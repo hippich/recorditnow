@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
                      0,
                      ki18n("RecordItNow"),
                      "0.1",
-                     ki18n("RecordMyDesktop GUI"),
+                     ki18n("Desktop recorder GUI"),
                      KAboutData::License_GPL,
                      ki18n("(C) 2009 Kai Dombrowe"),
                      KLocalizedString(),
