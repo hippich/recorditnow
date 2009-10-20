@@ -491,6 +491,7 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("recordWindow")->setEnabled(true);
             actionCollection()->action("recordFullScreen")->setEnabled(true);
             actionCollection()->action("box")->setEnabled(true);
+            actionCollection()->action("box")->setChecked(m_box->isEnabled());
             actionCollection()->action("options_configure")->setEnabled(true);
             break;
         }
