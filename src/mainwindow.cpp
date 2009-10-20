@@ -199,6 +199,7 @@ void MainWindow::recordTriggred()
 {
 
     if (!m_box->isEnabled()) {
+        KMessageBox::sorry(this, i18n("No screen area selected."));
         return;
     }
 
@@ -544,6 +545,9 @@ void MainWindow::recorderError(const QString &error)
 {
 
     KMessageBox::error(this, error);
+    setState(Idle);
+    m_recorderPlugin->deleteLater();
+    m_recorderPlugin = 0;
 
 }
 

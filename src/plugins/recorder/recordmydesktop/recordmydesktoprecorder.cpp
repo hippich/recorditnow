@@ -148,7 +148,7 @@ void RecordMyDesktopRecorder::record(const Data &d)
 
     const QString recordMyDesktop = KGlobal::dirs()->findExe("recordmydesktop");
     if (recordMyDesktop.isEmpty()) {
-        kDebug() << "binary not found";
+        emit error(i18n("Cannot find recordmydesktop."));
         return;
     }
 
@@ -252,11 +252,11 @@ void RecordMyDesktopRecorder::pause()
 {
 
     if (!m_paused) {
-        emit status(i18n("Paused..."));
+        emit status(i18n("Paused!"));
         kill(m_recorder->pid(), SIGSTOP);
         m_paused = true;
     } else {
-        emit status(i18n("Continue..."));
+        emit status(i18n("Capturing!"));
         kill(m_recorder->pid(), SIGCONT);
         m_paused = false;
     }
