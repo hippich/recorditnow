@@ -651,7 +651,7 @@ void MainWindow::startTimer()
 void MainWindow::tick()
 {
 
-    if (ui_toolBarWidget.timerLcd->value() == 1) {
+    if (ui_toolBarWidget.timerLcd->value() < 2) {
         m_timer->stop();
         startRecord();
     }
