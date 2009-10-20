@@ -58,7 +58,6 @@ FrameBox::FrameBox(QWidget *parent)
     m_sizeFrame->setLayout(layout);
     m_sizeLabel = new QLabel(m_sizeFrame);
     layout->addWidget(m_sizeLabel);
-    m_sizeFrame->resize(50, 50);
     m_sizeFrame->hide();
 
     // lines
@@ -160,6 +159,7 @@ void FrameBox::adjustLines()
 void FrameBox::adjustSizeFrame(const QRect &boxGeo)
 {
 
+    m_sizeFrame->resize(m_sizeLabel->sizeHint());
     QRect frameGeo = m_sizeFrame->geometry();
     frameGeo.moveCenter(boxGeo.center());
     m_sizeFrame->setGeometry(frameGeo);

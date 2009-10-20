@@ -401,7 +401,7 @@ QHash<QString, QString> MainWindow::recorder()
         KService::Ptr service = *iter;
         rec[service->name()] = service->entryPath();
     }
-    kDebug() << rec.size() << "engines found.";
+    kDebug() << rec.size() << "recorder found.";
 
     return rec;
 
@@ -574,7 +574,6 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
 
     m_recorderPlugin->deleteLater();
     m_recorderPlugin = 0;
-    setTrayOverlay("");
 
 }
 
@@ -691,7 +690,6 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 {
 
     Q_UNUSED(pos);
-
     if (active && (state() == Recording || state() == Paused)) {
         stopRecord();
     }
