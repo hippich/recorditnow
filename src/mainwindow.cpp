@@ -136,6 +136,7 @@ void MainWindow::setupActions()
     QAction *boxAction = new QAction(this);
     boxAction->setText(i18n("Show Frame"));
     boxAction->setIcon(KIcon("draw-rectangle"));
+    boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered()), this, SLOT(boxWindow()));
 
     QAction *fullAction = new QAction(this);
@@ -303,6 +304,7 @@ void MainWindow::boxWindow()
 {
 
     m_box->setEnabled(!m_box->isEnabled());
+    actionCollection()->action("box")->setChecked(m_box->isEnabled());
 
 }
 
