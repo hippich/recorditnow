@@ -135,7 +135,7 @@ void MainWindow::setupActions()
 
     QAction *boxAction = new QAction(this);
     boxAction->setText(i18n("Show Frame"));
-    boxAction->setIcon(KIcon("rectangle"));
+    boxAction->setIcon(KIcon("draw-rectangle"));
     connect(boxAction, SIGNAL(triggered()), this, SLOT(boxWindow()));
 
     QAction *fullAction = new QAction(this);
