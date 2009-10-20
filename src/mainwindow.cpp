@@ -639,10 +639,11 @@ void MainWindow::saveConfig(int code)
 void MainWindow::startTimer()
 {
 
-    if (ui_toolBarWidget.timerLcd->value() < 1) {
-        ui_toolBarWidget.timerLcd->display(1);
+    if (ui_toolBarWidget.timerLcd->value() == 0) {
+        m_timer->start(0);
+    } else {
+        m_timer->start(1000);
     }
-    m_timer->start(1000);
 
 }
 
