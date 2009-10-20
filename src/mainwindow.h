@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 // own
-#include "ui_mainwindow.h"
 #include "ui_toolbarwidget.h"
 #include "libs/recorder/abstractrecorder.h"
 #include "ui_settings.h"
@@ -18,7 +17,7 @@ class KDialog;
 class KProcess;
 class QStateMachine;
 class FrameBox;
-class MainWindow : public KXmlGuiWindow, public Ui::MainWindow
+class MainWindow : public KXmlGuiWindow
 {
     Q_OBJECT
 

@@ -52,10 +52,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_grabber(0)
 {
 
-    setupUi(this);
     setupActions();
 
-    KXmlGuiWindow::menuBar()->hide();
+    menuBar()->hide();
 
     QWidget *toolWidget = new QWidget;
     ui_toolBarWidget.setupUi(toolWidget);
@@ -532,7 +531,7 @@ MainWindow::State MainWindow::state() const
 void MainWindow::recorderStatus(const QString &text)
 {
 
-    KXmlGuiWindow::statusBar()->showMessage(text);
+    statusBar()->showMessage(text);
 
 }
 
