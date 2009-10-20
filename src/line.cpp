@@ -11,9 +11,11 @@
 #include "line.h"
 
 // Qt
-#include <QResizeEvent>
-#include <QMoveEvent>
-#include <QDebug>
+#include <QtGui/QResizeEvent>
+#include <QtGui/QMoveEvent>
+
+// KDE
+#include <kdebug.h>
 
 
 #define MIN_SIZE 20
@@ -196,14 +198,14 @@ void Line::mouseMoveEvent(QMouseEvent *event)
         }
     case Bottom: { // TODO
             if (dia) {
-                qDebug() << "diagonal move..";
+                kDebug() << "diagonal move..";
                 if (cursor().shape() == Qt::SizeFDiagCursor) { // right
-                    qDebug() << "bottomRight" << event->globalX()-geo.bottomRight().x();
+                    kDebug() << "bottomRight" << event->globalX()-geo.bottomRight().x();
                     geo.setWidth(geo.width()-(event->globalX()-geo.bottomRight().x()));
                    // geo.setBottom(event->globalY());
                     //geo.setBottomRight(event->globalPos());
                 } else { // left
-                    qDebug() << "bottomLeft...";
+                    kDebug() << "bottomLeft...";
                     geo.moveTo(event->globalPos());
                 }
             } else { // top/bottom

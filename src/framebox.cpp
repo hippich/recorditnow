@@ -5,16 +5,17 @@
 #include "line.h"
 
 // Qt
-#include <QWidget>
-#include <QResizeEvent>
-#include <QMoveEvent>
-#include <QDebug>
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QTimer>
+#include <QtGui/QWidget>
+#include <QtGui/QResizeEvent>
+#include <QtGui/QMoveEvent>
+#include <QtGui/QLabel>
+#include <QtGui/QHBoxLayout>
+#include <QtCore/QTimer>
 
 // KDE
-#include <KWindowSystem>
+#include <kwindowsystem.h>
+#include <kdebug.h>
+
 
 
 #define MIN_SIZE 100

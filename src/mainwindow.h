@@ -10,12 +10,7 @@
 #include <kxmlguiwindow.h>
 
 
-class PreviewWidget;
 class KNotificationItem;
-class InfoDialog;
-class KDialog;
-class KProcess;
-class QStateMachine;
 class FrameBox;
 class MainWindow : public KXmlGuiWindow
 {

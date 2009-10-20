@@ -6,7 +6,7 @@
 #include "line.h"
 
 // Qt
-#include <QObject>
+#include <QtCore/QObject>
 
 
 class QLabel;

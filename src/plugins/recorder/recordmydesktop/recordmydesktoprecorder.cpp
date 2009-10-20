@@ -10,8 +10,8 @@
 #include <kdebug.h>
 
 // Qt
-#include <QWidget>
-#include <QDir>
+#include <QtGui/QWidget>
+#include <QtCore/QDir>
 
 // C
 #include <sys/types.h>

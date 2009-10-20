@@ -3,7 +3,7 @@
 
 
 // Qt
-#include <QFrame>
+#include <QtGui/QFrame>
 
 
 

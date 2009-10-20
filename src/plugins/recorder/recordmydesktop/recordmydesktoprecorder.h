@@ -7,7 +7,7 @@
 #include "ui_recordmydesktop.h"
 
 // Qt
-#include <QVariantList>
+#include <QtCore/QVariantList>
 
 
 class KProcess;

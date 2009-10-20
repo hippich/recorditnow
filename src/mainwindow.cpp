@@ -5,46 +5,32 @@
 #include <recorditnow.h>
 
 // Qt
-#include <QToolBar>
-#include <QAction>
-#include <QStateMachine>
-#include <QMouseEvent>
-#include <QX11Info>
-#include <QTimer>
-#include <QHBoxLayout>
-#include <QDesktopWidget>
+#include <QtGui/QAction>
+#include <QtGui/QX11Info>
+#include <QtCore/QTimer>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QDesktopWidget>
 
 // KDE
 #include <kicon.h>
 #include <kactioncollection.h>
 #include <klocalizedstring.h>
 #include <kdebug.h>
-#include <kprocess.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
 #include <kstatusbar.h>
-#include <kdialog.h>
-#include <kpushbutton.h>
-#include <ktoolbar.h>
 #include <kmenubar.h>
 #include <kmessagebox.h>
-#include <KService>
-#include <KDebug>
-#include <KServiceTypeTrader>
-#include <KPluginInfo>
+#include <kservice.h>
+#include <kservicetypetrader.h>
+#include <kplugininfo.h>
 #include <kconfigdialog.h>
 #include <knotificationitem.h>
-#include <KMenu>
-#include <KApplication>
-#include <KRun>
-#include <KMimeType>
+#include <kmenu.h>
+#include <krun.h>
+#include <kmimetype.h>
 
 // X11
 #include <X11/Xlib.h>
 
-// C
-#include <sys/types.h>
-#include <signal.h>
 
 
 MainWindow::MainWindow(QWidget *parent)

@@ -7,9 +7,9 @@
 #include <ksharedconfig.h>
 
 // Qt
-#include <QObject>
-#include <QRect>
-#include <QVariantList>
+#include <QtCore/QObject>
+#include <QtCore/QRect>
+#include <QtCore/QVariantList>
 
 
 struct Data {
