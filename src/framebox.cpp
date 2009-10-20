@@ -281,8 +281,7 @@ void FrameBox::lineGeometryChanged(const Line::Side &side, const QRect &geometry
     }
 
     QRect parentGeometry = m_parent->geometry();
-    parentGeometry.setLeft(m_top->geometry().left());
-    parentGeometry.setRight(m_top->geometry().right());
+    parentGeometry.moveLeft(m_top->geometry().left());
 
     if (parentGeometry.bottom() > m_top->geometry().top()) {
         parentGeometry.moveBottom(m_top->geometry().top()-SPACING);
