@@ -695,6 +695,10 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
         stopRecord();
     }
 
+    if (!active && m_box->isEnabled()) {
+        boxWindow();
+    }
+
 }
 
 
