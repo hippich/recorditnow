@@ -97,6 +97,8 @@ private slots:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
+    void hideEvent(QHideEvent *event);
+    void showEvent(QShowEvent *event);
 
 
 };

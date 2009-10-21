@@ -695,12 +695,32 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
         stopRecord();
     }
 
-    if (!active && m_box->isEnabled()) {
+    /*if (!active && m_box->isEnabled()) {
         boxWindow();
+    }
+*/
+}
+
+
+void MainWindow::hideEvent(QHideEvent *event)
+{
+
+    KXmlGuiWindow::hideEvent(event);
+    if (m_box->isEnabled()) {
+        boxWindow();
+        actionCollection()->action("box")->setChecked(true);
     }
 
 }
 
 
+void MainWindow::showEvent(QShowEvent *event)
+{
 
+    KXmlGuiWindow::showEvent(event);
+    if (actionCollection()->action("box")->isChecked()) {
+        boxWindow();
+    }
+
+}
 
