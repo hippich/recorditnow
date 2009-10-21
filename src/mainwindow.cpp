@@ -57,7 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     setupActions();
-
     menuBar()->hide();
 
     QWidget *toolWidget = new QWidget;
@@ -70,20 +69,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui_toolBarWidget.timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
 
     m_box = new FrameBox(this);
-
     m_recorderPlugin = 0;
-
     ui_toolBarWidget.backendCombo->addItems(recorder().keys());
-
     m_tray = 0;
-
     setupTray();
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
 
     setupGUI();
-
     setState(Idle);
 
 }
@@ -457,11 +451,13 @@ void MainWindow::setupTray()
             context->addAction(actionCollection()->action("recordFullScreen"));
 
             m_tray->setContextMenu(context);
+            setAttribute(Qt::WA_DeleteOnClose, false);
         }
     } else {
         if (m_tray) {
             delete m_tray;
             m_tray = 0;
+            setAttribute(Qt::WA_DeleteOnClose, true);
         }
     }
 
