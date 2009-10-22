@@ -576,6 +576,8 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
     m_recorderPlugin->deleteLater();
     m_recorderPlugin = 0;
 
+    recorderStatus(i18n("Finished!"));
+
 }
 
 
@@ -695,10 +697,6 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
         stopRecord();
     }
 
-    /*if (!active && m_box->isEnabled()) {
-        boxWindow();
-    }
-*/
 }
 
 
