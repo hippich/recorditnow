@@ -1,0 +1,360 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: just89@gmx.de\n"
+"POT-Creation-Date: 2009-10-22 03:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:25
+#. i18n: ectx: item, widget (QWidget, RecordMyDesktop)
+#: po/rc.cpp:4 rc.cpp:4
+msgid ""
+"Image</string>\n"
+"      </attribute>"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:30
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: po/rc.cpp:8 rc.cpp:8
+msgid "Image Options"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:38
+#. i18n: ectx: property (text), widget (QCheckBox, noCursorCheck)
+#: po/rc.cpp:11 rc.cpp:11
+msgid "Disable drawing of the cursor"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:45
+#. i18n: ectx: property (text), widget (QCheckBox, fullShotsCheck)
+#: po/rc.cpp:14 rc.cpp:14
+msgid "Take full screenshot at every frame(Not recomended!)"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
+#. i18n: ectx: property (text), widget (QCheckBox, quickSubsamplingCheck)
+#: po/rc.cpp:17 rc.cpp:17
+msgid "Do subsampling of the chroma planes by discarding,not averaging"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:59
+#. i18n: ectx: property (text), widget (QCheckBox, noSharedCheck)
+#: po/rc.cpp:20 rc.cpp:20
+msgid "Disable usage of MIT-shared memory extension(Not Recommended!)"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:72
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#. i18n: file: src/ui/toolbarwidget.ui:118
+#. i18n: ectx: property (text), widget (QCheckBox, soundCheck)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:72
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#. i18n: file: src/ui/toolbarwidget.ui:118
+#. i18n: ectx: property (text), widget (QCheckBox, soundCheck)
+#: po/rc.cpp:23 po/rc.cpp:114 rc.cpp:23 rc.cpp:114
+msgid "Sound"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:78
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: po/rc.cpp:26 rc.cpp:26
+msgid "Sound Options"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:86
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:29 rc.cpp:29
+msgid "Channels"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:106
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:32 rc.cpp:32
+msgid "Frequency"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:139
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: po/rc.cpp:35 rc.cpp:35
+msgid "Buffer size (only ALSA or OSS)"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:146
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: po/rc.cpp:38 rc.cpp:38
+msgid "Ring Buffer size (JACK only)"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:166
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: po/rc.cpp:41 rc.cpp:41
+msgid "Device"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:173
+#. i18n: ectx: property (text), widget (KLineEdit, deviceEdit)
+#: po/rc.cpp:44 rc.cpp:44
+msgid "hw:0,0"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:180
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: po/rc.cpp:47 rc.cpp:47
+msgid "JACK Ports"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:196
+#. i18n: ectx: attribute (title), widget (QWidget, tab_3)
+#: po/rc.cpp:50 rc.cpp:50
+msgid "Encoding"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:202
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: po/rc.cpp:53 rc.cpp:53
+msgid "Encoding Options"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:210
+#. i18n: ectx: property (text), widget (QCheckBox, onTheFlyCheck)
+#: po/rc.cpp:56 rc.cpp:56
+msgid "Encode the audio-video data, while recording"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:217
+#. i18n: ectx: property (text), widget (QLabel, lab)
+#: po/rc.cpp:59 rc.cpp:59
+msgid "Video Quality"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:234
+#. i18n: ectx: property (text), widget (QLabel, lab_3)
+#: po/rc.cpp:62 rc.cpp:62
+msgid "Bitrate"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:251
+#. i18n: ectx: property (text), widget (QLabel, lab_2)
+#: po/rc.cpp:65 rc.cpp:65
+msgid "Audio Quality"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:287
+#. i18n: ectx: attribute (title), widget (QWidget, tab_4)
+#: po/rc.cpp:68 rc.cpp:68
+msgid "Misc"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:293
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: po/rc.cpp:71 rc.cpp:71
+msgid "Misc Options"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
+#. i18n: ectx: property (text), widget (QCheckBox, wmCheck)
+#: po/rc.cpp:74 rc.cpp:74
+msgid ""
+"Do not try to detect the window manager(and set options according to it)"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:308
+#. i18n: ectx: property (text), widget (QCheckBox, compressCacheCheck)
+#: po/rc.cpp:77 rc.cpp:77
+msgid "Compress Cache"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:315
+#. i18n: ectx: property (text), widget (QLabel, label_10)
+#: po/rc.cpp:80 rc.cpp:80
+msgid ""
+"Location where a temporary directory will be created to hold project files"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:332
+#. i18n: ectx: property (text), widget (QCheckBox, overwriteCheck)
+#: po/rc.cpp:83 rc.cpp:83
+msgid ""
+"If there is already a file with the same name, delete it (default is to add "
+"a number postfix to the new one)."
+msgstr ""
+
+#. i18n: file: src/recorditnow.kcfg:9
+#. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
+#: po/rc.cpp:86 rc.cpp:86
+msgid "Hide RecordItNow while recording"
+msgstr ""
+
+#. i18n: file: src/recorditnowui.rc:4
+#. i18n: ectx: ToolBar (mainToolBar)
+#: po/rc.cpp:89 rc.cpp:89
+msgid "Main Toolbar"
+msgstr ""
+
+#. i18n: file: src/ui/settings.ui:21
+#. i18n: ectx: item, widget (QWidget, Settings)
+#: po/rc.cpp:93 rc.cpp:93
+msgid ""
+"Hide on record</string>\n"
+"     </property>"
+msgstr ""
+
+#. i18n: file: src/ui/settings.ui:40
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
+#: po/rc.cpp:97 rc.cpp:97
+msgid "Enable system tray icon"
+msgstr ""
+
+#. i18n: file: src/ui/settings.ui:47
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
+#: po/rc.cpp:100 rc.cpp:100
+msgid "Show video after record"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:70
+#. i18n: ectx: property (margin), widget (QWidget, ToolBarWidget)
+#: po/rc.cpp:104 rc.cpp:104
+msgid ""
+"...</string>\n"
+"           </property>"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:79
+#. i18n: ectx: property (text), widget (QToolButton, timeDownButton)
+#: po/rc.cpp:108 rc.cpp:108
+msgid "..."
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:97
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:111 rc.cpp:111
+msgid "FPS:"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:135
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:117 rc.cpp:117
+msgid "Backend:"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:165
+#. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
+#: po/rc.cpp:120 rc.cpp:120
+msgid "Output file"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:168
+#. i18n: ectx: property (text), widget (KUrlRequester, outputRequester)
+#: po/rc.cpp:123 rc.cpp:123
+msgid "~/desktop_vid"
+msgstr ""
+
+#: po/rc.cpp:124 rc.cpp:124
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: po/rc.cpp:125 rc.cpp:125
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: src/main.cpp:34 src/mainwindow.cpp:591
+msgid "RecordItNow"
+msgstr ""
+
+#: src/main.cpp:36
+msgid "Desktop recorder GUI"
+msgstr ""
+
+#: src/main.cpp:38
+msgid "(C) 2009 Kai Dombrowe"
+msgstr ""
+
+#: src/mainwindow.cpp:129
+msgid "Record a Window"
+msgstr ""
+
+#: src/mainwindow.cpp:134
+msgid "Show Frame"
+msgstr ""
+
+#: src/mainwindow.cpp:140
+msgid "Record the entire Screen"
+msgstr ""
+
+#: src/mainwindow.cpp:196
+msgid "No screen area selected."
+msgstr ""
+
+#: src/mainwindow.cpp:508
+msgid "Continue"
+msgstr ""
+
+#: src/mainwindow.cpp:559
+msgid "recorder crashed"
+msgstr ""
+
+#: src/mainwindow.cpp:579
+msgid "Finished!"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:151
+msgid "Cannot find recordmydesktop."
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:255
+msgid "Paused!"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:259
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:378
+msgid "Capturing!"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:355
+msgid "Cached: %1"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:356
+msgid "Received: %1"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:360
+msgid "Frames: %1"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:362
+msgid "Output file: %1"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:370
+msgid "Encoding: %1"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:380
+msgid "Shutting down.."
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:382
+msgid "Encoding started!"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:384
+msgid "Done!"
+msgstr ""
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:388
+msgid "Cannot open file %1 for writting!"
+msgstr ""

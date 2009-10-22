@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
+    <width>584</width>
     <height>262</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -190,8 +190,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>groupBox</zorder>
-      <zorder>groupBox_2</zorder>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
