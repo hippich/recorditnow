@@ -17,45 +17,31 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDMYDESKTOPRECORDER_H
-#define RECORDMYDESKTOPRECORDER_H
+#ifndef SCREENSHOTRECORDERCONFIG_H
+#define SCREENSHOTRECORDERCONFIG_H
 
 
 // own
-#include "abstractrecorder.h"
+#include "ui_screenshot.h"
 
-// Qt
-#include <QtCore/QVariantList>
+// KDE
+#include <kcmodule.h>
 
 
-class KProcess;
-class RecordMyDesktopRecorder : public AbstractRecorder
+class ScreenshotRecorderConfig : public KCModule
 {
-    Q_OBJECT
 
 
 public:
-    RecordMyDesktopRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~RecordMyDesktopRecorder();
-
-    bool hasFeature(const AbstractRecorder::Feature &feature) const;
-
-    void record(const AbstractRecorder::Data &d);
-    void pause();
-    void stop();
+    ScreenshotRecorderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    ~ScreenshotRecorderConfig();
 
 
 private:
-    KProcess *m_recorder;
-    bool m_paused;
-
-
-private slots:
-    void newRecorderOutput();
-    void recorderFinished(int);
+     Ui::Screenshot ui_cfg;
 
 
 };
 
 
-#endif // RECORDMYDESKTOPRECORDER_H
+#endif // SCREENSHOTRECORDERCONFIG_H

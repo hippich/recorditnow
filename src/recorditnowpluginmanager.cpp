@@ -97,6 +97,7 @@ AbstractRecorder *RecordItNowPluginManager::loadRecorderPlugin(const QString &na
             return loadRecorderPlugin(it.key());
         }
     }
+    kDebug() << "plugin not found:" << name;
     return 0;
 
 }

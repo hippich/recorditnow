@@ -68,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui_toolBarWidget.timeDownButton->setIcon(KIcon("arrow-down"));
     connect(ui_toolBarWidget.timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
     connect(ui_toolBarWidget.timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
+    connect(ui_toolBarWidget.backendCombo, SIGNAL(currentIndexChanged(QString)), this,
+            SLOT(backendChanged(QString)));
 
     m_box = new FrameBox(this);
     m_recorderPlugin = 0;
@@ -163,7 +165,9 @@ void MainWindow::setupActions()
 void MainWindow::startRecord()
 {
 
-    m_recorderPlugin->record(m_recordData);
+    if (m_recorderPlugin) {
+        m_recorderPlugin->record(m_recordData);
+    }
 
 }
 
@@ -450,18 +454,20 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("box")->setEnabled(true);
             actionCollection()->action("box")->setChecked(m_box->isEnabled());
             actionCollection()->action("options_configure")->setEnabled(true);
+            ui_toolBarWidget.backendCombo->setEnabled(true);
             break;
         }
     case Recording: {
             setTrayOverlay("media-record");
             actionCollection()->action("pause")->setIcon(KIcon("media-playback-pause"));
             actionCollection()->action("record")->setEnabled(false);
-            actionCollection()->action("pause")->setEnabled(true);
-            actionCollection()->action("stop")->setEnabled(true);
+            actionCollection()->action("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
+            actionCollection()->action("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
             actionCollection()->action("recordWindow")->setEnabled(false);
             actionCollection()->action("recordFullScreen")->setEnabled(false);
             actionCollection()->action("box")->setEnabled(false);
             actionCollection()->action("options_configure")->setEnabled(false);
+            ui_toolBarWidget.backendCombo->setEnabled(false);
             break;
         }
     case Paused: {
@@ -469,15 +475,19 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("pause")->setText(i18n("Continue"));
             actionCollection()->action("pause")->setIcon(KIcon("media-playback-start"));
             actionCollection()->action("record")->setEnabled(false);
-            actionCollection()->action("pause")->setEnabled(true);
-            actionCollection()->action("stop")->setEnabled(true);
+            actionCollection()->action("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
+            actionCollection()->action("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
             actionCollection()->action("recordWindow")->setEnabled(false);
             actionCollection()->action("recordFullScreen")->setEnabled(false);
             actionCollection()->action("box")->setEnabled(false);
             actionCollection()->action("options_configure")->setEnabled(false);
+            ui_toolBarWidget.backendCombo->setEnabled(false);
             break;
         }
     }
+    ui_toolBarWidget.fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
+    ui_toolBarWidget.soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
+
     m_state = newState;
 
 }
@@ -645,6 +655,31 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
     if (active && (state() == Recording || state() == Paused)) {
         stopRecord();
     }
+
+}
+
+
+void MainWindow::backendChanged(const QString &newBackend)
+{
+
+    AbstractRecorder *recorder = m_pluginManager->loadRecorderPlugin(newBackend);
+
+    if (!recorder) {
+        m_currentFeatures[AbstractRecorder::Sound] = false;
+        m_currentFeatures[AbstractRecorder::Fps] = false;
+        m_currentFeatures[AbstractRecorder::Pause] = false;
+        m_currentFeatures[AbstractRecorder::Stop] = false;
+
+    } else {
+        m_currentFeatures[AbstractRecorder::Sound] = recorder->hasFeature(AbstractRecorder::Sound);
+        m_currentFeatures[AbstractRecorder::Fps] = recorder->hasFeature(AbstractRecorder::Fps);
+        m_currentFeatures[AbstractRecorder::Pause] = recorder->hasFeature(AbstractRecorder::Pause);
+        m_currentFeatures[AbstractRecorder::Stop] = recorder->hasFeature(AbstractRecorder::Stop);
+
+        m_pluginManager->unloadRecorderPlugin(recorder);
+    }
+
+    setState(Idle); // update actions/widgets
 
 }
 

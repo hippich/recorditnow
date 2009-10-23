@@ -60,7 +60,7 @@ private:
     AbstractRecorder::Data m_recordData;
     State m_state;
     RecordItNowPluginManager *m_pluginManager;
-
+    QHash<AbstractRecorder::Feature, bool> m_currentFeatures;
 
     void setupActions();
     void initRecorder(AbstractRecorder::Data *d);
@@ -93,8 +93,8 @@ private slots:
     void tick();
     void lcdUp();
     void lcdDown();
-
     void trayActivated(const bool &active, const QPoint &pos);
+    void backendChanged(const QString &newBackend);
 
 
 protected:

@@ -42,6 +42,13 @@ public:
         Crash = 1
     };
 
+    enum Feature {
+        Sound = 0,
+        Fps = 1,
+        Pause = 2,
+        Stop = 3
+    };
+    
     struct Data {
     public:
         QString outputFile;
@@ -54,8 +61,7 @@ public:
     AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractRecorder();
 
-    virtual bool canRecordSound() const = 0;
-
+    virtual bool hasFeature(const AbstractRecorder::Feature &) const { return false; };
 
     virtual void record(const AbstractRecorder::Data &) = 0;
     virtual void pause() = 0;

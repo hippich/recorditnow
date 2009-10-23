@@ -1,1 +1,2 @@
 add_subdirectory(recordmydesktop)
+add_subdirectory(screenshot)

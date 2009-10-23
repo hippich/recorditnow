@@ -17,45 +17,39 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDMYDESKTOPRECORDER_H
-#define RECORDMYDESKTOPRECORDER_H
-
 
 // own
-#include "abstractrecorder.h"
+#include "screenshotrecorderconfig.h"
+#include <screenshot.h>
 
-// Qt
-#include <QtCore/QVariantList>
+// KDE
+#include <kpluginfactory.h>
+#include <kaboutdata.h>
 
 
-class KProcess;
-class RecordMyDesktopRecorder : public AbstractRecorder
+K_PLUGIN_FACTORY(ConfigFactory, registerPlugin<ScreenshotRecorderConfig>();)
+K_EXPORT_PLUGIN(ConfigFactory("recorditnow_screenshot_config"))
+ScreenshotRecorderConfig::ScreenshotRecorderConfig(QWidget *parent, const QVariantList &args)
+    : KCModule( ConfigFactory::componentData(), parent, args)
 {
-    Q_OBJECT
+
+    KAboutData *about = new KAboutData("ScreenshotConfig",
+                                       0,
+                                       ki18n("Screenshot Configuration"),
+                                       KDE_VERSION_STRING,
+                                       KLocalizedString(),
+                                       KAboutData::License_GPL,
+                                       ki18n( "Copyright 2009 Kai Dombrowe" ) );
+    setAboutData(about);
+
+    ui_cfg.setupUi(this);
+    addConfig(Settings::self(), this);
+
+}
 
 
-public:
-    RecordMyDesktopRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~RecordMyDesktopRecorder();
-
-    bool hasFeature(const AbstractRecorder::Feature &feature) const;
-
-    void record(const AbstractRecorder::Data &d);
-    void pause();
-    void stop();
+ScreenshotRecorderConfig::~ScreenshotRecorderConfig()
+{
 
 
-private:
-    KProcess *m_recorder;
-    bool m_paused;
-
-
-private slots:
-    void newRecorderOutput();
-    void recorderFinished(int);
-
-
-};
-
-
-#endif // RECORDMYDESKTOPRECORDER_H
+}

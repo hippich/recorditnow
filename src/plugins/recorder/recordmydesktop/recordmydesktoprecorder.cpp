@@ -61,10 +61,16 @@ RecordMyDesktopRecorder::~RecordMyDesktopRecorder()
 }
 
 
-bool RecordMyDesktopRecorder::canRecordSound() const
+bool RecordMyDesktopRecorder::hasFeature(const AbstractRecorder::Feature &feature) const
 {
 
-    return true;
+    switch (feature) {
+    case AbstractRecorder::Sound:
+    case AbstractRecorder::Fps:
+    case AbstractRecorder::Pause:
+    case AbstractRecorder::Stop: return true;
+    default: return false;
+    }
 
 }
 
