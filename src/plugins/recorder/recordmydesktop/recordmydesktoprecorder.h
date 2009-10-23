@@ -40,7 +40,7 @@ public:
 
     bool canRecordSound() const;
 
-    void record(const Data &d);
+    void record(const AbstractRecorder::Data &d);
     void pause();
     void stop();
 

@@ -69,7 +69,7 @@ bool RecordMyDesktopRecorder::canRecordSound() const
 }
 
 
-void RecordMyDesktopRecorder::record(const Data &d)
+void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 {
 
     kDebug() << "record";

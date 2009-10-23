@@ -31,16 +31,6 @@
 #include <QtCore/QVariantList>
 
 
-struct Data {
-public:
-    QString outputFile;
-    QRect geometry;
-    qlonglong winId;
-    int fps;
-    bool sound;
-};
-
-
 class KDE_EXPORT AbstractRecorder : public QObject
 {
     Q_OBJECT
@@ -51,13 +41,23 @@ public:
         Normal = 0,
         Crash = 1
     };
+
+    struct Data {
+    public:
+        QString outputFile;
+        QRect geometry;
+        qlonglong winId;
+        int fps;
+        bool sound;
+    };
+
     AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractRecorder();
 
     virtual bool canRecordSound() const = 0;
 
 
-    virtual void record(const Data &) = 0;
+    virtual void record(const AbstractRecorder::Data &) = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
 

@@ -57,13 +57,13 @@ private:
     AbstractRecorder *m_recorderPlugin;
     KNotificationItem *m_tray;
     QTimer *m_timer;
-    Data m_recordData;
+    AbstractRecorder::Data m_recordData;
     State m_state;
     RecordItNowPluginManager *m_pluginManager;
 
 
     void setupActions();
-    void initRecorder(Data *d);
+    void initRecorder(AbstractRecorder::Data *d);
     void setupTray();
     void setTrayOverlay(const QString &name);
     void setState(const State &newState);

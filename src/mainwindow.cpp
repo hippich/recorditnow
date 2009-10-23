@@ -346,7 +346,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 }
 
 
-void MainWindow::initRecorder(Data *d)
+void MainWindow::initRecorder(AbstractRecorder::Data *d)
 {
 
     setState(Recording);
