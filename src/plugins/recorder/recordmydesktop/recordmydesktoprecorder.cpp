@@ -103,6 +103,8 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     args << "-fps" << QString::number(d.fps);
 
     // recordmydesktop cfg
+    Settings::self()->readConfig(); // cfg changed?
+
     // image
     if (Settings::__no_cursor()) {
         args << "--no-cursor";
@@ -130,7 +132,7 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     if (Settings::__ring_buffer_size() != -1) {
         args << "--ring-buffer-size" << QString::number(Settings::__ring_buffer_size());
     }
-    if (Settings::__device() != "hw:0,0" && Settings::__device().isEmpty()) {
+    if (Settings::__device() != "hw:0,0" && !Settings::__device().isEmpty()) {
         args << "--device" << Settings::__device();
     }
     if (!Settings::__use_jack().isEmpty()) {
@@ -260,6 +262,10 @@ void RecordMyDesktopRecorder::newRecorderOutput()
             emit error(i18n("Cannot open file %1 for writting!", line));
         } else if (line.startsWith("Could not create temporary directory")) {
             emit error(i18n("Could not create temporary directory, check your config."));
+        } else if (line.startsWith("recordMyDesktop is not compiled with Jack support!")) {
+            emit error(i18n("recordMyDesktop is not compiled with Jack support."));
+        } else if (line.startsWith("Error while opening/configuring soundcard")) {
+            emit error(i18n("Error while opening/configuring soundcard."));
         }
     }
 

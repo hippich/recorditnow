@@ -46,7 +46,9 @@ RecordItNowPluginManager::~RecordItNowPluginManager()
     QHashIterator<KPluginInfo, AbstractRecorder*> it(m_recorderPlugins);
     while (it.hasNext()) {
         it.next();
-        delete it.value();
+        if (it.value()) {
+            delete it.value();
+        }
     }
 
 }

@@ -520,7 +520,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
         KUrl url(ui_toolBarWidget.outputRequester->text());
 
         if (!QFile(url.path()).exists()) {
-            QStringList files = QDir(url.directory()).entryList(QStringList() << url.fileName()+".*");
+            const QStringList files = QDir(url.directory()).entryList(QStringList() << url.fileName()+".*");
             if (!files.isEmpty()) {
                 url = files.first();
             }
