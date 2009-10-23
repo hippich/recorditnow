@@ -71,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_box = new FrameBox(this);
     m_recorderPlugin = 0;
-   // ui_toolBarWidget.backendCombo->addItems(recorder().keys());
     m_tray = 0;
     setupTray();
 
@@ -337,10 +336,9 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         if (mouseEvent->button() == Qt::LeftButton) {
             recordCurrentWindow();
         } else {
-            actionCollection()->action("pause")->setEnabled(false);
-            actionCollection()->action("record")->setEnabled(true);
-            actionCollection()->action("stop")->setEnabled(false);
-            actionCollection()->action("recordWindow")->setEnabled(true);
+            m_grabber->deleteLater();
+            m_grabber = 0;
+            setState(Idle);
         }
     }
     return KXmlGuiWindow::eventFilter(watched, event);
@@ -552,7 +550,7 @@ void MainWindow::configure()
     QWidget *recorderPage = new QWidget;
     ui_recorder.setupUi(recorderPage);
     ui_recorder.pluginSelector->addPlugins(m_pluginManager->getRecorderList());
-    dialog->addPage(recorderPage, i18n("Recorder Plugins"), "configure");
+    dialog->addPage(recorderPage, i18n("Recorder Plugins"), "preferences-plugin");
 
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
