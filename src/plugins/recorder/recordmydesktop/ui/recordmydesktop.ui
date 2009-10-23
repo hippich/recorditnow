@@ -33,28 +33,28 @@
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0">
-             <widget class="QCheckBox" name="noCursorCheck">
+             <widget class="QCheckBox" name="kcfg___no_cursor">
               <property name="text">
                <string>Disable drawing of the cursor</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QCheckBox" name="fullShotsCheck">
+             <widget class="QCheckBox" name="kcfg___full_shots">
               <property name="text">
                <string>Take full screenshot at every frame(Not recomended!)</string>
               </property>
              </widget>
             </item>
             <item row="3" column="0">
-             <widget class="QCheckBox" name="quickSubsamplingCheck">
+             <widget class="QCheckBox" name="kcfg___subsampling">
               <property name="text">
                <string>Do subsampling of the chroma planes by discarding,not averaging</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QCheckBox" name="noSharedCheck">
+             <widget class="QCheckBox" name="kcfg___no_shared">
               <property name="text">
                <string>Disable usage of MIT-shared memory extension(Not Recommended!)</string>
               </property>
@@ -88,7 +88,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="KIntSpinBox" name="channelsSpin">
+             <widget class="KIntSpinBox" name="kcfg___channels">
               <property name="minimum">
                <number>-1</number>
               </property>
@@ -108,7 +108,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="KIntSpinBox" name="freqSpin">
+             <widget class="KIntSpinBox" name="kcfg___freq">
               <property name="minimum">
                <number>-1</number>
               </property>
@@ -121,7 +121,7 @@
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="KIntSpinBox" name="bufferSizeSpin">
+             <widget class="KIntSpinBox" name="kcfg___buffer_size">
               <property name="minimum">
                <number>-1</number>
               </property>
@@ -148,7 +148,7 @@
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="KIntSpinBox" name="ringBufferSpin">
+             <widget class="KIntSpinBox" name="kcfg___ring_buffer_size">
               <property name="minimum">
                <number>-1</number>
               </property>
@@ -168,7 +168,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="KLineEdit" name="deviceEdit">
+             <widget class="KLineEdit" name="kcfg___device">
               <property name="text">
                <string>hw:0,0</string>
               </property>
@@ -182,7 +182,7 @@
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="KLineEdit" name="jackEdit"/>
+             <widget class="KLineEdit" name="kcfg___use_jack"/>
             </item>
            </layout>
           </item>
@@ -205,7 +205,7 @@
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="0" column="0" colspan="2">
-             <widget class="QCheckBox" name="onTheFlyCheck">
+             <widget class="QCheckBox" name="kcfg___on_the_fly_encoding">
               <property name="text">
                <string>Encode the audio-video data, while recording</string>
               </property>
@@ -219,7 +219,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="KIntSpinBox" name="videoQualitySpin">
+             <widget class="KIntSpinBox" name="kcfg___v_quality">
               <property name="maximum">
                <number>63</number>
               </property>
@@ -236,7 +236,7 @@
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="KIntNumInput" name="bitrateSpin">
+             <widget class="KIntNumInput" name="kcfg___v_bitrate">
               <property name="minimum">
                <number>45000</number>
               </property>
@@ -253,7 +253,7 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="KIntSpinBox" name="audioQualitySpin">
+             <widget class="KIntSpinBox" name="kcfg___s_quality">
               <property name="minimum">
                <number>-1</number>
               </property>
@@ -296,14 +296,14 @@
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridLayout_8">
             <item row="1" column="0">
-             <widget class="QCheckBox" name="wmCheck">
+             <widget class="QCheckBox" name="kcfg___no_wm_check">
               <property name="text">
                <string>Do not try to detect the window manager(and set options according to it)</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QCheckBox" name="compressCacheCheck">
+             <widget class="QCheckBox" name="kcfg___compress_cache">
               <property name="text">
                <string>Compress Cache</string>
               </property>
@@ -320,14 +320,14 @@
              </widget>
             </item>
             <item row="4" column="0">
-             <widget class="KUrlComboRequester" name="tmpRequester">
+             <widget class="KUrlComboRequester" name="kcfg___workdir">
               <property name="mode">
                <set>KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly</set>
               </property>
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QCheckBox" name="overwriteCheck">
+             <widget class="QCheckBox" name="kcfg___overwrite">
               <property name="text">
                <string>If there is already a file with the same name, delete it (default is to add a number postfix to the new one).</string>
               </property>

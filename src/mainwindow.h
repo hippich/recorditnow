@@ -24,11 +24,13 @@
 #include "ui_toolbarwidget.h"
 #include "libs/recorder/abstractrecorder.h"
 #include "ui_settings.h"
+#include "ui_recorderplugins.h"
 
 // KDE
 #include <kxmlguiwindow.h>
 
 
+class RecordItNowPluginManager;
 class KNotificationItem;
 class FrameBox;
 class MainWindow : public KXmlGuiWindow
@@ -50,21 +52,23 @@ private:
     QWidget *m_grabber;
     Ui::ToolBarWidget ui_toolBarWidget;
     Ui::Settings ui_settings;
+    Ui::RecorderPlugins ui_recorder;
     FrameBox *m_box;
     AbstractRecorder *m_recorderPlugin;
-    QList<AbstractRecorder*> m_recorder;
     KNotificationItem *m_tray;
     QTimer *m_timer;
     Data m_recordData;
     State m_state;
+    RecordItNowPluginManager *m_pluginManager;
+
 
     void setupActions();
-    QHash<QString, QString> recorder();
     void initRecorder(Data *d);
     void setupTray();
     void setTrayOverlay(const QString &name);
     void setState(const State &newState);
     inline MainWindow::State state() const;
+    inline void updateRecorderCombo();
 
 
 private slots:
@@ -77,8 +81,6 @@ private slots:
     void recordCurrentWindow();
     void boxWindow();
     void recordFullScreen();
-
-    void loadRecorder(const QString &name);
 
     void recorderStatus(const QString &text);
     void recorderError(const QString &error);

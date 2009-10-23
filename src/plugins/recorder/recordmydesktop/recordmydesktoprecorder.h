@@ -23,7 +23,6 @@
 
 // own
 #include "abstractrecorder.h"
-#include "ui_recordmydesktop.h"
 
 // Qt
 #include <QtCore/QVariantList>
@@ -40,21 +39,15 @@ public:
     ~RecordMyDesktopRecorder();
 
     bool canRecordSound() const;
-    bool hasConfigPage() const;
-    QWidget *configPage();
 
     void record(const Data &d);
     void pause();
     void stop();
-    void saveConfig(KSharedConfig::Ptr cfg);
-    void loadConfig(KSharedConfig::Ptr cfg);
 
 
 private:
     KProcess *m_recorder;
     bool m_paused;
-    Ui::RecordMyDesktop ui_cfg;
-    QHash<QString, QVariant> m_cfg;
 
 
 private slots:

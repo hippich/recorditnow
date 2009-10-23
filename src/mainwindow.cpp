@@ -21,6 +21,7 @@
 #include "mainwindow.h"
 #include "framebox.h"
 #include <recorditnow.h>
+#include <recorditnowpluginmanager.h>
 
 // Qt
 #include <QtGui/QAction>
@@ -70,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_box = new FrameBox(this);
     m_recorderPlugin = 0;
-    ui_toolBarWidget.backendCombo->addItems(recorder().keys());
+   // ui_toolBarWidget.backendCombo->addItems(recorder().keys());
     m_tray = 0;
     setupTray();
 
@@ -79,6 +80,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupGUI();
     setState(Idle);
+
+    m_pluginManager = new RecordItNowPluginManager(this);
+    updateRecorderCombo();
 
 }
 
@@ -99,6 +103,7 @@ MainWindow::~MainWindow()
         delete m_tray;
     }
     delete m_timer;
+    delete m_pluginManager;
 
 }
 
@@ -343,66 +348,6 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 }
 
 
-void MainWindow::loadRecorder(const QString &name)
-{
-
-    if (m_recorderPlugin) {
-        delete m_recorderPlugin;
-        m_recorderPlugin = 0;
-    }
-
-    QHash<QString, QString> rec = recorder();
-
-    if (!rec.contains(name)) {
-        kDebug() << "recorder:" << name << "not found";
-        return;
-    }
-
-    kDebug() << "load recorder:" << rec[name];
-    KService::Ptr service = KService::serviceByStorageId(rec[name]);
-
-    KPluginLoader loader(service->library());
-    KPluginFactory *factory = loader.factory();
-    if (!factory) {
-        kError(5001) << "KPluginFactory could not load the plugin:" << service->library() <<
-        "Reason:" << loader.errorString();
-    }
-
-    m_recorderPlugin = factory->create<AbstractRecorder>(this);
-    if (!m_recorderPlugin) {
-        kError(5001) << "factory::create<>() failed " << service->library();
-    }
-
-    connect(m_recorderPlugin, SIGNAL(error(QString)), this, SLOT(recorderError(QString)));
-    connect(m_recorderPlugin, SIGNAL(status(QString)), this, SLOT(recorderStatus(QString)));
-    connect(m_recorderPlugin, SIGNAL(finished(AbstractRecorder::ExitStatus)), this,
-            SLOT(recorderFinished(AbstractRecorder::ExitStatus)));
-
-    KSharedConfig::Ptr ptr = KSharedConfig::openConfig("recorditnowrc");
-    m_recorderPlugin->loadConfig(ptr);
-
-}
-
-
-QHash<QString, QString> MainWindow::recorder()
-{
-
-    kDebug() << "search...";
-
-    QHash<QString, QString> rec;    
-    KService::List offers = KServiceTypeTrader::self()->query("RecordItNowRecorder");
-    KService::List::const_iterator iter;
-    for (iter = offers.begin(); iter < offers.end(); ++iter) {
-        KService::Ptr service = *iter;
-        rec[service->name()] = service->entryPath();
-    }
-    kDebug() << rec.size() << "recorder found.";
-
-    return rec;
-
-}
-
-
 void MainWindow::initRecorder(Data *d)
 {
 
@@ -421,7 +366,21 @@ void MainWindow::initRecorder(Data *d)
     d->sound = ui_toolBarWidget.soundCheck->isChecked();
     d->outputFile = path;
 
-    loadRecorder(ui_toolBarWidget.backendCombo->currentText());
+    if (m_recorderPlugin) {
+        m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+    }
+
+    const QString name = ui_toolBarWidget.backendCombo->currentText();
+    m_recorderPlugin = m_pluginManager->loadRecorderPlugin(name);
+    if (!m_recorderPlugin) {
+        KMessageBox::sorry(this, i18n("Cannot load Recorder %1", name));
+        setState(Idle);
+        return;
+    }
+    connect(m_recorderPlugin, SIGNAL(error(QString)), this, SLOT(recorderError(QString)));
+    connect(m_recorderPlugin, SIGNAL(finished(AbstractRecorder::ExitStatus)), this,
+            SLOT(recorderFinished(AbstractRecorder::ExitStatus)));
+    connect(m_recorderPlugin, SIGNAL(status(QString)), this, SLOT(recorderStatus(QString)));
 
     if (Settings::hideOnRecord()) {
         hide();
@@ -543,7 +502,7 @@ void MainWindow::recorderError(const QString &error)
 
     KMessageBox::error(this, error);
     setState(Idle);
-    m_recorderPlugin->deleteLater();
+    m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
 
 }
@@ -573,7 +532,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
         KRun::runUrl(url, type->name(), this);
     }
 
-    m_recorderPlugin->deleteLater();
+    m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
 
     recorderStatus(i18n("Finished!"));
@@ -590,33 +549,10 @@ void MainWindow::configure()
     ui_settings.setupUi(general);
     dialog->addPage(general, i18n("RecordItNow"), "configure");
 
-
-    AbstractRecorder *tmp = 0;
-    if (m_recorderPlugin) {
-        tmp = m_recorderPlugin;
-    }
-
-    QHash<QString, QString> rec = recorder();
-    QHashIterator<QString, QString> it(rec);
-    while (it.hasNext()) {
-        it.next();
-        loadRecorder(it.key());
-        if (!m_recorderPlugin) {
-            kDebug() << "load failed!";
-            continue;
-        }
-        if (m_recorderPlugin->hasConfigPage()) {
-            dialog->addPage(m_recorderPlugin->configPage(), it.key(), "configure");
-            m_recorder.append(m_recorderPlugin);
-        } else {
-            delete m_recorderPlugin;
-        }
-        m_recorderPlugin = 0;
-   }
-
-    if (tmp) {
-        m_recorderPlugin = tmp;
-    }
+    QWidget *recorderPage = new QWidget;
+    ui_recorder.setupUi(recorderPage);
+    ui_recorder.pluginSelector->addPlugins(m_pluginManager->getRecorderList());
+    dialog->addPage(recorderPage, i18n("Recorder Plugins"), "configure");
 
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -630,15 +566,26 @@ void MainWindow::configure()
 void MainWindow::saveConfig(int code)
 {
 
-    KSharedConfig::Ptr ptr = KSharedConfig::openConfig("recorditnowrc");
-    foreach (AbstractRecorder *rec, m_recorder) {
-        if (code == QDialog::Accepted) {
-            rec->saveConfig(ptr);
-        }
-        delete rec;
-    }
-    m_recorder.clear();
     setupTray();
+
+    if (code == QDialog::Accepted) {
+        ui_recorder.pluginSelector->updatePluginsState();
+        ui_recorder.pluginSelector->save();
+    }
+    updateRecorderCombo();
+
+}
+
+
+void MainWindow::updateRecorderCombo()
+{
+
+    ui_toolBarWidget.backendCombo->clear();
+    foreach (const KPluginInfo &info, m_pluginManager->getRecorderList()) {
+        if (info.isPluginEnabled()) {
+            ui_toolBarWidget.backendCombo->addItem(info.name());
+        }
+    }
 
 }
 

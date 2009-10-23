@@ -17,58 +17,32 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTRECORDER_H
-#define ABSTRACTRECORDER_H
+#ifndef RECORDMYDESKTOPCONFIG_H
+#define RECORDMYDESKTOPCONFIG_H
 
+
+// own
+#include "ui_recordmydesktop.h"
 
 // KDE
-#include <kdemacros.h>
-#include <ksharedconfig.h>
-
-// Qt
-#include <QtCore/QObject>
-#include <QtCore/QRect>
-#include <QtCore/QVariantList>
+#include <kcmodule.h>
 
 
-struct Data {
-public:
-    QString outputFile;
-    QRect geometry;
-    qlonglong winId;
-    int fps;
-    bool sound;
-};
-
-
-class KDE_EXPORT AbstractRecorder : public QObject
+class RecordMyDesktopConfig : public KCModule
 {
     Q_OBJECT
 
 
 public:
-    enum ExitStatus {
-        Normal = 0,
-        Crash = 1
-    };
-    AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractRecorder();
-
-    virtual bool canRecordSound() const = 0;
+    RecordMyDesktopConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    ~RecordMyDesktopConfig();
 
 
-    virtual void record(const Data &) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
-
-
-signals:
-    void status(const QString &text);
-    void finished(const AbstractRecorder::ExitStatus &status);
-    void error(const QString &text);
+private:
+    Ui::RecordMyDesktop ui_cfg;
 
 
 };
 
 
-#endif // ABSTRACTRECORDER_H
+#endif // RECORDMYDESKTOPCONFIG_H

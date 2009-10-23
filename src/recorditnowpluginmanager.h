@@ -17,58 +17,48 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTRECORDER_H
-#define ABSTRACTRECORDER_H
+#ifndef RECORDITNOWPLUGINMANAGER_H
+#define RECORDITNOWPLUGINMANAGER_H
 
-
-// KDE
-#include <kdemacros.h>
-#include <ksharedconfig.h>
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QRect>
-#include <QtCore/QVariantList>
+
+// KDE
+#include <kplugininfo.h>
 
 
-struct Data {
-public:
-    QString outputFile;
-    QRect geometry;
-    qlonglong winId;
-    int fps;
-    bool sound;
-};
-
-
-class KDE_EXPORT AbstractRecorder : public QObject
+class AbstractRecorder;
+class RecordItNowPluginManager : public QObject
 {
     Q_OBJECT
 
 
 public:
-    enum ExitStatus {
-        Normal = 0,
-        Crash = 1
-    };
-    AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractRecorder();
+    RecordItNowPluginManager(QObject *parent = 0);
+    ~RecordItNowPluginManager();
 
-    virtual bool canRecordSound() const = 0;
+    AbstractRecorder *loadRecorderPlugin(const KPluginInfo &info);
+    AbstractRecorder *loadRecorderPlugin(const QString &name);
+    void unloadRecorderPlugin(const KPluginInfo &info);
+    void unloadRecorderPlugin(AbstractRecorder *recorder);
+    QList<KPluginInfo> getRecorderList() const;
 
 
-    virtual void record(const Data &) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
+private:
+    QHash<KPluginInfo, AbstractRecorder*> m_recorderPlugins;
+
+
+    void loadPluginList();
+
+
+private slots:
 
 
 signals:
-    void status(const QString &text);
-    void finished(const AbstractRecorder::ExitStatus &status);
-    void error(const QString &text);
 
 
 };
 
 
-#endif // ABSTRACTRECORDER_H
+#endif // RECORDITNOWPLUGINMANAGER_H

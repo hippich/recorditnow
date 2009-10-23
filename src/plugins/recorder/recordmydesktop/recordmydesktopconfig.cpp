@@ -17,58 +17,42 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTRECORDER_H
-#define ABSTRACTRECORDER_H
 
+// own
+#include "recordmydesktopconfig.h"
+#include <recordmydesktop.h>
 
 // KDE
-#include <kdemacros.h>
-#include <ksharedconfig.h>
-
-// Qt
-#include <QtCore/QObject>
-#include <QtCore/QRect>
-#include <QtCore/QVariantList>
+#include <kpluginfactory.h>
+#include <kaboutdata.h>
 
 
-struct Data {
-public:
-    QString outputFile;
-    QRect geometry;
-    qlonglong winId;
-    int fps;
-    bool sound;
-};
-
-
-class KDE_EXPORT AbstractRecorder : public QObject
+K_PLUGIN_FACTORY(ConfigFactory, registerPlugin<RecordMyDesktopConfig>();)
+K_EXPORT_PLUGIN(ConfigFactory("recorditnow_recordmydesktop_config"))
+RecordMyDesktopConfig::RecordMyDesktopConfig(QWidget *parent, const QVariantList &args)
+    : KCModule( ConfigFactory::componentData(), parent, args)
 {
-    Q_OBJECT
+
+    KAboutData *about = new KAboutData("RecordMyDesktopConfig",
+                                       0,
+                                       ki18n("RecordMyDesktop Configuration"),
+                                       KDE_VERSION_STRING,
+                                       KLocalizedString(),
+                                       KAboutData::License_GPL,
+                                       ki18n( "Copyright 2009 Kai Dombrowe" ) );
+    setAboutData(about);
 
 
-public:
-    enum ExitStatus {
-        Normal = 0,
-        Crash = 1
-    };
-    AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractRecorder();
+    ui_cfg.setupUi(this);
+    addConfig(Settings::self(), this);
 
-    virtual bool canRecordSound() const = 0;
+}
 
 
-    virtual void record(const Data &) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
+RecordMyDesktopConfig::~RecordMyDesktopConfig()
+{
 
 
-signals:
-    void status(const QString &text);
-    void finished(const AbstractRecorder::ExitStatus &status);
-    void error(const QString &text);
+}
 
 
-};
-
-
-#endif // ABSTRACTRECORDER_H
