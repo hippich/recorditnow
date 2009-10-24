@@ -46,6 +46,7 @@
 #include <kmenu.h>
 #include <krun.h>
 #include <kmimetype.h>
+#include <kapplication.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -70,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(backendChanged(QString)));
+    connect(kapp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
 
     m_box = new FrameBox(this);
     m_recorderPlugin = 0;
@@ -93,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 
+    kDebug() << "<<<<<<<<";
     Settings::self()->setCurrentBackend(backendCombo->currentText());
     Settings::self()->writeConfig();
 
@@ -686,6 +689,15 @@ void MainWindow::backendChanged(const QString &newBackend)
 }
 
 
+void MainWindow::aboutToQuit()
+{
+
+    kDebug() << "quit...";
+    deleteLater(); // bug???
+
+}
+
+
 void MainWindow::hideEvent(QHideEvent *event)
 {
 
@@ -707,4 +719,20 @@ void MainWindow::showEvent(QShowEvent *event)
     }
 
 }
+
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+
+    if (m_tray) {
+        hide();
+        event->ignore();
+        return;
+    }
+    event->accept();
+    kapp->quit();
+
+}
+
+
 

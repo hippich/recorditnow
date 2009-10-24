@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
         if (args->count() == 0)
         {
-            //kcomedown *widget = new kcomedown;
             window->show();
         }
         else

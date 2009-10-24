@@ -94,12 +94,14 @@ private slots:
     void lcdDown();
     void trayActivated(const bool &active, const QPoint &pos);
     void backendChanged(const QString &newBackend);
+    void aboutToQuit();
 
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
+    void closeEvent(QCloseEvent *event);
 
 
 };
