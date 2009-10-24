@@ -59,7 +59,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     setupActions();
-    menuBar()->hide();
 
     QWidget *toolWidget = new QWidget;
     setupUi(toolWidget);
@@ -82,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
 
     setupGUI();
+    setMenuBar(0);
     setState(Idle);
 
     m_pluginManager = new RecordItNowPluginManager(this);
@@ -95,7 +95,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 
-    kDebug() << "<<<<<<<<";
     Settings::self()->setCurrentBackend(backendCombo->currentText());
     Settings::self()->writeConfig();
 
