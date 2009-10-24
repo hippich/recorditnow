@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=Screenshot
 Comment=Screenshot Plugin
-Icon=
+Icon=image-x-generic
 Type=Service                                                                               
 X-KDE-ServiceTypes=RecordItNowRecorder                                                      
 X-KDE-Library=recorditnow_screenshot

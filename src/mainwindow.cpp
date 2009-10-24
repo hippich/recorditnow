@@ -570,6 +570,7 @@ void MainWindow::configure()
 
     connect(dialog, SIGNAL(finished(int)), this, SLOT(saveConfig(int)));
 
+    dialog->resize(dialog->width(), 300);
     dialog->show();
 
 }
@@ -669,7 +670,6 @@ void MainWindow::backendChanged(const QString &newBackend)
         m_currentFeatures[AbstractRecorder::Fps] = false;
         m_currentFeatures[AbstractRecorder::Pause] = false;
         m_currentFeatures[AbstractRecorder::Stop] = false;
-
     } else {
         m_currentFeatures[AbstractRecorder::Sound] = recorder->hasFeature(AbstractRecorder::Sound);
         m_currentFeatures[AbstractRecorder::Fps] = recorder->hasFeature(AbstractRecorder::Fps);
@@ -678,7 +678,6 @@ void MainWindow::backendChanged(const QString &newBackend)
 
         m_pluginManager->unloadRecorderPlugin(recorder);
     }
-
     setState(Idle); // update actions/widgets
 
 }
