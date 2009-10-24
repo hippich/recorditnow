@@ -12,7 +12,7 @@ set(confg_SRCS
 
 kde4_add_kcfg_files(SRCS screenshot.kcfgc)
 kde4_add_plugin(recorditnow_screenshot ${SRCS})
-target_link_libraries(recorditnow_screenshot ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} kio recorditnow_recorder)
+target_link_libraries(recorditnow_screenshot ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${X11_Xfixes_LIB} ${X11_LIBRARIES} kio recorditnow_recorder)
 install(TARGETS recorditnow_screenshot DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES recorditnow_screenshot.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 

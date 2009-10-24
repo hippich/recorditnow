@@ -61,14 +61,14 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar()->hide();
 
     QWidget *toolWidget = new QWidget;
-    ui_toolBarWidget.setupUi(toolWidget);
+    setupUi(toolWidget);
     setCentralWidget(toolWidget);
 
-    ui_toolBarWidget.timeUpButton->setIcon(KIcon("arrow-up"));
-    ui_toolBarWidget.timeDownButton->setIcon(KIcon("arrow-down"));
-    connect(ui_toolBarWidget.timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
-    connect(ui_toolBarWidget.timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
-    connect(ui_toolBarWidget.backendCombo, SIGNAL(currentIndexChanged(QString)), this,
+    timeUpButton->setIcon(KIcon("arrow-up"));
+    timeDownButton->setIcon(KIcon("arrow-down"));
+    connect(timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
+    connect(timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
+    connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(backendChanged(QString)));
 
     m_box = new FrameBox(this);
@@ -85,11 +85,16 @@ MainWindow::MainWindow(QWidget *parent)
     m_pluginManager = new RecordItNowPluginManager(this);
     updateRecorderCombo();
 
+    backendCombo->setCurrentItem(Settings::currentBackend(), false);
+
 }
 
 
 MainWindow::~MainWindow()
 {
+
+    Settings::self()->setCurrentBackend(backendCombo->currentText());
+    Settings::self()->writeConfig();
 
     if (m_grabber) {
         delete m_grabber;
@@ -358,21 +363,21 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
         m_box->setEnabled(false);
     }
 
-    QString path = ui_toolBarWidget.outputRequester->text();
+    QString path = outputRequester->text();
     path.replace("~/", QDir::homePath()+'/');
 
     d->geometry = QRect(-1, -1, -1, -1);
     d->winId = -1;
 
-    d->fps = ui_toolBarWidget.fpsSpinBox->value();
-    d->sound = ui_toolBarWidget.soundCheck->isChecked();
+    d->fps = fpsSpinBox->value();
+    d->sound = soundCheck->isChecked();
     d->outputFile = path;
 
     if (m_recorderPlugin) {
         m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
     }
 
-    const QString name = ui_toolBarWidget.backendCombo->currentText();
+    const QString name = backendCombo->currentText();
     m_recorderPlugin = m_pluginManager->loadRecorderPlugin(name);
     if (!m_recorderPlugin) {
         KMessageBox::sorry(this, i18n("Cannot load Recorder %1", name));
@@ -416,13 +421,11 @@ void MainWindow::setupTray()
             context->addAction(actionCollection()->action("recordFullScreen"));
 
             m_tray->setContextMenu(context);
-            setAttribute(Qt::WA_DeleteOnClose, false);
         }
     } else {
         if (m_tray) {
             delete m_tray;
             m_tray = 0;
-            setAttribute(Qt::WA_DeleteOnClose, true);
         }
     }
 
@@ -454,7 +457,7 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("box")->setEnabled(true);
             actionCollection()->action("box")->setChecked(m_box->isEnabled());
             actionCollection()->action("options_configure")->setEnabled(true);
-            ui_toolBarWidget.backendCombo->setEnabled(true);
+            backendCombo->setEnabled(true);
             break;
         }
     case Recording: {
@@ -467,7 +470,7 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("recordFullScreen")->setEnabled(false);
             actionCollection()->action("box")->setEnabled(false);
             actionCollection()->action("options_configure")->setEnabled(false);
-            ui_toolBarWidget.backendCombo->setEnabled(false);
+            backendCombo->setEnabled(false);
             break;
         }
     case Paused: {
@@ -481,12 +484,12 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("recordFullScreen")->setEnabled(false);
             actionCollection()->action("box")->setEnabled(false);
             actionCollection()->action("options_configure")->setEnabled(false);
-            ui_toolBarWidget.backendCombo->setEnabled(false);
+            backendCombo->setEnabled(false);
             break;
         }
     }
-    ui_toolBarWidget.fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
-    ui_toolBarWidget.soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
+    fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
+    soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
 
     m_state = newState;
 
@@ -531,7 +534,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
     }
 
     if (Settings::showVideo()) {
-        KUrl url(ui_toolBarWidget.outputRequester->text());
+        KUrl url(outputRequester->text());
 
         if (!QFile(url.path()).exists()) {
             const QStringList files = QDir(url.directory()).entryList(QStringList() << url.fileName()+".*");
@@ -593,10 +596,10 @@ void MainWindow::saveConfig(int code)
 void MainWindow::updateRecorderCombo()
 {
 
-    ui_toolBarWidget.backendCombo->clear();
+    backendCombo->clear();
     foreach (const KPluginInfo &info, m_pluginManager->getRecorderList()) {
         if (info.isPluginEnabled()) {
-            ui_toolBarWidget.backendCombo->addItem(info.name());
+            backendCombo->addItem(info.name());
         }
     }
 
@@ -606,7 +609,7 @@ void MainWindow::updateRecorderCombo()
 void MainWindow::startTimer()
 {
 
-    if (ui_toolBarWidget.timerLcd->value() == 0) {
+    if (timerLcd->value() == 0) {
         m_timer->start(0);
     } else {
         m_timer->start(1000);
@@ -618,7 +621,7 @@ void MainWindow::startTimer()
 void MainWindow::tick()
 {
 
-    if (ui_toolBarWidget.timerLcd->value() < 2) {
+    if (timerLcd->value() < 2) {
         m_timer->stop();
         startRecord();
     }
@@ -630,10 +633,10 @@ void MainWindow::tick()
 void MainWindow::lcdUp()
 {
 
-    if (ui_toolBarWidget.timerLcd->value() == 60) {
+    if (timerLcd->value() == 60) {
         return;
     }
-    ui_toolBarWidget.timerLcd->display(ui_toolBarWidget.timerLcd->value()+1);
+    timerLcd->display(timerLcd->value()+1);
 
 }
 
@@ -641,10 +644,10 @@ void MainWindow::lcdUp()
 void MainWindow::lcdDown()
 {
 
-    if (ui_toolBarWidget.timerLcd->value() == 0) {
+    if (timerLcd->value() == 0) {
         return;
     }
-    ui_toolBarWidget.timerLcd->display(ui_toolBarWidget.timerLcd->value()-1);
+    timerLcd->display(timerLcd->value()-1);
 
 }
 

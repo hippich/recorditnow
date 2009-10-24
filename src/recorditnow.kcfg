@@ -18,4 +18,10 @@
             <default>true</default>
     </entry>
   </group>
+  <group name="GUI">
+    <entry name="currentBackend" type="String">
+            <label></label>
+            <default>RecordMyDesktop</default>
+    </entry>
+  </group>
 </kcfg>

@@ -29,11 +29,11 @@
 // KDE
 #include <kxmlguiwindow.h>
 
-
+class Settings;
 class RecordItNowPluginManager;
 class KNotificationItem;
 class FrameBox;
-class MainWindow : public KXmlGuiWindow
+class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
     Q_OBJECT
 
@@ -50,7 +50,6 @@ public:
 
 private:
     QWidget *m_grabber;
-    Ui::ToolBarWidget ui_toolBarWidget;
     Ui::Settings ui_settings;
     Ui::RecorderPlugins ui_recorder;
     FrameBox *m_box;

@@ -13,6 +13,10 @@
 #include <QtGui/QPixmap>
 #include <QtGui/QX11Info>
 #include <QtCore/QFile>
+#include <QtGui/QPainter>
+
+// X
+#include <X11/extensions/Xfixes.h>
 
 
 static const char format[][7] = { "PNG", "JPG", "BMP", "PPM", "TIFF", "XBM", "XPM"};
@@ -67,7 +71,6 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     const qlonglong window = d.winId != -1 ? d.winId : QX11Info::appRootWindow();
 
     QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h);
-
 
     QFile outFile(d.outputFile);
     if (outFile.exists()) {
