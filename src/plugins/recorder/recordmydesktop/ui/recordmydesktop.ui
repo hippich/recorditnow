@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
+    <width>430</width>
     <height>262</height>
    </rect>
   </property>
@@ -329,7 +329,7 @@
             <item row="0" column="0">
              <widget class="QCheckBox" name="kcfg___overwrite">
               <property name="text">
-               <string>If there is already a file with the same name, delete it (default is to add a number postfix to the new one).</string>
+               <string>If there is already a file with the same name, delete it.</string>
               </property>
              </widget>
             </item>
