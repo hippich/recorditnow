@@ -625,7 +625,7 @@ void MainWindow::startTimer()
 void MainWindow::tick()
 {
 
-    if (timerLcd->value() < 2) {
+    if (timerLcd->value() < 1) {
         m_timer->stop();
         startRecord();
     }
