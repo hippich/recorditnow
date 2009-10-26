@@ -59,6 +59,8 @@ bool ScreenshotRecorder::hasFeature(const AbstractRecorder::Feature &feature) co
 void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 {
 
+    emit status(i18n("Cheese!"));
+
     // reload cfg
     Settings::self()->readConfig();
 
