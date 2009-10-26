@@ -24,6 +24,7 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
+#include <kdebug.h>
 
 
 int main(int argc, char *argv[])
@@ -42,35 +43,68 @@ int main(int argc, char *argv[])
     about.setProgramIconName("video-display");
 
     KCmdLineArgs::init(argc, argv, &about);
+
     KCmdLineOptions options;
+    options.add("x <offset>", ki18n("Offset in x direction."));
+    options.add("y <offset>", ki18n("Offset in y direction."));
+    options.add("width <width>", ki18n("Width of recorded window."));
+    options.add("height <height>", ki18n("Height of recorded window."));
+    options.add("backend <backend>", ki18n("The Backend to use. (Example: RecordMyDesktop/Screenshot)"));
+    options.add("timer <time>", ki18n("Wait \"time\" seconds."));
+    options.add("o filename", ki18n("Name of recorded video/image."));
     KCmdLineArgs::addCmdLineOptions(options);
 
     KApplication app;
 
     MainWindow *window = new MainWindow;
 
-    // see if we are starting with session management
-    if (app.isSessionRestored())
-    {
+    if (app.isSessionRestored()) { // see if we are starting with session management
         RESTORE(MainWindow);
-    }
-    else
-    {
-        // no session.. just start up normally
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-        if (args->count() == 0)
-        {
-            window->show();
+    } else { // no session.. just start up normally
+        KCmdLineArgs *parsed = KCmdLineArgs::parsedArgs();
+
+        bool hasArgs = false;
+        QRect geometry = QRect(0, 0, 100, 100);
+        QString backend;
+        QString file;
+        int time = 0;
+
+
+        if (parsed->isSet("x")) {
+            hasArgs = true;
+            geometry.setX(parsed->getOption("x").toInt());
         }
-        else
-        {
-            int i = 0;
-            for (; i < args->count(); i++)
-            {
-                window->show();
-            }
+        if (parsed->isSet("y")) {
+            hasArgs = true;
+            geometry.setY(parsed->getOption("y").toInt());
         }
-        args->clear();
+        if (parsed->isSet("width")) {
+            hasArgs = true;
+            geometry.setWidth(parsed->getOption("width").toInt());
+        }
+        if (parsed->isSet("height")) {
+            hasArgs = true;
+            geometry.setHeight(parsed->getOption("height").toInt());
+        }
+        if (parsed->isSet("backend")) {
+            hasArgs = true;
+            backend = parsed->getOption("backend");
+        }
+        if (parsed->isSet("timer")) {
+            hasArgs = true;
+            time = parsed->getOption("timer").toInt();
+        }
+        if (parsed->isSet("o")) {
+            hasArgs = true;
+            file = parsed->getOption("o");
+        }
+
+        window->show();
+        parsed->clear();
+
+        if (hasArgs) {
+            window->startWithArgs(backend, file, time, geometry);
+        }
     }
 
     return app.exec();

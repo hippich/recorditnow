@@ -47,6 +47,9 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void startWithArgs(const QString &backend, const QString &file, const int &time,
+                       const QRect &geometry);
+
 
 private:
     QWidget *m_grabber;

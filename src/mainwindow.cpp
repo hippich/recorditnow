@@ -116,6 +116,30 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::startWithArgs(const QString &backend, const QString &file, const int &time,
+                               const QRect &geometry)
+{
+
+    if (!backend.isEmpty() && !backendCombo->contains(backend)) {
+        kWarning() << "Backend:" << backend << "not found...";
+    } else if (!backend.isEmpty()) {
+        backendCombo->setCurrentItem(backend, false);
+    }
+
+    if (!file.isEmpty()) {
+        outputRequester->setText(file);
+    }
+
+    initRecorder(&m_recordData);
+    m_recordData.geometry = geometry;
+
+    timerLcd->display(time);
+
+    startTimer();
+
+}
+
+
 void MainWindow::setupActions()
 {
 
