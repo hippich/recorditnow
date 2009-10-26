@@ -410,6 +410,8 @@ void MainWindow::setupTray()
             m_tray = new KNotificationItem(this);
             m_tray->setIconByName("video-display");
             m_tray->setStatus(KNotificationItem::Active);
+            m_tray->setCategory(KNotificationItem::ApplicationStatus);
+
             connect(m_tray, SIGNAL(activateRequested(bool,QPoint)), this,
                     SLOT(trayActivated(bool,QPoint)));
 
