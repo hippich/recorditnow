@@ -415,6 +415,8 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
             SLOT(recorderFinished(AbstractRecorder::ExitStatus)));
     connect(m_recorderPlugin, SIGNAL(status(QString)), this, SLOT(recorderStatus(QString)));
 
+    recorderStatus("");
+
     if (Settings::hideOnRecord()) {
         if (Settings::tray()) {
             close();
