@@ -634,11 +634,15 @@ void MainWindow::saveConfig(int code)
 void MainWindow::updateRecorderCombo()
 {
 
+    const QString oldBackend = backendCombo->currentText();
     backendCombo->clear();
     foreach (const KPluginInfo &info, m_pluginManager->getRecorderList()) {
         if (info.isPluginEnabled()) {
             backendCombo->addItem(KIcon(info.icon()), info.name());
         }
+    }
+    if (backendCombo->contains(oldBackend)) {
+        backendCombo->setCurrentItem(oldBackend, false);
     }
 
 }
@@ -740,7 +744,6 @@ void MainWindow::pluginsChanged()
 
     // recorder
     updateRecorderCombo();
-    backendCombo->setCurrentItem(Settings::currentBackend(), false);
 
 }
 
