@@ -56,6 +56,15 @@ bool ScreenshotRecorder::hasFeature(const AbstractRecorder::Feature &feature) co
 }
 
 
+QString ScreenshotRecorder::getDefaultOutputFile() const
+{
+
+    Settings::self()->readConfig();
+    return QString("~/screenshot.")+QString(format[Settings::format()]).toLower();
+
+}
+
+
 void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 {
 

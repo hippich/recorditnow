@@ -75,6 +75,14 @@ bool RecordMyDesktopRecorder::hasFeature(const AbstractRecorder::Feature &featur
 }
 
 
+QString RecordMyDesktopRecorder::getDefaultOutputFile() const
+{
+
+    return "~/desktop_video.ogv";
+
+}
+
+
 void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 {
 

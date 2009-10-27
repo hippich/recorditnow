@@ -36,6 +36,7 @@ public:
     ~ScreenshotRecorder();
 
     bool hasFeature(const AbstractRecorder::Feature &feature) const;
+    virtual QString getDefaultOutputFile() const;
 
     void record(const AbstractRecorder::Data &d);
     void pause();

@@ -62,6 +62,7 @@ public:
     ~AbstractRecorder();
 
     virtual bool hasFeature(const AbstractRecorder::Feature &) const { return false; };
+    virtual QString getDefaultOutputFile() const = 0;
 
     virtual void record(const AbstractRecorder::Data &) = 0;
     virtual void pause() = 0;

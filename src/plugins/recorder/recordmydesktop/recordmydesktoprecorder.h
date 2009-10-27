@@ -39,6 +39,7 @@ public:
     ~RecordMyDesktopRecorder();
 
     bool hasFeature(const AbstractRecorder::Feature &feature) const;
+    QString getDefaultOutputFile() const;
 
     void record(const AbstractRecorder::Data &d);
     void pause();

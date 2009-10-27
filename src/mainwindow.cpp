@@ -703,11 +703,13 @@ void MainWindow::backendChanged(const QString &newBackend)
         m_currentFeatures[AbstractRecorder::Fps] = false;
         m_currentFeatures[AbstractRecorder::Pause] = false;
         m_currentFeatures[AbstractRecorder::Stop] = false;
+        outputRequester->setText("");
     } else {
         m_currentFeatures[AbstractRecorder::Sound] = recorder->hasFeature(AbstractRecorder::Sound);
         m_currentFeatures[AbstractRecorder::Fps] = recorder->hasFeature(AbstractRecorder::Fps);
         m_currentFeatures[AbstractRecorder::Pause] = recorder->hasFeature(AbstractRecorder::Pause);
         m_currentFeatures[AbstractRecorder::Stop] = recorder->hasFeature(AbstractRecorder::Stop);
+        outputRequester->setText(recorder->getDefaultOutputFile());
 
         m_pluginManager->unloadRecorderPlugin(recorder);
     }
