@@ -629,7 +629,7 @@ void MainWindow::updateRecorderCombo()
     backendCombo->clear();
     foreach (const KPluginInfo &info, m_pluginManager->getRecorderList()) {
         if (info.isPluginEnabled()) {
-            backendCombo->addItem(info.name());
+            backendCombo->addItem(KIcon(info.icon()), info.name());
         }
     }
 
