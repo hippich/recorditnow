@@ -38,6 +38,8 @@ public:
     RecordItNowPluginManager(QObject *parent = 0);
     ~RecordItNowPluginManager();
 
+    void init();
+
     AbstractRecorder *loadRecorderPlugin(const KPluginInfo &info);
     AbstractRecorder *loadRecorderPlugin(const QString &name);
     void unloadRecorderPlugin(const KPluginInfo &info);
@@ -48,14 +50,16 @@ public:
 private:
     QHash<KPluginInfo, AbstractRecorder*> m_recorderPlugins;
 
-
+    void clear();
     void loadPluginList();
 
 
 private slots:
+    void ksycocaDatabaseChanged(const QStringList &changed);
 
 
 signals:
+    void pluginsChanged();
 
 
 };

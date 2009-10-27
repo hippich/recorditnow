@@ -86,7 +86,8 @@ MainWindow::MainWindow(QWidget *parent)
     setState(Idle);
 
     m_pluginManager = new RecordItNowPluginManager(this);
-    updateRecorderCombo();
+    connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
+    m_pluginManager->init();
 
     backendCombo->setCurrentItem(Settings::currentBackend(), false);
     soundCheck->setChecked(Settings::soundEnabled());
@@ -730,6 +731,16 @@ void MainWindow::aboutToQuit()
 
     kDebug() << "quit...";
     deleteLater(); // bug???
+
+}
+
+
+void MainWindow::pluginsChanged()
+{
+
+    // recorder
+    updateRecorderCombo();
+    backendCombo->setCurrentItem(Settings::currentBackend(), false);
 
 }
 

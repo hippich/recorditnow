@@ -28,14 +28,15 @@
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-
+#include <ksycoca.h>
 
 
 RecordItNowPluginManager::RecordItNowPluginManager(QObject *parent)
     : QObject(parent)
 {
 
-    loadPluginList();
+    connect(KSycoca::self(), SIGNAL(databaseChanged(QStringList)), this,
+            SLOT(ksycocaDatabaseChanged(QStringList)));
 
 }
 
@@ -43,13 +44,15 @@ RecordItNowPluginManager::RecordItNowPluginManager(QObject *parent)
 RecordItNowPluginManager::~RecordItNowPluginManager()
 {
 
-    QHashIterator<KPluginInfo, AbstractRecorder*> it(m_recorderPlugins);
-    while (it.hasNext()) {
-        it.next();
-        if (it.value()) {
-            delete it.value();
-        }
-    }
+    clear();
+
+}
+
+
+void RecordItNowPluginManager::init()
+{
+
+    loadPluginList();
 
 }
 
@@ -138,14 +141,31 @@ QList<KPluginInfo> RecordItNowPluginManager::getRecorderList() const
 }
 
 
+void RecordItNowPluginManager::clear()
+{
+
+    // recorder plugins
+    QHashIterator<KPluginInfo, AbstractRecorder*> it(m_recorderPlugins);
+    while (it.hasNext()) {
+        it.next();
+        if (it.value()) {
+            delete it.value();
+        }
+    }
+    m_recorderPlugins.clear();
+
+}
+
+
 void RecordItNowPluginManager::loadPluginList()
 {
 
+    clear();
+
     kDebug() << "load plugin list..";
 
+
     KConfig cfg("recorditnowrc");
-
-
     kDebug() << ">>> RecordItNowRecorder";
 
     KConfigGroup recorderCfg(&cfg, "Plugins");
@@ -166,5 +186,27 @@ void RecordItNowPluginManager::loadPluginList()
         }
     }
     kDebug() << ">>> RecordItNowRecorder finished!";
+    kDebug() << ">>> found" << m_recorderPlugins.size() << "recorder!";
+
+    if (m_recorderPlugins.isEmpty()) {
+        printf("*********************************\n");
+        printf("Please run \"kbuildsycoca4\".\n");
+        printf("*********************************\n");
+    }
+
+    emit pluginsChanged();
 
 }
+
+
+void RecordItNowPluginManager::ksycocaDatabaseChanged(const QStringList &changed)
+{
+
+    kDebug() << "database changed:"<< changed;
+    if (changed.contains("services")) {
+        loadPluginList();
+    }
+
+}
+
+

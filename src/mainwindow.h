@@ -77,20 +77,16 @@ private slots:
     void startRecord();
     void pauseRecord();
     void stopRecord();
-
     void recordTriggred();
     void recordWindow();
     void recordCurrentWindow();
     void boxWindow();
     void recordFullScreen();
-
     void recorderStatus(const QString &text);
     void recorderError(const QString &error);
     void recorderFinished(const AbstractRecorder::ExitStatus &status);
-
     void configure();
     void saveConfig(int code);
-
     void startTimer();
     void tick();
     void lcdUp();
@@ -98,6 +94,7 @@ private slots:
     void trayActivated(const bool &active, const QPoint &pos);
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
+    void pluginsChanged();
 
 
 protected:
