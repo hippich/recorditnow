@@ -114,7 +114,7 @@
          <item>
           <widget class="QCheckBox" name="soundCheck">
            <property name="text">
-            <string>Sound</string>
+            <string/>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -142,6 +142,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

@@ -66,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     timeUpButton->setIcon(KIcon("arrow-up"));
     timeDownButton->setIcon(KIcon("arrow-down"));
+    soundCheck->setIcon(KIcon("preferences-desktop-sound"));
+
     connect(timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
     connect(timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
