@@ -77,13 +77,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_box = new FrameBox(this);
     m_recorderPlugin = 0;
     m_tray = 0;
-    setupTray();
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
-
-    setMenuBar(0);
-    setState(Idle);
 
     m_pluginManager = new RecordItNowPluginManager(this);
     connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
@@ -93,7 +89,10 @@ MainWindow::MainWindow(QWidget *parent)
     soundCheck->setChecked(Settings::soundEnabled());
     fpsSpinBox->setValue(Settings::currentFps());
 
+    setupTray();
     setupGUI();
+    setMenuBar(0);
+    setState(Idle);
 
 }
 
