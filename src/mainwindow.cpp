@@ -82,7 +82,6 @@ MainWindow::MainWindow(QWidget *parent)
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
 
-    setupGUI();
     setMenuBar(0);
     setState(Idle);
 
@@ -90,6 +89,10 @@ MainWindow::MainWindow(QWidget *parent)
     updateRecorderCombo();
 
     backendCombo->setCurrentItem(Settings::currentBackend(), false);
+    soundCheck->setChecked(Settings::soundEnabled());
+    fpsSpinBox->setValue(Settings::currentFps());
+
+    setupGUI();
 
 }
 
@@ -98,6 +101,8 @@ MainWindow::~MainWindow()
 {
 
     Settings::self()->setCurrentBackend(backendCombo->currentText());
+    Settings::self()->setSoundEnabled(soundCheck->isChecked());
+    Settings::self()->setCurrentFps(fpsSpinBox->value());
     Settings::self()->writeConfig();
 
     if (m_grabber) {

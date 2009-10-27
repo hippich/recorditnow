@@ -20,8 +20,13 @@
   </group>
   <group name="GUI">
     <entry name="currentBackend" type="String">
-            <label></label>
             <default>RecordMyDesktop</default>
+    </entry>
+    <entry name="soundEnabled" type="Bool">
+            <default>true</default>
+    </entry>
+    <entry name="currentFps" type="Int">
+            <default>15</default>
     </entry>
   </group>
 </kcfg>
