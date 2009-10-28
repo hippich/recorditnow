@@ -54,10 +54,6 @@ private:
     void loadPluginList();
 
 
-private slots:
-    void ksycocaDatabaseChanged(const QStringList &changed);
-
-
 signals:
     void pluginsChanged();
 

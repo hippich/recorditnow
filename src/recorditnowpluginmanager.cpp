@@ -35,8 +35,6 @@ RecordItNowPluginManager::RecordItNowPluginManager(QObject *parent)
     : QObject(parent)
 {
 
-    connect(KSycoca::self(), SIGNAL(databaseChanged(QStringList)), this,
-            SLOT(ksycocaDatabaseChanged(QStringList)));
 
 }
 
@@ -195,17 +193,6 @@ void RecordItNowPluginManager::loadPluginList()
     }
 
     emit pluginsChanged();
-
-}
-
-
-void RecordItNowPluginManager::ksycocaDatabaseChanged(const QStringList &changed)
-{
-
-    kDebug() << "database changed:"<< changed;
-    if (changed.contains("services")) {
-        loadPluginList();
-    }
 
 }
 

@@ -114,7 +114,7 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
         args << QString("-width") << QString::number(d.geometry.width());
         args << QString("-height") << QString::number(d.geometry.height());
     }
-    args << "-fps" << QString::number(d.fps);
+    args << "--fps" << QString::number(d.fps);
 
     // recordmydesktop cfg
     Settings::self()->readConfig(); // cfg changed?

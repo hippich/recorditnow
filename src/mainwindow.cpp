@@ -83,7 +83,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_pluginManager = new RecordItNowPluginManager(this);
     connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
-    m_pluginManager->init();
 
     backendCombo->setCurrentItem(Settings::currentBackend(), false);
     soundCheck->setChecked(Settings::soundEnabled());
@@ -93,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupGUI();
     setMenuBar(0);
     setState(Idle);
+    m_pluginManager->init();
 
 }
 
@@ -230,7 +230,6 @@ void MainWindow::stopRecord()
     if (m_recorderPlugin) {
         m_recorderPlugin->stop();
     }
-    setState(Idle);
 
 }
 
@@ -356,7 +355,6 @@ void MainWindow::boxWindow()
 void MainWindow::recordFullScreen()
 {
 
-    kDebug() << "record fullscreen";
     initRecorder(&m_recordData);
     m_recordData.geometry = QApplication::desktop()->screenGeometry();
     startTimer();
@@ -494,7 +492,9 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("box")->setEnabled(true);
             actionCollection()->action("box")->setChecked(m_box->isEnabled());
             actionCollection()->action("options_configure")->setEnabled(true);
-            backendCombo->setEnabled(true);
+            fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
+            soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
+            centralWidget()->setEnabled(true);
             break;
         }
     case Recording: {
@@ -507,7 +507,7 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("recordFullScreen")->setEnabled(false);
             actionCollection()->action("box")->setEnabled(false);
             actionCollection()->action("options_configure")->setEnabled(false);
-            backendCombo->setEnabled(false);
+            centralWidget()->setEnabled(false);
             break;
         }
     case Paused: {
@@ -521,13 +521,10 @@ void MainWindow::setState(const State &newState)
             actionCollection()->action("recordFullScreen")->setEnabled(false);
             actionCollection()->action("box")->setEnabled(false);
             actionCollection()->action("options_configure")->setEnabled(false);
-            backendCombo->setEnabled(false);
+            centralWidget()->setEnabled(false);
             break;
         }
     }
-    fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
-    soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
-
     m_state = newState;
 
 }
@@ -741,6 +738,9 @@ void MainWindow::aboutToQuit()
 void MainWindow::pluginsChanged()
 {
 
+    if (state() != Idle) {
+        return; // play save
+    }
     // recorder
     updateRecorderCombo();
 
