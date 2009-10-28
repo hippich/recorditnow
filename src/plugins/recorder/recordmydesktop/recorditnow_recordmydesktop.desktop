@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
 Name=RecordMyDesktop
-Comment=RecordMyDesktop recorder
+Comment=RecordMyDesktop Plugin
 Icon=media-record
 Type=Service                                                                               
 X-KDE-ServiceTypes=RecordItNowRecorder                                                      
