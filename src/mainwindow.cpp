@@ -178,7 +178,7 @@ void MainWindow::setupActions()
     boxAction->setText(i18n("Show Frame"));
     boxAction->setIcon(KIcon("draw-rectangle"));
     boxAction->setCheckable(true);
-    connect(boxAction, SIGNAL(triggered()), this, SLOT(boxWindow()));
+    connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
 
     QAction *fullAction = new QAction(this);
     fullAction->setText(i18n("Record the entire Screen"));
@@ -343,11 +343,16 @@ void MainWindow::recordCurrentWindow()
 }
 
 
-void MainWindow::boxWindow()
+void MainWindow::triggerFrame(const bool &checked)
 {
 
-    m_box->setEnabled(!m_box->isEnabled());
-    actionCollection()->action("box")->setChecked(m_box->isEnabled());
+    if (!isVisible() && !checked) {
+        m_box->setEnabled(false);
+    } else if (!isVisible() && checked) {
+        m_box->setEnabled(false);
+    } else {
+        m_box->setEnabled(!m_box->isEnabled());
+    }
 
 }
 
@@ -752,7 +757,7 @@ void MainWindow::hideEvent(QHideEvent *event)
 
     KXmlGuiWindow::hideEvent(event);
     if (m_box->isEnabled()) {
-        boxWindow();
+        triggerFrame(false);
         actionCollection()->action("box")->setChecked(true);
     }
 
@@ -764,7 +769,7 @@ void MainWindow::showEvent(QShowEvent *event)
 
     KXmlGuiWindow::showEvent(event);
     if (actionCollection()->action("box")->isChecked()) {
-        boxWindow();
+        triggerFrame(true);
     }
 
 }

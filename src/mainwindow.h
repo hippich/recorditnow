@@ -80,7 +80,7 @@ private slots:
     void recordTriggred();
     void recordWindow();
     void recordCurrentWindow();
-    void boxWindow();
+    void triggerFrame(const bool &checked);
     void recordFullScreen();
     void recorderStatus(const QString &text);
     void recorderError(const QString &error);
