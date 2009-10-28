@@ -1,0 +1,9 @@
+
+# install recordmydesktop + KDE
+# build RecordItNow
+
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` -DCMAKE_BUILD_TYPE=debugfull ../ # or -DCMAKE_BUILD_TYPE=release
+make install # as root (sudo/su)
+kbuildsycoca4 # <---- important
