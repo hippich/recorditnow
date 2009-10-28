@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
 Name=RecordMyDesktop
-Comment=RecordMyDesktop Plugin
+Comment=RecordMyDesktop Plugin: http://recordmydesktop.sourceforge.net/about.php
 Icon=media-record
 Type=Service                                                                               
 X-KDE-ServiceTypes=RecordItNowRecorder                                                      
