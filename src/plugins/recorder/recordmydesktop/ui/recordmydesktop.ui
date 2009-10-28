@@ -218,16 +218,6 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="KIntSpinBox" name="kcfg___v_quality">
-              <property name="maximum">
-               <number>63</number>
-              </property>
-              <property name="value">
-               <number>63</number>
-              </property>
-             </widget>
-            </item>
             <item row="3" column="0">
              <widget class="QLabel" name="lab_3">
               <property name="text">
@@ -259,6 +249,16 @@
               </property>
               <property name="maximum">
                <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="KIntSpinBox" name="kcfg___v_quality">
+              <property name="maximum">
+               <number>63</number>
+              </property>
+              <property name="value">
+               <number>63</number>
               </property>
              </widget>
             </item>
