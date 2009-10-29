@@ -22,7 +22,7 @@ IF(NOT GETTEXT_MSGFMT_EXECUTABLE)
                  NOTE: msgfmt not found. Translations will *not* be installed
 ------")
 ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
-        SET(catalogname RecordItNow)
+        SET(catalogname recorditnow)
         ADD_CUSTOM_TARGET(translations ALL)
         FILE(GLOB PO_FILES po/${catalogname}*.po)
         FOREACH(_poFile ${PO_FILES})

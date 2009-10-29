@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-10-28 19:18+0100\n"
+"POT-Creation-Date: 2009-10-29 17:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,8 +20,7 @@ msgstr ""
 #. i18n: ectx: item, widget (QWidget, RecordMyDesktop)
 #: po/rc.cpp:4 rc.cpp:4
 msgid ""
-"Image</string>\n"
-"      </attribute>"
+"Image"
 msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:30
@@ -192,8 +191,7 @@ msgstr ""
 #. i18n: ectx: item, widget (QWidget, Screenshot)
 #: po/rc.cpp:87 rc.cpp:87
 msgid ""
-"Format</string>\n"
-"       </property>"
+"Format"
 msgstr ""
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:30

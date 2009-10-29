@@ -1,6 +1,6 @@
 #!/bin/sh
 BASEDIR=".."   # root of translatable sources
-PROJECT="RecordItNow"  # project name
+PROJECT="recorditnow"  # project name
 BUGADDR="just89@gmx.de"      # MSGID-Bugs
 WDIR=`pwd`          # working dir
  
