@@ -1,8 +1,12 @@
 [Desktop Entry]
-Encoding=UTF-8
+
+GenericName=Desktop recorder
+GenericName[de]=Desktop Recorder
+
 Name=RecordItNow
+Name[de]=RecordItNow
+
 Exec=recorditnow
 Icon=video-display
 Type=Application
 Categories=Qt;KDE;AudioVideo;
-comment=Desktop Recorder GUI
