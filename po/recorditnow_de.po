@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-10-29 22:03+0100\n"
-"PO-Revision-Date: 2009-10-29 22:04+0100\n"
+"PO-Revision-Date: 2009-10-29 22:07+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -401,7 +401,7 @@ msgstr "Den ganzen Bildschirm aufnehmen"
 
 #: src/mainwindow.cpp:241
 msgid "No screen area selected."
-msgstr "Kein Bildschirmareal ausgewählt."
+msgstr "Kein Bildschirmbereich ausgewählt."
 
 #: src/mainwindow.cpp:420
 msgid "Cannot load Recorder %1"
