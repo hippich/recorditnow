@@ -185,7 +185,7 @@
             <string>Output file</string>
            </property>
            <property name="text">
-            <string>~/desktop_vid</string>
+            <string/>
            </property>
           </widget>
          </item>

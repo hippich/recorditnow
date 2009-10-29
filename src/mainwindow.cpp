@@ -171,7 +171,7 @@ void MainWindow::setupActions()
 
     QAction *recordWindowAction = new QAction(this);
     recordWindowAction->setText(i18n("Record a Window"));
-    recordWindowAction->setIcon(KIcon("window-new")); // TODO
+    recordWindowAction->setIcon(KIcon("edit-select"));
     connect(recordWindowAction, SIGNAL(triggered()), this, SLOT(recordWindow()));
 
     QAction *boxAction = new QAction(this);
