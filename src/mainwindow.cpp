@@ -84,15 +84,15 @@ MainWindow::MainWindow(QWidget *parent)
     m_pluginManager = new RecordItNowPluginManager(this);
     connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
 
-    backendCombo->setCurrentItem(Settings::currentBackend(), false);
-    soundCheck->setChecked(Settings::soundEnabled());
-    fpsSpinBox->setValue(Settings::currentFps());
-
     setupTray();
     setupGUI();
     setMenuBar(0);
     setState(Idle);
     m_pluginManager->init();
+
+    backendCombo->setCurrentItem(Settings::currentBackend(), false);
+    soundCheck->setChecked(Settings::soundEnabled());
+    fpsSpinBox->setValue(Settings::currentFps());
 
 }
 
