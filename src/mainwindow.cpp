@@ -151,19 +151,19 @@ void MainWindow::setupActions()
 {
 
     QAction *recordAction = new QAction(this);
-    recordAction->setText("Record");
+    recordAction->setText(i18n("Record"));
     recordAction->setIcon(KIcon("media-record"));
     connect(recordAction, SIGNAL(triggered()), this, SLOT(recordTriggred()));
 
     QAction *pauseAction = new QAction(this);
     pauseAction->setObjectName("pause");
-    pauseAction->setText("Pause");
+    pauseAction->setText(i18n("Pause"));
     pauseAction->setIcon(KIcon("media-playback-pause"));
     pauseAction->setEnabled(false);
     connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseRecord()));
 
     QAction *stopAction = new QAction(this);
-    stopAction->setText("Stop");
+    stopAction->setText(i18n("Stop"));
     stopAction->setIcon(KIcon("media-playback-stop"));
     stopAction->setEnabled(false);
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopRecord()));

@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
                      0,
                      ki18n("RecordItNow"),
                      "0.1",
-                     ki18n("Desktop recorder GUI"),
+                     ki18n("Plugin based desktop recorder"),
                      KAboutData::License_GPL,
                      ki18n("(C) 2009 Kai Dombrowe"),
                      KLocalizedString(),

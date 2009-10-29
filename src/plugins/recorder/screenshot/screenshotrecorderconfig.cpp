@@ -39,7 +39,7 @@ ScreenshotRecorderConfig::ScreenshotRecorderConfig(QWidget *parent, const QVaria
                                        KDE_VERSION_STRING,
                                        KLocalizedString(),
                                        KAboutData::License_GPL,
-                                       ki18n( "Copyright 2009 Kai Dombrowe" ) );
+                                       ki18n("(C) 2009 Kai Dombrowe"));
     setAboutData(about);
 
     ui_cfg.setupUi(this);
