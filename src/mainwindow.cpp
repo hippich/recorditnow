@@ -411,6 +411,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
 
     if (m_recorderPlugin) {
         m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+        m_recorderPlugin = 0;
     }
 
     const QString name = backendCombo->currentText();
