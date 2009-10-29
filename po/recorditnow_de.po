@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-10-29 20:23+0100\n"
-"PO-Revision-Date: 2009-10-29 20:26+0100\n"
+"PO-Revision-Date: 2009-10-29 21:23+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -302,7 +302,7 @@ msgstr "Bilder in der Sekunde"
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
 #: po/rc.cpp:144 rc.cpp:144
 msgid " FPS"
-msgstr "FPS"
+msgstr " FPS"
 
 #. i18n: file: src/ui/toolbarwidget.ui:152
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
