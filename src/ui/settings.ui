@@ -44,7 +44,7 @@
    <item row="2" column="0">
     <widget class="QCheckBox" name="kcfg_showVideo">
      <property name="text">
-      <string>Show video after record</string>
+      <string>Show file after record</string>
      </property>
     </widget>
    </item>

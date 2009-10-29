@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-10-29 20:00+0100\n"
+"POT-Creation-Date: 2009-10-29 20:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,7 +261,7 @@ msgstr ""
 #. i18n: file: src/ui/settings.ui:47
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
 #: po/rc.cpp:121 rc.cpp:121
-msgid "Show video after record"
+msgid "Show file after record"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:42
