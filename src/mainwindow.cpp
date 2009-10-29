@@ -415,8 +415,12 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
 
     const QString name = backendCombo->currentText();
     m_recorderPlugin = m_pluginManager->loadRecorderPlugin(name);
-    if (!m_recorderPlugin) {
-        KMessageBox::sorry(this, i18n("Cannot load Recorder %1", name));
+    if (!m_recorderPlugin || d->outputFile.isEmpty()) {
+        if (!m_recorderPlugin) {
+            KMessageBox::sorry(this, i18n("Cannot load Recorder %1", name));
+        } else {
+            KMessageBox::sorry(this, i18n("No output file specified."));
+        }
         setState(Idle);
         return;
     }
@@ -556,8 +560,11 @@ void MainWindow::recorderError(const QString &error)
 
     KMessageBox::error(this, error);
     setState(Idle);
+
     m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
+
+    recorderStatus(i18n("Error: %1", error));
 
 }
 

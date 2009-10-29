@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-10-29 20:23+0100\n"
-"PO-Revision-Date: 2009-10-29 21:23+0100\n"
+"POT-Creation-Date: 2009-10-29 22:03+0100\n"
+"PO-Revision-Date: 2009-10-29 22:04+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -332,7 +332,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "just89@gmx.de"
 
-#: src/main.cpp:35 src/mainwindow.cpp:604
+#: src/main.cpp:35 src/mainwindow.cpp:611
 msgid "RecordItNow"
 msgstr "RecordItNow"
 
@@ -403,23 +403,31 @@ msgstr "Den ganzen Bildschirm aufnehmen"
 msgid "No screen area selected."
 msgstr "Kein Bildschirmareal ausgewählt."
 
-#: src/mainwindow.cpp:419
+#: src/mainwindow.cpp:420
 msgid "Cannot load Recorder %1"
 msgstr "Kann Recorder %1 nicht laden"
 
-#: src/mainwindow.cpp:520
+#: src/mainwindow.cpp:422
+msgid "No output file specified."
+msgstr "Keine Ausgabedatei angegeben."
+
+#: src/mainwindow.cpp:524
 msgid "Continue"
 msgstr "Fortsetzen"
 
-#: src/mainwindow.cpp:572
+#: src/mainwindow.cpp:567
+msgid "Error: %1"
+msgstr "Fehler: %1"
+
+#: src/mainwindow.cpp:579
 msgid "recorder crashed"
 msgstr "Recorder ist Abgestürzt"
 
-#: src/mainwindow.cpp:592
+#: src/mainwindow.cpp:599
 msgid "Finished!"
 msgstr "Abgeschlossen!"
 
-#: src/mainwindow.cpp:609
+#: src/mainwindow.cpp:616
 msgid "Recorder Plugins"
 msgstr "Recorder Plugins"
 
