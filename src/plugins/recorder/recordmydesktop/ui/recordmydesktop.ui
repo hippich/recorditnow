@@ -49,7 +49,7 @@
             <item row="3" column="0">
              <widget class="QCheckBox" name="kcfg___subsampling">
               <property name="text">
-               <string>Do subsampling of the chroma planes by discarding,not averaging</string>
+               <string>Quick subsampling</string>
               </property>
              </widget>
             </item>
@@ -87,49 +87,10 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="KIntSpinBox" name="kcfg___channels">
-              <property name="minimum">
-               <number>-1</number>
-              </property>
-              <property name="maximum">
-               <number>16777215</number>
-              </property>
-              <property name="value">
-               <number>-1</number>
-              </property>
-             </widget>
-            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
                <string>Frequency</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="KIntSpinBox" name="kcfg___freq">
-              <property name="minimum">
-               <number>-1</number>
-              </property>
-              <property name="maximum">
-               <number>16777215</number>
-              </property>
-              <property name="value">
-               <number>-1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="KIntSpinBox" name="kcfg___buffer_size">
-              <property name="minimum">
-               <number>-1</number>
-              </property>
-              <property name="maximum">
-               <number>16777215</number>
-              </property>
-              <property name="value">
-               <number>-1</number>
               </property>
              </widget>
             </item>
@@ -144,19 +105,6 @@
              <widget class="QLabel" name="label_4">
               <property name="text">
                <string>Ring Buffer size (JACK only)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="KIntSpinBox" name="kcfg___ring_buffer_size">
-              <property name="minimum">
-               <number>-1</number>
-              </property>
-              <property name="maximum">
-               <number>16777215</number>
-              </property>
-              <property name="value">
-               <number>-1</number>
               </property>
              </widget>
             </item>
@@ -183,6 +131,58 @@
             </item>
             <item row="5" column="1">
              <widget class="KLineEdit" name="kcfg___use_jack"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="KIntNumInput" name="kcfg___channels">
+              <property name="value">
+               <number>-1</number>
+              </property>
+              <property name="minimum">
+               <number>-1</number>
+              </property>
+              <property name="specialValueText">
+               <string>Default</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="KIntNumInput" name="kcfg___freq">
+              <property name="value">
+               <number>-1</number>
+              </property>
+              <property name="minimum">
+               <number>-1</number>
+              </property>
+              <property name="specialValueText">
+               <string>Default</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="KIntNumInput" name="kcfg___buffer_size">
+              <property name="value">
+               <number>-1</number>
+              </property>
+              <property name="minimum">
+               <number>-1</number>
+              </property>
+              <property name="specialValueText">
+               <string>Default</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="KIntNumInput" name="kcfg___ring_buffer_size">
+              <property name="value">
+               <number>-1</number>
+              </property>
+              <property name="minimum">
+               <number>-1</number>
+              </property>
+              <property name="specialValueText">
+               <string>Default</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -298,7 +298,7 @@
             <item row="1" column="0">
              <widget class="QCheckBox" name="kcfg___no_wm_check">
               <property name="text">
-               <string>Do not try to detect the window manager(and set options according to it)</string>
+               <string>Do not try to detect the window manager.</string>
               </property>
              </widget>
             </item>
@@ -329,7 +329,7 @@
             <item row="0" column="0">
              <widget class="QCheckBox" name="kcfg___overwrite">
               <property name="text">
-               <string>If there is already a file with the same name, delete it.</string>
+               <string>Overwrite existing files</string>
               </property>
              </widget>
             </item>

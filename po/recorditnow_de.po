@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-10-29 20:05+0100\n"
-"PO-Revision-Date: 2009-10-29 20:05+0100\n"
+"POT-Creation-Date: 2009-10-29 20:23+0100\n"
+"PO-Revision-Date: 2009-10-29 20:26+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,8 +43,8 @@ msgstr "Immer Vollbilder pro Frame (Nicht Empfohlen!)"
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___subsampling)
 #: po/rc.cpp:15 rc.cpp:15
-msgid "Do subsampling of the chroma planes by discarding,not averaging"
-msgstr ""
+msgid "Quick subsampling"
+msgstr "Schnelles Subsampling"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:59
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_shared)
@@ -60,7 +60,7 @@ msgstr "MIT-shared-memory Erweiterung deaktivieren (Nicht Empfohlen!)"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #. i18n: file: src/ui/toolbarwidget.ui:126
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:21 po/rc.cpp:135 rc.cpp:21 rc.cpp:135
+#: po/rc.cpp:21 po/rc.cpp:147 rc.cpp:21 rc.cpp:147
 msgid "Sound"
 msgstr "Sound"
 
@@ -76,102 +76,120 @@ msgstr "Sound Optionen"
 msgid "Channels"
 msgstr "Kanäle"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:106
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:93
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: po/rc.cpp:30 rc.cpp:30
 msgid "Frequency"
 msgstr "Frequenz"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:139
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:100
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: po/rc.cpp:33 rc.cpp:33
 msgid "Buffer size (only ALSA or OSS)"
 msgstr "Buffer größe (nur ALSA oder OSS)"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:146
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:107
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: po/rc.cpp:36 rc.cpp:36
 msgid "Ring Buffer size (JACK only)"
 msgstr "Ring Buffer größe (nur JACK)"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:166
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:114
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: po/rc.cpp:39 rc.cpp:39
 msgid "Device"
 msgstr "Gerät"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:180
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:128
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: po/rc.cpp:43 rc.cpp:43
 msgid "JACK Ports"
 msgstr "Jack Ports"
 
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:144
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___channels)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:157
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___freq)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:170
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___buffer_size)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:183
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___ring_buffer_size)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:144
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___channels)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:157
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___freq)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:170
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___buffer_size)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:183
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___ring_buffer_size)
+#: po/rc.cpp:46 po/rc.cpp:49 po/rc.cpp:52 po/rc.cpp:55 rc.cpp:46 rc.cpp:49
+#: rc.cpp:52 rc.cpp:55
+msgid "Default"
+msgstr "Standard"
+
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:196
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
-#: po/rc.cpp:46 rc.cpp:46
+#: po/rc.cpp:58 rc.cpp:58
 msgid "Encoding"
 msgstr "Codierung"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:202
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: po/rc.cpp:49 rc.cpp:49
+#: po/rc.cpp:61 rc.cpp:61
 msgid "Encoding Options"
 msgstr "Codierungs Optionen"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:210
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___on_the_fly_encoding)
-#: po/rc.cpp:52 rc.cpp:52
+#: po/rc.cpp:64 rc.cpp:64
 msgid "Encode the audio-video data, while recording"
 msgstr "Codiere die Audio und Video Daten während dem aufnehmen"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:217
 #. i18n: ectx: property (text), widget (QLabel, lab)
-#: po/rc.cpp:55 rc.cpp:55
+#: po/rc.cpp:67 rc.cpp:67
 msgid "Video Quality"
 msgstr "Video Qualität"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:224
 #. i18n: ectx: property (text), widget (QLabel, lab_3)
-#: po/rc.cpp:58 rc.cpp:58
+#: po/rc.cpp:70 rc.cpp:70
 msgid "Bitrate"
 msgstr "Bitrate"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:241
 #. i18n: ectx: property (text), widget (QLabel, lab_2)
-#: po/rc.cpp:61 rc.cpp:61
+#: po/rc.cpp:73 rc.cpp:73
 msgid "Audio Quality"
 msgstr "Audio Qualität"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:287
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
-#: po/rc.cpp:64 rc.cpp:64
+#: po/rc.cpp:76 rc.cpp:76
 msgid "Misc"
 msgstr "Sonstiges"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:293
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
-#: po/rc.cpp:67 rc.cpp:67
+#: po/rc.cpp:79 rc.cpp:79
 msgid "Misc Options"
 msgstr "Sonstige Optionen"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_wm_check)
-#: po/rc.cpp:70 rc.cpp:70
-msgid ""
-"Do not try to detect the window manager(and set options according to it)"
-msgstr ""
-"Nicht versuchen den Fenster-Manager zu erkennen (und die entsprechenden "
-"Optionen zu setzen)"
+#: po/rc.cpp:82 rc.cpp:82
+msgid "Do not try to detect the window manager."
+msgstr "Nicht versuchen den Fenster-Manager zu erkennen ."
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:308
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___compress_cache)
-#: po/rc.cpp:73 rc.cpp:73
+#: po/rc.cpp:85 rc.cpp:85
 msgid "Compress Cache"
 msgstr "Cache komprimieren"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:315
 #. i18n: ectx: property (text), widget (QLabel, label_10)
-#: po/rc.cpp:76 rc.cpp:76
+#: po/rc.cpp:88 rc.cpp:88
 msgid ""
 "Location where a temporary directory will be created to hold project files"
 msgstr ""
@@ -186,55 +204,55 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___overwrite)
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:68
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:79 po/rc.cpp:106 rc.cpp:79 rc.cpp:106
-msgid "If there is already a file with the same name, delete it."
-msgstr "Wenn es bereits eine Datei mit dem gleichen Namen gibt, lösche Sie."
+#: po/rc.cpp:91 po/rc.cpp:118 rc.cpp:91 rc.cpp:118
+msgid "Overwrite existing files"
+msgstr "Überschreibe vorhandene Dateien"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:22
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:82 rc.cpp:82
+#: po/rc.cpp:94 rc.cpp:94
 msgid "Format"
 msgstr "Format"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:30
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:85 rc.cpp:85
+#: po/rc.cpp:97 rc.cpp:97
 msgid "PNG"
 msgstr "PNG"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:35
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:88 rc.cpp:88
+#: po/rc.cpp:100 rc.cpp:100
 msgid "JPG"
 msgstr "JPG"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:40
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:91 rc.cpp:91
+#: po/rc.cpp:103 rc.cpp:103
 msgid "BMP"
 msgstr "BMP"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:45
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:94 rc.cpp:94
+#: po/rc.cpp:106 rc.cpp:106
 msgid "PPM"
 msgstr "PPM"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:50
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:97 rc.cpp:97
+#: po/rc.cpp:109 rc.cpp:109
 msgid "TIFF"
 msgstr "TIFF"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:55
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:100 rc.cpp:100
+#: po/rc.cpp:112 rc.cpp:112
 msgid "XBM"
 msgstr "XBM"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:60
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:103 rc.cpp:103
+#: po/rc.cpp:115 rc.cpp:115
 msgid "XPM"
 msgstr "XPM"
 
@@ -246,49 +264,49 @@ msgstr "XPM"
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
 #. i18n: file: src/ui/settings.ui:20
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:109 po/rc.cpp:115 rc.cpp:109 rc.cpp:115
+#: po/rc.cpp:121 po/rc.cpp:127 rc.cpp:121 rc.cpp:127
 msgid "Hide RecordItNow while recording"
 msgstr "Verstecke RecordItNow während dem aufnehmen"
 
 #. i18n: file: src/recorditnowui.rc:4
 #. i18n: ectx: ToolBar (mainToolBar)
-#: po/rc.cpp:112 rc.cpp:112
+#: po/rc.cpp:124 rc.cpp:124
 msgid "Main Toolbar"
 msgstr "Haupt Werkzeugleiste"
 
 #. i18n: file: src/ui/settings.ui:40
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:118 rc.cpp:118
+#: po/rc.cpp:130 rc.cpp:130
 msgid "Enable system tray icon"
 msgstr "Aktiviere Systemtray Symbol"
 
 #. i18n: file: src/ui/settings.ui:47
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:121 rc.cpp:121
+#: po/rc.cpp:133 rc.cpp:133
 msgid "Show file after record"
 msgstr "Zeige Datei nach der Aufnahme"
 
 #. i18n: file: src/ui/toolbarwidget.ui:42
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: po/rc.cpp:124 rc.cpp:124
+#: po/rc.cpp:136 rc.cpp:136
 msgid "Timer"
 msgstr "Timer"
 
 #. i18n: file: src/ui/toolbarwidget.ui:100
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:129 rc.cpp:129
+#: po/rc.cpp:141 rc.cpp:141
 msgid "Frames per second"
 msgstr "Bilder in der Sekunde"
 
 #. i18n: file: src/ui/toolbarwidget.ui:103
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:132 rc.cpp:132
+#: po/rc.cpp:144 rc.cpp:144
 msgid " FPS"
 msgstr "FPS"
 
 #. i18n: file: src/ui/toolbarwidget.ui:152
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:138 rc.cpp:138
+#: po/rc.cpp:150 rc.cpp:150
 msgid "Backend"
 msgstr "Backend"
 
@@ -300,16 +318,16 @@ msgstr "Backend"
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
 #. i18n: file: src/ui/toolbarwidget.ui:185
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:141 po/rc.cpp:144 rc.cpp:141 rc.cpp:144
+#: po/rc.cpp:153 po/rc.cpp:156 rc.cpp:153 rc.cpp:156
 msgid "Output file"
 msgstr "Ausgabedatei"
 
-#: po/rc.cpp:145 rc.cpp:145
+#: po/rc.cpp:157 rc.cpp:157
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Kai Dombrowe"
 
-#: po/rc.cpp:146 rc.cpp:146
+#: po/rc.cpp:158 rc.cpp:158
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "just89@gmx.de"
@@ -487,3 +505,5 @@ msgstr "Kann Ausgabedatei nicht öffnen: %1"
 msgid "Cannot save image."
 msgstr "Kann Bild nicht speichern."
 
+#~ msgid "If there is already a file with the same name, delete it."
+#~ msgstr "Wenn es bereits eine Datei mit dem gleichen Namen gibt, lösche Sie."

@@ -65,7 +65,7 @@
      <item row="1" column="0" colspan="3">
       <widget class="QCheckBox" name="kcfg_overwrite">
        <property name="text">
-        <string>If there is already a file with the same name, delete it.</string>
+        <string>Overwrite existing files</string>
        </property>
       </widget>
      </item>
