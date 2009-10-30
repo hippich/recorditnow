@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-10-29 22:03+0100\n"
-"PO-Revision-Date: 2009-10-29 22:07+0100\n"
+"PO-Revision-Date: 2009-10-29 23:16+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -179,7 +179,7 @@ msgstr "Sonstige Optionen"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_wm_check)
 #: po/rc.cpp:82 rc.cpp:82
 msgid "Do not try to detect the window manager."
-msgstr "Nicht versuchen den Fenster-Manager zu erkennen ."
+msgstr "Nicht versuchen den Fenster-Manager zu erkennen"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:308
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___compress_cache)
