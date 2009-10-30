@@ -32,8 +32,6 @@
 #include <QtCore/QFile>
 #include <QtGui/QPainter>
 
-// X
-#include <X11/extensions/Xfixes.h>
 
 
 static const char format[][7] = { "PNG", "JPG", "BMP", "PPM", "TIFF", "XBM", "XPM"};
