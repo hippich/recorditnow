@@ -179,7 +179,7 @@
             <string>Output file</string>
            </property>
            <property name="mode">
-            <set>KFile::Directory|KFile::ExistingOnly|KFile::File|KFile::LocalOnly</set>
+            <set>KFile::File|KFile::LocalOnly</set>
            </property>
            <property name="clickMessage">
             <string>Output file</string>
