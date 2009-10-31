@@ -28,10 +28,16 @@
 
 // KDE
 #include <kxmlguiwindow.h>
+#include <kdeversion.h>
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
+#include <knotificationitem.h>
+#else
+#include <knotificationitem-1/knotificationitem.h>
+#endif
+
 
 class Settings;
 class RecordItNowPluginManager;
-class KNotificationItem;
 class FrameBox;
 class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
@@ -57,7 +63,11 @@ private:
     Ui::RecorderPlugins ui_recorder;
     FrameBox *m_box;
     AbstractRecorder *m_recorderPlugin;
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
     KNotificationItem *m_tray;
+#else
+    Experimental::KNotificationItem *m_tray;
+#endif
     QTimer *m_timer;
     AbstractRecorder::Data m_recordData;
     State m_state;

@@ -42,7 +42,6 @@
 #include <kservicetypetrader.h>
 #include <kplugininfo.h>
 #include <kconfigdialog.h>
-#include <knotificationitem.h>
 #include <kmenu.h>
 #include <krun.h>
 #include <kmimetype.h>
@@ -448,7 +447,11 @@ void MainWindow::setupTray()
 
     if (Settings::tray()) {
         if (!m_tray) {
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
             m_tray = new KNotificationItem(this);
+#else
+            m_tray = new Experimental::KNotificationItem(this);
+#endif
             m_tray->setIconByName("video-display");
             m_tray->setStatus(KNotificationItem::Active);
             m_tray->setCategory(KNotificationItem::ApplicationStatus);
