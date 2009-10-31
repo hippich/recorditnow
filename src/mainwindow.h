@@ -30,7 +30,7 @@
 #include <kxmlguiwindow.h>
 #include <kdeversion.h>
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-#include <knotificationitem.h>
+#include <kstatusnotifieritem.h>
 #else
 #include <knotificationitem-1/knotificationitem.h>
 #endif
@@ -64,7 +64,7 @@ private:
     FrameBox *m_box;
     AbstractRecorder *m_recorderPlugin;
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-    KNotificationItem *m_tray;
+    KStatusNotifierItem *m_tray;
 #else
     Experimental::KNotificationItem *m_tray;
 #endif

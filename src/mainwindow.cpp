@@ -448,13 +448,16 @@ void MainWindow::setupTray()
     if (Settings::tray()) {
         if (!m_tray) {
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-            m_tray = new KNotificationItem(this);
+            m_tray = new KStatusNotifierItem(this);
+            m_tray->setStatus(KStatusNotifierItem::Active);
+            m_tray->setCategory(KStatusNotifierItem::ApplicationStatus);
 #else
             m_tray = new Experimental::KNotificationItem(this);
+            m_tray->setStatus(Experimental::KNotificationItem::Active);
+            m_tray->setCategory(Experimental::KNotificationItem::ApplicationStatus);
 #endif
             m_tray->setIconByName("video-display");
-            m_tray->setStatus(KNotificationItem::Active);
-            m_tray->setCategory(KNotificationItem::ApplicationStatus);
+
 
             connect(m_tray, SIGNAL(activateRequested(bool,QPoint)), this,
                     SLOT(trayActivated(bool,QPoint)));
