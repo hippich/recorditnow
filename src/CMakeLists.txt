@@ -1,6 +1,9 @@
 add_subdirectory(libs)
 add_subdirectory(plugins)
 
+if(${KDE_VERSION} VERSION_LESS 4.3.64)
+   find_package(LibKNotificationItem-1 REQUIRED) 
+endif()
 
 set(gui_SRCS
    main.cpp
@@ -13,7 +16,7 @@ set(gui_SRCS
 kde4_add_ui_files(gui_SRCS ui/toolbarwidget.ui ui/settings.ui ui/recorderplugins.ui)
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})
-target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KIO_LIBS} recorditnow_recorder)
+target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KIO_LIBS} ${LIBKNOTIFICATIONITEM-1_LIBRARIES} recorditnow_recorder)
 install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
