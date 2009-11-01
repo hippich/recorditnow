@@ -825,5 +825,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 }
 
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
+#include "mainwindow.moc"
+#else
+#include "mainwindow_4_3.moc"
+#endif
 
 
