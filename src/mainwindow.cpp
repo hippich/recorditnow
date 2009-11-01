@@ -20,9 +20,9 @@
 // own
 #include <kdeversion.h>
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-#include "mainwindow.h"
+    #include "mainwindow.h"
 #else
-#include "mainwindow_4_3.h" // moc workaround
+    #include "mainwindow_4_3.h" // moc workaround
 #endif
 #include "framebox.h"
 #include <recorditnow.h>
@@ -476,11 +476,11 @@ void MainWindow::setupTray()
             context->addAction(actionCollection()->action("box"));
             context->addAction(actionCollection()->action("recordWindow"));
             context->addAction(actionCollection()->action("recordFullScreen"));
-            #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-            #else
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
+#else
             context->addSeparator();
             context->addAction((QAction*)KStandardAction::quit(kapp, SLOT(quit()), actionCollection()));
-            #endif
+#endif
             m_tray->setContextMenu(context);
         }
     } else {
@@ -497,9 +497,12 @@ void MainWindow::setTrayOverlay(const QString &name)
 {
 
     if (m_tray) {
-        #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
         m_tray->setOverlayIconByName(name);
-        #endif
+#else
+        Q_UNUSED(name);
+#warning "KDE-4.3 TrayOverlay disabled"
+#endif
     }
 
 }
@@ -826,9 +829,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 }
 
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-#include "mainwindow.moc"
+    #include "mainwindow.moc"
 #else
-#include "mainwindow_4_3.moc"
+    #include "mainwindow_4_3.moc"
 #endif
 
 
