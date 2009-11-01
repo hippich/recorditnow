@@ -29,11 +29,7 @@
 // KDE
 #include <kxmlguiwindow.h>
 #include <kdeversion.h>
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-#include <kstatusnotifieritem.h>
-#else
 #include <ksystemtrayicon.h>
-#endif
 
 
 class Settings;
@@ -63,11 +59,7 @@ private:
     Ui::RecorderPlugins ui_recorder;
     FrameBox *m_box;
     AbstractRecorder *m_recorderPlugin;
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-    KStatusNotifierItem *m_tray;
-#else
     KSystemTrayIcon *m_tray;
-#endif
     QTimer *m_timer;
     AbstractRecorder::Data m_recordData;
     State m_state;
@@ -101,8 +93,7 @@ private slots:
     void tick();
     void lcdUp();
     void lcdDown();
-    void trayActivated(const bool &active, const QPoint &pos);
-   // void trayActivated(const QSystemTrayIcon::ActivationReason &reason);
+    void trayActivated(const QSystemTrayIcon::ActivationReason &reason);
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
     void pluginsChanged();

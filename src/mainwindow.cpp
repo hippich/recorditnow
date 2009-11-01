@@ -18,7 +18,12 @@
  ***************************************************************************/
 
 // own
+#include <kdeversion.h>
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
 #include "mainwindow.h"
+#else
+#include "mainwindow_4.3.h" // moc workaround
+#endif
 #include "framebox.h"
 #include <recorditnow.h>
 #include <recorditnowpluginmanager.h>
@@ -451,16 +456,17 @@ void MainWindow::setupTray()
             m_tray = new KStatusNotifierItem(this);
             m_tray->setStatus(KStatusNotifierItem::Active);
             m_tray->setCategory(KStatusNotifierItem::ApplicationStatus);
-#else
-            m_tray = new Experimental::KNotificationItem(this);
-            m_tray->setStatus(Experimental::KNotificationItem::Active);
-            m_tray->setCategory(Experimental::KNotificationItem::ApplicationStatus);
-#endif
             m_tray->setIconByName("video-display");
-
-
             connect(m_tray, SIGNAL(activateRequested(bool,QPoint)), this,
                     SLOT(trayActivated(bool,QPoint)));
+#else
+            m_tray = new KSystemTrayIcon(this);
+            m_tray->setIcon(KIcon("video-display"));
+            connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
+            SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
+            m_tray->show();
+#endif
+
 
             KMenu *context = new KMenu(this);
             context->addAction(actionCollection()->action("record"));
@@ -470,7 +476,11 @@ void MainWindow::setupTray()
             context->addAction(actionCollection()->action("box"));
             context->addAction(actionCollection()->action("recordWindow"));
             context->addAction(actionCollection()->action("recordFullScreen"));
-
+            #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
+            #else
+            context->addSeparator();
+            context->addAction((QAction*)KStandardAction::quit(kapp, SLOT(quit()), actionCollection()));
+            #endif
             m_tray->setContextMenu(context);
         }
     } else {
@@ -487,7 +497,9 @@ void MainWindow::setTrayOverlay(const QString &name)
 {
 
     if (m_tray) {
+        #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
         m_tray->setOverlayIconByName(name);
+        #endif
     }
 
 }
@@ -708,7 +720,7 @@ void MainWindow::lcdDown()
 
 }
 
-
+#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
 void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 {
 
@@ -718,7 +730,18 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
     }
 
 }
+#else
+void MainWindow::trayActivated(const QSystemTrayIcon::ActivationReason &reason)
+{
 
+    if (reason == QSystemTrayIcon::Trigger &&
+        isVisible() &&
+        (state() == Recording || state() == Paused)) {
+        stopRecord();
+    }
+
+}
+#endif
 
 void MainWindow::backendChanged(const QString &newBackend)
 {
