@@ -22,7 +22,7 @@
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
 #include "mainwindow.h"
 #else
-#include "mainwindow_4.3.h" // moc workaround
+#include "mainwindow_4_3.h" // moc workaround
 #endif
 #include "framebox.h"
 #include <recorditnow.h>
