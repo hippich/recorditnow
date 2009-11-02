@@ -188,7 +188,6 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     m_recorder->setProgram(recordMyDesktop, args);
     m_recorder->start();
 
-
 }
 
 
