@@ -56,11 +56,9 @@ int main(int argc, char *argv[])
 
     KApplication app;
 
-    MainWindow *window = new MainWindow;
-
     if (app.isSessionRestored()) { // see if we are starting with session management
         RESTORE(MainWindow);
-    } else { // no session.. just start up normally
+    } else { // no session.. just start up normally        
         KCmdLineArgs *parsed = KCmdLineArgs::parsedArgs();
 
         bool hasArgs = false;
@@ -99,6 +97,7 @@ int main(int argc, char *argv[])
             file = parsed->getOption("o");
         }
 
+        MainWindow *window = new MainWindow;
         window->show();
         parsed->clear();
 
