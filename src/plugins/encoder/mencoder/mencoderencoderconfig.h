@@ -17,60 +17,31 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOWPLUGINMANAGER_H
-#define RECORDITNOWPLUGINMANAGER_H
+#ifndef MENCODERENCODERCONFIG_H
+#define MENCODERENCODERCONFIG_H
 
 
-// Qt
-#include <QtCore/QObject>
+// own
+#include "ui_mencoder.h"
 
 // KDE
-#include <kplugininfo.h>
+#include <kcmodule.h>
 
 
-class AbstractRecorder;
-class AbstractEncoder;
-class RecordItNowPluginManager : public QObject
+class MencoderEncoderConfig : public KCModule
 {
-    Q_OBJECT
 
 
 public:
-    RecordItNowPluginManager(QObject *parent = 0);
-    ~RecordItNowPluginManager();
-
-    void init();
-
-    AbstractRecorder *loadRecorderPlugin(const KPluginInfo &info);
-    AbstractRecorder *loadRecorderPlugin(const QString &name);
-
-    AbstractEncoder *loadEncoderPlugin(const KPluginInfo &info);
-    AbstractEncoder *loadEncoderPlugin(const QString &name);
-
-    void unloadRecorderPlugin(const KPluginInfo &info);
-    void unloadRecorderPlugin(AbstractRecorder *recorder);
-
-    void unloadEncoderPlugin(const KPluginInfo &info);
-    void unloadEncoderPlugin(AbstractEncoder *encoder);
-
-    QList<KPluginInfo> getRecorderList() const;
-
-    QList<KPluginInfo> getEncoderList() const;
+    MencoderEncoderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    ~MencoderEncoderConfig();
 
 
 private:
-    QHash<KPluginInfo, AbstractRecorder*> m_recorderPlugins;
-    QHash<KPluginInfo, AbstractEncoder*> m_encoderPlugins;
-
-    void clear();
-    void loadPluginList();
-
-
-signals:
-    void pluginsChanged();
+     Ui::Mencoder ui_cfg;
 
 
 };
 
 
-#endif // RECORDITNOWPLUGINMANAGER_H
+#endif // SCREENSHOTRECORDERCONFIG_H

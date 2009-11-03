@@ -22,9 +22,11 @@
 
 // own
 #include "ui_toolbarwidget.h"
-#include "libs/recorder/abstractrecorder.h"
 #include "ui_settings.h"
 #include "ui_recorderplugins.h"
+#include "ui_encoderplugins.h"
+#include "libs/recorder/abstractrecorder.h"
+#include "libs/encoder/abstractencoder.h"
 
 // KDE
 #include <kxmlguiwindow.h>
@@ -57,8 +59,10 @@ private:
     QWidget *m_grabber;
     Ui::Settings ui_settings;
     Ui::RecorderPlugins ui_recorder;
+    Ui::EncoderPlugins ui_encoder;
     FrameBox *m_box;
     AbstractRecorder *m_recorderPlugin;
+    AbstractEncoder *m_encoderPlugin;
     KStatusNotifierItem *m_tray;
     QTimer *m_timer;
     AbstractRecorder::Data m_recordData;
@@ -73,6 +77,7 @@ private:
     void setState(const State &newState);
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
+    void playFile();
 
 
 private slots:
@@ -87,6 +92,8 @@ private slots:
     void recorderStatus(const QString &text);
     void recorderError(const QString &error);
     void recorderFinished(const AbstractRecorder::ExitStatus &status);
+    void encoderFinished();
+    void encoderError(const QString &error);
     void configure();
     void saveConfig(int code);
     void startTimer();
@@ -97,6 +104,8 @@ private slots:
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
     void pluginsChanged();
+    void encoderSettingsChanged(const bool &changed);
+    void updateEncoderCombo();
 
 
 protected:

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-10-29 22:03+0100\n"
-"PO-Revision-Date: 2009-10-29 23:16+0100\n"
+"PO-Revision-Date: 2009-11-04 00:35+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -131,19 +131,19 @@ msgstr "Standard"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
 #: po/rc.cpp:58 rc.cpp:58
 msgid "Encoding"
-msgstr "Codierung"
+msgstr "Kodierung"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:202
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: po/rc.cpp:61 rc.cpp:61
 msgid "Encoding Options"
-msgstr "Codierungs Optionen"
+msgstr "Kodierungs Optionen"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:210
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___on_the_fly_encoding)
 #: po/rc.cpp:64 rc.cpp:64
 msgid "Encode the audio-video data, while recording"
-msgstr "Codiere die Audio und Video Daten während dem aufnehmen"
+msgstr "Kodiere die Audio und Video Daten während dem aufnehmen"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:217
 #. i18n: ectx: property (text), widget (QLabel, lab)
@@ -466,7 +466,7 @@ msgstr "Ausgabedatei: %1"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:258
 msgid "Encoding: %1"
-msgstr "Codierung: %1"
+msgstr "Kodiere: %1"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:268
 msgid "Shutting down.."
@@ -474,7 +474,7 @@ msgstr "Fahre herunter."
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:270
 msgid "Encoding started!"
-msgstr "Codierung gestartet!"
+msgstr "Kodierung  gestartet!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:272
 msgid "Done!"

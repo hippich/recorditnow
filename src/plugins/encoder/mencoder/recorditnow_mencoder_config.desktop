@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KCModule
+X-KDE-Library=recorditnow_mencoder_config
+X-KDE-ParentComponents=MencoderEncoder
+X-KDE-PluginKeyword=MencoderEncoder
+Name=Mencoder Config

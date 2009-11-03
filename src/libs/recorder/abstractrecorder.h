@@ -61,6 +61,7 @@ public:
     AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractRecorder();
 
+    virtual bool isVideoRecorder() const { return true; };
     virtual bool hasFeature(const AbstractRecorder::Feature &) const { return false; };
     virtual QString getDefaultOutputFile() const = 0;
 
@@ -73,6 +74,7 @@ signals:
     void status(const QString &text);
     void finished(const AbstractRecorder::ExitStatus &status);
     void error(const QString &text);
+    void outputFileChanged(const QString &newFile);
 
 
 };

@@ -57,6 +57,14 @@ ScreenshotRecorder::~ScreenshotRecorder()
 }
 
 
+bool ScreenshotRecorder::isVideoRecorder() const
+{
+
+    return false;
+
+}
+
+
 bool ScreenshotRecorder::hasFeature(const AbstractRecorder::Feature &feature) const
 {
 

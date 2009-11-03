@@ -17,6 +17,18 @@
             <label></label>
             <default>true</default>
     </entry>
+    <entry name="encode" type="Bool">
+            <label></label>
+            <default>false</default>
+    </entry>
+    <entry name="encoderIndex" type="Int">
+            <label></label>
+            <default>-1</default>
+    </entry>
+    <entry name="encoderName" type="String">
+            <label></label>
+            <default></default>
+    </entry>
   </group>
   <group name="GUI">
     <entry name="currentBackend" type="String">

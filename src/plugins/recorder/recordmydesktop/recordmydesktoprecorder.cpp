@@ -246,7 +246,7 @@ void RecordMyDesktopRecorder::newRecorderOutput()
             frames.remove(frames.indexOf("frames"), frames.length());
             emit status(i18n("Frames: %1", frames));
         } else if (line.startsWith("Output file:")) {
-            emit status(i18n("Output file: %1", line.remove(0, 13)));
+            emit outputFileChanged(line.remove(0, 13));
         } else if (line.startsWith("[")) {
             for (int i = 0; i < line.length(); i++) {
                 if (line[i] == '[') {

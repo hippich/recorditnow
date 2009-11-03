@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_box = new FrameBox(this);
     m_recorderPlugin = 0;
+    m_encoderPlugin = 0;
     m_tray = 0;
 
     m_timer = new QTimer(this);
@@ -118,6 +119,11 @@ MainWindow::~MainWindow()
     if (m_recorderPlugin) {
         delete m_recorderPlugin;
     }
+
+    if (m_encoderPlugin) {
+        delete m_encoderPlugin;
+    }
+
     if (m_tray) {
         delete m_tray;
     }
@@ -217,12 +223,16 @@ void MainWindow::startRecord()
 void MainWindow::pauseRecord()
 {
 
+    if (m_recorderPlugin) {
+        m_recorderPlugin->pause();
+    } else if (m_encoderPlugin) {
+        m_encoderPlugin->pause();
+    }
+
     if (state() == Recording) {
         setState(Paused);
-        m_recorderPlugin->pause();
     } else {
         setState(Recording);
-        m_recorderPlugin->pause();
     }
 
 }
@@ -233,6 +243,8 @@ void MainWindow::stopRecord()
 
     if (m_recorderPlugin) {
         m_recorderPlugin->stop();
+    } else if (m_encoderPlugin) {
+        m_encoderPlugin->stop();
     }
 
 }
@@ -433,6 +445,8 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     connect(m_recorderPlugin, SIGNAL(finished(AbstractRecorder::ExitStatus)), this,
             SLOT(recorderFinished(AbstractRecorder::ExitStatus)));
     connect(m_recorderPlugin, SIGNAL(status(QString)), this, SLOT(recorderStatus(QString)));
+    connect(m_recorderPlugin, SIGNAL(outputFileChanged(QString)), outputRequester,
+            SLOT(setText(QString)));
 
     recorderStatus("");
 
@@ -581,12 +595,10 @@ void MainWindow::recorderError(const QString &error)
 {
 
     KMessageBox::error(this, error);
-    setState(Idle);
-
     m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
-
     recorderStatus(i18n("Error: %1", error));
+    setState(Idle);
 
 }
 
@@ -595,30 +607,69 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
 {
 
     kDebug() << "recorder finished";
-    setState(Idle);
 
     if (status == AbstractRecorder::Crash) {
         KMessageBox::error(this, i18n("recorder crashed"));
     }
 
-    if (Settings::showVideo()) {
-        KUrl url(outputRequester->text());
 
-        if (!QFile(url.path()).exists()) {
-            const QStringList files = QDir(url.directory()).entryList(QStringList() << url.fileName()+".*");
-            if (!files.isEmpty()) {
-                url = files.first();
-            }
-        }
-
-        KMimeType::Ptr type = KMimeType::findByUrl(url);
-        KRun::runUrl(url, type->name(), this);
+    if (!Settings::encode() || !m_recorderPlugin->isVideoRecorder()) {
+        m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+        m_recorderPlugin = 0;
+        setState(Idle);
+        playFile();
+        recorderStatus(i18n("Finished!"));
+        return;
     }
-
     m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
 
+    QList<KPluginInfo> list = m_pluginManager->getEncoderList();
+    if (m_encoderPlugin) {
+        m_encoderPlugin->disconnect(this);
+        m_encoderPlugin->deleteLater();
+    }
+    m_encoderPlugin = m_encoderPlugin = m_pluginManager->loadEncoderPlugin(Settings::encoderName());
+
+    if (!m_encoderPlugin) {
+        setState(Idle);
+        playFile();
+        recorderStatus(i18n("Finished!"));
+        return;
+    }
+
+    connect(m_encoderPlugin, SIGNAL(finished()), this, SLOT(encoderFinished()));
+    connect(m_encoderPlugin, SIGNAL(status(QString)), this, SLOT(recorderStatus(QString)));
+    connect(m_encoderPlugin, SIGNAL(error(QString)), this, SLOT(encoderError(QString)));
+    connect(m_encoderPlugin, SIGNAL(outputFileChanged(QString)), outputRequester,
+            SLOT(setText(QString)));
+
+    m_encoderPlugin->encode(outputRequester->text());
+
+}
+
+
+void MainWindow::encoderFinished()
+{
+
+    m_pluginManager->unloadEncoderPlugin(m_encoderPlugin);
+    m_encoderPlugin = 0;
+
+    setState(Idle);
+    playFile();
     recorderStatus(i18n("Finished!"));
+
+}
+
+
+void MainWindow::encoderError(const QString &error)
+{
+
+    KMessageBox::error(this, error);
+    m_pluginManager->unloadEncoderPlugin(m_encoderPlugin);
+    m_encoderPlugin = 0;
+    recorderStatus(i18n("Error: %1", error));
+    setState(Idle);
 
 }
 
@@ -637,12 +688,49 @@ void MainWindow::configure()
     ui_recorder.pluginSelector->addPlugins(m_pluginManager->getRecorderList());
     dialog->addPage(recorderPage, i18n("Recorder Plugins"), "preferences-plugin");
 
+    QWidget *encoderPage = new QWidget;
+    ui_encoder.setupUi(encoderPage);
+    ui_encoder.pluginSelector->addPlugins(m_pluginManager->getEncoderList());
+    connect(ui_encoder.pluginSelector, SIGNAL(changed(bool)), this,
+            SLOT(encoderSettingsChanged(bool)));
+    updateEncoderCombo();
+    dialog->addPage(encoderPage, i18n("Encoder Plugins"), "preferences-plugin");
+
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     connect(dialog, SIGNAL(finished(int)), this, SLOT(saveConfig(int)));
 
     dialog->resize(dialog->width(), 300);
     dialog->show();
+
+}
+
+
+void MainWindow::encoderSettingsChanged(const bool &changed)
+{
+
+    kDebug() << "changed:" << changed;
+    if (!changed) {
+        return;
+    }
+    ui_encoder.pluginSelector->updatePluginsState();
+    ui_encoder.pluginSelector->save();
+    updateEncoderCombo();
+
+}
+
+
+void MainWindow::updateEncoderCombo()
+{
+
+    const QString oldEncoder = ui_encoder.kcfg_encoderIndex->currentText();
+    ui_encoder.kcfg_encoderIndex->clear();
+    foreach (const KPluginInfo &info, m_pluginManager->getEncoderList()) {
+        if (info.isPluginEnabled()) {
+            ui_encoder.kcfg_encoderIndex->addItem(KIcon(info.icon()), info.name());
+        }
+    }
+    ui_encoder.kcfg_encoderIndex->setCurrentItem(oldEncoder, false);
 
 }
 
@@ -655,6 +743,7 @@ void MainWindow::saveConfig(int code)
     if (code == QDialog::Accepted) {
         ui_recorder.pluginSelector->updatePluginsState();
         ui_recorder.pluginSelector->save();
+        Settings::setEncoderName(ui_encoder.kcfg_encoderIndex->currentText());
     }
     updateRecorderCombo();
 
@@ -673,6 +762,26 @@ void MainWindow::updateRecorderCombo()
     }
     if (backendCombo->contains(oldBackend)) {
         backendCombo->setCurrentItem(oldBackend, false);
+    }
+
+}
+
+
+void MainWindow::playFile()
+{
+
+    if (Settings::showVideo()) {
+        KUrl url(outputRequester->text());
+
+        if (!QFile(url.path()).exists()) {
+            const QStringList files = QDir(url.directory()).entryList(QStringList() << url.fileName()+".*");
+            if (!files.isEmpty()) {
+                url = files.first();
+            }
+        }
+
+        KMimeType::Ptr type = KMimeType::findByUrl(url);
+        KRun::runUrl(url, type->name(), this);
     }
 
 }

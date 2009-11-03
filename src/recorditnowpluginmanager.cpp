@@ -21,6 +21,7 @@
 // own
 #include "recorditnowpluginmanager.h"
 #include "libs/recorder/abstractrecorder.h"
+#include "libs/encoder/abstractencoder.h"
 
 // KDE
 #include <kservice.h>
@@ -104,6 +105,55 @@ AbstractRecorder *RecordItNowPluginManager::loadRecorderPlugin(const QString &na
 }
 
 
+AbstractEncoder *RecordItNowPluginManager::loadEncoderPlugin(const KPluginInfo &info)
+{
+
+    if (!m_encoderPlugins.contains(info)) {
+        kWarning() << "no such plugin:" << info.name();
+        return 0;
+    } else if (m_encoderPlugins[info]) {
+        return m_encoderPlugins[info];
+    }
+
+    kDebug() << "load encoder:" << info.name();
+
+    KService::Ptr service = info.service();
+    KPluginLoader loader(service->library());
+    KPluginFactory *factory = loader.factory();
+
+    if (!factory) {
+        kWarning() << "KPluginFactory could not load the plugin:" << service->library() <<
+        "Reason:" << loader.errorString();
+        return 0;
+    }
+
+    AbstractEncoder *encoder = factory->create<AbstractEncoder>(this);
+    if (!encoder) {
+        kWarning() << "factory::create<>() failed " << service->library();
+        return 0;
+    }
+
+    return (m_encoderPlugins[info] = encoder);
+
+}
+
+
+AbstractEncoder *RecordItNowPluginManager::loadEncoderPlugin(const QString &name)
+{
+
+    QHashIterator<KPluginInfo, AbstractEncoder*> it(m_encoderPlugins);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key().name().toLower() == name.toLower()) {
+            return loadEncoderPlugin(it.key());
+        }
+    }
+    kDebug() << "plugin not found:" << name;
+    return 0;
+
+}
+
+
 void RecordItNowPluginManager::unloadRecorderPlugin(const KPluginInfo &info)
 {
 
@@ -131,10 +181,45 @@ void RecordItNowPluginManager::unloadRecorderPlugin(AbstractRecorder *recorder)
 }
 
 
+void RecordItNowPluginManager::unloadEncoderPlugin(const KPluginInfo &info)
+{
+
+    if (!m_encoderPlugins.contains(info)) {
+        kWarning() << "no such plugin";
+        return;
+    } else if (!m_encoderPlugins[info]) {
+        kDebug() << "plugin not loaded:" << info.name();
+        return;
+    }
+
+    kDebug() << "unload encoder:" << info.name();
+
+    m_encoderPlugins[info]->deleteLater();
+    m_encoderPlugins[info] = 0;
+
+}
+
+
+void RecordItNowPluginManager::unloadEncoderPlugin(AbstractEncoder *encoder)
+{
+
+    unloadEncoderPlugin(m_encoderPlugins.key(encoder));
+
+}
+
+
 QList<KPluginInfo> RecordItNowPluginManager::getRecorderList() const
 {
 
     return m_recorderPlugins.keys();
+
+}
+
+
+QList<KPluginInfo> RecordItNowPluginManager::getEncoderList() const
+{
+
+    return m_encoderPlugins.keys();
 
 }
 
@@ -151,6 +236,16 @@ void RecordItNowPluginManager::clear()
         }
     }
     m_recorderPlugins.clear();
+
+    // encoder plugins
+    QHashIterator<KPluginInfo, AbstractEncoder*> eit(m_encoderPlugins);
+    while (eit.hasNext()) {
+        eit.next();
+        if (eit.value()) {
+            delete eit.value();
+        }
+    }
+    m_encoderPlugins.clear();
 
 }
 
@@ -191,6 +286,28 @@ void RecordItNowPluginManager::loadPluginList()
         printf("Please run \"kbuildsycoca4\".\n");
         printf("*********************************\n");
     }
+
+    kDebug() << ">>> RecordItNowEncoder";
+
+    KConfigGroup encoderCfg(&cfg, "Plugins");
+    offers = KServiceTypeTrader::self()->query("RecordItNowEncoder");
+    for (iter = offers.begin(); iter < offers.end(); ++iter) {
+        KService::Ptr service = *iter;
+        KPluginInfo info(service);
+
+        if (!info.isValid()) {
+            kWarning() << "invalid plugin info:" << service->entryPath();
+            continue;
+        } else {
+            kDebug() << "found RecordItNowEncoder:" << info.name();
+            info.setConfig(encoderCfg);
+            info.load(encoderCfg);
+            m_encoderPlugins[info] = 0;
+        }
+    }
+    kDebug() << ">>> RecordItNowEncoder finished!";
+    kDebug() << ">>> found" << m_encoderPlugins.size() << "encoder!";
+
 
     emit pluginsChanged();
 

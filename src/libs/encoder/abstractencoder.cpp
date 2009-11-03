@@ -17,60 +17,27 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOWPLUGINMANAGER_H
-#define RECORDITNOWPLUGINMANAGER_H
+
+// own
+#include "abstractencoder.h"
 
 
-// Qt
-#include <QtCore/QObject>
-
-// KDE
-#include <kplugininfo.h>
-
-
-class AbstractRecorder;
-class AbstractEncoder;
-class RecordItNowPluginManager : public QObject
+AbstractEncoder::AbstractEncoder(QObject *parent, const QVariantList &args)
+    : QObject(parent)
 {
-    Q_OBJECT
+
+    Q_UNUSED(args);
+
+}
 
 
-public:
-    RecordItNowPluginManager(QObject *parent = 0);
-    ~RecordItNowPluginManager();
-
-    void init();
-
-    AbstractRecorder *loadRecorderPlugin(const KPluginInfo &info);
-    AbstractRecorder *loadRecorderPlugin(const QString &name);
-
-    AbstractEncoder *loadEncoderPlugin(const KPluginInfo &info);
-    AbstractEncoder *loadEncoderPlugin(const QString &name);
-
-    void unloadRecorderPlugin(const KPluginInfo &info);
-    void unloadRecorderPlugin(AbstractRecorder *recorder);
-
-    void unloadEncoderPlugin(const KPluginInfo &info);
-    void unloadEncoderPlugin(AbstractEncoder *encoder);
-
-    QList<KPluginInfo> getRecorderList() const;
-
-    QList<KPluginInfo> getEncoderList() const;
+AbstractEncoder::~AbstractEncoder()
+{
 
 
-private:
-    QHash<KPluginInfo, AbstractRecorder*> m_recorderPlugins;
-    QHash<KPluginInfo, AbstractEncoder*> m_encoderPlugins;
 
-    void clear();
-    void loadPluginList();
+}
 
 
-signals:
-    void pluginsChanged();
+#include "abstractencoder.moc"
 
-
-};
-
-
-#endif // RECORDITNOWPLUGINMANAGER_H

@@ -35,6 +35,7 @@ public:
     ScreenshotRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~ScreenshotRecorder();
 
+    bool isVideoRecorder() const;
     bool hasFeature(const AbstractRecorder::Feature &feature) const;
     virtual QString getDefaultOutputFile() const;
 
