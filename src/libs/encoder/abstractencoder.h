@@ -34,11 +34,16 @@ class KDE_EXPORT AbstractEncoder : public QObject
     Q_OBJECT
 
 
-public:    
+public:
+    struct Data {
+        QString file;
+        bool overwrite;
+    };
+
     AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractEncoder();
 
-    virtual void encode(const QString &file) = 0;
+    virtual void encode(const Data &d) = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
 

@@ -37,7 +37,7 @@ public:
     MencoderEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~MencoderEncoder();
 
-    void encode(const QString &file);
+    void encode(const Data &d);
     void pause();
     void stop();
 

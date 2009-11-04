@@ -108,7 +108,7 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 
     QFile outFile(d.outputFile);
     if (outFile.exists()) {
-        if (!Settings::overwrite()) {
+        if (!d.overwrite) {
             while (outFile.exists()) {
                 outFile.setFileName(outFile.fileName()+"_");
             }

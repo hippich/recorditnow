@@ -172,7 +172,7 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 
     args << "--workdir" << Settings::__workdir().encodedPathAndQuery();
 
-    if (Settings::__overwrite()) {
+    if (d.overwrite) {
         args << "--overwrite";
     }
 

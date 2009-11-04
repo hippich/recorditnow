@@ -56,6 +56,7 @@ public:
         qlonglong winId;
         int fps;
         bool sound;
+        bool overwrite;
     };
 
     AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());

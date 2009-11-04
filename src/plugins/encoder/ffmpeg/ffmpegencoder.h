@@ -37,7 +37,7 @@ public:
     FfmpegEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~FfmpegEncoder();
 
-    void encode(const QString &file);
+    void encode(const Data &d);
     void pause();
     void stop();
 

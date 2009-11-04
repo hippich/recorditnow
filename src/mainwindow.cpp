@@ -425,7 +425,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     d->fps = fpsSpinBox->value();
     d->sound = soundCheck->isChecked();
     d->outputFile = path;
-
+    d->overwrite = Settings::overwrite();
     if (m_recorderPlugin) {
         m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
         m_recorderPlugin = 0;
@@ -645,7 +645,10 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
     connect(m_encoderPlugin, SIGNAL(outputFileChanged(QString)), outputRequester,
             SLOT(setText(QString)));
 
-    m_encoderPlugin->encode(outputRequester->text());
+    AbstractEncoder::Data d;
+    d.overwrite = Settings::overwrite();
+    d.file = outputRequester->text();
+    m_encoderPlugin->encode(d);
 
 }
 

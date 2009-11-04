@@ -61,7 +61,7 @@ MencoderEncoder::~MencoderEncoder()
 }
 
 
-void MencoderEncoder::encode(const QString &file)
+void MencoderEncoder::encode(const Data &d)
 {
 
     emit status(i18n("Starting mencoder!"));
@@ -69,8 +69,8 @@ void MencoderEncoder::encode(const QString &file)
     // reload cfg
     Settings::self()->readConfig();
 
-    m_outputFile = file;
-    m_tmpFile = file;
+    m_outputFile = d.file;
+    m_tmpFile = d.file;
 
     // fix format
     if (m_outputFile.length() > 4 && m_outputFile[m_outputFile.length()-4] == '.') {
@@ -79,8 +79,18 @@ void MencoderEncoder::encode(const QString &file)
     const QString format = formats[Settings::format()];
     m_outputFile.append('.'+format);
 
-    while (QFile(m_outputFile).exists()) {
-        m_outputFile.insert(m_outputFile.length()-4, '_');
+    if (!d.overwrite) {
+        while (QFile(m_outputFile).exists()) {
+            m_outputFile.insert(m_outputFile.length()-4, '_');
+        }
+    } else {
+        QFile file(m_outputFile);
+        if (file.exists()) {
+            if (!file.remove()){
+                emit error(i18n("Cannot overwrite file %1", m_outputFile));
+                return;
+            }
+        }
     }
 
     emit outputFileChanged(m_outputFile);
@@ -102,8 +112,8 @@ void MencoderEncoder::encode(const QString &file)
         m_tmpFile.append('_');
     }
 
-    if (!dir.rename(file, m_tmpFile)) {
-        emit error(i18n("Rename failed: \"%1\" to \"%2\"", file, m_tmpFile));
+    if (!dir.rename(d.file, m_tmpFile)) {
+        emit error(i18n("Rename failed: \"%1\" to \"%2\"", d.file, m_tmpFile));
         return;
     }
 

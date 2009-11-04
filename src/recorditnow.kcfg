@@ -29,6 +29,10 @@
             <label></label>
             <default></default>
     </entry>
+    <entry name="overwrite" type="Bool">
+            <label></label>
+            <default>false</default>
+    </entry>
   </group>
   <group name="GUI">
     <entry name="currentBackend" type="String">
