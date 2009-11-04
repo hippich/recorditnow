@@ -66,13 +66,10 @@ FfmpegEncoder::~FfmpegEncoder()
 void FfmpegEncoder::encode(const QString &file)
 {
 
-    emit status(i18n("Starting Ffmpeg!"));
+    emit status(i18n("Starting ffmpeg!"));
 
     // reload cfg
     Settings::self()->readConfig();
-
-    kDebug() << "encode:" << file << "target format:" << formats[Settings::format()];
-
 
     m_outputFile = file;
     m_tmpFile = file;
@@ -100,14 +97,12 @@ void FfmpegEncoder::encode(const QString &file)
     if (!tmpDir.endsWith('/')) {
         tmpDir.append('/');
     }
-    kDebug() << "tmp dir:" << tmpDir;
 
     m_tmpFile = tmpDir+"recorditnow_ffmpeg";
     QDir dir;
     while (dir.exists(m_tmpFile)) {
         m_tmpFile.append('_');
     }
-    kDebug() << "tmp file:" << m_tmpFile;
 
     if (!dir.rename(file, m_tmpFile)) {
         emit error(i18n("Rename failed: \"%1\" to \"%2\"", file, m_tmpFile));
@@ -205,8 +200,6 @@ void FfmpegEncoder::newFfmpegOutput()
         m_duration = time.second();
         m_duration += (time.minute()*60);
         m_duration += (time.hour()*60*60);
-
-        kDebug() << "duration:" << output << m_duration;
         return;
     } else if (output.contains("time=") && m_duration > 0) {
         output.remove(QRegExp(".*time="));

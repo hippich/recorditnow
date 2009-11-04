@@ -64,13 +64,10 @@ MencoderEncoder::~MencoderEncoder()
 void MencoderEncoder::encode(const QString &file)
 {
 
-    emit status(i18n("Starting Mencoder!"));
+    emit status(i18n("Starting mencoder!"));
 
     // reload cfg
     Settings::self()->readConfig();
-
-    kDebug() << "encode:" << file << "target format:" << formats[Settings::format()];
-
 
     m_outputFile = file;
     m_tmpFile = file;
@@ -98,14 +95,12 @@ void MencoderEncoder::encode(const QString &file)
     if (!tmpDir.endsWith('/')) {
         tmpDir.append('/');
     }
-    kDebug() << "tmp dir:" << tmpDir;
 
     m_tmpFile = tmpDir+"recorditnow_mencoder";
     QDir dir;
     while (dir.exists(m_tmpFile)) {
         m_tmpFile.append('_');
     }
-    kDebug() << "tmp file:" << m_tmpFile;
 
     if (!dir.rename(file, m_tmpFile)) {
         emit error(i18n("Rename failed: \"%1\" to \"%2\"", file, m_tmpFile));
@@ -152,7 +147,7 @@ void MencoderEncoder::encode(const QString &file)
     // exe
     const QString exe = KGlobal::dirs()->findExe("mencoder");
     if (exe.isEmpty()) {
-        emit error(i18n("Cannot find Mencoder."));
+        emit error(i18n("Cannot find mencoder."));
         return;
     }
 
