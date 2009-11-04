@@ -47,11 +47,15 @@ public:
 
 
 private:
+    struct RecordMyDesktopData {
+        QString outputFile;
+        QString tmpFile;
+        bool paused;
+        bool overwrite;
+    };
+
     KProcess *m_recorder;
-    bool m_paused;
-    QString m_outputFile;
-    QString m_tmpFile;
-    bool m_overwrite;
+    RecordMyDesktopData m_data;
 
     void clean();
 

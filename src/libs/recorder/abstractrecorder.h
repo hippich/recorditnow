@@ -52,6 +52,7 @@ public:
     struct Data {
     public:
         QString outputFile;
+        QString workDir;
         QRect geometry;
         qlonglong winId;
         int fps;
@@ -72,8 +73,8 @@ public:
 
 
 protected:
-    QString getTmpFile() const;    
-    void unique(QString &file);
+    QString getTemporaryFile(const QString &workDir) const;
+    QString unique(const QString &file) const;
 
 
 signals:

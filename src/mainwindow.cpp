@@ -423,6 +423,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     d->sound = soundCheck->isChecked();
     d->outputFile = outputRequester->text();
     d->overwrite = Settings::overwrite();
+    d->workDir = Settings::workDir().pathOrUrl();
     if (m_recorderPlugin) {
         m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
         m_recorderPlugin = 0;
@@ -645,6 +646,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
     AbstractEncoder::Data d;
     d.overwrite = Settings::overwrite();
     d.file = outputRequester->text();
+    d.workDir = Settings::workDir().pathOrUrl();
     m_encoderPlugin->encode(d);
 
 }

@@ -4,6 +4,9 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name="recorditnowrc"/>
+  <include>QtCore/QDir</include>
+  <include>kstandarddirs.h</include>
+  <include>kglobal.h</include>
   <group name="Preferences">
     <entry name="hideOnRecord" type="Bool">
 	    <label>Hide RecordItNow while recording</label>
@@ -28,6 +31,10 @@
     <entry name="overwrite" type="Bool">
             <label></label>
             <default>false</default>
+    </entry>
+    <entry name="workDir" type="Url">
+            <label></label>
+            <default code="true">KGlobal::dirs()->locateLocal("tmp", "")</default>
     </entry>
   </group>
   <group name="GUI">

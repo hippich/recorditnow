@@ -46,10 +46,13 @@ AbstractEncoder::~AbstractEncoder()
 }
 
 
-QString AbstractEncoder::getTmpFile() const
+QString AbstractEncoder::getTemporaryFile(const QString &workDir) const
 {
 
-    QString tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
+    QString tmpDir = workDir;
+    if (tmpDir.isEmpty()) {
+        tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
+    }
 
     if (tmpDir.isEmpty()) {
         tmpDir = QDir::homePath();
@@ -60,26 +63,25 @@ QString AbstractEncoder::getTmpFile() const
     }
     QString path = (tmpDir+"recorditnow_tmp");
 
-    QFile file;
-    while(file.exists(path)) {
-        path += '_';
-    }
+    path = unique(path);
+
     return path;
 
 }
 
 
-void AbstractEncoder::unique(QString &file)
+QString AbstractEncoder::unique(const QString &file) const
 {
 
-    QFile f;
-    while (f.exists(file)) {
-        if (file.length() > 4 && file[file.length()-4] == '.') {
-            file.insert(file.length()-4, "_");
+    QString path = file;
+    while (QFile::exists(path)) {
+        if (path.length() > 4 && path[path.length()-4] == '.') {
+            path.insert(path.length()-4, "_");
         } else {
-            file.append('_');
+            path.append('_');
         }
     }
+    return path;
 
 }
 

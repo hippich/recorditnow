@@ -46,7 +46,7 @@ RecordMyDesktopRecorder::RecordMyDesktopRecorder(QObject *parent, const QVariant
 {
 
     m_recorder = 0;
-    m_paused = false;
+    m_data.paused = false;
 
 }
 
@@ -98,10 +98,10 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     if (!d.sound) {
         args << "--no-sound";
     }
-    m_overwrite = d.overwrite;
-    m_outputFile = d.outputFile;
-    m_tmpFile = getTmpFile()+".ogv";
-    args << "-o" << m_tmpFile;
+    m_data.overwrite = d.overwrite;
+    m_data.outputFile = d.outputFile;
+    m_data.tmpFile = getTemporaryFile(d.workDir)+".ogv";
+    args << "-o" << m_data.tmpFile;
 
     if (d.winId != -1) {
         args << "--windowid" << QString::number(d.winId);
@@ -171,11 +171,7 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
         args << "--compress-cache";
     }
 
-    args << "--workdir" << Settings::__workdir().encodedPathAndQuery();
-
-    if (d.overwrite) {
-        args << "--overwrite";
-    }
+    args << "--workdir" << d.workDir;
 
     // create/start
     m_recorder = new KProcess(this);
@@ -195,14 +191,14 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 void RecordMyDesktopRecorder::pause()
 {
 
-    if (!m_paused) {
+    if (!m_data.paused) {
         emit status(i18n("Paused!"));
         kill(m_recorder->pid(), SIGSTOP);
-        m_paused = true;
+        m_data.paused = true;
     } else {
         emit status(i18n("Capturing!"));
         kill(m_recorder->pid(), SIGCONT);
-        m_paused = false;
+        m_data.paused = false;
     }
 
 }
@@ -213,7 +209,7 @@ void RecordMyDesktopRecorder::stop()
 
     if (m_recorder) {
         kill(m_recorder->pid(), SIGINT);
-        m_paused = false;
+        m_data.paused = false;
     }
 
 }
@@ -247,7 +243,7 @@ void RecordMyDesktopRecorder::newRecorderOutput()
             frames.remove(frames.indexOf("frames"), frames.length());
             emit status(i18n("Frames: %1", frames));
         } else if (line.startsWith("Output file:")) {
-            m_tmpFile = line.remove(0, 13);
+            m_data.tmpFile = line.remove(0, 13);
         } else if (line.startsWith("[")) {
             for (int i = 0; i < line.length(); i++) {
                 if (line[i] == '[') {
@@ -327,20 +323,20 @@ void RecordMyDesktopRecorder::clean()
 void RecordMyDesktopRecorder::recorderFinished(int)
 {
 
-    QFile outputFile(m_outputFile);
+    QFile outputFile(m_data.outputFile);
     if (outputFile.exists()) {
-        if (m_overwrite) {
-            if (!remove(m_outputFile)) {
+        if (m_data.overwrite) {
+            if (!remove(m_data.outputFile)) {
                 clean();
                 return;
             }
         } else {
-            unique(m_outputFile);
-            emit outputFileChanged(m_outputFile);
+            m_data.outputFile = unique(m_data.outputFile);
+            emit outputFileChanged(m_data.outputFile);
         }
     }
 
-    if (!move(m_tmpFile, m_outputFile)) {
+    if (!move(m_data.tmpFile, m_data.outputFile)) {
         clean();
         return;
     }

@@ -78,7 +78,7 @@ void FfmpegEncoder::encode(const Data &d)
     Settings::self()->readConfig();
 
     m_outputFile = d.file;
-    m_tmpFile = getTmpFile();
+    m_tmpFile = getTemporaryFile(d.workDir);
 
 
     // move to wokdir
@@ -97,7 +97,7 @@ void FfmpegEncoder::encode(const Data &d)
 
     // set output file
     if (!d.overwrite) {
-        unique(m_outputFile);
+        m_outputFile = unique(m_outputFile);
     } else {
         QFile file(m_outputFile);
         if (file.exists()) {

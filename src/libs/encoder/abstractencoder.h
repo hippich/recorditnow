@@ -37,6 +37,7 @@ class KDE_EXPORT AbstractEncoder : public QObject
 public:
     struct Data {
         QString file;
+        QString workDir;
         bool overwrite;
     };
 
@@ -48,8 +49,8 @@ public:
     virtual void stop() = 0;
 
 protected:
-    QString getTmpFile() const;
-    void unique(QString &file);
+    QString getTemporaryFile(const QString &workDir) const;
+    QString unique(const QString &file) const;
 
 
 signals:
