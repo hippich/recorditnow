@@ -221,7 +221,7 @@ void FfmpegEncoder::newFfmpegOutput()
             return;
         }
         const QString progress = QString::number((time*100)/m_duration);
-        emit status(i18n("Encode: %1", progress+'%'));
+        emit status(i18n("Encoding: %1", progress+'%'));
         return;
     }
     kDebug() << "!parsed:" << output;

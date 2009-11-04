@@ -212,7 +212,7 @@ void MencoderEncoder::newMencoderOutput()
         bool ok;
         output.toInt(&ok);
         if (ok) {
-            emit status(i18n("Encode: %1", output+'%'));
+            emit status(i18n("Encoding: %1", output+'%'));
         } else {
             kDebug() << "!ok:" << output;
         }
