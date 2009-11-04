@@ -49,6 +49,9 @@ private:
     bool m_paused;
     int m_duration;
 
+    bool remove(const QString &file);
+    bool move(const QString &from, const QString &to);
+
 
 private slots:
     void newFfmpegOutput();

@@ -31,7 +31,7 @@
 #include <QtGui/QX11Info>
 #include <QtCore/QFile>
 #include <QtGui/QPainter>
-
+#include <QtCore/QDir>
 
 
 static const char format[][7] = { "PNG", "JPG", "BMP", "PPM", "TIFF", "XBM", "XPM"};
@@ -83,7 +83,7 @@ QString ScreenshotRecorder::getDefaultOutputFile() const
 {
 
     Settings::self()->readConfig();
-    return QString("~/screenshot.")+QString(format[Settings::format()]).toLower();
+    return QDir::homePath()+QString("/screenshot.")+QString(format[Settings::format()]).toLower();
 
 }
 

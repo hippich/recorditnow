@@ -71,6 +71,11 @@ public:
     virtual void stop() = 0;
 
 
+protected:
+    QString getTmpFile() const;    
+    void unique(QString &file);
+
+
 signals:
     void status(const QString &text);
     void finished(const AbstractRecorder::ExitStatus &status);

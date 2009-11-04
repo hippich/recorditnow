@@ -54,9 +54,7 @@ RecordMyDesktopRecorder::RecordMyDesktopRecorder(QObject *parent, const QVariant
 RecordMyDesktopRecorder::~RecordMyDesktopRecorder()
 {
 
-    if (m_recorder) {
-        delete m_recorder;
-    }
+    clean();
 
 }
 
@@ -78,7 +76,7 @@ bool RecordMyDesktopRecorder::hasFeature(const AbstractRecorder::Feature &featur
 QString RecordMyDesktopRecorder::getDefaultOutputFile() const
 {
 
-    return "~/desktop_video.ogv";
+    return QDir::homePath()+"/desktop_video.ogv";
 
 }
 
@@ -100,7 +98,10 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     if (!d.sound) {
         args << "--no-sound";
     }
-    args << "-o" << d.outputFile;
+    m_overwrite = d.overwrite;
+    m_outputFile = d.outputFile;
+    m_tmpFile = getTmpFile()+".ogv";
+    args << "-o" << m_tmpFile;
 
     if (d.winId != -1) {
         args << "--windowid" << QString::number(d.winId);
@@ -246,7 +247,7 @@ void RecordMyDesktopRecorder::newRecorderOutput()
             frames.remove(frames.indexOf("frames"), frames.length());
             emit status(i18n("Frames: %1", frames));
         } else if (line.startsWith("Output file:")) {
-            emit outputFileChanged(line.remove(0, 13));
+            m_tmpFile = line.remove(0, 13);
         } else if (line.startsWith("[")) {
             for (int i = 0; i < line.length(); i++) {
                 if (line[i] == '[') {
@@ -285,17 +286,71 @@ void RecordMyDesktopRecorder::newRecorderOutput()
 }
 
 
+bool RecordMyDesktopRecorder::remove(const QString &file)
+{
+
+    QFile f(file);
+    if (!f.remove()) {
+        emit error(i18nc("%1 = file", "Remove failed: %1", file));
+        return false;
+    }
+    return true;
+
+}
+
+
+bool RecordMyDesktopRecorder::move(const QString &from, const QString &to)
+{
+
+    QFile file;
+    if (!file.rename(from, to)) {
+        emit error(i18n("Move failed: \"%1\" to \"%2\"", from, to));
+        return false;
+    }
+    return true;
+
+}
+
+
+void RecordMyDesktopRecorder::clean()
+{
+
+    if (m_recorder) {
+        m_recorder->disconnect(this);
+        m_recorder->deleteLater();
+        m_recorder = 0;
+    }
+
+}
+
+
 void RecordMyDesktopRecorder::recorderFinished(int)
 {
+
+    QFile outputFile(m_outputFile);
+    if (outputFile.exists()) {
+        if (m_overwrite) {
+            if (!remove(m_outputFile)) {
+                clean();
+                return;
+            }
+        } else {
+            unique(m_outputFile);
+            emit outputFileChanged(m_outputFile);
+        }
+    }
+
+    if (!move(m_tmpFile, m_outputFile)) {
+        clean();
+        return;
+    }
 
     if (m_recorder->exitStatus() == KProcess::CrashExit) {
         emit finished(Crash);
     } else {
         emit finished(Normal);
     }
-
-    m_recorder->deleteLater();
-    m_recorder = 0;
+    clean();
 
 }
 

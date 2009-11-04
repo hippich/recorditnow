@@ -416,15 +416,12 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
         m_box->setEnabled(false);
     }
 
-    QString path = outputRequester->text();
-    path.replace("~/", QDir::homePath()+'/');
-
     d->geometry = QRect(-1, -1, -1, -1);
     d->winId = -1;
 
     d->fps = fpsSpinBox->value();
     d->sound = soundCheck->isChecked();
-    d->outputFile = path;
+    d->outputFile = outputRequester->text();
     d->overwrite = Settings::overwrite();
     if (m_recorderPlugin) {
         m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);

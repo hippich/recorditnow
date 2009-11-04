@@ -21,7 +21,14 @@
 // own
 #include "abstractrecorder.h"
 
+// KDE
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <klocalizedstring.h>
+#include <kdebug.h>
 
+// Qt
+#include <QtCore/QDir>
 
 
 AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
@@ -38,6 +45,44 @@ AbstractRecorder::~AbstractRecorder()
 
 
 
+
+}
+
+
+QString AbstractRecorder::getTmpFile() const
+{
+
+    QString tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
+
+    if (tmpDir.isEmpty()) {
+        tmpDir = QDir::homePath();
+    }
+
+    if (!tmpDir.endsWith('/')) {
+        tmpDir.append('/');
+    }
+    QString path = (tmpDir+"recorditnow_tmp");
+
+    QFile file;
+    while(file.exists(path)) {
+        path += '_';
+    }
+    return path;
+
+}
+
+
+void AbstractRecorder::unique(QString &file)
+{
+
+    QFile f;
+    while (f.exists(file)) {
+        if (file.length() > 4 && file[file.length()-4] == '.') {
+            file.insert(file.length()-4, "_");
+        } else {
+            file.append('_');
+        }
+    }
 
 }
 

@@ -68,11 +68,24 @@ void FfmpegEncoder::encode(const Data &d)
 
     emit status(i18n("Starting ffmpeg!"));
 
+    // check input file
+    if (!QFile::exists(d.file)) {
+        emit error(i18nc("%1 = file", "ffmpeg: %1 no such file!", d.file));
+        return;
+    }
+
     // reload cfg
     Settings::self()->readConfig();
 
     m_outputFile = d.file;
-    m_tmpFile = d.file;
+    m_tmpFile = getTmpFile();
+
+
+    // move to wokdir
+    if (!move(d.file, m_tmpFile)) {
+        return;
+    }
+
 
     // fix format
     if (m_outputFile.length() > 4 && m_outputFile[m_outputFile.length()-4] == '.') {
@@ -81,47 +94,23 @@ void FfmpegEncoder::encode(const Data &d)
     const QString format = formats[Settings::format()];
     m_outputFile.append('.'+format);
 
+
+    // set output file
     if (!d.overwrite) {
-        while (QFile(m_outputFile).exists()) {
-            m_outputFile.insert(m_outputFile.length()-4, '_');
-        }
+        unique(m_outputFile);
     } else {
         QFile file(m_outputFile);
         if (file.exists()) {
-            if (!file.remove()){
-                emit error(i18n("Cannot overwrite file %1", m_outputFile));
+            if (!remove(m_outputFile)) {
                 return;
             }
         }
     }
+    emit outputFileChanged(m_outputFile); // update gui
 
-    emit outputFileChanged(m_outputFile);
-
-    // tmp dir
-    QString tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
-
-    if (tmpDir.isEmpty()) {
-        tmpDir = QDir::homePath();
-    }
-
-    if (!tmpDir.endsWith('/')) {
-        tmpDir.append('/');
-    }
-
-    m_tmpFile = tmpDir+"recorditnow_ffmpeg";
-    QDir dir;
-    while (dir.exists(m_tmpFile)) {
-        m_tmpFile.append('_');
-    }
-
-    if (!dir.rename(d.file, m_tmpFile)) {
-        emit error(i18n("Rename failed: \"%1\" to \"%2\"", d.file, m_tmpFile));
-        return;
-    }
 
     // args
     QStringList args;
-
     if (Settings::useFormat()) {
         args << "-i";
         args << m_tmpFile;
@@ -194,6 +183,32 @@ void FfmpegEncoder::stop()
 }
 
 
+bool FfmpegEncoder::remove(const QString &file)
+{
+
+    QFile f(file);
+    if (!f.remove()) {
+        emit error(i18nc("%1 = file", "Mencoder: Remove failed: %1", file));
+        return false;
+    }
+    return true;
+
+}
+
+
+bool FfmpegEncoder::move(const QString &from, const QString &to)
+{
+
+    QFile file;
+    if (!file.rename(from, to)) {
+        emit error(i18n("Move failed: \"%1\" to \"%2\"", from, to));
+        return false;
+    }
+    return true;
+
+}
+
+
 void FfmpegEncoder::newFfmpegOutput()
 {
 
@@ -239,7 +254,7 @@ void FfmpegEncoder::ffmpegFinished(const int &ret)
 
     QFile file(m_tmpFile);
     if (file.exists()) {
-        file.remove();
+        remove(m_tmpFile);
     }
 
     m_ffmpeg->disconnect(this);

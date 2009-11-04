@@ -21,6 +21,13 @@
 // own
 #include "abstractencoder.h"
 
+// KDE
+#include <kstandarddirs.h>
+
+// Qt
+#include <QtCore/QFile>
+#include <QtCore/QDir>
+
 
 AbstractEncoder::AbstractEncoder(QObject *parent, const QVariantList &args)
     : QObject(parent)
@@ -35,6 +42,44 @@ AbstractEncoder::~AbstractEncoder()
 {
 
 
+
+}
+
+
+QString AbstractEncoder::getTmpFile() const
+{
+
+    QString tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
+
+    if (tmpDir.isEmpty()) {
+        tmpDir = QDir::homePath();
+    }
+
+    if (!tmpDir.endsWith('/')) {
+        tmpDir.append('/');
+    }
+    QString path = (tmpDir+"recorditnow_tmp");
+
+    QFile file;
+    while(file.exists(path)) {
+        path += '_';
+    }
+    return path;
+
+}
+
+
+void AbstractEncoder::unique(QString &file)
+{
+
+    QFile f;
+    while (f.exists(file)) {
+        if (file.length() > 4 && file[file.length()-4] == '.') {
+            file.insert(file.length()-4, "_");
+        } else {
+            file.append('_');
+        }
+    }
 
 }
 

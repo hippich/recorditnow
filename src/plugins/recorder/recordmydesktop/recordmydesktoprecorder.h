@@ -49,6 +49,14 @@ public:
 private:
     KProcess *m_recorder;
     bool m_paused;
+    QString m_outputFile;
+    QString m_tmpFile;
+    bool m_overwrite;
+
+    void clean();
+
+    bool remove(const QString &file);
+    bool move(const QString &from, const QString &to);
 
 
 private slots:
