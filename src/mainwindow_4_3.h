@@ -22,9 +22,6 @@
 
 // own
 #include "ui_toolbarwidget.h"
-#include "ui_settings.h"
-#include "ui_recorderplugins.h"
-#include "ui_encoderplugins.h"                                                    
 #include "libs/recorder/abstractrecorder.h"                                       
 #include "libs/encoder/abstractencoder.h" 
 
@@ -95,7 +92,7 @@ private slots:
     void encoderFinished();
     void encoderError(const QString &error);
     void configure();
-    void saveConfig(int code);
+    void dialogFinished();
     void startTimer();
     void tick();
     void lcdUp();
@@ -104,8 +101,6 @@ private slots:
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
     void pluginsChanged();
-    void encoderSettingsChanged(const bool &changed);
-    void updateEncoderCombo();
 
 
 protected:

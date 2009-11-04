@@ -6,7 +6,8 @@ set(gui_SRCS
    mainwindow.cpp
    framebox.cpp
    line.cpp
-   recorditnowpluginmanager.cpp)
+   recorditnowpluginmanager.cpp
+   configdialog.cpp)
 
 # GUI
 kde4_add_ui_files(gui_SRCS ui/toolbarwidget.ui ui/settings.ui ui/recorderplugins.ui ui/encoderplugins.ui)

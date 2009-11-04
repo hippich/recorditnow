@@ -27,6 +27,7 @@
 #include "framebox.h"
 #include <recorditnow.h>
 #include <recorditnowpluginmanager.h>
+#include "configdialog.h"
 
 // Qt
 #include <QtGui/QAction>
@@ -677,76 +678,17 @@ void MainWindow::encoderError(const QString &error)
 void MainWindow::configure()
 {
 
-    KConfigDialog *dialog = new KConfigDialog(this, "settings", Settings::self());
-
-    QWidget *general = new QWidget;
-    ui_settings.setupUi(general);
-    dialog->addPage(general, i18n("RecordItNow"), "configure");
-
-    QWidget *recorderPage = new QWidget;
-    ui_recorder.setupUi(recorderPage);
-    ui_recorder.pluginSelector->addPlugins(m_pluginManager->getRecorderList());
-    dialog->addPage(recorderPage, i18n("Recorder Plugins"), "preferences-plugin");
-
-    QWidget *encoderPage = new QWidget;
-    ui_encoder.setupUi(encoderPage);
-    ui_encoder.pluginSelector->addPlugins(m_pluginManager->getEncoderList());
-    connect(ui_encoder.pluginSelector, SIGNAL(changed(bool)), this,
-            SLOT(encoderSettingsChanged(bool)));
-
-    updateEncoderCombo();
-    ui_encoder.kcfg_encoderIndex->setCurrentItem(Settings::encoderName(), false);
-
-
-    dialog->addPage(encoderPage, i18n("Encoder Plugins"), "preferences-plugin");
-
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    connect(dialog, SIGNAL(finished(int)), this, SLOT(saveConfig(int)));
-    dialog->resize(dialog->width(), 300);
+    ConfigDialog *dialog = new ConfigDialog(this, m_pluginManager);
+    connect(dialog, SIGNAL(dialogFinished()), this, SLOT(dialogFinished()));
     dialog->show();
 
 }
 
 
-void MainWindow::encoderSettingsChanged(const bool &changed)
-{
-
-    kDebug() << "changed:" << changed;
-    if (!changed) {
-        return;
-    }
-    ui_encoder.pluginSelector->updatePluginsState();
-    ui_encoder.pluginSelector->save();
-    updateEncoderCombo();
-
-}
-
-
-void MainWindow::updateEncoderCombo()
-{
-
-    const QString oldEncoder = ui_encoder.kcfg_encoderIndex->currentText();
-    ui_encoder.kcfg_encoderIndex->clear();
-    foreach (const KPluginInfo &info, m_pluginManager->getEncoderList()) {
-        if (info.isPluginEnabled()) {
-            ui_encoder.kcfg_encoderIndex->addItem(KIcon(info.icon()), info.name());
-        }
-    }
-    ui_encoder.kcfg_encoderIndex->setCurrentItem(oldEncoder, false);
-
-}
-
-
-void MainWindow::saveConfig(int code)
+void MainWindow::dialogFinished()
 {
 
     setupTray();
-
-    if (code == QDialog::Accepted) {
-        ui_recorder.pluginSelector->updatePluginsState();
-        ui_recorder.pluginSelector->save();
-        Settings::setEncoderName(ui_encoder.kcfg_encoderIndex->currentText());
-    }
     updateRecorderCombo();
 
 }
