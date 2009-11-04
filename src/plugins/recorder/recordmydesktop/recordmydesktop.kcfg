@@ -4,7 +4,9 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name="recorditnowrc"/>
-  <include>QtCore/QDir</include>         
+  <include>QtCore/QDir</include>
+  <include>kstandarddirs.h</include>
+  <include>kglobal.h</include>
   <group name="RecordMyDesktop">
     <entry name="__no_cursor" type="Bool">
 	    <label></label>
@@ -58,7 +60,7 @@
             <default>false</default>
     </entry>
     <entry name="__workdir" type="Url">
-            <default code="true">QDir::homePath()</default>
+            <default code="true">KGlobal::dirs()->locateLocal("tmp", "")</default>
     </entry>
     <entry name="__overwrite" type="Bool">
             <default>true</default>
