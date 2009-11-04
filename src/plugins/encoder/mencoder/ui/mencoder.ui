@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QFormLayout" name="formLayout_2">
    <property name="sizeConstraint">
@@ -94,7 +94,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>84</x>
-     <y>15</y>
+     <y>19</y>
     </hint>
     <hint type="destinationlabel">
      <x>145</x>
@@ -110,7 +110,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>76</x>
-     <y>47</y>
+     <y>59</y>
     </hint>
     <hint type="destinationlabel">
      <x>147</x>

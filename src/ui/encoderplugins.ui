@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -22,7 +22,7 @@
      <item row="0" column="0">
       <widget class="QCheckBox" name="kcfg_encode">
        <property name="text">
-        <string>Encode output file</string>
+        <string>Encode after record</string>
        </property>
       </widget>
      </item>
