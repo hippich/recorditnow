@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KCModule
+X-KDE-Library=recorditnow_ffmpeg_config
+X-KDE-ParentComponents=FfmpegEncoder
+X-KDE-PluginKeyword=FfmpegEncoder
+Name=ffmpeg Config

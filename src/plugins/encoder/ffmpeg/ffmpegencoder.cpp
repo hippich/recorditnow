@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 // own
-#include "mencoderencoder.h"
-#include <mencoder.h>
+#include "ffmpegencoder.h"
+#include <ffmpeg.h>
 
 // KDE
 #include <klocalizedstring.h>
@@ -30,6 +30,7 @@
 
 // Qt
 #include <QtCore/QDir>
+#include <QtCore/QTime>
 
 // C
 #include <sys/types.h>
@@ -39,32 +40,33 @@
 static const QStringList formats = QStringList() << "avi" << "flv";
 
 
-K_PLUGIN_FACTORY(myFactory, registerPlugin<MencoderEncoder>();)
-K_EXPORT_PLUGIN(myFactory("mencoder_encoder"))
-MencoderEncoder::MencoderEncoder(QObject *parent, const QVariantList &args)
+K_PLUGIN_FACTORY(myFactory, registerPlugin<FfmpegEncoder>();)
+K_EXPORT_PLUGIN(myFactory("ffmpeg_encoder"))
+FfmpegEncoder::FfmpegEncoder(QObject *parent, const QVariantList &args)
     : AbstractEncoder(parent, args)
 {
 
-    m_mencoder = 0;
+    m_duration = -1;
+    m_ffmpeg = 0;
 
 }
 
 
 
-MencoderEncoder::~MencoderEncoder()
+FfmpegEncoder::~FfmpegEncoder()
 {
 
-    if (m_mencoder) {
-        delete m_mencoder;
+    if (m_ffmpeg) {
+        delete m_ffmpeg;
     }
 
 }
 
 
-void MencoderEncoder::encode(const QString &file)
+void FfmpegEncoder::encode(const QString &file)
 {
 
-    emit status(i18n("Starting Mencoder!"));
+    emit status(i18n("Starting Ffmpeg!"));
 
     // reload cfg
     Settings::self()->readConfig();
@@ -100,7 +102,7 @@ void MencoderEncoder::encode(const QString &file)
     }
     kDebug() << "tmp dir:" << tmpDir;
 
-    m_tmpFile = tmpDir+"recorditnow_mencoder";
+    m_tmpFile = tmpDir+"recorditnow_ffmpeg";
     QDir dir;
     while (dir.exists(m_tmpFile)) {
         m_tmpFile.append('_');
@@ -116,30 +118,16 @@ void MencoderEncoder::encode(const QString &file)
     QStringList args;
 
     if (Settings::useFormat()) {
-        args << "-idx";
+        args << "-i";
         args << m_tmpFile;
 
         if (format == "avi") {
-            args << "-ovc";
-            args << "lavc";
-            args << "-oac";
-            args << "mp3lame";
-            args << "-lavcopts";
-            args << "vcodec=mpeg4:vqscale=2:vhq:v4mv:trell:autoaspect";
         } else if (format == "flv") {
-            args << "-of";
-            args << "lavf";
-            args << "-oac";
-            args << "mp3lame";
-            args << "-ovc";
-            args << "lavc";
-            args << "-lavcopts";
-            args << "vcodec=flv";
         } else {
             emit error(i18n("Unkown format."));
             return;
         }
-        args << "-o";
+        args << "-sameq";
         args << m_outputFile;
     } else {
         QString cmd = Settings::command();
@@ -150,93 +138,110 @@ void MencoderEncoder::encode(const QString &file)
     }
 
     // exe
-    const QString exe = KGlobal::dirs()->findExe("mencoder");
+    const QString exe = KGlobal::dirs()->findExe("ffmpeg");
     if (exe.isEmpty()) {
-        emit error(i18n("Cannot find Mencoder."));
+        emit error(i18n("Cannot find ffmpeg."));
         return;
     }
 
     // process
-    if (m_mencoder) { // should never happen
-        m_mencoder->disconnect(this);
-        m_mencoder->deleteLater();
+    if (m_ffmpeg) { // should never happen
+        m_ffmpeg->disconnect(this);
+        m_ffmpeg->deleteLater();
     }
 
-    m_mencoder = new KProcess(this);
-    m_mencoder->setOutputChannelMode(KProcess::MergedChannels);
-    m_mencoder->setProgram(exe, args);
+    m_ffmpeg = new KProcess(this);
+    m_ffmpeg->setOutputChannelMode(KProcess::MergedChannels);
+    m_ffmpeg->setProgram(exe, args);
 
-    connect(m_mencoder, SIGNAL(finished(int)), this, SLOT(mencoderFinished(int)));
-    connect(m_mencoder, SIGNAL(readyReadStandardOutput()), this, SLOT(newMencoderOutput()));
+    connect(m_ffmpeg, SIGNAL(finished(int)), this, SLOT(ffmpegFinished(int)));
+    connect(m_ffmpeg, SIGNAL(readyReadStandardOutput()), this, SLOT(newFfmpegOutput()));
 
-    m_mencoder->start();
+    m_ffmpeg->start();
 
 }
 
 
-void MencoderEncoder::pause()
+void FfmpegEncoder::pause()
 {
 
     if (!m_paused) {
         emit status(i18n("Paused!"));
-        kill(m_mencoder->pid(), SIGSTOP);
+        kill(m_ffmpeg->pid(), SIGSTOP);
         m_paused = true;
     } else {
         emit status(i18n("Capturing!"));
-        kill(m_mencoder->pid(), SIGCONT);
+        kill(m_ffmpeg->pid(), SIGCONT);
         m_paused = false;
     }
 
 }
 
 
-void MencoderEncoder::stop()
+void FfmpegEncoder::stop()
 {
 
-    if (m_mencoder) {
-        kill(m_mencoder->pid(), SIGINT);
+    if (m_ffmpeg) {
+        kill(m_ffmpeg->pid(), SIGINT);
         m_paused = false;
     }
 
 }
 
 
-void MencoderEncoder::newMencoderOutput()
+void FfmpegEncoder::newFfmpegOutput()
 {
 
-    QString output = m_mencoder->readAllStandardOutput().trimmed();
-//"Pos:   6.7s    101f (99%) 33.95fps Trem:   0min   1mb  A-V:0.066 [1228:192]"
-    if (output.contains('%')) {
-        output.remove(output.indexOf('%'), output.length());
-        output.remove(0, output.lastIndexOf('(')+1);
-        bool ok;
-        output.toInt(&ok);
-        if (ok) {
-            emit status(i18n("Encode: %1", output+'%'));
-        } else {
-            kDebug() << "!ok:" << output;
+    QString output = m_ffmpeg->readAllStandardOutput().trimmed();
+    if (output.contains(QRegExp("[0-9][0-9]:[0-9][0-9]:[0-9][0-9]"))) {
+        output.remove(QRegExp(".*Duration:"));
+        output.remove(output.indexOf(','), output.length());
+        output = output.trimmed();
+        if (output.contains('.')) {
+            output.remove(output.indexOf('.'), output.length());
         }
-    } else {
-        kDebug() << "!parsed:" << output;
-    }
+        
+        QTime time = QTime::fromString(output, "hh:mm:ss");
+        m_duration = time.second();
+        m_duration += (time.minute()*60);
+        m_duration += (time.hour()*60*60);
 
+        kDebug() << "duration:" << output << m_duration;
+        return;
+    } else if (output.contains("time=") && m_duration > 0) {
+        output.remove(QRegExp(".*time="));
+        output = output.trimmed();
+        output.remove(QRegExp(" .*"));
+        if (output.contains('.')) {
+            output.remove(output.indexOf('.'), output.length());
+        }
+        bool ok;
+        const int time = output.toInt(&ok);
+        if (!ok) {
+            return;
+        }
+        const QString progress = QString::number((time*100)/m_duration);
+        emit status(i18n("Encode: %1", progress+'%'));
+        return;
+    }
+    kDebug() << "!parsed:" << output;
 
 }
 
 
-void MencoderEncoder::mencoderFinished(const int &ret)
+void FfmpegEncoder::ffmpegFinished(const int &ret)
 {
 
-    kDebug() << "Mencoder finished:" << ret;
+    kDebug() << "ffmpeg finished:" << ret;
 
     QFile file(m_tmpFile);
     if (file.exists()) {
         file.remove();
     }
 
-    m_mencoder->disconnect(this);
-    m_mencoder->deleteLater();
-    m_mencoder = 0;
+    m_ffmpeg->disconnect(this);
+    m_ffmpeg->deleteLater();
+    m_ffmpeg = 0;
 
     emit finished();
 

@@ -693,13 +693,15 @@ void MainWindow::configure()
     ui_encoder.pluginSelector->addPlugins(m_pluginManager->getEncoderList());
     connect(ui_encoder.pluginSelector, SIGNAL(changed(bool)), this,
             SLOT(encoderSettingsChanged(bool)));
+
     updateEncoderCombo();
+    ui_encoder.kcfg_encoderIndex->setCurrentItem(Settings::encoderName(), false);
+
+
     dialog->addPage(encoderPage, i18n("Encoder Plugins"), "preferences-plugin");
 
     dialog->setAttribute(Qt::WA_DeleteOnClose);
-
     connect(dialog, SIGNAL(finished(int)), this, SLOT(saveConfig(int)));
-
     dialog->resize(dialog->width(), 300);
     dialog->show();
 
