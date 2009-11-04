@@ -19,21 +19,35 @@
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
-     <item row="0" column="0">
+     <item row="3" column="1">
+      <widget class="KComboBox" name="kcfg_encoderIndex">
+       <property name="insertPolicy">
+        <enum>QComboBox::InsertAlphabetically</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QCheckBox" name="kcfg_encode">
+       <property name="text">
+        <string>Encode after record</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
       <widget class="QCheckBox" name="kcfg_tray">
        <property name="text">
         <string>Enable system tray icon</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="1" column="0" colspan="2">
       <widget class="QCheckBox" name="kcfg_hideOnRecord">
        <property name="text">
         <string>Hide RecordItNow while recording</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="2" column="0" colspan="2">
       <widget class="QCheckBox" name="kcfg_showVideo">
        <property name="text">
         <string>Show file after record</string>
@@ -44,6 +58,30 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_encode</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_encoderIndex</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

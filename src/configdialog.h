@@ -24,14 +24,13 @@
 
 // own
 #include "ui_settings.h"
-#include "ui_recorderplugins.h"
-#include "ui_encoderplugins.h"
 
 // KDE
 #include <kconfigdialog.h>
 
 
 class RecordItNowPluginManager;
+class KPluginSelector;
 class ConfigDialog : public KConfigDialog
 {
     Q_OBJECT
@@ -45,8 +44,7 @@ public:
 private:
     RecordItNowPluginManager *m_pluginManager;
     Ui::Settings ui_settings;
-    Ui::RecorderPlugins ui_recorder;
-    Ui::EncoderPlugins ui_encoder;
+    KPluginSelector *m_pluginSelector;
 
     void init();
 
@@ -54,8 +52,7 @@ private:
 private slots:
     void updateEncoderCombo();
     void configFinished(const int &code);
-    void recorderSettingsChanged(const bool &changed);
-    void encoderSettingsChanged(const bool &changed);
+    void pluginSettingsChanged(const bool &changed);
 
 
 signals:

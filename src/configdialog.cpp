@@ -25,6 +25,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <kpluginselector.h>
 
 
 ConfigDialog::ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager)
@@ -49,31 +50,26 @@ ConfigDialog::~ConfigDialog()
 void ConfigDialog::init()
 {
 
-    QWidget *general = new QWidget;
-    ui_settings.setupUi(general);
+    QWidget *generalPage = new QWidget(this);
+    ui_settings.setupUi(generalPage);
 
-    QWidget *recorderPage = new QWidget;
-    ui_recorder.setupUi(recorderPage);
-    ui_recorder.pluginSelector->addPlugins(m_pluginManager->getRecorderList());
-    connect(ui_recorder.pluginSelector, SIGNAL(changed(bool)), this,
-            SLOT(recorderSettingsChanged(bool)));
+    m_pluginSelector = new KPluginSelector(this);
+    connect(m_pluginSelector, SIGNAL(changed(bool)), this, SLOT(pluginSettingsChanged(bool)));
 
-    QWidget *encoderPage = new QWidget;
-    ui_encoder.setupUi(encoderPage);
-    ui_encoder.pluginSelector->addPlugins(m_pluginManager->getEncoderList());
-    connect(ui_encoder.pluginSelector, SIGNAL(changed(bool)), this,
-            SLOT(encoderSettingsChanged(bool)));
-
+    m_pluginSelector->addPlugins(m_pluginManager->getRecorderList(),
+                               KPluginSelector::ReadConfigFile,
+                               i18n("Recorder"));
+    m_pluginSelector->addPlugins(m_pluginManager->getEncoderList(),
+                               KPluginSelector::ReadConfigFile,
+                               i18n("Encoder"));
     updateEncoderCombo();
-    ui_encoder.kcfg_encoderIndex->setCurrentItem(Settings::encoderName(), false);
+    ui_settings.kcfg_encoderIndex->setCurrentItem(Settings::encoderName(), false);
 
-    addPage(general, i18n("RecordItNow"), "configure");
-    addPage(recorderPage, i18n("Recorder Plugins"), "preferences-plugin");
-    addPage(encoderPage, i18n("Encoder Plugins"), "preferences-plugin");
+    addPage(generalPage, i18n("RecordItNow"), "configure");
+    addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
-
-    resize(300, 400);
+    setMinimumHeight(450); // workaround for kpluginselector hang/bug
 
 }
 
@@ -81,14 +77,14 @@ void ConfigDialog::init()
 void ConfigDialog::updateEncoderCombo()
 {
 
-    const QString oldEncoder = ui_encoder.kcfg_encoderIndex->currentText();
-    ui_encoder.kcfg_encoderIndex->clear();
+    const QString oldEncoder = ui_settings.kcfg_encoderIndex->currentText();
+    ui_settings.kcfg_encoderIndex->clear();
     foreach (const KPluginInfo &info, m_pluginManager->getEncoderList()) {
         if (info.isPluginEnabled()) {
-            ui_encoder.kcfg_encoderIndex->addItem(KIcon(info.icon()), info.name());
+            ui_settings.kcfg_encoderIndex->addItem(KIcon(info.icon()), info.name());
         }
     }
-    ui_encoder.kcfg_encoderIndex->setCurrentItem(oldEncoder, false);
+    ui_settings.kcfg_encoderIndex->setCurrentItem(oldEncoder, false);
 
 }
 
@@ -97,34 +93,23 @@ void ConfigDialog::configFinished(const int &code)
 {
 
     if (code == KConfigDialog::Accepted) {
-        ui_recorder.pluginSelector->updatePluginsState();
-        ui_encoder.pluginSelector->updatePluginsState();
-        ui_recorder.pluginSelector->save();
-        ui_encoder.pluginSelector->save();
-        Settings::setEncoderName(ui_encoder.kcfg_encoderIndex->currentText());
+        m_pluginSelector->updatePluginsState();
+        m_pluginSelector->save();
+        Settings::setEncoderName(ui_settings.kcfg_encoderIndex->currentText());
     }
     emit dialogFinished();
 
 }
 
 
-void ConfigDialog::recorderSettingsChanged(const bool &changed)
-{
-
-    Q_UNUSED(changed);
-    enableButtonApply(true);
-
-}
-
-
-void ConfigDialog::encoderSettingsChanged(const bool &changed)
+void ConfigDialog::pluginSettingsChanged(const bool &changed)
 {
 
     enableButtonApply(true);
     if (!changed) {
         return;
     }
-    ui_encoder.pluginSelector->updatePluginsState();
+    m_pluginSelector->updatePluginsState();
     updateEncoderCombo();
 
 }
