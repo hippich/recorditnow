@@ -53,6 +53,7 @@ private slots:
     void updateEncoderCombo();
     void configFinished(const int &code);
     void pluginSettingsChanged(const bool &changed);
+    void encoderChanged();
 
 
 signals:

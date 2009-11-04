@@ -21,10 +21,6 @@
             <label></label>
             <default>false</default>
     </entry>
-    <entry name="encoderIndex" type="Int">
-            <label></label>
-            <default>-1</default>
-    </entry>
     <entry name="encoderName" type="String">
             <label></label>
             <default></default>

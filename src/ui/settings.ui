@@ -20,7 +20,7 @@
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
      <item row="4" column="1">
-      <widget class="KComboBox" name="kcfg_encoderIndex">
+      <widget class="KComboBox" name="encoderCombo">
        <property name="insertPolicy">
         <enum>QComboBox::InsertAlphabetically</enum>
        </property>
@@ -77,7 +77,7 @@
   <connection>
    <sender>kcfg_encode</sender>
    <signal>toggled(bool)</signal>
-   <receiver>kcfg_encoderIndex</receiver>
+   <receiver>encoderCombo</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

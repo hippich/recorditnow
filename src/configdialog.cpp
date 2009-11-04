@@ -42,8 +42,6 @@ ConfigDialog::ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager)
 ConfigDialog::~ConfigDialog()
 {
 
-
-
 }
 
 
@@ -63,7 +61,10 @@ void ConfigDialog::init()
                                KPluginSelector::ReadConfigFile,
                                i18n("Encoder"));
     updateEncoderCombo();
-    ui_settings.kcfg_encoderIndex->setCurrentItem(Settings::encoderName(), false);
+    ui_settings.encoderCombo->setCurrentItem(Settings::encoderName(), false);
+
+    connect(ui_settings.encoderCombo, SIGNAL(currentIndexChanged(QString)), this,
+            SLOT(encoderChanged()));
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
@@ -77,14 +78,14 @@ void ConfigDialog::init()
 void ConfigDialog::updateEncoderCombo()
 {
 
-    const QString oldEncoder = ui_settings.kcfg_encoderIndex->currentText();
-    ui_settings.kcfg_encoderIndex->clear();
+    const QString oldEncoder = ui_settings.encoderCombo->currentText();
+    ui_settings.encoderCombo->clear();
     foreach (const KPluginInfo &info, m_pluginManager->getEncoderList()) {
         if (info.isPluginEnabled()) {
-            ui_settings.kcfg_encoderIndex->addItem(KIcon(info.icon()), info.name());
+            ui_settings.encoderCombo->addItem(KIcon(info.icon()), info.name());
         }
     }
-    ui_settings.kcfg_encoderIndex->setCurrentItem(oldEncoder, false);
+    ui_settings.encoderCombo->setCurrentItem(oldEncoder, false);
 
 }
 
@@ -95,7 +96,7 @@ void ConfigDialog::configFinished(const int &code)
     if (code == KConfigDialog::Accepted) {
         m_pluginSelector->updatePluginsState();
         m_pluginSelector->save();
-        Settings::setEncoderName(ui_settings.kcfg_encoderIndex->currentText());
+        Settings::setEncoderName(ui_settings.encoderCombo->currentText());
     }
     emit dialogFinished();
 
@@ -111,6 +112,14 @@ void ConfigDialog::pluginSettingsChanged(const bool &changed)
     }
     m_pluginSelector->updatePluginsState();
     updateEncoderCombo();
+
+}
+
+
+void ConfigDialog::encoderChanged()
+{
+
+    enableButtonApply(true);
 
 }
 
