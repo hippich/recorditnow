@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-11-04 03:39+0100\n"
-"PO-Revision-Date: 2009-11-04 03:38+0100\n"
+"PO-Revision-Date: 2009-11-04 17:34+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -366,7 +366,7 @@ msgstr "RecordItNow"
 
 #: src/main.cpp:37
 msgid "Plugin based desktop recorder"
-msgstr "Plugin basierter Desktop Recorder"
+msgstr "Modul basierter Desktop Recorder"
 
 #: src/main.cpp:39 src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:42
 #: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:42
@@ -458,11 +458,11 @@ msgstr "Abgeschlossen!"
 
 #: src/mainwindow.cpp:689
 msgid "Recorder Plugins"
-msgstr "Recorder Plugins"
+msgstr "Recorder Module"
 
 #: src/mainwindow.cpp:701
 msgid "Encoder Plugins"
-msgstr "Encoder Plugins"
+msgstr "Encoder Module"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:38
 msgid "Ffmpeg Configuration"
