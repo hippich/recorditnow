@@ -32,31 +32,31 @@
          <property name="rowWrapPolicy">
           <enum>QFormLayout::WrapLongRows</enum>
          </property>
-         <item row="3" column="0">
+         <item row="1" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___no_cursor">
            <property name="text">
             <string>Disable drawing of the cursor</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="2" column="0" colspan="2">
+          <widget class="QCheckBox" name="kcfg___no_shared">
+           <property name="text">
+            <string>Disable usage of MIT-shared memory extension(Not Recommended!)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___full_shots">
            <property name="text">
             <string>Take full screenshot at every frame(Not recomended!)</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
+         <item row="4" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___subsampling">
            <property name="text">
             <string>Quick subsampling</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QCheckBox" name="kcfg___no_shared">
-           <property name="text">
-            <string>Disable usage of MIT-shared memory extension(Not Recommended!)</string>
            </property>
           </widget>
          </item>
@@ -298,7 +298,7 @@
      </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
-       <string>Misc</string>
+       <string>Miscellaneous</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
