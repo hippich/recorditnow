@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
                      0,
                      "just89@gmx.de");
     about.setProgramIconName("video-display");
+    about.setHomepage("X-KDE-PluginInfo-Website=http://kde-apps.org/content/show.php/"
+                      "RecordItNow?content=114610");
 
     KCmdLineArgs::init(argc, argv, &about);
 
