@@ -42,8 +42,10 @@ class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 public:
     enum State {
         Idle = 0,
-        Recording = 1,
-        Paused = 2
+        Timer = 1,
+        TimerPaused = 2,
+        Recording = 3,
+        Paused = 4
     };
     MainWindow(QWidget *parent = 0);
     ~MainWindow();

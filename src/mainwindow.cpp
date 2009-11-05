@@ -215,6 +215,7 @@ void MainWindow::startRecord()
 {
 
     if (m_recorderPlugin) {
+        setState(Recording);
         m_recorderPlugin->record(m_recordData);
     }
 
@@ -223,6 +224,15 @@ void MainWindow::startRecord()
 
 void MainWindow::pauseRecord()
 {
+
+    if (state() == Timer) {
+        m_timer->stop();
+        setState(TimerPaused);
+        return;
+    } else if (state() == TimerPaused) {
+        startTimer();
+        return;
+    }
 
     if (m_recorderPlugin) {
         m_recorderPlugin->pause();
@@ -241,6 +251,14 @@ void MainWindow::pauseRecord()
 
 void MainWindow::stopRecord()
 {
+
+    if (state() == Timer || state() == TimerPaused) {
+        m_timer->stop();
+        m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+        m_recorderPlugin = 0;
+        setState(Idle);
+        return;
+    }
 
     if (m_recorderPlugin) {
         m_recorderPlugin->stop();
@@ -411,7 +429,6 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 void MainWindow::initRecorder(AbstractRecorder::Data *d)
 {
 
-    setState(Recording);
     if (m_box->isEnabled()) {
         m_box->setEnabled(false);
     }
@@ -541,6 +558,7 @@ void MainWindow::setState(const State &newState)
             centralWidget()->setEnabled(true);
             break;
         }
+    case Timer:
     case Recording: {
             setTrayOverlay("media-record");
             actionCollection()->action("pause")->setIcon(KIcon("media-playback-pause"));
@@ -554,6 +572,7 @@ void MainWindow::setState(const State &newState)
             centralWidget()->setEnabled(false);
             break;
         }
+    case TimerPaused:
     case Paused: {
             setTrayOverlay("media-playback-pause");
             actionCollection()->action("pause")->setText(i18n("Continue"));
@@ -736,6 +755,7 @@ void MainWindow::playFile()
 void MainWindow::startTimer()
 {
 
+    setState(Timer);
     if (timerLcd->value() == 0) {
         m_timer->start(0);
     } else {
