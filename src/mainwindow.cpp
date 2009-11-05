@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupActions();
 
-    QWidget *toolWidget = new QWidget;
+    QWidget *toolWidget = new QWidget(this);
     setupUi(toolWidget);
     setCentralWidget(toolWidget);
 

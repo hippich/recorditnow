@@ -64,7 +64,7 @@
    <item row="1" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>	 Miscellaneous</string>
+      <string>Miscellaneous</string>
      </property>
      <layout class="QFormLayout" name="formLayout_4">
       <property name="fieldGrowthPolicy">

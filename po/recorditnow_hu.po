@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: recorditnow\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-04 03:39+0100\n"
+"POT-Creation-Date: 2009-11-05 21:16+0100\n"
 "PO-Revision-Date: 2009-10-31 02:35+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Hungary <info@blackpanther.hu>\n"
@@ -57,15 +57,15 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:69
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:22
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:69
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:69
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:22
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:13 po/rc.cpp:26 po/rc.cpp:108 rc.cpp:13 rc.cpp:26 rc.cpp:108
+#: po/rc.cpp:13 po/rc.cpp:26 po/rc.cpp:102 rc.cpp:13 rc.cpp:26 rc.cpp:102
 msgid "Format"
 msgstr "Formátum"
 
@@ -101,13 +101,13 @@ msgstr "Gyors almintázás"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#. i18n: file: src/ui/toolbarwidget.ui:138
+#. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#. i18n: file: src/ui/toolbarwidget.ui:138
+#. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:44 po/rc.cpp:164 rc.cpp:44 rc.cpp:164
+#: po/rc.cpp:44 po/rc.cpp:170 rc.cpp:44 rc.cpp:170
 msgid "Sound"
 msgstr "Hang"
 
@@ -200,169 +200,196 @@ msgstr "Átalakítja a hang-videó adatot a felvétel közben"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
-#: po/rc.cpp:93 rc.cpp:93
-msgid "Misc"
-msgstr "Egyéb"
+#. i18n: file: src/ui/settings.ui:67
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
+#. i18n: ectx: attribute (title), widget (QWidget, tab_4)
+#. i18n: file: src/ui/settings.ui:67
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: po/rc.cpp:93 po/rc.cpp:150 rc.cpp:93 rc.cpp:150
+msgid "Miscellaneous"
+msgstr ""
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:309
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg___overwrite)
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:68
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:309
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg___overwrite)
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:68
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:96 po/rc.cpp:132 rc.cpp:96 rc.cpp:132
-msgid "Overwrite existing files"
-msgstr "A meglévő fájlok felülírása"
-
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:316
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:312
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_wm_check)
-#: po/rc.cpp:99 rc.cpp:99
+#: po/rc.cpp:96 rc.cpp:96
 msgid "Do not try to detect the window manager."
 msgstr "Ne próbálja felismerni az ablakkezelőt"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:323
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:319
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___compress_cache)
-#: po/rc.cpp:102 rc.cpp:102
+#: po/rc.cpp:99 rc.cpp:99
 msgid "Compress Cache"
 msgstr "Gyorsítótár tömörítése"
 
-#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:330
-#. i18n: ectx: property (text), widget (QLabel, label_10)
-#: po/rc.cpp:105 rc.cpp:105
-msgid ""
-"Location where a temporary directory will be created to hold project files"
-msgstr "Az átmeneti fájlok helye ahol létre lesznek hozva a projekt fájlok"
-
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:30
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:33
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:111 rc.cpp:111
+#: po/rc.cpp:105 rc.cpp:105
 msgid "PNG"
 msgstr "PNG"
 
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:35
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:38
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:114 rc.cpp:114
+#: po/rc.cpp:108 rc.cpp:108
 msgid "JPG"
 msgstr "JPG"
 
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:40
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:43
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:117 rc.cpp:117
+#: po/rc.cpp:111 rc.cpp:111
 msgid "BMP"
 msgstr "BMP 2"
 
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:45
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:48
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:120 rc.cpp:120
+#: po/rc.cpp:114 rc.cpp:114
 msgid "PPM"
 msgstr "PPM-kép"
 
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:50
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:53
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:123 rc.cpp:123
+#: po/rc.cpp:117 rc.cpp:117
 msgid "TIFF"
 msgstr "TIFF-modul"
 
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:55
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:58
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:126 rc.cpp:126
+#: po/rc.cpp:120 rc.cpp:120
 msgid "XBM"
 msgstr "XBM"
 
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:60
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:63
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:129 rc.cpp:129
+#: po/rc.cpp:123 rc.cpp:123
 msgid "XPM"
 msgstr "XPM"
 
-#. i18n: file: src/recorditnow.kcfg:9
+#. i18n: file: src/recorditnow.kcfg:12
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
-#. i18n: file: src/ui/settings.ui:32
+#. i18n: file: src/ui/settings.ui:36
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#. i18n: file: src/recorditnow.kcfg:9
+#. i18n: file: src/recorditnow.kcfg:12
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
-#. i18n: file: src/ui/settings.ui:32
+#. i18n: file: src/ui/settings.ui:36
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:135 po/rc.cpp:147 rc.cpp:135 rc.cpp:147
+#: po/rc.cpp:126 po/rc.cpp:138 rc.cpp:126 rc.cpp:138
 msgid "Hide RecordItNow while recording"
 msgstr "A RecordItNow elrejtése a felvétel alatt"
 
 #. i18n: file: src/recorditnowui.rc:4
 #. i18n: ectx: ToolBar (mainToolBar)
-#: po/rc.cpp:138 rc.cpp:138
+#: po/rc.cpp:129 rc.cpp:129
 msgid "Main Toolbar"
 msgstr "Fő eszköztár"
 
-#. i18n: file: src/ui/encoderplugins.ui:25
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
+#. i18n: file: src/ui/settings.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: po/rc.cpp:132 rc.cpp:132
+msgid "Behavior "
+msgstr ""
+
+#. i18n: file: src/ui/settings.ui:29
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
+#: po/rc.cpp:135 rc.cpp:135
+msgid "Enable system tray icon"
+msgstr "Tálcaikon engedélyezése"
+
+#. i18n: file: src/ui/settings.ui:43
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
 #: po/rc.cpp:141 rc.cpp:141
+msgid "Overwrite existing files"
+msgstr "A meglévő fájlok felülírása"
+
+#. i18n: file: src/ui/settings.ui:50
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
+#: po/rc.cpp:144 rc.cpp:144
+msgid "Show file after record"
+msgstr "Mutassa a fájlt felvétel után"
+
+#. i18n: file: src/ui/settings.ui:57
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
+#: po/rc.cpp:147 rc.cpp:147
 #, fuzzy
 msgid "Encode after record"
 msgstr "Mutassa a fájlt felvétel után"
 
-#. i18n: file: src/ui/settings.ui:25
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:144 rc.cpp:144
-msgid "Enable system tray icon"
-msgstr "Tálcaikon engedélyezése"
-
-#. i18n: file: src/ui/settings.ui:39
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:150 rc.cpp:150
-msgid "Show file after record"
-msgstr "Mutassa a fájlt felvétel után"
-
-#. i18n: file: src/ui/toolbarwidget.ui:42
-#. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
+#. i18n: file: src/ui/settings.ui:76
+#. i18n: ectx: property (text), widget (QLabel, label_2)
 #: po/rc.cpp:153 rc.cpp:153
+#, fuzzy
+msgid "Encoder Plugin"
+msgstr "Felvételi bővítőmodulok"
+
+#. i18n: file: src/ui/settings.ui:93
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:156 rc.cpp:156
+msgid "Directory for temporary files:"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:48
+#. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
+#: po/rc.cpp:159 rc.cpp:159
 msgid "Timer"
 msgstr "Időzítő"
 
-#. i18n: file: src/ui/toolbarwidget.ui:106
+#. i18n: file: src/ui/toolbarwidget.ui:112
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:158 rc.cpp:158
+#: po/rc.cpp:164 rc.cpp:164
 msgid "Frames per second"
 msgstr "Képkocka/másodperc "
 
-#. i18n: file: src/ui/toolbarwidget.ui:109
+#. i18n: file: src/ui/toolbarwidget.ui:115
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:161 rc.cpp:161
+#: po/rc.cpp:167 rc.cpp:167
 msgid " FPS"
 msgstr " FPS"
 
-#. i18n: file: src/ui/toolbarwidget.ui:164
+#. i18n: file: src/ui/toolbarwidget.ui:170
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:167 rc.cpp:167
+#: po/rc.cpp:173 rc.cpp:173
 msgid "Backend"
 msgstr "Háttérprogram"
 
-#. i18n: file: src/ui/toolbarwidget.ui:178
-#. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
 #. i18n: file: src/ui/toolbarwidget.ui:184
-#. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:178
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:184
+#. i18n: file: src/ui/toolbarwidget.ui:190
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:170 po/rc.cpp:173 rc.cpp:170 rc.cpp:173
+#. i18n: file: src/ui/toolbarwidget.ui:184
+#. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
+#. i18n: file: src/ui/toolbarwidget.ui:190
+#. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
+#: po/rc.cpp:176 po/rc.cpp:179 rc.cpp:176 rc.cpp:179
 msgid "Output file"
 msgstr "Kimeneti fájl"
 
-#: po/rc.cpp:174 rc.cpp:174
+#: po/rc.cpp:180 rc.cpp:180
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Barcza Károly (blackPanther OS - www.blackpanther.hu)"
 
-#: po/rc.cpp:175 rc.cpp:175
+#: po/rc.cpp:181 rc.cpp:181
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kbarcza@blackpanther.hu"
 
-#: src/main.cpp:35 src/mainwindow.cpp:684
+#: src/configdialog.cpp:59
+#, fuzzy
+msgid "Recorder"
+msgstr "Felvétel"
+
+#: src/configdialog.cpp:62
+#, fuzzy
+msgid "Encoder"
+msgstr "Átalakítás"
+
+#: src/configdialog.cpp:69 src/main.cpp:35
 msgid "RecordItNow"
 msgstr "RecordItNow"
+
+#: src/configdialog.cpp:70
+#, fuzzy
+msgid "Plugins"
+msgstr "Felvételi bővítőmodulok"
 
 #: src/main.cpp:37
 msgid "Plugin based desktop recorder"
@@ -375,94 +402,85 @@ msgstr "Modul alapú asztal felvevő"
 msgid "(C) 2009 Kai Dombrowe"
 msgstr "(C) 2009 Kai Dombrowe"
 
-#: src/main.cpp:48
+#: src/main.cpp:49
 msgid "Offset in x direction."
 msgstr "Eltolás az x tengelyen"
 
-#: src/main.cpp:49
+#: src/main.cpp:50
 msgid "Offset in y direction."
 msgstr "Eltolás az y tengelyen"
 
-#: src/main.cpp:50
+#: src/main.cpp:51
 msgid "Width of recorded window."
 msgstr "A felvételi ablak szélessége"
 
-#: src/main.cpp:51
+#: src/main.cpp:52
 msgid "Height of recorded window."
 msgstr "A felvételi ablak magassága"
 
-#: src/main.cpp:52
+#: src/main.cpp:53
 msgid "The Backend to use. (Example: RecordMyDesktop/Screenshot)"
 msgstr "A háttérprogram a használathoz. (Például: RecordMyDesktop/Screenshot)"
 
-#: src/main.cpp:53
+#: src/main.cpp:54
 msgid "Wait \"time\" seconds."
 msgstr "A várakozási idő (másodpercben):"
 
-#: src/main.cpp:54
+#: src/main.cpp:55
 msgid "Name of recorded video/image."
 msgstr "A felvett videó/kép neve"
 
-#: src/mainwindow.cpp:164
+#: src/mainwindow.cpp:157
 msgid "Record"
 msgstr "Felvétel"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:163
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/mainwindow.cpp:176
+#: src/mainwindow.cpp:169
 msgid "Stop"
 msgstr "Megállítás"
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:176
 msgid "Record a Window"
 msgstr "Egy ablkak felvétele"
 
-#: src/mainwindow.cpp:188
+#: src/mainwindow.cpp:181
 msgid "Show Frame"
 msgstr "Képkockák megjelenítése"
 
-#: src/mainwindow.cpp:194
+#: src/mainwindow.cpp:187
 msgid "Record the entire Screen"
 msgstr "Az egész képernyő felvétele"
 
-#: src/mainwindow.cpp:257
+#: src/mainwindow.cpp:268
 msgid "No screen area selected."
 msgstr "Nincs képernyőterület kijelölve."
 
-#: src/mainwindow.cpp:437
+#: src/mainwindow.cpp:445
 msgid "Cannot load Recorder %1"
 msgstr "Nem sikerült betölteni a felvevőt %1"
 
-#: src/mainwindow.cpp:439
+#: src/mainwindow.cpp:447
 msgid "No output file specified."
 msgstr "Nincs megadva kimeneti fájl"
 
-#: src/mainwindow.cpp:560
+#: src/mainwindow.cpp:570
 msgid "Continue"
 msgstr "Folytatás"
 
-#: src/mainwindow.cpp:600 src/mainwindow.cpp:671
+#: src/mainwindow.cpp:610 src/mainwindow.cpp:685
 msgid "Error: %1"
 msgstr "Hiba: %1"
 
-#: src/mainwindow.cpp:612
+#: src/mainwindow.cpp:622
 msgid "recorder crashed"
 msgstr "A felvevő összeomlott"
 
-#: src/mainwindow.cpp:621 src/mainwindow.cpp:637 src/mainwindow.cpp:660
+#: src/mainwindow.cpp:631 src/mainwindow.cpp:647 src/mainwindow.cpp:674
 msgid "Finished!"
 msgstr "Kész!"
-
-#: src/mainwindow.cpp:689
-msgid "Recorder Plugins"
-msgstr "Felvételi bővítőmodulok"
-
-#: src/mainwindow.cpp:701
-#, fuzzy
-msgid "Encoder Plugins"
-msgstr "Felvételi bővítőmodulok"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:38
 #, fuzzy
@@ -473,37 +491,55 @@ msgstr "Pillanatkép beállítások"
 msgid "Starting ffmpeg!"
 msgstr ""
 
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:108
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:106
-msgid "Rename failed: \"%1\" to \"%2\""
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
+msgctxt "%1 = file"
+msgid "ffmpeg: %1 no such file!"
 msgstr ""
 
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:122
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:134
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:121
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:133
 msgid "Unkown format."
 msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:138
-#, fuzzy
-msgid "Cannot find ffmpeg."
-msgstr "Nem található a recordmydesktop."
+msgid ""
+"Cannot find ffmpeg!\n"
+"Please install ffmpeg or use another plugin."
+msgstr ""
 
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:164
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:176
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:198
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:165
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:178
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:196
 msgid "Paused!"
 msgstr "Szünetel!"
 
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:168
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:180
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:202
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:265
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:169
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:182
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:200
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:263
 msgid "Capturing!"
 msgstr "Felvétel !"
 
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:217
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:210
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:257
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"ffmpeg: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:208
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:221
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:306
+msgctxt "%1 = source, %1 = destination, %3 = error string"
+msgid ""
+"Move failed: \"%1\" to \"%2\".\n"
+"Reason: %3"
+msgstr ""
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:247
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:241
+#, fuzzy
+msgctxt "%1 = progress in %"
 msgid "Encoding: %1"
 msgstr "Átalakítás: %1"
 
@@ -516,59 +552,85 @@ msgstr "RecordMyDesktop beállítások"
 msgid "Starting mencoder!"
 msgstr ""
 
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:71
+msgctxt "%1 = file"
+msgid "Mencoder: %1 no such file!"
+msgstr ""
+
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:150
-#, fuzzy
-msgid "Cannot find mencoder."
-msgstr "Nem található a recordmydesktop."
+msgid ""
+"Cannot find mencoder!\n"
+"Please install mencoder or use another plugin."
+msgstr ""
+
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:206
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"Mencoder: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktopconfig.cpp:38
 msgid "RecordMyDesktop Configuration"
 msgstr "RecordMyDesktop beállítások"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:93
-msgid "Cannot find recordmydesktop."
-msgstr "Nem található a recordmydesktop."
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:91
+msgid ""
+"Cannot find recordmydesktop!\n"
+"Please install recordmydesktop or use another recorder."
+msgstr ""
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:242
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:240
 msgid "Cached: %1"
 msgstr "Gyorsítótárba: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:243
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:241
 msgid "Received: %1"
 msgstr "Fogadott: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:247
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:245
 msgid "Frames: %1"
 msgstr "Képkockák: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:267
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:255
+msgid "Encoding: %1"
+msgstr "Átalakítás: %1"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:265
 msgid "Shutting down.."
 msgstr "Leállítás..."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:269
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:267
 msgid "Encoding started!"
 msgstr "Elkezdődött az átalakítás!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:271
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:269
 msgid "Done!"
 msgstr "Kész!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:273
 msgid "Cannot open file %1 for writting!"
 msgstr "Nem sikerült írásra megnyitni a(z) %1 fájlt"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
 msgid "Could not create temporary directory, check your config."
 msgstr ""
 "Nem lehetett létrehozni az ideiglenes könyvtárat, ellenőrizze a beállításait."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:279
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
 msgid "recordMyDesktop is not compiled with Jack support."
 msgstr "A recordMyDesktop nem rendelkezik Jack támogatással."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:281
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:279
 msgid "Error while opening/configuring soundcard."
 msgstr "Hiba történt a hangkártya megnyitása/beállításakor."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:291
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"recordmydesktop: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
 
 #: src/plugins/recorder/screenshot/screenshotrecorderconfig.cpp:38
 msgid "Screenshot Configuration"
@@ -579,12 +641,35 @@ msgid "Cheese!"
 msgstr "Csíííz!"
 
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:119
+#, fuzzy
+msgctxt "%1 = error string"
 msgid "Cannot open output file: %1"
 msgstr "Nem lehet megnyitni a %1 fájlt"
 
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:127
 msgid "Cannot save image."
 msgstr "Nem lehetett menteni a képet."
+
+#~ msgid "Misc"
+#~ msgstr "Egyéb"
+
+#~ msgid ""
+#~ "Location where a temporary directory will be created to hold project files"
+#~ msgstr "Az átmeneti fájlok helye ahol létre lesznek hozva a projekt fájlok"
+
+#~ msgid "Recorder Plugins"
+#~ msgstr "Felvételi bővítőmodulok"
+
+#, fuzzy
+#~ msgid "Cannot find ffmpeg."
+#~ msgstr "Nem található a recordmydesktop."
+
+#, fuzzy
+#~ msgid "Cannot find mencoder."
+#~ msgstr "Nem található a recordmydesktop."
+
+#~ msgid "Cannot find recordmydesktop."
+#~ msgstr "Nem található a recordmydesktop."
 
 #, fuzzy
 #~ msgid "Form"

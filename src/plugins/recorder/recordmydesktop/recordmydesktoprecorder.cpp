@@ -88,7 +88,8 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 
     const QString recordMyDesktop = KGlobal::dirs()->findExe("recordmydesktop");
     if (recordMyDesktop.isEmpty()) {
-        emit error(i18n("Cannot find recordmydesktop."));
+        emit error(i18n("Cannot find recordmydesktop!\n"
+                        "Please install recordmydesktop or use another recorder."));
         return;
     }
 
@@ -287,7 +288,8 @@ bool RecordMyDesktopRecorder::remove(const QString &file)
 
     QFile f(file);
     if (!f.remove()) {
-        emit error(i18nc("%1 = file", "Remove failed: %1", file));
+        emit error(i18nc("%1 = file, %2 = error string", "recordmydesktop: Remove failed: %1.\n"
+                         "Reason: %2", file, f.errorString()));
         return false;
     }
     return true;
@@ -300,7 +302,9 @@ bool RecordMyDesktopRecorder::move(const QString &from, const QString &to)
 
     QFile file;
     if (!file.rename(from, to)) {
-        emit error(i18n("Move failed: \"%1\" to \"%2\"", from, to));
+        emit error(i18nc("%1 = source, %1 = destination, %3 = error string",
+                         "Move failed: \"%1\" to \"%2\".\n"
+                         "Reason: %3", from, to, file.errorString()));
         return false;
     }
     return true;

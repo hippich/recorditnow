@@ -116,7 +116,7 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     }
 
     if (!outFile.open(QIODevice::WriteOnly)) {
-        emit error(i18n("Cannot open output file: %1", outFile.errorString()));
+        emit error(i18nc("%1 = error string", "Cannot open output file: %1", outFile.errorString()));
         return;
     }
 

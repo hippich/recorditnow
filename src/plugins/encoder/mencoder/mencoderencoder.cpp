@@ -67,7 +67,7 @@ void MencoderEncoder::encode(const Data &d)
     emit status(i18n("Starting mencoder!"));
 
     // check input file
-    if (!QFile::exists(d.file)) {
+    if (!QFile::exists(d.file)) { // should never happen
         emit error(i18nc("%1 = file", "Mencoder: %1 no such file!", d.file));
         return;
     }
@@ -147,7 +147,8 @@ void MencoderEncoder::encode(const Data &d)
     // exe
     const QString exe = KGlobal::dirs()->findExe("mencoder");
     if (exe.isEmpty()) {
-        emit error(i18n("Cannot find mencoder."));
+        emit error(i18n("Cannot find mencoder!\n"
+                        "Please install mencoder or use another plugin."));
         return;
     }
 
@@ -202,7 +203,8 @@ bool MencoderEncoder::remove(const QString &file)
 
     QFile f(file);
     if (!f.remove()) {
-        emit error(i18nc("%1 = file", "Mencoder: Remove failed: %1", file));
+        emit error(i18nc("%1 = file, %2 = error string", "Mencoder: Remove failed: %1.\n"
+                         "Reason: %2", file, f.errorString()));
         return false;
     }
     return true;
@@ -215,7 +217,9 @@ bool MencoderEncoder::move(const QString &from, const QString &to)
 
     QFile file;
     if (!file.rename(from, to)) {
-        emit error(i18n("Move failed: \"%1\" to \"%2\"", from, to));
+        emit error(i18nc("%1 = source, %1 = destination, %3 = error string",
+                         "Move failed: \"%1\" to \"%2\".\n"
+                         "Reason: %3", from, to, file.errorString()));
         return false;
     }
     return true;
@@ -234,7 +238,7 @@ void MencoderEncoder::newMencoderOutput()
         bool ok;
         output.toInt(&ok);
         if (ok) {
-            emit status(i18n("Encoding: %1", output+'%'));
+            emit status(i18nc("%1 = progress in %", "Encoding: %1", output+'%'));
         } else {
             kDebug() << "!ok:" << output;
         }
