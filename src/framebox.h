@@ -55,6 +55,7 @@ private:
     QTimer *m_timer;
     bool m_enabled;
 
+    void adjustToParent();
     void adjustLines();
     void adjustSizeFrame(const QRect &boxGeo);
 

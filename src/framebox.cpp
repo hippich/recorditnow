@@ -130,6 +130,22 @@ void FrameBox::setEnabled(const bool &enabled)
     m_right->setVisible(enabled);
     m_bottom->setVisible(enabled);
 
+    if (enabled) {
+        adjustToParent();
+    }
+
+}
+
+
+void FrameBox::adjustToParent()
+{
+
+    QRect geometry = m_top->geometry();
+    geometry.moveLeft(m_parent->geometry().left());
+    geometry.moveTop(m_parent->geometry().bottomLeft().y()+SPACING);
+    m_top->setGeometry(geometry);
+    adjustLines();
+
 }
 
 
@@ -319,14 +335,7 @@ bool FrameBox::eventFilter(QObject *watched, QEvent *event)
 {
 
     switch (event->type()) {
-    case QEvent::Move: {
-            QRect geometry = m_top->geometry();
-            geometry.moveLeft(m_parent->geometry().left());
-            geometry.moveTop(m_parent->geometry().bottomLeft().y()+SPACING);
-            m_top->setGeometry(geometry);
-            adjustLines();
-            break;
-        }
+    case QEvent::Move: adjustToParent(); break;
     default: break;
     }
     return QObject::eventFilter(watched, event);
