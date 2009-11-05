@@ -117,14 +117,6 @@ MainWindow::~MainWindow()
 
     delete m_box;
 
-    if (m_recorderPlugin) {
-        delete m_recorderPlugin;
-    }
-
-    if (m_encoderPlugin) {
-        delete m_encoderPlugin;
-    }
-
     if (m_tray) {
         delete m_tray;
     }
