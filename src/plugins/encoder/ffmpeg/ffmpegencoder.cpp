@@ -122,6 +122,7 @@ void FfmpegEncoder::encode(const Data &d)
             return;
         }
         args << "-sameq";
+        args << "-xerror";
         args << m_outputFile;
     } else {
         QString cmd = Settings::command();
