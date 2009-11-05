@@ -91,7 +91,7 @@ QString RecordItNowPlugin::unique(const QString &file) const
             result += '-';
             result += QString::number(number);
         } else {
-            result += "-1";
+            result += "-0";
         }
     }
     result += format;
