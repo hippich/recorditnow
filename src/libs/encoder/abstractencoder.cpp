@@ -30,7 +30,7 @@
 
 
 AbstractEncoder::AbstractEncoder(QObject *parent, const QVariantList &args)
-    : QObject(parent)
+    : RecordItNowPlugin(parent)
 {
 
     Q_UNUSED(args);
@@ -42,46 +42,6 @@ AbstractEncoder::~AbstractEncoder()
 {
 
 
-
-}
-
-
-QString AbstractEncoder::getTemporaryFile(const QString &workDir) const
-{
-
-    QString tmpDir = workDir;
-    if (tmpDir.isEmpty()) {
-        tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
-    }
-
-    if (tmpDir.isEmpty()) {
-        tmpDir = QDir::homePath();
-    }
-
-    if (!tmpDir.endsWith('/')) {
-        tmpDir.append('/');
-    }
-    QString path = (tmpDir+"recorditnow_tmp");
-
-    path = unique(path);
-
-    return path;
-
-}
-
-
-QString AbstractEncoder::unique(const QString &file) const
-{
-
-    QString path = file;
-    while (QFile::exists(path)) {
-        if (path.length() > 4 && path[path.length()-4] == '.') {
-            path.insert(path.length()-4, "_");
-        } else {
-            path.append('_');
-        }
-    }
-    return path;
 
 }
 

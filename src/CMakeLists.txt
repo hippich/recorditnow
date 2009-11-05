@@ -1,5 +1,13 @@
+include_directories(${CMAKE_SOURCE_DIR}/src/libs/plugin
+    ${CMAKE_SOURCE_DIR}/src/libs/recorder
+    ${CMAKE_SOURCE_DIR}/src/libs/encoder
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_BINARY_DIR}
+    ${KDE4_INCLUDES})
+
 add_subdirectory(libs)
 add_subdirectory(plugins)
+
 
 set(gui_SRCS
    main.cpp

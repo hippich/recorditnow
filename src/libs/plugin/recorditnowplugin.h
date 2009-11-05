@@ -17,49 +17,33 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTENCODER_H
-#define ABSTRACTENCODER_H
+#ifndef RECORDITNOWPLUGIN_H
+#define RECORDITNOWPLUGIN_H
 
-
-// own
-#include "recorditnowplugin.h"
 
 // KDE
 #include <kdemacros.h>
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QVariantList>
 
 
-class KDE_EXPORT AbstractEncoder : public RecordItNowPlugin
+class KDE_EXPORT RecordItNowPlugin : public QObject
 {
     Q_OBJECT
 
 
 public:
-    struct Data {
-        QString file;
-        QString workDir;
-        bool overwrite;
-    };
-
-    AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractEncoder();
-
-    virtual void encode(const Data &d) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
+    RecordItNowPlugin(QObject *parent = 0);
+    ~RecordItNowPlugin();
 
 
-signals:
-    void status(const QString &text);
-    void error(const QString &text);
-    void outputFileChanged(const QString &newFile);
-    void finished();
+protected:
+    QString getTemporaryFile(const QString &workDir) const;
+    QString unique(const QString &file) const;
 
 
 };
 
 
-#endif // ABSTRACTRECORDER_H
+#endif // RECORDITNOWPLUGIN_H

@@ -17,49 +17,86 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTENCODER_H
-#define ABSTRACTENCODER_H
-
 
 // own
 #include "recorditnowplugin.h"
 
 // KDE
-#include <kdemacros.h>
+#include <kstandarddirs.h>
 
 // Qt
-#include <QtCore/QObject>
-#include <QtCore/QVariantList>
+#include <QtCore/QDir>
+#include <QtCore/QFile>
+#include <QtCore/QRegExp>
 
 
-class KDE_EXPORT AbstractEncoder : public RecordItNowPlugin
+RecordItNowPlugin::RecordItNowPlugin(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
 
 
-public:
-    struct Data {
-        QString file;
-        QString workDir;
-        bool overwrite;
-    };
 
-    AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractEncoder();
-
-    virtual void encode(const Data &d) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
+}
 
 
-signals:
-    void status(const QString &text);
-    void error(const QString &text);
-    void outputFileChanged(const QString &newFile);
-    void finished();
+RecordItNowPlugin::~RecordItNowPlugin()
+{
 
 
-};
+
+}
 
 
-#endif // ABSTRACTRECORDER_H
+QString RecordItNowPlugin::getTemporaryFile(const QString &workDir) const
+{
+
+    QString tmpDir = workDir;
+    if (tmpDir.isEmpty()) {
+        tmpDir = KGlobal::dirs()->locateLocal("tmp", "");
+    }
+
+    if (tmpDir.isEmpty()) {
+        tmpDir = QDir::homePath();
+    }
+
+    if (!tmpDir.endsWith('/')) {
+        tmpDir.append('/');
+    }
+    QString path = (tmpDir+"recorditnow_tmp");
+
+    path = unique(path);
+
+    return path;
+
+}
+
+
+QString RecordItNowPlugin::unique(const QString &file) const
+{
+
+    QString result = file;
+    const QRegExp rx("-[0-9]+$");
+    const QRegExp frx("\\..{3}$");
+
+    frx.indexIn(result);
+    const QString format = frx.cap();
+    result.remove(frx);
+
+    while (QFile::exists(result+format)) {
+        rx.indexIn(result);
+        if (!rx.cap().isEmpty()) {
+            int number = rx.cap().remove(0, 1).toInt();
+            number++;
+            result.remove(rx);
+            result += '-';
+            result += QString::number(number);
+        } else {
+            result += "-1";
+        }
+    }
+    result += format;
+
+    return result;
+
+}
+

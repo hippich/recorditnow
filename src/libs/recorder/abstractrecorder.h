@@ -21,6 +21,9 @@
 #define ABSTRACTRECORDER_H
 
 
+// own
+#include "recorditnowplugin.h"
+
 // KDE
 #include <kdemacros.h>
 #include <ksharedconfig.h>
@@ -31,7 +34,7 @@
 #include <QtCore/QVariantList>
 
 
-class KDE_EXPORT AbstractRecorder : public QObject
+class KDE_EXPORT AbstractRecorder : public RecordItNowPlugin
 {
     Q_OBJECT
 
@@ -70,11 +73,6 @@ public:
     virtual void record(const AbstractRecorder::Data &) = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
-
-
-protected:
-    QString getTemporaryFile(const QString &workDir) const;
-    QString unique(const QString &file) const;
 
 
 signals:

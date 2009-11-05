@@ -1,8 +1,3 @@
-include_directories(${CMAKE_SOURCE_DIR}/src/libs/encoder
- ${CMAKE_CURRENT_BINARY_DIR}
- ${CMAKE_BINARY_DIR}
- ${KDE4_INCLUDES})
-
 set(SRCS
   ffmpegencoder.cpp)
 
@@ -12,7 +7,7 @@ set(confg_SRCS
 
 kde4_add_kcfg_files(SRCS ffmpeg.kcfgc)
 kde4_add_plugin(recorditnow_ffmpeg ${SRCS})
-target_link_libraries(recorditnow_ffmpeg ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} recorditnow_encoder avcodec avdevice avformat)
+target_link_libraries(recorditnow_ffmpeg ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS} recorditnow_encoder recorditnow_plugin)
 install(TARGETS recorditnow_ffmpeg DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES recorditnow_ffmpeg.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
