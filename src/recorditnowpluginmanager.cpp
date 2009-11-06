@@ -184,77 +184,46 @@ void RecordItNowPluginManager::loadPluginList()
 
     kDebug() << "load plugin list..";
 
-
-    KConfig cfg("recorditnowrc");
-    kDebug() << ">>> RecordItNowRecorder";
-
-    KConfigGroup recorderCfg(&cfg, "Plugins");
-    KService::List offers = KServiceTypeTrader::self()->query("RecordItNowRecorder");
-    KService::List::const_iterator iter;
-    for (iter = offers.begin(); iter < offers.end(); ++iter) {
-        KService::Ptr service = *iter;
-        KPluginInfo info(service);
-
-        if (!info.isValid()) {
-            kWarning() << "invalid plugin info:" << service->entryPath();
-            continue;
-        } else {
-            kDebug() << "found RecordItNowRecorder:" << info.name();
-            info.setConfig(recorderCfg);
-            info.load(recorderCfg);
-            m_plugins[info] = 0;
-        }
-    }
-    kDebug() << ">>> RecordItNowRecorder finished!";
-
+    loadInfos("RecordItNowRecorder");
     if (m_plugins.isEmpty()) {
         printf("*********************************\n");
         printf("Please run \"kbuildsycoca4\".\n");
         printf("*********************************\n");
     }
+    loadInfos("RecordItNowEncoder");
+    loadInfos("RecordItNowUploader");
 
-    kDebug() << ">>> RecordItNowEncoder";
-
-    KConfigGroup encoderCfg(&cfg, "Plugins");
-    offers = KServiceTypeTrader::self()->query("RecordItNowEncoder");
-    for (iter = offers.begin(); iter < offers.end(); ++iter) {
-        KService::Ptr service = *iter;
-        KPluginInfo info(service);
-
-        if (!info.isValid()) {
-            kWarning() << "invalid plugin info:" << service->entryPath();
-            continue;
-        } else {
-            kDebug() << "found RecordItNowEncoder:" << info.name();
-            info.setConfig(encoderCfg);
-            info.load(encoderCfg);
-            m_plugins[info] = 0;
-        }
-    }
-    kDebug() << ">>> RecordItNowEncoder finished!";
-
-
-    kDebug() << ">>> RecordItUploader";
-
-    KConfigGroup uploaderCfg(&cfg, "Plugins");
-    offers = KServiceTypeTrader::self()->query("RecordItNowUploader");
-    for (iter = offers.begin(); iter < offers.end(); ++iter) {
-        KService::Ptr service = *iter;
-        KPluginInfo info(service);
-
-        if (!info.isValid()) {
-            kWarning() << "invalid plugin info:" << service->entryPath();
-            continue;
-        } else {
-            kDebug() << "found RecordItNowUploader:" << info.name();
-            info.setConfig(uploaderCfg);
-            info.load(uploaderCfg);
-            m_plugins[info] = 0;
-        }
-    }
-    kDebug() << ">>> RecordItNowUploader finished!";
-
+    kDebug() << "plugin list loaded:" << m_plugins.size();
     emit pluginsChanged();
+
+}
+
+
+void RecordItNowPluginManager::loadInfos(const QString &type)
+{
+
+    kDebug() << "load infos:" << type;
+    KConfig cfg("recorditnowrc");
+    KConfigGroup pCfg(&cfg, "Plugins");
+
+    KService::List offers = KServiceTypeTrader::self()->query(type);
+    KService::List::const_iterator iter;
+
+    for (iter = offers.begin(); iter < offers.end(); ++iter) {
+        KService::Ptr service = *iter;
+        KPluginInfo info(service);
+
+        if (!info.isValid()) {
+            kWarning() << "invalid plugin info:" << service->entryPath();
+            continue;
+        } else {
+            kDebug() << "found:" << info.name();
+            info.setConfig(pCfg);
+            info.load(pCfg);
+            m_plugins[info] = 0;
+        }
+    }
+    kDebug() << "finished:" << type;
 
 }
 

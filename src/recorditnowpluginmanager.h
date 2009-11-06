@@ -57,6 +57,7 @@ private:
 
     void clear();
     void loadPluginList();
+    void loadInfos(const QString &type);
 
 
 signals:
