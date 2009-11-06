@@ -35,7 +35,7 @@ class FrameBox : public QObject
 
 
 public:
-    FrameBox(QWidget *parent);
+    FrameBox(QWidget *parentconst, QRect pos);
     ~FrameBox();
 
     QRect boxGeometry() const;

@@ -65,9 +65,9 @@ RecordItNowPlugin *RecordItNowPluginManager::loadPlugin(const QString &name)
     while (it.hasNext()) {
         it.next();
         if (it.key().name().toLower() == name.toLower()) {
-            if (it.value()) {
+            if (it.value()) { // already loaded?
                 return it.value();
-            } else {
+            } else { // get info and load
                 info = it.key();
                 break;
             }
@@ -121,7 +121,6 @@ void RecordItNowPluginManager::unloadPlugin(RecordItNowPlugin *plugin)
 
 QList<KPluginInfo> RecordItNowPluginManager::getList(const QString &category) const
 {
-
 
     QHashIterator<KPluginInfo, RecordItNowPlugin*> it(m_plugins);
     QList<KPluginInfo> infos;

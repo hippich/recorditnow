@@ -40,7 +40,7 @@
 
 
 
-FrameBox::FrameBox(QWidget *parent)
+FrameBox::FrameBox(QWidget *parent, QRect pos)
     : QObject(parent),
     m_parent(parent)
 {
@@ -81,6 +81,29 @@ FrameBox::FrameBox(QWidget *parent)
 
     // parent widget
     m_parent->installEventFilter(this);
+
+    // restore size
+    if (pos.width() < MIN_SIZE) {
+        pos.setWidth(MIN_SIZE);
+    }
+
+    if (pos.height() < MIN_SIZE) {
+        pos.setHeight(MIN_SIZE);
+    }
+    QRect geo = pos;
+
+    geo.setHeight(m_top->height());
+    m_top->setGeometry(geo);
+    geo.moveBottom(pos.bottom());
+    m_bottom->setGeometry(geo);
+
+    geo = pos;
+    geo.setWidth(m_left->width());
+    m_left->setGeometry(geo);
+    geo.moveRight(pos.right());
+    m_right->setGeometry(geo);
+
+    adjustToParent();
 
 }
 

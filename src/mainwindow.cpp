@@ -81,7 +81,9 @@ MainWindow::MainWindow(QWidget *parent)
             SLOT(backendChanged(QString)));
     connect(kapp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
 
-    m_box = new FrameBox(this);
+    QRect pos = Settings::currentFrame();
+    m_box = new FrameBox(this, pos);
+
     m_recorderPlugin = 0;
     m_encoderPlugin = 0;
     m_tray = 0;
@@ -111,6 +113,7 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentBackend(backendCombo->currentText());
     Settings::self()->setSoundEnabled(soundCheck->isChecked());
     Settings::self()->setCurrentFps(fpsSpinBox->value());
+    Settings::self()->setCurrentFrame(m_box->boxGeometry());
     Settings::self()->writeConfig();
 
     if (m_grabber) {

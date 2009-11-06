@@ -47,5 +47,7 @@
     <entry name="currentFps" type="Int">
             <default>15</default>
     </entry>
+    <entry name="currentFrame" type="Rect">
+    </entry>
   </group>
 </kcfg>
