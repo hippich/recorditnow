@@ -254,7 +254,7 @@ void MainWindow::stopRecord()
 
     if (state() == Timer || state() == TimerPaused) {
         m_timer->stop();
-        m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+        m_pluginManager->unloadPlugin(m_recorderPlugin);
         m_recorderPlugin = 0;
         setState(Idle);
         return;
@@ -442,12 +442,12 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     d->overwrite = Settings::overwrite();
     d->workDir = Settings::workDir().pathOrUrl();
     if (m_recorderPlugin) {
-        m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+        m_pluginManager->unloadPlugin(m_recorderPlugin);
         m_recorderPlugin = 0;
     }
 
     const QString name = backendCombo->currentText();
-    m_recorderPlugin = m_pluginManager->loadRecorderPlugin(name);
+    m_recorderPlugin = static_cast<AbstractRecorder*>(m_pluginManager->loadPlugin(name));
     if (!m_recorderPlugin || d->outputFile.isEmpty()) {
         if (!m_recorderPlugin) {
             KMessageBox::sorry(this, i18n("Cannot load Recorder %1", name));
@@ -613,7 +613,7 @@ void MainWindow::recorderError(const QString &error)
 {
 
     KMessageBox::error(this, error);
-    m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+    m_pluginManager->unloadPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
     recorderStatus(i18n("Error: %1", error));
     setState(Idle);
@@ -632,14 +632,14 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
 
 
     if (!Settings::encode() || !m_recorderPlugin->isVideoRecorder()) {
-        m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+        m_pluginManager->unloadPlugin(m_recorderPlugin);
         m_recorderPlugin = 0;
         setState(Idle);
         playFile();
         recorderStatus(i18n("Finished!"));
         return;
     }
-    m_pluginManager->unloadRecorderPlugin(m_recorderPlugin);
+    m_pluginManager->unloadPlugin(m_recorderPlugin);
     m_recorderPlugin = 0;
 
     QList<KPluginInfo> list = m_pluginManager->getEncoderList();
@@ -647,7 +647,8 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
         m_encoderPlugin->disconnect(this);
         m_encoderPlugin->deleteLater();
     }
-    m_encoderPlugin = m_encoderPlugin = m_pluginManager->loadEncoderPlugin(Settings::encoderName());
+    m_encoderPlugin = static_cast<AbstractEncoder*>(
+            m_pluginManager->loadPlugin(Settings::encoderName()));
 
     if (!m_encoderPlugin) {
         setState(Idle);
@@ -674,7 +675,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
 void MainWindow::encoderFinished()
 {
 
-    m_pluginManager->unloadEncoderPlugin(m_encoderPlugin);
+    m_pluginManager->unloadPlugin(m_encoderPlugin);
     m_encoderPlugin = 0;
 
     setState(Idle);
@@ -688,7 +689,7 @@ void MainWindow::encoderError(const QString &error)
 {
 
     KMessageBox::error(this, error);
-    m_pluginManager->unloadEncoderPlugin(m_encoderPlugin);
+    m_pluginManager->unloadPlugin(m_encoderPlugin);
     m_encoderPlugin = 0;
     recorderStatus(i18n("Error: %1", error));
     setState(Idle);
@@ -825,7 +826,8 @@ void MainWindow::trayActivated(const QSystemTrayIcon::ActivationReason &reason)
 void MainWindow::backendChanged(const QString &newBackend)
 {
 
-    AbstractRecorder *recorder = m_pluginManager->loadRecorderPlugin(newBackend);
+    AbstractRecorder *recorder = static_cast<AbstractRecorder*>(
+            m_pluginManager->loadPlugin(newBackend));
 
     if (!recorder) {
         m_currentFeatures[AbstractRecorder::Sound] = false;
@@ -840,7 +842,7 @@ void MainWindow::backendChanged(const QString &newBackend)
         m_currentFeatures[AbstractRecorder::Stop] = recorder->hasFeature(AbstractRecorder::Stop);
         outputRequester->setText(recorder->getDefaultOutputFile());
 
-        m_pluginManager->unloadRecorderPlugin(recorder);
+        m_pluginManager->unloadPlugin(recorder);
     }
     setState(Idle); // update actions/widgets
 
@@ -899,7 +901,8 @@ void MainWindow::upload()
 {
 
     QAction *uploadAction = static_cast<QAction*>(sender());
-    AbstractUploader *uploader = m_pluginManager->loadUploaderPlugin(uploadAction->data().toString());
+    AbstractUploader *uploader = static_cast<AbstractUploader*>(
+            m_pluginManager->loadPlugin(uploadAction->data().toString()));
     if (uploader) {
         uploader->show(outputRequester->text(), this);
     }

@@ -57,17 +57,28 @@ void RecordItNowPluginManager::init()
 }
 
 
-AbstractRecorder *RecordItNowPluginManager::loadRecorderPlugin(const KPluginInfo &info)
+RecordItNowPlugin *RecordItNowPluginManager::loadPlugin(const QString &name)
 {
 
-    if (!m_recorderPlugins.contains(info)) {
-        kWarning() << "no such plugin:" << info.name();
+    QHashIterator<KPluginInfo, RecordItNowPlugin*> it(m_plugins);
+    KPluginInfo info;
+    while (it.hasNext()) {
+        it.next();
+        if (it.key().name().toLower() == name.toLower()) {
+            if (it.value()) {
+                return it.value();
+            } else {
+                info = it.key();
+                break;
+            }
+        }
+    }
+    if (!info.isValid()) {
+        kWarning() << "Plugin:" << name << "not found!";
         return 0;
-    } else if (m_recorderPlugins[info]) {
-        return m_recorderPlugins[info];
     }
 
-    kDebug() << "load recorder:" << info.name();
+    kDebug() << "load plugin:" << name;
 
     KService::Ptr service = info.service();
     KPluginLoader loader(service->library());
@@ -79,208 +90,50 @@ AbstractRecorder *RecordItNowPluginManager::loadRecorderPlugin(const KPluginInfo
         return 0;
     }
 
-    AbstractRecorder *recorder = factory->create<AbstractRecorder>(this);
-    if (!recorder) {
+    RecordItNowPlugin *plugin = factory->create<RecordItNowPlugin>(this);
+    if (!plugin) {
         kWarning() << "factory::create<>() failed " << service->library();
         return 0;
     }
 
-    return (m_recorderPlugins[info] = recorder);
+    return (m_plugins[info] = plugin);
 
 }
 
 
-AbstractRecorder *RecordItNowPluginManager::loadRecorderPlugin(const QString &name)
+void RecordItNowPluginManager::unloadPlugin(RecordItNowPlugin *plugin)
 {
 
-    QHashIterator<KPluginInfo, AbstractRecorder*> it(m_recorderPlugins);
+    QHashIterator<KPluginInfo, RecordItNowPlugin*> it(m_plugins);
     while (it.hasNext()) {
         it.next();
-        if (it.key().name().toLower() == name.toLower()) {
-            return loadRecorderPlugin(it.key());
+        if (it.value() && it.value() == plugin) {
+            delete it.value();
+            kDebug() << "unload plugin:" << it.key().name();
+            m_plugins[it.key()] = 0;
+            return;
         }
     }
-    kDebug() << "plugin not found:" << name;
-    return 0;
+    kWarning() << "plugin not found!"; // should never happen
 
 }
 
 
-AbstractUploader *RecordItNowPluginManager::loadUploaderPlugin(const KPluginInfo &info)
+QList<KPluginInfo> RecordItNowPluginManager::getList(const QString &category) const
 {
 
-    if (!m_uploaderPlugins.contains(info)) {
-        kWarning() << "no such plugin:" << info.name();
-        return 0;
-    } else if (m_uploaderPlugins[info]) {
-        return m_uploaderPlugins[info];
-    }
 
-    kDebug() << "load uploader:" << info.name();
+    QHashIterator<KPluginInfo, RecordItNowPlugin*> it(m_plugins);
+    QList<KPluginInfo> infos;
 
-    KService::Ptr service = info.service();
-    KPluginLoader loader(service->library());
-    KPluginFactory *factory = loader.factory();
-
-    if (!factory) {
-        kWarning() << "KPluginFactory could not load the plugin:" << service->library() <<
-        "Reason:" << loader.errorString();
-        return 0;
-    }
-
-    AbstractUploader *uploader = factory->create<AbstractUploader>(this);
-    if (!uploader) {
-        kWarning() << "factory::create<>() failed " << service->library();
-        return 0;
-    }
-
-    return (m_uploaderPlugins[info] = uploader);
-
-}
-
-
-AbstractEncoder *RecordItNowPluginManager::loadEncoderPlugin(const KPluginInfo &info)
-{
-
-    if (!m_encoderPlugins.contains(info)) {
-        kWarning() << "no such plugin:" << info.name();
-        return 0;
-    } else if (m_encoderPlugins[info]) {
-        return m_encoderPlugins[info];
-    }
-
-    kDebug() << "load encoder:" << info.name();
-
-    KService::Ptr service = info.service();
-    KPluginLoader loader(service->library());
-    KPluginFactory *factory = loader.factory();
-
-    if (!factory) {
-        kWarning() << "KPluginFactory could not load the plugin:" << service->library() <<
-        "Reason:" << loader.errorString();
-        return 0;
-    }
-
-    AbstractEncoder *encoder = factory->create<AbstractEncoder>(this);
-    if (!encoder) {
-        kWarning() << "factory::create<>() failed " << service->library();
-        return 0;
-    }
-
-    return (m_encoderPlugins[info] = encoder);
-
-}
-
-
-AbstractEncoder *RecordItNowPluginManager::loadEncoderPlugin(const QString &name)
-{
-
-    QHashIterator<KPluginInfo, AbstractEncoder*> it(m_encoderPlugins);
     while (it.hasNext()) {
         it.next();
-        if (it.key().name().toLower() == name.toLower()) {
-            return loadEncoderPlugin(it.key());
+        if (it.key().category() == category) {
+            infos.append(it.key());
         }
     }
-    kDebug() << "plugin not found:" << name;
-    return 0;
 
-}
-
-
-AbstractUploader *RecordItNowPluginManager::loadUploaderPlugin(const QString &name)
-{
-
-    QHashIterator<KPluginInfo, AbstractUploader*> it(m_uploaderPlugins);
-    while (it.hasNext()) {
-        it.next();
-        if (it.key().name().toLower() == name.toLower()) {
-            return loadUploaderPlugin(it.key());
-        }
-    }
-    kDebug() << "plugin not found:" << name;
-    return 0;
-
-}
-
-
-void RecordItNowPluginManager::unloadRecorderPlugin(const KPluginInfo &info)
-{
-
-    if (!m_recorderPlugins.contains(info)) {
-        kWarning() << "no such plugin";
-        return;
-    } else if (!m_recorderPlugins[info]) {
-        kDebug() << "plugin not loaded:" << info.name();
-        return;
-    }
-
-    kDebug() << "unload recorder:" << info.name();
-
-    m_recorderPlugins[info]->deleteLater();
-    m_recorderPlugins[info] = 0;
-
-}
-
-
-void RecordItNowPluginManager::unloadRecorderPlugin(AbstractRecorder *recorder)
-{
-
-    unloadRecorderPlugin(m_recorderPlugins.key(recorder));
-
-}
-
-
-void RecordItNowPluginManager::unloadUploaderPlugin(const KPluginInfo &info)
-{
-
-    if (!m_uploaderPlugins.contains(info)) {
-        kWarning() << "no such plugin";
-        return;
-    } else if (!m_uploaderPlugins[info]) {
-        kDebug() << "plugin not loaded:" << info.name();
-        return;
-    }
-
-    kDebug() << "unload uploader:" << info.name();
-
-    m_uploaderPlugins[info]->deleteLater();
-    m_uploaderPlugins[info] = 0;
-
-}
-
-
-void RecordItNowPluginManager::unloadUploaderPlugin(AbstractUploader *uploader)
-{
-
-    unloadUploaderPlugin(m_uploaderPlugins.key(uploader));
-
-}
-
-
-void RecordItNowPluginManager::unloadEncoderPlugin(const KPluginInfo &info)
-{
-
-    if (!m_encoderPlugins.contains(info)) {
-        kWarning() << "no such plugin";
-        return;
-    } else if (!m_encoderPlugins[info]) {
-        kDebug() << "plugin not loaded:" << info.name();
-        return;
-    }
-
-    kDebug() << "unload encoder:" << info.name();
-
-    m_encoderPlugins[info]->deleteLater();
-    m_encoderPlugins[info] = 0;
-
-}
-
-
-void RecordItNowPluginManager::unloadEncoderPlugin(AbstractEncoder *encoder)
-{
-
-    unloadEncoderPlugin(m_encoderPlugins.key(encoder));
+    return infos;
 
 }
 
@@ -288,7 +141,7 @@ void RecordItNowPluginManager::unloadEncoderPlugin(AbstractEncoder *encoder)
 QList<KPluginInfo> RecordItNowPluginManager::getRecorderList() const
 {
 
-    return m_recorderPlugins.keys();
+    return getList("Recorder");
 
 }
 
@@ -296,7 +149,7 @@ QList<KPluginInfo> RecordItNowPluginManager::getRecorderList() const
 QList<KPluginInfo> RecordItNowPluginManager::getEncoderList() const
 {
 
-    return m_encoderPlugins.keys();
+    return getList("Encoder");
 
 }
 
@@ -304,7 +157,7 @@ QList<KPluginInfo> RecordItNowPluginManager::getEncoderList() const
 QList<KPluginInfo> RecordItNowPluginManager::getUploaderList() const
 {
 
-    return m_uploaderPlugins.keys();
+    return getList("Uploader");
 
 }
 
@@ -312,35 +165,14 @@ QList<KPluginInfo> RecordItNowPluginManager::getUploaderList() const
 void RecordItNowPluginManager::clear()
 {
 
-    // recorder plugins
-    QHashIterator<KPluginInfo, AbstractRecorder*> it(m_recorderPlugins);
+    QHashIterator<KPluginInfo, RecordItNowPlugin*> it(m_plugins);
     while (it.hasNext()) {
         it.next();
         if (it.value()) {
             delete it.value();
         }
     }
-    m_recorderPlugins.clear();
-
-    // encoder plugins
-    QHashIterator<KPluginInfo, AbstractEncoder*> eit(m_encoderPlugins);
-    while (eit.hasNext()) {
-        eit.next();
-        if (eit.value()) {
-            delete eit.value();
-        }
-    }
-    m_encoderPlugins.clear();
-
-    // upload plugins
-    QHashIterator<KPluginInfo, AbstractUploader*> uit(m_uploaderPlugins);
-    while (uit.hasNext()) {
-        uit.next();
-        if (uit.value()) {
-            delete uit.value();
-        }
-    }
-    m_uploaderPlugins.clear();
+    m_plugins.clear();
 
 }
 
@@ -370,13 +202,12 @@ void RecordItNowPluginManager::loadPluginList()
             kDebug() << "found RecordItNowRecorder:" << info.name();
             info.setConfig(recorderCfg);
             info.load(recorderCfg);
-            m_recorderPlugins[info] = 0;
+            m_plugins[info] = 0;
         }
     }
     kDebug() << ">>> RecordItNowRecorder finished!";
-    kDebug() << ">>> found" << m_recorderPlugins.size() << "recorder!";
 
-    if (m_recorderPlugins.isEmpty()) {
+    if (m_plugins.isEmpty()) {
         printf("*********************************\n");
         printf("Please run \"kbuildsycoca4\".\n");
         printf("*********************************\n");
@@ -397,11 +228,10 @@ void RecordItNowPluginManager::loadPluginList()
             kDebug() << "found RecordItNowEncoder:" << info.name();
             info.setConfig(encoderCfg);
             info.load(encoderCfg);
-            m_encoderPlugins[info] = 0;
+            m_plugins[info] = 0;
         }
     }
     kDebug() << ">>> RecordItNowEncoder finished!";
-    kDebug() << ">>> found" << m_encoderPlugins.size() << "encoder!";
 
 
     kDebug() << ">>> RecordItUploader";
@@ -419,11 +249,10 @@ void RecordItNowPluginManager::loadPluginList()
             kDebug() << "found RecordItNowUploader:" << info.name();
             info.setConfig(uploaderCfg);
             info.load(uploaderCfg);
-            m_uploaderPlugins[info] = 0;
+            m_plugins[info] = 0;
         }
     }
     kDebug() << ">>> RecordItNowUploader finished!";
-    kDebug() << ">>> found" << m_uploaderPlugins.size() << "uploader!";
 
     emit pluginsChanged();
 

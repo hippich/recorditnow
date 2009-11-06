@@ -31,6 +31,7 @@
 class AbstractRecorder;
 class AbstractEncoder;
 class AbstractUploader;
+class RecordItNowPlugin;
 class RecordItNowPluginManager : public QObject
 {
     Q_OBJECT
@@ -42,31 +43,17 @@ public:
 
     void init();
 
-    AbstractRecorder *loadRecorderPlugin(const KPluginInfo &info);
-    AbstractEncoder *loadEncoderPlugin(const KPluginInfo &info);
-    AbstractUploader *loadUploaderPlugin(const KPluginInfo &info);
+    RecordItNowPlugin *loadPlugin(const QString &name);
+    void unloadPlugin(RecordItNowPlugin *plugin);
 
-    AbstractRecorder *loadRecorderPlugin(const QString &name);
-    AbstractEncoder *loadEncoderPlugin(const QString &name);
-    AbstractUploader *loadUploaderPlugin(const QString &name);
-
-    void unloadRecorderPlugin(AbstractRecorder *recorder);
-    void unloadEncoderPlugin(AbstractEncoder *encoder);
-    void unloadUploaderPlugin(AbstractUploader *uploader);
-
-    void unloadEncoderPlugin(const KPluginInfo &info);
-    void unloadRecorderPlugin(const KPluginInfo &info);
-    void unloadUploaderPlugin(const KPluginInfo &info);
-
+    QList<KPluginInfo> getList(const QString &category) const;
     QList<KPluginInfo> getRecorderList() const;
     QList<KPluginInfo> getEncoderList() const;
     QList<KPluginInfo> getUploaderList() const;
 
 
 private:
-    QHash<KPluginInfo, AbstractRecorder*> m_recorderPlugins;
-    QHash<KPluginInfo, AbstractEncoder*> m_encoderPlugins;
-    QHash<KPluginInfo, AbstractUploader*> m_uploaderPlugins;
+    QHash<KPluginInfo, RecordItNowPlugin*> m_plugins;
 
     void clear();
     void loadPluginList();
