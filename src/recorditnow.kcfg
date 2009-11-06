@@ -49,5 +49,8 @@
     </entry>
     <entry name="currentFrame" type="Rect">
     </entry>
+    <entry name="currentTime" type="Int">
+            <default>5</default>
+    </entry>
   </group>
 </kcfg>

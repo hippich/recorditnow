@@ -103,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     backendCombo->setCurrentItem(Settings::currentBackend(), false);
     soundCheck->setChecked(Settings::soundEnabled());
     fpsSpinBox->setValue(Settings::currentFps());
+    timerLcd->display(Settings::currentTime());
 
 }
 
@@ -114,6 +115,7 @@ MainWindow::~MainWindow()
     Settings::self()->setSoundEnabled(soundCheck->isChecked());
     Settings::self()->setCurrentFps(fpsSpinBox->value());
     Settings::self()->setCurrentFrame(m_box->boxGeometry());
+    Settings::self()->setCurrentTime(timerLcd->value());
     Settings::self()->writeConfig();
 
     if (m_grabber) {
