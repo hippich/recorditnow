@@ -22,6 +22,7 @@
 #include "recorditnowpluginmanager.h"
 #include "libs/recorder/abstractrecorder.h"
 #include "libs/encoder/abstractencoder.h"
+#include "libs/upload/abstractuploader.h"
 
 // KDE
 #include <kservice.h>
@@ -105,6 +106,39 @@ AbstractRecorder *RecordItNowPluginManager::loadRecorderPlugin(const QString &na
 }
 
 
+AbstractUploader *RecordItNowPluginManager::loadUploaderPlugin(const KPluginInfo &info)
+{
+
+    if (!m_uploaderPlugins.contains(info)) {
+        kWarning() << "no such plugin:" << info.name();
+        return 0;
+    } else if (m_uploaderPlugins[info]) {
+        return m_uploaderPlugins[info];
+    }
+
+    kDebug() << "load uploader:" << info.name();
+
+    KService::Ptr service = info.service();
+    KPluginLoader loader(service->library());
+    KPluginFactory *factory = loader.factory();
+
+    if (!factory) {
+        kWarning() << "KPluginFactory could not load the plugin:" << service->library() <<
+        "Reason:" << loader.errorString();
+        return 0;
+    }
+
+    AbstractUploader *uploader = factory->create<AbstractUploader>(this);
+    if (!uploader) {
+        kWarning() << "factory::create<>() failed " << service->library();
+        return 0;
+    }
+
+    return (m_uploaderPlugins[info] = uploader);
+
+}
+
+
 AbstractEncoder *RecordItNowPluginManager::loadEncoderPlugin(const KPluginInfo &info)
 {
 
@@ -154,6 +188,22 @@ AbstractEncoder *RecordItNowPluginManager::loadEncoderPlugin(const QString &name
 }
 
 
+AbstractUploader *RecordItNowPluginManager::loadUploaderPlugin(const QString &name)
+{
+
+    QHashIterator<KPluginInfo, AbstractUploader*> it(m_uploaderPlugins);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key().name().toLower() == name.toLower()) {
+            return loadUploaderPlugin(it.key());
+        }
+    }
+    kDebug() << "plugin not found:" << name;
+    return 0;
+
+}
+
+
 void RecordItNowPluginManager::unloadRecorderPlugin(const KPluginInfo &info)
 {
 
@@ -177,6 +227,33 @@ void RecordItNowPluginManager::unloadRecorderPlugin(AbstractRecorder *recorder)
 {
 
     unloadRecorderPlugin(m_recorderPlugins.key(recorder));
+
+}
+
+
+void RecordItNowPluginManager::unloadUploaderPlugin(const KPluginInfo &info)
+{
+
+    if (!m_uploaderPlugins.contains(info)) {
+        kWarning() << "no such plugin";
+        return;
+    } else if (!m_uploaderPlugins[info]) {
+        kDebug() << "plugin not loaded:" << info.name();
+        return;
+    }
+
+    kDebug() << "unload uploader:" << info.name();
+
+    m_uploaderPlugins[info]->deleteLater();
+    m_uploaderPlugins[info] = 0;
+
+}
+
+
+void RecordItNowPluginManager::unloadUploaderPlugin(AbstractUploader *uploader)
+{
+
+    unloadUploaderPlugin(m_uploaderPlugins.key(uploader));
 
 }
 
@@ -224,6 +301,14 @@ QList<KPluginInfo> RecordItNowPluginManager::getEncoderList() const
 }
 
 
+QList<KPluginInfo> RecordItNowPluginManager::getUploaderList() const
+{
+
+    return m_uploaderPlugins.keys();
+
+}
+
+
 void RecordItNowPluginManager::clear()
 {
 
@@ -246,6 +331,16 @@ void RecordItNowPluginManager::clear()
         }
     }
     m_encoderPlugins.clear();
+
+    // upload plugins
+    QHashIterator<KPluginInfo, AbstractUploader*> uit(m_uploaderPlugins);
+    while (uit.hasNext()) {
+        uit.next();
+        if (uit.value()) {
+            delete uit.value();
+        }
+    }
+    m_uploaderPlugins.clear();
 
 }
 
@@ -308,6 +403,27 @@ void RecordItNowPluginManager::loadPluginList()
     kDebug() << ">>> RecordItNowEncoder finished!";
     kDebug() << ">>> found" << m_encoderPlugins.size() << "encoder!";
 
+
+    kDebug() << ">>> RecordItUploader";
+
+    KConfigGroup uploaderCfg(&cfg, "Plugins");
+    offers = KServiceTypeTrader::self()->query("RecordItNowUploader");
+    for (iter = offers.begin(); iter < offers.end(); ++iter) {
+        KService::Ptr service = *iter;
+        KPluginInfo info(service);
+
+        if (!info.isValid()) {
+            kWarning() << "invalid plugin info:" << service->entryPath();
+            continue;
+        } else {
+            kDebug() << "found RecordItNowUploader:" << info.name();
+            info.setConfig(uploaderCfg);
+            info.load(uploaderCfg);
+            m_uploaderPlugins[info] = 0;
+        }
+    }
+    kDebug() << ">>> RecordItNowUploader finished!";
+    kDebug() << ">>> found" << m_uploaderPlugins.size() << "uploader!";
 
     emit pluginsChanged();
 

@@ -1,0 +1,15 @@
+[Desktop Entry] 
+Encoding=UTF-8
+Name=Youtube
+Comment=Youtube Plugin
+Icon=recorditnow_youtube
+Type=Service                                                                               
+X-KDE-ServiceTypes=RecordItNowUploader 
+X-KDE-Library=recorditnow_youtube
+X-KDE-PluginInfo-Name=YouTubeUploader
+X-KDE-PluginInfo-Author=Kai Dombrowe
+X-KDE-PluginInfo-Email=just89@gmx.de
+X-KDE-PluginInfo-Version=0.3
+X-KDE-PluginInfo-Website=http://kde-apps.org/content/show.php/RecordItNow?content=114610
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true

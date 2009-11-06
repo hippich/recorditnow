@@ -10,7 +10,7 @@
  <Action name="box"/>
  <Action name="recordFullScreen"/>
  <Separator/>
- <Action name="preview"/>
+ <Action name="upload"/>
  <Separator/>
  <Action name="options_configure"/>
  <Separator/>

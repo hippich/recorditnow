@@ -60,6 +60,10 @@ void ConfigDialog::init()
     m_pluginSelector->addPlugins(m_pluginManager->getEncoderList(),
                                KPluginSelector::ReadConfigFile,
                                i18n("Encoder"));
+    m_pluginSelector->addPlugins(m_pluginManager->getUploaderList(),
+                               KPluginSelector::ReadConfigFile,
+                               i18n("Uploader"));
+
     updateEncoderCombo();
     ui_settings.encoderCombo->setCurrentItem(Settings::encoderName(), false);
 

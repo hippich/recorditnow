@@ -17,7 +17,6 @@ macro_log_feature(FFMPEG_FOUND "ffmpeg"
     ""                                                                                                      
     "")                                                                                                        
 
-macro_display_feature_log()    
 
 if(MENCODER_FOUND)
    add_subdirectory(mencoder)

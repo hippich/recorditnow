@@ -103,6 +103,8 @@ private slots:
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
     void pluginsChanged();
+    void updateUploaderMenu();
+    void upload();
 
 
 protected:

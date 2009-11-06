@@ -28,6 +28,7 @@
 #include <recorditnow.h>
 #include <recorditnowpluginmanager.h>
 #include "configdialog.h"
+#include "libs/upload/abstractuploader.h"
 
 // Qt
 #include <QtGui/QAction>
@@ -52,6 +53,7 @@
 #include <krun.h>
 #include <kmimetype.h>
 #include <kapplication.h>
+#include <kactionmenu.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -189,6 +191,11 @@ void MainWindow::setupActions()
     connect(fullAction, SIGNAL(triggered()), this, SLOT(recordFullScreen()));
 
 
+    KActionMenu *uploadAction = new KActionMenu(this);
+    uploadAction->setIcon(KIcon("upload-media"));
+    uploadAction->setText(i18n("Upload"));
+    uploadAction->setDelayed(false);
+
     actionCollection()->addAction("record", recordAction);
     actionCollection()->addAction("pause", pauseAction);
     actionCollection()->addAction("stop", stopAction);
@@ -197,6 +204,7 @@ void MainWindow::setupActions()
     actionCollection()->addAction("box", boxAction);
     actionCollection()->addAction("recordFullScreen", fullAction);
 
+    actionCollection()->addAction("upload", uploadAction);
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
 
@@ -703,6 +711,7 @@ void MainWindow::dialogFinished()
 
     setupTray();
     updateRecorderCombo();
+    updateUploaderMenu();
 
 }
 
@@ -855,6 +864,45 @@ void MainWindow::pluginsChanged()
     }
     // recorder
     updateRecorderCombo();
+    // upload
+    updateUploaderMenu();
+
+}
+
+
+void MainWindow::updateUploaderMenu()
+{
+
+    KActionMenu *action = static_cast<KActionMenu*>(actionCollection()->action("upload"));
+    KMenu *menu = action->menu();
+    if (!menu) {
+        menu = new KMenu(this);
+        action->setMenu(menu);
+    }
+    menu->clear();
+
+    foreach (const KPluginInfo &info, m_pluginManager->getUploaderList()) {
+        if (info.isPluginEnabled()) {
+            QAction *uploadAction = new QAction(this);
+            uploadAction->setText(info.name());
+            uploadAction->setIcon(KIcon(info.icon()));
+            uploadAction->setData(info.name());
+            connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
+            menu->addAction(uploadAction);
+        }
+    }
+
+}
+
+
+void MainWindow::upload()
+{
+
+    QAction *uploadAction = static_cast<QAction*>(sender());
+    AbstractUploader *uploader = m_pluginManager->loadUploaderPlugin(uploadAction->data().toString());
+    if (uploader) {
+        uploader->show(outputRequester->text(), this);
+    }
 
 }
 
