@@ -35,6 +35,8 @@ public:
     UploadThread(QObject *parent, const QHash<QString, QString> &data);
     ~UploadThread();
 
+    void cancelUpload();
+
 
 private:
     QHash<QString, QString> m_data;

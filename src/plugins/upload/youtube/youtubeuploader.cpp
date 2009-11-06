@@ -68,6 +68,8 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
     m_category["Sports"] = i18n("Sports");
     m_category["Travel"] = i18n("Travel & Evends");
 
+    m_state = Idle;
+
 }
 
 
@@ -90,7 +92,7 @@ YouTubeUploader::~YouTubeUploader()
 void YouTubeUploader::show(const QString &file, QWidget *parent)
 {
 
-    if (m_dialog) {
+    if (m_dialog || m_state != Idle) {
         return;
     }
 
@@ -103,6 +105,8 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
 
     connect(uploadButton, SIGNAL(clicked()), this, SLOT(upload()));
     connect(quitButton, SIGNAL(clicked()), this, SLOT(quitDialog()));
+    connect(descriptionEdit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
+    connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelUpload()));
 
     QHashIterator<QString, QString> it(m_category);
     while (it.hasNext()) {
@@ -122,6 +126,7 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
         m_walletWait = Read;
         getWallet();
     }
+    setState(Idle);
     m_dialog->show();
 
 }
@@ -133,7 +138,7 @@ void YouTubeUploader::upload()
     kDebug() << "upload";
 
     Settings::self()->setTitle(titleEdit->text());
-    Settings::self()->setDescription(descriptionEdit->text());
+    Settings::self()->setDescription(descriptionEdit->toPlainText());
     Settings::self()->setTags(tagsEdit->text());
     Settings::self()->setCategory(categoryCombo->currentIndex());
     Settings::self()->setUserName(loginEdit->text());
@@ -147,8 +152,6 @@ void YouTubeUploader::upload()
     }
     Settings::self()->writeConfig();
 
-    uploadButton->setDisabled(true);
-
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
     if (KMessageBox::warningContinueCancel(m_dialog, GOOGLE.arg(i18n("Continue"))) != KMessageBox::Continue) {
         cancelUpload();
@@ -157,7 +160,7 @@ void YouTubeUploader::upload()
 
     QHash<QString, QString> data;
     data["Title"] = titleEdit->text();
-    data["Description"] = descriptionEdit->text();
+    data["Description"] = descriptionEdit->toPlainText();
     data["Tags"] = tagsEdit->text();
     data["Category"] = m_category.key(categoryCombo->currentText());
     data["Login"] = loginEdit->text();
@@ -179,14 +182,12 @@ void YouTubeUploader::upload()
     while (it.hasNext()) {
         it.next();
         if (it.value().isEmpty()) {
-            m_dialog->setDisabled(false);
             KMessageBox::sorry(m_dialog, i18n("Please fill out all the fields."));
             return;
         }
     }
 
     if (!QFile::exists(fileRequester->text())) {
-        m_dialog->setDisabled(false);
         KMessageBox::sorry(m_dialog, i18n("No such file: %1", fileRequester->text()));
         return;
     }
@@ -195,22 +196,22 @@ void YouTubeUploader::upload()
     connect(m_thread, SIGNAL(finished()), this, SLOT(uploadFinished()));
     connect(m_thread, SIGNAL(ytError(QString)), this, SLOT(threadError(QString)));
 
-    progressBar->setMaximum(0);
+    setState(Upload);
     m_thread->start();
 
 }
 
-// TODO
+
 void YouTubeUploader::cancelUpload()
 {
 
-    kDebug() << "cancel";
-    progressBar->setMaximum(1);
-    uploadButton->setDisabled(false);
     if (m_thread) {
+        kDebug() << "cancel";
+        m_thread->cancelUpload();
         m_thread->deleteLater();
         m_thread = 0;
     }
+    setState(Idle);
 
 }
 
@@ -219,12 +220,9 @@ void YouTubeUploader::uploadFinished()
 {
 
     qDebug() << "upload finished";
-    progressBar->setMaximum(1);
     m_thread->deleteLater();
     m_thread = 0;
-    if (m_dialog) {
-        uploadButton->setDisabled(false);
-    }
+    setState(Idle);
 
 }
 
@@ -247,7 +245,6 @@ void YouTubeUploader::threadError(const QString &error)
 }
 
 
-// pw + login
 void YouTubeUploader::getWallet()
 {
 
@@ -263,6 +260,33 @@ void YouTubeUploader::getWallet()
         connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(writeWallet(bool)));
     } else {
         connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(readWallet(bool)));
+    }
+
+}
+
+
+void YouTubeUploader::setState(const State &state)
+{
+
+    if (!m_dialog) {
+        return;
+    }
+
+    switch (state) {
+    case Idle: {
+            progressBar->setMaximum(1);
+            uploadButton->setEnabled(true);
+            cancelButton->setEnabled(false);
+            quitButton->setEnabled(true);
+            break;
+        }
+    case Upload: {
+            progressBar->setMaximum(0);
+            uploadButton->setEnabled(false);
+            cancelButton->setEnabled(true);
+            quitButton->setEnabled(true);
+            break;
+        }
     }
 
 }
@@ -327,4 +351,16 @@ bool YouTubeUploader::enterWalletFolder(const QString &folder)
 
 }
 
+
+void YouTubeUploader::descriptionChanged()
+{
+
+    QString text = descriptionEdit->toPlainText();
+    kDebug() << text.length();
+    if (text.length() > 5000) {
+        text.resize(5000);
+        descriptionEdit->setText(text);
+    }
+
+}
 

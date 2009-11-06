@@ -108,7 +108,7 @@ void RecordItNowPluginManager::unloadPlugin(RecordItNowPlugin *plugin)
     while (it.hasNext()) {
         it.next();
         if (it.value() && it.value() == plugin) {
-            delete it.value();
+            it.value()->deleteLater();
             kDebug() << "unload plugin:" << it.key().name();
             m_plugins[it.key()] = 0;
             return;
@@ -168,7 +168,7 @@ void RecordItNowPluginManager::clear()
     while (it.hasNext()) {
         it.next();
         if (it.value()) {
-            delete it.value();
+            it.value()->deleteLater();
         }
     }
     m_plugins.clear();

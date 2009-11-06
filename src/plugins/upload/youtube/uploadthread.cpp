@@ -27,6 +27,7 @@
 // libgdata
 extern "C" {
 #include <libgdata/gdata/gdata.h>
+#include <gio/gio.h>
 };
 
 
@@ -34,6 +35,7 @@ extern "C" {
 #define CLIENT_ID "ytapi-GNOME-libgdata-444fubtt-0"
 
 
+static GCancellable *cancel = NULL;
 UploadThread::UploadThread(QObject *parent, const QHash<QString, QString> &data)
     : QThread(parent), m_data(data)
 {
@@ -46,8 +48,20 @@ UploadThread::UploadThread(QObject *parent, const QHash<QString, QString> &data)
 UploadThread::~UploadThread()
 {
 
+    if (cancel) {
+        g_object_unref(cancel);
+    }
+
+}
 
 
+void UploadThread::cancelUpload()
+{
+
+    if (cancel) {
+        kDebug() << "cancel!!!!";
+        g_cancellable_cancel(cancel);
+    }
 
 }
 
@@ -70,6 +84,7 @@ void UploadThread::run()
     gboolean retval;
     GDataService *service;
     GError *error = NULL;
+    cancel = g_cancellable_new();
 
     // Create a service
     service = GDATA_SERVICE (gdata_youtube_service_new (DEVELOPER_KEY, CLIENT_ID));
@@ -91,7 +106,7 @@ void UploadThread::run()
     retval = gdata_service_authenticate (service,
                                          login.toLatin1(),
                                          password.toLatin1(),
-                                         NULL,
+                                         cancel,
                                          &error);
 
     if (error) {
@@ -111,6 +126,11 @@ void UploadThread::run()
     g_clear_error(&error);
     // auth end
 
+    if (g_cancellable_is_cancelled(cancel)) {
+        kDebug() << "canceled...";
+        emit finished();
+        return;
+    }
 
     // upload
     kDebug() << "upload";
@@ -141,7 +161,7 @@ void UploadThread::run()
     new_video = gdata_youtube_service_upload_video(GDATA_YOUTUBE_SERVICE(service),
                                                    video,
                                                    video_file,
-                                                   NULL,
+                                                   cancel,
                                                    &error);
     if (error) {
         g_object_unref(service);
