@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="recorditnowrc"/>         
+  <group name="YoutubeUploader">
+    <entry name="title" type="String">
+	    <label></label>
+	    <default>Desktop video</default>
+    </entry>
+    <entry name="description" type="String">
+            <label></label>
+            <default>My Description</default>
+    </entry>
+    <entry name="tags" type="String">
+            <label></label>
+            <default>linux, kde, recorditnow, recordmydesktop</default>
+    </entry>
+    <entry name="category" type="Int">
+            <label></label>
+            <default>0</default>
+    </entry>
+    <entry name="savePassword" type="Bool">
+            <label></label>
+            <default>true</default>
+    </entry>
+    <entry name="userName" type="String">
+            <label></label>
+            <default></default>
+    </entry>
+  </group>
+</kcfg>

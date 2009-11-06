@@ -29,6 +29,10 @@
 #include <QtCore/QPointer>
 
 
+namespace KWallet {
+    class Wallet;
+};
+
 class UploadThread;
 class YouTubeUploader : public AbstractUploader, public Ui::YouTube
 {
@@ -43,10 +47,17 @@ public:
 
 
 private:
+    enum WalletWait { None=0, Read, Write };
+
+    KWallet::Wallet *m_wallet;
+    WalletWait m_walletWait;
     QHash<QString, QString> m_category;
     QPointer<QWidget> m_dialog;
     UploadThread *m_thread;
     
+    void getWallet();
+    bool enterWalletFolder(const QString &folder);
+
 
 private slots:
     void upload();
@@ -54,6 +65,8 @@ private slots:
     void uploadFinished();
     void quitDialog();
     void threadError(const QString &error);
+    void readWallet(bool success);
+    void writeWallet(bool success);
 
 
 };

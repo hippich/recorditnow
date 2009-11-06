@@ -20,6 +20,7 @@
 // own
 #include "youtubeuploader.h"
 #include "uploadthread.h"
+#include <recorditnow_youtube.h>
 
 // KDE
 #include <klocalizedstring.h>
@@ -27,6 +28,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kmessagebox.h>
+#include <kwallet.h>
 
 // Qt
 #include <QtCore/QFile>
@@ -48,6 +50,7 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
 {
 
     m_thread = 0;
+    m_wallet = 0;
 
     m_category["Autos"] = i18n("Autos & Vehicles");
     m_category["Comedy"] = i18n("Comedy");
@@ -77,6 +80,9 @@ YouTubeUploader::~YouTubeUploader()
     if (m_dialog) {
         delete m_dialog;
     }
+    if (m_wallet) {
+        delete m_wallet;
+    }
 
 }
 
@@ -103,6 +109,19 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
         it.next();
         categoryCombo->addItem(it.value());
     }
+
+    Settings::self()->readConfig();
+    titleEdit->setText(Settings::title());
+    descriptionEdit->setText(Settings::description());
+    tagsEdit->setText(Settings::tags());
+    categoryCombo->setCurrentIndex(Settings::category());
+    loginEdit->setText(Settings::userName());
+
+    if (Settings::savePassword()) {
+        savePasswordCheck->setChecked(true);
+        m_walletWait = Read;
+        getWallet();
+    }
     m_dialog->show();
 
 }
@@ -112,6 +131,22 @@ void YouTubeUploader::upload()
 {
 
     kDebug() << "upload";
+
+    Settings::self()->setTitle(titleEdit->text());
+    Settings::self()->setDescription(descriptionEdit->text());
+    Settings::self()->setTags(tagsEdit->text());
+    Settings::self()->setCategory(categoryCombo->currentIndex());
+    Settings::self()->setUserName(loginEdit->text());
+
+    if (savePasswordCheck->isChecked()) {
+        Settings::self()->setSavePassword(true);
+        m_walletWait = Write;
+        getWallet();
+    } else {
+        Settings::self()->setSavePassword(false);
+    }
+    Settings::self()->writeConfig();
+
     uploadButton->setDisabled(true);
 
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
@@ -208,3 +243,86 @@ void YouTubeUploader::threadError(const QString &error)
     cancelUpload();
 
 }
+
+
+// pw + login
+void YouTubeUploader::getWallet()
+{
+
+    if (m_wallet) {
+        delete m_wallet;
+    }
+
+    kDebug() << "opening wallet";
+    m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), m_dialog->winId(),
+                                           KWallet::Wallet::Asynchronous);
+
+    if (m_walletWait == Write) {
+        connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(writeWallet(bool)));
+    } else {
+        connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(readWallet(bool)));
+    }
+
+}
+
+
+void YouTubeUploader::writeWallet(bool success)
+{
+
+    kDebug() << "success:" << success;
+
+    const QString password = passwordEdit->text();
+    const QString username = loginEdit->text();
+
+    if (success &&
+        enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube")) &&
+        (m_wallet->writePassword(username, password) == 0)) {
+        kDebug() << "successfully put password in wallet";
+    }
+
+    m_walletWait = None;
+    delete m_wallet;
+    m_wallet = 0;
+
+}
+
+
+void YouTubeUploader::readWallet(bool success)
+{
+
+    kDebug() << "success:" << success;
+
+    QString password;
+    const QString username = loginEdit->text();
+
+    if (success &&
+        enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube")) &&
+        (m_wallet->readPassword(username, password) == 0)) {
+        kDebug() << "successfully retrieved password from wallet";
+        passwordEdit->setText(password);
+    } else if (password.isEmpty()) {
+        kDebug() << "failed to read password";
+    }
+
+    m_walletWait = None;
+    delete m_wallet;
+    m_wallet = 0;
+
+}
+
+
+bool YouTubeUploader::enterWalletFolder(const QString &folder)
+{
+
+    m_wallet->createFolder(folder);
+    if (!m_wallet->setFolder(folder)) {
+        kDebug() << "failed to open folder" << folder;
+        return false;
+    }
+
+    kDebug() << "wallet now on folder" << folder;
+    return true;
+
+}
+
+
