@@ -167,7 +167,9 @@ void YouTubeUploader::upload()
     QString tags = data["Tags"];
     foreach (const QString &tag, tags.split(',')) {
         if (tag.trimmed().length() > 25) {
-            KMessageBox::sorry(m_dialog, i18n("The Tag %1 is too long.", tag.trimmed()));
+            KMessageBox::sorry(m_dialog, i18nc("%1 = youtube tag",
+                                               "The Tag %1 is too long.",
+                                               tag.trimmed()));
             cancelUpload();
             return;
         }
@@ -178,14 +180,14 @@ void YouTubeUploader::upload()
         it.next();
         if (it.value().isEmpty()) {
             m_dialog->setDisabled(false);
-            KMessageBox::sorry(m_dialog, i18n(""));
+            KMessageBox::sorry(m_dialog, i18n("Please fill out all the fields."));
             return;
         }
     }
 
     if (!QFile::exists(fileRequester->text())) {
         m_dialog->setDisabled(false);
-        KMessageBox::sorry(m_dialog, i18n(""));
+        KMessageBox::sorry(m_dialog, i18n("No such file: %1", fileRequester->text()));
         return;
     }
 

@@ -89,7 +89,7 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     const QString recordMyDesktop = KGlobal::dirs()->findExe("recordmydesktop");
     if (recordMyDesktop.isEmpty()) {
         emit error(i18n("Cannot find recordmydesktop!\n"
-                        "Please install recordmydesktop or use another recorder."));
+                        "Please install recordmydesktop or use another plugin."));
         return;
     }
 
