@@ -96,7 +96,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupTray();
     setupGUI();
-    setMenuBar(0);
+
+    //setMenuBar(0); // crash on saveNewToolbarConfig()... KDE bug?
+    menuBar()->clear(); // see saveNewToolbarConfig()
+
     setState(Idle);
     m_pluginManager->init();
 
@@ -157,59 +160,61 @@ void MainWindow::startWithArgs(const QString &backend, const QString &file, cons
 }
 
 
+QAction *MainWindow::getAction(const QString &name)
+{
+
+    QAction *action = actionCollection()->action(name);
+    if (!action) {
+        action = new KActionMenu(this);
+        static_cast<KActionMenu*>(action)->setDelayed(false);
+        actionCollection()->addAction(name, action);
+    }
+    return action;
+
+}
+
+
 void MainWindow::setupActions()
 {
 
-    QAction *recordAction = new QAction(this);
+    QAction *recordAction = getAction("record");
     recordAction->setText(i18n("Record"));
     recordAction->setIcon(KIcon("media-record"));
     connect(recordAction, SIGNAL(triggered()), this, SLOT(recordTriggred()));
 
-    QAction *pauseAction = new QAction(this);
+    QAction *pauseAction = getAction("pause");
     pauseAction->setObjectName("pause");
     pauseAction->setText(i18n("Pause"));
     pauseAction->setIcon(KIcon("media-playback-pause"));
     pauseAction->setEnabled(false);
     connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseRecord()));
 
-    QAction *stopAction = new QAction(this);
+    QAction *stopAction = getAction("stop");
     stopAction->setText(i18n("Stop"));
     stopAction->setIcon(KIcon("media-playback-stop"));
     stopAction->setEnabled(false);
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopRecord()));
 
 
-    QAction *recordWindowAction = new QAction(this);
+    QAction *recordWindowAction = getAction("recordWindow");
     recordWindowAction->setText(i18n("Record a Window"));
     recordWindowAction->setIcon(KIcon("edit-select"));
     connect(recordWindowAction, SIGNAL(triggered()), this, SLOT(recordWindow()));
 
-    QAction *boxAction = new QAction(this);
+    QAction *boxAction = getAction("box");
     boxAction->setText(i18n("Show Frame"));
     boxAction->setIcon(KIcon("draw-rectangle"));
     boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
 
-    QAction *fullAction = new QAction(this);
+    QAction *fullAction = getAction("recordFullScreen");
     fullAction->setText(i18n("Record the entire Screen"));
     fullAction->setIcon(KIcon("view-fullscreen"));
     connect(fullAction, SIGNAL(triggered()), this, SLOT(recordFullScreen()));
 
-
-    KActionMenu *uploadAction = new KActionMenu(this);
+    QAction *uploadAction = getAction("upload");
     uploadAction->setIcon(KIcon("upload-media"));
     uploadAction->setText(i18n("Upload"));
-    uploadAction->setDelayed(false);
-
-    actionCollection()->addAction("record", recordAction);
-    actionCollection()->addAction("pause", pauseAction);
-    actionCollection()->addAction("stop", stopAction);
-
-    actionCollection()->addAction("recordWindow", recordWindowAction);
-    actionCollection()->addAction("box", boxAction);
-    actionCollection()->addAction("recordFullScreen", fullAction);
-
-    actionCollection()->addAction("upload", uploadAction);
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
 
@@ -504,13 +509,13 @@ void MainWindow::setupTray()
 
 
             KMenu *context = new KMenu(this);
-            context->addAction(actionCollection()->action("record"));
-            context->addAction(actionCollection()->action("pause"));
-            context->addAction(actionCollection()->action("stop"));
+            context->addAction(getAction("record"));
+            context->addAction(getAction("pause"));
+            context->addAction(getAction("stop"));
             context->addSeparator();
-            context->addAction(actionCollection()->action("box"));
-            context->addAction(actionCollection()->action("recordWindow"));
-            context->addAction(actionCollection()->action("recordFullScreen"));
+            context->addAction(getAction("box"));
+            context->addAction(getAction("recordWindow"));
+            context->addAction(getAction("recordFullScreen"));
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
 #else
             context->addSeparator();
@@ -549,15 +554,15 @@ void MainWindow::setState(const State &newState)
     switch (newState) {
     case Idle: {
             setTrayOverlay("");
-            actionCollection()->action("pause")->setIcon(KIcon("media-playback-pause"));
-            actionCollection()->action("record")->setEnabled(true);
-            actionCollection()->action("pause")->setEnabled(false);
-            actionCollection()->action("stop")->setEnabled(false);
-            actionCollection()->action("recordWindow")->setEnabled(true);
-            actionCollection()->action("recordFullScreen")->setEnabled(true);
-            actionCollection()->action("box")->setEnabled(true);
-            actionCollection()->action("box")->setChecked(m_box->isEnabled());
-            actionCollection()->action("options_configure")->setEnabled(true);
+            getAction("pause")->setIcon(KIcon("media-playback-pause"));
+            getAction("record")->setEnabled(true);
+            getAction("pause")->setEnabled(false);
+            getAction("stop")->setEnabled(false);
+            getAction("recordWindow")->setEnabled(true);
+            getAction("recordFullScreen")->setEnabled(true);
+            getAction("box")->setEnabled(true);
+            getAction("box")->setChecked(m_box->isEnabled());
+            getAction("options_configure")->setEnabled(true);
             fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
             soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
             centralWidget()->setEnabled(true);
@@ -566,29 +571,29 @@ void MainWindow::setState(const State &newState)
     case Timer:
     case Recording: {
             setTrayOverlay("media-record");
-            actionCollection()->action("pause")->setIcon(KIcon("media-playback-pause"));
-            actionCollection()->action("record")->setEnabled(false);
-            actionCollection()->action("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
-            actionCollection()->action("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
-            actionCollection()->action("recordWindow")->setEnabled(false);
-            actionCollection()->action("recordFullScreen")->setEnabled(false);
-            actionCollection()->action("box")->setEnabled(false);
-            actionCollection()->action("options_configure")->setEnabled(false);
+            getAction("pause")->setIcon(KIcon("media-playback-pause"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
+            getAction("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
     case TimerPaused:
     case Paused: {
             setTrayOverlay("media-playback-pause");
-            actionCollection()->action("pause")->setText(i18n("Continue"));
-            actionCollection()->action("pause")->setIcon(KIcon("media-playback-start"));
-            actionCollection()->action("record")->setEnabled(false);
-            actionCollection()->action("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
-            actionCollection()->action("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
-            actionCollection()->action("recordWindow")->setEnabled(false);
-            actionCollection()->action("recordFullScreen")->setEnabled(false);
-            actionCollection()->action("box")->setEnabled(false);
-            actionCollection()->action("options_configure")->setEnabled(false);
+            getAction("pause")->setText(i18n("Continue"));
+            getAction("pause")->setIcon(KIcon("media-playback-start"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
+            getAction("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
@@ -880,7 +885,7 @@ void MainWindow::pluginsChanged()
 void MainWindow::updateUploaderMenu()
 {
 
-    KActionMenu *action = static_cast<KActionMenu*>(actionCollection()->action("upload"));
+    KActionMenu *action = static_cast<KActionMenu*>(getAction("upload"));
     KMenu *menu = action->menu();
     if (!menu) {
         menu = new KMenu(this);
@@ -890,7 +895,7 @@ void MainWindow::updateUploaderMenu()
 
     foreach (const KPluginInfo &info, m_pluginManager->getUploaderList()) {
         if (info.isPluginEnabled()) {
-            QAction *uploadAction = new QAction(this);
+            KAction *uploadAction = new KAction(this);
             uploadAction->setText(info.name());
             uploadAction->setIcon(KIcon(info.icon()));
             uploadAction->setData(info.name());
@@ -921,7 +926,7 @@ void MainWindow::hideEvent(QHideEvent *event)
     KXmlGuiWindow::hideEvent(event);
     if (m_box->isEnabled()) {
         triggerFrame(false);
-        actionCollection()->action("box")->setChecked(true);
+        getAction("box")->setChecked(true);
     }
 
 }
@@ -931,7 +936,7 @@ void MainWindow::showEvent(QShowEvent *event)
 {
 
     KXmlGuiWindow::showEvent(event);
-    if (actionCollection()->action("box")->isChecked()) {
+    if (getAction("box")->isChecked()) {
         triggerFrame(true);
     }
 
@@ -950,6 +955,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
     kapp->quit();
 
 }
+
+
+void MainWindow::saveNewToolbarConfig()
+{
+
+    KXmlGuiWindow::saveNewToolbarConfig();
+    menuBar()->clear();
+
+}
+
 
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
     #include "mainwindow.moc"

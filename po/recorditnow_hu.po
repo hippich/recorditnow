@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: recorditnow\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-06 18:52+0100\n"
+"POT-Creation-Date: 2009-11-06 21:43+0100\n"
 "PO-Revision-Date: 2009-10-31 02:35+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Hungary <info@blackpanther.hu>\n"
@@ -467,13 +467,28 @@ msgstr "kbarcza@blackpanther.hu"
 
 #: src/configdialog.cpp:59
 #, fuzzy
+msgid "Record Plugins"
+msgstr "Felvételi bővítőmodulok"
+
+#: src/configdialog.cpp:59
+#, fuzzy
 msgid "Recorder"
 msgstr "Felvétel"
 
 #: src/configdialog.cpp:62
 #, fuzzy
+msgid "Encode Plugins"
+msgstr "Felvételi bővítőmodulok"
+
+#: src/configdialog.cpp:62
+#, fuzzy
 msgid "Encoder"
 msgstr "Átalakítás"
+
+#: src/configdialog.cpp:65
+#, fuzzy
+msgid "Upload Plugins"
+msgstr "Felvételi bővítőmodulok"
 
 #: src/configdialog.cpp:65
 msgid "Uploader"
@@ -606,14 +621,14 @@ msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:165
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:178
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:196
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:200
 msgid "Paused!"
 msgstr "Szünetel!"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:169
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:182
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:200
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:263
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:204
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:271
 msgid "Capturing!"
 msgstr "Felvétel !"
 
@@ -626,7 +641,7 @@ msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:208
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:221
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:306
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:314
 msgctxt "%1 = source, %1 = destination, %3 = error string"
 msgid ""
 "Move failed: \"%1\" to \"%2\".\n"
@@ -677,52 +692,52 @@ msgid ""
 "Please install recordmydesktop or use another plugin."
 msgstr ""
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:240
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:248
 msgid "Cached: %1"
 msgstr "Gyorsítótárba: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:241
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:249
 msgid "Received: %1"
 msgstr "Fogadott: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:245
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:253
 msgid "Frames: %1"
 msgstr "Képkockák: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:255
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:263
 msgid "Encoding: %1"
 msgstr "Átalakítás: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:265
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:273
 msgid "Shutting down.."
 msgstr "Leállítás..."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:267
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
 msgid "Encoding started!"
 msgstr "Elkezdődött az átalakítás!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:269
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
 msgid "Done!"
 msgstr "Kész!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:273
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:281
 msgid "Cannot open file %1 for writting!"
 msgstr "Nem sikerült írásra megnyitni a(z) %1 fájlt"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:283
 msgid "Could not create temporary directory, check your config."
 msgstr ""
 "Nem lehetett létrehozni az ideiglenes könyvtárat, ellenőrizze a beállításait."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:285
 msgid "recordMyDesktop is not compiled with Jack support."
 msgstr "A recordMyDesktop nem rendelkezik Jack támogatással."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:279
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:287
 msgid "Error while opening/configuring soundcard."
 msgstr "Hiba történt a hangkártya megnyitása/beállításakor."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:291
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:299
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "recordmydesktop: Remove failed: %1.\n"
@@ -834,9 +849,6 @@ msgstr "Kimeneti fájl: %1"
 #~ msgid ""
 #~ "Location where a temporary directory will be created to hold project files"
 #~ msgstr "Az átmeneti fájlok helye ahol létre lesznek hozva a projekt fájlok"
-
-#~ msgid "Recorder Plugins"
-#~ msgstr "Felvételi bővítőmodulok"
 
 #, fuzzy
 #~ msgid "Cannot find ffmpeg."

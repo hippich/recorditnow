@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-06 18:52+0100\n"
-"PO-Revision-Date: 2009-11-06 18:53+0100\n"
+"POT-Creation-Date: 2009-11-06 21:43+0100\n"
+"PO-Revision-Date: 2009-11-06 21:46+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -460,12 +460,24 @@ msgid "Your emails"
 msgstr "just89@gmx.de"
 
 #: src/configdialog.cpp:59
+msgid "Record Plugins"
+msgstr "Aufnahme Module"
+
+#: src/configdialog.cpp:59
 msgid "Recorder"
 msgstr "Recorder"
 
 #: src/configdialog.cpp:62
+msgid "Encode Plugins"
+msgstr "Kodierungs Module"
+
+#: src/configdialog.cpp:62
 msgid "Encoder"
 msgstr "Encoder"
+
+#: src/configdialog.cpp:65
+msgid "Upload Plugins"
+msgstr "Hochlad Module"
 
 #: src/configdialog.cpp:65
 msgid "Uploader"
@@ -599,14 +611,14 @@ msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:165
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:178
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:196
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:200
 msgid "Paused!"
 msgstr "Pausiert!"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:169
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:182
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:200
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:263
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:204
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:271
 msgid "Capturing!"
 msgstr "Aufnahme!"
 
@@ -621,7 +633,7 @@ msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:208
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:221
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:306
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:314
 msgctxt "%1 = source, %1 = destination, %3 = error string"
 msgid ""
 "Move failed: \"%1\" to \"%2\".\n"
@@ -678,52 +690,52 @@ msgstr ""
 "Kann recordmydesktop nicht finden!\n"
 "Bitte installiere recordmydesktop oder verwende ein anderes Modul."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:240
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:248
 msgid "Cached: %1"
 msgstr "Cached: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:241
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:249
 msgid "Received: %1"
 msgstr "Eingegangen: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:245
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:253
 msgid "Frames: %1"
 msgstr "Bilder: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:255
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:263
 msgid "Encoding: %1"
 msgstr "Kodiere: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:265
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:273
 msgid "Shutting down.."
 msgstr "Fahre herunter."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:267
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
 msgid "Encoding started!"
 msgstr "Kodierung  gestartet!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:269
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
 msgid "Done!"
 msgstr "Fertig!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:273
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:281
 msgid "Cannot open file %1 for writting!"
 msgstr "Kann Datei %1  nicht öffnen!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:283
 msgid "Could not create temporary directory, check your config."
 msgstr ""
 "Kann tempoäres Verzeichniss nicht erstellen, prüfe deine Einstellungen."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:285
 msgid "recordMyDesktop is not compiled with Jack support."
 msgstr "RecordMyDesktop ist ohne JACK Support Kompiliert."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:279
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:287
 msgid "Error while opening/configuring soundcard."
 msgstr "Fehler während des öffnens/konfigurierens der Soundkarte."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:291
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:299
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "recordmydesktop: Remove failed: %1.\n"
@@ -836,9 +848,6 @@ msgstr "Kann Datei nicht finden: %1"
 #~ msgstr ""
 #~ "Ort, an dem ein temporäres Verzeichnis erstellt wird, um Projekt-Dateien "
 #~ "zu speichern"
-
-#~ msgid "Recorder Plugins"
-#~ msgstr "Recorder Module"
 
 #~ msgid "Cannot find ffmpeg."
 #~ msgstr "Kann ffmpeg nicht finden."

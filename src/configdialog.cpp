@@ -56,13 +56,13 @@ void ConfigDialog::init()
 
     m_pluginSelector->addPlugins(m_pluginManager->getRecorderList(),
                                KPluginSelector::ReadConfigFile,
-                               i18n("Recorder"), I18N_NOOP("Recorder"));
+                               i18n("Record Plugins"), I18N_NOOP("Recorder"));
     m_pluginSelector->addPlugins(m_pluginManager->getEncoderList(),
                                KPluginSelector::ReadConfigFile,
-                               i18n("Encoder"), I18N_NOOP("Encoder"));
+                               i18n("Encode Plugins"), I18N_NOOP("Encoder"));
     m_pluginSelector->addPlugins(m_pluginManager->getUploaderList(),
                                KPluginSelector::ReadConfigFile,
-                               i18n("Uploader"), I18N_NOOP("Uploader"));
+                               i18n("Upload Plugins"), I18N_NOOP("Uploader"));
     
     updateEncoderCombo();
     ui_settings.encoderCombo->setCurrentItem(Settings::encoderName(), false);

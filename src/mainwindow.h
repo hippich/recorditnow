@@ -66,6 +66,8 @@ private:
     RecordItNowPluginManager *m_pluginManager;
     QHash<AbstractRecorder::Feature, bool> m_currentFeatures;
 
+    QAction *getAction(const QString &name);
+
     void setupActions();
     void initRecorder(AbstractRecorder::Data *d);
     void setupTray();
@@ -109,6 +111,7 @@ protected:
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
+    void saveNewToolbarConfig();
 
 
 };
