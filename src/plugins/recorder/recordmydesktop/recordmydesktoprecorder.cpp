@@ -192,6 +192,10 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 void RecordMyDesktopRecorder::pause()
 {
 
+    if (!m_recorder) {
+        return;
+    }
+
     if (!m_data.paused) {
         emit status(i18n("Paused!"));
         kill(m_recorder->pid(), SIGSTOP);
@@ -218,6 +222,10 @@ void RecordMyDesktopRecorder::stop()
 
 void RecordMyDesktopRecorder::newRecorderOutput()
 {
+
+    if (!m_recorder) {
+        return;
+    }
 
     QString output = QString(m_recorder->readAllStandardOutput()).trimmed();
 
@@ -317,6 +325,10 @@ void RecordMyDesktopRecorder::clean()
 
     if (m_recorder) {
         m_recorder->disconnect(this);
+        if (m_recorder->state() != KProcess::NotRunning) {
+            m_recorder->terminate();
+        }
+        m_recorder->waitForFinished(-1);
         m_recorder->deleteLater();
         m_recorder = 0;
     }
@@ -345,12 +357,14 @@ void RecordMyDesktopRecorder::recorderFinished(int)
         return;
     }
 
-    if (m_recorder->exitStatus() == KProcess::CrashExit) {
+    const KProcess::ExitStatus status = m_recorder->exitStatus();
+    clean();
+
+    if ( status == KProcess::CrashExit) {
         emit finished(Crash);
     } else {
         emit finished(Normal);
     }
-    clean();
 
 }
 

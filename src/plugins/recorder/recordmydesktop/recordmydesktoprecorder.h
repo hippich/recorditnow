@@ -26,7 +26,7 @@
 
 // Qt
 #include <QtCore/QVariantList>
-
+#include <QtCore/QPointer>
 
 class KProcess;
 class RecordMyDesktopRecorder : public AbstractRecorder
