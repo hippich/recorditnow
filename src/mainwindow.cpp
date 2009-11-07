@@ -212,9 +212,11 @@ void MainWindow::setupActions()
     fullAction->setIcon(KIcon("view-fullscreen"));
     connect(fullAction, SIGNAL(triggered()), this, SLOT(recordFullScreen()));
 
+
     QAction *uploadAction = getAction("upload");
     uploadAction->setIcon(KIcon("upload-media"));
     uploadAction->setText(i18n("Upload"));
+
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
 
@@ -563,6 +565,7 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(true);
             getAction("box")->setChecked(m_box->isEnabled());
             getAction("options_configure")->setEnabled(true);
+            getAction("upload")->setEnabled(true);
             fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
             soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
             centralWidget()->setEnabled(true);
@@ -579,6 +582,7 @@ void MainWindow::setState(const State &newState)
             getAction("recordFullScreen")->setEnabled(false);
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
@@ -594,6 +598,7 @@ void MainWindow::setState(const State &newState)
             getAction("recordFullScreen")->setEnabled(false);
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }

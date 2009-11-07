@@ -80,6 +80,7 @@ YouTubeUploader::~YouTubeUploader()
 {
 
     if (m_thread) {
+        m_jobTracker->unregisterJob(m_thread->getJob());
         m_thread->deleteLater();
     }
     if (m_dialog) {

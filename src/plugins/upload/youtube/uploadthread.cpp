@@ -134,9 +134,10 @@ void UploadThread::run()
     const QString qcategory = m_data["Category"];
     const QString password = m_data["Password"];
     const QString login = m_data["Login"];
+    const QString path = m_data["File"];
 
     m_job->start();
-    m_job->setText(m_data["File"]);
+    m_job->setText(path);
     m_job->setProgress(10);
 
     g_type_init();
@@ -231,7 +232,7 @@ void UploadThread::run()
     xml = gdata_parsable_get_xml(GDATA_PARSABLE(video));
     g_free (xml);
 
-    video_file = g_file_new_for_path(m_data["File"].toLatin1());
+    video_file = g_file_new_for_path(path.toLatin1());
 
     m_job->setProgress(60);
 
