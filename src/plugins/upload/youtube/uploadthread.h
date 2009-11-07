@@ -24,8 +24,11 @@
 // Qt
 #include <QtCore/QThread>
 #include <QtCore/QHash>
+#include <QtCore/QPointer>
 
 
+class KJob;
+class Job;
 class UploadThread : public QThread
 {
     Q_OBJECT
@@ -35,11 +38,14 @@ public:
     UploadThread(QObject *parent, const QHash<QString, QString> &data);
     ~UploadThread();
 
+    KJob *getJob() const;
+
     void cancelUpload();
 
 
 private:
     QHash<QString, QString> m_data;
+    QPointer<Job> m_job;
 
 
 protected:

@@ -29,6 +29,8 @@
 #include <kdialog.h>
 #include <kmessagebox.h>
 #include <kwallet.h>
+#include <knotification.h>
+#include <kuiserverjobtracker.h>
 
 // Qt
 #include <QtCore/QFile>
@@ -51,6 +53,7 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
 
     m_thread = 0;
     m_wallet = 0;
+    m_jobTracker = new KUiServerJobTracker(this);
 
     m_category["Autos"] = i18n("Autos & Vehicles");
     m_category["Comedy"] = i18n("Comedy");
@@ -85,6 +88,7 @@ YouTubeUploader::~YouTubeUploader()
     if (m_wallet) {
         delete m_wallet;
     }
+    delete m_jobTracker;
 
 }
 
@@ -197,6 +201,7 @@ void YouTubeUploader::upload()
     connect(m_thread, SIGNAL(ytError(QString)), this, SLOT(threadError(QString)));
 
     setState(Upload);
+    m_jobTracker->registerJob(m_thread->getJob());
     m_thread->start();
 
 }
@@ -207,8 +212,8 @@ void YouTubeUploader::cancelUpload()
 
     if (m_thread) {
         kDebug() << "cancel";
+        m_jobTracker->unregisterJob(m_thread->getJob());
         m_thread->cancelUpload();
-        m_thread->deleteLater();
         m_thread = 0;
     }
     setState(Idle);
@@ -220,6 +225,7 @@ void YouTubeUploader::uploadFinished()
 {
 
     qDebug() << "upload finished";
+    m_jobTracker->unregisterJob(m_thread->getJob());
     m_thread->deleteLater();
     m_thread = 0;
     setState(Idle);
@@ -274,14 +280,12 @@ void YouTubeUploader::setState(const State &state)
 
     switch (state) {
     case Idle: {
-            progressBar->setMaximum(1);
             uploadButton->setEnabled(true);
             cancelButton->setEnabled(false);
             quitButton->setEnabled(true);
             break;
         }
     case Upload: {
-            progressBar->setMaximum(0);
             uploadButton->setEnabled(false);
             cancelButton->setEnabled(true);
             quitButton->setEnabled(true);

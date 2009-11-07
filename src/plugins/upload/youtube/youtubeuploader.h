@@ -32,7 +32,7 @@
 namespace KWallet {
     class Wallet;
 };
-
+class KUiServerJobTracker;
 class UploadThread;
 class YouTubeUploader : public AbstractUploader, public Ui::YouTube
 {
@@ -56,7 +56,9 @@ private:
     QHash<QString, QString> m_category;
     QPointer<QWidget> m_dialog;
     UploadThread *m_thread;
-    
+    KUiServerJobTracker *m_jobTracker;
+
+
     void getWallet();
     void setState(const State &state);
     bool enterWalletFolder(const QString &folder);

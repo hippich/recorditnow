@@ -23,6 +23,10 @@
 // KDE
 #include <kdebug.h>
 #include <klocalizedstring.h>
+#include <kjob.h>
+
+// Qt
+#include <QtCore/QMetaType>
 
 // libgdata
 extern "C" {
@@ -35,12 +39,53 @@ extern "C" {
 #define CLIENT_ID "ytapi-GNOME-libgdata-444fubtt-0"
 
 
+class Job : public KJob {
+
+public:
+    Job() {};
+    ~Job() {};
+
+    void start() {};
+
+    void setText(const QString &file)
+    {
+
+        qRegisterMetaType< QPair<QString,QString> >("QPair<QString,QString>");
+        emit description(this, i18n("Upload to YouTube"), qMakePair(i18n("Video"), file));
+
+    }
+
+    void setInfo(const QString &message)
+    {
+
+        infoMessage(this, message);
+
+    }
+
+    void setProgress(const int &progress)
+    {
+
+        setPercent(progress);
+
+    }
+
+    void emitFinished()
+    {
+
+        emitResult();
+
+    }
+
+};
+
+
+
 static GCancellable *cancel = NULL;
 UploadThread::UploadThread(QObject *parent, const QHash<QString, QString> &data)
     : QThread(parent), m_data(data)
 {
 
-
+    m_job = new Job();
 
 }
 
@@ -48,9 +93,21 @@ UploadThread::UploadThread(QObject *parent, const QHash<QString, QString> &data)
 UploadThread::~UploadThread()
 {
 
-    if (cancel) {
+    if (cancel && G_IS_OBJECT(cancel)) {
         g_object_unref(cancel);
     }
+
+    if (m_job) {
+        delete m_job;
+    }
+
+}
+
+
+KJob *UploadThread::getJob() const
+{
+
+    return m_job;
 
 }
 
@@ -58,9 +115,11 @@ UploadThread::~UploadThread()
 void UploadThread::cancelUpload()
 {
 
-    if (cancel) {
-        kDebug() << "cancel!!!!";
+    if (cancel && G_IS_OBJECT(cancel)) {
+        kDebug() << "cancel!";
         g_cancellable_cancel(cancel);
+        cancel = 0;
+        deleteLater();
     }
 
 }
@@ -76,10 +135,15 @@ void UploadThread::run()
     const QString password = m_data["Password"];
     const QString login = m_data["Login"];
 
+    m_job->start();
+    m_job->setText(m_data["File"]);
+    m_job->setProgress(10);
+
     g_type_init();
 
     // auth
     kDebug() << "auth...";
+    m_job->setInfo(i18n("Authenticating..."));
 
     gboolean retval;
     GDataService *service;
@@ -88,9 +152,11 @@ void UploadThread::run()
 
     // Create a service
     service = GDATA_SERVICE (gdata_youtube_service_new (DEVELOPER_KEY, CLIENT_ID));
+    m_job->setProgress(20);
 
     if (!service) {
         kDebug() << "!service";
+        m_job->emitFinished();
         emit ytError(i18n("Unkown error"));
         return;
     }
@@ -98,11 +164,15 @@ void UploadThread::run()
     if (!GDATA_IS_SERVICE(service)) {
         g_object_unref(service);
         kDebug() << "!isService";
+        m_job->emitFinished();
         emit ytError(i18n("Unkown error"));
         return;
     }
 
     // Log in
+    m_job->setInfo(i18n("Log in..."));
+    m_job->setProgress(30);
+
     retval = gdata_service_authenticate (service,
                                          login.toLatin1(),
                                          password.toLatin1(),
@@ -113,6 +183,7 @@ void UploadThread::run()
         g_object_unref(service);
         const QString msg = error->message;
         g_clear_error (&error);
+        m_job->emitFinished();
         emit ytError(msg);
         return;
     }
@@ -120,7 +191,8 @@ void UploadThread::run()
     if (!retval) {
         g_object_unref(service);
         g_clear_error (&error);
-        emit ytError(i18n("Authentication failed!"));
+        m_job->emitFinished();
+        emit ytError(i18n("Authentication failed!"));        
         return;
     }
     g_clear_error(&error);
@@ -128,12 +200,16 @@ void UploadThread::run()
 
     if (g_cancellable_is_cancelled(cancel)) {
         kDebug() << "canceled...";
+        m_job->emitFinished();
         emit finished();
         return;
     }
 
     // upload
     kDebug() << "upload";
+    m_job->setInfo(i18n("Uploading..."));
+    m_job->setProgress(50);
+
 
     GDataYouTubeVideo *video, *new_video;
     GDataMediaCategory *category;
@@ -157,6 +233,8 @@ void UploadThread::run()
 
     video_file = g_file_new_for_path(m_data["File"].toLatin1());
 
+    m_job->setProgress(60);
+
     // Upload the video
     new_video = gdata_youtube_service_upload_video(GDATA_YOUTUBE_SERVICE(service),
                                                    video,
@@ -170,9 +248,13 @@ void UploadThread::run()
         g_object_unref(video_file);
         const QString msg = error->message;
         g_clear_error(&error);
+        m_job->emitFinished();
         emit ytError(msg);
         return;
     }
+
+    m_job->setProgress(100);
+
     g_clear_error(&error);
     g_object_unref(video);
     g_object_unref(new_video);
@@ -180,6 +262,7 @@ void UploadThread::run()
     g_object_unref(service);
 
     kDebug() << "upload finished";
+    m_job->emitFinished();
     emit finished();
 
 }
