@@ -2,5 +2,5 @@
 File=recorditnow_youtube.kcfg
 ClassName=Settings
 Singleton=true
-Mutators=userName, savePassword, title, category, description, tags
+Mutators=currentAccount, savePassword, title, category, description, tags
 # will create the necessary code for setting those variables

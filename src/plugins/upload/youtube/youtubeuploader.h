@@ -47,21 +47,16 @@ public:
 
 
 private:
-    enum WalletWait { None=0, Read, Write };
     enum State { Idle = 0, Upload = 1 };
 
-    KWallet::Wallet *m_wallet;
     State m_state;
-    WalletWait m_walletWait;
     QHash<QString, QString> m_category;
     QPointer<QWidget> m_dialog;
     UploadThread *m_thread;
     KUiServerJobTracker *m_jobTracker;
 
 
-    void getWallet();
     void setState(const State &state);
-    bool enterWalletFolder(const QString &folder);
 
 
 private slots:
@@ -70,9 +65,14 @@ private slots:
     void uploadFinished();
     void quitDialog();
     void threadError(const QString &error);
-    void readWallet(bool success);
-    void writeWallet(bool success);
     void descriptionChanged();
+    void addAccount();
+    void removeAccount();
+    void editAccount();
+    void accountsChanged(const QStringList &accounts);
+    void newPassword(const QString &account, const QString &password);
+    void currentAccountChanged(const QString &newAccount);
+    void gotPasswordForAccount(const QString &account, const QString &password);
 
 
 };

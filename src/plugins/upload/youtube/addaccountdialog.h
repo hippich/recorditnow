@@ -17,67 +17,48 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef ABSTRACTUPLOADER_H
-#define ABSTRACTUPLOADER_H
+#ifndef ADDACCOUNTDIALOG_H
+#define ADDACCOUNTDIALOG_H
 
 
 // own
-#include "recorditnowplugin.h"
+#include "ui_youtube_account.h"
 
 // KDE
-#include <kdemacros.h>
-
-// Qt
-#include <QtCore/QVariantList>
-#include <QtGui/QAction>
+#include <kdialog.h>
 
 
-namespace KWallet {
-    class Wallet;
-};
-
-class KDE_EXPORT AbstractUploader : public RecordItNowPlugin
+class AbstractUploader;
+class AddAccountDialog : public KDialog, public Ui::Account
 {
     Q_OBJECT
 
 
 public:
-    AbstractUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractUploader();
+    AddAccountDialog(QWidget *parent, AbstractUploader *uploader = 0,
+                     const QString &account = QString());
+    ~AddAccountDialog();
 
-    virtual void show(const QString &file, QWidget *parent) = 0;
+    static void removeAccount(const QString &account);
+    static QStringList getAccounts();
+    static bool hasPassword(const QString &account);
 
-    void getPassword(const QString &account);
-    void setPassword(const QString &account, const QString &password);
 
 private:
-    enum WalletWait { None=0, Read, Write };
-
-    WId m_wId;
-    WalletWait m_walletWait;
-    KWallet::Wallet *m_wallet;
-    QStringList m_getPasswords;
-    QHash<QString, QString> m_setPasswords;
-
-    void getWallet();
-    bool enterWalletFolder(const QString &folder);
+    QString m_account;
 
 
 private slots:
-    void readWallet(bool success);
-    void writeWallet(bool success);
-
-
-protected:
-    void setId(const WId &i);
+    void dialogFinished(const int &code);
+    void gotPassword(const QString &account, const QString &password);
 
 
 signals:
-    void gotPassword(const QString &account, const QString &password);
+    void accountsChanged(const QStringList &accounts);
+    void newPassword(const QString &account, const QString &password);
 
 
 };
 
 
-#endif // ABSTRACTUPLOADER_H
+#endif // ADDACCOUNTDIALOG_H

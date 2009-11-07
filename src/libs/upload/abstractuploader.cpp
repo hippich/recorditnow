@@ -21,6 +21,9 @@
 // own
 #include "abstractuploader.h"
 
+// KDE
+#include <kwallet.h>
+#include <kdebug.h>
 
 
 AbstractUploader::AbstractUploader(QObject *parent, const QVariantList &args)
@@ -28,6 +31,8 @@ AbstractUploader::AbstractUploader(QObject *parent, const QVariantList &args)
 {
 
     Q_UNUSED(args);
+    m_wId = -1;
+    m_wallet = 0;
 
 }
 
@@ -35,7 +40,126 @@ AbstractUploader::AbstractUploader(QObject *parent, const QVariantList &args)
 AbstractUploader::~AbstractUploader()
 {
 
-
+    if (m_wallet) {
+        delete m_wallet;
+    }
 
 }
 
+
+void AbstractUploader::getPassword(const QString &account)
+{
+
+    Q_ASSERT(m_wId != WId(-1));
+    m_getPasswords.append(account);
+    m_walletWait = Read;
+    getWallet();
+
+}
+
+
+void AbstractUploader::setPassword(const QString &account, const QString &password)
+{
+
+    Q_ASSERT(m_wId != WId(-1));
+    m_setPasswords[account] = password;
+    m_walletWait = Write;
+    getWallet();
+
+}
+
+
+void AbstractUploader::writeWallet(bool success)
+{
+
+    kDebug() << "success:" << success;
+    if (success && enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube"))) {
+        QHashIterator<QString, QString> it(m_setPasswords);
+        while (it.hasNext()) {
+            it.next();
+            if (m_wallet->writePassword(it.key(), it.value()) == 0) {
+                kDebug() << "successfully put password in wallet";
+            }
+        }
+    }
+
+    m_setPasswords.clear();
+    m_walletWait = None;
+    delete m_wallet;
+    m_wallet = 0;
+
+    if (!m_getPasswords.isEmpty()) {
+        m_walletWait = Read;
+        getWallet();
+    }
+
+}
+
+
+void AbstractUploader::readWallet(bool success)
+{
+
+    kDebug() << "success:" << success;
+    if (success && enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube"))) {
+        foreach (const QString &username, m_getPasswords) {
+            QString password;
+            if (m_wallet->readPassword(username, password) == 0) {
+                kDebug() << "successfully retrieved password from wallet";
+                emit gotPassword(username, password);
+            }
+        }
+    }
+
+    m_getPasswords.clear();
+    m_walletWait = None;
+    delete m_wallet;
+    m_wallet = 0;
+
+    if (!m_setPasswords.isEmpty()) {
+        m_walletWait = Write;
+        getWallet();
+    }
+
+}
+
+
+void AbstractUploader::getWallet()
+{
+
+    if (m_wallet) {
+        delete m_wallet;
+    }
+
+    kDebug() << "opening wallet";
+    m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), m_wId,
+                                           KWallet::Wallet::Asynchronous);
+
+    if (m_walletWait == Write) {
+        connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(writeWallet(bool)));
+    } else {
+        connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(readWallet(bool)));
+    }
+
+}
+
+
+bool AbstractUploader::enterWalletFolder(const QString &folder)
+{
+
+    m_wallet->createFolder(folder);
+    if (!m_wallet->setFolder(folder)) {
+        kDebug() << "failed to open folder" << folder;
+        return false;
+    }
+    kDebug() << "wallet now on folder" << folder;
+    return true;
+
+}
+
+
+void AbstractUploader::setId(const WId &i)
+{
+
+    m_wId = i;
+
+}

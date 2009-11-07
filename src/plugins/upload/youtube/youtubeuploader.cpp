@@ -21,6 +21,7 @@
 #include "youtubeuploader.h"
 #include "uploadthread.h"
 #include <recorditnow_youtube.h>
+#include "addaccountdialog.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -52,7 +53,6 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
 {
 
     m_thread = 0;
-    m_wallet = 0;
     m_jobTracker = new KUiServerJobTracker(this);
 
     m_category["Autos"] = i18n("Autos & Vehicles");
@@ -71,6 +71,9 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
     m_category["Sports"] = i18n("Sports");
     m_category["Travel"] = i18n("Travel & Evends");
 
+    connect(this, SIGNAL(gotPassword(QString,QString)), this,
+            SLOT(gotPasswordForAccount(QString,QString)));
+
     m_state = Idle;
 
 }
@@ -86,9 +89,6 @@ YouTubeUploader::~YouTubeUploader()
     if (m_dialog) {
         delete m_dialog;
     }
-    if (m_wallet) {
-        delete m_wallet;
-    }
     delete m_jobTracker;
 
 }
@@ -100,6 +100,8 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     if (m_dialog || m_state != Idle) {
         return;
     }
+
+    setId(parent->winId());
 
     m_dialog = new QWidget(parent, Qt::Dialog);
     m_dialog->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -113,6 +115,19 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     connect(descriptionEdit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
     connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelUpload()));
 
+    addAccountButton->setIcon(KIcon("list-add"));
+    editAccountButton->setIcon(KIcon("document-edit"));
+    removeAccountButton->setIcon(KIcon("list-remove"));
+
+    connect(addAccountButton, SIGNAL(clicked()), this, SLOT(addAccount()));
+    connect(editAccountButton, SIGNAL(clicked()), this, SLOT(editAccount()));
+    connect(removeAccountButton, SIGNAL(clicked()), this, SLOT(removeAccount()));
+
+    connect(accountsCombo, SIGNAL(currentIndexChanged(QString)), this,
+            SLOT(currentAccountChanged(QString)));
+
+    accountsChanged(AddAccountDialog::getAccounts());
+
     QHashIterator<QString, QString> it(m_category);
     while (it.hasNext()) {
         it.next();
@@ -120,17 +135,12 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     }
 
     Settings::self()->readConfig();
+    accountsCombo->setCurrentItem(Settings::currentAccount(), false);
     titleEdit->setText(Settings::title());
     descriptionEdit->setText(Settings::description());
     tagsEdit->setText(Settings::tags());
     categoryCombo->setCurrentIndex(Settings::category());
-    loginEdit->setText(Settings::userName());
 
-    if (Settings::savePassword()) {
-        savePasswordCheck->setChecked(true);
-        m_walletWait = Read;
-        getWallet();
-    }
     setState(Idle);
     m_dialog->show();
 
@@ -146,15 +156,7 @@ void YouTubeUploader::upload()
     Settings::self()->setDescription(descriptionEdit->toPlainText());
     Settings::self()->setTags(tagsEdit->text());
     Settings::self()->setCategory(categoryCombo->currentIndex());
-    Settings::self()->setUserName(loginEdit->text());
-
-    if (savePasswordCheck->isChecked()) {
-        Settings::self()->setSavePassword(true);
-        m_walletWait = Write;
-        getWallet();
-    } else {
-        Settings::self()->setSavePassword(false);
-    }
+    Settings::self()->setCurrentAccount(accountsCombo->currentText());
     Settings::self()->writeConfig();
 
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
@@ -168,7 +170,7 @@ void YouTubeUploader::upload()
     data["Description"] = descriptionEdit->toPlainText();
     data["Tags"] = tagsEdit->text();
     data["Category"] = m_category.key(categoryCombo->currentText());
-    data["Login"] = loginEdit->text();
+    data["Login"] = accountsCombo->currentText();
     data["Password"] = passwordEdit->text();
     data["File"] = fileRequester->text();
 
@@ -252,26 +254,6 @@ void YouTubeUploader::threadError(const QString &error)
 }
 
 
-void YouTubeUploader::getWallet()
-{
-
-    if (m_wallet) {
-        delete m_wallet;
-    }
-
-    kDebug() << "opening wallet";
-    m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), m_dialog->winId(),
-                                           KWallet::Wallet::Asynchronous);
-
-    if (m_walletWait == Write) {
-        connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(writeWallet(bool)));
-    } else {
-        connect(m_wallet, SIGNAL(walletOpened(bool)), SLOT(readWallet(bool)));
-    }
-
-}
-
-
 void YouTubeUploader::setState(const State &state)
 {
 
@@ -297,66 +279,6 @@ void YouTubeUploader::setState(const State &state)
 }
 
 
-void YouTubeUploader::writeWallet(bool success)
-{
-
-    kDebug() << "success:" << success;
-
-    const QString password = passwordEdit->text();
-    const QString username = loginEdit->text();
-
-    if (success &&
-        enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube")) &&
-        (m_wallet->writePassword(username, password) == 0)) {
-        kDebug() << "successfully put password in wallet";
-    }
-
-    m_walletWait = None;
-    delete m_wallet;
-    m_wallet = 0;
-
-}
-
-
-void YouTubeUploader::readWallet(bool success)
-{
-
-    kDebug() << "success:" << success;
-
-    QString password;
-    const QString username = loginEdit->text();
-
-    if (success &&
-        enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube")) &&
-        (m_wallet->readPassword(username, password) == 0)) {
-        kDebug() << "successfully retrieved password from wallet";
-        passwordEdit->setText(password);
-    } else if (password.isEmpty()) {
-        kDebug() << "failed to read password";
-    }
-
-    m_walletWait = None;
-    delete m_wallet;
-    m_wallet = 0;
-
-}
-
-
-bool YouTubeUploader::enterWalletFolder(const QString &folder)
-{
-
-    m_wallet->createFolder(folder);
-    if (!m_wallet->setFolder(folder)) {
-        kDebug() << "failed to open folder" << folder;
-        return false;
-    }
-
-    kDebug() << "wallet now on folder" << folder;
-    return true;
-
-}
-
-
 void YouTubeUploader::descriptionChanged()
 {
 
@@ -369,3 +291,78 @@ void YouTubeUploader::descriptionChanged()
 
 }
 
+
+void YouTubeUploader::addAccount()
+{
+
+    AddAccountDialog *dialog = new AddAccountDialog(m_dialog);
+    connect(dialog, SIGNAL(accountsChanged(QStringList)), this, SLOT(accountsChanged(QStringList)));
+    connect(dialog, SIGNAL(newPassword(QString,QString)), this, SLOT(newPassword(QString,QString)));
+    dialog->show();
+
+}
+
+
+void YouTubeUploader::removeAccount()
+{
+
+    const QString account = accountsCombo->currentText();
+    if (!account.isEmpty()) {
+        AddAccountDialog::removeAccount(account);
+        accountsCombo->removeItem(accountsCombo->currentIndex());
+    }
+
+}
+
+
+void YouTubeUploader::editAccount()
+{
+
+    if (accountsCombo->currentText().isEmpty()) {
+        return;
+    }
+
+    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, this, accountsCombo->currentText());
+    connect(dialog, SIGNAL(accountsChanged(QStringList)), this, SLOT(accountsChanged(QStringList)));
+    connect(dialog, SIGNAL(newPassword(QString,QString)), this, SLOT(newPassword(QString,QString)));
+    dialog->show();
+
+}
+
+
+void YouTubeUploader::accountsChanged(const QStringList &accounts)
+{
+
+    accountsCombo->clear();
+    accountsCombo->addItems(accounts);
+
+}
+
+
+void YouTubeUploader::newPassword(const QString &account, const QString &password)
+{
+
+    setPassword(account, password);
+
+}
+
+
+void YouTubeUploader::currentAccountChanged(const QString &newAccount)
+{
+
+    passwordEdit->clear();
+    if (!newAccount.isEmpty() && AddAccountDialog::hasPassword(newAccount)) {
+        getPassword(newAccount);
+    }
+
+}
+
+
+void YouTubeUploader::gotPasswordForAccount(const QString &account, const QString &password)
+{
+
+    if (m_dialog && accountsCombo->currentText() == account) {
+        passwordEdit->setText(password);
+    }
+
+}

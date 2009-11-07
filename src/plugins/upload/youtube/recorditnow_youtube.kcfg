@@ -25,7 +25,7 @@
             <label></label>
             <default>true</default>
     </entry>
-    <entry name="userName" type="String">
+    <entry name="currentAccount" type="String">
             <label></label>
             <default></default>
     </entry>
