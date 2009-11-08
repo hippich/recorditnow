@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
 Name=Mencoder
-Comment=Mencoder Plugin
+Comment=Encode your videos with Mencoder
 Icon=video-x-generic
 Type=Service                                                                               
 X-KDE-ServiceTypes=RecordItNowEncoder                                                      

@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
 Name=ffmpeg
-Comment=ffmpeg Plugin
+Comment=Encode your videos with ffmpeg
 Icon=video-x-generic
 Type=Service                                                          
 X-KDE-ServiceTypes=RecordItNowEncoder                                                      

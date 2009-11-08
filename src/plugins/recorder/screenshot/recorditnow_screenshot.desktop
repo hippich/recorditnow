@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
 Name=Screenshot
-Comment=Screenshot Plugin
+Comment=Make a Screenshot
 Icon=image-x-generic
 Type=Service                                                     
 X-KDE-ServiceTypes=RecordItNowRecorder     

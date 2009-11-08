@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
 Name=Youtube
-Comment=Youtube Plugin
+Comment=Upload your videos to YouTube
 Icon=recorditnow_youtube
 Type=Service                                                                               
 X-KDE-ServiceTypes=RecordItNowUploader 
