@@ -142,10 +142,3 @@ void AddAccountDialog::gotPassword(const QString &account, const QString &passwo
 
 }
 
-
-
-
-
-
-
-

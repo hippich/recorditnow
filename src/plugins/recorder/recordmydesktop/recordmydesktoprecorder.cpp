@@ -171,6 +171,12 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     if (Settings::__compress_cache()) {
         args << "--compress-cache";
     }
+    if (Settings::followMouse()) {
+        args << "--follow-mouse";
+    }
+    if (!Settings::frame()) {
+        args << "--no-frame";
+    }
 
     args << "--workdir" << d.workDir;
 

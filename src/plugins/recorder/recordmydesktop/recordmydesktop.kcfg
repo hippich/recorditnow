@@ -56,5 +56,11 @@
     <entry name="__compress_cache" type="Bool">
             <default>false</default>
     </entry>
+    <entry name="followMouse" type="Bool">
+            <default>false</default>
+    </entry>
+    <entry name="frame" type="Bool">
+            <default>true</default>
+    </entry>
   </group>
 </kcfg>

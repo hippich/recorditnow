@@ -159,11 +159,6 @@ void YouTubeUploader::upload()
     Settings::self()->setCurrentAccount(accountsCombo->currentText());
     Settings::self()->writeConfig();
 
-    // http://code.google.com/intl/de-DE/apis/youtube/terms.html
-    if (KMessageBox::warningContinueCancel(m_dialog, GOOGLE.arg(i18n("Continue"))) != KMessageBox::Continue) {
-        cancelUpload();
-        return;
-    }
 
     QHash<QString, QString> data;
     data["Title"] = titleEdit->text();
@@ -196,6 +191,12 @@ void YouTubeUploader::upload()
 
     if (!QFile::exists(fileRequester->text())) {
         KMessageBox::sorry(m_dialog, i18n("No such file: %1", fileRequester->text()));
+        return;
+    }
+
+    // http://code.google.com/intl/de-DE/apis/youtube/terms.html
+    if (KMessageBox::warningContinueCancel(m_dialog, GOOGLE.arg(i18n("Continue"))) != KMessageBox::Continue) {
+        cancelUpload();
         return;
     }
 
@@ -333,8 +334,10 @@ void YouTubeUploader::editAccount()
 void YouTubeUploader::accountsChanged(const QStringList &accounts)
 {
 
+    const QString current = accountsCombo->currentText();
     accountsCombo->clear();
     accountsCombo->addItems(accounts);
+    accountsCombo->setCurrentItem(current, false);
 
 }
 
