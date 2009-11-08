@@ -264,6 +264,7 @@ void MainWindow::pauseRecord()
             setState(Recording);
         }
         m_recorderManager->pauseOrContinue();
+        m_encoderManager->pauseOrContinue();
     }
 
 }
