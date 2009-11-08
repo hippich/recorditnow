@@ -68,7 +68,7 @@ void MencoderEncoder::encode(const Data &d)
 
     // check input file
     if (!QFile::exists(d.file)) { // should never happen
-        emit error(i18nc("%1 = file", "Mencoder: %1 no such file!", d.file));
+        emit error(i18nc("%1 = file", "%1 no such file!", d.file));
         return;
     }
 
@@ -203,7 +203,7 @@ bool MencoderEncoder::remove(const QString &file)
 
     QFile f(file);
     if (!f.remove()) {
-        emit error(i18nc("%1 = file, %2 = error string", "Mencoder: Remove failed: %1.\n"
+        emit error(i18nc("%1 = file, %2 = error string", "Remove failed: %1.\n"
                          "Reason: %2", file, f.errorString()));
         return false;
     }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: recorditnow\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-06 21:43+0100\n"
+"POT-Creation-Date: 2009-11-08 02:08+0100\n"
 "PO-Revision-Date: 2009-10-31 02:35+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Hungary <info@blackpanther.hu>\n"
@@ -65,7 +65,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:25
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:13 po/rc.cpp:26 po/rc.cpp:102 rc.cpp:13 rc.cpp:26 rc.cpp:102
+#: po/rc.cpp:13 po/rc.cpp:26 po/rc.cpp:108 rc.cpp:13 rc.cpp:26 rc.cpp:108
 msgid "Format"
 msgstr "Formátum"
 
@@ -107,7 +107,7 @@ msgstr "Gyors almintázás"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:44 po/rc.cpp:216 rc.cpp:44 rc.cpp:216
+#: po/rc.cpp:44 po/rc.cpp:238 rc.cpp:44 rc.cpp:238
 msgid "Sound"
 msgstr "Hang"
 
@@ -206,7 +206,7 @@ msgstr "Átalakítja a hang-videó adatot a felvétel közben"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: file: src/ui/settings.ui:67
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:93 po/rc.cpp:196 rc.cpp:93 rc.cpp:196
+#: po/rc.cpp:93 po/rc.cpp:218 rc.cpp:93 rc.cpp:218
 msgid "Miscellaneous"
 msgstr ""
 
@@ -222,138 +222,181 @@ msgstr "Ne próbálja felismerni az ablakkezelőt"
 msgid "Compress Cache"
 msgstr "Gyorsítótár tömörítése"
 
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:326
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
+#: po/rc.cpp:102 rc.cpp:102
+msgid "Follow the mouse"
+msgstr ""
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:333
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
+#: po/rc.cpp:105 src/mainwindow.cpp:209 rc.cpp:105
+msgid "Show Frame"
+msgstr "Képkockák megjelenítése"
+
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:33
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:105 rc.cpp:105
+#: po/rc.cpp:111 rc.cpp:111
 msgid "PNG"
 msgstr "PNG"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:38
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:108 rc.cpp:108
+#: po/rc.cpp:114 rc.cpp:114
 msgid "JPG"
 msgstr "JPG"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:43
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:111 rc.cpp:111
+#: po/rc.cpp:117 rc.cpp:117
 msgid "BMP"
 msgstr "BMP 2"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:48
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:114 rc.cpp:114
+#: po/rc.cpp:120 rc.cpp:120
 msgid "PPM"
 msgstr "PPM-kép"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:53
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:117 rc.cpp:117
+#: po/rc.cpp:123 rc.cpp:123
 msgid "TIFF"
 msgstr "TIFF-modul"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:58
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:120 rc.cpp:120
+#: po/rc.cpp:126 rc.cpp:126
 msgid "XBM"
 msgstr "XBM"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:63
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
-#: po/rc.cpp:123 rc.cpp:123
+#: po/rc.cpp:129 rc.cpp:129
 msgid "XPM"
 msgstr "XPM"
 
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:185
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:185
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: po/rc.cpp:132 po/rc.cpp:182 rc.cpp:132 rc.cpp:182
+msgid "Account"
+msgstr ""
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:30
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:141
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:30
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:141
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: po/rc.cpp:135 po/rc.cpp:170 rc.cpp:135 rc.cpp:170
+msgid "Password"
+msgstr ""
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:50
+#. i18n: ectx: property (text), widget (QCheckBox, saveCheck)
+#: po/rc.cpp:138 rc.cpp:138
+msgid "Save password with KWallet"
+msgstr ""
+
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:22
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:127 rc.cpp:127
+#: po/rc.cpp:142 src/plugins/upload/youtube/uploadthread.cpp:54 rc.cpp:142
 msgid "Video"
 msgstr ""
 
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:31
-#. i18n: ectx: property (text), widget (QLabel, label_7)
-#: po/rc.cpp:130 rc.cpp:130
-msgid "File"
-msgstr ""
-
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:45
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:133 rc.cpp:133
+#: po/rc.cpp:145 rc.cpp:145
 #, fuzzy
 msgid "Title"
 msgstr "Időzítő"
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:52
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:38
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
-#: po/rc.cpp:136 rc.cpp:136
+#: po/rc.cpp:148 rc.cpp:148
 #, fuzzy
-msgid "My description"
-msgstr "Egyéb beállítások"
+msgid "My Title"
+msgstr "Időzítő"
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:62
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:48
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:139 rc.cpp:139
+#: po/rc.cpp:151 rc.cpp:151
 #, fuzzy
 msgid "Description"
 msgstr "Egyéb beállítások"
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:69
-#. i18n: ectx: property (text), widget (KLineEdit, descriptionEdit)
-#: po/rc.cpp:142 rc.cpp:142
-msgid "My video"
-msgstr ""
-
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:79
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:75
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:145 rc.cpp:145
+#: po/rc.cpp:155 rc.cpp:155
 msgid "Tags"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:86
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:85
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
-#: po/rc.cpp:148 rc.cpp:148
+#: po/rc.cpp:158 rc.cpp:158
 msgid "linux, kde"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:96
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:98
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: po/rc.cpp:161 rc.cpp:161
+msgid "File"
+msgstr ""
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:112
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: po/rc.cpp:151 rc.cpp:151
+#: po/rc.cpp:164 rc.cpp:164
 msgid "Category"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:109
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:125
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:115
-#. i18n: ectx: property (text), widget (QLabel, label_5)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:109
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:115
-#. i18n: ectx: property (text), widget (QLabel, label_5)
-#: po/rc.cpp:154 po/rc.cpp:157 rc.cpp:154 rc.cpp:157
+#: po/rc.cpp:167 rc.cpp:167
 msgid "Login"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:122
-#. i18n: ectx: property (text), widget (QLabel, label_6)
-#: po/rc.cpp:160 rc.cpp:160
-msgid "Password"
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:153
+#. i18n: ectx: property (toolTip), widget (QToolButton, addAccountButton)
+#: po/rc.cpp:173 rc.cpp:173
+msgid "Add"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:139
-#. i18n: ectx: property (text), widget (QCheckBox, savePasswordCheck)
-#: po/rc.cpp:163 rc.cpp:163
-msgid "Save password in KWallet"
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:163
+#. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
+#: po/rc.cpp:176 rc.cpp:176
+msgid "Edit"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:166
-#. i18n: ectx: property (text), widget (QPushButton, uploadButton)
-#: po/rc.cpp:166 src/mainwindow.cpp:201 rc.cpp:166
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:173
+#. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
+#: po/rc.cpp:179 rc.cpp:179
+msgid "Remove"
+msgstr ""
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:199
+#. i18n: ectx: property (text), widget (KPushButton, uploadButton)
+#: po/rc.cpp:185 src/mainwindow.cpp:222 rc.cpp:185
 msgid "Upload"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:186
-#. i18n: ectx: property (text), widget (QPushButton, quitButton)
-#: po/rc.cpp:169 rc.cpp:169
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:219
+#. i18n: ectx: property (text), widget (KPushButton, cancelButton)
+#: po/rc.cpp:188 rc.cpp:188
+#, fuzzy
+msgid "Cancel"
+msgstr "Csatornák"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:226
+#. i18n: ectx: property (text), widget (KPushButton, quitButton)
+#: po/rc.cpp:191 rc.cpp:191
 msgid "Quit"
 msgstr ""
 
@@ -365,81 +408,81 @@ msgstr ""
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
 #. i18n: file: src/ui/settings.ui:36
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:172 po/rc.cpp:184 rc.cpp:172 rc.cpp:184
+#: po/rc.cpp:194 po/rc.cpp:206 rc.cpp:194 rc.cpp:206
 msgid "Hide RecordItNow while recording"
 msgstr "A RecordItNow elrejtése a felvétel alatt"
 
-#. i18n: file: src/recorditnowui.rc:4
+#. i18n: file: src/recorditnowui.rc:7
 #. i18n: ectx: ToolBar (mainToolBar)
-#: po/rc.cpp:175 rc.cpp:175
+#: po/rc.cpp:197 rc.cpp:197
 msgid "Main Toolbar"
 msgstr "Fő eszköztár"
 
 #. i18n: file: src/ui/settings.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:178 rc.cpp:178
+#: po/rc.cpp:200 rc.cpp:200
 msgid "Behavior "
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:29
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:181 rc.cpp:181
+#: po/rc.cpp:203 rc.cpp:203
 msgid "Enable system tray icon"
 msgstr "Tálcaikon engedélyezése"
 
 #. i18n: file: src/ui/settings.ui:43
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:187 rc.cpp:187
+#: po/rc.cpp:209 rc.cpp:209
 msgid "Overwrite existing files"
 msgstr "A meglévő fájlok felülírása"
 
 #. i18n: file: src/ui/settings.ui:50
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:190 rc.cpp:190
+#: po/rc.cpp:212 rc.cpp:212
 msgid "Show file after record"
 msgstr "Mutassa a fájlt felvétel után"
 
 #. i18n: file: src/ui/settings.ui:57
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
-#: po/rc.cpp:193 rc.cpp:193
+#: po/rc.cpp:215 rc.cpp:215
 #, fuzzy
 msgid "Encode after record"
 msgstr "Mutassa a fájlt felvétel után"
 
 #. i18n: file: src/ui/settings.ui:76
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:199 rc.cpp:199
+#: po/rc.cpp:221 rc.cpp:221
 #, fuzzy
 msgid "Encoder Plugin"
 msgstr "Felvételi bővítőmodulok"
 
 #. i18n: file: src/ui/settings.ui:93
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:202 rc.cpp:202
+#: po/rc.cpp:224 rc.cpp:224
 msgid "Directory for temporary files:"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:48
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: po/rc.cpp:205 rc.cpp:205
+#: po/rc.cpp:227 rc.cpp:227
 msgid "Timer"
 msgstr "Időzítő"
 
 #. i18n: file: src/ui/toolbarwidget.ui:112
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:210 rc.cpp:210
+#: po/rc.cpp:232 rc.cpp:232
 msgid "Frames per second"
 msgstr "Képkocka/másodperc "
 
 #. i18n: file: src/ui/toolbarwidget.ui:115
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:213 rc.cpp:213
+#: po/rc.cpp:235 rc.cpp:235
 msgid " FPS"
 msgstr " FPS"
 
 #. i18n: file: src/ui/toolbarwidget.ui:170
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:219 rc.cpp:219
+#: po/rc.cpp:241 rc.cpp:241
 msgid "Backend"
 msgstr "Háttérprogram"
 
@@ -451,16 +494,29 @@ msgstr "Háttérprogram"
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
 #. i18n: file: src/ui/toolbarwidget.ui:190
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:222 po/rc.cpp:225 rc.cpp:222 rc.cpp:225
+#: po/rc.cpp:244 po/rc.cpp:247 rc.cpp:244 rc.cpp:247
 msgid "Output file"
 msgstr "Kimeneti fájl"
 
-#: po/rc.cpp:226 rc.cpp:226
+#. i18n: file: src/ui/toolbarwidget.ui:200
+#. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
+#: po/rc.cpp:250 rc.cpp:250
+msgid "Play/Open"
+msgstr ""
+
+#. i18n: file: src/ui/toolbarwidget.ui:210
+#. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
+#: po/rc.cpp:253 rc.cpp:253
+#, fuzzy
+msgid "Delete"
+msgstr "Alapértelmezett"
+
+#: po/rc.cpp:254 rc.cpp:254
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Barcza Károly (blackPanther OS - www.blackpanther.hu)"
 
-#: po/rc.cpp:227 rc.cpp:227
+#: po/rc.cpp:255 rc.cpp:255
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kbarcza@blackpanther.hu"
@@ -470,29 +526,15 @@ msgstr "kbarcza@blackpanther.hu"
 msgid "Record Plugins"
 msgstr "Felvételi bővítőmodulok"
 
-#: src/configdialog.cpp:59
-#, fuzzy
-msgid "Recorder"
-msgstr "Felvétel"
-
 #: src/configdialog.cpp:62
 #, fuzzy
 msgid "Encode Plugins"
 msgstr "Felvételi bővítőmodulok"
 
-#: src/configdialog.cpp:62
-#, fuzzy
-msgid "Encoder"
-msgstr "Átalakítás"
-
 #: src/configdialog.cpp:65
 #, fuzzy
 msgid "Upload Plugins"
 msgstr "Felvételi bővítőmodulok"
-
-#: src/configdialog.cpp:65
-msgid "Uploader"
-msgstr ""
 
 #: src/configdialog.cpp:73 src/main.cpp:35
 msgid "RecordItNow"
@@ -542,57 +584,68 @@ msgstr "A várakozási idő (másodpercben):"
 msgid "Name of recorded video/image."
 msgstr "A felvett videó/kép neve"
 
-#: src/mainwindow.cpp:164
+#: src/mainwindow.cpp:185
 msgid "Record"
 msgstr "Felvétel"
 
-#: src/mainwindow.cpp:170
+#: src/mainwindow.cpp:191
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/mainwindow.cpp:176
+#: src/mainwindow.cpp:197
 msgid "Stop"
 msgstr "Megállítás"
 
-#: src/mainwindow.cpp:183
+#: src/mainwindow.cpp:204
 msgid "Record a Window"
 msgstr "Egy ablkak felvétele"
 
-#: src/mainwindow.cpp:188
-msgid "Show Frame"
-msgstr "Képkockák megjelenítése"
-
-#: src/mainwindow.cpp:194
+#: src/mainwindow.cpp:215
 msgid "Record the entire Screen"
 msgstr "Az egész képernyő felvétele"
 
-#: src/mainwindow.cpp:281
+#: src/mainwindow.cpp:292
 msgid "No screen area selected."
 msgstr "Nincs képernyőterület kijelölve."
 
-#: src/mainwindow.cpp:458
+#: src/mainwindow.cpp:469
 msgid "Cannot load Recorder %1"
 msgstr "Nem sikerült betölteni a felvevőt %1"
 
-#: src/mainwindow.cpp:460
+#: src/mainwindow.cpp:471
 msgid "No output file specified."
 msgstr "Nincs megadva kimeneti fájl"
 
-#: src/mainwindow.cpp:583 src/plugins/upload/youtube/youtubeuploader.cpp:153
+#: src/mainwindow.cpp:596 src/plugins/upload/youtube/youtubeuploader.cpp:198
 msgid "Continue"
 msgstr "Folytatás"
 
-#: src/mainwindow.cpp:623 src/mainwindow.cpp:699
+#: src/mainwindow.cpp:637 src/mainwindow.cpp:713
 msgid "Error: %1"
 msgstr "Hiba: %1"
 
-#: src/mainwindow.cpp:635
+#: src/mainwindow.cpp:649
 msgid "recorder crashed"
 msgstr "A felvevő összeomlott"
 
-#: src/mainwindow.cpp:644 src/mainwindow.cpp:661 src/mainwindow.cpp:688
+#: src/mainwindow.cpp:658 src/mainwindow.cpp:675 src/mainwindow.cpp:702
 msgid "Finished!"
 msgstr "Kész!"
+
+#: src/mainwindow.cpp:781 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:71
+#, fuzzy
+msgctxt "%1 = file"
+msgid "%1 no such file!"
+msgstr "Kimeneti fájl: %1"
+
+#: src/mainwindow.cpp:786 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:206
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:38
 #, fuzzy
@@ -601,11 +654,6 @@ msgstr "Pillanatkép beállítások"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:69
 msgid "Starting ffmpeg!"
-msgstr ""
-
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
-msgctxt "%1 = file"
-msgid "ffmpeg: %1 no such file!"
 msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:121
@@ -621,27 +669,20 @@ msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:165
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:178
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:200
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:206
 msgid "Paused!"
 msgstr "Szünetel!"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:169
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:182
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:204
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:271
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:210
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
 msgid "Capturing!"
 msgstr "Felvétel !"
 
-#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
-msgctxt "%1 = file, %2 = error string"
-msgid ""
-"ffmpeg: Remove failed: %1.\n"
-"Reason: %2"
-msgstr ""
-
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:208
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:221
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:314
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:320
 msgctxt "%1 = source, %1 = destination, %3 = error string"
 msgid ""
 "Move failed: \"%1\" to \"%2\".\n"
@@ -664,22 +705,10 @@ msgstr "RecordMyDesktop beállítások"
 msgid "Starting mencoder!"
 msgstr ""
 
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:71
-msgctxt "%1 = file"
-msgid "Mencoder: %1 no such file!"
-msgstr ""
-
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:150
 msgid ""
 "Cannot find mencoder!\n"
 "Please install mencoder or use another plugin."
-msgstr ""
-
-#: src/plugins/encoder/mencoder/mencoderencoder.cpp:206
-msgctxt "%1 = file, %2 = error string"
-msgid ""
-"Mencoder: Remove failed: %1.\n"
-"Reason: %2"
 msgstr ""
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktopconfig.cpp:38
@@ -692,52 +721,52 @@ msgid ""
 "Please install recordmydesktop or use another plugin."
 msgstr ""
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:248
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:254
 msgid "Cached: %1"
 msgstr "Gyorsítótárba: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:249
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:255
 msgid "Received: %1"
 msgstr "Fogadott: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:253
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:259
 msgid "Frames: %1"
 msgstr "Képkockák: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:263
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:269
 msgid "Encoding: %1"
 msgstr "Átalakítás: %1"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:273
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:279
 msgid "Shutting down.."
 msgstr "Leállítás..."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:275
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:281
 msgid "Encoding started!"
 msgstr "Elkezdődött az átalakítás!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:283
 msgid "Done!"
 msgstr "Kész!"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:281
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:287
 msgid "Cannot open file %1 for writting!"
 msgstr "Nem sikerült írásra megnyitni a(z) %1 fájlt"
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:283
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:289
 msgid "Could not create temporary directory, check your config."
 msgstr ""
 "Nem lehetett létrehozni az ideiglenes könyvtárat, ellenőrizze a beállításait."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:285
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:291
 msgid "recordMyDesktop is not compiled with Jack support."
 msgstr "A recordMyDesktop nem rendelkezik Jack támogatással."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:287
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:293
 msgid "Error while opening/configuring soundcard."
 msgstr "Hiba történt a hangkártya megnyitása/beállításakor."
 
-#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:299
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:305
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "recordmydesktop: Remove failed: %1.\n"
@@ -762,89 +791,122 @@ msgstr "Nem lehet megnyitni a %1 fájlt"
 msgid "Cannot save image."
 msgstr "Nem lehetett menteni a képet."
 
-#: src/plugins/upload/youtube/uploadthread.cpp:79
-#: src/plugins/upload/youtube/uploadthread.cpp:86
+#: src/plugins/upload/youtube/addaccountdialog.cpp:37
+msgid "Add a new Account"
+msgstr ""
+
+#: src/plugins/upload/youtube/uploadthread.cpp:54
+msgid "Upload to YouTube"
+msgstr ""
+
+#: src/plugins/upload/youtube/uploadthread.cpp:147
+msgid "Authenticating..."
+msgstr ""
+
+#: src/plugins/upload/youtube/uploadthread.cpp:161
+#: src/plugins/upload/youtube/uploadthread.cpp:169
 msgid "Unkown error"
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:108
+#: src/plugins/upload/youtube/uploadthread.cpp:174
+msgid "Log in..."
+msgstr ""
+
+#: src/plugins/upload/youtube/uploadthread.cpp:196
 msgid "Authentication failed!"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:55
+#: src/plugins/upload/youtube/uploadthread.cpp:211
+#, fuzzy
+msgid "Uploading..."
+msgstr "Felvételi bővítőmodulok"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:58
 msgid "Autos & Vehicles"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:56
+#: src/plugins/upload/youtube/youtubeuploader.cpp:59
 msgid "Comedy"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:57
+#: src/plugins/upload/youtube/youtubeuploader.cpp:60
 msgid "Education"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:58
+#: src/plugins/upload/youtube/youtubeuploader.cpp:61
 msgid "Entertainment"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:59
+#: src/plugins/upload/youtube/youtubeuploader.cpp:62
 msgid "Film & Animation"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:60
+#: src/plugins/upload/youtube/youtubeuploader.cpp:63
 msgid "Gaming"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:61
+#: src/plugins/upload/youtube/youtubeuploader.cpp:64
 msgid "Howto & Style"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:62
+#: src/plugins/upload/youtube/youtubeuploader.cpp:65
 #, fuzzy
 msgid "Music"
 msgstr "Egyéb"
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:63
+#: src/plugins/upload/youtube/youtubeuploader.cpp:66
 msgid "News & Politics"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:64
+#: src/plugins/upload/youtube/youtubeuploader.cpp:67
 msgid "Nonprofit & Activism"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:65
+#: src/plugins/upload/youtube/youtubeuploader.cpp:68
 msgid "People & Blogs"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:66
+#: src/plugins/upload/youtube/youtubeuploader.cpp:69
 msgid "Pets & Animals"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:67
+#: src/plugins/upload/youtube/youtubeuploader.cpp:70
 msgid "Sience & Technology"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:68
+#: src/plugins/upload/youtube/youtubeuploader.cpp:71
 msgid "Sports"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:69
+#: src/plugins/upload/youtube/youtubeuploader.cpp:72
 msgid "Travel & Evends"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:171
+#: src/plugins/upload/youtube/youtubeuploader.cpp:176
 msgctxt "%1 = youtube tag"
 msgid "The Tag %1 is too long."
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:183
+#: src/plugins/upload/youtube/youtubeuploader.cpp:187
 msgid "Please fill out all the fields."
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:190
+#: src/plugins/upload/youtube/youtubeuploader.cpp:193
 #, fuzzy
 msgid "No such file: %1"
 msgstr "Kimeneti fájl: %1"
+
+#, fuzzy
+#~ msgid "My description"
+#~ msgstr "Egyéb beállítások"
+
+#, fuzzy
+#~ msgid "Recorder"
+#~ msgstr "Felvétel"
+
+#, fuzzy
+#~ msgid "Encoder"
+#~ msgstr "Átalakítás"
 
 #~ msgid ""
 #~ "Location where a temporary directory will be created to hold project files"

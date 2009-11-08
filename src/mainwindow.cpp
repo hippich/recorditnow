@@ -778,7 +778,7 @@ void MainWindow::removeFile()
 
     QFile file(outputRequester->text());
     if (!file.exists()) {
-        KMessageBox::sorry(this, i18nc("%1 = file", "ffmpeg: %1 no such file!", file.fileName()));
+        KMessageBox::sorry(this, i18nc("%1 = file", "%1 no such file!", file.fileName()));
         return;
     }
 
