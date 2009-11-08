@@ -74,12 +74,16 @@ MainWindow::MainWindow(QWidget *parent)
     timeUpButton->setIcon(KIcon("arrow-up"));
     timeDownButton->setIcon(KIcon("arrow-down"));
     soundCheck->setIcon(KIcon("preferences-desktop-sound"));
+    deleteButton->setIcon(KIcon("list-remove"));
+    playButton->setIcon(KIcon("media-playback-start"));
 
     connect(timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
     connect(timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(backendChanged(QString)));
     connect(kapp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
+    connect(playButton, SIGNAL(clicked()), this, SLOT(playFile()));
+    connect(deleteButton, SIGNAL(clicked()), this, SLOT(removeFile()));
 
     QRect pos = Settings::currentFrame();
     m_box = new FrameBox(this, pos);
@@ -650,7 +654,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
         m_pluginManager->unloadPlugin(m_recorderPlugin);
         m_recorderPlugin = 0;
         setState(Idle);
-        playFile();
+        playFile(false);
         recorderStatus(i18n("Finished!"));
         return;
     }
@@ -667,7 +671,7 @@ void MainWindow::recorderFinished(const AbstractRecorder::ExitStatus &status)
 
     if (!m_encoderPlugin) {
         setState(Idle);
-        playFile();
+        playFile(false);
         recorderStatus(i18n("Finished!"));
         return;
     }
@@ -694,7 +698,7 @@ void MainWindow::encoderFinished()
     m_encoderPlugin = 0;
 
     setState(Idle);
-    playFile();
+    playFile(false);
     recorderStatus(i18n("Finished!"));
 
 }
@@ -749,10 +753,10 @@ void MainWindow::updateRecorderCombo()
 }
 
 
-void MainWindow::playFile()
+void MainWindow::playFile(const bool &force)
 {
 
-    if (Settings::showVideo()) {
+    if (Settings::showVideo() || force) {
         KUrl url(outputRequester->text());
 
         if (!QFile(url.path()).exists()) {
@@ -764,6 +768,25 @@ void MainWindow::playFile()
 
         KMimeType::Ptr type = KMimeType::findByUrl(url);
         KRun::runUrl(url, type->name(), this);
+    }
+
+}
+
+
+void MainWindow::removeFile()
+{
+
+    QFile file(outputRequester->text());
+    if (!file.exists()) {
+        KMessageBox::sorry(this, i18nc("%1 = file", "ffmpeg: %1 no such file!", file.fileName()));
+        return;
+    }
+
+    if (!file.remove()) {
+        KMessageBox::error(this, i18nc("%1 = file, %2 = error string", "Remove failed: %1.\n"
+                                       "Reason: %2", file.fileName(), file.errorString()));
+    } else {
+        outputRequester->clear();
     }
 
 }

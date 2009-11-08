@@ -78,7 +78,6 @@ private:
     void setState(const State &newState);
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
-    void playFile();
 
 
 private slots:
@@ -107,6 +106,8 @@ private slots:
     void pluginsChanged();
     void updateUploaderMenu();
     void upload();
+    void playFile(const bool &force = true);
+    void removeFile();
 
 
 protected:
