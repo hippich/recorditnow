@@ -17,54 +17,60 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTENCODER_H
-#define ABSTRACTENCODER_H
+#ifndef RECORDERMANAGER_H
+#define RECORDERMANAGER_H
 
 
 // own
-#include "recorditnowplugin.h"
+#include "abstractrecorder.h"
 
 // KDE
-#include <kdemacros.h>
+#include <kicon.h>
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QVariantList>
+#include <QtCore/QPair>
+#include <QtCore/QPointer>
 
 
-class KDE_EXPORT AbstractEncoder : public RecordItNowPlugin
+typedef QPair<QString, KIcon> RecorderData;
+class RecordItNowPluginManager;
+class RecorderManager : public QObject
 {
     Q_OBJECT
 
 
 public:
-    enum ExitStatus {
-        Normal = 0,
-        Crash = 1
-    };
+    RecorderManager(QObject *parent, RecordItNowPluginManager *manager);
+    ~RecorderManager();
 
-    struct Data {
-        QString file;
-        QString workDir;
-        bool overwrite;
-    };
+    QList<RecorderData> getRecorder() const;
+    QHash<AbstractRecorder::Feature, bool> getFeatures(const QString &recorder, QString &defaultFile);
 
-    AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractEncoder();
+    void startRecord(const QString &recorder, const AbstractRecorder::Data &data);
+    void pauseOrContinue();
+    void stop();
 
-    virtual void encode(const Data &d) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
+
+private:
+    RecordItNowPluginManager *m_manager;
+    QPointer<AbstractRecorder> m_recorder;
+
+    void clean();
+
+
+private slots:
+    void recorderError(const QString &error);
+    void recorderFinished(const AbstractRecorder::ExitStatus &status);
 
 
 signals:
-    void status(const QString &text);
-    void error(const QString &text);
-    void outputFileChanged(const QString &newFile);
-    void finished(const AbstractEncoder::ExitStatus &status);
+    void status(const QString &status);
+    void finished(const QString &error, const bool &isVideo = false);
+    void fileChanged(const QString &newFile);
 
 
 };
 
 
-#endif // ABSTRACTRECORDER_H
+#endif // RECORDERMANAGER_H

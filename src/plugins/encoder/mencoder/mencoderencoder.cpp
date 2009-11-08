@@ -264,7 +264,7 @@ void MencoderEncoder::mencoderFinished(const int &ret)
     m_mencoder->deleteLater();
     m_mencoder = 0;
 
-    emit finished();
+    emit finished(ret == 0 ? Normal: Crash);
 
 }
 

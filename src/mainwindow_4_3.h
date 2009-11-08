@@ -31,7 +31,8 @@
 #include <ksystemtrayicon.h>
 
 
-class Settings;
+class RecorderManager;
+class EncoderManager;
 class RecordItNowPluginManager;
 class FrameBox;
 class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
@@ -56,23 +57,21 @@ public:
 
 private:
     QWidget *m_grabber;
-    Ui::Settings ui_settings;
-    Ui::RecorderPlugins ui_recorder;
-    Ui::EncoderPlugins ui_encoder;                                                
     FrameBox *m_box;
-    AbstractRecorder *m_recorderPlugin;
-    AbstractEncoder *m_encoderPlugin;
     KSystemTrayIcon *m_tray;
     QTimer *m_timer;
     AbstractRecorder::Data m_recordData;
     State m_state;
     RecordItNowPluginManager *m_pluginManager;
     QHash<AbstractRecorder::Feature, bool> m_currentFeatures;
+    RecorderManager *m_recorderManager;
+    EncoderManager *m_encoderManager;
 
     QAction *getAction(const QString &name);
 
     void setupActions();
     void initRecorder(AbstractRecorder::Data *d);
+    void initEncoder(AbstractEncoder::Data *d);
     void setupTray();
     void setTrayOverlay(const QString &name);
     void setState(const State &newState);
@@ -89,11 +88,9 @@ private slots:
     void recordCurrentWindow();
     void triggerFrame(const bool &checked);
     void recordFullScreen();
-    void recorderStatus(const QString &text);
-    void recorderError(const QString &error);
-    void recorderFinished(const AbstractRecorder::ExitStatus &status);
-    void encoderFinished();
-    void encoderError(const QString &error);
+    void pluginStatus(const QString &text);
+    void recorderFinished(const QString &error, const bool &isVideo);
+    void encoderFinished(const QString &error);
     void configure();
     void dialogFinished();
     void startTimer();

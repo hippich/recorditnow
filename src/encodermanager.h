@@ -17,54 +17,59 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTENCODER_H
-#define ABSTRACTENCODER_H
+#ifndef ENCODERMANAGER_H
+#define ENCODERMANAGER_H
 
 
 // own
-#include "recorditnowplugin.h"
+#include "abstractencoder.h"
 
 // KDE
-#include <kdemacros.h>
+#include <kicon.h>
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QVariantList>
+#include <QtCore/QPointer>
+#include <QtCore/QPair>
 
 
-class KDE_EXPORT AbstractEncoder : public RecordItNowPlugin
+typedef QPair<QString, KIcon> EncoderData;
+class RecordItNowPluginManager;
+class EncoderManager : public QObject
 {
     Q_OBJECT
 
 
 public:
-    enum ExitStatus {
-        Normal = 0,
-        Crash = 1
-    };
+    EncoderManager(QObject *parent, RecordItNowPluginManager *manager);
+    ~EncoderManager();
 
-    struct Data {
-        QString file;
-        QString workDir;
-        bool overwrite;
-    };
+    QList<EncoderData> getEncoder() const;
 
-    AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~AbstractEncoder();
+    void startEncode(const QString &recorder, const AbstractEncoder::Data &data);
+    void pauseOrContinue();
+    void stop();
 
-    virtual void encode(const Data &d) = 0;
-    virtual void pause() = 0;
-    virtual void stop() = 0;
+
+private:
+    RecordItNowPluginManager *m_manager;
+    QPointer<AbstractEncoder> m_encoder;
+
+    void clean();
+
+
+private slots:
+    void encoderError(const QString &error);
+    void encoderFinished(const AbstractEncoder::ExitStatus &status);
 
 
 signals:
-    void status(const QString &text);
-    void error(const QString &text);
-    void outputFileChanged(const QString &newFile);
-    void finished(const AbstractEncoder::ExitStatus &status);
+    void status(const QString &status);
+    void finished(const QString &error);
+    void fileChanged(const QString &newFile);
 
 
 };
 
 
-#endif // ABSTRACTRECORDER_H
+#endif // ENCODERMANAGER_H

@@ -266,7 +266,7 @@ void FfmpegEncoder::ffmpegFinished(const int &ret)
     m_ffmpeg->deleteLater();
     m_ffmpeg = 0;
 
-    emit finished();
+    emit finished(ret == 0 ? Normal: Crash);
 
 }
 
