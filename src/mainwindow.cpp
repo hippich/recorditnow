@@ -87,6 +87,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(playButton, SIGNAL(clicked()), this, SLOT(playFile()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(removeFile()));
 
+    connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChanged(QString)));
+
     m_box = new FrameBox(this, Settings::currentFrame());
 
     m_tray = 0;
@@ -105,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_encoderManager = new EncoderManager(this, m_pluginManager);
     connect(m_encoderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
+    connect(m_encoderManager, SIGNAL(fileChanged(QString)), outputRequester, SLOT(setText(QString)));
     connect(m_encoderManager, SIGNAL(finished(QString)), this,
             SLOT(encoderFinished(QString)));
 
@@ -631,6 +634,7 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         initEncoder(&d);
         m_encoderManager->startEncode(Settings::encoderName() ,d);
     }
+    outputFileChanged(outputRequester->text());
 
 }
 
@@ -646,6 +650,7 @@ void MainWindow::encoderFinished(const QString &error)
         pluginStatus(i18n("Finished!"));
     }
     setState(Idle);
+    outputFileChanged(outputRequester->text());
 
 }
 
@@ -721,6 +726,20 @@ void MainWindow::removeFile()
                                        "Reason: %2", file.fileName(), file.errorString()));
     } else {
         outputRequester->clear();
+    }
+
+}
+
+
+void MainWindow::outputFileChanged(const QString &newFile)
+{
+
+    if (QFile::exists(newFile)) {
+        playButton->setEnabled(true);
+        deleteButton->setEnabled(true);
+    } else {
+        playButton->setEnabled(false);
+        deleteButton->setEnabled(false);
     }
 
 }

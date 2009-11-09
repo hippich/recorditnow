@@ -104,6 +104,7 @@ private slots:
     void upload();
     void playFile(const bool &force = true);
     void removeFile();
+    void outputFileChanged(const QString &newFile);
 
 
 protected:
