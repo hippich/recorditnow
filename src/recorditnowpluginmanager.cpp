@@ -30,7 +30,6 @@
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <ksycoca.h>
 
 
 RecordItNowPluginManager::RecordItNowPluginManager(QObject *parent)

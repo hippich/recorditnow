@@ -108,10 +108,15 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 
     QFile outFile(d.outputFile);
     if (outFile.exists()) {
-        if (!d.overwrite) {
-            while (outFile.exists()) {
-                outFile.setFileName(outFile.fileName()+"_");
+        if (d.overwrite) {
+            if (!outFile.remove()) {
+                emit error(i18nc("%1 = file, %2 = error string", "screenshot: Remove failed: %1.\n"
+                                 "Reason: %2", outFile.fileName(), outFile.errorString()));
+                return;
             }
+        } else {
+            outFile.setFileName(unique(outFile.fileName()));
+            emit outputFileChanged(outFile.fileName());
         }
     }
 

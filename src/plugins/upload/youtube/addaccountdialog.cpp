@@ -34,7 +34,6 @@ AddAccountDialog::AddAccountDialog(QWidget *parent, AbstractUploader *uploader,
 {
 
     setWindowIcon(KIcon("recorditnow_youtube"));
-    setWindowTitle(i18n("Add a new Account"));
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     QWidget *widget = new QWidget(this);
@@ -42,6 +41,7 @@ AddAccountDialog::AddAccountDialog(QWidget *parent, AbstractUploader *uploader,
     setMainWidget(widget);
 
     if (uploader && !account.isEmpty()) {
+        setWindowTitle(i18nc("%1 = account name", "Edit %1", account));
         accountEdit->setText(account);
         saveCheck->setChecked(hasPassword(account));
         m_account = account;
@@ -50,6 +50,8 @@ AddAccountDialog::AddAccountDialog(QWidget *parent, AbstractUploader *uploader,
                     SLOT(gotPassword(QString,QString)));
             uploader->getPassword(account);
         }
+    } else {
+        setWindowTitle(i18n("Add a new Account"));
     }
 
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));

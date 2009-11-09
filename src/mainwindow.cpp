@@ -99,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_recorderManager = new RecorderManager(this, m_pluginManager);
     connect(m_recorderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
+    connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputRequester, SLOT(setText(QString)));
     connect(m_recorderManager, SIGNAL(finished(QString,bool)), this,
             SLOT(recorderFinished(QString,bool)));
 
@@ -617,24 +618,11 @@ void MainWindow::pluginStatus(const QString &text)
 void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 {
 
-    kDebug() << "recorder finished";
-
     if (!error.isEmpty()) {
         KMessageBox::error(this, error);
         pluginStatus(error);
         setState(Idle);
-        return;
-    }
-
-
-    if (!Settings::encode() || !isVideo) {
-        setState(Idle);
-        playFile(false);
-        pluginStatus(i18n("Finished!"));
-        return;
-    }
-
-    if (Settings::encoderName().isEmpty() || !Settings::encode()) {
+    } else if (Settings::encoderName().isEmpty() || !Settings::encode() || !isVideo) {
         setState(Idle);
         playFile(false);
         pluginStatus(i18n("Finished!"));
@@ -821,7 +809,6 @@ void MainWindow::backendChanged(const QString &newBackend)
 void MainWindow::aboutToQuit()
 {
 
-    kDebug() << "quit...";
     deleteLater(); // bug???
 
 }
