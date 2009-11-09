@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: recorditnow\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-08 02:08+0100\n"
+"POT-Creation-Date: 2009-11-09 05:31+0100\n"
 "PO-Revision-Date: 2009-10-31 02:35+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Hungary <info@blackpanther.hu>\n"
@@ -230,7 +230,7 @@ msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:333
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
-#: po/rc.cpp:105 src/mainwindow.cpp:209 rc.cpp:105
+#: po/rc.cpp:105 src/mainwindow.cpp:221 rc.cpp:105
 msgid "Show Frame"
 msgstr "Képkockák megjelenítése"
 
@@ -383,7 +383,7 @@ msgstr ""
 
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:199
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#: po/rc.cpp:185 src/mainwindow.cpp:222 rc.cpp:185
+#: po/rc.cpp:185 src/mainwindow.cpp:234 rc.cpp:185
 msgid "Upload"
 msgstr ""
 
@@ -545,14 +545,21 @@ msgstr "RecordItNow"
 msgid "Plugins"
 msgstr "Felvételi bővítőmodulok"
 
+#: src/encodermanager.cpp:73
+#, fuzzy
+msgid "Cannot load Encoder %1."
+msgstr "Nem sikerült betölteni a felvevőt %1"
+
+#: src/encodermanager.cpp:133
+#, fuzzy
+msgid "The encoder has crashed!"
+msgstr "A felvevő összeomlott"
+
 #: src/main.cpp:37
 msgid "Plugin based desktop recorder"
 msgstr "Modul alapú asztal felvevő"
 
-#: src/main.cpp:39 src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:42
-#: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:42
-#: src/plugins/recorder/recordmydesktop/recordmydesktopconfig.cpp:42
-#: src/plugins/recorder/screenshot/screenshotrecorderconfig.cpp:42
+#: src/main.cpp:39
 msgid "(C) 2009 Kai Dombrowe"
 msgstr "(C) 2009 Kai Dombrowe"
 
@@ -584,73 +591,52 @@ msgstr "A várakozási idő (másodpercben):"
 msgid "Name of recorded video/image."
 msgstr "A felvett videó/kép neve"
 
-#: src/mainwindow.cpp:185
+#: src/mainwindow.cpp:197
 msgid "Record"
 msgstr "Felvétel"
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:203
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/mainwindow.cpp:197
+#: src/mainwindow.cpp:209
 msgid "Stop"
 msgstr "Megállítás"
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:216
 msgid "Record a Window"
 msgstr "Egy ablkak felvétele"
 
-#: src/mainwindow.cpp:215
+#: src/mainwindow.cpp:227
 msgid "Record the entire Screen"
 msgstr "Az egész képernyő felvétele"
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 msgid "No screen area selected."
 msgstr "Nincs képernyőterület kijelölve."
 
-#: src/mainwindow.cpp:469
-msgid "Cannot load Recorder %1"
-msgstr "Nem sikerült betölteni a felvevőt %1"
-
-#: src/mainwindow.cpp:471
-msgid "No output file specified."
-msgstr "Nincs megadva kimeneti fájl"
-
-#: src/mainwindow.cpp:596 src/plugins/upload/youtube/youtubeuploader.cpp:198
+#: src/mainwindow.cpp:583 src/plugins/upload/youtube/youtubeuploader.cpp:198
 msgid "Continue"
 msgstr "Folytatás"
 
-#: src/mainwindow.cpp:637 src/mainwindow.cpp:713
-msgid "Error: %1"
-msgstr "Hiba: %1"
-
-#: src/mainwindow.cpp:649
-msgid "recorder crashed"
-msgstr "A felvevő összeomlott"
-
-#: src/mainwindow.cpp:658 src/mainwindow.cpp:675 src/mainwindow.cpp:702
+#: src/mainwindow.cpp:628 src/mainwindow.cpp:646
 msgid "Finished!"
 msgstr "Kész!"
 
-#: src/mainwindow.cpp:781 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
+#: src/mainwindow.cpp:715 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:71
 #, fuzzy
 msgctxt "%1 = file"
 msgid "%1 no such file!"
 msgstr "Kimeneti fájl: %1"
 
-#: src/mainwindow.cpp:786 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
+#: src/mainwindow.cpp:720 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:206
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "Remove failed: %1.\n"
 "Reason: %2"
 msgstr ""
-
-#: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:38
-#, fuzzy
-msgid "Ffmpeg Configuration"
-msgstr "Pillanatkép beállítások"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:69
 msgid "Starting ffmpeg!"
@@ -696,11 +682,6 @@ msgctxt "%1 = progress in %"
 msgid "Encoding: %1"
 msgstr "Átalakítás: %1"
 
-#: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:38
-#, fuzzy
-msgid "Mencoder Configuration"
-msgstr "RecordMyDesktop beállítások"
-
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:67
 msgid "Starting mencoder!"
 msgstr ""
@@ -710,10 +691,6 @@ msgid ""
 "Cannot find mencoder!\n"
 "Please install mencoder or use another plugin."
 msgstr ""
-
-#: src/plugins/recorder/recordmydesktop/recordmydesktopconfig.cpp:38
-msgid "RecordMyDesktop Configuration"
-msgstr "RecordMyDesktop beállítások"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:91
 msgid ""
@@ -773,25 +750,34 @@ msgid ""
 "Reason: %2"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorderconfig.cpp:38
-msgid "Screenshot Configuration"
-msgstr "Pillanatkép beállítások"
-
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:94
 msgid "Cheese!"
 msgstr "Csíííz!"
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:119
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:113
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"screenshot: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
+
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:124
 #, fuzzy
 msgctxt "%1 = error string"
 msgid "Cannot open output file: %1"
 msgstr "Nem lehet megnyitni a %1 fájlt"
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:127
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:132
 msgid "Cannot save image."
 msgstr "Nem lehetett menteni a képet."
 
-#: src/plugins/upload/youtube/addaccountdialog.cpp:37
+#: src/plugins/upload/youtube/addaccountdialog.cpp:44
+#, fuzzy
+msgctxt "%1 = account name"
+msgid "Edit %1"
+msgstr "Átalakítás: %1"
+
+#: src/plugins/upload/youtube/addaccountdialog.cpp:54
 msgid "Add a new Account"
 msgstr ""
 
@@ -895,6 +881,37 @@ msgstr ""
 #, fuzzy
 msgid "No such file: %1"
 msgstr "Kimeneti fájl: %1"
+
+#: src/recordermanager.cpp:96
+#, fuzzy
+msgid "Cannot load Recorder %1."
+msgstr "Nem sikerült betölteni a felvevőt %1"
+
+#: src/recordermanager.cpp:99
+msgid "No output file specified."
+msgstr "Nincs megadva kimeneti fájl"
+
+#: src/recordermanager.cpp:159
+#, fuzzy
+msgid "The recorder has crashed!"
+msgstr "A felvevő összeomlott"
+
+#~ msgid "Error: %1"
+#~ msgstr "Hiba: %1"
+
+#, fuzzy
+#~ msgid "Ffmpeg Configuration"
+#~ msgstr "Pillanatkép beállítások"
+
+#, fuzzy
+#~ msgid "Mencoder Configuration"
+#~ msgstr "RecordMyDesktop beállítások"
+
+#~ msgid "RecordMyDesktop Configuration"
+#~ msgstr "RecordMyDesktop beállítások"
+
+#~ msgid "Screenshot Configuration"
+#~ msgstr "Pillanatkép beállítások"
 
 #, fuzzy
 #~ msgid "My description"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-08 02:08+0100\n"
+"POT-Creation-Date: 2009-11-09 05:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,7 +229,7 @@ msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:333
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
-#: po/rc.cpp:105 src/mainwindow.cpp:209 rc.cpp:105
+#: po/rc.cpp:105 src/mainwindow.cpp:221 rc.cpp:105
 msgid "Show Frame"
 msgstr ""
 
@@ -379,7 +379,7 @@ msgstr ""
 
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:199
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#: po/rc.cpp:185 src/mainwindow.cpp:222 rc.cpp:185
+#: po/rc.cpp:185 src/mainwindow.cpp:234 rc.cpp:185
 msgid "Upload"
 msgstr ""
 
@@ -533,14 +533,19 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
+#: src/encodermanager.cpp:73
+msgid "Cannot load Encoder %1."
+msgstr ""
+
+#: src/encodermanager.cpp:133
+msgid "The encoder has crashed!"
+msgstr ""
+
 #: src/main.cpp:37
 msgid "Plugin based desktop recorder"
 msgstr ""
 
-#: src/main.cpp:39 src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:42
-#: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:42
-#: src/plugins/recorder/recordmydesktop/recordmydesktopconfig.cpp:42
-#: src/plugins/recorder/screenshot/screenshotrecorderconfig.cpp:42
+#: src/main.cpp:39
 msgid "(C) 2009 Kai Dombrowe"
 msgstr ""
 
@@ -572,70 +577,50 @@ msgstr ""
 msgid "Name of recorded video/image."
 msgstr ""
 
-#: src/mainwindow.cpp:185
+#: src/mainwindow.cpp:197
 msgid "Record"
 msgstr ""
 
-#: src/mainwindow.cpp:191
+#: src/mainwindow.cpp:203
 msgid "Pause"
 msgstr ""
 
-#: src/mainwindow.cpp:197
+#: src/mainwindow.cpp:209
 msgid "Stop"
 msgstr ""
 
-#: src/mainwindow.cpp:204
+#: src/mainwindow.cpp:216
 msgid "Record a Window"
 msgstr ""
 
-#: src/mainwindow.cpp:215
+#: src/mainwindow.cpp:227
 msgid "Record the entire Screen"
 msgstr ""
 
-#: src/mainwindow.cpp:292
+#: src/mainwindow.cpp:291
 msgid "No screen area selected."
 msgstr ""
 
-#: src/mainwindow.cpp:469
-msgid "Cannot load Recorder %1"
-msgstr ""
-
-#: src/mainwindow.cpp:471
-msgid "No output file specified."
-msgstr ""
-
-#: src/mainwindow.cpp:596 src/plugins/upload/youtube/youtubeuploader.cpp:198
+#: src/mainwindow.cpp:583 src/plugins/upload/youtube/youtubeuploader.cpp:198
 msgid "Continue"
 msgstr ""
 
-#: src/mainwindow.cpp:637 src/mainwindow.cpp:713
-msgid "Error: %1"
-msgstr ""
-
-#: src/mainwindow.cpp:649
-msgid "recorder crashed"
-msgstr ""
-
-#: src/mainwindow.cpp:658 src/mainwindow.cpp:675 src/mainwindow.cpp:702
+#: src/mainwindow.cpp:628 src/mainwindow.cpp:646
 msgid "Finished!"
 msgstr ""
 
-#: src/mainwindow.cpp:781 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
+#: src/mainwindow.cpp:715 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:71
 msgctxt "%1 = file"
 msgid "%1 no such file!"
 msgstr ""
 
-#: src/mainwindow.cpp:786 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
+#: src/mainwindow.cpp:720 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:206
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "Remove failed: %1.\n"
 "Reason: %2"
-msgstr ""
-
-#: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:38
-msgid "Ffmpeg Configuration"
 msgstr ""
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:69
@@ -681,10 +666,6 @@ msgctxt "%1 = progress in %"
 msgid "Encoding: %1"
 msgstr ""
 
-#: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:38
-msgid "Mencoder Configuration"
-msgstr ""
-
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:67
 msgid "Starting mencoder!"
 msgstr ""
@@ -693,10 +674,6 @@ msgstr ""
 msgid ""
 "Cannot find mencoder!\n"
 "Please install mencoder or use another plugin."
-msgstr ""
-
-#: src/plugins/recorder/recordmydesktop/recordmydesktopconfig.cpp:38
-msgid "RecordMyDesktop Configuration"
 msgstr ""
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:91
@@ -756,24 +733,32 @@ msgid ""
 "Reason: %2"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorderconfig.cpp:38
-msgid "Screenshot Configuration"
-msgstr ""
-
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:94
 msgid "Cheese!"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:119
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:113
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"screenshot: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
+
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:124
 msgctxt "%1 = error string"
 msgid "Cannot open output file: %1"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:127
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:132
 msgid "Cannot save image."
 msgstr ""
 
-#: src/plugins/upload/youtube/addaccountdialog.cpp:37
+#: src/plugins/upload/youtube/addaccountdialog.cpp:44
+msgctxt "%1 = account name"
+msgid "Edit %1"
+msgstr ""
+
+#: src/plugins/upload/youtube/addaccountdialog.cpp:54
 msgid "Add a new Account"
 msgstr ""
 
@@ -873,4 +858,16 @@ msgstr ""
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:193
 msgid "No such file: %1"
+msgstr ""
+
+#: src/recordermanager.cpp:96
+msgid "Cannot load Recorder %1."
+msgstr ""
+
+#: src/recordermanager.cpp:99
+msgid "No output file specified."
+msgstr ""
+
+#: src/recordermanager.cpp:159
+msgid "The recorder has crashed!"
 msgstr ""
