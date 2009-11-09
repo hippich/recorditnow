@@ -33,11 +33,10 @@
 #include "encodermanager.h"
 
 // Qt
-#include <QtGui/QAction>
 #include <QtGui/QX11Info>
-#include <QtCore/QTimer>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QDesktopWidget>
+#include <QtCore/QTimer>
 
 // KDE
 #include <kicon.h>
@@ -47,10 +46,7 @@
 #include <kstatusbar.h>
 #include <kmenubar.h>
 #include <kmessagebox.h>
-#include <kservice.h>
 #include <kservicetypetrader.h>
-#include <kplugininfo.h>
-#include <kconfigdialog.h>
 #include <kmenu.h>
 #include <krun.h>
 #include <kmimetype.h>
