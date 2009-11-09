@@ -499,6 +499,7 @@ void MainWindow::setupTray()
             m_tray->setStatus(KStatusNotifierItem::Active);
             m_tray->setCategory(KStatusNotifierItem::ApplicationStatus);
             m_tray->setIconByName("video-display");
+            m_tray->setToolTip("video-display", i18n("RecordItNow"), "");
             connect(m_tray, SIGNAL(activateRequested(bool,QPoint)), this,
                     SLOT(trayActivated(bool,QPoint)));
 #else
