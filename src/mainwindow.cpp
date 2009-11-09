@@ -179,10 +179,10 @@ void MainWindow::startWithArgs(const QString &backend, const QString &file, cons
 }
 
 
-QAction *MainWindow::getAction(const QString &name)
+KAction *MainWindow::getAction(const QString &name)
 {
 
-    QAction *action = actionCollection()->action(name);
+    KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
         action = new KActionMenu(this);
         static_cast<KActionMenu*>(action)->setDelayed(false);
@@ -196,46 +196,52 @@ QAction *MainWindow::getAction(const QString &name)
 void MainWindow::setupActions()
 {
 
-    QAction *recordAction = getAction("record");
+    KAction *recordAction = getAction("record");
     recordAction->setText(i18n("Record"));
     recordAction->setIcon(KIcon("media-record"));
+    recordAction->setShortcut(Qt::CTRL+Qt::Key_R);
     connect(recordAction, SIGNAL(triggered()), this, SLOT(recordTriggred()));
 
-    QAction *pauseAction = getAction("pause");
+    KAction *pauseAction = getAction("pause");
     pauseAction->setObjectName("pause");
     pauseAction->setText(i18n("Pause"));
     pauseAction->setIcon(KIcon("media-playback-pause"));
+    pauseAction->setShortcut(Qt::CTRL+Qt::Key_P);
     pauseAction->setEnabled(false);
     connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseRecord()));
 
-    QAction *stopAction = getAction("stop");
+    KAction *stopAction = getAction("stop");
     stopAction->setText(i18n("Stop"));
     stopAction->setIcon(KIcon("media-playback-stop"));
+    stopAction->setShortcut(Qt::CTRL+Qt::Key_S);
     stopAction->setEnabled(false);
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopRecord()));
 
 
-    QAction *recordWindowAction = getAction("recordWindow");
+    KAction *recordWindowAction = getAction("recordWindow");
     recordWindowAction->setText(i18n("Record a Window"));
     recordWindowAction->setIcon(KIcon("edit-select"));
+    recordWindowAction->setShortcut(Qt::CTRL+Qt::Key_W);
     connect(recordWindowAction, SIGNAL(triggered()), this, SLOT(recordWindow()));
 
-    QAction *boxAction = getAction("box");
+    KAction *boxAction = getAction("box");
     boxAction->setText(i18n("Show Frame"));
     boxAction->setIcon(KIcon("draw-rectangle"));
+    boxAction->setShortcut(Qt::CTRL+Qt::Key_F);
     boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
 
-    QAction *fullAction = getAction("recordFullScreen");
+    KAction *fullAction = getAction("recordFullScreen");
     fullAction->setText(i18n("Record the entire Screen"));
     fullAction->setIcon(KIcon("view-fullscreen"));
+    fullAction->setShortcut(Qt::CTRL+Qt::Key_F);
     connect(fullAction, SIGNAL(triggered()), this, SLOT(recordFullScreen()));
 
 
-    QAction *uploadAction = getAction("upload");
+    KAction *uploadAction = getAction("upload");
     uploadAction->setIcon(KIcon("upload-media"));
     uploadAction->setText(i18n("Upload"));
-
+    uploadAction->setShortcut(Qt::CTRL+Qt::Key_U);
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
 

@@ -31,6 +31,7 @@
 #include <ksystemtrayicon.h>
 
 
+class KAction;
 class RecorderManager;
 class EncoderManager;
 class RecordItNowPluginManager;
@@ -67,7 +68,7 @@ private:
     RecorderManager *m_recorderManager;
     EncoderManager *m_encoderManager;
 
-    QAction *getAction(const QString &name);
+    KAction *getAction(const QString &name);
 
     void setupActions();
     void initRecorder(AbstractRecorder::Data *d);
