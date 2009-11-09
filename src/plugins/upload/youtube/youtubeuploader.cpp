@@ -27,10 +27,7 @@
 #include <klocalizedstring.h>
 #include <kplugininfo.h>
 #include <kdebug.h>
-#include <kdialog.h>
 #include <kmessagebox.h>
-#include <kwallet.h>
-#include <knotification.h>
 #include <kuiserverjobtracker.h>
 
 // Qt
@@ -39,9 +36,9 @@
 
 
 
-#define GOOGLE QString("By clicking '%1,' you certify that you own all rights to the content or that " \
-                "you are authorized by the owner to make the content publicly available on YouTube, " \
-                "and that it otherwise complies with the YouTube Terms of Service located at " \
+#define GOOGLE QString("By clicking '%1,' you certify that you own all rights to the content or that "\
+                "you are authorized by the owner to make the content publicly available on YouTube, "\
+                "and that it otherwise complies with the YouTube Terms of Service located at "\
                 "http://www.youtube.com/t/terms.")
 
 

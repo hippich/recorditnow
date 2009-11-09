@@ -1,7 +1,6 @@
 add_subdirectory(icons)
 
-include_directories(${LIBSOUP2_INCLUDE_DIRS}
-${LIBGDATA_INCLUDE_DIRS})
+include_directories(${LIBGDATA_INCLUDE_DIRS})
 
 set(SRCS
     youtubeuploader.cpp
