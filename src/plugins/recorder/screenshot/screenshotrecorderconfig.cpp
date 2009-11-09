@@ -20,7 +20,7 @@
 
 // own
 #include "screenshotrecorderconfig.h"
-#include <screenshot.h>
+#include <recorditnow_screenshot.h>
 
 // KDE
 #include <kpluginfactory.h>

@@ -20,7 +20,7 @@
 
 // own
 #include "mencoderencoderconfig.h"
-#include <mencoder.h>
+#include <recorditnow_mencoder.h>
 
 // KDE
 #include <kpluginfactory.h>

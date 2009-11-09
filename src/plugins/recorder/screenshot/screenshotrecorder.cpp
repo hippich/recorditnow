@@ -19,7 +19,7 @@
 
 // own
 #include "screenshotrecorder.h"
-#include <screenshot.h>
+#include <recorditnow_screenshot.h>
 
 // KDE
 #include <klocalizedstring.h>

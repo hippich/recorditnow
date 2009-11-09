@@ -19,7 +19,7 @@
 
 // own
 #include "ffmpegencoder.h"
-#include <ffmpeg.h>
+#include <recorditnow_ffmpeg.h>
 
 // KDE
 #include <klocalizedstring.h>

@@ -20,7 +20,7 @@
 
 // own
 #include "ffmpegencoderconfig.h"
-#include <ffmpeg.h>
+#include <recorditnow_ffmpeg.h>
 
 // KDE
 #include <kpluginfactory.h>

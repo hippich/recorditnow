@@ -20,7 +20,7 @@
 
 // own
 #include "recordmydesktopconfig.h"
-#include <recordmydesktop.h>
+#include <recorditnow_recordmydesktop.h>
 
 // KDE
 #include <kpluginfactory.h>
