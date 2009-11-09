@@ -26,7 +26,7 @@
 #endif
 #include "framebox.h"
 #include <recorditnow.h>
-#include <recorditnowpluginmanager.h>
+#include "recorditnowpluginmanager.h"
 #include "configdialog.h"
 #include "libs/upload/abstractuploader.h"
 #include "recordermanager.h"
@@ -87,8 +87,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(playButton, SIGNAL(clicked()), this, SLOT(playFile()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(removeFile()));
 
-    QRect pos = Settings::currentFrame();
-    m_box = new FrameBox(this, pos);
+    m_box = new FrameBox(this, Settings::currentFrame());
 
     m_tray = 0;
 

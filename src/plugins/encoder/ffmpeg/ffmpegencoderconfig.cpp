@@ -33,15 +33,6 @@ FfmpegEncoderConfig::FfmpegEncoderConfig(QWidget *parent, const QVariantList &ar
     : KCModule( ConfigFactory::componentData(), parent, args)
 {
 
-    KAboutData *about = new KAboutData("FfmpegConfig",
-                                       0,
-                                       ki18n("Ffmpeg Configuration"),
-                                       KDE_VERSION_STRING,
-                                       KLocalizedString(),
-                                       KAboutData::License_GPL,
-                                       ki18n("(C) 2009 Kai Dombrowe"));
-    setAboutData(about);
-
     ui_cfg.setupUi(this);
     addConfig(Settings::self(), this);
 

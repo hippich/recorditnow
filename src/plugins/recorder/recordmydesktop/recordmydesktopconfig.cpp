@@ -30,18 +30,8 @@
 K_PLUGIN_FACTORY(ConfigFactory, registerPlugin<RecordMyDesktopConfig>();)
 K_EXPORT_PLUGIN(ConfigFactory("recorditnow_recordmydesktop_config"))
 RecordMyDesktopConfig::RecordMyDesktopConfig(QWidget *parent, const QVariantList &args)
-    : KCModule( ConfigFactory::componentData(), parent, args)
+    : KCModule(ConfigFactory::componentData(), parent, args)
 {
-
-    KAboutData *about = new KAboutData("RecordMyDesktopConfig",
-                                       0,
-                                       ki18n("RecordMyDesktop Configuration"),
-                                       KDE_VERSION_STRING,
-                                       KLocalizedString(),
-                                       KAboutData::License_GPL,
-                                       ki18n("(C) 2009 Kai Dombrowe"));
-    setAboutData(about);
-
 
     ui_cfg.setupUi(this);
     addConfig(Settings::self(), this);
