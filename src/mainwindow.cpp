@@ -234,7 +234,7 @@ void MainWindow::setupActions()
     KAction *fullAction = getAction("recordFullScreen");
     fullAction->setText(i18n("Record the entire Screen"));
     fullAction->setIcon(KIcon("view-fullscreen"));
-    fullAction->setShortcut(Qt::CTRL+Qt::Key_S);
+    fullAction->setShortcut(Qt::CTRL+Qt::Key_A);
     connect(fullAction, SIGNAL(triggered()), this, SLOT(recordFullScreen()));
 
 
