@@ -90,6 +90,7 @@ RecordItNowPlugin *RecordItNowPluginManager::loadPlugin(const QString &name)
     }
 
     RecordItNowPlugin *plugin = factory->create<RecordItNowPlugin>(this);
+    delete factory;
     if (!plugin) {
         kWarning() << "factory::create<>() failed " << service->library();
         return 0;
