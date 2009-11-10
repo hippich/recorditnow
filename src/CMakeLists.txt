@@ -8,6 +8,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/libs/plugin
 
 add_subdirectory(libs)
 add_subdirectory(plugins)
+add_subdirectory(icons)
 
 macro_display_feature_log()
 

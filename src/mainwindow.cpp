@@ -235,7 +235,7 @@ void MainWindow::setupActions()
 
 
     KAction *uploadAction = getAction("upload");
-    uploadAction->setIcon(KIcon("upload-media"));
+    uploadAction->setIcon(KIcon("recorditnow-upload-media"));
     uploadAction->setText(i18n("Upload"));
     uploadAction->setShortcut(Qt::CTRL+Qt::Key_U);
 
