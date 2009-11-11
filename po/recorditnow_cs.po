@@ -1,0 +1,954 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Kai Dombrowe <just89@gmx.de>, 2009.
+# Pavel Fric <pavelfric@seznam.cz>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: just89@gmx.de\n"
+"POT-Creation-Date: 2009-11-09 05:31+0100\n"
+"PO-Revision-Date: 2009-11-10 22:19+0100\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:33
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:33
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:33
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:33
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:3 po/rc.cpp:16 rc.cpp:3 rc.cpp:16
+msgid "avi"
+msgstr "avi"
+
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:38
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:38
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:38
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:38
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:6 po/rc.cpp:19 rc.cpp:6 rc.cpp:19
+msgid "flv"
+msgstr "flv"
+
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:46
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useCommand)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:46
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useCommand)
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:46
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useCommand)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:46
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useCommand)
+#: po/rc.cpp:9 po/rc.cpp:22 rc.cpp:9 rc.cpp:22
+msgid "Custom command"
+msgstr "Vlastní příkaz"
+
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:69
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:69
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:69
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
+#. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:69
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_useFormat)
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:25
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:13 po/rc.cpp:26 po/rc.cpp:108 rc.cpp:13 rc.cpp:26 rc.cpp:108
+msgid "Format"
+msgstr "Formát"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:24
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: po/rc.cpp:29 rc.cpp:29
+msgid "Image"
+msgstr "Obrázek"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:38
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_cursor)
+#: po/rc.cpp:32 rc.cpp:32
+msgid "Disable drawing of the cursor"
+msgstr "Vypnout ukazovátko"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:45
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_shared)
+#: po/rc.cpp:35 rc.cpp:35
+msgid "Disable usage of MIT-shared memory extension(Not Recommended!)"
+msgstr "Vypnout rozšíření MIT-shared-memory (Nedoporučuje se!)"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___full_shots)
+#: po/rc.cpp:38 rc.cpp:38
+msgid "Take full screenshot at every frame(Not recomended!)"
+msgstr "Vždy úplné obrázky na každém snímku (Nedoporučuje se!)"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:59
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___subsampling)
+#: po/rc.cpp:41 rc.cpp:41
+msgid "Quick subsampling"
+msgstr "Rychlé podvzorkování"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#. i18n: file: src/ui/toolbarwidget.ui:144
+#. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#. i18n: file: src/ui/toolbarwidget.ui:144
+#. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
+#: po/rc.cpp:44 po/rc.cpp:238 rc.cpp:44 rc.cpp:238
+msgid "Sound"
+msgstr "Zvuk"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:80
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: po/rc.cpp:47 rc.cpp:47
+msgid "Device"
+msgstr "Zařízení"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:94
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:51 rc.cpp:51
+msgid "Channels"
+msgstr "Kanály"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:107
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___channels)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:127
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___freq)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:147
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___buffer_size)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:167
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___ring_buffer_size)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:107
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___channels)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:127
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___freq)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:147
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___buffer_size)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:167
+#. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___ring_buffer_size)
+#: po/rc.cpp:54 po/rc.cpp:60 po/rc.cpp:66 po/rc.cpp:72 rc.cpp:54 rc.cpp:60
+#: rc.cpp:66 rc.cpp:72
+msgid "Default"
+msgstr "Výchozí"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:114
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:57 rc.cpp:57
+msgid "Frequency"
+msgstr "Kmitočet"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:134
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: po/rc.cpp:63 rc.cpp:63
+msgid "Buffer size (only ALSA or OSS)"
+msgstr "Velikost vyrovnávací paměti (pouze ALSA nebo OSS)"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:154
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: po/rc.cpp:69 rc.cpp:69
+msgid "Ring Buffer size (JACK only)"
+msgstr "Velikost vyrovnávací paměti Ring (pouze JACK)"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:174
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: po/rc.cpp:75 rc.cpp:75
+msgid "JACK Ports"
+msgstr "Přípojky Jack"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:187
+#. i18n: ectx: attribute (title), widget (QWidget, tab_3)
+#: po/rc.cpp:78 rc.cpp:78
+msgid "Encoding"
+msgstr "Kódování"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:217
+#. i18n: ectx: property (text), widget (QLabel, lab_2)
+#: po/rc.cpp:81 rc.cpp:81
+msgid "Audio Quality"
+msgstr "Kvalita zvuku"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:246
+#. i18n: ectx: property (text), widget (QLabel, lab_3)
+#: po/rc.cpp:84 rc.cpp:84
+msgid "Bitrate"
+msgstr "Datový tok"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:281
+#. i18n: ectx: property (text), widget (QLabel, lab)
+#: po/rc.cpp:87 rc.cpp:87
+msgid "Video Quality"
+msgstr "Kvalita videa"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:291
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___on_the_fly_encoding)
+#: po/rc.cpp:90 rc.cpp:90
+msgid "Encode the audio-video data, while recording"
+msgstr "Kódovat zvuková a videodata během nahrávání"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
+#. i18n: ectx: attribute (title), widget (QWidget, tab_4)
+#. i18n: file: src/ui/settings.ui:67
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
+#. i18n: ectx: attribute (title), widget (QWidget, tab_4)
+#. i18n: file: src/ui/settings.ui:67
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: po/rc.cpp:93 po/rc.cpp:218 rc.cpp:93 rc.cpp:218
+msgid "Miscellaneous"
+msgstr "Různé"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:312
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_wm_check)
+#: po/rc.cpp:96 rc.cpp:96
+msgid "Do not try to detect the window manager."
+msgstr "Nepokoušet se zjistit okenního správce"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:319
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg___compress_cache)
+#: po/rc.cpp:99 rc.cpp:99
+msgid "Compress Cache"
+msgstr "Komprimovat vyrovnávací paměť"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:326
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
+#: po/rc.cpp:102 rc.cpp:102
+msgid "Follow the mouse"
+msgstr "Sledovat myš"
+
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:333
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
+#: po/rc.cpp:105 src/mainwindow.cpp:221 rc.cpp:105
+msgid "Show Frame"
+msgstr "Ukázat snímek"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:33
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:111 rc.cpp:111
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:38
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:114 rc.cpp:114
+msgid "JPG"
+msgstr "JPG"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:43
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:117 rc.cpp:117
+msgid "BMP"
+msgstr "BMP"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:48
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:120 rc.cpp:120
+msgid "PPM"
+msgstr "PPM"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:53
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:123 rc.cpp:123
+msgid "TIFF"
+msgstr "TIFF"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:58
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:126 rc.cpp:126
+msgid "XBM"
+msgstr "XBM"
+
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:63
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_format)
+#: po/rc.cpp:129 rc.cpp:129
+msgid "XPM"
+msgstr "XPM"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:185
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:185
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: po/rc.cpp:132 po/rc.cpp:182 rc.cpp:132 rc.cpp:182
+msgid "Account"
+msgstr "Účet"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:30
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:141
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:30
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:141
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: po/rc.cpp:135 po/rc.cpp:170 rc.cpp:135 rc.cpp:170
+msgid "Password"
+msgstr "Heslo"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube_account.ui:50
+#. i18n: ectx: property (text), widget (QCheckBox, saveCheck)
+#: po/rc.cpp:138 rc.cpp:138
+msgid "Save password with KWallet"
+msgstr "Uložit heslo pomocí KWallet"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:22
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: po/rc.cpp:142 src/plugins/upload/youtube/uploadthread.cpp:54 rc.cpp:142
+msgid "Video"
+msgstr "Video"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:31
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:145 rc.cpp:145
+msgid "Title"
+msgstr "Název"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:38
+#. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
+#: po/rc.cpp:148 rc.cpp:148
+msgid "My Title"
+msgstr "Můj název"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:48
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:151 rc.cpp:151
+msgid "Description"
+msgstr "Popis"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:75
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: po/rc.cpp:155 rc.cpp:155
+msgid "Tags"
+msgstr "Značky"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:85
+#. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
+#: po/rc.cpp:158 rc.cpp:158
+msgid "linux, kde"
+msgstr "linux, kde"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:98
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: po/rc.cpp:161 rc.cpp:161
+msgid "File"
+msgstr "Soubor"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:112
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: po/rc.cpp:164 rc.cpp:164
+msgid "Category"
+msgstr "Skupina"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:125
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: po/rc.cpp:167 rc.cpp:167
+msgid "Login"
+msgstr "Přihlášení"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:153
+#. i18n: ectx: property (toolTip), widget (QToolButton, addAccountButton)
+#: po/rc.cpp:173 rc.cpp:173
+msgid "Add"
+msgstr "Přidat"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:163
+#. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
+#: po/rc.cpp:176 rc.cpp:176
+msgid "Edit"
+msgstr "Upravit"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:173
+#. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
+#: po/rc.cpp:179 rc.cpp:179
+msgid "Remove"
+msgstr "Odstranit"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:199
+#. i18n: ectx: property (text), widget (KPushButton, uploadButton)
+#: po/rc.cpp:185 src/mainwindow.cpp:234 rc.cpp:185
+msgid "Upload"
+msgstr "Nahrát"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:219
+#. i18n: ectx: property (text), widget (KPushButton, cancelButton)
+#: po/rc.cpp:188 rc.cpp:188
+msgid "Cancel"
+msgstr "Zrušit"
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:226
+#. i18n: ectx: property (text), widget (KPushButton, quitButton)
+#: po/rc.cpp:191 rc.cpp:191
+msgid "Quit"
+msgstr "Ukončit"
+
+#. i18n: file: src/recorditnow.kcfg:12
+#. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
+#. i18n: file: src/ui/settings.ui:36
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
+#. i18n: file: src/recorditnow.kcfg:12
+#. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
+#. i18n: file: src/ui/settings.ui:36
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
+#: po/rc.cpp:194 po/rc.cpp:206 rc.cpp:194 rc.cpp:206
+msgid "Hide RecordItNow while recording"
+msgstr "Skrýt RecordItNow během nahrávání"
+
+#. i18n: file: src/recorditnowui.rc:7
+#. i18n: ectx: ToolBar (mainToolBar)
+#: po/rc.cpp:197 rc.cpp:197
+msgid "Main Toolbar"
+msgstr "Hlavní nástrojová lišta"
+
+#. i18n: file: src/ui/settings.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: po/rc.cpp:200 rc.cpp:200
+msgid "Behavior "
+msgstr "Chování"
+
+#. i18n: file: src/ui/settings.ui:29
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
+#: po/rc.cpp:203 rc.cpp:203
+msgid "Enable system tray icon"
+msgstr "Povolit ikonu v oznamovací části panelu"
+
+#. i18n: file: src/ui/settings.ui:43
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
+#: po/rc.cpp:209 rc.cpp:209
+msgid "Overwrite existing files"
+msgstr "Přepsat existující soubory"
+
+#. i18n: file: src/ui/settings.ui:50
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
+#: po/rc.cpp:212 rc.cpp:212
+msgid "Show file after record"
+msgstr "Po nahrání ukázat soubor"
+
+#. i18n: file: src/ui/settings.ui:57
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
+#: po/rc.cpp:215 rc.cpp:215
+msgid "Encode after record"
+msgstr "Po nahrání zakódovat"
+
+#. i18n: file: src/ui/settings.ui:76
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:221 rc.cpp:221
+msgid "Encoder Plugin"
+msgstr "Přídavný modul pro kódování"
+
+#. i18n: file: src/ui/settings.ui:93
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:224 rc.cpp:224
+msgid "Directory for temporary files:"
+msgstr "Adresář pro dočasné soubory:"
+
+#. i18n: file: src/ui/toolbarwidget.ui:48
+#. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
+#: po/rc.cpp:227 rc.cpp:227
+msgid "Timer"
+msgstr "Časovač"
+
+#. i18n: file: src/ui/toolbarwidget.ui:112
+#. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
+#: po/rc.cpp:232 rc.cpp:232
+msgid "Frames per second"
+msgstr "Snímků za sekundu"
+
+#. i18n: file: src/ui/toolbarwidget.ui:115
+#. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
+#: po/rc.cpp:235 rc.cpp:235
+msgid " FPS"
+msgstr " FPS"
+
+#. i18n: file: src/ui/toolbarwidget.ui:170
+#. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
+#: po/rc.cpp:241 rc.cpp:241
+msgid "Backend"
+msgstr "Zadní část programu"
+
+#. i18n: file: src/ui/toolbarwidget.ui:184
+#. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
+#. i18n: file: src/ui/toolbarwidget.ui:190
+#. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
+#. i18n: file: src/ui/toolbarwidget.ui:184
+#. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
+#. i18n: file: src/ui/toolbarwidget.ui:190
+#. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
+#: po/rc.cpp:244 po/rc.cpp:247 rc.cpp:244 rc.cpp:247
+msgid "Output file"
+msgstr "Výstupní soubor"
+
+#. i18n: file: src/ui/toolbarwidget.ui:200
+#. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
+#: po/rc.cpp:250 rc.cpp:250
+msgid "Play/Open"
+msgstr "Přehrát/Otevřít"
+
+#. i18n: file: src/ui/toolbarwidget.ui:210
+#. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
+#: po/rc.cpp:253 rc.cpp:253
+msgid "Delete"
+msgstr "Smazat"
+
+#: po/rc.cpp:254 rc.cpp:254
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Pavel Fric"
+
+#: po/rc.cpp:255 rc.cpp:255
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "fripohled.blogspot.com"
+
+#: src/configdialog.cpp:59
+msgid "Record Plugins"
+msgstr "Přídavné moduly pro nahrávání"
+
+#: src/configdialog.cpp:62
+msgid "Encode Plugins"
+msgstr "Přídavné moduly pro kódování"
+
+#: src/configdialog.cpp:65
+msgid "Upload Plugins"
+msgstr "Přídavné moduly pro nahrání"
+
+#: src/configdialog.cpp:73 src/main.cpp:35
+msgid "RecordItNow"
+msgstr "RecordItNow"
+
+#: src/configdialog.cpp:74
+msgid "Plugins"
+msgstr "Přídavné moduly"
+
+#: src/encodermanager.cpp:73
+msgid "Cannot load Encoder %1."
+msgstr "Nelze nahrát kodér %1"
+
+#: src/encodermanager.cpp:133
+msgid "The encoder has crashed!"
+msgstr "Kodér spadl!"
+
+#: src/main.cpp:37
+msgid "Plugin based desktop recorder"
+msgstr "Nahrávadlo pracovní plochy založené na přídavných modulech"
+
+#: src/main.cpp:39
+msgid "(C) 2009 Kai Dombrowe"
+msgstr "(C) 2009 Kai Dombrowe"
+
+#: src/main.cpp:49
+msgid "Offset in x direction."
+msgstr "Posun ve směru x."
+
+#: src/main.cpp:50
+msgid "Offset in y direction."
+msgstr "Posun ve směru y."
+
+#: src/main.cpp:51
+msgid "Width of recorded window."
+msgstr "Šířka nahrávaného okna."
+
+#: src/main.cpp:52
+msgid "Height of recorded window."
+msgstr "Výška nahrávaného okna."
+
+#: src/main.cpp:53
+msgid "The Backend to use. (Example: RecordMyDesktop/Screenshot)"
+msgstr ""
+"Zadní část, která se má používat (Příklad: RecordMyDesktop/Screenshot)"
+
+#: src/main.cpp:54
+msgid "Wait \"time\" seconds."
+msgstr "Čekat \"time\" sekund."
+
+#: src/main.cpp:55
+msgid "Name of recorded video/image."
+msgstr "Název pro nahrané video/obrázek."
+
+#: src/mainwindow.cpp:197
+msgid "Record"
+msgstr "Nahrávat"
+
+#: src/mainwindow.cpp:203
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: src/mainwindow.cpp:209
+msgid "Stop"
+msgstr "Zastavit"
+
+#: src/mainwindow.cpp:216
+msgid "Record a Window"
+msgstr "Nahrávat okno"
+
+#: src/mainwindow.cpp:227
+msgid "Record the entire Screen"
+msgstr "Nahrávat celou obrazovku"
+
+#: src/mainwindow.cpp:291
+msgid "No screen area selected."
+msgstr "Není vybrána žádná oblast obrazovky."
+
+#: src/mainwindow.cpp:583 src/plugins/upload/youtube/youtubeuploader.cpp:198
+msgid "Continue"
+msgstr "Pokračovat"
+
+#: src/mainwindow.cpp:628 src/mainwindow.cpp:646
+msgid "Finished!"
+msgstr "Hotovo!"
+
+#: src/mainwindow.cpp:715 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:73
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:71
+msgctxt "%1 = file"
+msgid "%1 no such file!"
+msgstr "Soubor %1 nenalezen!"
+
+#: src/mainwindow.cpp:720 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:193
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:206
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
+"%1: Odstranění se nezdařilo.\n"
+"Důvod: %2"
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:69
+msgid "Starting ffmpeg!"
+msgstr "Spouští se ffmpeg!"
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:121
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:133
+msgid "Unkown format."
+msgstr "Neznámý formát."
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:138
+msgid ""
+"Cannot find ffmpeg!\n"
+"Please install ffmpeg or use another plugin."
+msgstr ""
+"Nelze nalézt ffmpeg!\n"
+"Nainstalujte, prosím, ffmpeg, nebo použijte jiný přídavný modul."
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:165
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:178
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:206
+msgid "Paused!"
+msgstr "Pozastaveno!"
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:169
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:182
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:210
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:277
+msgid "Capturing!"
+msgstr "Probíhá zachytávání!"
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:208
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:221
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:320
+msgctxt "%1 = source, %1 = destination, %3 = error string"
+msgid ""
+"Move failed: \"%1\" to \"%2\".\n"
+"Reason: %3"
+msgstr ""
+"Přesun se nezdařil: \"%1\" do \"%2\".\n"
+"Důvod: %3"
+
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:247
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:241
+msgctxt "%1 = progress in %"
+msgid "Encoding: %1"
+msgstr "Kóduje se: %1"
+
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:67
+msgid "Starting mencoder!"
+msgstr "Spouští se mencoder!"
+
+#: src/plugins/encoder/mencoder/mencoderencoder.cpp:150
+msgid ""
+"Cannot find mencoder!\n"
+"Please install mencoder or use another plugin."
+msgstr ""
+"Nelze nalézt mencoder!\n"
+"Nainstalujte, prosím, mencoder, nebo použijte jiný přídavný modul."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:91
+msgid ""
+"Cannot find recordmydesktop!\n"
+"Please install recordmydesktop or use another plugin."
+msgstr ""
+"Nelze nalézt recordmydesktop!\n"
+"Nainstalujte, prosím, recordmydesktop, nebo použijte jiný přídavný modul."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:254
+msgid "Cached: %1"
+msgstr "Uloženo do vyrovnávací paměti: %1"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:255
+msgid "Received: %1"
+msgstr "Obdrženo: %1"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:259
+msgid "Frames: %1"
+msgstr "Snímky: %1"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:269
+msgid "Encoding: %1"
+msgstr "Kóduje se: %1"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:279
+msgid "Shutting down.."
+msgstr "Vypíná se..."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:281
+msgid "Encoding started!"
+msgstr "Kódování spuštěno!"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:283
+msgid "Done!"
+msgstr "Hotovo!"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:287
+msgid "Cannot open file %1 for writting!"
+msgstr "Soubor %1 nelze otevřít pro zápis!"
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:289
+msgid "Could not create temporary directory, check your config."
+msgstr "Nepodařilo se vytvořit dočasný adresář. Ověřte nastavení."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:291
+msgid "recordMyDesktop is not compiled with Jack support."
+msgstr "RecordMyDesktop je sestaven bez podpory JACK."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:293
+msgid "Error while opening/configuring soundcard."
+msgstr "Během otevírání/nastavování zvukové karty se vyskytla chyba."
+
+#: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:305
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"recordmydesktop: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
+"recordmydesktop: Odstranění %1 se nezdařilo.\n"
+"Důvod: %2"
+
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:94
+msgid "Cheese!"
+msgstr "Sýr!"
+
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:113
+msgctxt "%1 = file, %2 = error string"
+msgid ""
+"screenshot: Remove failed: %1.\n"
+"Reason: %2"
+msgstr ""
+"screenshot: Odstranění %1 se nezdařilo.\n"
+"Důvod: %2"
+
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:124
+msgctxt "%1 = error string"
+msgid "Cannot open output file: %1"
+msgstr "Nelze otevřít výstupní soubor: %1"
+
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:132
+msgid "Cannot save image."
+msgstr "Nelze uložit obrázek"
+
+#: src/plugins/upload/youtube/addaccountdialog.cpp:44
+msgctxt "%1 = account name"
+msgid "Edit %1"
+msgstr "Upravit %1"
+
+#: src/plugins/upload/youtube/addaccountdialog.cpp:54
+msgid "Add a new Account"
+msgstr "Přidat nový účet"
+
+#: src/plugins/upload/youtube/uploadthread.cpp:54
+msgid "Upload to YouTube"
+msgstr "Nahrát na YouTube"
+
+#: src/plugins/upload/youtube/uploadthread.cpp:147
+msgid "Authenticating..."
+msgstr "Probíhá prokázání pravosti..."
+
+#: src/plugins/upload/youtube/uploadthread.cpp:161
+#: src/plugins/upload/youtube/uploadthread.cpp:169
+msgid "Unkown error"
+msgstr "Neznámá chyba"
+
+#: src/plugins/upload/youtube/uploadthread.cpp:174
+msgid "Log in..."
+msgstr "Přihlášení..."
+
+#: src/plugins/upload/youtube/uploadthread.cpp:196
+msgid "Authentication failed!"
+msgstr "Prokázání pravosti se nezdařilo!"
+
+#: src/plugins/upload/youtube/uploadthread.cpp:211
+msgid "Uploading..."
+msgstr "Nahrává se..."
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:58
+msgid "Autos & Vehicles"
+msgstr "Auta & Vozidla"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:59
+msgid "Comedy"
+msgstr "Veselohra"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:60
+msgid "Education"
+msgstr "Vzdělávání"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:61
+msgid "Entertainment"
+msgstr "Zábava"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:62
+msgid "Film & Animation"
+msgstr "Film & Kreslený film"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:63
+msgid "Gaming"
+msgstr "Hry"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:64
+msgid "Howto & Style"
+msgstr "Rady a fígle"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:65
+msgid "Music"
+msgstr "Hudba"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:66
+msgid "News & Politics"
+msgstr "Zprávy & Politika"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:67
+msgid "Nonprofit & Activism"
+msgstr "Neziskové činnosti & Aktivismus"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:68
+msgid "People & Blogs"
+msgstr "Lidé & Deníky"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:69
+msgid "Pets & Animals"
+msgstr "Domácí zvířata & Zvířata"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:70
+msgid "Sience & Technology"
+msgstr "Věda & Technika"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:71
+msgid "Sports"
+msgstr "Sporty"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:72
+msgid "Travel & Evends"
+msgstr "Cestování & Události"
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:176
+msgctxt "%1 = youtube tag"
+msgid "The Tag %1 is too long."
+msgstr "Den %1 je příliš dlouhý."
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:187
+msgid "Please fill out all the fields."
+msgstr "Vyplňte, prosím, všechna pole."
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:193
+msgid "No such file: %1"
+msgstr "Soubor nelze nalézt %1"
+
+#: src/recordermanager.cpp:96
+msgid "Cannot load Recorder %1."
+msgstr "Nahrávadlo %1 nelze nahrát."
+
+#: src/recordermanager.cpp:99
+msgid "No output file specified."
+msgstr "Nebyl zadán výstupní soubor."
+
+#: src/recordermanager.cpp:159
+msgid "The recorder has crashed!"
+msgstr "Nahrávadlo spadlo!"
+
+#~ msgid "Error: %1"
+#~ msgstr "Fehler: %1"
+
+#~ msgid "Ffmpeg Configuration"
+#~ msgstr "ffmpeg Konfiguration"
+
+#~ msgid "Mencoder Configuration"
+#~ msgstr "Mencoder Konfiguration"
+
+#~ msgid "RecordMyDesktop Configuration"
+#~ msgstr "RecordMyDesktop Konfiguration"
+
+#~ msgid "Screenshot Configuration"
+#~ msgstr "Screenshot Konfiguration"
+
+#~ msgid "My description"
+#~ msgstr "Meine Beschreibung"
+
+#~ msgid "My video"
+#~ msgstr "Mein Video"
+
+#~ msgid "Recorder"
+#~ msgstr "Recorder"
+
+#~ msgid "Encoder"
+#~ msgstr "Encoder"
+
+#~ msgid "Uploader"
+#~ msgstr "Hochlader"
+
+#~ msgctxt "%1 = file"
+#~ msgid "Mencoder: %1 no such file!"
+#~ msgstr "Mencoder: Datei %1 nicht gefunden!"
+
+#~ msgid ""
+#~ "Location where a temporary directory will be created to hold project files"
+#~ msgstr ""
+#~ "Ort, an dem ein temporäres Verzeichnis erstellt wird, um Projekt-Dateien "
+#~ "zu speichern"
+
+#~ msgid "Cannot find ffmpeg."
+#~ msgstr "Kann ffmpeg nicht finden."
+
+#~ msgid "Cannot find mencoder."
+#~ msgstr "Kann mencoder nicht finden."
+
+#~ msgid "Cannot find recordmydesktop."
+#~ msgstr "Kann recordmydesktop nicht finden."
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Format"
+
+#~ msgid "Image Options"
+#~ msgstr "Bildoptionen"
+
+#~ msgid "Sound Options"
+#~ msgstr "Sound Optionen"
+
+#~ msgid "Encoding Options"
+#~ msgstr "Kodierungs Optionen"
+
+#~ msgid "If there is already a file with the same name, delete it."
+#~ msgstr "Wenn es bereits eine Datei mit dem gleichen Namen gibt, lösche Sie."
