@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>356</width>
-    <height>297</height>
+    <height>324</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,17 +44,24 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2">
+      <item row="4" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_showVideo">
         <property name="text">
          <string>Show file after record</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="2">
+      <item row="5" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_encode">
         <property name="text">
          <string>Encode after record</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="kcfg_includeDecoration">
+        <property name="text">
+         <string>Include window decorations when you select a window</string>
         </property>
        </widget>
       </item>

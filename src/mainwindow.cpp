@@ -375,9 +375,11 @@ void MainWindow::recordCurrentWindow()
         child = QX11Info::appRootWindow();
     }
 
-    Window real_child = findRealWindow(child);
-    if (real_child != None) {// test just in case
-        child = real_child;
+    if (!Settings::includeDecoration()) {
+        Window real_child = findRealWindow(child);
+        if (real_child != None) {// test just in case
+            child = real_child;
+        }
     }
 
     XUngrabServer(QX11Info::display());

@@ -36,6 +36,10 @@
             <label></label>
             <default code="true">KGlobal::dirs()->locateLocal("tmp", "")</default>
     </entry>
+    <entry name="includeDecoration" type="Bool">
+            <label></label>
+            <default>true</default>
+    </entry>
   </group>
   <group name="GUI">
     <entry name="currentBackend" type="String">
