@@ -37,6 +37,7 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QDesktopWidget>
 #include <QtCore/QTimer>
+#include <QtGui/QPainter>
 
 // KDE
 #include <kicon.h>
@@ -541,8 +542,16 @@ void MainWindow::setTrayOverlay(const QString &name)
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
         m_tray->setOverlayIconByName(name);
 #else
-        Q_UNUSED(name);
-#warning "KDE-4.3 TrayOverlay disabled"
+        QPixmap icon = KIcon("video-display").pixmap(KIconLoader::SizeSmallMedium,
+                                                     KIconLoader::SizeSmallMedium);
+        if (!name.isEmpty()) {
+            QPixmap overlay = KIcon(name).pixmap(KIconLoader::SizeSmallMedium/2,
+                                                 KIconLoader::SizeSmallMedium/2);
+            QPainter p(&icon);
+            p.drawPixmap(icon.width()-overlay.width(), icon.height()-overlay.height(), overlay);
+            p.end();
+        }
+        m_tray->setIcon(icon);
 #endif
     }
 
