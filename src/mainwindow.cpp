@@ -842,6 +842,7 @@ void MainWindow::backendChanged(const QString &newBackend)
 
     QString file;
     m_currentFeatures = m_recorderManager->getFeatures(newBackend, file);
+    outputRequester->clear(); // call textChanged()
     outputRequester->setText(file);
     setState(Idle); // update actions/widgets
 
