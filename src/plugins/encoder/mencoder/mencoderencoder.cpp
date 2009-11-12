@@ -36,7 +36,7 @@
 #include <signal.h>
 
 
-static const QStringList formats = QStringList() << "avi" << "flv";
+static const QStringList formats = QStringList() << "avi" << "flv" << "wmv" << "mkv";
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<MencoderEncoder>();)
@@ -46,6 +46,17 @@ MencoderEncoder::MencoderEncoder(QObject *parent, const QVariantList &args)
 {
 
     m_mencoder = 0;
+
+    m_args["flv"] = QStringList() << "-of" << "lavf" << "-oac" << "mp3lame" << "-ovc" << "lavc" <<
+                    "-lavcopts" << "vcodec=flv";
+    m_args["avi"] = QStringList() << "-ovc" << "lavc" << "-oac" << "mp3lame" << "-lavcopts" <<
+                    "vcodec=mpeg4:vqscale=2:vhq:v4mv:trell:autoaspect";
+
+    m_args["wmv"] = QStringList() << "-ovc" << "lavc" << "-lavcopts" << "vcodec=wmv2" << "-oac" <<
+                    "lavc" << "-lavcopts" << "acodec=wmav2:vqscale=2:vhq" << "-of" << "lavf" << "-lavfopts" <<
+                    "format=wmv";
+    m_args["mkv"] = QStringList() << "-ovc" <<  "lavc" << "-oac" << "lavc" << "-of" << "lavf" <<
+                    "-lavfopts" << "format=mkv";
 
 }
 
@@ -113,7 +124,7 @@ void MencoderEncoder::encode(const Data &d)
         args << "-idx";
         args << m_tmpFile;
 
-        if (format == "avi") {
+ /*       if (format == "avi") {
             args << "-ovc";
             args << "lavc";
             args << "-oac";
@@ -133,6 +144,9 @@ void MencoderEncoder::encode(const Data &d)
             emit error(i18n("Unkown format."));
             return;
         }
+        */
+        args << m_args[format];
+
         args << "-o";
         args << m_outputFile;
     } else {

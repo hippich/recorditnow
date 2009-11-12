@@ -37,7 +37,7 @@
 #include <signal.h>
 
 
-static const QStringList formats = QStringList() << "avi" << "flv";
+static const QStringList formats = QStringList() << "avi" << "flv" << "wmv" << "mpeg" << "mkv";
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<FfmpegEncoder>();)
@@ -48,6 +48,12 @@ FfmpegEncoder::FfmpegEncoder(QObject *parent, const QVariantList &args)
 
     m_duration = -1;
     m_ffmpeg = 0;
+
+    m_args["flv"] = QStringList() << "-sameq" << "-xerror";
+    m_args["avi"] = QStringList() << "-sameq" << "-xerror";
+    m_args["wmv"] = QStringList() << "-sameq" << "-xerror";
+    m_args["mpeg"] = QStringList() << "-sameq" << "-xerror";
+    m_args["mkv"] = QStringList() << "-sameq" << "-xerror";
 
 }
 
@@ -115,14 +121,8 @@ void FfmpegEncoder::encode(const Data &d)
         args << "-i";
         args << m_tmpFile;
 
-        if (format == "avi") {
-        } else if (format == "flv") {
-        } else {
-            emit error(i18n("Unkown format."));
-            return;
-        }
-        args << "-sameq";
-        args << "-xerror";
+        args << m_args[format];
+
         args << m_outputFile;
     } else {
         QString cmd = Settings::command();

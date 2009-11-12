@@ -38,6 +38,16 @@
        <string>flv</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>wmv</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>mkv</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="6" column="0">

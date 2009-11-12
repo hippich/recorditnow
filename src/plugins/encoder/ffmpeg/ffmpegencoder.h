@@ -48,6 +48,7 @@ private:
     QString m_tmpFile;
     bool m_paused;
     int m_duration;
+    QHash<QString, QStringList> m_args;
 
     bool remove(const QString &file);
     bool move(const QString &from, const QString &to);
