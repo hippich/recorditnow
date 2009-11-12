@@ -570,7 +570,20 @@ void MainWindow::setState(const State &newState)
             centralWidget()->setEnabled(true);
             break;
         }
-    case Timer:
+    case Timer: {
+            setTrayOverlay("xclock");
+            getAction("pause")->setIcon(KIcon("media-playback-pause"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(true);
+            getAction("stop")->setEnabled(true);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
+            centralWidget()->setEnabled(false);
+            break;
+        }
     case Recording: {
             setTrayOverlay("media-record");
             getAction("pause")->setIcon(KIcon("media-playback-pause"));
