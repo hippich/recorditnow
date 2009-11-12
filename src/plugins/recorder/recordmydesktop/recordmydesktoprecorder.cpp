@@ -268,8 +268,6 @@ void RecordMyDesktopRecorder::newRecorderOutput()
                 }
             }
         }
-
-
         if (line == "Capturing!") {
             emit status(i18n("Capturing!"));
         } else if (line == "Shutting down..") {

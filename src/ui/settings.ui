@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>356</width>
-    <height>324</height>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,17 +51,27 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="2">
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="kcfg_includeDecoration">
+        <property name="text">
+         <string>Include window decoration when selecting a window</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
        <widget class="QCheckBox" name="kcfg_encode">
         <property name="text">
          <string>Encode after record</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QCheckBox" name="kcfg_includeDecoration">
-        <property name="text">
-         <string>Include window decoration when selecting a window</string>
+      <item row="5" column="1">
+       <widget class="KComboBox" name="encoderCombo">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="insertPolicy">
+         <enum>QComboBox::InsertAlphabetically</enum>
         </property>
        </widget>
       </item>
@@ -77,24 +87,7 @@
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::ExpandingFieldsGrow</enum>
       </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Encoder Plugin</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="KComboBox" name="encoderCombo">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="insertPolicy">
-         <enum>QComboBox::InsertAlphabetically</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
+      <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Directory for temporary files:</string>
@@ -104,7 +97,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="2">
+      <item row="1" column="0" colspan="2">
        <widget class="KUrlRequester" name="kcfg_workDir">
         <property name="mode">
          <set>KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly</set>
