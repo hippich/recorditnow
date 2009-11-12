@@ -115,6 +115,7 @@ void RecordItNowPluginManager::unloadPlugin(RecordItNowPlugin *plugin)
         }
     }
     kWarning() << "plugin not found!"; // should never happen
+    delete plugin; // but play save
 
 }
 
