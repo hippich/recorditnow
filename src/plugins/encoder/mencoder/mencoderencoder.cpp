@@ -124,27 +124,6 @@ void MencoderEncoder::encode(const Data &d)
         args << "-idx";
         args << m_tmpFile;
 
- /*       if (format == "avi") {
-            args << "-ovc";
-            args << "lavc";
-            args << "-oac";
-            args << "mp3lame";
-            args << "-lavcopts";
-            args << "vcodec=mpeg4:vqscale=2:vhq:v4mv:trell:autoaspect";
-        } else if (format == "flv") {
-            args << "-of";
-            args << "lavf";
-            args << "-oac";
-            args << "mp3lame";
-            args << "-ovc";
-            args << "lavc";
-            args << "-lavcopts";
-            args << "vcodec=flv";
-        } else {
-            emit error(i18n("Unkown format."));
-            return;
-        }
-        */
         args << m_args[format];
 
         args << "-o";
