@@ -246,8 +246,6 @@ void MencoderEncoder::newMencoderOutput()
 void MencoderEncoder::mencoderFinished(const int &ret)
 {
 
-    kDebug() << "Mencoder finished:" << ret;
-
     QFile file(m_tmpFile);
     if (file.exists()) {
         remove(m_tmpFile);

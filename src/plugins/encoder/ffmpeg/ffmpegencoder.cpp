@@ -255,8 +255,6 @@ void FfmpegEncoder::newFfmpegOutput()
 void FfmpegEncoder::ffmpegFinished(const int &ret)
 {
 
-    kDebug() << "ffmpeg finished:" << ret;
-
     QFile file(m_tmpFile);
     if (file.exists()) {
         remove(m_tmpFile);

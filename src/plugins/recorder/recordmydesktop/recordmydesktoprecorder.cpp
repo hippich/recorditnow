@@ -84,8 +84,6 @@ QString RecordMyDesktopRecorder::getDefaultOutputFile() const
 void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 {
 
-    kDebug() << "record";
-
     const QString recordMyDesktop = KGlobal::dirs()->findExe("recordmydesktop");
     if (recordMyDesktop.isEmpty()) {
         emit error(i18n("Cannot find recordmydesktop!\n"
@@ -117,6 +115,7 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
         args << QString("-height") << QString::number(d.geometry.height());
     }
     args << "--fps" << QString::number(d.fps);
+    args << "--workdir" << d.workDir;
 
     // recordmydesktop cfg
     Settings::self()->readConfig(); // cfg changed?
@@ -177,8 +176,6 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     if (!Settings::frame()) {
         args << "--no-frame";
     }
-
-    args << "--workdir" << d.workDir;
 
     // create/start
     m_recorder = new KProcess(this);
