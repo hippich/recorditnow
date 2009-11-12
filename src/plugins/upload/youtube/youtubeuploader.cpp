@@ -124,10 +124,11 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     connect(editAccountButton, SIGNAL(clicked()), this, SLOT(editAccount()));
     connect(removeAccountButton, SIGNAL(clicked()), this, SLOT(removeAccount()));
 
-    connect(accountsCombo, SIGNAL(currentIndexChanged(QString)), this,
-            SLOT(currentAccountChanged(QString)));
 
     accountsChanged(AddAccountDialog::getAccounts());
+    connect(accountsCombo, SIGNAL(currentIndexChanged(QString)), this,
+            SLOT(currentAccountChanged(QString)));
+    currentAccountChanged(accountsCombo->currentText());
 
     QHashIterator<QString, QString> it(m_category);
     while (it.hasNext()) {
