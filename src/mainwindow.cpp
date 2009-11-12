@@ -723,17 +723,13 @@ void MainWindow::playFile(const bool &force)
 {
 
     if (Settings::showVideo() || force) {
-        KUrl url(outputRequester->text());
-
+        const KUrl url(outputRequester->text());
         if (!QFile(url.path()).exists()) {
-            const QStringList files = QDir(url.directory()).entryList(QStringList() << url.fileName()+".*");
-            if (!files.isEmpty()) {
-                url = files.first();
-            }
+            KMessageBox::sorry(this, i18nc("%1 = file", "%1 no such file!", url.path()));
+        } else {
+            KMimeType::Ptr type = KMimeType::findByUrl(url);
+            KRun::runUrl(url, type->name(), this);
         }
-
-        KMimeType::Ptr type = KMimeType::findByUrl(url);
-        KRun::runUrl(url, type->name(), this);
     }
 
 }
