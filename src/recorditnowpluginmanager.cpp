@@ -73,7 +73,6 @@ RecordItNowPlugin *RecordItNowPluginManager::loadPlugin(const QString &name)
         }
     }
     if (!info.isValid()) {
-        kWarning() << "Plugin:" << name << "not found!";
         return 0;
     }
 
@@ -108,8 +107,8 @@ void RecordItNowPluginManager::unloadPlugin(RecordItNowPlugin *plugin)
     while (it.hasNext()) {
         it.next();
         if (it.value() && it.value() == plugin) {
-            it.value()->deleteLater();
             kDebug() << "unload plugin:" << it.key().name();
+            it.value()->deleteLater();
             m_plugins[it.key()] = 0;
             return;
         }
@@ -193,7 +192,7 @@ void RecordItNowPluginManager::loadPluginList()
     loadInfos("RecordItNowEncoder");
     loadInfos("RecordItNowUploader");
 
-    kDebug() << "plugin list loaded:" << m_plugins.size();
+    kDebug() << "plugins found:" << m_plugins.size();
     emit pluginsChanged();
 
 }
