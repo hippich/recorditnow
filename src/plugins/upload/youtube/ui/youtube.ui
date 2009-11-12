@@ -7,15 +7,31 @@
     <x>0</x>
     <y>0</y>
     <width>408</width>
-    <height>347</height>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true">YouTube</string>
+   <string>YouTube</string>
+  </property>
+  <property name="toolTip">
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="KTitleWidget" name="titleWidget">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>YouTube</string>
+       </property>
+       <property name="comment">
+        <string>Upload and share your videos</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
@@ -25,27 +41,50 @@
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::ExpandingFieldsGrow</enum>
         </property>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label">
+        <item row="6" column="1">
+         <widget class="KComboBox" name="categoryCombo"/>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Title</string>
+           <string>Category</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="KLineEdit" name="titleEdit">
+        <item row="5" column="1">
+         <widget class="KUrlRequester" name="fileRequester">
+          <property name="clickMessage">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>My Title</string>
+           <string>File</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="KLineEdit" name="tagsEdit">
+          <property name="text">
+           <string>linux, kde</string>
           </property>
           <property name="maxLength">
-           <number>60</number>
+           <number>120</number>
+          </property>
+          <property name="clickMessage">
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Description</string>
+           <string>Tags</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -69,52 +108,29 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_3">
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Tags</string>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
+           <string>Description</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="KLineEdit" name="tagsEdit">
+        <item row="1" column="1">
+         <widget class="KLineEdit" name="titleEdit">
           <property name="text">
-           <string>linux, kde</string>
+           <string>My Title</string>
           </property>
           <property name="maxLength">
-           <number>120</number>
-          </property>
-          <property name="clickMessage">
-           <string/>
+           <number>60</number>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_7">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label">
           <property name="text">
-           <string>File</string>
+           <string>Title</string>
           </property>
          </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="KUrlRequester" name="fileRequester">
-          <property name="clickMessage">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Category</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="KComboBox" name="categoryCombo"/>
         </item>
        </layout>
       </widget>
@@ -239,6 +255,11 @@ p, li { white-space: pre-wrap; }
    <class>KUrlRequester</class>
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTitleWidget</class>
+   <extends>QWidget</extends>
+   <header>ktitlewidget.h</header>
   </customwidget>
   <customwidget>
    <class>KPushButton</class>

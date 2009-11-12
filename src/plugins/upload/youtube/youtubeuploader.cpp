@@ -105,6 +105,8 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     m_dialog->setWindowIcon(KIcon("recorditnow_youtube"));
     setupUi(m_dialog);
 
+    titleWidget->setPixmap(KIcon("recorditnow_youtube"));
+    
     uploadButton->setIcon(KIcon("recorditnow-upload-media"));
     cancelButton->setIcon(KIcon("dialog-cancel"));
     quitButton->setIcon(KIcon("dialog-close"));
