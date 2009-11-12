@@ -25,10 +25,10 @@
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>YouTube</string>
+        <string>&lt;html&gt;&lt;font size=&quot;5&quot;&gt;YouTube&lt;/font&gt;&lt;br /&gt;&lt;b&gt;Upload and share your videos!&lt;/html&gt;</string>
        </property>
        <property name="comment">
-        <string>Upload and share your videos</string>
+        <string notr="true"/>
        </property>
       </widget>
      </item>
