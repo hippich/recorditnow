@@ -752,7 +752,7 @@ void MainWindow::removeFile()
         KMessageBox::error(this, i18nc("%1 = file, %2 = error string", "Remove failed: %1.\n"
                                        "Reason: %2", file.fileName(), file.errorString()));
     } else {
-        outputRequester->clear();
+        backendChanged(backendCombo->currentText()); // reset output file name
     }
 
 }
