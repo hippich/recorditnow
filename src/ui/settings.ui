@@ -73,6 +73,12 @@
         <property name="insertPolicy">
          <enum>QComboBox::InsertAlphabetically</enum>
         </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
      </layout>

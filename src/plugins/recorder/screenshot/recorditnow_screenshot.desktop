@@ -14,3 +14,9 @@ X-KDE-PluginInfo-Version=0.4
 X-KDE-PluginInfo-Website=http://kde-apps.org/content/show.php/RecordItNow?content=114610
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
+
+X-RecordItNow-FPS=false
+X-RecordItNow-Sound=false
+X-RecordItNow-Pause=false
+X-RecordItNow-Stop=false
+

@@ -46,7 +46,8 @@ public:
 
     AbstractRecorder::State currentState() const;
     QList<RecorderData> getRecorder() const;
-    QHash<AbstractRecorder::Feature, bool> getFeatures(const QString &recorder, QString &defaultFile);
+    bool hasFeature(const QString &feature, const QString &recorder) const;
+    QString getDefaultFile(const QString &name) const;
 
     void startRecord(const QString &recorder, const AbstractRecorder::Data &data);
     void pauseOrContinue();

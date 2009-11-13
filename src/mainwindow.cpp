@@ -563,6 +563,7 @@ void MainWindow::setTrayOverlay(const QString &name)
 void MainWindow::setState(const State &newState)
 {
 
+    const QString recorder = backendCombo->currentText();
     switch (newState) {
     case Idle: {
             setTrayOverlay("");
@@ -576,8 +577,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setChecked(m_box->isEnabled());
             getAction("options_configure")->setEnabled(true);
             getAction("upload")->setEnabled(true);
-            fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
-            soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
+            fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
+            soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             centralWidget()->setEnabled(true);
             timerLcd->display(m_timer->property("Time").toInt());
             break;
@@ -600,8 +601,8 @@ void MainWindow::setState(const State &newState)
             setTrayOverlay("media-record");
             getAction("pause")->setIcon(KIcon("media-playback-pause"));
             getAction("record")->setEnabled(false);
-            getAction("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
-            getAction("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
+            getAction("pause")->setEnabled(m_recorderManager->hasFeature("Pause", recorder));
+            getAction("stop")->setEnabled(m_recorderManager->hasFeature("Stop", recorder));
             getAction("recordWindow")->setEnabled(false);
             getAction("recordFullScreen")->setEnabled(false);
             getAction("box")->setEnabled(false);
@@ -631,8 +632,8 @@ void MainWindow::setState(const State &newState)
             getAction("pause")->setText(i18n("Continue"));
             getAction("pause")->setIcon(KIcon("media-playback-start"));
             getAction("record")->setEnabled(false);
-            getAction("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
-            getAction("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
+            getAction("pause")->setEnabled(m_recorderManager->hasFeature("Pause", recorder));
+            getAction("stop")->setEnabled(m_recorderManager->hasFeature("Stop", recorder));
             getAction("recordWindow")->setEnabled(false);
             getAction("recordFullScreen")->setEnabled(false);
             getAction("box")->setEnabled(false);
@@ -891,10 +892,8 @@ void MainWindow::trayActivated(const QSystemTrayIcon::ActivationReason &reason)
 void MainWindow::backendChanged(const QString &newBackend)
 {
 
-    QString file;
-    m_currentFeatures = m_recorderManager->getFeatures(newBackend, file);
     outputRequester->clear(); // call textChanged()
-    outputRequester->setText(file);
+    outputRequester->setText(m_recorderManager->getDefaultFile(newBackend));
     setState(Idle); // update actions/widgets
 
 }

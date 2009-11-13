@@ -44,13 +44,6 @@ public:
         Normal = 0,
         Crash = 1
     };
-
-    enum Feature {
-        Sound = 0,
-        Fps = 1,
-        Pause = 2,
-        Stop = 3
-    };
     
     enum State {
         Idle = 0,
@@ -75,7 +68,6 @@ public:
     AbstractRecorder::State state() const;
 
     virtual bool isVideoRecorder() const { return true; };
-    virtual bool hasFeature(const AbstractRecorder::Feature &) const { return false; };
     virtual QString getDefaultOutputFile() const = 0;
 
     virtual void record(const AbstractRecorder::Data &) = 0;

@@ -64,7 +64,6 @@ private:
     AbstractRecorder::Data m_recordData;
     State m_state;
     RecordItNowPluginManager *m_pluginManager;
-    QHash<AbstractRecorder::Feature, bool> m_currentFeatures;
     RecorderManager *m_recorderManager;
     EncoderManager *m_encoderManager;
 

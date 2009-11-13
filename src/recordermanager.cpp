@@ -22,6 +22,9 @@
 #include "recordermanager.h"
 #include "recorditnowpluginmanager.h"
 
+// Qt
+#include <QtCore/QDir>
+
 
 RecorderManager::RecorderManager(QObject *parent, RecordItNowPluginManager *manager)
     : QObject(parent), m_manager(manager)
@@ -69,28 +72,30 @@ QList<RecorderData> RecorderManager::getRecorder() const
 }
 
 
-QHash<AbstractRecorder::Feature, bool> RecorderManager::getFeatures(const QString &recorder,
-                                                                    QString &defaultFile)
+bool RecorderManager::hasFeature(const QString &feature, const QString &recorder) const
 {
 
-    AbstractRecorder *plugin = static_cast<AbstractRecorder*>(m_manager->loadPlugin(recorder));
-    QHash<AbstractRecorder::Feature, bool> features;
-
-    if (plugin) {
-        features[AbstractRecorder::Sound] = plugin->hasFeature(AbstractRecorder::Sound);
-        features[AbstractRecorder::Fps] = plugin->hasFeature(AbstractRecorder::Fps);
-        features[AbstractRecorder::Pause] = plugin->hasFeature(AbstractRecorder::Pause);
-        features[AbstractRecorder::Stop] = plugin->hasFeature(AbstractRecorder::Stop);
-        defaultFile = plugin->getDefaultOutputFile();
-        m_manager->unloadPlugin(plugin);
-    } else {
-        features[AbstractRecorder::Sound] = false;
-        features[AbstractRecorder::Fps] = false;
-        features[AbstractRecorder::Pause] = false;
-        features[AbstractRecorder::Stop] = false;
-        defaultFile.clear();
+    foreach (const KPluginInfo &info, m_manager->getRecorderList()) {
+        if (info.name().toLower() == recorder.toLower()) {
+            return info.property("X-RecordItNow-"+feature).toBool();
+        }
     }
-    return features;
+    return false;
+
+}
+
+
+QString RecorderManager::getDefaultFile(const QString &name) const
+{
+
+    AbstractRecorder *recorder = static_cast<AbstractRecorder*>(m_manager->loadPlugin(name));
+    if (recorder) {
+        const QString file = recorder->getDefaultOutputFile();
+        m_manager->unloadPlugin(recorder);
+        return file;
+    } else {
+        return QString();
+    }
 
 }
 

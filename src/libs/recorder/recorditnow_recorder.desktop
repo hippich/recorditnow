@@ -3,3 +3,16 @@ Type=ServiceType
 X-KDE-ServiceType=RecordItNowRecorder
 X-KDE-PluginInfo-Version=0.1
 Name=RecordItNow Recorder lib
+
+
+[PropertyDef::X-RecordItNow-FPS]
+Type=bool
+
+[PropertyDef::X-RecordItNow-Sound]
+Type=bool
+
+[PropertyDef::X-RecordItNow-Pause]
+Type=bool
+
+[PropertyDef::X-RecordItNow-Stop]
+Type=bool

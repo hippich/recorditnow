@@ -65,20 +65,6 @@ bool ScreenshotRecorder::isVideoRecorder() const
 }
 
 
-bool ScreenshotRecorder::hasFeature(const AbstractRecorder::Feature &feature) const
-{
-
-    switch (feature) {
-    case AbstractRecorder::Sound:
-    case AbstractRecorder::Fps:
-    case AbstractRecorder::Pause:
-    case AbstractRecorder::Stop:
-    default: return false;
-    }
-
-}
-
-
 QString ScreenshotRecorder::getDefaultOutputFile() const
 {
 

@@ -169,6 +169,9 @@
            <property name="toolTip">
             <string>Backend</string>
            </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToContents</enum>
+           </property>
            <property name="frame">
             <bool>true</bool>
            </property>
