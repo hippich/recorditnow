@@ -250,7 +250,7 @@ void MainWindow::setupActions()
 void MainWindow::startRecord()
 {
 
-    setState(Recording);
+    setState(Recording);   
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
 }
@@ -579,6 +579,7 @@ void MainWindow::setState(const State &newState)
             fpsSpinBox->setEnabled(m_currentFeatures[AbstractRecorder::Fps]);
             soundCheck->setEnabled(m_currentFeatures[AbstractRecorder::Sound]);
             centralWidget()->setEnabled(true);
+            timerLcd->display(m_timer->property("Time").toInt());
             break;
         }
     case Timer: {
@@ -607,6 +608,7 @@ void MainWindow::setState(const State &newState)
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
+            timerLcd->display(0);
             break;
         }
     case TimerPaused: {
@@ -814,6 +816,10 @@ void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
 void MainWindow::startTimer()
 {
 
+    if (state() == Idle) {
+        m_timer->setProperty("Time", timerLcd->value());
+    }
+
     setState(Timer);
     if (timerLcd->value() == 0) {
         m_timer->start(0);
@@ -827,11 +833,11 @@ void MainWindow::startTimer()
 void MainWindow::tick()
 {
 
+    lcdDown();
     if (timerLcd->value() < 1) {
         m_timer->stop();
         startRecord();
     }
-    lcdDown();
 
 }
 
