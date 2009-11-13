@@ -187,6 +187,8 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
     kDebug() << "starting:" << recordMyDesktop << "with:" << args;
 
     m_recorder->setProgram(recordMyDesktop, args);
+
+    setState(Record);
     m_recorder->start();
 
 }
@@ -259,6 +261,9 @@ void RecordMyDesktopRecorder::newRecorderOutput()
         } else if (line.startsWith("[")) {
             for (int i = 0; i < line.length(); i++) {
                 if (line[i] == '[') {
+
+                    setState(Encode);
+
                     line.remove(0, i+1);
                     const int percent = line.mid(0, line.indexOf('%', 0)).toInt();
                     line.remove(0, line.indexOf("]"));

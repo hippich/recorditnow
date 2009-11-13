@@ -46,7 +46,8 @@ public:
         Timer = 1,
         TimerPaused = 2,
         Recording = 3,
-        Paused = 4
+        Paused = 4,
+        Encode = 5
     };
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -106,6 +107,7 @@ private slots:
     void playFile(const bool &force = true);
     void removeFile();
     void outputFileChanged(const QString &newFile);
+    void recorderStateChanged(const AbstractRecorder::State &newState);
 
 
 protected:

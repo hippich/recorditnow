@@ -44,6 +44,7 @@ public:
     RecorderManager(QObject *parent, RecordItNowPluginManager *manager);
     ~RecorderManager();
 
+    AbstractRecorder::State currentState() const;
     QList<RecorderData> getRecorder() const;
     QHash<AbstractRecorder::Feature, bool> getFeatures(const QString &recorder, QString &defaultFile);
 
@@ -68,6 +69,7 @@ signals:
     void status(const QString &status);
     void finished(const QString &error, const bool &isVideo = false);
     void fileChanged(const QString &newFile);
+    void stateChanged(const AbstractRecorder::State &newState);
 
 
 };

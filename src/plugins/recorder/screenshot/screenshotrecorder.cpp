@@ -91,6 +91,8 @@ QString ScreenshotRecorder::getDefaultOutputFile() const
 void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 {
 
+    setState(Record);
+
     emit status(i18n("Cheese!"));
 
     // reload cfg

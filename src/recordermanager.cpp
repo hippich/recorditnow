@@ -40,6 +40,18 @@ RecorderManager::~RecorderManager()
 }
 
 
+AbstractRecorder::State RecorderManager::currentState() const
+{
+
+    if (m_recorder) {
+        return m_recorder->state();
+    } else {
+        return AbstractRecorder::Idle;
+    }
+
+}
+
+
 QList<RecorderData> RecorderManager::getRecorder() const
 {
 
@@ -105,6 +117,8 @@ void RecorderManager::startRecord(const QString &recorder, const AbstractRecorde
     connect(m_recorder, SIGNAL(status(QString)), this, SIGNAL(status(QString)));
     connect(m_recorder, SIGNAL(finished(AbstractRecorder::ExitStatus)), this,
             SLOT(recorderFinished(AbstractRecorder::ExitStatus)));
+    connect(m_recorder, SIGNAL(stateChanged(AbstractRecorder::State)), this,
+            SIGNAL(stateChanged(AbstractRecorder::State)));
 
     m_recorder->record(data);
 

@@ -101,6 +101,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputRequester, SLOT(setText(QString)));
     connect(m_recorderManager, SIGNAL(finished(QString,bool)), this,
             SLOT(recorderFinished(QString,bool)));
+    connect(m_recorderManager, SIGNAL(stateChanged(AbstractRecorder::State)), this,
+            SLOT(recorderStateChanged(AbstractRecorder::State)));
 
     m_encoderManager = new EncoderManager(this, m_pluginManager);
     connect(m_encoderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
@@ -580,7 +582,7 @@ void MainWindow::setState(const State &newState)
             break;
         }
     case Timer: {
-            setTrayOverlay("xclock");
+            setTrayOverlay("player-time");
             getAction("pause")->setIcon(KIcon("media-playback-pause"));
             getAction("record")->setEnabled(false);
             getAction("pause")->setEnabled(true);
@@ -615,6 +617,20 @@ void MainWindow::setState(const State &newState)
             getAction("record")->setEnabled(false);
             getAction("pause")->setEnabled(m_currentFeatures[AbstractRecorder::Pause]);
             getAction("stop")->setEnabled(m_currentFeatures[AbstractRecorder::Stop]);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
+            centralWidget()->setEnabled(false);
+            break;
+        }
+    case Encode: {
+            setTrayOverlay("system-run");
+            getAction("pause")->setIcon(KIcon("media-playback-pause"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(true);
+            getAction("stop")->setEnabled(true);
             getAction("recordWindow")->setEnabled(false);
             getAction("recordFullScreen")->setEnabled(false);
             getAction("box")->setEnabled(false);
@@ -659,6 +675,7 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
     } else {
         AbstractEncoder::Data d;
         initEncoder(&d);
+        setState(Encode);
         m_encoderManager->startEncode(Settings::encoderName() ,d);
     }
     outputFileChanged(outputRequester->text());
@@ -768,6 +785,18 @@ void MainWindow::outputFileChanged(const QString &newFile)
 }
 
 
+void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
+{
+
+    switch (newState) {
+    case AbstractRecorder::Idle: setTrayOverlay(""); break;
+    case AbstractRecorder::Record: setTrayOverlay("media-record"); break;
+    case AbstractRecorder::Encode: setTrayOverlay("system-run"); break;
+    }
+
+}
+
+
 void MainWindow::startTimer()
 {
 
@@ -819,7 +848,8 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 {
 
     Q_UNUSED(pos);
-    if (active && (state() == Recording || state() == Paused)) {
+    if (active && (state() == Recording || state() == Paused) &&
+        m_recorderManager->currentState() == AbstractRecorder::Record) {
         stopRecord();
     }
 
@@ -830,7 +860,8 @@ void MainWindow::trayActivated(const QSystemTrayIcon::ActivationReason &reason)
 
     if (reason == QSystemTrayIcon::Trigger &&
         isVisible() &&
-        (state() == Recording || state() == Paused)) {
+        (state() == Recording || state() == Paused) &&
+        m_recorderManager->currentState() == AbstractRecorder::Record) {
         stopRecord();
     }
 

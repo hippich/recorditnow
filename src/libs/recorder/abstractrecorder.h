@@ -52,6 +52,12 @@ public:
         Stop = 3
     };
     
+    enum State {
+        Idle = 0,
+        Record = 1,
+        Encode = 2
+    };
+
     struct Data {
     public:
         QString outputFile;
@@ -66,6 +72,8 @@ public:
     AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractRecorder();
 
+    AbstractRecorder::State state() const;
+
     virtual bool isVideoRecorder() const { return true; };
     virtual bool hasFeature(const AbstractRecorder::Feature &) const { return false; };
     virtual QString getDefaultOutputFile() const = 0;
@@ -74,12 +82,20 @@ public:
     virtual void pause() = 0;
     virtual void stop() = 0;
 
+private:
+    AbstractRecorder::State m_state;
+
+
+protected:
+    void setState(const AbstractRecorder::State &newState);
+
 
 signals:
     void status(const QString &text);
     void finished(const AbstractRecorder::ExitStatus &status);
     void error(const QString &text);
     void outputFileChanged(const QString &newFile);
+    void stateChanged(const AbstractRecorder::State &newState);
 
 
 };

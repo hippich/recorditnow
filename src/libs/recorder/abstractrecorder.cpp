@@ -36,6 +36,7 @@ AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
 {
 
     Q_UNUSED(args);
+    m_state = Idle;
 
 }
 
@@ -47,6 +48,27 @@ AbstractRecorder::~AbstractRecorder()
 
 
 }
+
+
+AbstractRecorder::State AbstractRecorder::state() const
+{
+
+    return m_state;
+
+}
+
+
+void AbstractRecorder::setState(const AbstractRecorder::State &newState)
+{
+
+    if (m_state == newState) {
+        return;
+    }
+    m_state = newState;
+    emit stateChanged(newState);
+
+}
+
 
 
 #include "abstractrecorder.moc"
