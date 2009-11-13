@@ -609,7 +609,21 @@ void MainWindow::setState(const State &newState)
             centralWidget()->setEnabled(false);
             break;
         }
-    case TimerPaused:
+    case TimerPaused: {
+            setTrayOverlay("media-playback-pause");
+            getAction("pause")->setText(i18n("Continue"));
+            getAction("pause")->setIcon(KIcon("media-playback-start"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(true);
+            getAction("stop")->setEnabled(true);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
+            centralWidget()->setEnabled(false);
+            break;
+        }
     case Paused: {
             setTrayOverlay("media-playback-pause");
             getAction("pause")->setText(i18n("Continue"));
