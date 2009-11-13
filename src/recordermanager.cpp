@@ -22,9 +22,11 @@
 #include "recordermanager.h"
 #include "recorditnowpluginmanager.h"
 
+// KDE
+#include <kdebug.h>
+
 // Qt
 #include <QtCore/QDir>
-
 
 RecorderManager::RecorderManager(QObject *parent, RecordItNowPluginManager *manager)
     : QObject(parent), m_manager(manager)
@@ -88,14 +90,35 @@ bool RecorderManager::hasFeature(const QString &feature, const QString &recorder
 QString RecorderManager::getDefaultFile(const QString &name) const
 {
 
-    AbstractRecorder *recorder = static_cast<AbstractRecorder*>(m_manager->loadPlugin(name));
-    if (recorder) {
-        const QString file = recorder->getDefaultOutputFile();
-        m_manager->unloadPlugin(recorder);
-        return file;
-    } else {
-        return QString();
+    foreach (const KPluginInfo &info, m_manager->getRecorderList()) {
+        if (info.name().toLower() == name.toLower()) {
+            QString file = info.property("X-RecordItNow-DefaultFile").toString();
+            if (file.contains("${home}")) {
+                file.replace("${home}", QDir::homePath());
+            }
+            const QRegExp rx("\\$\\{config:.*:.*\\}");
+            rx.indexIn(file);
+            QString var = rx.cap();
+            kDebug() << "var:" << var;
+            if (!var.isEmpty()) {
+                KConfig config("recorditnowrc");
+                KConfigGroup cfg(&config, info.property("X-RecordItNow-ConfigGroup").toString());
+                if (cfg.isValid()) {
+                    QString key = var.remove("${config:").remove('}');
+                    key.remove(QRegExp(":.*"));
+                    QString defaultValue = var.mid(var.indexOf(":")+1);
+                    kDebug() << "key:" << key << "default:" << defaultValue;
+                    QString value = cfg.readEntry(key, defaultValue);
+                    kDebug() << "value:" << value;
+                    file.replace(rx, value);
+                } else {
+                    kWarning() << "invalid config!";
+                }
+            }
+            return file;
+        }
     }
+    return QString();
 
 }
 

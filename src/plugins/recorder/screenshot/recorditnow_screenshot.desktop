@@ -19,4 +19,6 @@ X-RecordItNow-FPS=false
 X-RecordItNow-Sound=false
 X-RecordItNow-Pause=false
 X-RecordItNow-Stop=false
+X-RecordItNow-ConfigGroup=ScreenshotRecorder
+X-RecordItNow-DefaultFile=${home}/screenshot.${config:Format:png}
 

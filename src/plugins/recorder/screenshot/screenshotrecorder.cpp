@@ -34,8 +34,6 @@
 #include <QtCore/QDir>
 
 
-static const char format[][7] = { "PNG", "JPG", "BMP", "PPM", "TIFF", "XBM", "XPM"};
-
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<ScreenshotRecorder>();)
 K_EXPORT_PLUGIN(myFactory("screenshot_recorder"))
@@ -61,15 +59,6 @@ bool ScreenshotRecorder::isVideoRecorder() const
 {
 
     return false;
-
-}
-
-
-QString ScreenshotRecorder::getDefaultOutputFile() const
-{
-
-    Settings::self()->readConfig();
-    return QDir::homePath()+QString("/screenshot.")+QString(format[Settings::format()]).toLower();
 
 }
 
@@ -113,8 +102,8 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
         return;
     }
 
-    kDebug() << "format:" << format[Settings::format()];
-    if (!cheese.save(&outFile, format[Settings::format()])) {
+    kDebug() << "format:" << Settings::format();
+    if (!cheese.save(&outFile, Settings::format().toUpper().toLatin1())) {
         outFile.close();
         outFile.remove();
         emit error(i18n("Cannot save image."));

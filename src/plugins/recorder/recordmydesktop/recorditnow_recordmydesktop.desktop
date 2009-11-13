@@ -19,3 +19,4 @@ X-RecordItNow-FPS=true
 X-RecordItNow-Sound=true
 X-RecordItNow-Pause=true
 X-RecordItNow-Stop=true
+X-RecordItNow-DefaultFile=${home}/desktop_video.ogv

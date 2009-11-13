@@ -59,14 +59,6 @@ RecordMyDesktopRecorder::~RecordMyDesktopRecorder()
 }
 
 
-QString RecordMyDesktopRecorder::getDefaultOutputFile() const
-{
-
-    return QDir::homePath()+"/desktop_video.ogv";
-
-}
-
-
 void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
 {
 

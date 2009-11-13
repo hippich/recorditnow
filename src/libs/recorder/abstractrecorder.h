@@ -68,11 +68,11 @@ public:
     AbstractRecorder::State state() const;
 
     virtual bool isVideoRecorder() const { return true; };
-    virtual QString getDefaultOutputFile() const = 0;
 
     virtual void record(const AbstractRecorder::Data &) = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
+
 
 private:
     AbstractRecorder::State m_state;

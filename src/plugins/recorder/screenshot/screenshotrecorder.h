@@ -36,7 +36,6 @@ public:
     ~ScreenshotRecorder();
 
     bool isVideoRecorder() const;
-    virtual QString getDefaultOutputFile() const;
 
     void record(const AbstractRecorder::Data &d);
     void pause();

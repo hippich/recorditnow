@@ -16,3 +16,9 @@ Type=bool
 
 [PropertyDef::X-RecordItNow-Stop]
 Type=bool
+
+[PropertyDef::X-RecordItNow-DefaultFile]
+Type=QString
+
+[PropertyDef::X-RecordItNow-ConfigGroup]
+Type=QString

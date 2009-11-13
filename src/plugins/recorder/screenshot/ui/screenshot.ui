@@ -27,40 +27,43 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="KComboBox" name="kcfg_format">
+      <widget class="KComboBox" name="formatCombo">
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
        <item>
         <property name="text">
-         <string>PNG</string>
+         <string notr="true">png</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>JPG</string>
+         <string notr="true">jpg</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>BMP</string>
+         <string notr="true">bmp</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>PPM</string>
+         <string notr="true">ppm</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>TIFF</string>
+         <string notr="true">tiff</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>XBM</string>
+         <string notr="true">xbm</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>XPM</string>
+         <string notr="true">xpm</string>
         </property>
        </item>
       </widget>

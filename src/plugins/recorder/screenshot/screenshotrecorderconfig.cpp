@@ -24,7 +24,7 @@
 
 // KDE
 #include <kpluginfactory.h>
-#include <kaboutdata.h>
+#include <kconfiggroup.h>
 
 
 K_PLUGIN_FACTORY(ConfigFactory, registerPlugin<ScreenshotRecorderConfig>();)
@@ -33,8 +33,8 @@ ScreenshotRecorderConfig::ScreenshotRecorderConfig(QWidget *parent, const QVaria
     : KCModule( ConfigFactory::componentData(), parent, args)
 {
 
-    ui_cfg.setupUi(this);
-    addConfig(Settings::self(), this);
+    setupUi(this);
+    connect(formatCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changed()));
 
 }
 
@@ -42,5 +42,31 @@ ScreenshotRecorderConfig::ScreenshotRecorderConfig(QWidget *parent, const QVaria
 ScreenshotRecorderConfig::~ScreenshotRecorderConfig()
 {
 
+
+}
+
+
+void ScreenshotRecorderConfig::load()
+{
+
+    KConfigGroup cfg(Settings::self()->config(), Settings::self()->currentGroup());
+    formatCombo->setCurrentItem(cfg.readEntry("Format", "png"), false);
+
+}
+
+
+void ScreenshotRecorderConfig::save()
+{
+
+    KConfigGroup cfg(Settings::self()->config(), Settings::self()->currentGroup());
+    cfg.writeEntry("Format", formatCombo->currentText());
+
+}
+
+
+void ScreenshotRecorderConfig::defaults()
+{
+
+    formatCombo->setCurrentItem("png", false);
 
 }

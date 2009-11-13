@@ -38,8 +38,6 @@ public:
     RecordMyDesktopRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~RecordMyDesktopRecorder();
 
-    QString getDefaultOutputFile() const;
-
     void record(const AbstractRecorder::Data &d);
     void pause();
     void stop();

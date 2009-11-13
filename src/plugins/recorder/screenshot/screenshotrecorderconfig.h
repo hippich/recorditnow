@@ -28,7 +28,7 @@
 #include <kcmodule.h>
 
 
-class ScreenshotRecorderConfig : public KCModule
+class ScreenshotRecorderConfig : public KCModule, public Ui::Screenshot
 {
 
 
@@ -36,9 +36,9 @@ public:
     ScreenshotRecorderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
     ~ScreenshotRecorderConfig();
 
-
-private:
-     Ui::Screenshot ui_cfg;
+    void load();
+    void save();
+    void defaults();
 
 
 };
