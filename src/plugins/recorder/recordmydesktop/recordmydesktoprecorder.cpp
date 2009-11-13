@@ -361,7 +361,7 @@ void RecordMyDesktopRecorder::recorderFinished(int)
     const KProcess::ExitStatus status = m_recorder->exitStatus();
     clean();
 
-    if ( status == KProcess::CrashExit) {
+    if (status == KProcess::CrashExit) {
         emit finished(Crash);
     } else {
         emit finished(Normal);
