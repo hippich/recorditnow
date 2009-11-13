@@ -28,8 +28,9 @@
 #include <kcmodule.h>
 
 
-class MencoderEncoderConfig : public KCModule
+class MencoderEncoderConfig : public KCModule, public Ui::Mencoder
 {
+    Q_OBJECT
 
 
 public:
@@ -37,11 +38,27 @@ public:
     ~MencoderEncoderConfig();
 
 
+public slots:
+    void defaults();
+    void load();
+    void save();
+
+
 private:
-     Ui::Mencoder ui_cfg;
+    QHash<QString, QString> m_format;
+
+
+private slots:
+    void addClicked();
+    void editClicked();
+    void removeClicked();
+    void formatChanged(const QString &newFormat);
+    void formatListChanged();
+    void editFinished(const QString &oldName, const QString &newName, const QString &command);
+    void addFinished(const QString &format, const QString &command);
 
 
 };
 
 
-#endif // SCREENSHOTRECORDERCONFIG_H
+#endif // MENCODERENCODERCONFIG_H

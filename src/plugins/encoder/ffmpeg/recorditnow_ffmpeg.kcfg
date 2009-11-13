@@ -5,21 +5,11 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name="recorditnowrc"/>         
   <group name="ffmpeg">
-    <entry name="format" type="Int">
-    <label></label>
-    <default>0</default>
-    </entry>
-    <entry name="useFormat" type="Bool">
-    <label></label>
-    <default>true</default>
-    </entry>
-    <entry name="useCommand" type="Bool">
-    <label></label>
-    <default>false</default>
+    <entry name="format" type="String">
+    <default>avi</default>
     </entry>
     <entry name="command" type="String">
-    <label></label>
-    <default></default>
+    <default>-i %1 -sameq -xerror %2.avi</default>
     </entry>
   </group>
 </kcfg>

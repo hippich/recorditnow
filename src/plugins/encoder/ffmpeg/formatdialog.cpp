@@ -17,48 +17,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FFMPEGENCODER_H
-#define FFMPEGENCODER_H
 
 // own
-#include "abstractencoder.h"
-
-// Qt
-#include <QtCore/QVariantList>
+#include "formatdialog.h"
 
 
-class KProcess;
-class FfmpegEncoder : public AbstractEncoder
+
+FormatDialog::FormatDialog(const QString &format, const QString &command, QWidget *parent)
+    : KDialog(parent), m_oldFormat(format)
 {
-    Q_OBJECT
+
+    setAttribute(Qt::WA_DeleteOnClose, true);
+
+    QWidget *widget = new QWidget(this);
+    setupUi(widget);
+    setMainWidget(widget);
+
+    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+
+    if (!m_oldFormat.isEmpty()) {
+        setWindowTitle(i18nc("%1 = format", "Edit %1", m_oldFormat));
+        formatEdit->setText(format);
+        commandEdit->setText(command);
+    } else {
+        setWindowTitle(i18n("Format"));
+    }
+
+}
 
 
-public:
-    FfmpegEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~FfmpegEncoder();
-
-    void encode(const Data &d);
-    void pause();
-    void stop();
+FormatDialog::~FormatDialog()
+{
 
 
-private:
-    KProcess *m_ffmpeg;
-    QString m_outputFile;
-    QString m_tmpFile;
-    bool m_paused;
-    int m_duration;
 
-    bool remove(const QString &file);
-    bool move(const QString &from, const QString &to);
-    
-
-private slots:
-    void newFfmpegOutput();
-    void ffmpegFinished(const int &ret);
+}
 
 
-};
+void FormatDialog::dialogFinished(const int &ret)
+{
 
+    if (ret == KDialog::Accepted) {
+        if (!m_oldFormat.isEmpty()) {
+            emit editFinished(m_oldFormat, formatEdit->text(), commandEdit->text());
+        } else {
+            emit addFinished(formatEdit->text(), commandEdit->text());
+        }
+    }
 
-#endif // FFMPEGENCODER_H
+}
+

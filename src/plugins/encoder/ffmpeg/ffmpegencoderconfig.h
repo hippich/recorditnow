@@ -28,17 +28,34 @@
 #include <kcmodule.h>
 
 
-class FfmpegEncoderConfig : public KCModule
+class KDialog;
+class FfmpegEncoderConfig : public KCModule, public Ui::Ffmpeg
 {
+    Q_OBJECT
 
 
 public:
     FfmpegEncoderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
     ~FfmpegEncoderConfig();
 
+public slots:
+    void defaults();
+    void load();
+    void save();
+
 
 private:
-     Ui::Ffmpeg ui_cfg;
+    QHash<QString, QString> m_format;
+
+
+private slots:
+    void addClicked();
+    void editClicked();
+    void removeClicked();
+    void formatChanged(const QString &newFormat);
+    void formatListChanged();
+    void editFinished(const QString &oldName, const QString &newName, const QString &command);
+    void addFinished(const QString &format, const QString &command);
 
 
 };

@@ -17,48 +17,40 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FFMPEGENCODER_H
-#define FFMPEGENCODER_H
+#ifndef FORMATDIALOG_H
+#define FORMATDIALOG_H
 
 // own
-#include "abstractencoder.h"
+#include "ui_addformat.h"
 
-// Qt
-#include <QtCore/QVariantList>
+// KDE
+#include <kdialog.h>
 
 
-class KProcess;
-class FfmpegEncoder : public AbstractEncoder
+class FormatDialog : public KDialog, public Ui::AddFormat
 {
     Q_OBJECT
 
 
 public:
-    FfmpegEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~FfmpegEncoder();
-
-    void encode(const Data &d);
-    void pause();
-    void stop();
+    FormatDialog(const QString &format, const QString &command, QWidget *parent);
+    ~FormatDialog();
 
 
 private:
-    KProcess *m_ffmpeg;
-    QString m_outputFile;
-    QString m_tmpFile;
-    bool m_paused;
-    int m_duration;
+    QString m_oldFormat;
 
-    bool remove(const QString &file);
-    bool move(const QString &from, const QString &to);
-    
 
 private slots:
-    void newFfmpegOutput();
-    void ffmpegFinished(const int &ret);
+    void dialogFinished(const int &ret);
+
+
+signals:
+    void editFinished(const QString &oldName, const QString &newName, const QString &command);
+    void addFinished(const QString &format, const QString &command);
 
 
 };
 
 
-#endif // FFMPEGENCODER_H
+#endif // FORMATDIALOG_H

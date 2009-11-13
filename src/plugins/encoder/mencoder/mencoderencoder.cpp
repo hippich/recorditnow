@@ -47,17 +47,6 @@ MencoderEncoder::MencoderEncoder(QObject *parent, const QVariantList &args)
 
     m_mencoder = 0;
 
-    m_args["flv"] = QStringList() << "-of" << "lavf" << "-oac" << "mp3lame" << "-ovc" << "lavc" <<
-                    "-lavcopts" << "vcodec=flv";
-    m_args["avi"] = QStringList() << "-ovc" << "lavc" << "-oac" << "mp3lame" << "-lavcopts" <<
-                    "vcodec=mpeg4:vqscale=2:vhq:v4mv:trell:autoaspect";
-
-    m_args["wmv"] = QStringList() << "-ovc" << "lavc" << "-lavcopts" << "vcodec=wmv2" << "-oac" <<
-                    "lavc" << "-lavcopts" << "acodec=wmav2:vqscale=2:vhq" << "-of" << "lavf" << "-lavfopts" <<
-                    "format=wmv";
-    m_args["mkv"] = QStringList() << "-ovc" <<  "lavc" << "-oac" << "lavc" << "-of" << "lavf" <<
-                    "-lavfopts" << "format=mkv";
-
 }
 
 
@@ -96,15 +85,24 @@ void MencoderEncoder::encode(const Data &d)
     }
 
 
-    // fix format
+    // remove format
     if (m_outputFile.length() > 4 && m_outputFile[m_outputFile.length()-4] == '.') {
         m_outputFile.remove(m_outputFile.length()-4, 4);
     }
-    const QString format = formats[Settings::format()];
-    m_outputFile.append('.'+format);
 
 
-    // set output file
+    // set output file + args
+    QString command = Settings::command();
+    if (!command.contains("%1") || !command.contains("%1")) {
+        emit error(i18n("Input/output file is missing."));
+        return;
+    }
+
+    QString format = command.mid(command.indexOf("%2"));
+    format.remove("%2");
+    format.remove(QRegExp(" .*"));
+
+    m_outputFile += format;
     if (!d.overwrite) {
         m_outputFile = unique(m_outputFile);
     } else {
@@ -115,27 +113,14 @@ void MencoderEncoder::encode(const Data &d)
             }
         }
     }
-    emit outputFileChanged(m_outputFile); // update gui
 
+    emit outputFileChanged(m_outputFile); // update gui
+    m_outputFile.remove(format);
 
     // args
-    QStringList args;
-    if (Settings::useFormat()) {
-        args << "-idx";
-        args << m_tmpFile;
-
-        args << m_args[format];
-
-        args << "-o";
-        args << m_outputFile;
-    } else {
-        QString cmd = Settings::command();
-        cmd = cmd.arg(m_tmpFile).arg(m_outputFile);
-        args = cmd.split(' ');
-        kDebug() << "cmd:" << cmd;
-        kDebug() << "args:" << args;
-    }
-
+    command = command.arg(m_tmpFile).arg(m_outputFile);
+    const QStringList args = command.split(' ');
+    kDebug() << "command:" << command;
 
     // exe
     const QString exe = KGlobal::dirs()->findExe("mencoder");

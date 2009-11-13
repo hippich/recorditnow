@@ -4,22 +4,12 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name="recorditnowrc"/>         
-  <group name="Mencoder">
-    <entry name="format" type="Int">
-    <label></label>
-    <default>0</default>
-    </entry>
-    <entry name="useFormat" type="Bool">
-    <label></label>
-    <default>true</default>
-    </entry>
-    <entry name="useCommand" type="Bool">
-    <label></label>
-    <default>false</default>
+  <group name="mencoder">
+    <entry name="format" type="String">
+    <default>flv</default>
     </entry>
     <entry name="command" type="String">
-    <label></label>
-    <default></default>
+    <default>-idx %1 -of lavf -oac mp3lame -ovc lavc -lavcopts vcodec=flv -o %2.flv</default>
     </entry>
   </group>
 </kcfg>

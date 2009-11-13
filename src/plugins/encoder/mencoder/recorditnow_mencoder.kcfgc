@@ -2,4 +2,4 @@
 File=recorditnow_mencoder.kcfg
 ClassName=Settings
 Singleton=true
-Mutators=
+Mutators=command, format

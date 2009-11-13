@@ -49,12 +49,6 @@ FfmpegEncoder::FfmpegEncoder(QObject *parent, const QVariantList &args)
     m_duration = -1;
     m_ffmpeg = 0;
 
-    m_args["flv"] = QStringList() << "-sameq" << "-xerror";
-    m_args["avi"] = QStringList() << "-sameq" << "-xerror";
-    m_args["wmv"] = QStringList() << "-sameq" << "-xerror";
-    m_args["mpeg"] = QStringList() << "-sameq" << "-xerror";
-    m_args["mkv"] = QStringList() << "-sameq" << "-xerror";
-
 }
 
 
@@ -93,15 +87,24 @@ void FfmpegEncoder::encode(const Data &d)
     }
 
 
-    // fix format
+    // remove format
     if (m_outputFile.length() > 4 && m_outputFile[m_outputFile.length()-4] == '.') {
         m_outputFile.remove(m_outputFile.length()-4, 4);
     }
-    const QString format = formats[Settings::format()];
-    m_outputFile.append('.'+format);
 
 
-    // set output file
+    // set output file + args
+    QString command = Settings::command();
+    if (!command.contains("%1") || !command.contains("%1")) {
+        emit error(i18n("Input/output file is missing."));
+        return;
+    }
+
+    QString format = command.mid(command.indexOf("%2"));
+    format.remove("%2");
+    format.remove(QRegExp(" .*"));
+
+    m_outputFile += format;
     if (!d.overwrite) {
         m_outputFile = unique(m_outputFile);
     } else {
@@ -112,25 +115,14 @@ void FfmpegEncoder::encode(const Data &d)
             }
         }
     }
-    emit outputFileChanged(m_outputFile); // update gui
 
+    emit outputFileChanged(m_outputFile); // update gui
+    m_outputFile.remove(format);
 
     // args
-    QStringList args;
-    if (Settings::useFormat()) {
-        args << "-i";
-        args << m_tmpFile;
+    command = command.arg(m_tmpFile).arg(m_outputFile);
+    const QStringList args = command.split(' ');
 
-        args << m_args[format];
-
-        args << m_outputFile;
-    } else {
-        QString cmd = Settings::command();
-        cmd = cmd.arg(m_tmpFile).arg(m_outputFile);
-        args = cmd.split(' ');
-        kDebug() << "cmd:" << cmd;
-        kDebug() << "args:" << args;
-    }
 
     // exe
     const QString exe = KGlobal::dirs()->findExe("ffmpeg");
