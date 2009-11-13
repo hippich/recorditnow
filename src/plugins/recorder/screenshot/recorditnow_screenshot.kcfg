@@ -9,5 +9,9 @@
 	    <label></label>
 	    <default>png</default>
     </entry>
+    <entry name="quality" type="Int">
+            <label></label>
+            <default>-1</default>
+    </entry>
   </group>
 </kcfg>

@@ -102,8 +102,8 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
         return;
     }
 
-    kDebug() << "format:" << Settings::format();
-    if (!cheese.save(&outFile, Settings::format().toUpper().toLatin1())) {
+    kDebug() << "format:" << Settings::format() << "quality:" << Settings::quality();
+    if (!cheese.save(&outFile, Settings::format().toUpper().toLatin1(), Settings::quality())) {
         outFile.close();
         outFile.remove();
         emit error(i18n("Cannot save image."));

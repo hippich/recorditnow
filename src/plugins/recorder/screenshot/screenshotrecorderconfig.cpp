@@ -36,6 +36,8 @@ ScreenshotRecorderConfig::ScreenshotRecorderConfig(QWidget *parent, const QVaria
     setupUi(this);
     connect(formatCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changed()));
 
+    addConfig(Settings::self(), this);
+
 }
 
 
@@ -51,6 +53,7 @@ void ScreenshotRecorderConfig::load()
 
     KConfigGroup cfg(Settings::self()->config(), Settings::self()->currentGroup());
     formatCombo->setCurrentItem(cfg.readEntry("Format", "png"), false);
+    KCModule::load();
 
 }
 
@@ -60,6 +63,7 @@ void ScreenshotRecorderConfig::save()
 
     KConfigGroup cfg(Settings::self()->config(), Settings::self()->currentGroup());
     cfg.writeEntry("Format", formatCombo->currentText());
+    KCModule::save();
 
 }
 
@@ -68,5 +72,6 @@ void ScreenshotRecorderConfig::defaults()
 {
 
     formatCombo->setCurrentItem("png", false);
+    KCModule::defaults();
 
 }
