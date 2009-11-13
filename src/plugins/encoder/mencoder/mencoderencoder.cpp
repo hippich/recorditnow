@@ -46,6 +46,7 @@ MencoderEncoder::MencoderEncoder(QObject *parent, const QVariantList &args)
 {
 
     m_mencoder = 0;
+    m_stopped = false;
 
 }
 
@@ -169,6 +170,7 @@ void MencoderEncoder::stop()
 {
 
     if (m_mencoder) {
+        m_stopped = true;
         kill(m_mencoder->pid(), SIGINT);
         m_paused = false;
     }
@@ -240,7 +242,7 @@ void MencoderEncoder::mencoderFinished(const int &ret)
     m_mencoder->deleteLater();
     m_mencoder = 0;
 
-    emit finished(ret == 0 ? Normal: Crash);
+    emit finished(ret == 0 || m_stopped ? Normal: Crash);
 
 }
 

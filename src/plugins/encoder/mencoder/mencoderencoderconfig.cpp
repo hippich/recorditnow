@@ -62,12 +62,12 @@ void MencoderEncoderConfig::defaults()
 
     m_format.clear();
 
-    m_format["flv"] = "-idx %1 -of lavf -oac mp3lame -ovc lavc -lavcopts vcodec=flv -o %2.flv";
-    m_format["avi"] = "-idx %1 -ovc lavc -oac mp3lame -lavcopts "\
-                      "vcodec=mpeg4:vqscale=2:vhq:v4mv:trell:autoaspect -o %2.avi";
-    m_format["wmv"] = "-idx %1 -ovc lavc -lavcopts vcodec=wmv2 -oac lavc -lavcopts "\
-                      "acodec=wmav2:vqscale=2:vhq -of lavf -lavfopts format=wmv -o %2.wmv";
-    m_format["mkv"] = "-idx %1 -ovc lavc -oac lavc -of lavf -lavfopts format=mkv -o %2.mkv";
+    m_format[i18n("flv")] = "-idx %1 -of lavf -oac mp3lame -ovc lavc -lavcopts vcodec=flv -o %2.flv";
+    m_format[i18n("avi")] = "-idx %1 -ovc lavc -oac mp3lame -lavcopts "\
+                            "vcodec=mpeg4:vqscale=2:vhq:v4mv:trell:autoaspect -o %2.avi";
+    m_format[i18n("wmv")] = "-idx %1 -ovc lavc -lavcopts vcodec=wmv2 -oac lavc -lavcopts "\
+                            "acodec=wmav2:vqscale=2:vhq -of lavf -lavfopts format=wmv -o %2.wmv";
+    m_format[i18n("mkv")] = "-idx %1 -ovc lavc -oac lavc -of lavf -lavfopts format=mkv -o %2.mkv";
 
     formatListChanged();
 
@@ -163,6 +163,7 @@ void MencoderEncoderConfig::formatChanged(const QString &newFormat)
 void MencoderEncoderConfig::formatListChanged()
 {
 
+    const QString format = formatCombo->currentText();
     formatCombo->clear();
 
     if (m_format.isEmpty()) {
@@ -170,6 +171,8 @@ void MencoderEncoderConfig::formatListChanged()
     } else {
         formatCombo->addItems(m_format.keys());
     }
+
+    formatCombo->setCurrentItem(format, false);
 
 }
 

@@ -64,11 +64,11 @@ void FfmpegEncoderConfig::defaults()
 
     m_format.clear();
 
-    m_format["flv"] = "-i %1 -sameq -xerror %2.flv";
-    m_format["avi"] = "-i %1 -sameq -xerror %2.avi";
-    m_format["wmv"] = "-i %1 -sameq -xerror %2.wmv";
-    m_format["mpeg"] = "-i %1 -sameq -xerror %2.mpeg";
-    m_format["mkv"] = "-i %1 -sameq -xerror %2.mkv";
+    m_format[i18n("flv")] = "-i %1 -sameq -xerror %2.flv";
+    m_format[i18n("avi")] = "-i %1 -sameq -xerror %2.avi";
+    m_format[i18n("wmv")] = "-i %1 -sameq -xerror %2.wmv";
+    m_format[i18n("mpeg")] = "-i %1 -sameq -xerror %2.mpeg";
+    m_format[i18n("mkv")] = "-i %1 -sameq -xerror %2.mkv";
 
     formatListChanged();
 
@@ -164,6 +164,7 @@ void FfmpegEncoderConfig::formatChanged(const QString &newFormat)
 void FfmpegEncoderConfig::formatListChanged()
 {
 
+    const QString format = formatCombo->currentText();
     formatCombo->clear();
 
     if (m_format.isEmpty()) {
@@ -171,6 +172,8 @@ void FfmpegEncoderConfig::formatListChanged()
     } else {
         formatCombo->addItems(m_format.keys());
     }
+
+    formatCombo->setCurrentItem(format, false);
 
 }
 

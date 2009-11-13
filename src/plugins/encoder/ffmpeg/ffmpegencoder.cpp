@@ -48,6 +48,7 @@ FfmpegEncoder::FfmpegEncoder(QObject *parent, const QVariantList &args)
 
     m_duration = -1;
     m_ffmpeg = 0;
+    m_stopped = false;
 
 }
 
@@ -170,6 +171,7 @@ void FfmpegEncoder::stop()
 {
 
     if (m_ffmpeg) {
+        m_stopped = true;
         kill(m_ffmpeg->pid(), SIGINT);
         m_paused = false;
     }
@@ -256,7 +258,7 @@ void FfmpegEncoder::ffmpegFinished(const int &ret)
     m_ffmpeg->deleteLater();
     m_ffmpeg = 0;
 
-    emit finished(ret == 0 ? Normal: Crash);
+    emit finished(ret == 0 || m_stopped ? Normal: Crash);
 
 }
 

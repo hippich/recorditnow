@@ -47,6 +47,7 @@ private:
     QString m_outputFile;
     QString m_tmpFile;
     bool m_paused;
+    bool m_stopped;
 
     bool remove(const QString &file);
     bool move(const QString &from, const QString &to);
