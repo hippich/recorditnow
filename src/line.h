@@ -22,11 +22,11 @@
 
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QWidget>
 
 
 
-class Line : public QFrame
+class Line : public QWidget
 {
     Q_OBJECT
 

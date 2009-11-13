@@ -33,20 +33,19 @@
 
 
 Line::Line(const Line::Side &side)
-    : QFrame(0, Qt::FramelessWindowHint|Qt::X11BypassWindowManagerHint),
+    : QWidget(0, Qt::FramelessWindowHint|Qt::X11BypassWindowManagerHint),
     m_side(side)
 {
 
     // init size
     switch (m_side) {
     case Left:
-    case Right: resize(6, 101); break;
+    case Right: resize(7, 101); break;
     case Top:
-    case Bottom: resize(101, 6); break;
+    case Bottom: resize(101, 7); break;
     }
 
     setMouseTracking(true);
-    setFrameShadow(QFrame::Sunken);
 
     hide();
 
@@ -112,37 +111,11 @@ void Line::mouseMoveEvent(QMouseEvent *event)
             setCursor(Qt::SizeHorCursor);
             break;
         }
-    case Top: {/*
-            r.setWidth(size().height());
-            r.moveBottomRight(rect().bottomRight());
-            if (r.contains(event->pos())) {
-                setCursor(Qt::SizeBDiagCursor);
-                break;
-            }
-            r.moveBottomLeft(rect().bottomLeft());
-            if (r.contains(event->pos())) {
-                setCursor(Qt::SizeFDiagCursor);
-                break;
-            }
-            if (event->buttons() == Qt::LeftButton) {
-                break;
-            }*/
+    case Top: {
             setCursor(Qt::SizeVerCursor);
             break;
         }
-    case Bottom: {/*
-            r.setWidth(size().height());
-            r.moveBottomRight(rect().bottomRight());
-            if (r.contains(event->pos())) {
-                setCursor(Qt::SizeFDiagCursor);
-                break;
-            }
-            r.moveBottomLeft(rect().bottomLeft());
-            if (r.contains(event->pos())) {
-                setCursor(Qt::SizeBDiagCursor);
-                break;
-            }
-            */
+    case Bottom: {
             setCursor(Qt::SizeVerCursor);
             break;
         }
@@ -207,26 +180,14 @@ void Line::mouseMoveEvent(QMouseEvent *event)
             emit geometryChanged(m_side, geo);
             break;
         }
-    case Bottom: { // TODO
+    case Bottom: {
             if (dia) {
-                kDebug() << "diagonal move..";
-                if (cursor().shape() == Qt::SizeFDiagCursor) { // right
-                    kDebug() << "bottomRight" << event->globalX()-geo.bottomRight().x();
-                    geo.setWidth(geo.width()-(event->globalX()-geo.bottomRight().x()));
-                   // geo.setBottom(event->globalY());
-                    //geo.setBottomRight(event->globalPos());
-                } else { // left
-                    kDebug() << "bottomLeft...";
-                    geo.moveTo(event->globalPos());
-                }
+                geo.moveTo(event->globalPos());
             } else { // top/bottom
                 geo.setTop(event->globalY());
             }
-            //geo.setTop(geometry().top());
-            //geo.moveTop(geo.bottom()+(geometry().bottom()-geometry().top()));
             geo.setHeight(height());
 
-            //setGeometry(geo);
             emit geometryChanged(m_side, geo);
             break;
         }
