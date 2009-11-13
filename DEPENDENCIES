@@ -1,0 +1,8 @@
+
+recordmydesktop (tested with recordmydesktop-0.3.8.1)
+KDE-4.3 or KDE-4.4
+
+Optional:
+    ffmepg for ffmpeg encoder plugin
+    mencoder (part of mplayer) for mencoder encoder plugin
+    >=libgdata-5.0.0 for youtube plugin
