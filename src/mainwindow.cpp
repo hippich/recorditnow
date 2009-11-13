@@ -123,6 +123,7 @@ MainWindow::MainWindow(QWidget *parent)
     soundCheck->setChecked(Settings::soundEnabled());
     fpsSpinBox->setValue(Settings::currentFps());
     timerLcd->display(Settings::currentTime());
+    m_timer->setProperty("Time", timerLcd->value());
 
 }
 
@@ -851,6 +852,10 @@ void MainWindow::lcdUp()
     }
     timerLcd->display(timerLcd->value()+1);
 
+    if (sender() == timeUpButton) {
+        m_timer->setProperty("Time", timerLcd->value());
+    }
+
 }
 
 
@@ -861,6 +866,10 @@ void MainWindow::lcdDown()
         return;
     }
     timerLcd->display(timerLcd->value()-1);
+
+    if (sender() == timeDownButton) {
+        m_timer->setProperty("Time", timerLcd->value());
+    }
 
 }
 
