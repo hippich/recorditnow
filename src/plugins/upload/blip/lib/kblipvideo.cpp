@@ -188,6 +188,7 @@ void KBlipVideo::send(const KBlipAccount *account)
 
     KIO::Job *job = KIO::http_post(url, data);
     job->addMetaData(meta);
+    job->setAutoDelete(true);
 
     connect(job, SIGNAL(data(KIO::Job*, QByteArray)), SLOT(jobData(KIO::Job*, QByteArray)));
     connect(job, SIGNAL(result(KJob*)), SLOT(jobResult(KJob*)));

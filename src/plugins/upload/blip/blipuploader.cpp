@@ -89,7 +89,7 @@ BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
     m_category[KBlipVideo::PersonalOrAutoBiographical] = i18n("Personal or Auto-biographical");
     m_category[KBlipVideo::Politics] = i18n("Politics");
     m_category[KBlipVideo::Religion] = i18n("Religion");
-    m_category[KBlipVideo::SchoolandEducation] = i18n("School and Education");
+    m_category[KBlipVideo::SchoolAndEducation] = i18n("School and Education");
     m_category[KBlipVideo::Science] = i18n("Science");
     m_category[KBlipVideo::Sports] = i18n("Sports");
     m_category[KBlipVideo::Technology] = i18n("Technology");
@@ -97,7 +97,7 @@ BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
     m_category[KBlipVideo::TheMainstreamMedia] = i18n("The Mainstream Media");
     m_category[KBlipVideo::Travel] = i18n("Travel");
     m_category[KBlipVideo::Videoblogging] = i18n("Videoblogging");
-    m_category[KBlipVideo::WebDevelopmentandSites] = i18n("Web Development and Sites");
+    m_category[KBlipVideo::WebDevelopmentAndSites] = i18n("Web Development and Sites");
 
 
     connect(this, SIGNAL(gotPassword(QString,QString)), this,
@@ -177,6 +177,9 @@ void BlipUploader::show(const QString &file, QWidget *parent)
         categoryCombo->addItem(cIt.value());
     }
 
+    Settings::self()->readConfig();
+    accountsCombo->setCurrentItem(Settings::currentAccount(), false);
+
     setState(Idle);
     m_dialog->show();
 
@@ -187,6 +190,9 @@ void BlipUploader::upload()
 {
 
     kDebug() << "upload";
+
+    Settings::self()->setCurrentAccount(accountsCombo->currentText());
+    Settings::self()->writeConfig();
 
     KBlipAccount account;
     account.setUsername(accountsCombo->currentText());

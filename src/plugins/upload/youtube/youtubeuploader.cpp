@@ -142,10 +142,6 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
 
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
-    titleEdit->setText(Settings::title());
-    descriptionEdit->setText(Settings::description());
-    tagsEdit->setText(Settings::tags());
-    categoryCombo->setCurrentIndex(Settings::category());
 
     setState(Idle);
     m_dialog->show();
@@ -158,10 +154,6 @@ void YouTubeUploader::upload()
 
     kDebug() << "upload";
 
-    Settings::self()->setTitle(titleEdit->text());
-    Settings::self()->setDescription(descriptionEdit->toPlainText());
-    Settings::self()->setTags(tagsEdit->text());
-    Settings::self()->setCategory(categoryCombo->currentIndex());
     Settings::self()->setCurrentAccount(accountsCombo->currentText());
     Settings::self()->writeConfig();
 

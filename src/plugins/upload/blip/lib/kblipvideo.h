@@ -79,7 +79,7 @@ public:
         PersonalOrAutoBiographical = 8,
         Politics = 3,
         Religion = 23,
-        SchoolandEducation = 16,
+        SchoolAndEducation = 16,
         Science = 14,
         Sports = 6,
         Technology = 7,
@@ -87,7 +87,7 @@ public:
         TheMainstreamMedia = 18,
         Travel = 24,
         Videoblogging = 9,
-        WebDevelopmentandSites = 17
+        WebDevelopmentAndSites = 17
     };
 
     KBlipVideo(QObject *parent = 0);
