@@ -321,48 +321,6 @@ void MainWindow::recordWindow()
 }
 
 
-static Window findRealWindow(Window w, int depth = 0)
-{
-
-    if (depth > 5) {
-        return None;
-    }
-
-    static Atom wm_state = XInternAtom(QX11Info::display(), "WM_STATE", False);
-    Atom type;
-    int format;
-    unsigned long nitems, after;
-    unsigned char* prop;
-
-    if (XGetWindowProperty(QX11Info::display(), w, wm_state, 0, 0, False, AnyPropertyType,
-                           &type, &format, &nitems, &after, &prop ) == Success) {
-        if (prop != NULL) {
-            XFree( prop );
-        }
-        if (type != None) {
-            return w;
-        }
-    }
-
-    Window root, parent;
-    Window* children;
-    unsigned int nchildren;
-    Window ret = None;
-
-    if (XQueryTree(QX11Info::display(), w, &root, &parent, &children, &nchildren ) != 0) {
-        for( unsigned int i = 0; i < nchildren && ret == None; ++i) {
-            ret = findRealWindow(children[i], depth+1);
-        }
-        if (children != NULL) {
-            XFree(children);
-        }
-    }
-
-    return ret;
-
-}
-
-
 void MainWindow::recordCurrentWindow()
 {
 
