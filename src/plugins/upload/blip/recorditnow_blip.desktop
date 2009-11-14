@@ -1,7 +1,7 @@
 [Desktop Entry] 
 Encoding=UTF-8
-Name=Blip.tv
-Comment=Upload your videos to Blip.tv
+Name=blip.tv
+Comment=Upload your videos to blip.tv
 Icon=recorditnow_blip
 Type=Service                                                                               
 X-KDE-ServiceTypes=RecordItNowUploader 
