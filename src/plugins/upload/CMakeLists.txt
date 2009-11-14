@@ -10,3 +10,5 @@ macro_log_feature(LIBGDATA_FOUND "libgdata"
 if(LIBGDATA_FOUND)
     add_subdirectory(youtube)
 endif(LIBGDATA_FOUND)
+add_subdirectory(blip)
+

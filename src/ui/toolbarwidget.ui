@@ -75,7 +75,7 @@
          <item>
           <widget class="QToolButton" name="timeUpButton">
            <property name="text">
-            <string notr="true">...</string>
+            <string notr="true"/>
            </property>
            <property name="autoRaise">
             <bool>true</bool>
@@ -85,7 +85,7 @@
          <item>
           <widget class="QToolButton" name="timeDownButton">
            <property name="text">
-            <string notr="true">...</string>
+            <string notr="true"/>
            </property>
            <property name="autoRaise">
             <bool>true</bool>
