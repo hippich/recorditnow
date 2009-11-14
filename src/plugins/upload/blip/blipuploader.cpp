@@ -128,7 +128,7 @@ void BlipUploader::show(const QString &file, QWidget *parent)
         return;
     }
 
-    setId(parent->winId());
+    setId(parent->winId(), "blip");
 
     m_dialog = new QWidget(parent, Qt::Dialog);
     m_dialog->setAttribute(Qt::WA_DeleteOnClose, true);

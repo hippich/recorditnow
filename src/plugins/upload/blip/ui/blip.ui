@@ -31,7 +31,7 @@
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;font size=&quot;5&quot;&gt;Blip.tv&lt;/font&gt;&lt;br /&gt;&lt;b&gt;The next generation television network!&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;font size=&quot;5&quot;&gt;blip.tv&lt;/font&gt;&lt;br /&gt;&lt;b&gt;The next generation television network!&lt;/html&gt;</string>
        </property>
        <property name="comment">
         <string notr="true"/>

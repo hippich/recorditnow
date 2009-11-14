@@ -73,7 +73,7 @@ void AbstractUploader::writeWallet(bool success)
 {
 
     kDebug() << "success:" << success;
-    if (success && enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube"))) {
+    if (success && enterWalletFolder("RecordItNow-"+m_folder)) {
         QHashIterator<QString, QString> it(m_setPasswords);
         while (it.hasNext()) {
             it.next();
@@ -100,7 +100,7 @@ void AbstractUploader::readWallet(bool success)
 {
 
     kDebug() << "success:" << success;
-    if (success && enterWalletFolder(QString::fromLatin1("RecordItNow-Youtube"))) {
+    if (success && enterWalletFolder("RecordItNow-"+m_folder)) {
         foreach (const QString &username, m_getPasswords) {
             QString password;
             if (m_wallet->readPassword(username, password) == 0) {
@@ -157,9 +157,10 @@ bool AbstractUploader::enterWalletFolder(const QString &folder)
 }
 
 
-void AbstractUploader::setId(const WId &i)
+void AbstractUploader::setId(const WId &i, const QString &folder)
 {
 
     m_wId = i;
+    m_folder = folder;
 
 }

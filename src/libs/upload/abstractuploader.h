@@ -59,6 +59,7 @@ private:
     KWallet::Wallet *m_wallet;
     QStringList m_getPasswords;
     QHash<QString, QString> m_setPasswords;
+    QString m_folder;
 
     void getWallet();
     bool enterWalletFolder(const QString &folder);
@@ -70,7 +71,7 @@ private slots:
 
 
 protected:
-    void setId(const WId &i);
+    void setId(const WId &i, const QString &folder);
 
 
 signals:
