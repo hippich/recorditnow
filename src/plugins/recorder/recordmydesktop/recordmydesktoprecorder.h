@@ -28,6 +28,7 @@
 #include <QtCore/QVariantList>
 #include <QtCore/QPointer>
 
+
 class KProcess;
 class RecordMyDesktopRecorder : public AbstractRecorder
 {
@@ -62,7 +63,7 @@ private:
 
 private slots:
     void newRecorderOutput();
-    void recorderFinished(int);
+    void recorderFinished(const int & ret);
 
 
 };

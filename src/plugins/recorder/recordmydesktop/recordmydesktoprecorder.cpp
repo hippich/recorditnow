@@ -269,6 +269,8 @@ void RecordMyDesktopRecorder::newRecorderOutput()
             emit error(i18n("recordMyDesktop is not compiled with Jack support."));
         } else if (line.startsWith("Error while opening/configuring soundcard")) {
             emit error(i18n("Error while opening/configuring soundcard."));
+        } else if (line.startsWith("Window size specification out of bounds!")) {
+            emit error(i18n("Window size specification out of bounds!"));
         }
     }
 
@@ -320,8 +322,17 @@ void RecordMyDesktopRecorder::clean()
 }
 
 
-void RecordMyDesktopRecorder::recorderFinished(int)
+void RecordMyDesktopRecorder::recorderFinished(const int &ret)
 {
+
+    const KProcess::ExitStatus status = m_recorder->exitStatus();
+    kDebug() << "status:" << status << "ret:" << ret;
+
+    if (status == KProcess::CrashExit || ret != 0) {
+        clean();
+        emit finished(Crash);
+        return;
+    }
 
     QFile outputFile(m_data.outputFile);
     if (outputFile.exists()) {
@@ -341,7 +352,6 @@ void RecordMyDesktopRecorder::recorderFinished(int)
         return;
     }
 
-    const KProcess::ExitStatus status = m_recorder->exitStatus();
     clean();
 
     if (status == KProcess::CrashExit) {

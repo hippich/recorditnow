@@ -177,6 +177,7 @@ void RecorderManager::clean()
 {
 
     if (m_recorder) {
+        m_recorder->disconnect();
         m_manager->unloadPlugin(m_recorder);
         m_recorder = 0;
     }
@@ -187,8 +188,8 @@ void RecorderManager::clean()
 void RecorderManager::recorderError(const QString &error)
 {
 
-    emit finished(error);
     clean();
+    emit finished(error);
 
 }
 
