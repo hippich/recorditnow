@@ -104,9 +104,6 @@
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::ExpandingFieldsGrow</enum>
       </property>
-      <item row="0" column="0" colspan="2">
-       <widget class="KUrlRequester" name="kcfg_brandingFile"/>
-      </item>
       <item row="1" column="0" colspan="2">
        <widget class="KDoubleNumInput" name="kcfg_brandingOpacity">
         <property name="label">
@@ -174,6 +171,16 @@
           <string>Bottom center</string>
          </property>
         </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="KUrlRequester" name="kcfg_brandingFile"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Image</string>
+        </property>
        </widget>
       </item>
      </layout>
