@@ -37,7 +37,7 @@
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<BlipUploader>();)
-K_EXPORT_PLUGIN(myFactory("youtube_blip"))
+K_EXPORT_PLUGIN(myFactory("recorditnow_blip"))
 BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
     : AbstractUploader(parent, args)
 {
@@ -45,29 +45,29 @@ BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
     m_video = 0;
 
     m_license[KBlipVideo::NoLicense] = i18n("No License");
-    m_license[KBlipVideo::CreativeCommonsAttribution_2_0] = i18n("Creative Commons Attribution 2.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] = i18n(
-            "Creative Commons Attribution-NoDerivs 2.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_2_0] = i18n(
-            "Creative Commons Attribution-NonCommercial-NoDerivs 2.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_2_0] = i18n(
-            "Creative Commons Attribution-NonCommercial 2.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_2_0] = i18n(
-            "Creative Commons Attribution-NonCommercial-ShareAlike 2.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_ShareAlike_2_0] = i18n(
-            "Creative Commons Attribution-ShareAlike 2.0");
-    m_license[KBlipVideo::PublicDomain] = i18n("Public Domain");
-    m_license[KBlipVideo::CreativeCommonsAttribution_3_0] = i18n("Creative Commons Attribution 3.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NoDerivs_3_0] = i18n(
-            "Creative Commons Attribution-NoDerivs 3.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_3_0] = i18n(
-            "Creative Commons Attribution-NonCommercial-NoDerivs 3.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_3_0] = i18n(
-            "Creative Commons Attribution-NonCommercial 3.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_3_0] = i18n(
-            "Creative Commons Attribution-NonCommercial-ShareAlike 3.0");
-    m_license[KBlipVideo::CreativeCommonsAttribution_ShareAlike_3_0] = i18n(
-            "Creative Commons Attribution-ShareAlike 3.0");
+    m_license[KBlipVideo::CreativeCommonsAttribution_2_0] = "Creative Commons Attribution 2.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] =
+            "Creative Commons Attribution-NoDerivs 2.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_2_0] =
+            "Creative Commons Attribution-NonCommercial-NoDerivs 2.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_2_0] =
+            "Creative Commons Attribution-NonCommercial 2.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_2_0] =
+            "Creative Commons Attribution-NonCommercial-ShareAlike 2.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_ShareAlike_2_0] =
+            "Creative Commons Attribution-ShareAlike 2.0";
+    m_license[KBlipVideo::PublicDomain] = "Public Domain";
+    m_license[KBlipVideo::CreativeCommonsAttribution_3_0] = "Creative Commons Attribution 3.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NoDerivs_3_0] =
+            "Creative Commons Attribution-NoDerivs 3.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_3_0] =
+            "Creative Commons Attribution-NonCommercial-NoDerivs 3.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_3_0] =
+            "Creative Commons Attribution-NonCommercial 3.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_3_0] =
+            "Creative Commons Attribution-NonCommercial-ShareAlike 3.0";
+    m_license[KBlipVideo::CreativeCommonsAttribution_ShareAlike_3_0] =
+            "Creative Commons Attribution-ShareAlike 3.0";
 
 
     m_category[KBlipVideo::Art] = i18n("Art");
