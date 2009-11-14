@@ -74,7 +74,6 @@ void ConfigDialog::init()
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
-    setMinimumHeight(450); // workaround for kpluginselector hang/bug
 
 }
 
