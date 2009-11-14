@@ -417,7 +417,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     d->sound = soundCheck->isChecked();
     d->outputFile = outputRequester->text();
     d->overwrite = Settings::overwrite();
-    d->workDir = Settings::workDir().pathOrUrl();
+    d->workDir = Settings::workDir().path();
 
     pluginStatus("");
 
