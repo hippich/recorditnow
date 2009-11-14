@@ -22,10 +22,11 @@
 
 
 // own
-#include "ui_blip_addaccount.h"
+#include "ui_addaccount.h"
 
 // KDE
 #include <kdialog.h>
+#include <kconfigskeleton.h>
 
 
 class AbstractUploader;
@@ -35,17 +36,18 @@ class AddAccountDialog : public KDialog, public Ui::Account
 
 
 public:
-    AddAccountDialog(QWidget *parent, AbstractUploader *uploader = 0,
+    AddAccountDialog(QWidget *parent, KConfigSkeleton *config, AbstractUploader *uploader = 0,
                      const QString &account = QString());
     ~AddAccountDialog();
 
-    static void removeAccount(const QString &account);
-    static QStringList getAccounts();
-    static bool hasPassword(const QString &account);
+    static void removeAccount(const QString &account, KConfigSkeleton *settings);
+    static QStringList getAccounts(KConfigSkeleton *settings);
+    static bool hasPassword(const QString &account, KConfigSkeleton *settings);
 
 
 private:
     QString m_account;
+    KConfigSkeleton *m_settings;
 
 
 private slots:

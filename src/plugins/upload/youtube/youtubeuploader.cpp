@@ -21,7 +21,7 @@
 #include "youtubeuploader.h"
 #include "uploadthread.h"
 #include <recorditnow_youtube.h>
-#include "addaccountdialog.h"
+#include "../common/addaccountdialog.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -129,7 +129,7 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     connect(removeAccountButton, SIGNAL(clicked()), this, SLOT(removeAccount()));
 
 
-    accountsChanged(AddAccountDialog::getAccounts());
+    accountsChanged(AddAccountDialog::getAccounts(Settings::self()));
     connect(accountsCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(currentAccountChanged(QString)));
     currentAccountChanged(accountsCombo->currentText());
@@ -294,7 +294,7 @@ void YouTubeUploader::descriptionChanged()
 void YouTubeUploader::addAccount()
 {
 
-    AddAccountDialog *dialog = new AddAccountDialog(m_dialog);
+    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, Settings::self());
     connect(dialog, SIGNAL(accountsChanged(QStringList)), this, SLOT(accountsChanged(QStringList)));
     connect(dialog, SIGNAL(newPassword(QString,QString)), this, SLOT(newPassword(QString,QString)));
     dialog->show();
@@ -307,7 +307,7 @@ void YouTubeUploader::removeAccount()
 
     const QString account = accountsCombo->currentText();
     if (!account.isEmpty()) {
-        AddAccountDialog::removeAccount(account);
+        AddAccountDialog::removeAccount(account, Settings::self());
         accountsCombo->removeItem(accountsCombo->currentIndex());
     }
 
@@ -321,7 +321,8 @@ void YouTubeUploader::editAccount()
         return;
     }
 
-    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, this, accountsCombo->currentText());
+    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, Settings::self(), this,
+                                                    accountsCombo->currentText());
     connect(dialog, SIGNAL(accountsChanged(QStringList)), this, SLOT(accountsChanged(QStringList)));
     connect(dialog, SIGNAL(newPassword(QString,QString)), this, SLOT(newPassword(QString,QString)));
     dialog->show();
@@ -352,7 +353,7 @@ void YouTubeUploader::currentAccountChanged(const QString &newAccount)
 {
 
     passwordEdit->clear();
-    if (!newAccount.isEmpty() && AddAccountDialog::hasPassword(newAccount)) {
+    if (!newAccount.isEmpty() && AddAccountDialog::hasPassword(newAccount, Settings::self())) {
         getPassword(newAccount);
     }
 

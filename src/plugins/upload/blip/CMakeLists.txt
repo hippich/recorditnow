@@ -3,10 +3,10 @@ add_subdirectory(icons)
 
 set(SRCS
     blipuploader.cpp
-    addaccountdialog.cpp)
+    ../common/addaccountdialog.cpp)
 
 
-kde4_add_ui_files(SRCS ui/blip.ui ui/blip_addaccount.ui)
+kde4_add_ui_files(SRCS ui/blip.ui ../common/ui/addaccount.ui)
 kde4_add_kcfg_files(SRCS recorditnow_blip.kcfgc)
 kde4_add_plugin(recorditnow_blip ${SRCS})
 target_link_libraries(recorditnow_blip ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} recorditnow_uploader recorditnow_plugin ${KDE4_KIO_LIBS} kblip)

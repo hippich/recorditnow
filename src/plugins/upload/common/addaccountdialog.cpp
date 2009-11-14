@@ -20,7 +20,6 @@
 
 // own
 #include "addaccountdialog.h"
-#include <recorditnow_youtube.h>
 #include "abstractuploader.h"
 
 // KDE
@@ -28,9 +27,9 @@
 #include <kicon.h>
 
 
-AddAccountDialog::AddAccountDialog(QWidget *parent, AbstractUploader *uploader,
+AddAccountDialog::AddAccountDialog(QWidget *parent, KConfigSkeleton *config, AbstractUploader *uploader,
                                    const QString &account)
-    : KDialog(parent)
+    : KDialog(parent), m_settings(config)
 {
 
     setWindowIcon(KIcon("recorditnow_youtube"));
@@ -43,7 +42,7 @@ AddAccountDialog::AddAccountDialog(QWidget *parent, AbstractUploader *uploader,
     if (uploader && !account.isEmpty()) {
         setWindowTitle(i18nc("%1 = account name", "Edit %1", account));
         accountEdit->setText(account);
-        saveCheck->setChecked(hasPassword(account));
+        saveCheck->setChecked(hasPassword(account, m_settings));
         m_account = account;
         if (saveCheck->isChecked()) {
             connect(uploader, SIGNAL(gotPassword(QString,QString)), this,
@@ -67,10 +66,10 @@ AddAccountDialog::~AddAccountDialog()
 }
 
 
-void AddAccountDialog::removeAccount(const QString &account)
+void AddAccountDialog::removeAccount(const QString &account, KConfigSkeleton *settings)
 {
 
-    KConfig *cfg = Settings::self()->config();
+    KConfig *cfg = settings->config();
     KConfigGroup group(cfg, "youtube_accounts");
     QStringList accounts = group.readEntry("Accounts", QStringList());
     accounts.removeAll(account);
@@ -81,20 +80,20 @@ void AddAccountDialog::removeAccount(const QString &account)
 }
 
 
-QStringList AddAccountDialog::getAccounts()
+QStringList AddAccountDialog::getAccounts(KConfigSkeleton *settings)
 {
 
-    KConfig *cfg = Settings::self()->config();
+    KConfig *cfg = settings->config();
     KConfigGroup group(cfg, "youtube_accounts");
     return group.readEntry("Accounts", QStringList());
 
 }
 
 
-bool AddAccountDialog::hasPassword(const QString &account)
+bool AddAccountDialog::hasPassword(const QString &account, KConfigSkeleton *settings)
 {
 
-    KConfig *cfg = Settings::self()->config();
+    KConfig *cfg = settings->config();
     KConfigGroup group(cfg, "youtube_accounts");
     return group.readEntry(account, false);
 
@@ -109,13 +108,13 @@ void AddAccountDialog::dialogFinished(const int &code)
         const QString password = passwordEdit->text();
         const bool savePassword = saveCheck->isChecked();
 
-        KConfig *cfg = Settings::self()->config();
+        KConfig *cfg = m_settings->config();
         KConfigGroup group(cfg, "youtube_accounts");
         QStringList accounts = group.readEntry("Accounts", QStringList());
 
         if (!m_account.isEmpty()) {
             accounts.removeAll(m_account);
-            removeAccount(m_account);
+            removeAccount(m_account, m_settings);
         }
 
         if (!accounts.contains(account)) {
