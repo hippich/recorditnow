@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>87</height>
+    <height>256</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,9 +89,109 @@
      </item>
     </layout>
    </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="kcfg_branding">
+     <property name="title">
+      <string>Branding</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QFormLayout" name="formLayout_3">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+      </property>
+      <item row="0" column="0" colspan="2">
+       <widget class="KUrlRequester" name="kcfg_brandingFile"/>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="KDoubleNumInput" name="kcfg_brandingOpacity">
+        <property name="label">
+         <string>Opacity</string>
+        </property>
+        <property name="minimum">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="sliderEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="KPixmapRegionSelectorWidget" name="kpixmapregionselectorwidget"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Position</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="KComboBox" name="kcfg_position">
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>Top left corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Top right corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bottom left corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bottom right corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Top center</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bottom center</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KDoubleNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
+  </customwidget>
   <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>
@@ -101,6 +201,11 @@
    <class>KIntNumInput</class>
    <extends>QWidget</extends>
    <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPixmapRegionSelectorWidget</class>
+   <extends>QWidget</extends>
+   <header>kpixmapregionselectorwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

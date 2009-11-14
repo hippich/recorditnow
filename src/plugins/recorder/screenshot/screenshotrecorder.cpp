@@ -81,7 +81,49 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 
     const qlonglong window = d.winId != -1 ? d.winId : QX11Info::appRootWindow();
 
-    QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h);
+    QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h); // screenshot
+
+    // branding
+    if (Settings::branding() && QFile::exists(Settings::brandingFile().path())) {
+        QImage branding(Settings::brandingFile().path());
+        QPainter painter(&cheese);
+        painter.setOpacity(Settings::brandingOpacity());
+
+        QPoint pos(0, 0);
+        switch (Settings::position()) {
+        case 0: pos = cheese.rect().topLeft(); break;
+        case 1: {
+                pos = cheese.rect().topRight();
+                pos.rx() -= branding.width();
+                break;
+            }
+        case 2: {
+                pos = cheese.rect().bottomLeft();
+                pos.ry() -= branding.height();
+                break;
+            }
+        case 3: {
+                pos = cheese.rect().bottomRight();
+                pos.rx() -= branding.width();
+                pos.ry() -= branding.height();
+                break;
+            }
+        case 4: {
+                pos = cheese.rect().center();
+                pos.rx() -= (branding.width()/2);
+                pos.ry() = cheese.rect().top();
+                break;
+            }
+        case 5: {
+                pos = cheese.rect().center();
+                pos.rx() -= (branding.width()/2);
+                pos.ry() = (cheese.rect().bottom()-branding.height());
+                break;
+            }
+        default: break;
+        }
+        painter.drawImage(pos, branding);
+    }
 
     QFile outFile(d.outputFile);
     if (outFile.exists()) {

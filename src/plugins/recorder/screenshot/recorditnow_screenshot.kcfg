@@ -13,5 +13,21 @@
             <label></label>
             <default>-1</default>
     </entry>
+    <entry name="branding" type="Bool">
+            <label></label>
+            <default>false</default>
+    </entry>
+    <entry name="brandingFile" type="Url">
+            <label></label>
+            <default></default>
+    </entry>
+    <entry name="brandingOpacity" type="Double">
+            <label></label>
+            <default>0.8</default>
+    </entry>
+    <entry name="position" type="Int">
+            <label></label>
+            <default>0</default>
+    </entry>
   </group>
 </kcfg>
