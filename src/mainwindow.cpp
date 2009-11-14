@@ -379,13 +379,6 @@ void MainWindow::recordCurrentWindow()
         child = QX11Info::appRootWindow();
     }
 
-    if (!Settings::includeDecoration()) {
-        Window real_child = findRealWindow(child);
-        if (real_child != None) {// test just in case
-            child = real_child;
-        }
-    }
-
     XUngrabServer(QX11Info::display());
 
     m_grabber->deleteLater();
