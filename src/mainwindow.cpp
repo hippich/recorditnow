@@ -437,7 +437,7 @@ void MainWindow::initEncoder(AbstractEncoder::Data *d)
 
     d->overwrite = Settings::overwrite();
     d->file = outputRequester->text();
-    d->workDir = Settings::workDir().pathOrUrl();
+    d->workDir = Settings::workDir().path();
 
 }
 
