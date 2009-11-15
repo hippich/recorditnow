@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>YouTube</string>
+   <string notr="true">blip.tv</string>
   </property>
   <property name="toolTip">
    <string notr="true"/>
