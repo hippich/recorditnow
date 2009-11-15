@@ -68,6 +68,7 @@ private:
 private slots:
     void readWallet(bool success);
     void writeWallet(bool success);
+    void newPassword(const QString &account, const QString &password);
 
 
 protected:

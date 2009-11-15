@@ -350,14 +350,6 @@ void BlipUploader::accountsChanged(const QStringList &accounts)
 }
 
 
-void BlipUploader::newPassword(const QString &account, const QString &password)
-{
-
-    setPassword(account, password);
-
-}
-
-
 void BlipUploader::currentAccountChanged(const QString &newAccount)
 {
 

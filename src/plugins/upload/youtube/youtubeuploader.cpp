@@ -345,14 +345,6 @@ void YouTubeUploader::accountsChanged(const QStringList &accounts)
 }
 
 
-void YouTubeUploader::newPassword(const QString &account, const QString &password)
-{
-
-    setPassword(account, password);
-
-}
-
-
 void YouTubeUploader::currentAccountChanged(const QString &newAccount)
 {
 

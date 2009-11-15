@@ -70,7 +70,6 @@ private slots:
     void removeAccount();
     void editAccount();
     void accountsChanged(const QStringList &accounts);
-    void newPassword(const QString &account, const QString &password);
     void currentAccountChanged(const QString &newAccount);
     void gotPasswordForAccount(const QString &account, const QString &password);
 

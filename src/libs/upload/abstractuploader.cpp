@@ -164,3 +164,12 @@ void AbstractUploader::setId(const WId &i, const QString &folder)
     m_folder = folder;
 
 }
+
+
+void AbstractUploader::newPassword(const QString &account, const QString &password)
+{
+
+    setPassword(account, password);
+
+}
+
