@@ -21,17 +21,18 @@
 #define ADDACCOUNTDIALOG_H
 
 
-// own
-#include "ui_addaccount.h"
-
 // KDE
 #include <kdialog.h>
 #include <kdemacros.h>
 
 
+namespace Ui {
+    class Account;
+}
+
 class KConfigSkeleton;
 class AbstractUploader;
-class KDE_EXPORT AddAccountDialog : public KDialog, public Ui::Account
+class KDE_EXPORT AddAccountDialog : public KDialog
 {
     Q_OBJECT
 
@@ -49,6 +50,7 @@ public:
 private:
     QString m_account;
     KConfigSkeleton *m_settings;
+    Ui::Account *m_ui;
 
 
 private slots:

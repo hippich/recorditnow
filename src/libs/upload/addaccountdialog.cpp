@@ -21,6 +21,7 @@
 // own
 #include "addaccountdialog.h"
 #include "abstractuploader.h"
+#include "ui_addaccount.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -30,22 +31,22 @@
 
 AddAccountDialog::AddAccountDialog(QWidget *parent, KConfigSkeleton *config, AbstractUploader *uploader,
                                    const QString &account)
-    : KDialog(parent), m_settings(config)
+                                       : KDialog(parent), m_settings(config), m_ui(new Ui::Account)
 {
 
     setWindowIcon(KIcon("recorditnow_youtube"));
     setAttribute(Qt::WA_DeleteOnClose, true);
 
     QWidget *widget = new QWidget(this);
-    setupUi(widget);
+    m_ui->setupUi(widget);
     setMainWidget(widget);
 
     if (uploader && !account.isEmpty()) {
         setWindowTitle(i18nc("%1 = account name", "Edit %1", account));
-        accountEdit->setText(account);
-        saveCheck->setChecked(hasPassword(account, m_settings));
+        m_ui->accountEdit->setText(account);
+        m_ui->saveCheck->setChecked(hasPassword(account, m_settings));
         m_account = account;
-        if (saveCheck->isChecked()) {
+        if (m_ui->saveCheck->isChecked()) {
             connect(uploader, SIGNAL(gotPassword(QString,QString)), this,
                     SLOT(gotPassword(QString,QString)));
             uploader->getPassword(account);
@@ -62,7 +63,7 @@ AddAccountDialog::AddAccountDialog(QWidget *parent, KConfigSkeleton *config, Abs
 AddAccountDialog::~AddAccountDialog()
 {
 
-
+    delete m_ui;
 
 }
 
@@ -105,9 +106,9 @@ void AddAccountDialog::dialogFinished(const int &code)
 {
 
     if (code == KDialog::Accepted) {
-        const QString account = accountEdit->text();
-        const QString password = passwordEdit->text();
-        const bool savePassword = saveCheck->isChecked();
+        const QString account = m_ui->accountEdit->text();
+        const QString password = m_ui->passwordEdit->text();
+        const bool savePassword = m_ui->saveCheck->isChecked();
 
         KConfig *cfg = m_settings->config();
         KConfigGroup group(cfg, "youtube_accounts");
@@ -138,8 +139,8 @@ void AddAccountDialog::dialogFinished(const int &code)
 void AddAccountDialog::gotPassword(const QString &account, const QString &password)
 {
 
-    if (accountEdit->text() == account) {
-        passwordEdit->setText(password);
+    if (m_ui->accountEdit->text() == account) {
+        m_ui->passwordEdit->setText(password);
     }
 
 }

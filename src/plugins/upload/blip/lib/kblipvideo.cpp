@@ -172,7 +172,7 @@ void KBlipVideo::send(const KBlipAccount *account)
         if (!file.open(QIODevice::ReadOnly)) {
             kDebug() << "open failed!";
             emit error(i18nc("%1 = file, %2 = error string", "Cannot open %1.\n"
-                             "Reason: %1", fit.value(), file.errorString()));
+                             "Reason: %2", fit.value(), file.errorString()));
             return;
         }
         data.append(file.readAll());
