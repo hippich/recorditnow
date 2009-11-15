@@ -240,6 +240,7 @@ void YouTubeUploader::quitDialog()
 
     cancelUpload();
     m_dialog->close();
+    emit finished();
 
 }
 

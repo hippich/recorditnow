@@ -107,6 +107,7 @@ private slots:
     void removeFile();
     void outputFileChanged(const QString &newFile);
     void recorderStateChanged(const AbstractRecorder::State &newState);
+    void uploaderFinished();
 
 
 protected:

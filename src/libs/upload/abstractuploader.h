@@ -76,6 +76,7 @@ protected:
 
 signals:
     void gotPassword(const QString &account, const QString &password);
+    void finished();
 
 
 };

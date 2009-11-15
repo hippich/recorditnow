@@ -766,6 +766,15 @@ void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
 }
 
 
+void MainWindow::uploaderFinished()
+{
+
+    AbstractUploader *uploader = static_cast<AbstractUploader*>(sender());
+    m_pluginManager->unloadPlugin(uploader);
+
+}
+
+
 void MainWindow::startTimer()
 {
 
@@ -913,6 +922,7 @@ void MainWindow::upload()
     AbstractUploader *uploader = static_cast<AbstractUploader*>(
             m_pluginManager->loadPlugin(uploadAction->data().toString()));
     if (uploader) {
+        connect(uploader, SIGNAL(finished()), this, SLOT(uploaderFinished()));
         uploader->show(outputRequester->text(), this);
     }
 

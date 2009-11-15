@@ -254,6 +254,7 @@ void BlipUploader::quitDialog()
 
     cancelUpload();
     m_dialog->close();
+    emit finished();
 
 }
 
