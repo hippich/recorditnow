@@ -159,7 +159,7 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     connect(removeAccountButton, SIGNAL(clicked()), this, SLOT(removeAccount()));
 
 
-    accountsChanged(AddAccountDialog::getAccounts(Settings::self()));
+    accountsChanged(AddAccountDialog::getAccounts(Settings::self(), "blip_accounts"));
     connect(accountsCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(currentAccountChanged(QString)));
     currentAccountChanged(accountsCombo->currentText());
@@ -300,7 +300,8 @@ void BlipUploader::descriptionChanged()
 void BlipUploader::addAccount()
 {
 
-    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, Settings::self());
+    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, Settings::self(), "recorditnow_blip",
+                                                    "blip_accounts");
     connect(dialog, SIGNAL(accountsChanged(QStringList)), this, SLOT(accountsChanged(QStringList)));
     connect(dialog, SIGNAL(newPassword(QString,QString)), this, SLOT(newPassword(QString,QString)));
     dialog->show();
@@ -313,7 +314,7 @@ void BlipUploader::removeAccount()
 
     const QString account = accountsCombo->currentText();
     if (!account.isEmpty()) {
-        AddAccountDialog::removeAccount(account, Settings::self());
+        AddAccountDialog::removeAccount(account, Settings::self(), "blip_accounts");
         accountsCombo->removeItem(accountsCombo->currentIndex());
     }
 
@@ -327,7 +328,9 @@ void BlipUploader::editAccount()
         return;
     }
 
-    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, Settings::self(), this,
+    AddAccountDialog *dialog = new AddAccountDialog(m_dialog, Settings::self(), "recorditnow_blip",
+                                                    "blip_accounts",
+                                                    this,
                                                     accountsCombo->currentText());
     connect(dialog, SIGNAL(accountsChanged(QStringList)), this, SLOT(accountsChanged(QStringList)));
     connect(dialog, SIGNAL(newPassword(QString,QString)), this, SLOT(newPassword(QString,QString)));
@@ -359,7 +362,8 @@ void BlipUploader::currentAccountChanged(const QString &newAccount)
 {
 
     passwordEdit->clear();
-    if (!newAccount.isEmpty() && AddAccountDialog::hasPassword(newAccount, Settings::self())) {
+    if (!newAccount.isEmpty() && AddAccountDialog::hasPassword(newAccount, Settings::self(),
+                                                               "blip_accounts")) {
         getPassword(newAccount);
     }
 

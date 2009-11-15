@@ -38,19 +38,21 @@ class KDE_EXPORT AddAccountDialog : public KDialog
 
 
 public:
-    AddAccountDialog(QWidget *parent, KConfigSkeleton *config, AbstractUploader *uploader = 0,
+    AddAccountDialog(QWidget *parent, KConfigSkeleton *config, const QString &icon,
+                     const QString &group, AbstractUploader *uploader = 0,
                      const QString &account = QString());
     ~AddAccountDialog();
 
-    static void removeAccount(const QString &account, KConfigSkeleton *settings);
-    static QStringList getAccounts(KConfigSkeleton *settings);
-    static bool hasPassword(const QString &account, KConfigSkeleton *settings);
+    static void removeAccount(const QString &account, KConfigSkeleton *settings, const QString &group);
+    static QStringList getAccounts(KConfigSkeleton *settings, const QString &group);
+    static bool hasPassword(const QString &account, KConfigSkeleton *settings, const QString &group);
 
 
 private:
     QString m_account;
     KConfigSkeleton *m_settings;
     Ui::Account *m_ui;
+    QString m_group;
 
 
 private slots:
