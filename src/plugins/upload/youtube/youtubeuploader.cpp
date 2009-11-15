@@ -129,7 +129,7 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     connect(removeAccountButton, SIGNAL(clicked()), this, SLOT(removeAccount()));
 
 
-    accountsChanged(AddAccountDialog::getAccounts(Settings::self(), "blip_accounts"));
+    accountsChanged(AddAccountDialog::getAccounts(Settings::self(), "youtube_accounts"));
     connect(accountsCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(currentAccountChanged(QString)));
     currentAccountChanged(accountsCombo->currentText());

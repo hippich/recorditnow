@@ -186,9 +186,10 @@ void KBlipVideo::send(const KBlipAccount *account)
     meta.insert("content-type", "Content-type: multipart/form-data; boundary="+BOUNDARY);
     meta.insert("content-length", QString::number(data.size()));
 
-    KIO::Job *job = KIO::http_post(url, data);
+    KIO::TransferJob *job = KIO::http_post(url, data);
     job->addMetaData(meta);
     job->setAutoDelete(true);
+    job->setTotalSize(data.size());
 
     connect(job, SIGNAL(data(KIO::Job*, QByteArray)), SLOT(jobData(KIO::Job*, QByteArray)));
     connect(job, SIGNAL(result(KJob*)), SLOT(jobResult(KJob*)));
@@ -222,6 +223,7 @@ void KBlipVideo::jobResult(KJob *job)
     kDebug() << "data:" << m_bytes;
     kDebug() << "error:" << job->error();
 
+    const int ret = job->error();
     QString text = m_bytes;
     QString errorString;
 
@@ -231,14 +233,15 @@ void KBlipVideo::jobResult(KJob *job)
         errorString = rx.cap();
         errorString.remove("<error>");
         errorString.remove("</error>");
+    } else if (ret != 0 && ret != KIO::ERR_USER_CANCELED) {
+        errorString = job->errorString();
+        if (errorString.isEmpty()) {
+            errorString = i18nc("%1 = error", "Unkown error: %1.", ret);
+        }
     }
 
-    if (job->error() || !errorString.isEmpty()) {
-        if (!errorString.isEmpty()) {
-            emit error(errorString);
-        } else {
-            emit error(job->errorString());
-        }
+    if (!errorString.isEmpty()) {
+        emit error(errorString);
     } else {
         emit finished();
     }
