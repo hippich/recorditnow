@@ -20,7 +20,7 @@
 // own
 #include "blipuploader.h"
 #include <recorditnow_blip.h>
-#include "../common/addaccountdialog.h"
+#include "addaccountdialog.h"
 #include "lib/kblipvideo.h"
 #include "lib/kblipaccount.h"
 

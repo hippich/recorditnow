@@ -26,11 +26,12 @@
 
 // KDE
 #include <kdialog.h>
-#include <kconfigskeleton.h>
+#include <kdemacros.h>
 
 
+class KConfigSkeleton;
 class AbstractUploader;
-class AddAccountDialog : public KDialog, public Ui::Account
+class KDE_EXPORT AddAccountDialog : public KDialog, public Ui::Account
 {
     Q_OBJECT
 

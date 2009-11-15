@@ -4,11 +4,10 @@ include_directories(${LIBGDATA_INCLUDE_DIRS})
 
 set(SRCS
     youtubeuploader.cpp
-    uploadthread.cpp
-    ../common/addaccountdialog.cpp)
+    uploadthread.cpp)
 
 
-kde4_add_ui_files(SRCS ui/youtube.ui ../common/ui/addaccount.ui)
+kde4_add_ui_files(SRCS ui/youtube.ui)
 kde4_add_kcfg_files(SRCS recorditnow_youtube.kcfgc)
 kde4_add_plugin(recorditnow_youtube ${SRCS})
 target_link_libraries(recorditnow_youtube ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} recorditnow_uploader recorditnow_plugin ${LIBGDATA_LIBRARIES} ${KDE4_KIO_LIBS})

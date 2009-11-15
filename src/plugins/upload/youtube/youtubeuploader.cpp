@@ -21,7 +21,7 @@
 #include "youtubeuploader.h"
 #include "uploadthread.h"
 #include <recorditnow_youtube.h>
-#include "../common/addaccountdialog.h"
+#include "addaccountdialog.h"
 
 // KDE
 #include <klocalizedstring.h>

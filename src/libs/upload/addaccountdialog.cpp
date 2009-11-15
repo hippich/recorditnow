@@ -25,6 +25,7 @@
 // KDE
 #include <klocalizedstring.h>
 #include <kicon.h>
+#include <kconfigskeleton.h>
 
 
 AddAccountDialog::AddAccountDialog(QWidget *parent, KConfigSkeleton *config, AbstractUploader *uploader,
