@@ -225,9 +225,9 @@ void KBlipVideo::jobResult(KJob *job)
     QString text = m_bytes;
     QString errorString;
 
-    if (text.contains("error")) {
-        const QRegExp rx("<error>.*</error>");
-        rx.indexIn(text);
+    const QRegExp rx("<error>.*</error>");
+    rx.indexIn(text);
+    if (!rx.cap().isEmpty()) {
         errorString = rx.cap();
         errorString.remove("<error>");
         errorString.remove("</error>");
