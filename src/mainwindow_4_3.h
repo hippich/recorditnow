@@ -47,7 +47,8 @@ public:
         Timer = 1,
         TimerPaused = 2,
         Recording = 3,
-        Paused = 4
+        Paused = 4,
+        Encode = 5
     };
     MainWindow(QWidget *parent = 0);
     ~MainWindow();

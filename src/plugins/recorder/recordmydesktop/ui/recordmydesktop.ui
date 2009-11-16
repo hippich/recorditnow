@@ -49,7 +49,7 @@
          <item row="3" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___full_shots">
            <property name="text">
-            <string>Take full screenshot at every frame(Not recomended!)</string>
+            <string>Take full screenshot at every frame(Not Recomended!)</string>
            </property>
           </widget>
          </item>
