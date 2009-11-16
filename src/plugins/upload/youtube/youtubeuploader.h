@@ -29,11 +29,7 @@
 #include <QtCore/QPointer>
 
 
-namespace KWallet {
-    class Wallet;
-};
-class KUiServerJobTracker;
-class UploadThread;
+class YouTubeService;
 class YouTubeUploader : public AbstractUploader, public Ui::YouTube
 {
     Q_OBJECT
@@ -52,9 +48,7 @@ private:
     State m_state;
     QHash<QString, QString> m_category;
     QPointer<QWidget> m_dialog;
-    UploadThread *m_thread;
-    KUiServerJobTracker *m_jobTracker;
-
+    YouTubeService *m_service;
 
     void setState(const State &state);
 
@@ -64,7 +58,8 @@ private slots:
     void cancelUpload();
     void uploadFinished();
     void quitDialog();
-    void threadError(const QString &error);
+    void authenticated();
+    void serviceError(const QString &error);
     void descriptionChanged();
     void addAccount();
     void removeAccount();

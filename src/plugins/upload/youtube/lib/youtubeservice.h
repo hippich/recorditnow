@@ -17,46 +17,64 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef UPLOADTHREAD_H
-#define UPLOADTHREAD_H
 
+#ifndef YOUTUBESERVICE_H
+#define YOUTUBESERVICE_H
+
+
+// KDE
+#include <kio/http.h>
+#include <kio/job.h>
+#include <kdemacros.h>
 
 // Qt
-#include <QtCore/QThread>
-#include <QtCore/QHash>
+#include <QtCore/QObject>
 #include <QtCore/QPointer>
 
 
-class KJob;
-class Job;
-class UploadThread : public QThread
+class KDE_EXPORT YouTubeService : public QObject
 {
     Q_OBJECT
 
 
 public:
-    UploadThread(QObject *parent, const QHash<QString, QString> &data);
-    ~UploadThread();
+    enum State {
+        Idle = 0,
+        Auth = 1,
+        Upload = 2
+    };
 
-    KJob *getJob() const;
+    YouTubeService(QObject *parent = 0);
+    ~YouTubeService();
 
-    void cancelUpload();
+    YouTubeService::State state() const;
+    bool isAuthenticated() const;
+
+    void authenticate(const QString &account, const QString &password);
+    void upload(const QHash<QString, QString> data);
 
 
 private:
-    QHash<QString, QString> m_data;
-    QPointer<Job> m_job;
+    State m_state;
+
+    QPointer<KIO::Job> m_job;
+    QByteArray m_bytes;
+    QString m_auth;
+    bool m_authenticated;
 
 
-protected:
-    void run();
+private slots:
+    void data(KIO::Job *job, const QByteArray &data);
+    void result(KJob *job);
 
 
 signals:
-    void ytError(const QString &error);
+    void error(const QString &reason);
+    void authenticated();
+    void finished();
 
 
 };
 
 
-#endif // UPLOADTHREAD_H
+#endif // YOUTUBESERVICE_H

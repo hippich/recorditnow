@@ -19,16 +19,15 @@
 
 // own
 #include "youtubeuploader.h"
-#include "uploadthread.h"
 #include <recorditnow_youtube.h>
 #include "addaccountdialog.h"
+#include "lib/youtubeservice.h"
 
 // KDE
 #include <klocalizedstring.h>
 #include <kplugininfo.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <kuiserverjobtracker.h>
 
 // Qt
 #include <QtCore/QFile>
@@ -49,8 +48,7 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
     : AbstractUploader(parent, args)
 {
 
-    m_thread = 0;
-    m_jobTracker = new KUiServerJobTracker(this);
+    m_service = 0;
 
     m_category["Autos"] = i18n("Autos & Vehicles");
     m_category["Comedy"] = i18n("Comedy");
@@ -79,14 +77,12 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
 YouTubeUploader::~YouTubeUploader()
 {
 
-    if (m_thread) {
-        m_jobTracker->unregisterJob(m_thread->getJob());
-        m_thread->deleteLater();
+    if (m_service) {
+        delete m_service;
     }
     if (m_dialog) {
         delete m_dialog;
     }
-    delete m_jobTracker;
 
 }
 
@@ -158,53 +154,19 @@ void YouTubeUploader::upload()
     Settings::self()->writeConfig();
 
 
-    QHash<QString, QString> data;
-    data["Title"] = titleEdit->text();
-    data["Description"] = descriptionEdit->toPlainText();
-    data["Tags"] = tagsEdit->text();
-    data["Category"] = m_category.key(categoryCombo->currentText());
-    data["Login"] = accountsCombo->currentText();
-    data["Password"] = passwordEdit->text();
-    data["File"] = fileRequester->text();
-
-    QString tags = data["Tags"];
-    foreach (const QString &tag, tags.split(',')) {
-        if (tag.trimmed().length() > 25) {
-            KMessageBox::sorry(m_dialog, i18nc("%1 = youtube tag",
-                                               "The Tag %1 is too long.",
-                                               tag.trimmed()));
-            cancelUpload();
-            return;
-        }
-    }
-
-    QHashIterator<QString, QString> it(data);
-    while (it.hasNext()) {
-        it.next();
-        if (it.value().isEmpty()) {
-            KMessageBox::sorry(m_dialog, i18n("Please fill out all the fields."));
-            return;
-        }
-    }
-
-    if (!QFile::exists(fileRequester->text())) {
-        KMessageBox::sorry(m_dialog, i18n("No such file: %1", fileRequester->text()));
-        return;
-    }
-
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
     if (KMessageBox::warningContinueCancel(m_dialog, GOOGLE.arg(i18n("Continue"))) != KMessageBox::Continue) {
         cancelUpload();
         return;
     }
 
-    m_thread = new UploadThread(this, data);
-    connect(m_thread, SIGNAL(finished()), this, SLOT(uploadFinished()));
-    connect(m_thread, SIGNAL(ytError(QString)), this, SLOT(threadError(QString)));
+    m_service = new YouTubeService(this);
+    connect(m_service, SIGNAL(authenticated()), this, SLOT(authenticated()));
+    connect(m_service, SIGNAL(finished()), this, SLOT(uploadFinished()));
+    connect(m_service, SIGNAL(error(QString)), this, SLOT(serviceError(QString)));
 
     setState(Upload);
-    m_jobTracker->registerJob(m_thread->getJob());
-    m_thread->start();
+    m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
 
 }
 
@@ -212,11 +174,10 @@ void YouTubeUploader::upload()
 void YouTubeUploader::cancelUpload()
 {
 
-    if (m_thread) {
+    if (m_service) {
         kDebug() << "cancel";
-        m_jobTracker->unregisterJob(m_thread->getJob());
-        m_thread->cancelUpload();
-        m_thread = 0;
+        delete m_service;
+        m_service = 0;
     }
     setState(Idle);
 
@@ -227,9 +188,8 @@ void YouTubeUploader::uploadFinished()
 {
 
     qDebug() << "upload finished";
-    m_jobTracker->unregisterJob(m_thread->getJob());
-    m_thread->deleteLater();
-    m_thread = 0;
+    delete m_service;
+    m_service = 0;
     setState(Idle);
 
 }
@@ -245,7 +205,23 @@ void YouTubeUploader::quitDialog()
 }
 
 
-void YouTubeUploader::threadError(const QString &error)
+void YouTubeUploader::authenticated()
+{
+
+    QHash<QString, QString> data;
+    data["Title"] = titleEdit->text();
+    data["Description"] = descriptionEdit->toPlainText();
+    data["Tags"] = tagsEdit->text();
+    data["Category"] = m_category.key(categoryCombo->currentText());
+    data["File"] = fileRequester->text();
+    data["Account"] = accountsCombo->currentText();
+
+    m_service->upload(data);
+
+}
+
+
+void YouTubeUploader::serviceError(const QString &error)
 {
 
     KMessageBox::error(m_dialog, error);
