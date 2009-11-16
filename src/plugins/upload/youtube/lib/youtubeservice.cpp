@@ -28,7 +28,7 @@
 
 // Qt
 #include <QtCore/QFile>
-
+#include <QtXml/QXmlStreamReader>
 
 
 #define DEV_KEY "AI39si4PPp_RmxGSVs4cHH93rcG2e9vSRQU1vC0L3sfuy_ZHmtaAWZOdvSfBjmow3YSZfrerx"\
@@ -293,8 +293,18 @@ void YouTubeService::result(KJob *job)
             break;
         }
     case Upload: {
-            emit finished();
             m_state = Idle;
+            QXmlStreamReader reader(response);
+            while (!reader.atEnd()) {
+                reader.readNext();
+                kDebug() << "name:" << reader.name();
+            }
+            if (reader.hasError()) {
+                emit error(i18nc("%1 = error", "Upload failed!\n"
+                                 "Response: %1", response));
+                break;
+            }
+            emit finished();
             break;
         }
     case Idle: break;
