@@ -29,17 +29,17 @@
 // Qt
 #include <QtCore/QFile>
 #include <QtXml/QXmlStreamReader>
+#include <QtCore/QDateTime>
 
 
 #define DEV_KEY "AI39si4PPp_RmxGSVs4cHH93rcG2e9vSRQU1vC0L3sfuy_ZHmtaAWZOdvSfBjmow3YSZfrerx"\
                 "jhsZGX0brUrdSLr5qvNchxeiQ"
 
 YouTubeService::YouTubeService(QObject *parent)
-    : QObject(parent)
+    : KoogleData::Service(parent)
 {
 
     m_authenticated = false;
-    m_state = Idle;
 
 }
 
@@ -47,25 +47,20 @@ YouTubeService::YouTubeService(QObject *parent)
 YouTubeService::~YouTubeService()
 {
 
-    if (m_job) {
-        m_job->kill();
+    QHashIterator<JobData, KJob*> it(m_jobs);
+    while (it.hasNext()) {
+        if (it.value()) {
+            it.value()->kill();
+        }
     }
 
 }
 
 
-YouTubeService::State YouTubeService::state() const
+bool YouTubeService::isAuthenticated(const QString &account) const
 {
 
-    return m_state;
-
-}
-
-
-bool YouTubeService::isAuthenticated() const
-{
-
-    return m_authenticated;
+    return !m_token[account].isEmpty();
 
 }
 
@@ -73,11 +68,9 @@ bool YouTubeService::isAuthenticated() const
 void YouTubeService::authenticate(const QString &account, const QString &password)
 {
 
-    if (state() != Idle || account.isEmpty() || password.isEmpty()) {
+    if (account.isEmpty() || password.isEmpty()) {
         return;
     }
-
-    m_state = Auth;
 
     const KUrl url("https://www.google.com/youtube/accounts/ClientLogin");
 
@@ -94,45 +87,31 @@ void YouTubeService::authenticate(const QString &account, const QString &passwor
     QByteArray postData = "Email="+account.toLatin1()+"&Passwd="+password.toLatin1()+"&service="\
                           "youtube&source=RecordItNow";
 
-    KIO::TransferJob *job = KIO::http_post(url, postData, KIO::HideProgressInfo);
-    job->addMetaData(meta);
-    job->setAutoDelete(true);
-
-    connect(job, SIGNAL(result(KJob* )), SLOT(result(KJob*)));
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(dataReq(KIO::Job*,QByteArray&)));
-
-    m_job = job;
+    m_jobs[qMakePair(AuthJob, account)] = post(url, meta, postData, true);
 
 }
 
 
-void YouTubeService::upload(const QHash<QString, QString> data)
+void YouTubeService::upload(const YouTubeVideo *video, const QString &account)
 {
 
-    if (state() != Idle) {
-        return;
-    }
-
-    m_state = Upload;
-
     QString errorString;
-    if (!isAuthenticated()) {
+    if (!isAuthenticated(account)) {
         errorString = i18n("Please authenticate first!");
     }
 
-    const QString video = data["File"];
-    const QString title = data["Title"];
-    const QString description = data["Description"];
-    const QString category = data["Category"]; // TODO
-    const QString tags = data["Tags"];
+    const QString videoFile = video->file();
+    const QString title = video->title();
+    const QString description = video->description();
+    const QString category = video->category();
+    const QString tags = video->keywords().join(", ");
 
-    int index = video.lastIndexOf('/');
+    int index = videoFile.lastIndexOf('/');
     index != -1 ? index++ : index = 0;
-    QString fileName = video.mid(index);
+    QString fileName = videoFile.mid(index);
 
-    if (!QFile::exists(video)) {
-        errorString = i18n("No such file: %1.", video);
+    if (!QFile::exists(videoFile)) {
+        errorString = i18n("No such file: %1.", videoFile);
     }
 
     if (title.length() > 60 || title.toLatin1().size() > 100) {
@@ -158,25 +137,24 @@ void YouTubeService::upload(const QHash<QString, QString> data)
     }
 
     if (!errorString.isEmpty()) {
-        m_state = Idle;
-        emit error(errorString);
+        emit error(errorString, account);
         return;
     }
 
-    const KUrl url("http://uploads.gdata.youtube.com/feeds/api/users/"+data["Account"]+"/uploads");
+    const KUrl url("http://uploads.gdata.youtube.com/feeds/api/users/"+account+"/uploads");
 
     QByteArray CRLF = "\r\n";
     QByteArray BOUNDARY = "f93dcbA3";
 
-    QFile file(data["File"]);
+    QFile file(videoFile);
     if (!file.open(QIODevice::ReadOnly)) {
-        emit error(i18n("Cannot open video!"));
+        emit error(i18n("Cannot open video!"), account);
         return;
     }
     QByteArray videoData = file.readAll();
     file.close();
 
-    KMimeType::Ptr type = KMimeType::findByUrl(KUrl(data["File"]));
+    KMimeType::Ptr type = KMimeType::findByUrl(KUrl(videoFile));
     QByteArray mime = type->name().toLatin1();
     if (mime.isEmpty()) {
         mime = "application/octet-stream";
@@ -188,7 +166,7 @@ void YouTubeService::upload(const QHash<QString, QString> data)
                              "GData-Version: 2\r\n"\
                              "X-GData-Key: key=%2\r\n"\
                              "Slug: %3\r\n"\
-                             "Connection: close\r\n").arg(m_auth).arg(DEV_KEY).arg(fileName);
+                             "Connection: close\r\n").arg(m_token[account]).arg(DEV_KEY).arg(fileName);
 
     meta.insert("content-type", "Content-Type: multipart/related; boundary=\""+BOUNDARY+"\"");
     meta.insert("customHTTPHeader", header);
@@ -235,65 +213,52 @@ void YouTubeService::upload(const QHash<QString, QString> data)
     meta.insert("Content-Length", "Content-Length: "+QString::number(postData.size()).toLatin1());
 
 
-    KIO::TransferJob *job = KIO::http_post(url, postData);
-    job->addMetaData(meta);
-    job->setAutoDelete(true);
-    job->setTotalSize(postData.size());
+    m_jobs[qMakePair(UploadJob, account)] = post(url, meta, postData);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)), SLOT(data(KIO::Job*, const QByteArray&)));
-    connect(job, SIGNAL(result(KJob* )), SLOT(result(KJob*)));
-    connect(job, SIGNAL(infoMessage(KJob*, const QString &, const QString&)), SLOT(infoMessage(KJob*, const QString&)));
+}
 
-    m_job = job;
+
+void YouTubeService::search(const QString &categoryOrKeyword, const QString &uniqueId)
+{
+
+    const KUrl url("http://gdata.youtube.com/feeds/api/videos/-/"+categoryOrKeyword);
+    m_jobs[qMakePair(SearchJob, uniqueId)] = get(url, KIO::NoReload, true);
 
 }
 
 
 
-void YouTubeService::data(KIO::Job *job, const QByteArray &data)
+void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
 {
 
-    Q_UNUSED(job);
-    m_bytes.append(data);
+    JobData jData = m_jobs.key(job);
+    const QString id = jData.second;
+    const JobType type = jData.first;
+    m_jobs.remove(jData);
 
-}
+    kDebug() << "job finished:" << type << id << data;
 
-
-void YouTubeService::result(KJob *job)
-{
-
-    kDebug() << "result";
-
-    QString response = m_bytes;
     const int ret = job->error();
+    QString response = data.trimmed();
 
-    response = response.trimmed();
-
-    kDebug() << "response:" << response;
-
-    m_bytes .clear();
-
-    switch (m_state) {
-    case Auth: {
-            m_state = Idle;
+    switch (type) {
+    case AuthJob: {
             if (response.startsWith("Auth=")) {
                 response.remove("Auth=");
 
                 const QStringList lines = response.split('\n');
                 QString user = lines.last();
                 user.remove(QRegExp(".*="));
-                m_auth = lines.first();
-                m_authenticated = true;
-                emit authenticated();
+                m_token[user] = lines.first();
+                emit authenticated(user);
             } else if (ret == KIO::ERR_USER_CANCELED) {
-                emit finished();
+                emit canceled(id);
             } else {
-                emit error(i18n("Authentication failed!"));
+                emit error(i18n("Authentication failed!"), id);
             }
             break;
         }
-    case Upload: {
-            m_state = Idle;
+    case UploadJob: {
             QXmlStreamReader reader(response);
             while (!reader.atEnd()) {
                 reader.readNext();
@@ -301,14 +266,95 @@ void YouTubeService::result(KJob *job)
             }
             if (reader.hasError()) {
                 emit error(i18nc("%1 = error", "Upload failed!\n"
-                                 "Response: %1", response));
+                                 "Response: %1", response), id);
                 break;
             }
-            emit finished();
+            emit uploadFinished(id);
             break;
         }
-    case Idle: break;
+    case SearchJob: {
+            QList<YouTubeVideo*> videoList;
+            QXmlStreamReader reader(data);
+            while (!reader.atEnd()) {
+                reader.readNext();
+                if (reader.isStartElement()) {
+                    if (reader.name() == "feed") {
+                        while (!reader.atEnd()) {
+                            reader.readNext();
+                            if (reader.isStartElement() && reader.name() == "entry") {
+                                videoList.append(readEntry(&reader));
+                            }
+                        }
+                    }
+                }
+            }
+            emit searchFinished(videoList, id);
+            break;
+        }
+    default: break;
     }
 
 }
 
+
+YouTubeVideo *YouTubeService::readEntry(QXmlStreamReader *reader)
+{
+
+    YouTubeVideo *video = new YouTubeVideo(this);
+    while (!reader->atEnd()) {
+        reader->readNext();
+
+        if (reader->isEndElement() && reader->name() == "entry") {
+            break;
+        }
+
+        if (reader->isStartElement()) {
+            if (reader->name() == "link"
+                && reader->attributes().value("rel").toString() == "alternate"
+                && reader->attributes().value("type").toString() == "text/html") {
+                QString webpage = reader->attributes().value("href").toString();
+                video->setUrl(KUrl(webpage));
+            } else if (reader->name() == "author") {
+                reader->readNext();
+                if (reader->name() == "name") {
+                    QString author = reader->readElementText();
+                    video->setAuthor(author);
+                }
+            } else if (reader->name() == "published") {
+                video->setPublished(QDateTime::fromString(reader->readElementText(), Qt::ISODate));
+            } else if (reader->namespaceUri() == "http://gdata.youtube.com/schemas/2007"
+                       && reader->name() == "statistics") {
+
+                QString viewCount = reader->attributes().value("viewCount").toString();
+                video->setViewCount(viewCount.toInt());
+            }
+            else if (reader->namespaceUri() == "http://search.yahoo.com/mrss/"
+                     && reader->name() == "group") {
+
+                // read media group
+                while (!reader->atEnd()) {
+                    reader->readNext();
+                    if (reader->isEndElement() && reader->name() == "group") {
+                        break;
+                    }
+                    if (reader->isStartElement()) {
+                        if (reader->name() == "thumbnail") {
+                            video->setThumbnail(KUrl(reader->attributes().value("url").toString()));
+                        } else if (reader->name() == "title") {
+                            QString title = reader->readElementText();
+                            video->setTitle(title);
+                        } else if (reader->name() == "description") {
+                            QString desc = reader->readElementText();
+                            video->setDescription(desc);
+                        } else if (reader->name() == "duration") {
+                            QString duration = reader->attributes().value("seconds").toString();
+                            video->setDuration(duration.toInt());
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return video;
+
+}

@@ -22,6 +22,7 @@
 #include <recorditnow_youtube.h>
 #include "addaccountdialog.h"
 #include "lib/youtubeservice.h"
+#include "lib/youtubevideo.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -161,9 +162,10 @@ void YouTubeUploader::upload()
     }
 
     m_service = new YouTubeService(this);
-    connect(m_service, SIGNAL(authenticated()), this, SLOT(authenticated()));
-    connect(m_service, SIGNAL(finished()), this, SLOT(uploadFinished()));
-    connect(m_service, SIGNAL(error(QString)), this, SLOT(serviceError(QString)));
+    connect(m_service, SIGNAL(authenticated(QString)), this, SLOT(authenticated(QString)));
+    connect(m_service, SIGNAL(uploadFinished(QString)), this, SLOT(uploadFinished(QString)));
+    connect(m_service, SIGNAL(error(QString, QString)), this, SLOT(serviceError(QString, QString)));
+    connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadFinished(QString)));
 
     setState(Upload);
     m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
@@ -184,10 +186,10 @@ void YouTubeUploader::cancelUpload()
 }
 
 
-void YouTubeUploader::uploadFinished()
+void YouTubeUploader::uploadFinished(const QString &account)
 {
 
-    qDebug() << "upload finished";
+    qDebug() << "upload finished" << account;
     delete m_service;
     m_service = 0;
     setState(Idle);
@@ -205,25 +207,27 @@ void YouTubeUploader::quitDialog()
 }
 
 
-void YouTubeUploader::authenticated()
+void YouTubeUploader::authenticated(const QString &account)
 {
 
-    QHash<QString, QString> data;
-    data["Title"] = titleEdit->text();
-    data["Description"] = descriptionEdit->toPlainText();
-    data["Tags"] = tagsEdit->text();
-    data["Category"] = m_category.key(categoryCombo->currentText());
-    data["File"] = fileRequester->text();
-    data["Account"] = accountsCombo->currentText();
+    kDebug() << "auth finished for:" << account;
 
-    m_service->upload(data);
+    YouTubeVideo video;
+    video.setTitle(titleEdit->text());
+    video.setDescription(descriptionEdit->toPlainText());
+    video.setKeywords(tagsEdit->text());
+    video.setCategory(m_category.key(categoryCombo->currentText()));
+    video.setFile(fileRequester->text());
+
+    m_service->upload(&video, accountsCombo->currentText());
 
 }
 
 
-void YouTubeUploader::serviceError(const QString &error)
+void YouTubeUploader::serviceError(const QString &error, const QString &id)
 {
 
+    kDebug() << "error:" << id;
     KMessageBox::error(m_dialog, error);
     cancelUpload();
 

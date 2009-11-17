@@ -17,74 +17,58 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef YOUTUBEVIDEO_H
+#define YOUTUBEVIDEO_H
 
-#ifndef YOUTUBESERVICE_H
-#define YOUTUBESERVICE_H
-
-
-// own
-#include "service.h"
-#include "youtubevideo.h"
 
 // KDE
-#include <kio/http.h>
-#include <kio/job.h>
+#include <kurl.h>
 #include <kdemacros.h>
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QPointer>
-#include <QtCore/QPair>
+#include <QtCore/QHash>
+#include <QtCore/QStringList>
 
 
-class QXmlStreamReader;
-class KDE_EXPORT YouTubeService : public KoogleData::Service
+class KDE_EXPORT YouTubeVideo : public QObject
 {
     Q_OBJECT
 
 
 public:
-    YouTubeService(QObject *parent = 0);
-    ~YouTubeService();
+    YouTubeVideo(QObject *parent = 0);
+    ~YouTubeVideo();
 
-    bool isAuthenticated(const QString &account) const;
+    QString title() const;
+    QString description() const;
+    QStringList keywords() const;
+    KUrl url() const;
+    QString category() const;
+    int duration() const;
+    QString author() const;
+    KUrl thumbnailUrl() const;
+    int viewCount() const;
+    QDateTime published() const;
+    QString file() const;
 
-    void authenticate(const QString &account, const QString &password);
-    void upload(const YouTubeVideo *video, const QString &account);
-    void search(const QString &categoryOrKeyword, const QString &uniqueId);
+    void setTitle(const QString &title);
+    void setDescription(const QString &description);
+    void setKeywords(const QString &keywords);
+    void setUrl(const KUrl &url);
+    void setCategory(const QString &category);
+    void setDuration(const int &duration);
+    void setAuthor(const QString &author);
+    void setThumbnail(const KUrl &url);
+    void setViewCount(const int &count);
+    void setPublished(const QDateTime &date);
+    void setFile(const QString &file);
 
 
 private:
-    enum JobType {
-        AuthJob = 0,
-        UploadJob = 1,
-        SearchJob = 2
-    };
-    typedef QPair<JobType, QString> JobData;
-
-    QHash<JobData, KJob*> m_jobs;
-    QHash<QString, QString> m_token;
-    bool m_authenticated;
-
-    YouTubeVideo *readEntry(QXmlStreamReader *reader);
-
-
-private slots:
-
-
-protected slots:
-    void jobFinished(KJob *job, const QByteArray &data);
-
-
-signals:
-    void error(const QString &reason, const QString &accountOrId);
-    void authenticated(const QString &account);
-    void uploadFinished(const QString &account);
-    void searchFinished(const QList<YouTubeVideo*> videos, const QString &uniqueId);
-    void canceled(const QString &id);
+    QHash<QString, QVariant> m_data;
 
 
 };
 
-
-#endif // YOUTUBESERVICE_H
+#endif // YOUTUBEVIDEO_H

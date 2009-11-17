@@ -56,10 +56,10 @@ private:
 private slots:
     void upload();
     void cancelUpload();
-    void uploadFinished();
+    void uploadFinished(const QString &account);
     void quitDialog();
-    void authenticated();
-    void serviceError(const QString &error);
+    void authenticated(const QString &account);
+    void serviceError(const QString &error, const QString &id);
     void descriptionChanged();
     void addAccount();
     void removeAccount();
