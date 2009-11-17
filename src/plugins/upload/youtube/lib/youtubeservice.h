@@ -80,7 +80,7 @@ signals:
     void error(const QString &reason, const QString &accountOrId);
     void authenticated(const QString &account);
     void uploadFinished(const QString &account);
-    void searchFinished(const QList<YouTubeVideo*> videos, const QString &uniqueId);
+    void searchFinished(const QList<YouTubeVideo*> &videos, const QString &uniqueId);
     void canceled(const QString &id);
 
 

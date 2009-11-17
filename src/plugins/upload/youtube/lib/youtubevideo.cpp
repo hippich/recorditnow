@@ -21,6 +21,9 @@
 // own
 #include "youtubevideo.h"
 
+// KDE
+#include <kdebug.h>
+
 // Qt
 #include <QtCore/QDateTime>
 
@@ -68,7 +71,7 @@ QStringList YouTubeVideo::keywords() const
 KUrl YouTubeVideo::url() const
 {
 
-    return m_data["Url"].toUrl();
+    return m_data["Url"].value<KUrl>();
 
 }
 
