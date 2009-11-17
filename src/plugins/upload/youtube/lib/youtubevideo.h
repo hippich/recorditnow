@@ -21,6 +21,9 @@
 #define YOUTUBEVIDEO_H
 
 
+// own
+#include "service.h"
+
 // KDE
 #include <kurl.h>
 #include <kdemacros.h>
@@ -31,7 +34,7 @@
 #include <QtCore/QStringList>
 
 
-class KDE_EXPORT YouTubeVideo : public QObject
+class KDE_EXPORT YouTubeVideo : public KoogleData::Service
 {
     Q_OBJECT
 
@@ -51,6 +54,7 @@ public:
     int viewCount() const;
     QDateTime published() const;
     QString file() const;
+    QString thumbnail() const;
 
     void setTitle(const QString &title);
     void setDescription(const QString &description);
@@ -59,16 +63,30 @@ public:
     void setCategory(const QString &category);
     void setDuration(const int &duration);
     void setAuthor(const QString &author);
-    void setThumbnail(const KUrl &url);
+    void setThumbnailUrl(const KUrl &url);
     void setViewCount(const int &count);
     void setPublished(const QDateTime &date);
     void setFile(const QString &file);
+    void setThumbnail(const QString &file);
+
+    void updateThumbnail(const QString &thumbnailDir);
 
 
 private:
     QHash<QString, QVariant> m_data;
+    KJob *m_thumbnailJob;
+
+
+protected slots:
+    void jobFinished(KJob *job, const QByteArray &data);
+
+
+signals:
+    void thumbnailUpdated(const QString &thumbnail);
+    void thumbnailUpdateFailed();
 
 
 };
+
 
 #endif // YOUTUBEVIDEO_H

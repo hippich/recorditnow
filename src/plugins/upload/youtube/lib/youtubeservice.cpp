@@ -339,7 +339,7 @@ YouTubeVideo *YouTubeService::readEntry(QXmlStreamReader *reader)
                     }
                     if (reader->isStartElement()) {
                         if (reader->name() == "thumbnail") {
-                            video->setThumbnail(KUrl(reader->attributes().value("url").toString()));
+                            video->setThumbnailUrl(KUrl(reader->attributes().value("url").toString()));
                         } else if (reader->name() == "title") {
                             QString title = reader->readElementText();
                             video->setTitle(title);
