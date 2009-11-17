@@ -227,7 +227,6 @@ void YouTubeService::search(const QString &categoryOrKeyword, const QString &uni
 }
 
 
-
 void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
 {
 
@@ -264,7 +263,7 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
                 reader.readNext();
                 kDebug() << "name:" << reader.name();
             }
-            if (reader.hasError()) {
+            if (reader.hasError() && ret != KIO::ERR_USER_CANCELED) {
                 emit error(i18nc("%1 = error", "Upload failed!\n"
                                  "Response: %1", response), id);
                 break;

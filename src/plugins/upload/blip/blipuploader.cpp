@@ -288,7 +288,6 @@ void BlipUploader::descriptionChanged()
 {
 
     QString text = descriptionEdit->toPlainText();
-    kDebug() << text.length();
     if (text.length() > 5000) {
         text.resize(5000);
         descriptionEdit->setText(text);
