@@ -43,7 +43,7 @@ class KDE_EXPORT YouTubeService : public KoogleData::Service
     Q_OBJECT
 
 
-public:
+public:    
     YouTubeService(QObject *parent = 0);
     ~YouTubeService();
 

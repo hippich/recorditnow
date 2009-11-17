@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-15 05:21+0100\n"
+"POT-Creation-Date: 2009-11-17 14:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,39 +16,39 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. i18n: file: src/libs/upload/ui/addaccount.ui:23
+#. i18n: file: src/libs/upload/ui/addaccount.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:229
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:232
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:207
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:210
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#. i18n: file: src/libs/upload/ui/addaccount.ui:23
+#. i18n: file: src/libs/upload/ui/addaccount.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:229
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:232
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:207
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:210
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#: po/rc.cpp:3 po/rc.cpp:243 po/rc.cpp:301 rc.cpp:3 rc.cpp:243 rc.cpp:301
+#: po/rc.cpp:3 po/rc.cpp:241 po/rc.cpp:299 rc.cpp:3 rc.cpp:241 rc.cpp:299
 msgid "Account"
 msgstr ""
 
-#. i18n: file: src/libs/upload/ui/addaccount.ui:30
+#. i18n: file: src/libs/upload/ui/addaccount.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:181
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:184
 #. i18n: ectx: property (text), widget (QLabel, label_6)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:163
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:166
 #. i18n: ectx: property (text), widget (QLabel, label_6)
-#. i18n: file: src/libs/upload/ui/addaccount.ui:30
+#. i18n: file: src/libs/upload/ui/addaccount.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:181
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:184
 #. i18n: ectx: property (text), widget (QLabel, label_6)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:163
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:166
 #. i18n: ectx: property (text), widget (QLabel, label_6)
-#: po/rc.cpp:6 po/rc.cpp:231 po/rc.cpp:289 rc.cpp:6 rc.cpp:231 rc.cpp:289
+#: po/rc.cpp:6 po/rc.cpp:229 po/rc.cpp:287 rc.cpp:6 rc.cpp:229 rc.cpp:287
 msgid "Password"
 msgstr ""
 
-#. i18n: file: src/libs/upload/ui/addaccount.ui:50
+#. i18n: file: src/libs/upload/ui/addaccount.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, saveCheck)
 #: po/rc.cpp:9 rc.cpp:9
 msgid "Save password with KWallet"
@@ -101,9 +101,9 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:54
 #. i18n: ectx: property (text), widget (QToolButton, addButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:197
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:200
 #. i18n: ectx: property (toolTip), widget (QToolButton, addAccountButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:175
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:178
 #. i18n: ectx: property (toolTip), widget (QToolButton, addAccountButton)
 #. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:51
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
@@ -113,12 +113,12 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:54
 #. i18n: ectx: property (text), widget (QToolButton, addButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:197
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:200
 #. i18n: ectx: property (toolTip), widget (QToolButton, addAccountButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:175
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:178
 #. i18n: ectx: property (toolTip), widget (QToolButton, addAccountButton)
-#: po/rc.cpp:21 po/rc.cpp:24 po/rc.cpp:48 po/rc.cpp:51 po/rc.cpp:234
-#: po/rc.cpp:292 rc.cpp:21 rc.cpp:24 rc.cpp:48 rc.cpp:51 rc.cpp:234 rc.cpp:292
+#: po/rc.cpp:21 po/rc.cpp:24 po/rc.cpp:48 po/rc.cpp:51 po/rc.cpp:232
+#: po/rc.cpp:290 rc.cpp:21 rc.cpp:24 rc.cpp:48 rc.cpp:51 rc.cpp:232 rc.cpp:290
 msgid "Add"
 msgstr ""
 
@@ -130,9 +130,9 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, editButton)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:64
 #. i18n: ectx: property (text), widget (QToolButton, editButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:207
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:210
 #. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:185
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:188
 #. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
 #. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:61
 #. i18n: ectx: property (toolTip), widget (QToolButton, editButton)
@@ -142,12 +142,12 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, editButton)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:64
 #. i18n: ectx: property (text), widget (QToolButton, editButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:207
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:210
 #. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:185
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:188
 #. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
-#: po/rc.cpp:27 po/rc.cpp:30 po/rc.cpp:54 po/rc.cpp:57 po/rc.cpp:237
-#: po/rc.cpp:295 rc.cpp:27 rc.cpp:30 rc.cpp:54 rc.cpp:57 rc.cpp:237 rc.cpp:295
+#: po/rc.cpp:27 po/rc.cpp:30 po/rc.cpp:54 po/rc.cpp:57 po/rc.cpp:235
+#: po/rc.cpp:293 rc.cpp:27 rc.cpp:30 rc.cpp:54 rc.cpp:57 rc.cpp:235 rc.cpp:293
 msgid "Edit"
 msgstr ""
 
@@ -159,9 +159,9 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:74
 #. i18n: ectx: property (text), widget (QToolButton, removeButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:217
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:220
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:195
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:198
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
 #. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:71
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
@@ -171,12 +171,12 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
 #. i18n: file: src/plugins/encoder/mencoder/ui/mencoder.ui:74
 #. i18n: ectx: property (text), widget (QToolButton, removeButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:217
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:220
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:195
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:198
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#: po/rc.cpp:33 po/rc.cpp:36 po/rc.cpp:60 po/rc.cpp:63 po/rc.cpp:240
-#: po/rc.cpp:298 rc.cpp:33 rc.cpp:36 rc.cpp:60 rc.cpp:63 rc.cpp:240 rc.cpp:298
+#: po/rc.cpp:33 po/rc.cpp:36 po/rc.cpp:60 po/rc.cpp:63 po/rc.cpp:238
+#: po/rc.cpp:296 rc.cpp:33 rc.cpp:36 rc.cpp:60 rc.cpp:63 rc.cpp:238 rc.cpp:296
 msgid "Remove"
 msgstr ""
 
@@ -207,7 +207,7 @@ msgstr ""
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___full_shots)
 #: po/rc.cpp:75 rc.cpp:75
-msgid "Take full screenshot at every frame(Not recomended!)"
+msgid "Take full screenshot at every frame(Not Recomended!)"
 msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:59
@@ -224,7 +224,7 @@ msgstr ""
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:81 po/rc.cpp:352 rc.cpp:81 rc.cpp:352
+#: po/rc.cpp:81 po/rc.cpp:350 rc.cpp:81 rc.cpp:350
 msgid "Sound"
 msgstr ""
 
@@ -321,13 +321,13 @@ msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
-#. i18n: file: src/ui/settings.ui:83
+#. i18n: file: src/ui/settings.ui:86
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:301
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
-#. i18n: file: src/ui/settings.ui:83
+#. i18n: file: src/ui/settings.ui:86
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:130 po/rc.cpp:337 rc.cpp:130 rc.cpp:337
+#: po/rc.cpp:130 po/rc.cpp:335 rc.cpp:130 rc.cpp:335
 msgid "Miscellaneous"
 msgstr ""
 
@@ -421,180 +421,173 @@ msgstr ""
 msgid "Quality"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Blip)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, YouTube)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, Blip)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:14
-#. i18n: ectx: property (windowTitle), widget (QWidget, YouTube)
-#: po/rc.cpp:194 po/rc.cpp:255 rc.cpp:194 rc.cpp:255
-msgid "YouTube"
-msgstr ""
-
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:34
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:37
 #. i18n: ectx: property (text), widget (KTitleWidget, titleWidget)
-#: po/rc.cpp:197 rc.cpp:197
+#: po/rc.cpp:195 rc.cpp:195
 msgid ""
 "<html><font size=\"5\">blip.tv</font><br /><b>The next generation television "
 "network!</html>"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:44
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:47
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:44
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:47
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:44
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:47
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:44
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:47
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:200 po/rc.cpp:261 src/plugins/upload/youtube/uploadthread.cpp:54
-#: rc.cpp:200 rc.cpp:261
+#: po/rc.cpp:198 po/rc.cpp:259 rc.cpp:198 rc.cpp:259
 msgid "Video"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:60
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:63
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:56
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:59
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:60
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:63
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:56
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:59
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: po/rc.cpp:203 po/rc.cpp:264 rc.cpp:203 rc.cpp:264
+#: po/rc.cpp:201 po/rc.cpp:262 rc.cpp:201 rc.cpp:262
 msgid "Category"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:74
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:77
 #. i18n: ectx: property (text), widget (QLabel, label_7)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:70
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:73
 #. i18n: ectx: property (text), widget (QLabel, label_7)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:74
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:77
 #. i18n: ectx: property (text), widget (QLabel, label_7)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:70
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:73
 #. i18n: ectx: property (text), widget (QLabel, label_7)
-#: po/rc.cpp:206 po/rc.cpp:267 rc.cpp:206 rc.cpp:267
+#: po/rc.cpp:204 po/rc.cpp:265 rc.cpp:204 rc.cpp:265
 msgid "File"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:81
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:84
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:77
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:80
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:81
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:84
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:77
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:80
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
-#: po/rc.cpp:209 po/rc.cpp:270 rc.cpp:209 rc.cpp:270
+#: po/rc.cpp:207 po/rc.cpp:268 rc.cpp:207 rc.cpp:268
 msgid "linux, kde"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:94
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:97
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:90
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:93
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:94
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:97
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:90
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:93
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:212 po/rc.cpp:273 rc.cpp:212 rc.cpp:273
+#: po/rc.cpp:210 po/rc.cpp:271 rc.cpp:210 rc.cpp:271
 msgid "Tags"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:124
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:127
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:120
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:123
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:124
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:127
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:120
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:123
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:216 po/rc.cpp:277 rc.cpp:216 rc.cpp:277
+#: po/rc.cpp:214 po/rc.cpp:275 rc.cpp:214 rc.cpp:275
 msgid "Description"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:131
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:134
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:127
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:130
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:131
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:134
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:127
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:130
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
-#: po/rc.cpp:219 po/rc.cpp:280 rc.cpp:219 rc.cpp:280
+#: po/rc.cpp:217 po/rc.cpp:278 rc.cpp:217 rc.cpp:278
 msgid "My Title"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:141
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:144
 #. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:137
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:140
 #. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:141
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:144
 #. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:137
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:140
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:222 po/rc.cpp:283 rc.cpp:222 rc.cpp:283
+#: po/rc.cpp:220 po/rc.cpp:281 rc.cpp:220 rc.cpp:281
 msgid "Title"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:148
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:151
 #. i18n: ectx: property (text), widget (QLabel, label_5)
-#: po/rc.cpp:225 rc.cpp:225
+#: po/rc.cpp:223 rc.cpp:223
 msgid "License"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:165
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:168
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:147
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:150
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:165
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:168
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:147
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:150
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:228 po/rc.cpp:286 rc.cpp:228 rc.cpp:286
+#: po/rc.cpp:226 po/rc.cpp:284 rc.cpp:226 rc.cpp:284
 msgid "Login"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:246
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:249
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:224
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:227
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:246
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:249
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:224
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:227
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#: po/rc.cpp:246 po/rc.cpp:304 src/mainwindow.cpp:243 rc.cpp:246 rc.cpp:304
+#: po/rc.cpp:244 po/rc.cpp:302 src/mainwindow.cpp:243 rc.cpp:244 rc.cpp:302
 msgid "Upload"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:266
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:269
 #. i18n: ectx: property (text), widget (KPushButton, cancelButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:244
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:247
 #. i18n: ectx: property (text), widget (KPushButton, cancelButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:266
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:269
 #. i18n: ectx: property (text), widget (KPushButton, cancelButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:244
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:247
 #. i18n: ectx: property (text), widget (KPushButton, cancelButton)
-#: po/rc.cpp:249 po/rc.cpp:307 rc.cpp:249 rc.cpp:307
+#: po/rc.cpp:247 po/rc.cpp:305 rc.cpp:247 rc.cpp:305
 msgid "Cancel"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:273
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:276
 #. i18n: ectx: property (text), widget (KPushButton, quitButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:251
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:254
 #. i18n: ectx: property (text), widget (KPushButton, quitButton)
-#. i18n: file: src/plugins/upload/blip/ui/blip.ui:273
+#. i18n: file: src/plugins/upload/blip/ui/blip.ui:276
 #. i18n: ectx: property (text), widget (KPushButton, quitButton)
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:251
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:254
 #. i18n: ectx: property (text), widget (KPushButton, quitButton)
-#: po/rc.cpp:252 po/rc.cpp:310 rc.cpp:252 rc.cpp:310
+#: po/rc.cpp:250 po/rc.cpp:308 rc.cpp:250 rc.cpp:308
 msgid "Quit"
 msgstr ""
 
-#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:34
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, YouTube)
+#: po/rc.cpp:253 rc.cpp:253
+msgid "YouTube"
+msgstr ""
+
+#. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:37
 #. i18n: ectx: property (text), widget (KTitleWidget, titleWidget)
-#: po/rc.cpp:258 rc.cpp:258
+#: po/rc.cpp:256 rc.cpp:256
 msgid ""
 "<html><font size=\"5\">YouTube</font><br /><b>Upload and share your videos!</"
 "html>"
@@ -602,79 +595,79 @@ msgstr ""
 
 #. i18n: file: src/recorditnow.kcfg:12
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
-#. i18n: file: src/ui/settings.ui:36
+#. i18n: file: src/ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
 #. i18n: file: src/recorditnow.kcfg:12
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
-#. i18n: file: src/ui/settings.ui:36
+#. i18n: file: src/ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:313 po/rc.cpp:325 rc.cpp:313 rc.cpp:325
+#: po/rc.cpp:311 po/rc.cpp:323 rc.cpp:311 rc.cpp:323
 msgid "Hide RecordItNow while recording"
 msgstr ""
 
 #. i18n: file: src/recorditnowui.rc:7
 #. i18n: ectx: ToolBar (mainToolBar)
-#: po/rc.cpp:316 rc.cpp:316
+#: po/rc.cpp:314 rc.cpp:314
 msgid "Main Toolbar"
 msgstr ""
 
-#. i18n: file: src/ui/settings.ui:20
+#. i18n: file: src/ui/settings.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:319 rc.cpp:319
+#: po/rc.cpp:317 rc.cpp:317
 msgid "Behavior "
 msgstr ""
 
-#. i18n: file: src/ui/settings.ui:29
+#. i18n: file: src/ui/settings.ui:32
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:322 rc.cpp:322
+#: po/rc.cpp:320 rc.cpp:320
 msgid "Enable system tray icon"
 msgstr ""
 
-#. i18n: file: src/ui/settings.ui:43
+#. i18n: file: src/ui/settings.ui:46
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:328 rc.cpp:328
+#: po/rc.cpp:326 rc.cpp:326
 msgid "Overwrite existing files"
 msgstr ""
 
-#. i18n: file: src/ui/settings.ui:50
+#. i18n: file: src/ui/settings.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:331 rc.cpp:331
+#: po/rc.cpp:329 rc.cpp:329
 msgid "Show file after record"
 msgstr ""
 
-#. i18n: file: src/ui/settings.ui:57
+#. i18n: file: src/ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
-#: po/rc.cpp:334 rc.cpp:334
+#: po/rc.cpp:332 rc.cpp:332
 msgid "Encode after record"
 msgstr ""
 
-#. i18n: file: src/ui/settings.ui:92
+#. i18n: file: src/ui/settings.ui:95
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:340 rc.cpp:340
+#: po/rc.cpp:338 rc.cpp:338
 msgid "Directory for temporary files:"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:48
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: po/rc.cpp:343 rc.cpp:343
+#: po/rc.cpp:341 rc.cpp:341
 msgid "Timer"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:112
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:346 rc.cpp:346
+#: po/rc.cpp:344 rc.cpp:344
 msgid "Frames per second"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:115
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:349 rc.cpp:349
+#: po/rc.cpp:347 rc.cpp:347
 msgid " FPS"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:170
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:355 rc.cpp:355
+#: po/rc.cpp:353 rc.cpp:353
 msgid "Backend"
 msgstr ""
 
@@ -686,28 +679,28 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
 #. i18n: file: src/ui/toolbarwidget.ui:193
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:358 po/rc.cpp:361 rc.cpp:358 rc.cpp:361
+#: po/rc.cpp:356 po/rc.cpp:359 rc.cpp:356 rc.cpp:359
 msgid "Output file"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:203
 #. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
-#: po/rc.cpp:364 rc.cpp:364
+#: po/rc.cpp:362 rc.cpp:362
 msgid "Play/Open"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:213
 #. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
-#: po/rc.cpp:367 rc.cpp:367
+#: po/rc.cpp:365 rc.cpp:365
 msgid "Delete"
 msgstr ""
 
-#: po/rc.cpp:368 rc.cpp:368
+#: po/rc.cpp:366 rc.cpp:366
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: po/rc.cpp:369 rc.cpp:369
+#: po/rc.cpp:367 rc.cpp:367
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
@@ -740,12 +733,12 @@ msgstr ""
 msgid "The encoder has crashed!"
 msgstr ""
 
-#: src/libs/upload/addaccountdialog.cpp:44
+#: src/libs/upload/addaccountdialog.cpp:50
 msgctxt "%1 = account name"
 msgid "Edit %1"
 msgstr ""
 
-#: src/libs/upload/addaccountdialog.cpp:54
+#: src/libs/upload/addaccountdialog.cpp:60
 msgid "Add a new Account"
 msgstr ""
 
@@ -810,7 +803,6 @@ msgid "No screen area selected."
 msgstr ""
 
 #: src/mainwindow.cpp:569 src/mainwindow.cpp:584
-#: src/plugins/upload/youtube/youtubeuploader.cpp:196
 msgid "Continue"
 msgstr ""
 
@@ -1006,7 +998,7 @@ msgid "Art"
 msgstr ""
 
 #: src/plugins/upload/blip/blipuploader.cpp:74
-#: src/plugins/upload/youtube/youtubeuploader.cpp:55
+#: src/plugins/upload/youtube/youtubeuploader.cpp:62
 msgid "Autos & Vehicles"
 msgstr ""
 
@@ -1019,7 +1011,7 @@ msgid "Citizen Journalism"
 msgstr ""
 
 #: src/plugins/upload/blip/blipuploader.cpp:77
-#: src/plugins/upload/youtube/youtubeuploader.cpp:56
+#: src/plugins/upload/youtube/youtubeuploader.cpp:63
 msgid "Comedy"
 msgstr ""
 
@@ -1048,7 +1040,7 @@ msgid "Friends"
 msgstr ""
 
 #: src/plugins/upload/blip/blipuploader.cpp:84
-#: src/plugins/upload/youtube/youtubeuploader.cpp:60
+#: src/plugins/upload/youtube/youtubeuploader.cpp:67
 msgid "Gaming"
 msgstr ""
 
@@ -1089,7 +1081,7 @@ msgid "Science"
 msgstr ""
 
 #: src/plugins/upload/blip/blipuploader.cpp:94
-#: src/plugins/upload/youtube/youtubeuploader.cpp:68
+#: src/plugins/upload/youtube/youtubeuploader.cpp:75
 msgid "Sports"
 msgstr ""
 
@@ -1136,86 +1128,109 @@ msgid ""
 "Reason: %2"
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:54
-msgid "Upload to YouTube"
+#: src/plugins/upload/blip/lib/kblipvideo.cpp:239
+msgctxt "%1 = error"
+msgid "Unkown error: %1."
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:147
-msgid "Authenticating..."
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:100
+msgid "Please authenticate first!"
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:161
-#: src/plugins/upload/youtube/uploadthread.cpp:169
-msgid "Unkown error"
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:114
+msgid "No such file: %1."
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:174
-msgid "Log in..."
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:118
+msgid "Title too long."
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:196
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:122
+msgid "Description too long."
+msgstr ""
+
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:126
+msgid "Too long tags."
+msgstr ""
+
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:131
+msgid "Tag %1 is too long."
+msgstr ""
+
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:134
+msgid "Tag %1 is too short."
+msgstr ""
+
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:151
+msgid "Cannot open video!"
+msgstr ""
+
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:256
 msgid "Authentication failed!"
 msgstr ""
 
-#: src/plugins/upload/youtube/uploadthread.cpp:211
-msgid "Uploading..."
+#: src/plugins/upload/youtube/lib/youtubeservice.cpp:267
+msgctxt "%1 = error"
+msgid ""
+"Upload failed!\n"
+"Response: %1"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:57
-msgid "Education"
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:58
-msgid "Entertainment"
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:59
-msgid "Film & Animation"
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:61
-msgid "Howto & Style"
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:62
-msgid "Music"
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:63
-msgid "News & Politics"
+#: src/plugins/upload/youtube/youtubeuploader.cpp:46
+msgid ""
+"By clicking 'Continue', you certify that you own all rights to the content "
+"or that you are authorized by the owner to make the content publicly "
+"available on YouTube, and that it otherwise complies with the YouTube Terms "
+"of Service located at <a href='http://www.youtube.com/t/terms'>http://www."
+"youtube.com/t/terms</a>."
 msgstr ""
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:64
-msgid "Nonprofit & Activism"
+msgid "Education"
 msgstr ""
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:65
-msgid "People & Blogs"
+msgid "Entertainment"
 msgstr ""
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:66
-msgid "Pets & Animals"
+msgid "Film & Animation"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:67
-msgid "Sience & Technology"
+#: src/plugins/upload/youtube/youtubeuploader.cpp:68
+msgid "Howto & Style"
 msgstr ""
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:69
+msgid "Music"
+msgstr ""
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:70
+msgid "News & Politics"
+msgstr ""
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:71
+msgid "Nonprofit & Activism"
+msgstr ""
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:72
+msgid "People & Blogs"
+msgstr ""
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:73
+msgid "Pets & Animals"
+msgstr ""
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:74
+msgid "Sience & Technology"
+msgstr ""
+
+#: src/plugins/upload/youtube/youtubeuploader.cpp:76
 msgid "Travel & Evends"
 msgstr ""
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:174
-msgctxt "%1 = youtube tag"
-msgid "The Tag %1 is too long."
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:185
-msgid "Please fill out all the fields."
-msgstr ""
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:191
-msgid "No such file: %1"
+msgid "Translation:"
 msgstr ""
 
 #: src/recordermanager.cpp:136

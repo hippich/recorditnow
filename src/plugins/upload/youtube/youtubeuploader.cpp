@@ -36,11 +36,19 @@
 
 
 
-#define GOOGLE QString("By clicking '%1,' you certify that you own all rights to the content or that "\
-                "you are authorized by the owner to make the content publicly available on YouTube, "\
-                "and that it otherwise complies with the YouTube Terms of Service located at "\
-                "http://www.youtube.com/t/terms.")
+#define GOOGLE                 "By clicking &apos;Continue&apos;, you certify that you own all rights to "\
+                               "the content or that you are authorized by the owner to make the "\
+                               "content publicly available on YouTube, and that it otherwise "\
+                               "complies with the YouTube Terms of Service located at "\
+                               "<a href='http://www.youtube.com/t/terms'>"\
+                               "http://www.youtube.com/t/terms</a>."
 
+static QString GOOGLETR = i18n("By clicking 'Continue', you certify that you own all rights to "
+                               "the content or that you are authorized by the owner to make the "
+                               "content publicly available on YouTube, and that it otherwise "
+                               "complies with the YouTube Terms of Service located at "
+                               "<a href='http://www.youtube.com/t/terms'>"
+                               "http://www.youtube.com/t/terms</a>.");
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<YouTubeUploader>();)
@@ -156,7 +164,20 @@ void YouTubeUploader::upload()
 
 
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
-    if (KMessageBox::warningContinueCancel(m_dialog, GOOGLE.arg(i18n("Continue"))) != KMessageBox::Continue) {
+    QString message(GOOGLE);
+
+
+    if (QString(GOOGLE) != GOOGLETR) {
+        message.append("<br>");
+        message.append("<br>");
+        message.append("<br>");
+        message.append(i18n("Translation:"));
+        message.append("<br>");
+        message.append("<br>");
+        message.append(GOOGLETR);
+    }
+
+    if (KMessageBox::warningContinueCancel(m_dialog, message) != KMessageBox::Continue) {
         cancelUpload();
         return;
     }
