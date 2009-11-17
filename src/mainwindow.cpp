@@ -451,13 +451,13 @@ void MainWindow::setupTray()
             m_tray = new KStatusNotifierItem(this);
             m_tray->setStatus(KStatusNotifierItem::Active);
             m_tray->setCategory(KStatusNotifierItem::ApplicationStatus);
-            m_tray->setIconByName("video-display");
-            m_tray->setToolTip("video-display", i18n("RecordItNow"), "");
+            m_tray->setIconByName("recorditnow");
+            m_tray->setToolTip("recorditnow", i18n("RecordItNow"), "");
             connect(m_tray, SIGNAL(activateRequested(bool,QPoint)), this,
                     SLOT(trayActivated(bool,QPoint)));
 #else
             m_tray = new KSystemTrayIcon(this);
-            m_tray->setIcon(KIcon("video-display"));
+            m_tray->setIcon(KIcon("recorditnow"));
             connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
             SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
             m_tray->show();
@@ -496,7 +496,7 @@ void MainWindow::setTrayOverlay(const QString &name)
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
         m_tray->setOverlayIconByName(name);
 #else
-        QPixmap icon = KIcon("video-display").pixmap(KIconLoader::SizeSmallMedium,
+        QPixmap icon = KIcon("recorditnow").pixmap(KIconLoader::SizeSmallMedium,
                                                      KIconLoader::SizeSmallMedium);
         if (!name.isEmpty()) {
             QPixmap overlay = KIcon(name).pixmap(KIconLoader::SizeSmallMedium/2,

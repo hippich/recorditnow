@@ -7,6 +7,6 @@ Name=RecordItNow
 Name[de]=RecordItNow
 
 Exec=recorditnow
-Icon=video-display
+Icon=recorditnow
 Type=Application
 Categories=Qt;KDE;AudioVideo;
