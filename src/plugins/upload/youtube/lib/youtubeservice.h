@@ -62,7 +62,7 @@ private:
     };
     typedef QPair<JobType, QString> JobData;
 
-    QHash<JobData, KJob*> m_jobs;
+    QHash<KJob*, JobData> m_jobs;
     QHash<QString, QString> m_token;
     bool m_authenticated;
 

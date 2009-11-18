@@ -47,10 +47,10 @@ YouTubeService::YouTubeService(QObject *parent)
 YouTubeService::~YouTubeService()
 {
 
-    QHashIterator<JobData, KJob*> it(m_jobs);
+    QHashIterator<KJob*, JobData> it(m_jobs);
     while (it.hasNext()) {
-        if (it.value()) {
-            it.value()->kill();
+        if (it.key()) {
+            it.key()->kill();
         }
     }
 
@@ -87,7 +87,7 @@ void YouTubeService::authenticate(const QString &account, const QString &passwor
     QByteArray postData = "Email="+account.toLatin1()+"&Passwd="+password.toLatin1()+"&service="\
                           "youtube&source=RecordItNow";
 
-    m_jobs[qMakePair(AuthJob, account)] = post(url, meta, postData, true);
+    m_jobs[post(url, meta, postData, true)] = qMakePair(AuthJob, account);
 
 }
 
@@ -213,7 +213,7 @@ void YouTubeService::upload(const YouTubeVideo *video, const QString &account)
     meta.insert("Content-Length", "Content-Length: "+QString::number(postData.size()).toLatin1());
 
 
-    m_jobs[qMakePair(UploadJob, account)] = post(url, meta, postData);
+    m_jobs[post(url, meta, postData)] = qMakePair(UploadJob, account);
 
 }
 
@@ -222,7 +222,7 @@ void YouTubeService::search(const QString &categoryOrKeyword, const QString &uni
 {
 
     const KUrl url("http://gdata.youtube.com/feeds/api/videos/-/"+categoryOrKeyword);
-    m_jobs[qMakePair(SearchJob, uniqueId)] = get(url, KIO::NoReload, true);
+    m_jobs[get(url, KIO::NoReload, true)] = qMakePair(SearchJob, uniqueId);
 
 }
 
@@ -230,10 +230,10 @@ void YouTubeService::search(const QString &categoryOrKeyword, const QString &uni
 void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
 {
 
-    JobData jData = m_jobs.key(job);
+    JobData jData = m_jobs[job];
     const QString id = jData.second;
     const JobType type = jData.first;
-    m_jobs.remove(jData);
+    m_jobs.remove(job);
 
     kDebug() << "job finished:" << type << id << data;
 
