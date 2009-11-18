@@ -250,11 +250,25 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
 }
 
 
-QString YouTubeService::search(const QString &categoryOrKeyword)
+QString YouTubeService::search(const QString &key, const QString &author, const int &start,
+                               const int &max)
 {
 
+    if (start < 1) {
+        return QString();
+    }
+
     const QString id = getUniqueId();
-    const KUrl url("http://gdata.youtube.com/feeds/api/videos/-/"+categoryOrKeyword);
+
+    KUrl url("http://gdata.youtube.com/feeds/api/videos");
+    url.addQueryItem("q", key);
+    url.addQueryItem("start-index", QString::number(start));
+    url.addQueryItem("max-results", QString::number(max));
+
+    if (!author.isEmpty()) {
+        url.addQueryItem("author", author);
+    }
+
     m_jobs[get(url, KIO::NoReload, true)] = qMakePair(SearchJob, id);
     return id;
 

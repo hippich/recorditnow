@@ -52,7 +52,8 @@ public:
 
     QString authenticate(const QString &account, const QString &password);
     QString upload(const YouTubeVideo *video, const QString &account);
-    QString search(const QString &categoryOrKeyword);
+    QString search(const QString &key,  const QString &author = QString(), const int &start = 1,
+                   const int &max = 10);
     QString getFavorites(const QString &user, const int &max);
 
 

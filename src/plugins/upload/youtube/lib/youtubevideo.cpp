@@ -279,7 +279,7 @@ void YouTubeVideo::jobFinished(KJob *job, const QByteArray &data)
         while (file.exists(name)) {
             int number = name.mid(name.lastIndexOf('/')+1).toInt();
             number++;
-            name.replace(QRegExp("[0-9]*$"), QString::number(number));
+            name.replace(QRegExp("[0-9]+$"), QString::number(number));
         }
         file.setFileName(name);
 
