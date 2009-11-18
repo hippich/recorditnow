@@ -24,6 +24,7 @@
 // KDE
 #include <kdebug.h>
 #include <kio/job.h>
+#include <kcodecs.h>
 
 // Qt
 #include <QtCore/QDateTime>
@@ -318,18 +319,37 @@ void YouTubeVideo::updateThumbnail(const QString &thumbnailDir)
 }
 
 
+bool YouTubeVideo::loadThumbnail(const QString &thumbnailDir)
+{
+
+    const QString file = thumbnailDir+'/'+getMD5String();
+    if (QFile::exists(file)) {
+        setThumbnail(file);
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+
+QByteArray YouTubeVideo::getMD5String() const
+{
+
+    KMD5 context ((title()+'_'+description()).toLatin1());
+    return context.hexDigest().data();
+
+}
+
+
 void YouTubeVideo::jobFinished(KJob *job, const QByteArray &data)
 {
 
     if (job == m_thumbnailJob) {
-        QFile file(thumbnail()+"/0");
-        QString name = file.fileName();
-        while (file.exists(name)) {
-            int number = name.mid(name.lastIndexOf('/')+1).toInt();
-            number++;
-            name.replace(QRegExp("[0-9]+$"), QString::number(number));
+        QFile file(thumbnail()+'/'+getMD5String());
+        if (file.exists()) {
+            emit thumbnailUpdateFailed();
         }
-        file.setFileName(name);
 
         if (!file.open(QIODevice::WriteOnly)) {
             kWarning() << "open() failed!";

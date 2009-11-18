@@ -76,11 +76,14 @@ public:
     void setFavoriteCount(const int &favCount);
 
     void updateThumbnail(const QString &thumbnailDir);
+    bool loadThumbnail(const QString &thumbnailDir);
 
 
 private:
     QHash<QString, QVariant> m_data;
     KJob *m_thumbnailJob;
+
+    QByteArray getMD5String() const;
 
 
 protected slots:
