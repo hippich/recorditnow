@@ -38,7 +38,7 @@ InfoJob::InfoJob(QNetworkReply *reply, QObject *parent)
     qRegisterMetaType< QPair<QString,QString> >("QPair<QString,QString>");
     m_state = InfoJob::Idle;
 
-    setAutoDelete(true);
+    setAutoDelete(false);
 
     connect(m_reply, SIGNAL(uploadProgress(qint64,qint64)), this,
             SLOT(uploadProgress(qint64,qint64)));

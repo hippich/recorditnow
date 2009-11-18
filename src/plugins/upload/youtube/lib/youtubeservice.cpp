@@ -100,12 +100,6 @@ QString YouTubeService::authenticate(const QString &account, const QString &pass
 
     KIO::MetaData meta;
     meta.insert("content-type", "Content-Type: application/x-www-form-urlencoded");
-    meta.insert("ssl_no_client_cert", "TRUE");
-    meta.insert("ssl_no_ui", "false");
-    meta.insert("ssl", "true");
-    meta.insert("UseCache", "false");
-    meta.insert("cookies", "none");
-    meta.insert("no-auth", "true");
     meta.insert("errorPage", "false");
 
     QByteArray postData = "Email="+account.toLatin1()+"&Passwd="+password.toLatin1()+"&service="\
@@ -189,18 +183,6 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
         mime = "application/octet-stream";
     }
 
-    KIO::MetaData meta;
-
- /*   QString header = QString("Authorization: GoogleLogin auth=%1\r\n"\
-                             "GData-Version: 2\r\n"\
-                             "X-GData-Key: key=%2\r\n"\
-                             "Slug: %3\r\n"\
-                             "Connection: close\r\n").arg(m_token[account]).arg(DEV_KEY).arg(fileName);
-*/
-    meta.insert("content-type", "Content-Type: multipart/related; boundary=\""+BOUNDARY+"\"");
-   // meta.insert("customHTTPHeader", header);
-
-
     QString XML = "<?xml version=\"1.0\"?>"+CRLF+\
                      "<entry xmlns=\"http://www.w3.org/2005/Atom\""+CRLF+\
                        "xmlns:media=\"http://search.yahoo.com/mrss/\""+CRLF+\
@@ -239,12 +221,9 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
     postData.append("--"+BOUNDARY+"--");
     postData.append(CRLF);
 
-    meta.insert("Content-Length", "Content-Length: "+QString::number(postData.size()).toLatin1());
 
     const QString id = getUniqueId();
     m_accountIds[id] = account;
-
-   // m_jobs[post(url, meta, postData)] = qMakePair(UploadJob, account);
 
     QHash<QString, QString> header;
     header["Authorization"] = "GoogleLogin auth="+m_token[account].toLatin1();

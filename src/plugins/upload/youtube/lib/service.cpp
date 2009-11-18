@@ -98,6 +98,7 @@ void Service::infoJobResult(KJob *job)
 
     kDebug() << "jobFinished..!";
     jobFinished(job, static_cast<InfoJob*>(job)->getResponse());
+    job->deleteLater();
 
 }
 
