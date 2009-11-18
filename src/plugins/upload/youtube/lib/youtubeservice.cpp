@@ -65,11 +65,34 @@ bool YouTubeService::isAuthenticated(const QString &account) const
 }
 
 
-void YouTubeService::authenticate(const QString &account, const QString &password)
+QString YouTubeService::getUniqueId()
+{
+
+    QString id;
+    for (int i = 0 ; i < 100 ; ++i) {
+        int number;
+        number = rand()%122;
+        if (48 > number) {
+            number += 48;
+        }
+        if ( (57 < number) && (65 > number)) {
+            number += 7;
+        }
+        if ((90 < number) && (97 > number)) {
+            number += 6;
+        }
+        id += (char)number;
+    }
+    return id;
+
+}
+
+
+QString YouTubeService::authenticate(const QString &account, const QString &password)
 {
 
     if (account.isEmpty() || password.isEmpty()) {
-        return;
+        return QString();
     }
 
     const KUrl url("https://www.google.com/youtube/accounts/ClientLogin");
@@ -87,12 +110,17 @@ void YouTubeService::authenticate(const QString &account, const QString &passwor
     QByteArray postData = "Email="+account.toLatin1()+"&Passwd="+password.toLatin1()+"&service="\
                           "youtube&source=RecordItNow";
 
+    const QString id = getUniqueId();
+    m_accountIds[id] = account;
+
     m_jobs[post(url, meta, postData, true)] = qMakePair(AuthJob, account);
+
+    return id;
 
 }
 
 
-void YouTubeService::upload(const YouTubeVideo *video, const QString &account)
+QString YouTubeService::upload(const YouTubeVideo *video, const QString &account)
 {
 
     QString errorString;
@@ -138,7 +166,7 @@ void YouTubeService::upload(const YouTubeVideo *video, const QString &account)
 
     if (!errorString.isEmpty()) {
         emit error(errorString, account);
-        return;
+        return QString();
     }
 
     const KUrl url("http://uploads.gdata.youtube.com/feeds/api/users/"+account+"/uploads");
@@ -149,7 +177,7 @@ void YouTubeService::upload(const YouTubeVideo *video, const QString &account)
     QFile file(videoFile);
     if (!file.open(QIODevice::ReadOnly)) {
         emit error(i18n("Cannot open video!"), account);
-        return;
+        return QString ();
     }
     QByteArray videoData = file.readAll();
     file.close();
@@ -212,17 +240,35 @@ void YouTubeService::upload(const YouTubeVideo *video, const QString &account)
 
     meta.insert("Content-Length", "Content-Length: "+QString::number(postData.size()).toLatin1());
 
+    const QString id = getUniqueId();
+    m_accountIds[id] = account;
 
     m_jobs[post(url, meta, postData)] = qMakePair(UploadJob, account);
+
+    return id;
 
 }
 
 
-void YouTubeService::search(const QString &categoryOrKeyword, const QString &uniqueId)
+QString YouTubeService::search(const QString &categoryOrKeyword)
 {
 
+    const QString id = getUniqueId();
     const KUrl url("http://gdata.youtube.com/feeds/api/videos/-/"+categoryOrKeyword);
-    m_jobs[get(url, KIO::NoReload, true)] = qMakePair(SearchJob, uniqueId);
+    m_jobs[get(url, KIO::NoReload, true)] = qMakePair(SearchJob, id);
+    return id;
+
+}
+
+
+QString YouTubeService::getFavorites(const QString &user, const int &max)
+{
+
+    const QString id = getUniqueId();
+    KUrl url("http://gdata.youtube.com/feeds/api/users/"+user+"/favorites?v=2");
+    url.addQueryItem("max-results", QString::number(max));
+    m_jobs[get(url, KIO::NoReload, true)] = qMakePair(FavoritesJob, id);
+    return id;
 
 }
 
@@ -231,7 +277,7 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
 {
 
     JobData jData = m_jobs[job];
-    const QString id = jData.second;
+    QString id = jData.second;
     const JobType type = jData.first;
     m_jobs.remove(job);
 
@@ -242,6 +288,11 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
 
     switch (type) {
     case AuthJob: {
+
+            const QString key = id;
+            id = m_accountIds.key(key);
+            m_accountIds.remove(key);
+
             if (response.startsWith("Auth=")) {
                 response.remove("Auth=");
 
@@ -258,6 +309,11 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
             break;
         }
     case UploadJob: {
+
+            const QString key = id;
+            id = m_accountIds.key(key);
+            m_accountIds.remove(key);
+
             QXmlStreamReader reader(response);
             while (!reader.atEnd()) {
                 reader.readNext();
@@ -271,6 +327,7 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
             emit uploadFinished(id);
             break;
         }
+    case FavoritesJob:
     case SearchJob: {
             QList<YouTubeVideo*> videoList;
             QXmlStreamReader reader(data);
@@ -287,7 +344,11 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
                     }
                 }
             }
-            emit searchFinished(videoList, id);
+            if (type == SearchJob) {
+                emit searchFinished(videoList, id);
+            } else {
+                emit favoritesFinished(videoList, id);
+            }
             break;
         }
     default: break;

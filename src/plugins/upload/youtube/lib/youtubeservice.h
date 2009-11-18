@@ -48,21 +48,25 @@ public:
     ~YouTubeService();
 
     bool isAuthenticated(const QString &account) const;
+    static QString getUniqueId();
 
-    void authenticate(const QString &account, const QString &password);
-    void upload(const YouTubeVideo *video, const QString &account);
-    void search(const QString &categoryOrKeyword, const QString &uniqueId);
+    QString authenticate(const QString &account, const QString &password);
+    QString upload(const YouTubeVideo *video, const QString &account);
+    QString search(const QString &categoryOrKeyword);
+    QString getFavorites(const QString &user, const int &max);
 
 
 private:
     enum JobType {
         AuthJob = 0,
         UploadJob = 1,
-        SearchJob = 2
+        SearchJob = 2,
+        FavoritesJob = 3
     };
     typedef QPair<JobType, QString> JobData;
 
     QHash<KJob*, JobData> m_jobs;
+    QHash<QString, QString> m_accountIds;
     QHash<QString, QString> m_token;
     bool m_authenticated;
 
@@ -81,6 +85,7 @@ signals:
     void authenticated(const QString &account);
     void uploadFinished(const QString &account);
     void searchFinished(const QList<YouTubeVideo*> &videos, const QString &uniqueId);
+    void favoritesFinished(const QList<YouTubeVideo*> &videos, const QString &uniqueId);
     void canceled(const QString &id);
 
 
