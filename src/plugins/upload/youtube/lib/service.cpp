@@ -20,10 +20,17 @@
 
 // own
 #include "service.h"
+#include "infojob.h"
 
 // KDE
 #include <kdebug.h>
 #include <kio/scheduler.h>
+#include <kapplication.h>
+
+// Qt
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
 
 
 namespace KoogleData {
@@ -33,7 +40,8 @@ Service::Service(QObject *parent)
     : QObject(parent)
 {
 
-
+    m_manager = new QNetworkAccessManager(this);
+    connect(m_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(infoJobFinished(QNetworkReply*)));
 
 }
 
@@ -41,7 +49,7 @@ Service::Service(QObject *parent)
 Service::~Service()
 {
 
-
+    delete m_manager;
 
 }
 
@@ -77,6 +85,23 @@ void Service::jobDataReq(KIO::Job *job, QByteArray &data)
 }
 
 
+void Service::infoJobFinished(QNetworkReply *reply)
+{
+
+    reply->deleteLater();
+
+}
+
+
+void Service::infoJobResult(KJob *job)
+{
+
+    kDebug() << "jobFinished..!";
+    jobFinished(job, static_cast<InfoJob*>(job)->getResponse());
+
+}
+
+
 KJob *Service::post(const KUrl &url, const KIO::MetaData &meta, const QByteArray &postData,
                     const bool &hideProgress)
 {
@@ -107,6 +132,28 @@ KJob *Service::post(const KUrl &url, const KIO::MetaData &meta, const QByteArray
     m_data[job] = QByteArray();
 
     KIO::Scheduler::scheduleJob(job);
+
+    return job;
+
+}
+
+
+KJob *Service::post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data)
+{
+
+    QNetworkRequest request;
+    request.setUrl(url);
+
+    QHashIterator<QString, QString> it(header);
+    while (it.hasNext()) {
+        it.next();
+        request.setRawHeader(it.key().toLatin1(), it.value().toLatin1());
+    }
+    QNetworkReply *reply = m_manager->post(request, data);
+
+    InfoJob *job = new InfoJob(reply);
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(infoJobResult(KJob*)));
+    job->setTotalAmount(data.size());
 
     return job;
 

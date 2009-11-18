@@ -17,63 +17,61 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef SERVICE_H
-#define SERVICE_H
+
+#ifndef INFOJOB_H
+#define INFOJOB_H
 
 
 // KDE
-#include <kurl.h>
 #include <kio/job.h>
 
 // Qt
-#include <QtCore/QObject>
+#include <QtCore/QTime>
 
 
 class QNetworkReply;
-class QNetworkAccessManager;
-namespace KoogleData {
-
-
-class Service : public QObject
+class InfoJob : public KJob
 {
     Q_OBJECT
 
 
 public:
-    Service(QObject *parent = 0);
-    ~Service();
+    enum State {
+        Idle = 0,
+        Upload = 1,
+        Download = 2,
+        Kill = 3
+    };
+
+    InfoJob(QNetworkReply *reply, QObject *parent = 0);
+    ~InfoJob();
+
+    InfoJob::State state() const;
+    QByteArray getResponse() const;
+
+    void start();
+    void setTotalAmount(qulonglong amount);
 
 
 private:
-    QHash<KJob*, QByteArray> m_data;
-    QHash<KIO::Job*, QByteArray> m_reqData;
-    QNetworkAccessManager *m_manager;
+    QNetworkReply *m_reply;
+    InfoJob::State m_state;
+    QTime m_speedTime;
+
+    void setState(const InfoJob::State &newState);
 
 
 private slots:
-    void jobData(KIO::Job *job, const QByteArray &data);
-    void jobResult(KJob *job);
-    void jobDataReq(KIO::Job *job, QByteArray &data);
-    void infoJobFinished(QNetworkReply *reply);
-    void infoJobResult(KJob *job);
+    void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void uploadFinished();
 
 
 protected:
-    KJob *post(const KUrl &url, const KIO::MetaData &meta,  const QByteArray &postData,
-               const bool &hideProgress = false);
-    KJob *get(const KUrl &url, const KIO::LoadType &loadType, const bool &hideProgress = false);
-    KJob *post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data);
+     bool doKill();
 
 
-protected slots:
-    virtual void jobFinished(KJob *job, const QByteArray &data);
+};
 
 
-
-}; // Service
-
-
-}; // KoogleData
-
-
-#endif // SERVICE_H
+#endif // INFOJOB_H

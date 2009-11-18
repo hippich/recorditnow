@@ -191,14 +191,14 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
 
     KIO::MetaData meta;
 
-    QString header = QString("Authorization: GoogleLogin auth=%1\r\n"\
+ /*   QString header = QString("Authorization: GoogleLogin auth=%1\r\n"\
                              "GData-Version: 2\r\n"\
                              "X-GData-Key: key=%2\r\n"\
                              "Slug: %3\r\n"\
                              "Connection: close\r\n").arg(m_token[account]).arg(DEV_KEY).arg(fileName);
-
+*/
     meta.insert("content-type", "Content-Type: multipart/related; boundary=\""+BOUNDARY+"\"");
-    meta.insert("customHTTPHeader", header);
+   // meta.insert("customHTTPHeader", header);
 
 
     QString XML = "<?xml version=\"1.0\"?>"+CRLF+\
@@ -244,7 +244,18 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
     const QString id = getUniqueId();
     m_accountIds[id] = account;
 
-    m_jobs[post(url, meta, postData)] = qMakePair(UploadJob, account);
+   // m_jobs[post(url, meta, postData)] = qMakePair(UploadJob, account);
+
+    QHash<QString, QString> header;
+    header["Authorization"] = "GoogleLogin auth="+m_token[account].toLatin1();
+    header["GData-Version"] = "2";
+    header["X-GData-Key"] = "key="+QString(DEV_KEY).toLatin1();
+    header["Connection"] = "close";
+    header["Slug"] = fileName.toLatin1();
+    header["Content-Type"] = "multipart/related; boundary=\""+BOUNDARY+"\"";
+    header["Content-Length"] = QString::number(postData.size()).toLatin1();
+
+    m_jobs[post(url, header, postData)] = qMakePair(UploadJob, id);
 
     return id;
 
@@ -298,11 +309,12 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
     JobData jData = m_jobs[job];
     QString id = jData.second;
     const JobType type = jData.first;
+    const int ret = job->error();
+
     m_jobs.remove(job);
 
     kDebug() << "job finished:" << type << id << data;
 
-    const int ret = job->error();
     QString response = data.trimmed();
 
     switch (type) {

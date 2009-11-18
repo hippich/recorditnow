@@ -1,5 +1,6 @@
 
 set(SRCS
+    infojob.cpp
     service.cpp
     youtubeservice.cpp
     youtubevideo.cpp)
