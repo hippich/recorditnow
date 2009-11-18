@@ -82,11 +82,11 @@ protected slots:
 
 
 signals:
-    void error(const QString &reason, const QString &accountOrId);
-    void authenticated(const QString &account);
-    void uploadFinished(const QString &account);
-    void searchFinished(const QList<YouTubeVideo*> &videos, const QString &uniqueId);
-    void favoritesFinished(const QList<YouTubeVideo*> &videos, const QString &uniqueId);
+    void error(const QString &reason, const QString &id);
+    void authenticated(const QString &id);
+    void uploadFinished(const QString &id);
+    void searchFinished(const QList<YouTubeVideo*> &videos, const QString &id);
+    void favoritesFinished(const QList<YouTubeVideo*> &videos, const QString &id);
     void canceled(const QString &id);
 
 

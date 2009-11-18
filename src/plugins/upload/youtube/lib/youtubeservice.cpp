@@ -314,7 +314,7 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
                 QString user = lines.last();
                 user.remove(QRegExp(".*="));
                 m_token[user] = lines.first();
-                emit authenticated(user);
+                emit authenticated(id);
             } else if (ret == KIO::ERR_USER_CANCELED) {
                 emit canceled(id);
             } else {
