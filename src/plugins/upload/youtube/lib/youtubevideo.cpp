@@ -349,6 +349,7 @@ void YouTubeVideo::jobFinished(KJob *job, const QByteArray &data)
         QFile file(thumbnail()+'/'+getMD5String());
         if (file.exists()) {
             emit thumbnailUpdateFailed();
+            return;
         }
 
         if (!file.open(QIODevice::WriteOnly)) {
