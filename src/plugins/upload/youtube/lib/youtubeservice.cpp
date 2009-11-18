@@ -391,21 +391,19 @@ YouTubeVideo *YouTubeService::readEntry(QXmlStreamReader *reader)
             } else if (reader->name() == "author") {
                 reader->readNext();
                 if (reader->name() == "name") {
-                    QString author = reader->readElementText();
-                    video->setAuthor(author);
+                    video->setAuthor(reader->readElementText());
                 }
             } else if (reader->name() == "published") {
                 video->setPublished(QDateTime::fromString(reader->readElementText(), Qt::ISODate));
             } else if (reader->namespaceUri() == "http://gdata.youtube.com/schemas/2007"
                        && reader->name() == "statistics") {
-
-                QString viewCount = reader->attributes().value("viewCount").toString();
-                video->setViewCount(viewCount.toInt());
+                video->setViewCount(reader->attributes().value("viewCount").toString().toInt());
+                video->setFavoriteCount(reader->attributes().value("favoriteCount").toString().toInt());
             }
             else if (reader->namespaceUri() == "http://search.yahoo.com/mrss/"
                      && reader->name() == "group") {
 
-                // read media group
+                // media group
                 while (!reader->atEnd()) {
                     reader->readNext();
                     if (reader->isEndElement() && reader->name() == "group") {
@@ -423,9 +421,16 @@ YouTubeVideo *YouTubeService::readEntry(QXmlStreamReader *reader)
                         } else if (reader->name() == "duration") {
                             QString duration = reader->attributes().value("seconds").toString();
                             video->setDuration(duration.toInt());
+                        } else if (reader->name() == "keywords") {
+                            video->setKeywords(reader->readElementText());
+                        } else if (reader->name() == "category") {
+                            video->setCategory(reader->readElementText());
                         }
                     }
                 }
+            } else if (reader->name() == "rating") {
+                video->setRating(reader->attributes().value("average").toString().toDouble());
+                video->setRaters(reader->attributes().value("numRaters").toString().toInt());
             }
         }
     }

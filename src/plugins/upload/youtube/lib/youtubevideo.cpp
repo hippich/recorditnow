@@ -142,6 +142,30 @@ QString YouTubeVideo::thumbnail() const
 }
 
 
+double YouTubeVideo::rating() const
+{
+
+    return m_data["Rating"].toDouble();
+
+}
+
+
+int YouTubeVideo::raters() const
+{
+
+    return m_data["Raters"].toInt();
+
+}
+
+
+int YouTubeVideo::favoriteCount() const
+{
+
+    return m_data["FavCount"].toInt();
+
+}
+
+
 void YouTubeVideo::setTitle(const QString &title)
 {
 
@@ -234,6 +258,30 @@ void YouTubeVideo::setThumbnail(const QString &file)
 {
 
     m_data["ThumbnailFile"] = file;
+
+}
+
+
+void YouTubeVideo::setRating(const double &rating)
+{
+
+    m_data["Rating"] = rating;
+
+}
+
+
+void YouTubeVideo::setRaters(const int &raters)
+{
+
+    m_data["Raters"] = raters;
+
+}
+
+
+void YouTubeVideo::setFavoriteCount(const int &favCount)
+{
+
+    m_data["FavCount"] = favCount;
 
 }
 

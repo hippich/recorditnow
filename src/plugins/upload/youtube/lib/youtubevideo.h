@@ -55,6 +55,9 @@ public:
     QDateTime published() const;
     QString file() const;
     QString thumbnail() const;
+    double rating() const;
+    int raters() const;
+    int favoriteCount() const;
 
     void setTitle(const QString &title);
     void setDescription(const QString &description);
@@ -68,6 +71,9 @@ public:
     void setPublished(const QDateTime &date);
     void setFile(const QString &file);
     void setThumbnail(const QString &file);
+    void setRating(const double &rating);
+    void setRaters(const int &raters);
+    void setFavoriteCount(const int &favCount);
 
     void updateThumbnail(const QString &thumbnailDir);
 
