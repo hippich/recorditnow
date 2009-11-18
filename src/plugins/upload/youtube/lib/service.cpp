@@ -37,6 +37,7 @@ Service::Service(QObject *parent)
 
 }
 
+
 Service::~Service()
 {
 
@@ -63,15 +64,37 @@ void Service::jobResult(KJob *job)
 }
 
 
+void Service::jobDataReq(KIO::Job *job, QByteArray &data)
+{
+
+    data = m_reqData[job].left(1024*1024);
+    m_reqData[job] = m_reqData[job].mid(1024*1024);
+
+    if (m_reqData[job].size() == 0) {
+        m_reqData.remove(job);
+    }
+
+}
+
+
 KJob *Service::post(const KUrl &url, const KIO::MetaData &meta, const QByteArray &postData,
                     const bool &hideProgress)
 {
 
     KIO::TransferJob *job;
+
+    KIO::JobFlags flags;
     if (hideProgress) {
-        job = KIO::http_post(url, postData, KIO::HideProgressInfo);
+        flags = KIO::HideProgressInfo;
+    }
+
+    if (postData.size() > (1024*1024)) {
+        job = KIO::http_post(url, QByteArray(), flags);
+        m_reqData[job] = postData;
+        connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this,
+                SLOT(jobDataReq(KIO::Job*,QByteArray&)));
     } else {
-        job = KIO::http_post(url, postData);
+        job = KIO::http_post(url, postData, flags);
     }
 
     job->addMetaData(meta);
@@ -97,7 +120,7 @@ KJob *Service::get(const KUrl &url, const KIO::LoadType &loadType, const bool &h
     if (hideProgress) {
         job = KIO::get(url, loadType, KIO::HideProgressInfo);
     } else {
-        job = KIO::get(url, loadType, false);
+        job = KIO::get(url, loadType);
     }
 
     job->setAutoDelete(true);

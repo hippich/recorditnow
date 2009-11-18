@@ -43,11 +43,13 @@ public:
 
 private:
     QHash<KJob*, QByteArray> m_data;
+    QHash<KIO::Job*, QByteArray> m_reqData;
 
 
 private slots:
     void jobData(KIO::Job *job, const QByteArray &data);
     void jobResult(KJob *job);
+    void jobDataReq(KIO::Job *job, QByteArray &data);
 
 
 protected:
