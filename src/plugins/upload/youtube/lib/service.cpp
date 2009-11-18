@@ -97,7 +97,7 @@ KJob *Service::get(const KUrl &url, const KIO::LoadType &loadType, const bool &h
     if (hideProgress) {
         job = KIO::get(url, loadType, KIO::HideProgressInfo);
     } else {
-        job = KIO::get(url, loadType);
+        job = KIO::get(url, loadType, false);
     }
 
     job->setAutoDelete(true);
