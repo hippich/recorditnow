@@ -23,7 +23,7 @@
 
 // KDE
 #include <kdebug.h>
-
+#include <kio/scheduler.h>
 
 
 namespace KoogleData {
@@ -83,6 +83,8 @@ KJob *Service::post(const KUrl &url, const KIO::MetaData &meta, const QByteArray
 
     m_data[job] = QByteArray();
 
+    KIO::Scheduler::scheduleJob(job);
+
     return job;
 
 }
@@ -104,6 +106,8 @@ KJob *Service::get(const KUrl &url, const KIO::LoadType &loadType, const bool &h
     connect(job, SIGNAL(result(KJob* )), SLOT(jobResult(KJob*)));
 
     m_data[job] = QByteArray();
+
+    KIO::Scheduler::scheduleJob(job);
 
     return job;
 

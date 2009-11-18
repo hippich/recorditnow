@@ -258,6 +258,10 @@ QString YouTubeService::search(const QString &key, const QString &author, const 
         return QString();
     }
 
+    if (max > 50) {
+        return QString();
+    }
+
     const QString id = getUniqueId();
 
     KUrl url("http://gdata.youtube.com/feeds/api/videos");
