@@ -169,8 +169,8 @@ public:
     /**
      * sets the rating for the video
      *
-     * max: 10.0
-     * min: 0.0
+     * max: 5.0
+     * min: 1.0
      *
      * @param rating the rating
      */
@@ -189,9 +189,11 @@ public:
      */
     void updateThumbnail(const QString &thumbnailDir);
     /**
-     * loads the thumbnail from a local folder
+     * trying to load the thumbnail from a local folder
      *
      * @param thumbnailDir the folder where the thumbnail was saved
+     * @return false if the thumbnail does not exist
+     * @return true if the thumbnail was found
      */
     bool loadThumbnail(const QString &thumbnailDir);
 
