@@ -31,6 +31,8 @@
 // Qt
 #include <QtCore/QFile>
 #include <QtCore/QHash>
+#include <QtXml/QXmlStreamReader>
+#include <QtCore/QDateTime>
 
 
 BlipService::BlipService(QObject *parent) :
@@ -45,7 +47,7 @@ BlipService::BlipService(QObject *parent) :
 BlipService::~BlipService()
 {
 
-    QHashIterator<KJob*, QString> it(m_jobs);
+    QHashIterator<KJob*, JobData> it(m_jobs);
     while (it.hasNext()) {
         it.next();
         if (it.key()) {
@@ -88,8 +90,8 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
     fields["title"] = video->title();
     fields["description"] = video->description();
     fields["topics"] = video->keywords().join(", ");
-    fields["categories_id"] = QString::number(video->category());
-    fields["license"] = QString::number(video->license());
+    fields["categories_id"] = QString::number(video->m_categorys.key(video->category()));
+    fields["license"] = QString::number(video->m_licenses.key(video->license()));
 
 
     QHash<QString, QString> files;
@@ -141,7 +143,23 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
 
     const QString id = getUniqueId();
 
-    m_jobs[post(url, header, data)] = id;
+    m_jobs[post(url, header, data)] = qMakePair(UploadJob, id);
+
+    return id;
+
+}
+
+
+QString BlipService::search(const QString &term)
+{
+
+    KUrl url("http://www.blip.tv/search/");
+    url.addQueryItem("search", term);
+    url.addQueryItem("skin", "rss");
+
+    const QString id = getUniqueId();
+
+    m_jobs[get(url, KIO::NoReload, true)] = qMakePair(SearchJob, id);
 
     return id;
 
@@ -151,7 +169,8 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
 void BlipService::jobFinished(KJob *job, const QByteArray &data)
 {
 
-    const QString id = m_jobs[job];
+    const JobType type = m_jobs[job].first;
+    const QString id = m_jobs[job].second;
     const int ret = job->error();
     QString text = data;
     QString errorString;
@@ -160,27 +179,120 @@ void BlipService::jobFinished(KJob *job, const QByteArray &data)
 
     kDebug() << "response:" << data;
 
-    const QRegExp rx("<error>.*</error>");
-    rx.indexIn(text);
-    if (!rx.cap().isEmpty()) {
-        errorString = rx.cap();
-        errorString.remove("<error>");
-        errorString.remove("</error>");
-    } else if (ret != 0 && ret != KIO::ERR_USER_CANCELED) {
-        errorString = job->errorString();
-        if (errorString.isEmpty()) {
-            errorString = i18nc("%1 = error", "Unkown error: %1.", ret);
-        }
-    }
+    switch (type) {
+    case UploadJob: {
+            const QRegExp rx("<error>.*</error>");
+            rx.indexIn(text);
+            if (!rx.cap().isEmpty()) {
+                errorString = rx.cap();
+                errorString.remove("<error>");
+                errorString.remove("</error>");
+            } else if (ret != 0 && ret != KIO::ERR_USER_CANCELED) {
+                errorString = job->errorString();
+                if (errorString.isEmpty()) {
+                    errorString = i18nc("%1 = error", "Unkown error: %1.", ret);
+                }
+            }
 
-    if (ret == KIO::ERR_USER_CANCELED) {
-        emit canceled(id);
-    } else if (!errorString.isEmpty()) {
-        emit error(errorString, id);
-    } else {
-        emit uploadFinished(id);
+            if (ret == KIO::ERR_USER_CANCELED) {
+                emit canceled(id);
+            } else if (!errorString.isEmpty()) {
+                emit error(errorString, id);
+            } else {
+                emit uploadFinished(id);
+            }
+            break;
+        }
+    case SearchJob: {
+            QList<BlipVideo*> videoList;
+            QXmlStreamReader reader(data);
+            while (!reader.atEnd()) {
+                reader.readNext();
+                if (reader.name() == "item") {
+                    videoList.append(readEntry(&reader));
+                }
+            }
+            emit searchFinished(videoList, id);
+            break;
+        }
+    default: break;
     }
 
 }
 
 
+
+BlipVideo *BlipService::readEntry(QXmlStreamReader *reader)
+{
+
+    BlipVideo *video = new BlipVideo(this);
+
+    reader->readNextStartElement();
+    while (reader->name() != "item") {
+        reader->readNext();
+
+        if (reader->name().isEmpty() || reader->isEndElement()) {
+            continue;
+        }
+
+        if (reader->name() == "title" && reader->prefix().isEmpty()) {
+            video->setTitle(reader->readElementText().trimmed());
+        } else if (reader->name() == "user" && reader->prefix() == "blip") {
+            video->setAuthor(reader->readElementText().trimmed());
+        } else if (reader->name() == "rating" && reader->prefix() == "blip") {
+            video->setRating(reader->readElementText().toDouble());
+        } else if (reader->name() == "license" && reader->prefix() == "blip") {
+            video->setLicense(reader->readElementText().trimmed());
+        } else if (reader->name() == "runtime" && reader->prefix() == "blip") {
+            video->setDuration(reader->readElementText().toInt());
+        } else if (reader->name() == "content" && reader->prefix() == "media") {
+            if (reader->attributes().value("isDefault").toString() == "true") {
+                video->setUrl(KUrl(reader->attributes().value("url").toString()));
+            }
+        } else if (reader->name() == "puredescription" && reader->prefix() == "blip") {
+            video->setDescription(reader->readElementText().trimmed());
+        } else if (reader->name() == "pubDate") {
+            QString string = reader->readElementText().remove(" +0000");
+
+            string.replace("Mon", QDate::shortDayName(1, QDate::DateFormat));
+            string.replace("Tue", QDate::shortDayName(2, QDate::DateFormat));
+            string.replace("Wed", QDate::shortDayName(3, QDate::DateFormat));
+            string.replace("Thu", QDate::shortDayName(4, QDate::DateFormat));
+            string.replace("Fri", QDate::shortDayName(5, QDate::DateFormat));
+            string.replace("Sat", QDate::shortDayName(6, QDate::DateFormat));
+            string.replace("Sun", QDate::shortDayName(7, QDate::DateFormat));
+
+            string.replace("Jan", QDate::shortMonthName(1, QDate::DateFormat));
+            string.replace("Feb", QDate::shortMonthName(2, QDate::DateFormat));
+            string.replace("Mar", QDate::shortMonthName(3, QDate::DateFormat));
+            string.replace("Apr", QDate::shortMonthName(4, QDate::DateFormat));
+            string.replace("May", QDate::shortMonthName(5, QDate::DateFormat));
+            string.replace("Jun", QDate::shortMonthName(6, QDate::DateFormat));
+            string.replace("Jul", QDate::shortMonthName(7, QDate::DateFormat));
+            string.replace("Aug", QDate::shortMonthName(8, QDate::DateFormat));
+            string.replace("Sep", QDate::shortMonthName(9, QDate::DateFormat));
+            string.replace("Oct", QDate::shortMonthName(10, QDate::DateFormat));
+            string.replace("Nov", QDate::shortMonthName(11, QDate::DateFormat));
+            string.replace("Dec", QDate::shortMonthName(12, QDate::DateFormat));
+
+            video->setPublished(QDateTime::fromString(string, "ddd, dd MMM yyyy HH:mm:ss"));
+            kDebug() << "string:" << string << "=" << QDateTime::fromString(string, "ddd, dd MMM yyyy HH:mm:ss");
+        } else if (reader->name() == "thumbnail") {
+            video->setThumbnailUrl(KUrl(reader->attributes().value("url").toString()));
+        } else if (reader->name() == "category") {
+            if (video->category().isEmpty()) {
+                video->setCategory(reader->readElementText());
+            } else {
+                QString keys = video->keywords().join(", ");
+                if (!keys.isEmpty()) {
+                    keys.append(", ");
+                }
+                keys.append(reader->readElementText());
+                video->setKeywords(keys);
+            }
+        }
+    }
+
+    return video;
+
+}

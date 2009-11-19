@@ -22,7 +22,7 @@
 
 
 // own
-#include "service.h"
+#include "video.h"
 
 // KDE
 #include <kurl.h>
@@ -34,65 +34,30 @@
 #include <QtCore/QStringList>
 
 
-class KDE_EXPORT YouTubeVideo : public KYouBlip::Service
+class KDE_EXPORT YouTubeVideo : public KYouBlip::Video
 {
     Q_OBJECT
+    friend class YouTubeService;
 
 
 public:
     YouTubeVideo(QObject *parent = 0);
     ~YouTubeVideo();
 
-    QString title() const;
-    QString description() const;
-    QStringList keywords() const;
-    KUrl url() const;
-    QString category() const;
-    int duration() const;
-    QString author() const;
-    KUrl thumbnailUrl() const;
     int viewCount() const;
-    QDateTime published() const;
-    QString file() const;
-    QString thumbnail() const;
-    double rating() const;
     int raters() const;
     int favoriteCount() const;
+    QStringList licenses() const;
+    QStringList categorys() const;
 
-    void setTitle(const QString &title);
-    void setDescription(const QString &description);
-    void setKeywords(const QString &keywords);
-    void setUrl(const KUrl &url);
-    void setCategory(const QString &category);
-    void setDuration(const int &duration);
-    void setAuthor(const QString &author);
-    void setThumbnailUrl(const KUrl &url);
     void setViewCount(const int &count);
-    void setPublished(const QDateTime &date);
-    void setFile(const QString &file);
-    void setThumbnail(const QString &file);
-    void setRating(const double &rating);
     void setRaters(const int &raters);
     void setFavoriteCount(const int &favCount);
 
-    void updateThumbnail(const QString &thumbnailDir);
-    bool loadThumbnail(const QString &thumbnailDir);
-
 
 private:
+    QHash<QString, QString> m_categorys;
     QHash<QString, QVariant> m_data;
-    KJob *m_thumbnailJob;
-
-    QByteArray getMD5String() const;
-
-
-protected slots:
-    void jobFinished(KJob *job, const QByteArray &data);
-
-
-signals:
-    void thumbnailUpdated(const QString &thumbnail);
-    void thumbnailUpdateFailed();
 
 
 };

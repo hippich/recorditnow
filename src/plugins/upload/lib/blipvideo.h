@@ -22,7 +22,7 @@
 
 
 // own
-#include "service.h"
+#include "video.h"
 
 // KDE
 #include <kurl.h>
@@ -34,9 +34,10 @@
 #include <QtCore/QStringList>
 
 
-class KDE_EXPORT BlipVideo : public KYouBlip::Service
+class KDE_EXPORT BlipVideo : public KYouBlip::Video
 {
     Q_OBJECT
+    friend class BlipService;
 
 
 public:
@@ -91,25 +92,13 @@ public:
     BlipVideo(QObject *parent = 0);
     ~BlipVideo();
 
-    QString title() const;
-    QString description() const;
-    QStringList keywords() const;
-    KUrl url() const;
-    BlipVideo::Category category() const;
-    QString file() const;
-    BlipVideo::License license() const;
-
-    void setTitle(const QString &title);
-    void setDescription(const QString &description);
-    void setKeywords(const QString &keywords);
-    void setUrl(const KUrl &url);
-    void setCategory(const BlipVideo::Category &category);
-    void setFile(const QString &file);
-    void setLicense(const BlipVideo::License &license);
+    QStringList licenses() const;
+    QStringList categorys() const;
 
 
 private:
-    QHash<QString, QVariant> m_data;
+    QHash<int, QString> m_licenses;
+    QHash<int, QString> m_categorys;
 
 
 };

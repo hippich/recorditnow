@@ -175,7 +175,7 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
                        "</media:group>"+CRLF+\
                      "</entry>";
 
-    XML = XML.arg(title).arg(description).arg(category).arg(tags);
+    XML = XML.arg(title).arg(description).arg(video->m_categorys.key(category)).arg(tags);
 
     QByteArray postData;
     postData.append("--"+BOUNDARY);

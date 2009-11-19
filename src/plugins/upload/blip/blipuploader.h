@@ -47,7 +47,7 @@ private:
     enum State { Idle = 0, Upload = 1 };
 
     State m_state;
-    QHash<BlipVideo::Category, QString> m_category;
+    QHash<QString, QString> m_category;
     QHash<BlipVideo::License, QString> m_license;
     QPointer<QWidget> m_dialog;
     BlipService *m_service;

@@ -46,7 +46,6 @@ private:
     enum State { Idle = 0, Upload = 1 };
 
     State m_state;
-    QHash<QString, QString> m_category;
     QPointer<QWidget> m_dialog;
     YouTubeService *m_service;
 

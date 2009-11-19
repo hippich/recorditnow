@@ -44,62 +44,6 @@ BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
 
     m_service = 0;
 
-    m_license[BlipVideo::NoLicense] = i18n("No License");
-    m_license[BlipVideo::CreativeCommonsAttribution_2_0] = "Creative Commons Attribution 2.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] =
-            "Creative Commons Attribution-NoDerivs 2.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_2_0] =
-            "Creative Commons Attribution-NonCommercial-NoDerivs 2.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_2_0] =
-            "Creative Commons Attribution-NonCommercial 2.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_2_0] =
-            "Creative Commons Attribution-NonCommercial-ShareAlike 2.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_ShareAlike_2_0] =
-            "Creative Commons Attribution-ShareAlike 2.0";
-    m_license[BlipVideo::PublicDomain] = "Public Domain";
-    m_license[BlipVideo::CreativeCommonsAttribution_3_0] = "Creative Commons Attribution 3.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NoDerivs_3_0] =
-            "Creative Commons Attribution-NoDerivs 3.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_3_0] =
-            "Creative Commons Attribution-NonCommercial-NoDerivs 3.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_3_0] =
-            "Creative Commons Attribution-NonCommercial 3.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_3_0] =
-            "Creative Commons Attribution-NonCommercial-ShareAlike 3.0";
-    m_license[BlipVideo::CreativeCommonsAttribution_ShareAlike_3_0] =
-            "Creative Commons Attribution-ShareAlike 3.0";
-
-
-    m_category[BlipVideo::Art] = i18n("Art");
-    m_category[BlipVideo::AutosAndVehicles] = i18n("Autos & Vehicles");
-    m_category[BlipVideo::Business] = i18n("Business");
-    m_category[BlipVideo::CitizenJournalism] = i18n("Citizen Journalism");
-    m_category[BlipVideo::Comedy] = i18n("Comedy");
-    m_category[BlipVideo::ConferencesAndOtherEvents] = i18n("Conferences and other Events");
-    m_category[BlipVideo::DefaultCategory] = i18n("Default Category");
-    m_category[BlipVideo::Documentary] = i18n("Documentary");
-    m_category[BlipVideo::Educational] = i18n("Educational");
-    m_category[BlipVideo::FoodAndDrink] = i18n("Food & Drink");
-    m_category[BlipVideo::Friends] = i18n("Friends");
-    m_category[BlipVideo::Gaming] = i18n("Gaming");
-    m_category[BlipVideo::Health] = i18n("Health");
-    m_category[BlipVideo::Literature] = i18n("Literature");
-    m_category[BlipVideo::MoviesAndTelevision] = i18n("Movies and Television");
-    m_category[BlipVideo::MusicAndEntertainment] = i18n("Music and Entertainment");
-    m_category[BlipVideo::PersonalOrAutoBiographical] = i18n("Personal or Auto-biographical");
-    m_category[BlipVideo::Politics] = i18n("Politics");
-    m_category[BlipVideo::Religion] = i18n("Religion");
-    m_category[BlipVideo::SchoolAndEducation] = i18n("School and Education");
-    m_category[BlipVideo::Science] = i18n("Science");
-    m_category[BlipVideo::Sports] = i18n("Sports");
-    m_category[BlipVideo::Technology] = i18n("Technology");
-    m_category[BlipVideo::TheEnvironment] = i18n("The Environment");
-    m_category[BlipVideo::TheMainstreamMedia] = i18n("The Mainstream Media");
-    m_category[BlipVideo::Travel] = i18n("Travel");
-    m_category[BlipVideo::Videoblogging] = i18n("Videoblogging");
-    m_category[BlipVideo::WebDevelopmentAndSites] = i18n("Web Development and Sites");
-
-
     connect(this, SIGNAL(gotPassword(QString,QString)), this,
             SLOT(gotPasswordForAccount(QString,QString)));
 
@@ -165,17 +109,9 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     currentAccountChanged(accountsCombo->currentText());
 
 
-    QHashIterator<BlipVideo::License, QString> lIt(m_license);
-    while (lIt.hasNext()) {
-        lIt.next();
-        licenseCombo->addItem(lIt.value());
-    }
-
-    QHashIterator<BlipVideo::Category, QString> cIt(m_category);
-    while (cIt.hasNext()) {
-        cIt.next();
-        categoryCombo->addItem(cIt.value());
-    }
+    BlipVideo video;
+    licenseCombo->addItems(video.licenses());
+    categoryCombo->addItems(video.categorys());
 
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
@@ -198,7 +134,7 @@ void BlipUploader::upload()
     video.setTitle(titleEdit->text());
     video.setDescription(descriptionEdit->toPlainText());
     video.setCategory(m_category.key(categoryCombo->currentText()));
-    video.setLicense(m_license.key(licenseCombo->currentText()));
+    video.setLicense(licenseCombo->currentText());
     video.setFile(fileRequester->text());
     video.setKeywords(tagsEdit->text());
 

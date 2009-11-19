@@ -1,5 +1,6 @@
 
 set(SRCS
+    video.cpp
     infojob.cpp
     service.cpp
     youtubeservice.cpp
@@ -8,6 +9,7 @@ set(SRCS
     blipvideo.cpp)
 
 set(HEADERS service.h
+    video.h
     youtubeservice.h 
     youtubevideo.h
     blipservice.h

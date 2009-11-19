@@ -59,22 +59,6 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
 
     m_service = 0;
 
-    m_category["Autos"] = i18n("Autos & Vehicles");
-    m_category["Comedy"] = i18n("Comedy");
-    m_category["Education"] = i18n("Education");
-    m_category["Entertainment"] = i18n("Entertainment");
-    m_category["Film"] = i18n("Film & Animation");
-    m_category["Games"] = i18n("Gaming");
-    m_category["Howto"] = i18n("Howto & Style");
-    m_category["Music"] = i18n("Music");
-    m_category["News"] = i18n("News & Politics");
-    m_category["Nonprofit"] = i18n("Nonprofit & Activism");
-    m_category["People"] = i18n("People & Blogs");
-    m_category["Animals"] = i18n("Pets & Animals");
-    m_category["Tech"] = i18n("Sience & Technology");
-    m_category["Sports"] = i18n("Sports");
-    m_category["Travel"] = i18n("Travel & Evends");
-
     connect(this, SIGNAL(gotPassword(QString,QString)), this,
             SLOT(gotPasswordForAccount(QString,QString)));
 
@@ -139,11 +123,8 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
             SLOT(currentAccountChanged(QString)));
     currentAccountChanged(accountsCombo->currentText());
 
-    QHashIterator<QString, QString> it(m_category);
-    while (it.hasNext()) {
-        it.next();
-        categoryCombo->addItem(it.value());
-    }
+    YouTubeVideo video;
+    categoryCombo->addItems(video.categorys());
 
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
@@ -237,7 +218,7 @@ void YouTubeUploader::authenticated(const QString &account)
     video.setTitle(titleEdit->text());
     video.setDescription(descriptionEdit->toPlainText());
     video.setKeywords(tagsEdit->text());
-    video.setCategory(m_category.key(categoryCombo->currentText()));
+    video.setCategory(categoryCombo->currentText());
     video.setFile(fileRequester->text());
 
     QString id = m_service->upload(&video, accountsCombo->currentText());

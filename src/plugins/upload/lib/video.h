@@ -18,54 +18,67 @@
  ***************************************************************************/
 
 
-#ifndef BLIPSERVICE_H
-#define BLIPSERVICE_H
+#ifndef VIDEO_H
+#define VIDEO_H
 
 
 // own
 #include "service.h"
 
-// KDE
-#include <kdemacros.h>
 
-// Qt
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QPointer>
+namespace KYouBlip {
 
 
-namespace KIO {
-    class Job;
-};
-class KJob;
-class BlipVideo;
-class QXmlStreamReader;
-class KDE_EXPORT BlipService : public KYouBlip::Service
+class KDE_EXPORT Video : public KYouBlip::Service
 {
     Q_OBJECT
 
 
 public:
-    BlipService(QObject *parent = 0);
-    ~BlipService();
+    Video(QObject *parent = 0);
+    ~Video();
+
+    QString title() const;
+    QString description() const;
+    QStringList keywords() const;
+    KUrl url() const;
+    QString category() const;
+    int duration() const;
+    QString author() const;
+    KUrl thumbnailUrl() const;
+    QDateTime published() const;
+    QString file() const;
+    QString thumbnail() const;
+    double rating() const;
+    QString license() const;
+
+    virtual QStringList licenses() const = 0;
+    virtual QStringList categorys() const = 0;
 
 
-public slots:
-    QString upload(const BlipVideo *video, const QString &account, const QString &password);
-    QString search(const QString &term);
+    void setTitle(const QString &title);
+    void setDescription(const QString &description);
+    void setKeywords(const QString &keywords);
+    void setUrl(const KUrl &url);
+    void setCategory(const QString &category);
+    void setDuration(const int &duration);
+    void setAuthor(const QString &author);
+    void setThumbnailUrl(const KUrl &url);
+    void setPublished(const QDateTime &date);
+    void setFile(const QString &file);
+    void setThumbnail(const QString &file);
+    void setRating(const double &rating);
+    void setLicense(const QString &license);
+
+    void updateThumbnail(const QString &thumbnailDir);
+    bool loadThumbnail(const QString &thumbnailDir);
 
 
 private:
-    enum JobType {
-        AuthJob = 0,
-        UploadJob = 1,
-        SearchJob = 2
-    };
-    typedef QPair<JobType, QString> JobData;
+    QHash<QString, QVariant> m_data;
+    KJob *m_thumbnailJob;
 
-    QHash<KJob*, JobData> m_jobs;
-
-    BlipVideo *readEntry(QXmlStreamReader *reader);
+    QByteArray getMD5String() const;
 
 
 protected slots:
@@ -73,13 +86,14 @@ protected slots:
 
 
 signals:
-    void error(const QString &reason, const QString &id);
-    void uploadFinished(const QString &id);
-    void canceled(const QString &id);
-    void searchFinished(const QList<BlipVideo*> &videos, const QString &id);
+    void thumbnailUpdated(const QString &thumbnail);
+    void thumbnailUpdateFailed();
 
 
 };
 
 
-#endif // BlipService_H
+}; // namespace KYouBlip
+
+
+#endif // VIDEO_H

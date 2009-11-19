@@ -23,19 +23,29 @@
 
 // KDE
 #include <kdebug.h>
-#include <kio/job.h>
-#include <kcodecs.h>
+#include <klocalizedstring.h>
 
-// Qt
-#include <QtCore/QDateTime>
-#include <QtCore/QDir>
 
 
 YouTubeVideo::YouTubeVideo(QObject *parent)
-    : KYouBlip::Service(parent)
+    : KYouBlip::Video(parent)
 {
 
-
+    m_categorys["Autos"] = i18n("Autos & Vehicles");
+    m_categorys["Comedy"] = i18n("Comedy");
+    m_categorys["Education"] = i18n("Education");
+    m_categorys["Entertainment"] = i18n("Entertainment");
+    m_categorys["Film"] = i18n("Film & Animation");
+    m_categorys["Games"] = i18n("Gaming");
+    m_categorys["Howto"] = i18n("Howto & Style");
+    m_categorys["Music"] = i18n("Music");
+    m_categorys["News"] = i18n("News & Politics");
+    m_categorys["Nonprofit"] = i18n("Nonprofit & Activism");
+    m_categorys["People"] = i18n("People & Blogs");
+    m_categorys["Animals"] = i18n("Pets & Animals");
+    m_categorys["Tech"] = i18n("Sience & Technology");
+    m_categorys["Sports"] = i18n("Sports");
+    m_categorys["Travel"] = i18n("Travel & Evends");
 
 }
 
@@ -47,106 +57,10 @@ YouTubeVideo::~YouTubeVideo()
 }
 
 
-QString YouTubeVideo::title() const
-{
-
-    return m_data["Title"].toString();
-
-}
-
-
-QString YouTubeVideo::description() const
-{
-
-    return m_data["Description"].toString();
-
-}
-
-
-QStringList YouTubeVideo::keywords() const
-{
-
-    return m_data["Keywords"].toString().split(',');
-
-}
-
-
-KUrl YouTubeVideo::url() const
-{
-
-    return m_data["Url"].value<KUrl>();
-
-}
-
-
-QString YouTubeVideo::category() const
-{
-
-    return m_data["Category"].toString();
-
-}
-
-
-int YouTubeVideo::duration() const
-{
-
-    return m_data["Duration"].toInt();
-
-}
-
-
-QString YouTubeVideo::author() const
-{
-
-    return m_data["Author"].toString();
-
-}
-
-
-KUrl YouTubeVideo::thumbnailUrl() const
-{
-
-    return m_data["ThumbnailUrl"].value<KUrl>();
-
-}
-
-
 int YouTubeVideo::viewCount() const
 {
 
     return m_data["ViewCount"].toInt();
-
-}
-
-
-QDateTime YouTubeVideo::published() const
-{
-
-    return m_data["Published"].toDateTime();
-
-}
-
-
-QString YouTubeVideo::file() const
-{
-
-    return m_data["File"].toString();
-
-}
-
-
-QString YouTubeVideo::thumbnail() const
-{
-
-    return m_data["ThumbnailFile"].toString();
-
-}
-
-
-double YouTubeVideo::rating() const
-{
-
-    return m_data["Rating"].toDouble();
 
 }
 
@@ -167,66 +81,18 @@ int YouTubeVideo::favoriteCount() const
 }
 
 
-void YouTubeVideo::setTitle(const QString &title)
+QStringList YouTubeVideo::categorys() const
 {
 
-    m_data["Title"] = title;
+    return m_categorys.values();
 
 }
 
 
-void YouTubeVideo::setDescription(const QString &description)
+QStringList YouTubeVideo::licenses() const
 {
 
-    m_data["Description"] = description;
-
-}
-
-
-void YouTubeVideo::setKeywords(const QString &keywords)
-{
-
-    m_data["Keywords"] = keywords;
-
-}
-
-
-void YouTubeVideo::setUrl(const KUrl &url)
-{
-
-    m_data["Url"] = url;
-
-}
-
-
-void YouTubeVideo::setCategory(const QString &category)
-{
-
-    m_data["Category"] = category;
-
-}
-
-
-void YouTubeVideo::setDuration(const int &duration)
-{
-
-    m_data["Duration"] = QString::number(duration);
-
-}
-
-
-void YouTubeVideo::setAuthor(const QString &author)
-{
-
-    m_data["Author"] = author;
-
-}
-
-
-void YouTubeVideo::setThumbnailUrl(const KUrl &url)
-{
-
-    m_data["ThumbnailUrl"] = url;
+    return QStringList();
 
 }
 
@@ -235,38 +101,6 @@ void YouTubeVideo::setViewCount(const int &count)
 {
 
     m_data["ViewCount"] = count;
-
-}
-
-
-void YouTubeVideo::setPublished(const QDateTime &date)
-{
-
-    m_data["Published"] = date;
-
-}
-
-
-void YouTubeVideo::setFile(const QString &file)
-{
-
-    m_data["File"] = file;
-
-}
-
-
-void YouTubeVideo::setThumbnail(const QString &file)
-{
-
-    m_data["ThumbnailFile"] = file;
-
-}
-
-
-void YouTubeVideo::setRating(const double &rating)
-{
-
-    m_data["Rating"] = rating;
 
 }
 
@@ -283,87 +117,6 @@ void YouTubeVideo::setFavoriteCount(const int &favCount)
 {
 
     m_data["FavCount"] = favCount;
-
-}
-
-
-void YouTubeVideo::updateThumbnail(const QString &thumbnailDir)
-{
-
-    QDir dir(thumbnailDir);
-    if (thumbnailDir.isEmpty() || !dir.exists()) {
-        kWarning() << "invalid thumnail dir:" << thumbnailDir;
-        emit thumbnailUpdateFailed();
-        return;
-    }
-
-    const KUrl url(thumbnailUrl());
-    if (url.isEmpty()) {
-        kWarning() << "empty url...";
-        emit thumbnailUpdateFailed();
-        return;
-    }
-
-    QFile old(thumbnail());
-    if (old.exists()) {
-        if (!old.remove()) {
-            kWarning() << "remove() failed!";
-            emit thumbnailUpdateFailed();
-            return;
-        }
-    }
-    setThumbnail(thumbnailDir);
-
-    m_thumbnailJob = get(url, KIO::NoReload, true);
-
-}
-
-
-bool YouTubeVideo::loadThumbnail(const QString &thumbnailDir)
-{
-
-    const QString file = thumbnailDir+'/'+getMD5String();
-    if (QFile::exists(file)) {
-        setThumbnail(file);
-        return true;
-    } else {
-        return false;
-    }
-
-}
-
-
-QByteArray YouTubeVideo::getMD5String() const
-{
-
-    KMD5 context ((title()+'_'+description()).toLatin1());
-    return context.hexDigest().data();
-
-}
-
-
-void YouTubeVideo::jobFinished(KJob *job, const QByteArray &data)
-{
-
-    if (job == m_thumbnailJob) {
-        QFile file(thumbnail()+'/'+getMD5String());
-        if (file.exists()) {
-            emit thumbnailUpdateFailed();
-            return;
-        }
-
-        if (!file.open(QIODevice::WriteOnly)) {
-            kWarning() << "open() failed!";
-            emit thumbnailUpdateFailed();
-            return;
-        }
-        file.write(data);
-        file.close();
-
-        setThumbnail(file.fileName());
-
-        emit thumbnailUpdated(file.fileName());
-    }
 
 }
 

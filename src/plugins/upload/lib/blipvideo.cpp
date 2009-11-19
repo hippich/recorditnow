@@ -23,19 +23,68 @@
 
 // KDE
 #include <kdebug.h>
-#include <kio/job.h>
-#include <kcodecs.h>
-
-// Qt
-#include <QtCore/QDateTime>
-#include <QtCore/QDir>
+#include <klocalizedstring.h>
 
 
 BlipVideo::BlipVideo(QObject *parent)
-    : KYouBlip::Service(parent)
+    : KYouBlip::Video(parent)
 {
 
 
+    m_licenses[BlipVideo::NoLicense] = i18n("No License");
+    m_licenses[BlipVideo::CreativeCommonsAttribution_2_0] = "Creative Commons Attribution 2.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] =
+            "Creative Commons Attribution-NoDerivs 2.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_2_0] =
+            "Creative Commons Attribution-NonCommercial-NoDerivs 2.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NonCommercial_2_0] =
+            "Creative Commons Attribution-NonCommercial 2.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_2_0] =
+            "Creative Commons Attribution-NonCommercial-ShareAlike 2.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_ShareAlike_2_0] =
+            "Creative Commons Attribution-ShareAlike 2.0";
+    m_licenses[BlipVideo::PublicDomain] = "Public Domain";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_3_0] = "Creative Commons Attribution 3.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NoDerivs_3_0] =
+            "Creative Commons Attribution-NoDerivs 3.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_3_0] =
+            "Creative Commons Attribution-NonCommercial-NoDerivs 3.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NonCommercial_3_0] =
+            "Creative Commons Attribution-NonCommercial 3.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_3_0] =
+            "Creative Commons Attribution-NonCommercial-ShareAlike 3.0";
+    m_licenses[BlipVideo::CreativeCommonsAttribution_ShareAlike_3_0] =
+            "Creative Commons Attribution-ShareAlike 3.0";
+
+
+    m_categorys[BlipVideo::Art] = i18n("Art");
+    m_categorys[BlipVideo::AutosAndVehicles] = i18n("Autos & Vehicles");
+    m_categorys[BlipVideo::Business] = i18n("Business");
+    m_categorys[BlipVideo::CitizenJournalism] = i18n("Citizen Journalism");
+    m_categorys[BlipVideo::Comedy] = i18n("Comedy");
+    m_categorys[BlipVideo::ConferencesAndOtherEvents] = i18n("Conferences and other Events");
+    m_categorys[BlipVideo::DefaultCategory] = i18n("Default Category");
+    m_categorys[BlipVideo::Documentary] = i18n("Documentary");
+    m_categorys[BlipVideo::Educational] = i18n("Educational");
+    m_categorys[BlipVideo::FoodAndDrink] = i18n("Food & Drink");
+    m_categorys[BlipVideo::Friends] = i18n("Friends");
+    m_categorys[BlipVideo::Gaming] = i18n("Gaming");
+    m_categorys[BlipVideo::Health] = i18n("Health");
+    m_categorys[BlipVideo::Literature] = i18n("Literature");
+    m_categorys[BlipVideo::MoviesAndTelevision] = i18n("Movies and Television");
+    m_categorys[BlipVideo::MusicAndEntertainment] = i18n("Music and Entertainment");
+    m_categorys[BlipVideo::PersonalOrAutoBiographical] = i18n("Personal or Auto-biographical");
+    m_categorys[BlipVideo::Politics] = i18n("Politics");
+    m_categorys[BlipVideo::Religion] = i18n("Religion");
+    m_categorys[BlipVideo::SchoolAndEducation] = i18n("School and Education");
+    m_categorys[BlipVideo::Science] = i18n("Science");
+    m_categorys[BlipVideo::Sports] = i18n("Sports");
+    m_categorys[BlipVideo::Technology] = i18n("Technology");
+    m_categorys[BlipVideo::TheEnvironment] = i18n("The Environment");
+    m_categorys[BlipVideo::TheMainstreamMedia] = i18n("The Mainstream Media");
+    m_categorys[BlipVideo::Travel] = i18n("Travel");
+    m_categorys[BlipVideo::Videoblogging] = i18n("Videoblogging");
+    m_categorys[BlipVideo::WebDevelopmentAndSites] = i18n("Web Development and Sites");
 
 }
 
@@ -47,113 +96,18 @@ BlipVideo::~BlipVideo()
 }
 
 
-QString BlipVideo::title() const
+QStringList BlipVideo::categorys() const
 {
 
-    return m_data["Title"].toString();
+    return m_categorys.values();
 
 }
 
 
-QString BlipVideo::description() const
+QStringList BlipVideo::licenses() const
 {
 
-    return m_data["Description"].toString();
+    return m_licenses.values();
 
 }
 
-
-QStringList BlipVideo::keywords() const
-{
-
-    return m_data["Keywords"].toString().split(',');
-
-}
-
-
-KUrl BlipVideo::url() const
-{
-
-    return m_data["Url"].value<KUrl>();
-
-}
-
-
-BlipVideo::Category BlipVideo::category() const
-{
-
-    return static_cast<BlipVideo::Category>(m_data["Category"].toInt());
-
-}
-
-
-QString BlipVideo::file() const
-{
-
-    return m_data["File"].toString();
-
-}
-
-
-BlipVideo::License BlipVideo::license() const
-{
-
-    return static_cast<BlipVideo::License>(m_data["License"].toInt());
-
-}
-
-
-void BlipVideo::setTitle(const QString &title)
-{
-
-    m_data["Title"] = title;
-
-}
-
-
-void BlipVideo::setDescription(const QString &description)
-{
-
-    m_data["Description"] = description;
-
-}
-
-
-void BlipVideo::setKeywords(const QString &keywords)
-{
-
-    m_data["Keywords"] = keywords;
-
-}
-
-
-void BlipVideo::setUrl(const KUrl &url)
-{
-
-    m_data["Url"] = url;
-
-}
-
-
-void BlipVideo::setCategory(const BlipVideo::Category &category)
-{
-
-    m_data["Category"] = static_cast<int>(category);
-
-}
-
-
-void BlipVideo::setFile(const QString &file)
-{
-
-    m_data["File"] = file;
-
-}
-
-
-void BlipVideo::setLicense(const BlipVideo::License &license)
-{
-
-    m_data["License"] = static_cast<int>(license);
-
-}
