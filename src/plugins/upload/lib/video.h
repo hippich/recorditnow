@@ -38,39 +38,161 @@ public:
     Video(QObject *parent = 0);
     ~Video();
 
+    /**
+     * @return the title
+     */
     QString title() const;
+    /**
+     * @return the description
+     */
     QString description() const;
+    /**
+     * @return the keywords/tags
+     */
     QStringList keywords() const;
+    /**
+     * @return the url to the video
+     */
     KUrl url() const;
+    /**
+     * @return the category
+     */
     QString category() const;
+    /**
+     * @return the duration in seconds
+     */
     int duration() const;
+    /**
+     * @return the author
+     */
     QString author() const;
+    /**
+     * @return the thumbnail url
+     */
     KUrl thumbnailUrl() const;
+    /**
+     * @return the date and time when the video was published
+     */
     QDateTime published() const;
+    /**
+     * @return the local video file
+     */
     QString file() const;
+    /**
+     * @return the local thumbnail
+     */
     QString thumbnail() const;
+    /**
+     * @return the rating
+     */
     double rating() const;
+    /**
+     * @return the license
+     */
     QString license() const;
 
+    /**
+     * @return all available licenses
+     */
     virtual QStringList licenses() const = 0;
+    /**
+     * @return all available categorys
+     */
     virtual QStringList categorys() const = 0;
 
-
+    /**
+     * sets the title for the video
+     *
+     * @param title the title
+     */
     void setTitle(const QString &title);
+    /**
+     * sets the description for the video
+     *
+     * @param description the description
+     */
     void setDescription(const QString &description);
+    /**
+     * sets the tags/keywords for the video
+     *
+     * @param keywords comma-separated list of tags
+     */
     void setKeywords(const QString &keywords);
+    /**
+     * sets the url for the video
+     *
+     * @param url the url
+     */
     void setUrl(const KUrl &url);
+    /**
+     * sets the category for the video
+     *
+     * @param category the category
+     */
     void setCategory(const QString &category);
+    /**
+     * sets the duration for the video
+     *
+     * @param duration the duration in seconds
+     */
     void setDuration(const int &duration);
+    /**
+     * sets the author of this video
+     *
+     * @param author the author
+     */
     void setAuthor(const QString &author);
+    /**
+     * sets the thumbnail url for the video
+     *
+     * @param url the url
+     */
     void setThumbnailUrl(const KUrl &url);
+    /**
+     * sets the date and time at which the video was published
+     *
+     * @param date the date/time
+     */
     void setPublished(const QDateTime &date);
+    /**
+     * sets the local video file
+     *
+     * @param file the local file
+     */
     void setFile(const QString &file);
+    /**
+     * sets the local thumbnail for the video
+     *
+     * @param file the thumbnail
+     */
     void setThumbnail(const QString &file);
+    /**
+     * sets the rating for the video
+     *
+     * max: 10.0
+     * min: 0.0
+     *
+     * @param rating the rating
+     */
     void setRating(const double &rating);
+    /**
+     * sets the license for the video
+     *
+     * @param the url
+     */
     void setLicense(const QString &license);
 
+    /**
+     * updates the thumbnail for the video
+     *
+     * @param thumbnailDir the folder where the thumbnail should be saved
+     */
     void updateThumbnail(const QString &thumbnailDir);
+    /**
+     * loads the thumbnail from a local folder
+     *
+     * @param thumbnailDir the folder where the thumbnail was saved
+     */
     bool loadThumbnail(const QString &thumbnailDir);
 
 
@@ -86,7 +208,13 @@ protected slots:
 
 
 signals:
+    /**
+     * The thumbnail was successfully updated
+     */
     void thumbnailUpdated(const QString &thumbnail);
+    /**
+     * The update failed
+     */
     void thumbnailUpdateFailed();
 
 
