@@ -32,7 +32,7 @@
 
 
 YouTubeVideo::YouTubeVideo(QObject *parent)
-    : KoogleData::Service(parent)
+    : KYouBlip::Service(parent)
 {
 
 

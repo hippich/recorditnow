@@ -36,7 +36,7 @@
                 "jhsZGX0brUrdSLr5qvNchxeiQ"
 
 YouTubeService::YouTubeService(QObject *parent)
-    : KoogleData::Service(parent)
+    : KYouBlip::Service(parent)
 {
 
     m_authenticated = false;
@@ -66,29 +66,6 @@ bool YouTubeService::isAuthenticated(const QString &account) const
 }
 
 
-QString YouTubeService::getUniqueId()
-{
-
-    QString id;
-    for (int i = 0 ; i < 100 ; ++i) {
-        int number;
-        number = rand()%122;
-        if (48 > number) {
-            number += 48;
-        }
-        if ( (57 < number) && (65 > number)) {
-            number += 7;
-        }
-        if ((90 < number) && (97 > number)) {
-            number += 6;
-        }
-        id += (char)number;
-    }
-    return id;
-
-}
-
-
 QString YouTubeService::authenticate(const QString &account, const QString &password)
 {
 
@@ -105,7 +82,7 @@ QString YouTubeService::authenticate(const QString &account, const QString &pass
     QByteArray postData = "Email="+account.toLatin1()+"&Passwd="+password.toLatin1()+"&service="\
                           "youtube&source=RecordItNow";
 
-    const QString id = getUniqueId();
+    const QString id = Service::getUniqueId();
     m_accountIds[id] = account;
 
     m_jobs[post(url, meta, postData, true)] = qMakePair(AuthJob, account);
@@ -222,7 +199,7 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
     postData.append(CRLF);
 
 
-    const QString id = getUniqueId();
+    const QString id = Service::getUniqueId();
     m_accountIds[id] = account;
 
     QHash<QString, QString> header;
@@ -253,7 +230,7 @@ QString YouTubeService::search(const QString &key, const QString &author, const 
         return QString();
     }
 
-    const QString id = getUniqueId();
+    const QString id = Service::getUniqueId();
 
     KUrl url("http://gdata.youtube.com/feeds/api/videos");
     url.addQueryItem("q", key);
@@ -273,7 +250,7 @@ QString YouTubeService::search(const QString &key, const QString &author, const 
 QString YouTubeService::getFavorites(const QString &user, const int &max)
 {
 
-    const QString id = getUniqueId();
+    const QString id = Service::getUniqueId();
     KUrl url("http://gdata.youtube.com/feeds/api/users/"+user+"/favorites?v=2");
     url.addQueryItem("max-results", QString::number(max));
     m_jobs[get(url, KIO::NoReload, true)] = qMakePair(FavoritesJob, id);

@@ -17,26 +17,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef BLIPVIDEO_H
+#define BLIPVIDEO_H
 
-#ifndef KBLIPVIDEO_H
-#define KBLIPVIDEO_H
 
+// own
+#include "service.h"
 
 // KDE
+#include <kurl.h>
 #include <kdemacros.h>
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QPointer>
+#include <QtCore/QHash>
+#include <QtCore/QStringList>
 
 
-namespace KIO {
-    class Job;
-};
-class KJob;
-class KBlipAccount;
-class KDE_EXPORT KBlipVideo : public QObject
+class KDE_EXPORT BlipVideo : public KYouBlip::Service
 {
     Q_OBJECT
 
@@ -90,47 +88,31 @@ public:
         WebDevelopmentAndSites = 17
     };
 
-    KBlipVideo(QObject *parent = 0);
-    ~KBlipVideo();
+    BlipVideo(QObject *parent = 0);
+    ~BlipVideo();
 
+    QString title() const;
+    QString description() const;
+    QStringList keywords() const;
+    KUrl url() const;
+    BlipVideo::Category category() const;
+    QString file() const;
+    BlipVideo::License license() const;
 
-public slots:
     void setTitle(const QString &title);
     void setDescription(const QString &description);
-    void setTags(const QStringList &tags);
-    void setLicense(const KBlipVideo::License &license);
-    void setCategory(const KBlipVideo::Category &id);
+    void setKeywords(const QString &keywords);
+    void setUrl(const KUrl &url);
+    void setCategory(const BlipVideo::Category &category);
     void setFile(const QString &file);
-
-    void send(const KBlipAccount *account);
+    void setLicense(const BlipVideo::License &license);
 
 
 private:
-    QString m_file;
-    QString m_title;
-    QString m_description;
-    QString m_tags;
-    int m_category;
-    int m_license;
-    QPointer<KJob> m_job;
-
-    QByteArray m_bytes;
-
-
-private slots:
-    void jobData(KIO::Job *job, const QByteArray &data);
-    void jobInfoMessage(KJob*, const QString &message);
-    void jobResult(KJob *job);
-    void jobSpeed(KJob *job, unsigned long speed);
-
-
-signals:
-    void finished();
-    void error(const QString &errorString);
-    void speed(const QString &speed);
+    QHash<QString, QVariant> m_data;
 
 
 };
 
 
-#endif // KBLIPVIDEO_H
+#endif // BLIPVIDEO_H

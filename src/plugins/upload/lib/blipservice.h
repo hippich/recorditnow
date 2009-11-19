@@ -18,63 +18,44 @@
  ***************************************************************************/
 
 
-#ifndef YOUTUBESERVICE_H
-#define YOUTUBESERVICE_H
+#ifndef BLIPSERVICE_H
+#define BLIPSERVICE_H
 
 
 // own
 #include "service.h"
-#include "youtubevideo.h"
 
 // KDE
-#include <kio/http.h>
-#include <kio/job.h>
 #include <kdemacros.h>
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QString>
 #include <QtCore/QPointer>
-#include <QtCore/QPair>
 
 
-class QXmlStreamReader;
-class KDE_EXPORT YouTubeService : public KoogleData::Service
+namespace KIO {
+    class Job;
+};
+class KJob;
+class BlipVideo;
+class KDE_EXPORT BlipService : public KYouBlip::Service
 {
     Q_OBJECT
 
 
-public:    
-    YouTubeService(QObject *parent = 0);
-    ~YouTubeService();
+public:
+    BlipService(QObject *parent = 0);
+    ~BlipService();
 
-    bool isAuthenticated(const QString &account) const;
-    static QString getUniqueId();
 
-    QString authenticate(const QString &account, const QString &password);
-    QString upload(const YouTubeVideo *video, const QString &account);
-    QString search(const QString &key,  const QString &author = QString(), const int &start = 1,
-                   const int &max = 10);
-    QString getFavorites(const QString &user, const int &max);
+public slots:
+    QString upload(const BlipVideo *video, const QString &account, const QString &password);
+
 
 
 private:
-    enum JobType {
-        AuthJob = 0,
-        UploadJob = 1,
-        SearchJob = 2,
-        FavoritesJob = 3
-    };
-    typedef QPair<JobType, QString> JobData;
-
-    QHash<KJob*, JobData> m_jobs;
-    QHash<QString, QString> m_accountIds;
-    QHash<QString, QString> m_token;
-    bool m_authenticated;
-
-    YouTubeVideo *readEntry(QXmlStreamReader *reader);
-
-
-private slots:
+    QHash<KJob*, QString> m_jobs;
 
 
 protected slots:
@@ -83,14 +64,11 @@ protected slots:
 
 signals:
     void error(const QString &reason, const QString &id);
-    void authenticated(const QString &id);
     void uploadFinished(const QString &id);
-    void searchFinished(const QList<YouTubeVideo*> &videos, const QString &id);
-    void favoritesFinished(const QList<YouTubeVideo*> &videos, const QString &id);
     void canceled(const QString &id);
 
 
 };
 
 
-#endif // YOUTUBESERVICE_H
+#endif // BlipService_H

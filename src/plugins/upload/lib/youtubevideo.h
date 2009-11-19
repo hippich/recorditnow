@@ -34,7 +34,7 @@
 #include <QtCore/QStringList>
 
 
-class KDE_EXPORT YouTubeVideo : public KoogleData::Service
+class KDE_EXPORT YouTubeVideo : public KYouBlip::Service
 {
     Q_OBJECT
 

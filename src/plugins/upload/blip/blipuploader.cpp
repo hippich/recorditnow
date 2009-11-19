@@ -21,8 +21,8 @@
 #include "blipuploader.h"
 #include <recorditnow_blip.h>
 #include "addaccountdialog.h"
-#include "lib/kblipvideo.h"
-#include "lib/kblipaccount.h"
+#include "lib/blipvideo.h"
+#include "lib/blipservice.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -42,62 +42,62 @@ BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
     : AbstractUploader(parent, args)
 {
 
-    m_video = 0;
+    m_service = 0;
 
-    m_license[KBlipVideo::NoLicense] = i18n("No License");
-    m_license[KBlipVideo::CreativeCommonsAttribution_2_0] = "Creative Commons Attribution 2.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] =
+    m_license[BlipVideo::NoLicense] = i18n("No License");
+    m_license[BlipVideo::CreativeCommonsAttribution_2_0] = "Creative Commons Attribution 2.0";
+    m_license[BlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] =
             "Creative Commons Attribution-NoDerivs 2.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_2_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_2_0] =
             "Creative Commons Attribution-NonCommercial-NoDerivs 2.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_2_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_2_0] =
             "Creative Commons Attribution-NonCommercial 2.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_2_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_2_0] =
             "Creative Commons Attribution-NonCommercial-ShareAlike 2.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_ShareAlike_2_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_ShareAlike_2_0] =
             "Creative Commons Attribution-ShareAlike 2.0";
-    m_license[KBlipVideo::PublicDomain] = "Public Domain";
-    m_license[KBlipVideo::CreativeCommonsAttribution_3_0] = "Creative Commons Attribution 3.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NoDerivs_3_0] =
+    m_license[BlipVideo::PublicDomain] = "Public Domain";
+    m_license[BlipVideo::CreativeCommonsAttribution_3_0] = "Creative Commons Attribution 3.0";
+    m_license[BlipVideo::CreativeCommonsAttribution_NoDerivs_3_0] =
             "Creative Commons Attribution-NoDerivs 3.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_3_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_NoDerivs_3_0] =
             "Creative Commons Attribution-NonCommercial-NoDerivs 3.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_3_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_3_0] =
             "Creative Commons Attribution-NonCommercial 3.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_3_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_NonCommercial_ShareAlike_3_0] =
             "Creative Commons Attribution-NonCommercial-ShareAlike 3.0";
-    m_license[KBlipVideo::CreativeCommonsAttribution_ShareAlike_3_0] =
+    m_license[BlipVideo::CreativeCommonsAttribution_ShareAlike_3_0] =
             "Creative Commons Attribution-ShareAlike 3.0";
 
 
-    m_category[KBlipVideo::Art] = i18n("Art");
-    m_category[KBlipVideo::AutosAndVehicles] = i18n("Autos & Vehicles");
-    m_category[KBlipVideo::Business] = i18n("Business");
-    m_category[KBlipVideo::CitizenJournalism] = i18n("Citizen Journalism");
-    m_category[KBlipVideo::Comedy] = i18n("Comedy");
-    m_category[KBlipVideo::ConferencesAndOtherEvents] = i18n("Conferences and other Events");
-    m_category[KBlipVideo::DefaultCategory] = i18n("Default Category");
-    m_category[KBlipVideo::Documentary] = i18n("Documentary");
-    m_category[KBlipVideo::Educational] = i18n("Educational");
-    m_category[KBlipVideo::FoodAndDrink] = i18n("Food & Drink");
-    m_category[KBlipVideo::Friends] = i18n("Friends");
-    m_category[KBlipVideo::Gaming] = i18n("Gaming");
-    m_category[KBlipVideo::Health] = i18n("Health");
-    m_category[KBlipVideo::Literature] = i18n("Literature");
-    m_category[KBlipVideo::MoviesAndTelevision] = i18n("Movies and Television");
-    m_category[KBlipVideo::MusicAndEntertainment] = i18n("Music and Entertainment");
-    m_category[KBlipVideo::PersonalOrAutoBiographical] = i18n("Personal or Auto-biographical");
-    m_category[KBlipVideo::Politics] = i18n("Politics");
-    m_category[KBlipVideo::Religion] = i18n("Religion");
-    m_category[KBlipVideo::SchoolAndEducation] = i18n("School and Education");
-    m_category[KBlipVideo::Science] = i18n("Science");
-    m_category[KBlipVideo::Sports] = i18n("Sports");
-    m_category[KBlipVideo::Technology] = i18n("Technology");
-    m_category[KBlipVideo::TheEnvironment] = i18n("The Environment");
-    m_category[KBlipVideo::TheMainstreamMedia] = i18n("The Mainstream Media");
-    m_category[KBlipVideo::Travel] = i18n("Travel");
-    m_category[KBlipVideo::Videoblogging] = i18n("Videoblogging");
-    m_category[KBlipVideo::WebDevelopmentAndSites] = i18n("Web Development and Sites");
+    m_category[BlipVideo::Art] = i18n("Art");
+    m_category[BlipVideo::AutosAndVehicles] = i18n("Autos & Vehicles");
+    m_category[BlipVideo::Business] = i18n("Business");
+    m_category[BlipVideo::CitizenJournalism] = i18n("Citizen Journalism");
+    m_category[BlipVideo::Comedy] = i18n("Comedy");
+    m_category[BlipVideo::ConferencesAndOtherEvents] = i18n("Conferences and other Events");
+    m_category[BlipVideo::DefaultCategory] = i18n("Default Category");
+    m_category[BlipVideo::Documentary] = i18n("Documentary");
+    m_category[BlipVideo::Educational] = i18n("Educational");
+    m_category[BlipVideo::FoodAndDrink] = i18n("Food & Drink");
+    m_category[BlipVideo::Friends] = i18n("Friends");
+    m_category[BlipVideo::Gaming] = i18n("Gaming");
+    m_category[BlipVideo::Health] = i18n("Health");
+    m_category[BlipVideo::Literature] = i18n("Literature");
+    m_category[BlipVideo::MoviesAndTelevision] = i18n("Movies and Television");
+    m_category[BlipVideo::MusicAndEntertainment] = i18n("Music and Entertainment");
+    m_category[BlipVideo::PersonalOrAutoBiographical] = i18n("Personal or Auto-biographical");
+    m_category[BlipVideo::Politics] = i18n("Politics");
+    m_category[BlipVideo::Religion] = i18n("Religion");
+    m_category[BlipVideo::SchoolAndEducation] = i18n("School and Education");
+    m_category[BlipVideo::Science] = i18n("Science");
+    m_category[BlipVideo::Sports] = i18n("Sports");
+    m_category[BlipVideo::Technology] = i18n("Technology");
+    m_category[BlipVideo::TheEnvironment] = i18n("The Environment");
+    m_category[BlipVideo::TheMainstreamMedia] = i18n("The Mainstream Media");
+    m_category[BlipVideo::Travel] = i18n("Travel");
+    m_category[BlipVideo::Videoblogging] = i18n("Videoblogging");
+    m_category[BlipVideo::WebDevelopmentAndSites] = i18n("Web Development and Sites");
 
 
     connect(this, SIGNAL(gotPassword(QString,QString)), this,
@@ -114,8 +114,8 @@ BlipUploader::~BlipUploader()
     if (m_dialog) {
         delete m_dialog;
     }
-    if (m_video) {
-        delete m_video;
+    if (m_service) {
+        delete m_service;
     }
 
 }
@@ -165,13 +165,13 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     currentAccountChanged(accountsCombo->currentText());
 
 
-    QHashIterator<KBlipVideo::License, QString> lIt(m_license);
+    QHashIterator<BlipVideo::License, QString> lIt(m_license);
     while (lIt.hasNext()) {
         lIt.next();
         licenseCombo->addItem(lIt.value());
     }
 
-    QHashIterator<KBlipVideo::Category, QString> cIt(m_category);
+    QHashIterator<BlipVideo::Category, QString> cIt(m_category);
     while (cIt.hasNext()) {
         cIt.next();
         categoryCombo->addItem(cIt.value());
@@ -194,23 +194,26 @@ void BlipUploader::upload()
     Settings::self()->setCurrentAccount(accountsCombo->currentText());
     Settings::self()->writeConfig();
 
-    KBlipAccount account;
-    account.setUsername(accountsCombo->currentText());
-    account.setPassword(passwordEdit->text());
+    BlipVideo video;
+    video.setTitle(titleEdit->text());
+    video.setDescription(descriptionEdit->toPlainText());
+    video.setCategory(m_category.key(categoryCombo->currentText()));
+    video.setLicense(m_license.key(licenseCombo->currentText()));
+    video.setFile(fileRequester->text());
+    video.setKeywords(tagsEdit->text());
 
-    m_video = new KBlipVideo(this);
-    m_video->setTitle(titleEdit->text());
-    m_video->setDescription(descriptionEdit->toPlainText());
-    m_video->setCategory(m_category.key(categoryCombo->currentText()));
-    m_video->setLicense(m_license.key(licenseCombo->currentText()));
-    m_video->setFile(fileRequester->text());
-    m_video->setTags(tagsEdit->text().split(','));
+    m_service = new BlipService(this);
 
-    connect(m_video, SIGNAL(finished()), this, SLOT(uploadFinished()));
-    connect(m_video, SIGNAL(error(QString)), this, SLOT(error(QString)));
+    connect(m_service, SIGNAL(uploadFinished(QString)), this, SLOT(uploadFinished(QString)));
+    connect(m_service, SIGNAL(error(QString, QString)), this, SLOT(error(QString, QString)));
+    connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadFinished(QString)));
 
     setState(Upload);
-    m_video->send(&account);
+    QString id = m_service->upload(&video, accountsCombo->currentText(), passwordEdit->text());
+
+    if (id.isEmpty()) {
+        cancelUpload();
+    }
 
 }
 
@@ -218,30 +221,32 @@ void BlipUploader::upload()
 void BlipUploader::cancelUpload()
 {
 
-    if (m_video) {
-        delete m_video;
-        m_video = 0;
+    if (m_service) {
+        delete m_service;
+        m_service = 0;
     }
     setState(Idle);
 
 }
 
 
-void BlipUploader::uploadFinished()
+void BlipUploader::uploadFinished(const QString &id)
 {
 
-    qDebug() << "upload finished";
-    if (m_video) {
-        delete m_video;
-        m_video = 0;
+    qDebug() << "upload finished" << id;
+    if (m_service) {
+        delete m_service;
+        m_service = 0;
     }
     setState(Idle);
 
 }
 
 
-void BlipUploader::error(const QString &errorString)
+void BlipUploader::error(const QString &errorString, const QString &id)
 {
+
+    Q_UNUSED(id);
 
     KMessageBox::error(m_dialog, errorString);
     cancelUpload();

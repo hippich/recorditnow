@@ -23,14 +23,14 @@
 // own
 #include "abstractuploader.h"
 #include "ui_blip.h"
-#include "lib/kblipvideo.h"
+#include "lib/blipvideo.h"
 
 // Qt
 #include <QtCore/QVariantList>
 #include <QtCore/QPointer>
 
 
-
+class BlipService;
 class BlipUploader : public AbstractUploader, public Ui::Blip
 {
     Q_OBJECT
@@ -47,10 +47,10 @@ private:
     enum State { Idle = 0, Upload = 1 };
 
     State m_state;
-    QHash<KBlipVideo::Category, QString> m_category;
-    QHash<KBlipVideo::License, QString> m_license;
+    QHash<BlipVideo::Category, QString> m_category;
+    QHash<BlipVideo::License, QString> m_license;
     QPointer<QWidget> m_dialog;
-    KBlipVideo *m_video;
+    BlipService *m_service;
 
 
     void setState(const State &state);
@@ -59,7 +59,7 @@ private:
 private slots:
     void upload();
     void cancelUpload();
-    void uploadFinished();
+    void uploadFinished(const QString &id);
     void quitDialog();
     void descriptionChanged();
     void addAccount();
@@ -68,7 +68,7 @@ private slots:
     void accountsChanged(const QStringList &accounts);
     void currentAccountChanged(const QString &newAccount);
     void gotPasswordForAccount(const QString &account, const QString &password);
-    void error(const QString &errorString);
+    void error(const QString &errorString, const QString &id);
 
 
 };

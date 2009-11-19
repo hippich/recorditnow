@@ -17,37 +17,65 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef KBLIPACCOUNT_H
-#define KBLIPACCOUNT_H
+#ifndef SERVICE_H
+#define SERVICE_H
 
 
 // KDE
-#include <kdemacros.h>
+#include <kurl.h>
+#include <kio/job.h>
 
 // Qt
-#include <QtCore/QString>
+#include <QtCore/QObject>
 
 
-class KDE_EXPORT KBlipAccount
+class QNetworkReply;
+class QNetworkAccessManager;
+namespace KYouBlip {
+
+
+class Service : public QObject
 {
-friend class KBlipVideo;
+    Q_OBJECT
 
 
 public:
-    KBlipAccount();
-    ~KBlipAccount();
+    Service(QObject *parent = 0);
+    ~Service();
 
-    void setUsername(const QString &username);
-    void setPassword(const QString &password);
+    static QString getUniqueId();
 
 
 private:
-    QString m_username;
-    QString m_password;
+    QHash<KJob*, QByteArray> m_data;
+    QHash<KIO::Job*, QByteArray> m_reqData;
+    QNetworkAccessManager *m_manager;
 
 
-};
+private slots:
+    void jobData(KIO::Job *job, const QByteArray &data);
+    void jobResult(KJob *job);
+    void jobDataReq(KIO::Job *job, QByteArray &data);
+    void infoJobFinished(QNetworkReply *reply);
+    void infoJobResult(KJob *job);
 
 
-#endif // KBLIPACCOUNT_H
+protected:
+    KJob *post(const KUrl &url, const KIO::MetaData &meta,  const QByteArray &postData,
+               const bool &hideProgress = false);
+    KJob *get(const KUrl &url, const KIO::LoadType &loadType, const bool &hideProgress = false);
+    KJob *post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data);
+
+
+protected slots:
+    virtual void jobFinished(KJob *job, const QByteArray &data);
+
+
+
+}; // Service
+
+
+}; // KYouBlip
+
+
+#endif // SERVICE_H

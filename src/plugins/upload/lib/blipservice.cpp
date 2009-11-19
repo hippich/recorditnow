@@ -19,8 +19,8 @@
 
 
 // own
-#include "kblipvideo.h"
-#include "kblipaccount.h"
+#include "blipservice.h"
+#include "blipvideo.h"
 
 // KDE
 #include <kdebug.h>
@@ -33,8 +33,8 @@
 #include <QtCore/QHash>
 
 
-KBlipVideo::KBlipVideo(QObject *parent) :
-    QObject(parent)
+BlipService::BlipService(QObject *parent) :
+    KYouBlip::Service(parent)
 {
 
 
@@ -42,83 +42,37 @@ KBlipVideo::KBlipVideo(QObject *parent) :
 }
 
 
-KBlipVideo::~KBlipVideo()
+BlipService::~BlipService()
 {
 
-    if (m_job) {
-        m_job->kill();
+    QHashIterator<KJob*, QString> it(m_jobs);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key()) {
+            it.key()->kill();
+        }
     }
 
 }
 
 
-void KBlipVideo::setTitle(const QString &title)
+QString BlipService::upload(const BlipVideo *video, const QString &account, const QString &password)
 {
 
-    m_title = title;
-
-}
-
-
-void KBlipVideo::setDescription(const QString &description)
-{
-
-    m_description = description;
-
-}
-
-
-void KBlipVideo::setTags(const QStringList &tags)
-{
-
-    m_tags = tags.join(", ");
-
-}
-
-
-void KBlipVideo::setLicense(const KBlipVideo::License &license)
-{
-
-    m_license = static_cast<int>(license);
-
-}
-
-
-void KBlipVideo::setCategory(const KBlipVideo::Category &id)
-{
-
-    m_category = static_cast<int>(id);
-
-}
-
-
-void KBlipVideo::setFile(const QString &file)
-{
-
-    m_file = file;
-
-}
-
-
-void KBlipVideo::send(const KBlipAccount *account)
-{
-
-    if (m_title.isEmpty()) {
-        emit error(i18n("No title specified"));
-        return;
+    if (video->title().isEmpty()) {
+        return QString();
     }
 
-    if (m_file.isEmpty() || !QFile::exists(m_file)) {
-        emit error(i18n("No video specified"));
-        return;
+    if (video->file().isEmpty() || !QFile::exists(video->file())) {
+        return QString();
     }
 
-    if (account->m_username.isEmpty() || account->m_password.isEmpty()) {
-        emit error(i18n("No Account or Password specified"));
-        return;
+    if (account.isEmpty() || password.isEmpty()) {
+        return QString();
     }
 
-    KUrl url("http://blip.tv/file/post");
+    const KUrl url("http://blip.tv/file/post");
+
     QByteArray BOUNDARY = "-----------$$SomeFancyBoundary$$";
     QByteArray CRLF = "\r\n";
 
@@ -129,17 +83,17 @@ void KBlipVideo::send(const KBlipAccount *account)
     fields["file_role"] = "Web";
     fields["item_type"] = "file";
 
-    fields["userlogin"] = account->m_username;
-    fields["password"] = account->m_password;
-    fields["title"] = m_title;
-    fields["description"] = m_description;
-    fields["topics"] = m_tags;
-    fields["categories_id"] = QString::number(m_category);
-    fields["license"] = QString::number(m_license);
+    fields["userlogin"] = account;
+    fields["password"] = password;
+    fields["title"] = video->title();
+    fields["description"] = video->description();
+    fields["topics"] = video->keywords().join(", ");
+    fields["categories_id"] = QString::number(video->category());
+    fields["license"] = QString::number(video->license());
 
 
     QHash<QString, QString> files;
-    files["file"] = m_file;
+    files["file"] = video->file();
 
 
     QHashIterator<QString, QString> fit(files);
@@ -171,9 +125,7 @@ void KBlipVideo::send(const KBlipAccount *account)
         QFile file(fit.value());
         if (!file.open(QIODevice::ReadOnly)) {
             kDebug() << "open failed!";
-            emit error(i18nc("%1 = file, %2 = error string", "Cannot open %1.\n"
-                             "Reason: %2", fit.value(), file.errorString()));
-            return;
+            return QString();
         }
         data.append(file.readAll());
         data.append(CRLF);
@@ -182,50 +134,30 @@ void KBlipVideo::send(const KBlipAccount *account)
     data.append("--" + BOUNDARY + "--");
     data.append(CRLF);
 
-    KIO::MetaData meta;
-    meta.insert("content-type", "Content-type: multipart/form-data; boundary="+BOUNDARY);
-    meta.insert("content-length", QString::number(data.size()));
+    QHash<QString, QString> header;
+    header["Content-type"] = "multipart/form-data; boundary="+BOUNDARY;
+    header["content-length"] = QString::number(data.size());
 
-    KIO::TransferJob *job = KIO::http_post(url, data);
-    job->addMetaData(meta);
-    job->setAutoDelete(true);
-    job->setTotalSize(data.size());
+    const QString id = getUniqueId();
 
-    connect(job, SIGNAL(data(KIO::Job*, QByteArray)), SLOT(jobData(KIO::Job*, QByteArray)));
-    connect(job, SIGNAL(result(KJob*)), SLOT(jobResult(KJob*)));
-    connect(job, SIGNAL(infoMessage(KJob*, QString, QString)), SLOT(jobInfoMessage(KJob*, QString)));
-    connect(job, SIGNAL(speed(KJob*, unsigned long)), this, SLOT(jobSpeed(KJob*, unsigned long)));
+    m_jobs[post(url, header, data)] = id;
 
-    m_job = job;
+    return id;
 
 }
 
 
-void KBlipVideo::jobData(KIO::Job *, const QByteArray &data)
+void BlipService::jobFinished(KJob *job, const QByteArray &data)
 {
 
-    m_bytes += data;
-
-}
-
-
-void KBlipVideo::jobInfoMessage(KJob *, const QString &message)
-{
-
-    kDebug() << "info message:" << message;
-
-}
-
-
-void KBlipVideo::jobResult(KJob *job)
-{
-
-    kDebug() << "data:" << m_bytes;
-    kDebug() << "error:" << job->error();
-
+    const QString id = m_jobs[job];
     const int ret = job->error();
-    QString text = m_bytes;
+    QString text = data;
     QString errorString;
+
+    m_jobs.remove(job);
+
+    kDebug() << "response:" << data;
 
     const QRegExp rx("<error>.*</error>");
     rx.indexIn(text);
@@ -240,18 +172,14 @@ void KBlipVideo::jobResult(KJob *job)
         }
     }
 
-    if (!errorString.isEmpty()) {
-        emit error(errorString);
+    if (ret == KIO::ERR_USER_CANCELED) {
+        emit canceled(id);
+    } else if (!errorString.isEmpty()) {
+        emit error(errorString, id);
     } else {
-        emit finished();
+        emit uploadFinished(id);
     }
 
 }
 
 
-void KBlipVideo::jobSpeed(KJob *, unsigned long bytes)
-{
-
-    emit speed(KGlobal::locale()->formatByteSize(bytes));
-
-}
