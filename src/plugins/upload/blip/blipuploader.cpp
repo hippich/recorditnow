@@ -211,8 +211,8 @@ void BlipUploader::upload()
     setState(Upload);
     QString id = m_service->upload(&video, accountsCombo->currentText(), passwordEdit->text());
 
-    if (id.isEmpty()) {
-        cancelUpload();
+    if (id.startsWith("Error:")) {
+        error(id.remove(0, 7), QString());
     }
 
 }

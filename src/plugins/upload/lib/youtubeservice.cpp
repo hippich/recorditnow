@@ -137,8 +137,7 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
     }
 
     if (!errorString.isEmpty()) {
-        emit error(errorString, account);
-        return QString();
+        return "Error: "+errorString;
     }
 
     const KUrl url("http://uploads.gdata.youtube.com/feeds/api/users/"+account+"/uploads");

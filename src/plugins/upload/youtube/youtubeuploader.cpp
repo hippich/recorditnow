@@ -240,7 +240,11 @@ void YouTubeUploader::authenticated(const QString &account)
     video.setCategory(m_category.key(categoryCombo->currentText()));
     video.setFile(fileRequester->text());
 
-    m_service->upload(&video, accountsCombo->currentText());
+    QString id = m_service->upload(&video, accountsCombo->currentText());
+
+    if (id.startsWith("Error:")) {
+        serviceError(id.remove(0, 7), QString());
+    }
 
 }
 

@@ -60,15 +60,15 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
 {
 
     if (video->title().isEmpty()) {
-        return QString();
+        return "Error: "+i18n("No title specified");
     }
 
     if (video->file().isEmpty() || !QFile::exists(video->file())) {
-        return QString();
+        return "Error: "+i18n("No video specified");
     }
 
     if (account.isEmpty() || password.isEmpty()) {
-        return QString();
+        return "Error: "+i18n("No account/password specified");
     }
 
     const KUrl url("http://blip.tv/file/post");
@@ -125,7 +125,8 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
         QFile file(fit.value());
         if (!file.open(QIODevice::ReadOnly)) {
             kDebug() << "open failed!";
-            return QString();
+            return "Error: "+i18nc("%1 = file, %2 = error string", "Cannot open %1.\n"
+                                   "Reason: %1", fit.value(), file.errorString());
         }
         data.append(file.readAll());
         data.append(CRLF);
