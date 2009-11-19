@@ -110,7 +110,7 @@ void InfoJob::setState(const InfoJob::State &newState)
             break;
         }
     case InfoJob::Download: {
-            emit description(this, i18n("Upload"), qMakePair(i18n("Source"),
+            emit description(this, i18n("Download"), qMakePair(i18n("Source"),
                                                              m_reply->request().url().toString()));
             break;
         }
