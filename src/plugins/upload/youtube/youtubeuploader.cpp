@@ -146,8 +146,6 @@ void YouTubeUploader::upload()
 
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
     QString message(GOOGLE);
-
-
     if (QString(GOOGLE) != GOOGLETR) {
         message.append("<br>");
         message.append("<br>");
@@ -170,7 +168,11 @@ void YouTubeUploader::upload()
     connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadFinished(QString)));
 
     setState(Upload);
-    m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
+    QString id = m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
+
+    if (id.startsWith("Error: ")) {
+        serviceError(id.remove(0, 7), QString());
+    }
 
 }
 

@@ -70,7 +70,7 @@ QString YouTubeService::authenticate(const QString &account, const QString &pass
 {
 
     if (account.isEmpty() || password.isEmpty()) {
-        return QString();
+        return "Error: "+i18n("No account/password specified.");
     }
 
     const KUrl url("https://www.google.com/youtube/accounts/ClientLogin");

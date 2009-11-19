@@ -186,6 +186,7 @@ public:
      * updates the thumbnail for the video
      *
      * @param thumbnailDir the folder where the thumbnail should be saved
+     * @see loadThumbnail()
      */
     void updateThumbnail(const QString &thumbnailDir);
     /**
@@ -194,6 +195,7 @@ public:
      * @param thumbnailDir the folder where the thumbnail was saved
      * @return false if the thumbnail does not exist
      * @return true if the thumbnail was found
+     * @see updateThumbnail()
      */
     bool loadThumbnail(const QString &thumbnailDir);
 
