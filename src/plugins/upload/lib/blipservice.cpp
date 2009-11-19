@@ -61,17 +61,32 @@ BlipService::~BlipService()
 QString BlipService::upload(const BlipVideo *video, const QString &account, const QString &password)
 {
 
+    QString errorString;
     if (video->title().isEmpty()) {
-        return "Error: "+i18n("No title specified");
+        errorString = i18n("No title specified.");
     }
 
     if (video->file().isEmpty() || !QFile::exists(video->file())) {
-        return "Error: "+i18n("No video specified");
+        errorString = i18n("No video specified.");
     }
 
     if (account.isEmpty() || password.isEmpty()) {
-        return "Error: "+i18n("No account/password specified");
+        errorString = i18n("No account/password specified.");
     }
+
+    if (!video->m_categorys.values().contains(video->category())) {
+        errorString = i18n("Invalid category.");
+    }
+    
+    if (!video->m_licenses.values().contains(video->license())) {
+        errorString = i18n("Invalid license.");
+    }
+
+
+    if (!errorString.isEmpty()) {
+        return "Error: "+errorString;
+    }
+
 
     const KUrl url("http://blip.tv/file/post");
 

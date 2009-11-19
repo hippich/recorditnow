@@ -126,12 +126,29 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
         errorString = i18n("Too long tags.");
     }
 
+    if (!video->m_categorys.values().contains(category)) {
+        errorString = i18n("Invalid category.");
+    }
+
+    if (title.isEmpty()) {
+        errorString = i18n("No title specified.");
+    }
+
+    if (description.isEmpty()) {
+        errorString = i18n("No description specified.");
+    }
+
+    if (tags.isEmpty()) {
+        errorString = i18n("No tags specified.");
+    }
+
+
     foreach (const QString &keyword, tags.split(',')) {
         if (keyword.length() > 25) {
-            errorString = i18n("Tag %1 is too long.", keyword);
+            errorString = i18n("Tag \"%1\" is too long.", keyword);
             break;
         } else if (keyword.length() < 2) {
-            errorString = i18n("Tag %1 is too short.", keyword);
+            errorString = i18n("Tag \"%1\" is too short.", keyword);
             break;
         }
     }
