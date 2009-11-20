@@ -264,7 +264,7 @@ BlipVideo *BlipService::readEntry(QXmlStreamReader *reader)
                 video->setUrl(KUrl(reader->attributes().value("url").toString()));
             }
         } else if (reader->name() == "puredescription" && reader->prefix() == "blip") {
-            video->setDescription(reader->readElementText().trimmed());
+            video->setDescription(reader->readElementText());
         } else if (reader->name() == "pubDate") {
             QString string = reader->readElementText().remove(" +0000");
 

@@ -36,7 +36,7 @@ BlipVideo::BlipVideo(QObject *parent)
     m_license = -5;
     m_category = -5;
 
-    m_licenses[BlipVideo::NoLicense] = "No License";
+    m_licenses[BlipVideo::NoLicense] = "No license (All rights reserved)";
     m_licenses[BlipVideo::CreativeCommonsAttribution_2_0] = "Creative Commons Attribution 2.0";
     m_licenses[BlipVideo::CreativeCommonsAttribution_NoDerivs_2_0] =
             "Creative Commons Attribution-NoDerivs 2.0";
