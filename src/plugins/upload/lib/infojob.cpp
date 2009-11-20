@@ -92,6 +92,15 @@ void InfoJob::setTotalAmount(qulonglong amount)
 }
 
 
+void InfoJob::setSource(const QString &source)
+{
+
+    m_source = source;
+    setState(state());
+
+}
+
+
 void InfoJob::setState(const InfoJob::State &newState)
 {
 
@@ -104,18 +113,19 @@ void InfoJob::setState(const InfoJob::State &newState)
             break;
         }
     case InfoJob::Upload: {
-            emit description(this, i18n("Upload"), qMakePair(i18n("Destination"),
-                                                             m_reply->request().url().toString()));
+            emit description(this, i18n("Upload"),
+                             qMakePair(i18n("Source"), m_source),
+                             qMakePair(i18n("Destination"), m_reply->request().url().toString()));
             emit infoMessage(this, i18n("Transmit Data"), QString());
             break;
         }
     case InfoJob::Download: {
-            emit description(this, i18n("Download"), qMakePair(i18n("Source"),
-                                                             m_reply->request().url().toString()));
+            emit description(this, i18n("Download"),
+                             qMakePair(i18n("Source"), m_reply->request().url().toString()));
             break;
         }
     case InfoJob::Kill: {
-            emit description(this, i18n("Upload"), qMakePair(i18n("Canceled"), QString()));
+            emit description(this, i18n("Upload"), qMakePair(i18n("Canceled"), m_source));
             break;
         }
     }
@@ -127,7 +137,9 @@ void InfoJob::uploadProgress(qint64 bytesSent, qint64 bytesTotal)
 {
 
     kDebug() << "upload progress...";
-    setState(InfoJob::Upload);
+    if (state() != InfoJob::Upload) {
+        setState(InfoJob::Upload);
+    }
     if (!bytesTotal != -1) {
         const qlonglong speed = bytesSent*1000.0/m_speedTime.elapsed();
         setProcessedAmount(KJob::Bytes, bytesSent);
@@ -142,7 +154,9 @@ void InfoJob::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
 
     kDebug() << "download progress...";
-    setState(InfoJob::Download);
+    if (state() != InfoJob::Upload) {
+        setState(InfoJob::Download);
+    }
     if (!bytesTotal != -1) {
         setProcessedAmount(KJob::Bytes, bytesReceived);
         emitPercent(bytesReceived, bytesTotal);

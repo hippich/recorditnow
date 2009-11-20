@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-17 14:08+0100\n"
-"PO-Revision-Date: 2009-11-17 14:11+0100\n"
+"POT-Creation-Date: 2009-11-20 11:11+0100\n"
+"PO-Revision-Date: 2009-11-20 11:14+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -553,7 +553,9 @@ msgstr "Login"
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:227
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#: po/rc.cpp:244 po/rc.cpp:302 src/mainwindow.cpp:243 rc.cpp:244 rc.cpp:302
+#: po/rc.cpp:244 po/rc.cpp:302 src/mainwindow.cpp:243
+#: src/plugins/upload/lib/infojob.cpp:107
+#: src/plugins/upload/lib/infojob.cpp:118 rc.cpp:244 rc.cpp:302
 msgid "Upload"
 msgstr "Hochladen"
 
@@ -1009,189 +1011,224 @@ msgstr "Kann Ausgabedatei nicht öffnen: %1"
 msgid "Cannot save image."
 msgstr "Kann Bild nicht speichern."
 
-#: src/plugins/upload/blip/blipuploader.cpp:47
-msgid "No License"
-msgstr "Keine Lizenz"
+#: src/plugins/upload/lib/blipservice.cpp:66
+#: src/plugins/upload/lib/youtubeservice.cpp:130
+msgid "No title specified."
+msgstr "Kein Titel angegeben."
 
-#: src/plugins/upload/blip/blipuploader.cpp:73
-msgid "Art"
-msgstr "Kunst"
+#: src/plugins/upload/lib/blipservice.cpp:70
+msgid "No video specified."
+msgstr "Kein Video angegeben."
 
-#: src/plugins/upload/blip/blipuploader.cpp:74
-#: src/plugins/upload/youtube/youtubeuploader.cpp:62
-msgid "Autos & Vehicles"
-msgstr "Autos & Fahrzeuge"
+#: src/plugins/upload/lib/blipservice.cpp:74
+#: src/plugins/upload/lib/youtubeservice.cpp:73
+msgid "No account/password specified."
+msgstr "Kein Account/Passwort angegeben."
 
-#: src/plugins/upload/blip/blipuploader.cpp:75
-msgid "Business"
-msgstr "Unternehmen"
+#: src/plugins/upload/lib/blipservice.cpp:78
+#: src/plugins/upload/lib/youtubeservice.cpp:143
+msgid "Invalid category."
+msgstr "Ungültige Kategorie."
 
-#: src/plugins/upload/blip/blipuploader.cpp:76
-msgid "Citizen Journalism"
-msgstr "Journalismus"
+#: src/plugins/upload/lib/blipservice.cpp:82
+msgid "Invalid license."
+msgstr "Ungültige Lizenz."
 
-#: src/plugins/upload/blip/blipuploader.cpp:77
-#: src/plugins/upload/youtube/youtubeuploader.cpp:63
-msgid "Comedy"
-msgstr "Comedy"
-
-#: src/plugins/upload/blip/blipuploader.cpp:78
-msgid "Conferences and other Events"
-msgstr "Konferenzen und andere Veranstaltungen"
-
-#: src/plugins/upload/blip/blipuploader.cpp:79
-msgid "Default Category"
-msgstr "Standard Kategorie"
-
-#: src/plugins/upload/blip/blipuploader.cpp:80
-msgid "Documentary"
-msgstr "Dokumentarfilm"
-
-#: src/plugins/upload/blip/blipuploader.cpp:81
-msgid "Educational"
-msgstr "Bildung"
-
-#: src/plugins/upload/blip/blipuploader.cpp:82
-msgid "Food & Drink"
-msgstr "Essen und Trinken"
-
-#: src/plugins/upload/blip/blipuploader.cpp:83
-msgid "Friends"
-msgstr "Freunde"
-
-#: src/plugins/upload/blip/blipuploader.cpp:84
-#: src/plugins/upload/youtube/youtubeuploader.cpp:67
-msgid "Gaming"
-msgstr "Spiele"
-
-#: src/plugins/upload/blip/blipuploader.cpp:85
-msgid "Health"
-msgstr "Gesundheit"
-
-#: src/plugins/upload/blip/blipuploader.cpp:86
-msgid "Literature"
-msgstr "Literatur"
-
-#: src/plugins/upload/blip/blipuploader.cpp:87
-msgid "Movies and Television"
-msgstr "Filme und Fernsehen"
-
-#: src/plugins/upload/blip/blipuploader.cpp:88
-msgid "Music and Entertainment"
-msgstr "Musik und Unterhaltung"
-
-#: src/plugins/upload/blip/blipuploader.cpp:89
-msgid "Personal or Auto-biographical"
-msgstr "Persönlich/Autobiografie"
-
-#: src/plugins/upload/blip/blipuploader.cpp:90
-msgid "Politics"
-msgstr "Politisch"
-
-#: src/plugins/upload/blip/blipuploader.cpp:91
-msgid "Religion"
-msgstr "Religion"
-
-#: src/plugins/upload/blip/blipuploader.cpp:92
-msgid "School and Education"
-msgstr "Schule und Bildung"
-
-#: src/plugins/upload/blip/blipuploader.cpp:93
-msgid "Science"
-msgstr "Wissenschaft"
-
-#: src/plugins/upload/blip/blipuploader.cpp:94
-#: src/plugins/upload/youtube/youtubeuploader.cpp:75
-msgid "Sports"
-msgstr "Sport"
-
-#: src/plugins/upload/blip/blipuploader.cpp:95
-msgid "Technology"
-msgstr "Technik"
-
-#: src/plugins/upload/blip/blipuploader.cpp:96
-msgid "The Environment"
-msgstr "Umwelt"
-
-#: src/plugins/upload/blip/blipuploader.cpp:97
-msgid "The Mainstream Media"
-msgstr "Die Mainstream Medien"
-
-#: src/plugins/upload/blip/blipuploader.cpp:98
-msgid "Travel"
-msgstr "Reisen"
-
-#: src/plugins/upload/blip/blipuploader.cpp:99
-msgid "Videoblogging"
-msgstr "Videoblogging"
-
-#: src/plugins/upload/blip/blipuploader.cpp:100
-msgid "Web Development and Sites"
-msgstr "Web-Entwicklung und Seiten"
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:107
-msgid "No title specified"
-msgstr "Kein Titel angegeben!"
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:112
-msgid "No video specified"
-msgstr "Kein Video angegeben"
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:117
-msgid "No Account or Password specified"
-msgstr "Kein Account oder Passwort angegeben"
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:174
+#: src/plugins/upload/lib/blipservice.cpp:144
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "Cannot open %1.\n"
-"Reason: %2"
+"Reason: %1"
 msgstr ""
-"Kann Ausgabedatei nicht öffnen: %1.\n"
+"Kann nicht öffnen: %1.\n"
 "Grund: %2"
 
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:239
+#: src/plugins/upload/lib/blipservice.cpp:207
 msgctxt "%1 = error"
 msgid "Unkown error: %1."
 msgstr "Unbekannter Fehler: %1."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:100
-msgid "Please authenticate first!"
-msgstr ""
+#: src/plugins/upload/lib/blipvideo.cpp:66
+msgid "Art"
+msgstr "Kunst"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:114
+#: src/plugins/upload/lib/blipvideo.cpp:68
+#: src/plugins/upload/lib/youtubevideo.cpp:34
+msgid "Autos & Vehicles"
+msgstr "Autos & Fahrzeuge"
+
+#: src/plugins/upload/lib/blipvideo.cpp:70
+msgid "Business"
+msgstr "Unternehmen"
+
+#: src/plugins/upload/lib/blipvideo.cpp:72
+msgid "Citizen Journalism"
+msgstr "Journalismus"
+
+#: src/plugins/upload/lib/blipvideo.cpp:74
+#: src/plugins/upload/lib/youtubevideo.cpp:35
+msgid "Comedy"
+msgstr "Comedy"
+
+#: src/plugins/upload/lib/blipvideo.cpp:76
+msgid "Conferences and other Events"
+msgstr "Konferenzen und andere Veranstaltungen"
+
+#: src/plugins/upload/lib/blipvideo.cpp:78
+msgid "Default Category"
+msgstr "Standard Kategorie"
+
+#: src/plugins/upload/lib/blipvideo.cpp:80
+msgid "Documentary"
+msgstr "Dokumentarfilm"
+
+#: src/plugins/upload/lib/blipvideo.cpp:82
+msgid "Educational"
+msgstr "Bildung"
+
+#: src/plugins/upload/lib/blipvideo.cpp:84
+msgid "Food & Drink"
+msgstr "Essen und Trinken"
+
+#: src/plugins/upload/lib/blipvideo.cpp:86
+msgid "Friends"
+msgstr "Freunde"
+
+#: src/plugins/upload/lib/blipvideo.cpp:88
+#: src/plugins/upload/lib/youtubevideo.cpp:39
+msgid "Gaming"
+msgstr "Spiele"
+
+#: src/plugins/upload/lib/blipvideo.cpp:90
+msgid "Health"
+msgstr "Gesundheit"
+
+#: src/plugins/upload/lib/blipvideo.cpp:92
+msgid "Literature"
+msgstr "Literatur"
+
+#: src/plugins/upload/lib/blipvideo.cpp:94
+msgid "Movies and Television"
+msgstr "Filme und Fernsehen"
+
+#: src/plugins/upload/lib/blipvideo.cpp:96
+msgid "Music and Entertainment"
+msgstr "Musik und Unterhaltung"
+
+#: src/plugins/upload/lib/blipvideo.cpp:98
+msgid "Personal or Auto-biographical"
+msgstr "Persönlich/Autobiografie"
+
+#: src/plugins/upload/lib/blipvideo.cpp:100
+msgid "Politics"
+msgstr "Politisch"
+
+#: src/plugins/upload/lib/blipvideo.cpp:102
+msgid "Religion"
+msgstr "Religion"
+
+#: src/plugins/upload/lib/blipvideo.cpp:104
+msgid "School and Education"
+msgstr "Schule und Bildung"
+
+#: src/plugins/upload/lib/blipvideo.cpp:106
+msgid "Science"
+msgstr "Wissenschaft"
+
+#: src/plugins/upload/lib/blipvideo.cpp:108
+#: src/plugins/upload/lib/youtubevideo.cpp:47
+msgid "Sports"
+msgstr "Sport"
+
+#: src/plugins/upload/lib/blipvideo.cpp:110
+msgid "Technology"
+msgstr "Technik"
+
+#: src/plugins/upload/lib/blipvideo.cpp:112
+msgid "The Environment"
+msgstr "Umwelt"
+
+#: src/plugins/upload/lib/blipvideo.cpp:114
+msgid "The Mainstream Media"
+msgstr "Die Mainstream Medien"
+
+#: src/plugins/upload/lib/blipvideo.cpp:116
+msgid "Travel"
+msgstr "Reisen"
+
+#: src/plugins/upload/lib/blipvideo.cpp:118
+msgid "Videoblogging"
+msgstr "Videoblogging"
+
+#: src/plugins/upload/lib/blipvideo.cpp:120
+msgid "Web Development and Sites"
+msgstr "Web-Entwicklung und Seiten"
+
+#: src/plugins/upload/lib/infojob.cpp:107
+msgid "Destination"
+msgstr "Ziel"
+
+#: src/plugins/upload/lib/infojob.cpp:109
+msgid "Transmit Data"
+msgstr "Übertrage Daten"
+
+#: src/plugins/upload/lib/infojob.cpp:113
+msgid "Download"
+msgstr "Download"
+
+#: src/plugins/upload/lib/infojob.cpp:113
+msgid "Source"
+msgstr "Quelle"
+
+#: src/plugins/upload/lib/infojob.cpp:118
+msgid "Canceled"
+msgstr "Abgebrochen"
+
+#: src/plugins/upload/lib/youtubeservice.cpp:100
+msgid "Please authenticate first!"
+msgstr "Bitte authentifizieren Sie sich zuerst!"
+
+#: src/plugins/upload/lib/youtubeservice.cpp:114
 msgid "No such file: %1."
 msgstr "Kann Datei nicht finden: %1."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:118
+#: src/plugins/upload/lib/youtubeservice.cpp:118
 msgid "Title too long."
 msgstr "Der Titel ist zu lang."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:122
+#: src/plugins/upload/lib/youtubeservice.cpp:122
 msgid "Description too long."
 msgstr "Die Beschreibung ist zu lang."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:126
+#: src/plugins/upload/lib/youtubeservice.cpp:126
 msgid "Too long tags."
 msgstr "Zu lange Tags."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:131
-msgid "Tag %1 is too long."
-msgstr "Der Tag %1 ist zu lang."
+#: src/plugins/upload/lib/youtubeservice.cpp:134
+msgid "No description specified."
+msgstr "Keine Beschreibung angegeben."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:134
-msgid "Tag %1 is too short."
-msgstr "Der Tag %1 ist zu kurz."
+#: src/plugins/upload/lib/youtubeservice.cpp:138
+msgid "No tags specified."
+msgstr "Keine Tags angegeben!"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:151
+#: src/plugins/upload/lib/youtubeservice.cpp:148
+msgid "Tag \"%1\" is too long."
+msgstr "Der Tag \"%1\" ist zu lang."
+
+#: src/plugins/upload/lib/youtubeservice.cpp:151
+msgid "Tag \"%1\" is too short."
+msgstr "Der Tag \"%1\" ist zu kurz."
+
+#: src/plugins/upload/lib/youtubeservice.cpp:167
 msgid "Cannot open video!"
 msgstr "Kann Video nicht öffnen!"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:256
+#: src/plugins/upload/lib/youtubeservice.cpp:310
 msgid "Authentication failed!"
 msgstr "Authentifizierung fehlgeschlagen!"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:267
+#: src/plugins/upload/lib/youtubeservice.cpp:326
 msgctxt "%1 = error"
 msgid ""
 "Upload failed!\n"
@@ -1199,6 +1236,50 @@ msgid ""
 msgstr ""
 "Hochladen fehlgeschlagen!\n"
 "Antwort: %1"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:36
+msgid "Education"
+msgstr "Bildung"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:37
+msgid "Entertainment"
+msgstr "Unterhaltung"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:38
+msgid "Film & Animation"
+msgstr "Film & Animation"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:40
+msgid "Howto & Style"
+msgstr "Tipps und Tricks"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:41
+msgid "Music"
+msgstr "Musik"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:42
+msgid "News & Politics"
+msgstr "Nachrichten & Politik"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:43
+msgid "Nonprofit & Activism"
+msgstr "Nonprofit & Aktivismus"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:44
+msgid "People & Blogs"
+msgstr "Leute & Blogs"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:45
+msgid "Pets & Animals"
+msgstr "Tiere"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:46
+msgid "Sience & Technology"
+msgstr "Wissenschaft & Technik"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:48
+msgid "Travel & Evends"
+msgstr "Reisen & Events"
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:46
 msgid ""
@@ -1208,57 +1289,13 @@ msgid ""
 "of Service located at <a href='http://www.youtube.com/t/terms'>http://www."
 "youtube.com/t/terms</a>."
 msgstr ""
-"Mit dem Klick auf \"Fortsetzen\" bestätigen Sie, dass Sie alle Rechte an "
-"den Inhalten besitzen oder dass Sie durch den Inhaber berechtigt sind, die "
+"Mit dem Klick auf \"Fortsetzen\" bestätigen Sie, dass Sie alle Rechte an den "
+"Inhalten besitzen oder dass Sie durch den Inhaber berechtigt sind, die "
 "Inhalte auf YouTube öffentlich verfügbar zu machen, und dass es den YouTube- "
 "Nutzungsbedingungen, die auf <a href=\"http://www.youtube.com/t/terms\"> "
 "http://www.youtube.com/t/terms</a> zu finden sind,  entspricht."
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:64
-msgid "Education"
-msgstr "Bildung"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:65
-msgid "Entertainment"
-msgstr "Unterhaltung"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:66
-msgid "Film & Animation"
-msgstr "Film & Animation"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:68
-msgid "Howto & Style"
-msgstr "Tipps und Tricks"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:69
-msgid "Music"
-msgstr "Musik"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:70
-msgid "News & Politics"
-msgstr "Nachrichten & Politik"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:71
-msgid "Nonprofit & Activism"
-msgstr "Nonprofit & Aktivismus"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:72
-msgid "People & Blogs"
-msgstr "Leute & Blogs"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:73
-msgid "Pets & Animals"
-msgstr "Tiere"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:74
-msgid "Sience & Technology"
-msgstr "Wissenschaft & Technik"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:76
-msgid "Travel & Evends"
-msgstr "Reisen & Events"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:174
+#: src/plugins/upload/youtube/youtubeuploader.cpp:153
 msgid "Translation:"
 msgstr "Übersetzung:"
 
@@ -1273,6 +1310,9 @@ msgstr "Keine Ausgabedatei angegeben."
 #: src/recordermanager.cpp:202
 msgid "The recorder has crashed!"
 msgstr "Der Recorder ist Abgestürzt!"
+
+#~ msgid "No License"
+#~ msgstr "Keine Lizenz"
 
 #~ msgid "Upload to YouTube"
 #~ msgstr "Hochladen zu YouTube"

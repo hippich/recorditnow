@@ -20,6 +20,8 @@
 #ifndef SERVICE_H
 #define SERVICE_H
 
+// own
+#include "infojob.h"
 
 // KDE
 #include <kurl.h>
@@ -64,7 +66,7 @@ protected:
     KJob *post(const KUrl &url, const KIO::MetaData &meta,  const QByteArray &postData,
                const bool &hideProgress = false);
     KJob *get(const KUrl &url, const KIO::LoadType &loadType, const bool &hideProgress = false);
-    KJob *post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data);
+    InfoJob *post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data);
 
 
 protected slots:

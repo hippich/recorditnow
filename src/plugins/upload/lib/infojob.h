@@ -51,12 +51,14 @@ public:
 
     void start();
     void setTotalAmount(qulonglong amount);
+    void setSource(const QString &source);
 
 
 private:
     QNetworkReply *m_reply;
     InfoJob::State m_state;
     QTime m_speedTime;
+    QString m_source;
 
     void setState(const InfoJob::State &newState);
 

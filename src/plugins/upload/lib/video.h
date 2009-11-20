@@ -178,7 +178,7 @@ public:
     /**
      * sets the license for the video
      *
-     * @param the license (translated or untranslated)
+     * @param the license
      */
     virtual void setLicense(const QString &license) = 0;
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-17 14:08+0100\n"
+"POT-Creation-Date: 2009-11-20 11:11+0100\n"
 "PO-Revision-Date: 2009-11-10 22:19+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -557,7 +557,9 @@ msgstr "Přihlášení"
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:227
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#: po/rc.cpp:244 po/rc.cpp:302 src/mainwindow.cpp:243 rc.cpp:244 rc.cpp:302
+#: po/rc.cpp:244 po/rc.cpp:302 src/mainwindow.cpp:243
+#: src/plugins/upload/lib/infojob.cpp:107
+#: src/plugins/upload/lib/infojob.cpp:118 rc.cpp:244 rc.cpp:302
 msgid "Upload"
 msgstr "Nahrát"
 
@@ -1010,205 +1012,246 @@ msgstr "Nelze otevřít výstupní soubor: %1"
 msgid "Cannot save image."
 msgstr "Nelze uložit obrázek"
 
-#: src/plugins/upload/blip/blipuploader.cpp:47
-msgid "No License"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:73
-msgid "Art"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:74
-#: src/plugins/upload/youtube/youtubeuploader.cpp:62
-msgid "Autos & Vehicles"
-msgstr "Auta & Vozidla"
-
-#: src/plugins/upload/blip/blipuploader.cpp:75
-msgid "Business"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:76
-msgid "Citizen Journalism"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:77
-#: src/plugins/upload/youtube/youtubeuploader.cpp:63
-msgid "Comedy"
-msgstr "Veselohra"
-
-#: src/plugins/upload/blip/blipuploader.cpp:78
-msgid "Conferences and other Events"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:79
+#: src/plugins/upload/lib/blipservice.cpp:66
+#: src/plugins/upload/lib/youtubeservice.cpp:130
 #, fuzzy
-msgid "Default Category"
+msgid "No title specified."
+msgstr "Nebyl zadán výstupní soubor."
+
+#: src/plugins/upload/lib/blipservice.cpp:70
+#, fuzzy
+msgid "No video specified."
+msgstr "Nebyl zadán výstupní soubor."
+
+#: src/plugins/upload/lib/blipservice.cpp:74
+#: src/plugins/upload/lib/youtubeservice.cpp:73
+#, fuzzy
+msgid "No account/password specified."
+msgstr "Nebyl zadán výstupní soubor."
+
+#: src/plugins/upload/lib/blipservice.cpp:78
+#: src/plugins/upload/lib/youtubeservice.cpp:143
+#, fuzzy
+msgid "Invalid category."
 msgstr "Skupina"
 
-#: src/plugins/upload/blip/blipuploader.cpp:80
-msgid "Documentary"
+#: src/plugins/upload/lib/blipservice.cpp:82
+msgid "Invalid license."
 msgstr ""
 
-#: src/plugins/upload/blip/blipuploader.cpp:81
-#, fuzzy
-msgid "Educational"
-msgstr "Vzdělávání"
-
-#: src/plugins/upload/blip/blipuploader.cpp:82
-msgid "Food & Drink"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:83
-msgid "Friends"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:84
-#: src/plugins/upload/youtube/youtubeuploader.cpp:67
-msgid "Gaming"
-msgstr "Hry"
-
-#: src/plugins/upload/blip/blipuploader.cpp:85
-#, fuzzy
-msgid "Health"
-msgstr "Výchozí"
-
-#: src/plugins/upload/blip/blipuploader.cpp:86
-#, fuzzy
-msgid "Literature"
-msgstr "Datový tok"
-
-#: src/plugins/upload/blip/blipuploader.cpp:87
-msgid "Movies and Television"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:88
-#, fuzzy
-msgid "Music and Entertainment"
-msgstr "Zábava"
-
-#: src/plugins/upload/blip/blipuploader.cpp:89
-msgid "Personal or Auto-biographical"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:90
-#, fuzzy
-msgid "Politics"
-msgstr "Zprávy & Politika"
-
-#: src/plugins/upload/blip/blipuploader.cpp:91
-msgid "Religion"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:92
-#, fuzzy
-msgid "School and Education"
-msgstr "Vzdělávání"
-
-#: src/plugins/upload/blip/blipuploader.cpp:93
-msgid "Science"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:94
-#: src/plugins/upload/youtube/youtubeuploader.cpp:75
-msgid "Sports"
-msgstr "Sporty"
-
-#: src/plugins/upload/blip/blipuploader.cpp:95
-#, fuzzy
-msgid "Technology"
-msgstr "Věda & Technika"
-
-#: src/plugins/upload/blip/blipuploader.cpp:96
-msgid "The Environment"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:97
-msgid "The Mainstream Media"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:98
-msgid "Travel"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:99
-msgid "Videoblogging"
-msgstr ""
-
-#: src/plugins/upload/blip/blipuploader.cpp:100
-msgid "Web Development and Sites"
-msgstr ""
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:107
-#, fuzzy
-msgid "No title specified"
-msgstr "Nebyl zadán výstupní soubor."
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:112
-#, fuzzy
-msgid "No video specified"
-msgstr "Nebyl zadán výstupní soubor."
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:117
-msgid "No Account or Password specified"
-msgstr ""
-
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:174
+#: src/plugins/upload/lib/blipservice.cpp:144
 #, fuzzy
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "Cannot open %1.\n"
-"Reason: %2"
+"Reason: %1"
 msgstr "Nelze otevřít výstupní soubor: %1"
 
-#: src/plugins/upload/blip/lib/kblipvideo.cpp:239
+#: src/plugins/upload/lib/blipservice.cpp:207
 #, fuzzy
 msgctxt "%1 = error"
 msgid "Unkown error: %1."
 msgstr "Neznámá chyba"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:100
+#: src/plugins/upload/lib/blipvideo.cpp:66
+msgid "Art"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:68
+#: src/plugins/upload/lib/youtubevideo.cpp:34
+msgid "Autos & Vehicles"
+msgstr "Auta & Vozidla"
+
+#: src/plugins/upload/lib/blipvideo.cpp:70
+msgid "Business"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:72
+msgid "Citizen Journalism"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:74
+#: src/plugins/upload/lib/youtubevideo.cpp:35
+msgid "Comedy"
+msgstr "Veselohra"
+
+#: src/plugins/upload/lib/blipvideo.cpp:76
+msgid "Conferences and other Events"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:78
+#, fuzzy
+msgid "Default Category"
+msgstr "Skupina"
+
+#: src/plugins/upload/lib/blipvideo.cpp:80
+msgid "Documentary"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:82
+#, fuzzy
+msgid "Educational"
+msgstr "Vzdělávání"
+
+#: src/plugins/upload/lib/blipvideo.cpp:84
+msgid "Food & Drink"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:86
+msgid "Friends"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:88
+#: src/plugins/upload/lib/youtubevideo.cpp:39
+msgid "Gaming"
+msgstr "Hry"
+
+#: src/plugins/upload/lib/blipvideo.cpp:90
+#, fuzzy
+msgid "Health"
+msgstr "Výchozí"
+
+#: src/plugins/upload/lib/blipvideo.cpp:92
+#, fuzzy
+msgid "Literature"
+msgstr "Datový tok"
+
+#: src/plugins/upload/lib/blipvideo.cpp:94
+msgid "Movies and Television"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:96
+#, fuzzy
+msgid "Music and Entertainment"
+msgstr "Zábava"
+
+#: src/plugins/upload/lib/blipvideo.cpp:98
+msgid "Personal or Auto-biographical"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:100
+#, fuzzy
+msgid "Politics"
+msgstr "Zprávy & Politika"
+
+#: src/plugins/upload/lib/blipvideo.cpp:102
+msgid "Religion"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:104
+#, fuzzy
+msgid "School and Education"
+msgstr "Vzdělávání"
+
+#: src/plugins/upload/lib/blipvideo.cpp:106
+msgid "Science"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:108
+#: src/plugins/upload/lib/youtubevideo.cpp:47
+msgid "Sports"
+msgstr "Sporty"
+
+#: src/plugins/upload/lib/blipvideo.cpp:110
+#, fuzzy
+msgid "Technology"
+msgstr "Věda & Technika"
+
+#: src/plugins/upload/lib/blipvideo.cpp:112
+msgid "The Environment"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:114
+msgid "The Mainstream Media"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:116
+msgid "Travel"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:118
+msgid "Videoblogging"
+msgstr ""
+
+#: src/plugins/upload/lib/blipvideo.cpp:120
+msgid "Web Development and Sites"
+msgstr ""
+
+#: src/plugins/upload/lib/infojob.cpp:107
+#, fuzzy
+msgid "Destination"
+msgstr "Popis"
+
+#: src/plugins/upload/lib/infojob.cpp:109
+msgid "Transmit Data"
+msgstr ""
+
+#: src/plugins/upload/lib/infojob.cpp:113
+msgid "Download"
+msgstr ""
+
+#: src/plugins/upload/lib/infojob.cpp:113
+msgid "Source"
+msgstr ""
+
+#: src/plugins/upload/lib/infojob.cpp:118
+#, fuzzy
+msgid "Canceled"
+msgstr "Zrušit"
+
+#: src/plugins/upload/lib/youtubeservice.cpp:100
 msgid "Please authenticate first!"
 msgstr ""
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:114
+#: src/plugins/upload/lib/youtubeservice.cpp:114
 #, fuzzy
 msgid "No such file: %1."
 msgstr "Soubor nelze nalézt %1"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:118
+#: src/plugins/upload/lib/youtubeservice.cpp:118
 #, fuzzy
 msgid "Title too long."
 msgstr "Den %1 je příliš dlouhý."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:122
+#: src/plugins/upload/lib/youtubeservice.cpp:122
 #, fuzzy
 msgid "Description too long."
 msgstr "Popis"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:126
+#: src/plugins/upload/lib/youtubeservice.cpp:126
 msgid "Too long tags."
 msgstr ""
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:131
+#: src/plugins/upload/lib/youtubeservice.cpp:134
 #, fuzzy
-msgid "Tag %1 is too long."
+msgid "No description specified."
+msgstr "Nebyl zadán výstupní soubor."
+
+#: src/plugins/upload/lib/youtubeservice.cpp:138
+#, fuzzy
+msgid "No tags specified."
+msgstr "Nebyl zadán výstupní soubor."
+
+#: src/plugins/upload/lib/youtubeservice.cpp:148
+#, fuzzy
+msgid "Tag \"%1\" is too long."
 msgstr "Den %1 je příliš dlouhý."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:134
+#: src/plugins/upload/lib/youtubeservice.cpp:151
 #, fuzzy
-msgid "Tag %1 is too short."
+msgid "Tag \"%1\" is too short."
 msgstr "Den %1 je příliš dlouhý."
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:151
+#: src/plugins/upload/lib/youtubeservice.cpp:167
 #, fuzzy
 msgid "Cannot open video!"
 msgstr "Nelze otevřít výstupní soubor: %1"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:256
+#: src/plugins/upload/lib/youtubeservice.cpp:310
 msgid "Authentication failed!"
 msgstr "Prokázání pravosti se nezdařilo!"
 
-#: src/plugins/upload/youtube/lib/youtubeservice.cpp:267
+#: src/plugins/upload/lib/youtubeservice.cpp:326
 #, fuzzy
 msgctxt "%1 = error"
 msgid ""
@@ -1217,6 +1260,50 @@ msgid ""
 msgstr ""
 "%1: Odstranění se nezdařilo.\n"
 "Důvod: %2"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:36
+msgid "Education"
+msgstr "Vzdělávání"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:37
+msgid "Entertainment"
+msgstr "Zábava"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:38
+msgid "Film & Animation"
+msgstr "Film & Kreslený film"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:40
+msgid "Howto & Style"
+msgstr "Rady a fígle"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:41
+msgid "Music"
+msgstr "Hudba"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:42
+msgid "News & Politics"
+msgstr "Zprávy & Politika"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:43
+msgid "Nonprofit & Activism"
+msgstr "Neziskové činnosti & Aktivismus"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:44
+msgid "People & Blogs"
+msgstr "Lidé & Deníky"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:45
+msgid "Pets & Animals"
+msgstr "Domácí zvířata & Zvířata"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:46
+msgid "Sience & Technology"
+msgstr "Věda & Technika"
+
+#: src/plugins/upload/lib/youtubevideo.cpp:48
+msgid "Travel & Evends"
+msgstr "Cestování & Události"
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:46
 msgid ""
@@ -1227,51 +1314,7 @@ msgid ""
 "youtube.com/t/terms</a>."
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:64
-msgid "Education"
-msgstr "Vzdělávání"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:65
-msgid "Entertainment"
-msgstr "Zábava"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:66
-msgid "Film & Animation"
-msgstr "Film & Kreslený film"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:68
-msgid "Howto & Style"
-msgstr "Rady a fígle"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:69
-msgid "Music"
-msgstr "Hudba"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:70
-msgid "News & Politics"
-msgstr "Zprávy & Politika"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:71
-msgid "Nonprofit & Activism"
-msgstr "Neziskové činnosti & Aktivismus"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:72
-msgid "People & Blogs"
-msgstr "Lidé & Deníky"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:73
-msgid "Pets & Animals"
-msgstr "Domácí zvířata & Zvířata"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:74
-msgid "Sience & Technology"
-msgstr "Věda & Technika"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:76
-msgid "Travel & Evends"
-msgstr "Cestování & Události"
-
-#: src/plugins/upload/youtube/youtubeuploader.cpp:174
+#: src/plugins/upload/youtube/youtubeuploader.cpp:153
 msgid "Translation:"
 msgstr ""
 

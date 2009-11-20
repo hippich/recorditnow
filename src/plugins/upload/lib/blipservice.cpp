@@ -157,7 +157,9 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
 
     const QString id = getUniqueId();
 
-    m_jobs[post(url, header, data)] = qMakePair(UploadJob, id);
+    InfoJob *job = post(url, header, data);
+    m_jobs[job] = qMakePair(UploadJob, id);
+    job->setSource(video->file());
 
     return id;
 

@@ -148,7 +148,7 @@ KJob *Service::post(const KUrl &url, const KIO::MetaData &meta, const QByteArray
 }
 
 
-KJob *Service::post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data)
+InfoJob *Service::post(const KUrl &url, QHash<QString, QString> &header, const QByteArray &data)
 {
 
     QNetworkRequest request;

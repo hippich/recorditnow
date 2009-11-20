@@ -227,7 +227,9 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
     header["Content-Type"] = "multipart/related; boundary=\""+BOUNDARY+"\"";
     header["Content-Length"] = QString::number(postData.size()).toLatin1();
 
-    m_jobs[post(url, header, postData)] = qMakePair(UploadJob, id);
+    InfoJob *job = post(url, header, postData);
+    m_jobs[job] = qMakePair(UploadJob, id);
+    job->setSource(video->file());
 
     return id;
 
