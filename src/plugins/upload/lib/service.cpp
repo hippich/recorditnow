@@ -31,6 +31,7 @@
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
+#include <QtCore/QUuid>
 
 
 namespace KYouBlip {
@@ -57,22 +58,7 @@ Service::~Service()
 QString Service::getUniqueId()
 {
 
-    QString id;
-    for (int i = 0 ; i < 100 ; ++i) {
-        int number;
-        number = rand()%122;
-        if (48 > number) {
-            number += 48;
-        }
-        if ( (57 < number) && (65 > number)) {
-            number += 7;
-        }
-        if ((90 < number) && (97 > number)) {
-            number += 6;
-        }
-        id += (char)number;
-    }
-    return id;
+    return QUuid::createUuid().toString();
 
 }
 
