@@ -277,6 +277,34 @@ QString YouTubeService::getFavorites(const QString &user, const int &max)
 }
 
 
+void YouTubeService::cancelUpload()
+{
+
+    QHashIterator<KJob*, JobData> it(m_jobs);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key()) {
+            it.key()->kill();
+        }
+    }
+
+}
+
+
+void YouTubeService::cancelUpload(const QString &id)
+{
+
+    QHashIterator<KJob*, JobData> it(m_jobs);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key() && it.value().second == id) {
+            it.key()->kill();
+        }
+    }
+
+}
+
+
 void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
 {
 
@@ -319,20 +347,20 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
             id = m_accountIds.key(key);
             m_accountIds.remove(key);
 
-            QFile file("/home/just/test.xml");
-            file.open(QIODevice::WriteOnly);
-            file.write(data);
-            file.close();
+            YouTubeVideo *video = 0;
             QXmlStreamReader reader(response);
             while (!reader.atEnd()) {
                 reader.readNext();
+                if (reader.isStartElement() && reader.name() == "entry") {
+                    video = readEntry(&reader);
+                }
             }
             if (reader.hasError() && ret != KIO::ERR_USER_CANCELED) {
                 emit error(i18nc("%1 = error", "Upload failed!\n"
                                  "Response: %1", response), id);
                 break;
             }
-            emit uploadFinished(id);
+            emit uploadFinished(video, id);
             break;
         }
     case FavoritesJob:

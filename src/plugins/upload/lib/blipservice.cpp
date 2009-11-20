@@ -182,6 +182,34 @@ QString BlipService::search(const QString &term)
 }
 
 
+void BlipService::cancelUpload()
+{
+
+    QHashIterator<KJob*, JobData> it(m_jobs);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key()) {
+            it.key()->kill();
+        }
+    }
+
+}
+
+
+void BlipService::cancelUpload(const QString &id)
+{
+
+    QHashIterator<KJob*, JobData> it(m_jobs);
+    while (it.hasNext()) {
+        it.next();
+        if (it.key() && it.value().second == id) {
+            it.key()->kill();
+        }
+    }
+
+}
+
+
 void BlipService::jobFinished(KJob *job, const QByteArray &data)
 {
 

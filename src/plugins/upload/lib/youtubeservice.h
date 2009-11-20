@@ -57,6 +57,11 @@ public:
     QString getFavorites(const QString &user, const int &max);
 
 
+public slots:
+    void cancelUpload();
+    void cancelUpload(const QString &id);
+
+
 private:
     enum JobType {
         AuthJob = 0,
@@ -81,7 +86,7 @@ protected slots:
 signals:
     void error(const QString &reason, const QString &id);
     void authenticated(const QString &id);
-    void uploadFinished(const QString &id);
+    void uploadFinished(YouTubeVideo *video, const QString &id);
     void searchFinished(const QList<YouTubeVideo*> &videos, const QString &id);
     void favoritesFinished(const QList<YouTubeVideo*> &videos, const QString &id);
     void canceled(const QString &id);

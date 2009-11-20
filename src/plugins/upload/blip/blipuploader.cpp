@@ -59,7 +59,8 @@ BlipUploader::~BlipUploader()
         delete m_dialog;
     }
     if (m_service) {
-        delete m_service;
+        m_service->cancelUpload();
+        m_service->deleteLater();
     }
 
 }
@@ -158,7 +159,8 @@ void BlipUploader::cancelUpload()
 {
 
     if (m_service) {
-        delete m_service;
+        m_service->cancelUpload();
+        m_service->deleteLater();;
         m_service = 0;
     }
     setState(Idle);
@@ -171,7 +173,7 @@ void BlipUploader::uploadFinished(const QString &id)
 
     qDebug() << "upload finished" << id;
     if (m_service) {
-        delete m_service;
+        m_service->deleteLater();
         m_service = 0;
     }
     setState(Idle);

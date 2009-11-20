@@ -55,6 +55,11 @@ public slots:
     QString search(const QString &term);
 
 
+public slots:
+    void cancelUpload();
+    void cancelUpload(const QString &id);
+
+
 private:
     enum JobType {
         AuthJob = 0,

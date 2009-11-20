@@ -30,6 +30,7 @@
 
 
 class YouTubeService;
+class YouTubeVideo;
 class YouTubeUploader : public AbstractUploader, public Ui::YouTube
 {
     Q_OBJECT
@@ -55,7 +56,8 @@ private:
 private slots:
     void upload();
     void cancelUpload();
-    void uploadFinished(const QString &account);
+    void uploadFinished(YouTubeVideo *video, const QString &id);
+    void uploadCanceled(const QString &id);
     void quitDialog();
     void authenticated(const QString &account);
     void serviceError(const QString &error, const QString &id);

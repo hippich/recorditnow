@@ -71,7 +71,8 @@ YouTubeUploader::~YouTubeUploader()
 {
 
     if (m_service) {
-        delete m_service;
+        m_service->cancelUpload();
+        m_service->deleteLater();
     }
     if (m_dialog) {
         delete m_dialog;
@@ -163,9 +164,10 @@ void YouTubeUploader::upload()
 
     m_service = new YouTubeService(this);
     connect(m_service, SIGNAL(authenticated(QString)), this, SLOT(authenticated(QString)));
-    connect(m_service, SIGNAL(uploadFinished(QString)), this, SLOT(uploadFinished(QString)));
+    connect(m_service, SIGNAL(uploadFinished(YouTubeVideo*, QString)), this,
+            SLOT(uploadFinished(YouTubeVideo*, QString)));
     connect(m_service, SIGNAL(error(QString, QString)), this, SLOT(serviceError(QString, QString)));
-    connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadFinished(QString)));
+    connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadCanceled(QString)));
 
     setState(Upload);
     QString id = m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
@@ -182,7 +184,8 @@ void YouTubeUploader::cancelUpload()
 
     if (m_service) {
         kDebug() << "cancel";
-        delete m_service;
+        m_service->cancelUpload();
+        m_service->deleteLater();
         m_service = 0;
     }
     setState(Idle);
@@ -190,13 +193,27 @@ void YouTubeUploader::cancelUpload()
 }
 
 
-void YouTubeUploader::uploadFinished(const QString &account)
+void YouTubeUploader::uploadFinished(YouTubeVideo *video, const QString &id)
 {
 
-    qDebug() << "upload finished" << account;
-    delete m_service;
+    qDebug() << "upload finished" << id;
+
+    if (video) {
+        //KMessageBox::information(m_dialog, video->url().pathOrUrl(), i18n("Upload successful!"));
+        delete video;
+    }
+
+    m_service->deleteLater();
     m_service = 0;
     setState(Idle);
+
+}
+
+
+void YouTubeUploader::uploadCanceled(const QString &id)
+{
+
+    uploadFinished(0, id);
 
 }
 
