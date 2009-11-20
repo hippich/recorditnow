@@ -192,7 +192,7 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
                        "</media:group>"+CRLF+\
                      "</entry>";
 
-    XML = XML.arg(title).arg(description).arg(video->m_categorys.key(category)).arg(tags);
+    XML = XML.arg(title).arg(description).arg(category).arg(tags);
 
     QByteArray postData;
     postData.append("--"+BOUNDARY);
@@ -319,10 +319,13 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
             id = m_accountIds.key(key);
             m_accountIds.remove(key);
 
+            QFile file("/home/just/test.xml");
+            file.open(QIODevice::WriteOnly);
+            file.write(data);
+            file.close();
             QXmlStreamReader reader(response);
             while (!reader.atEnd()) {
                 reader.readNext();
-                kDebug() << "name:" << reader.name();
             }
             if (reader.hasError() && ret != KIO::ERR_USER_CANCELED) {
                 emit error(i18nc("%1 = error", "Upload failed!\n"
