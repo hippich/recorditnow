@@ -102,7 +102,7 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
         }
 
         QImage qcursor(pixels, xcursor->width, xcursor->height, QImage::Format_ARGB32);
-        painter.drawImage(xcursor->x, xcursor->y, qcursor);
+        painter.drawImage(xcursor->x-x, xcursor->y-y, qcursor);
 
         free(pixels);
         XFree(xcursor);
