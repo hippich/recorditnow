@@ -29,5 +29,9 @@
             <label></label>
             <default>0</default>
     </entry>
+    <entry name="drawCursor" type="Bool">
+            <label></label>
+            <default>true</default>
+    </entry>
   </group>
 </kcfg>

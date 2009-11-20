@@ -33,6 +33,8 @@
 #include <QtGui/QPainter>
 #include <QtCore/QDir>
 
+// X
+#include <X11/extensions/Xfixes.h>
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<ScreenshotRecorder>();)
@@ -82,11 +84,30 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     const qlonglong window = d.winId != -1 ? d.winId : QX11Info::appRootWindow();
 
     QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h); // screenshot
+    QPainter painter(&cheese);
+
+    // cursor
+    if (Settings::drawCursor()) {
+        XFixesCursorImage *xcursor = XFixesGetCursorImage(QX11Info::display());
+        unsigned char *pixels = (unsigned char*) malloc(xcursor->width*xcursor->height*4);
+        for (int i = 0; i < xcursor->width*xcursor->height; i++) {
+            unsigned long pix = xcursor->pixels[i];
+            pixels[i * 4] = pix & 0xff;
+            pixels[(i * 4) + 1] = (pix >> 8) & 0xff;
+            pixels[(i * 4) + 2] = (pix >> 16) & 0xff;
+            pixels[(i * 4) + 3] = (pix >> 24) & 0xff;
+        }
+
+        QImage qcursor(pixels, xcursor->width, xcursor->height, QImage::Format_ARGB32);
+        painter.drawImage(xcursor->x, xcursor->y, qcursor);
+
+        free(pixels);
+        XFree(xcursor);
+    }
 
     // branding
     if (Settings::branding() && QFile::exists(Settings::brandingFile().path())) {
         QImage branding(Settings::brandingFile().path());
-        QPainter painter(&cheese);
         painter.setOpacity(Settings::brandingOpacity());
 
         QPoint pos(0, 0);
