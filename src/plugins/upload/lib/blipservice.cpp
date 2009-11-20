@@ -74,11 +74,11 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
         errorString = i18n("No account/password specified.");
     }
 
-    if (!video->m_categorys.values().contains(video->category())) {
+    if (video->getCategoryCode() == "-5") {
         errorString = i18n("Invalid category.");
     }
     
-    if (!video->m_licenses.values().contains(video->license())) {
+    if (video->getLicenseCode() == "-5") {
         errorString = i18n("Invalid license.");
     }
 
@@ -86,7 +86,6 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
     if (!errorString.isEmpty()) {
         return "Error: "+errorString;
     }
-
 
     const KUrl url("http://blip.tv/file/post");
 
@@ -105,8 +104,8 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
     fields["title"] = video->title();
     fields["description"] = video->description();
     fields["topics"] = video->keywords().join(", ");
-    fields["categories_id"] = QString::number(video->m_categorys.key(video->category()));
-    fields["license"] = QString::number(video->m_licenses.key(video->license()));
+    fields["categories_id"] = video->getCategoryCode();
+    fields["license"] = video->getLicenseCode();
 
 
     QHash<QString, QString> files;

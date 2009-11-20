@@ -95,10 +95,24 @@ public:
     QStringList licenses() const;
     QStringList categorys() const;
 
+    QString category() const;
+    QString license() const;
+
+    void setCategory(const QString &category);
+    void setLicense(const QString &license);
+
 
 private:
+    typedef QPair<QString, QString> CategoryStrings;
+
+
     QHash<int, QString> m_licenses;
-    QHash<int, QString> m_categorys;
+    QHash<int, CategoryStrings> m_categorys;
+    int m_category;
+    int m_license;
+
+    QString getCategoryCode() const;
+    QString getLicenseCode() const;
 
 
 };

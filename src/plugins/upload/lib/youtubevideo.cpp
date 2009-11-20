@@ -28,7 +28,7 @@
 
 
 YouTubeVideo::YouTubeVideo(QObject *parent)
-    : KYouBlip::Video(parent)
+    : KYouBlip::Video(parent), m_category("-5")
 {
 
     m_categorys["Autos"] = i18n("Autos & Vehicles");
@@ -97,6 +97,14 @@ QStringList YouTubeVideo::licenses() const
 }
 
 
+QString YouTubeVideo::category() const
+{
+
+    return m_categorys[m_category];
+
+}
+
+
 void YouTubeVideo::setViewCount(const int &count)
 {
 
@@ -119,4 +127,32 @@ void YouTubeVideo::setFavoriteCount(const int &favCount)
     m_data["FavCount"] = favCount;
 
 }
+
+
+void YouTubeVideo::setCategory(const QString &category)
+{
+
+    m_category = "-5";
+    QHashIterator<QString, QString> it(m_categorys);
+    while (it.hasNext()) {
+        it.next();
+        if (it.value() == category || it.key() == category) {
+            m_category = it.key();
+            break;
+        }
+    }
+    if (m_category == "-5") {
+        kWarning() << "Invalid category:" << category;
+    }
+
+}
+
+
+QString YouTubeVideo::getCategory() const
+{
+
+    return m_category;
+
+}
+
 

@@ -82,14 +82,6 @@ KUrl Video::url() const
 }
 
 
-QString Video::category() const
-{
-
-    return m_data["Category"].toString();
-
-}
-
-
 int Video::duration() const
 {
 
@@ -146,14 +138,6 @@ double Video::rating() const
 }
 
 
-QString Video::license() const
-{
-
-    return m_data["License"].toString();
-
-}
-
-
 void Video::setTitle(const QString &title)
 {
 
@@ -182,14 +166,6 @@ void Video::setUrl(const KUrl &url)
 {
 
     m_data["Url"] = url;
-
-}
-
-
-void Video::setCategory(const QString &category)
-{
-
-    m_data["Category"] = category;
 
 }
 
@@ -246,14 +222,6 @@ void Video::setRating(const double &rating)
 {
 
     m_data["Rating"] = rating;
-
-}
-
-
-void Video::setLicense(const QString &license)
-{
-
-    m_data["License"] = license;
 
 }
 

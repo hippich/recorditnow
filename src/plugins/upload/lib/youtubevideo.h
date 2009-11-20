@@ -49,15 +49,22 @@ public:
     int favoriteCount() const;
     QStringList licenses() const;
     QStringList categorys() const;
+    QString category() const;
+    QString license() const { return QString(); }
 
     void setViewCount(const int &count);
     void setRaters(const int &raters);
     void setFavoriteCount(const int &favCount);
+    void setCategory(const QString &category);
+    void setLicense(const QString &) {}
 
 
 private:
     QHash<QString, QString> m_categorys;
     QHash<QString, QVariant> m_data;
+    QString m_category;
+
+    QString getCategory() const;
 
 
 };

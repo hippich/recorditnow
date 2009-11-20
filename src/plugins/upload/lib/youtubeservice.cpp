@@ -103,7 +103,7 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
     const QString videoFile = video->file();
     const QString title = video->title();
     const QString description = video->description();
-    const QString category = video->category();
+    const QString category = video->getCategory();
     const QString tags = video->keywords().join(", ");
 
     int index = videoFile.lastIndexOf('/');
@@ -126,10 +126,6 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
         errorString = i18n("Too long tags.");
     }
 
-    if (!video->m_categorys.values().contains(category)) {
-        errorString = i18n("Invalid category.");
-    }
-
     if (title.isEmpty()) {
         errorString = i18n("No title specified.");
     }
@@ -142,6 +138,10 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
         errorString = i18n("No tags specified.");
     }
 
+    if (category == "-5") {
+        kDebug() << "category" << category;
+        errorString = i18n("Invalid category.");
+    }
 
     foreach (const QString &keyword, tags.split(',')) {
         if (keyword.length() > 25) {

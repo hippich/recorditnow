@@ -133,7 +133,7 @@ void BlipUploader::upload()
     BlipVideo video;
     video.setTitle(titleEdit->text());
     video.setDescription(descriptionEdit->toPlainText());
-    video.setCategory(m_category.key(categoryCombo->currentText()));
+    video.setCategory(categoryCombo->currentText());
     video.setLicense(licenseCombo->currentText());
     video.setFile(fileRequester->text());
     video.setKeywords(tagsEdit->text());

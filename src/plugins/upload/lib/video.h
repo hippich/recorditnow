@@ -55,9 +55,9 @@ public:
      */
     KUrl url() const;
     /**
-     * @return the category
+     * @return the translated category
      */
-    QString category() const;
+    virtual QString category() const = 0;
     /**
      * @return the duration in seconds
      */
@@ -87,16 +87,16 @@ public:
      */
     double rating() const;
     /**
-     * @return the license
+     * @return the translated license name
      */
-    QString license() const;
+    virtual QString license() const = 0;
 
     /**
      * @return all available licenses
      */
     virtual QStringList licenses() const = 0;
     /**
-     * @return all available categorys
+     * @return all available categorys (translated)
      */
     virtual QStringList categorys() const = 0;
 
@@ -127,9 +127,9 @@ public:
     /**
      * sets the category for the video
      *
-     * @param category the category
+     * @param category the category (translated or untranslated)
      */
-    void setCategory(const QString &category);
+    virtual void setCategory(const QString &category) = 0;
     /**
      * sets the duration for the video
      *
@@ -178,9 +178,9 @@ public:
     /**
      * sets the license for the video
      *
-     * @param the url
+     * @param the license (translated or untranslated)
      */
-    void setLicense(const QString &license);
+    virtual void setLicense(const QString &license) = 0;
 
     /**
      * updates the thumbnail for the video
