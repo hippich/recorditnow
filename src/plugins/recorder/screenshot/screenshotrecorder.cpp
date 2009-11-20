@@ -34,7 +34,9 @@
 #include <QtCore/QDir>
 
 // X
-#include <X11/extensions/Xfixes.h>
+#ifdef XFIXES_FOUND
+    #include <X11/extensions/Xfixes.h>
+#endif
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<ScreenshotRecorder>();)
@@ -86,6 +88,7 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h); // screenshot
     QPainter painter(&cheese);
 
+#ifdef XFIXES_FOUND
     // cursor
     if (Settings::drawCursor()) {
         XFixesCursorImage *xcursor = XFixesGetCursorImage(QX11Info::display());
@@ -104,7 +107,7 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
         free(pixels);
         XFree(xcursor);
     }
-
+#endif
     // branding
     if (Settings::branding() && QFile::exists(Settings::brandingFile().path())) {
         QImage branding(Settings::brandingFile().path());
