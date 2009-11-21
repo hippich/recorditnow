@@ -208,13 +208,10 @@ void YouTubeUploader::uploadFinished(YouTubeVideo *video, const QString &id)
         QString html = "<a href='%1'>%1</a>";
         html = html.arg(video->url().pathOrUrl());
 
-        // TODO
-        html = video->url().pathOrUrl();
-
         delete video;
         m_service->deleteLater();
         m_service = 0;
-        emit status(i18n("Finished: %1.", html));
+        emit status(i18n("Finished: %1", html));
         emit finished(QString());
     } else {
         m_service->deleteLater();

@@ -54,7 +54,7 @@ private:
 private slots:
     void upload();
     void cancelUpload();
-    void uploadFinished(const QString &id);
+    void uploadFinished(const KUrl &link, const QString &id);
     void quitDialog();
     void descriptionChanged();
     void addAccount();

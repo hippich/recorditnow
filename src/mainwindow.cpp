@@ -54,6 +54,7 @@
 #include <kmimetype.h>
 #include <kapplication.h>
 #include <kactionmenu.h>
+#include <ksqueezedtextlabel.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -116,6 +117,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_uploadManager, SIGNAL(finished(QString)), this, SLOT(uploaderFinished(QString)));
     connect(m_uploadManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
 
+
+    m_statusLabel = new KSqueezedTextLabel(this);
+    connect(m_statusLabel, SIGNAL(linkActivated(QString)), this, SLOT(linkActivated(QString)));
+    statusBar()->addPermanentWidget(m_statusLabel, 1);
 
     setupTray();
     setupGUI();
@@ -648,7 +653,7 @@ MainWindow::State MainWindow::state() const
 void MainWindow::pluginStatus(const QString &text)
 {
 
-    statusBar()->showMessage(text);
+    m_statusLabel->setText(text);
 
 }
 
@@ -949,6 +954,14 @@ void MainWindow::upload()
     setState(Upload);
     QAction *uploadAction = static_cast<QAction*>(sender());
     m_uploadManager->startUpload(uploadAction->data().toString(), outputRequester->text(), this);
+
+}
+
+
+void MainWindow::linkActivated(const QString &link)
+{
+
+    KRun::runUrl(KUrl(link), "text/html", this);
 
 }
 

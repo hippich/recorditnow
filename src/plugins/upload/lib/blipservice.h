@@ -79,7 +79,7 @@ protected slots:
 
 signals:
     void error(const QString &reason, const QString &id);
-    void uploadFinished(const QString &id);
+    void uploadFinished(const KUrl &link, const QString &id);
     void canceled(const QString &id);
     void searchFinished(const QList<BlipVideo*> &videos, const QString &id);
 

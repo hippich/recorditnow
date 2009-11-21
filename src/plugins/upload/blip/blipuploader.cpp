@@ -148,7 +148,7 @@ void BlipUploader::upload()
 
     m_service = new BlipService(this);
 
-    connect(m_service, SIGNAL(uploadFinished(QString)), this, SLOT(uploadFinished(QString)));
+    connect(m_service, SIGNAL(uploadFinished(KUrl, QString)), this, SLOT(uploadFinished(KUrl, QString)));
     connect(m_service, SIGNAL(error(QString, QString)), this, SLOT(error(QString, QString)));
     connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadFinished(QString)));
 
@@ -175,7 +175,7 @@ void BlipUploader::cancelUpload()
 }
 
 
-void BlipUploader::uploadFinished(const QString &id)
+void BlipUploader::uploadFinished(const KUrl &link, const QString &id)
 {
 
     qDebug() << "upload finished" << id;
@@ -183,6 +183,9 @@ void BlipUploader::uploadFinished(const QString &id)
         m_service->deleteLater();
         m_service = 0;
     }
+
+    QString html = "<a href='%1'>%1</a>";
+    emit status(i18n("Finished: %1", html.arg(link.pathOrUrl())));
     emit finished(QString());
 
 }

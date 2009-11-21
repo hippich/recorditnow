@@ -235,7 +235,14 @@ void BlipService::jobFinished(KJob *job, const QByteArray &data)
             } else if (!errorString.isEmpty()) {
                 emit error(errorString, id);
             } else {
-                emit uploadFinished(id);
+                const QRegExp urlRx("<post_url>.*</post_url>");
+                urlRx.indexIn(text);
+                if (!urlRx.cap().isEmpty()) {
+                    const KUrl url = urlRx.cap().remove("<post_url>").remove("</post_url>");
+                    emit uploadFinished(url, id);
+                } else {
+                    emit error(i18n("Invalid response from blip.tv!"), id);
+                }
             }
             break;
         }
