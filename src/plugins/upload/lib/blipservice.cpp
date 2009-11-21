@@ -263,7 +263,15 @@ BlipVideo *BlipService::readEntry(QXmlStreamReader *reader)
 
     BlipVideo *video = new BlipVideo(this);
 
-    reader->readNextStartElement();
+    reader->readNext();
+    while (reader->readNext() != QXmlStreamReader::Invalid) {
+        if (reader->isEndElement()) {
+            break;
+        } else if (reader->isStartElement()) {
+            break;
+        }
+    }
+
     while (reader->name() != "item") {
         reader->readNext();
 
