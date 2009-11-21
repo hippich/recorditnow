@@ -62,8 +62,6 @@ YouTubeUploader::YouTubeUploader(QObject *parent, const QVariantList &args)
     connect(this, SIGNAL(gotPassword(QString,QString)), this,
             SLOT(gotPasswordForAccount(QString,QString)));
 
-    m_state = Idle;
-
 }
 
 
@@ -84,7 +82,7 @@ YouTubeUploader::~YouTubeUploader()
 void YouTubeUploader::show(const QString &file, QWidget *parent)
 {
 
-    if (m_dialog || m_state != Idle) {
+    if (m_dialog) {
         return;
     }
 
@@ -100,7 +98,6 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     titleWidget->setPixmap(pixmap, KTitleWidget::ImageLeft);
     
     uploadButton->setIcon(KIcon("recorditnow-upload-media"));
-    cancelButton->setIcon(KIcon("dialog-cancel"));
     quitButton->setIcon(KIcon("dialog-close"));
 
     fileRequester->setText(file);
@@ -108,7 +105,6 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     connect(uploadButton, SIGNAL(clicked()), this, SLOT(upload()));
     connect(quitButton, SIGNAL(clicked()), this, SLOT(quitDialog()));
     connect(descriptionEdit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
-    connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelUpload()));
 
     addAccountButton->setIcon(KIcon("list-add"));
     editAccountButton->setIcon(KIcon("document-edit"));
@@ -130,8 +126,17 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
 
-    setState(Idle);
     m_dialog->show();
+
+}
+
+
+void YouTubeUploader::cancel()
+{
+
+    cancelUpload();
+    emit status(i18n("Upload canceled."));
+    emit finished(QString());
 
 }
 
@@ -143,7 +148,6 @@ void YouTubeUploader::upload()
 
     Settings::self()->setCurrentAccount(accountsCombo->currentText());
     Settings::self()->writeConfig();
-
 
     // http://code.google.com/intl/de-DE/apis/youtube/terms.html
     QString message(GOOGLE);
@@ -162,6 +166,8 @@ void YouTubeUploader::upload()
         return;
     }
 
+    m_dialog->hide();
+
     m_service = new YouTubeService(this);
     connect(m_service, SIGNAL(authenticated(QString)), this, SLOT(authenticated(QString)));
     connect(m_service, SIGNAL(uploadFinished(YouTubeVideo*, QString)), this,
@@ -169,7 +175,8 @@ void YouTubeUploader::upload()
     connect(m_service, SIGNAL(error(QString, QString)), this, SLOT(serviceError(QString, QString)));
     connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadCanceled(QString)));
 
-    setState(Upload);
+    emit status(i18n("authenticate..."));
+
     QString id = m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
 
     if (id.startsWith("Error: ")) {
@@ -188,7 +195,6 @@ void YouTubeUploader::cancelUpload()
         m_service->deleteLater();
         m_service = 0;
     }
-    setState(Idle);
 
 }
 
@@ -199,13 +205,22 @@ void YouTubeUploader::uploadFinished(YouTubeVideo *video, const QString &id)
     qDebug() << "upload finished" << id;
 
     if (video) {
-        //KMessageBox::information(m_dialog, video->url().pathOrUrl(), i18n("Upload successful!"));
-        delete video;
-    }
+        QString html = "<a href='%1'>%1</a>";
+        html = html.arg(video->url().pathOrUrl());
 
-    m_service->deleteLater();
-    m_service = 0;
-    setState(Idle);
+        // TODO
+        html = video->url().pathOrUrl();
+
+        delete video;
+        m_service->deleteLater();
+        m_service = 0;
+        emit status(i18n("Finished: %1.", html));
+        emit finished(QString());
+    } else {
+        m_service->deleteLater();
+        m_service = 0;
+        emit finished(i18n("Invalid response from YouTube!"));
+    }
 
 }
 
@@ -213,7 +228,7 @@ void YouTubeUploader::uploadFinished(YouTubeVideo *video, const QString &id)
 void YouTubeUploader::uploadCanceled(const QString &id)
 {
 
-    uploadFinished(0, id);
+    serviceError(i18n("Upload canceled."), id);
 
 }
 
@@ -223,7 +238,7 @@ void YouTubeUploader::quitDialog()
 
     cancelUpload();
     m_dialog->close();
-    emit finished();
+    emit finished(QString());
 
 }
 
@@ -233,12 +248,17 @@ void YouTubeUploader::authenticated(const QString &account)
 
     kDebug() << "auth finished for:" << account;
 
+    emit status(i18n("Authentication finished..."));
+
     YouTubeVideo video;
     video.setTitle(titleEdit->text());
     video.setDescription(descriptionEdit->toPlainText());
     video.setKeywords(tagsEdit->text());
     video.setCategory(categoryCombo->currentText());
     video.setFile(fileRequester->text());
+
+    m_dialog->close();
+    emit status(i18n("Uploading..."));
 
     QString id = m_service->upload(&video, accountsCombo->currentText());
 
@@ -249,37 +269,12 @@ void YouTubeUploader::authenticated(const QString &account)
 }
 
 
-void YouTubeUploader::serviceError(const QString &error, const QString &id)
+void YouTubeUploader::serviceError(const QString &reason, const QString &id)
 {
 
-    kDebug() << "error:" << id;
-    KMessageBox::error(m_dialog, error);
+    kDebug() << "error:" << id << reason;
     cancelUpload();
-
-}
-
-
-void YouTubeUploader::setState(const State &state)
-{
-
-    if (!m_dialog) {
-        return;
-    }
-
-    switch (state) {
-    case Idle: {
-            uploadButton->setEnabled(true);
-            cancelButton->setEnabled(false);
-            quitButton->setEnabled(true);
-            break;
-        }
-    case Upload: {
-            uploadButton->setEnabled(false);
-            cancelButton->setEnabled(true);
-            quitButton->setEnabled(true);
-            break;
-        }
-    }
+    emit finished(reason);
 
 }
 

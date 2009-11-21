@@ -47,14 +47,6 @@ YouTubeService::YouTubeService(QObject *parent)
 YouTubeService::~YouTubeService()
 {
 
-    QHashIterator<KJob*, JobData> it(m_jobs);
-    while (it.hasNext()) {
-        it.next();
-        if (it.key()) {
-            it.key()->kill();
-        }
-    }
-
 }
 
 

@@ -47,8 +47,6 @@ BlipUploader::BlipUploader(QObject *parent, const QVariantList &args)
     connect(this, SIGNAL(gotPassword(QString,QString)), this,
             SLOT(gotPasswordForAccount(QString,QString)));
 
-    m_state = Idle;
-
 }
 
 
@@ -69,7 +67,7 @@ BlipUploader::~BlipUploader()
 void BlipUploader::show(const QString &file, QWidget *parent)
 {
 
-    if (m_dialog || m_state != Idle) {
+    if (m_dialog) {
         return;
     }
 
@@ -85,7 +83,6 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     titleWidget->setPixmap(pixmap, KTitleWidget::ImageLeft);
 
     uploadButton->setIcon(KIcon("recorditnow-upload-media"));
-    cancelButton->setIcon(KIcon("dialog-cancel"));
     quitButton->setIcon(KIcon("dialog-close"));
 
     fileRequester->setText(file);
@@ -93,7 +90,6 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     connect(uploadButton, SIGNAL(clicked()), this, SLOT(upload()));
     connect(quitButton, SIGNAL(clicked()), this, SLOT(quitDialog()));
     connect(descriptionEdit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
-    connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelUpload()));
 
     addAccountButton->setIcon(KIcon("list-add"));
     editAccountButton->setIcon(KIcon("document-edit"));
@@ -117,8 +113,17 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
 
-    setState(Idle);
     m_dialog->show();
+
+}
+
+
+void BlipUploader::cancel()
+{
+
+    cancelUpload();
+    emit status(i18n("Upload canceled."));
+    emit finished(QString());
 
 }
 
@@ -139,13 +144,16 @@ void BlipUploader::upload()
     video.setFile(fileRequester->text());
     video.setKeywords(tagsEdit->text());
 
+    m_dialog->close();
+
     m_service = new BlipService(this);
 
     connect(m_service, SIGNAL(uploadFinished(QString)), this, SLOT(uploadFinished(QString)));
     connect(m_service, SIGNAL(error(QString, QString)), this, SLOT(error(QString, QString)));
     connect(m_service, SIGNAL(canceled(QString)), this, SLOT(uploadFinished(QString)));
 
-    setState(Upload);
+    emit status(i18n("Uploading..."));
+
     QString id = m_service->upload(&video, accountsCombo->currentText(), passwordEdit->text());
 
     if (id.startsWith("Error:")) {
@@ -163,7 +171,6 @@ void BlipUploader::cancelUpload()
         m_service->deleteLater();;
         m_service = 0;
     }
-    setState(Idle);
 
 }
 
@@ -176,7 +183,7 @@ void BlipUploader::uploadFinished(const QString &id)
         m_service->deleteLater();
         m_service = 0;
     }
-    setState(Idle);
+    emit finished(QString());
 
 }
 
@@ -185,9 +192,8 @@ void BlipUploader::error(const QString &errorString, const QString &id)
 {
 
     Q_UNUSED(id);
-
-    KMessageBox::error(m_dialog, errorString);
     cancelUpload();
+    emit finished(errorString);
 
 }
 
@@ -197,32 +203,7 @@ void BlipUploader::quitDialog()
 
     cancelUpload();
     m_dialog->close();
-    emit finished();
-
-}
-
-
-void BlipUploader::setState(const State &state)
-{
-
-    if (!m_dialog) {
-        return;
-    }
-
-    switch (state) {
-    case Idle: {
-            uploadButton->setEnabled(true);
-            cancelButton->setEnabled(false);
-            quitButton->setEnabled(true);
-            break;
-        }
-    case Upload: {
-            uploadButton->setEnabled(false);
-            cancelButton->setEnabled(true);
-            quitButton->setEnabled(true);
-            break;
-        }
-    }
+    emit finished(QString());
 
 }
 

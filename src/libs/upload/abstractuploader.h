@@ -47,6 +47,7 @@ public:
     ~AbstractUploader();
 
     virtual void show(const QString &file, QWidget *parent) = 0;
+    virtual void cancel() = 0;
 
     void getPassword(const QString &account);
     void setPassword(const QString &account, const QString &password);
@@ -77,7 +78,8 @@ protected:
 
 signals:
     void gotPassword(const QString &account, const QString &password);
-    void finished();
+    void finished(const QString &error);
+    void status(const QString &status);
 
 
 };

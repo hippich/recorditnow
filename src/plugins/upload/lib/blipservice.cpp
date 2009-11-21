@@ -47,14 +47,6 @@ BlipService::BlipService(QObject *parent) :
 BlipService::~BlipService()
 {
 
-    QHashIterator<KJob*, JobData> it(m_jobs);
-    while (it.hasNext()) {
-        it.next();
-        if (it.key()) {
-            it.key()->kill();
-        }
-    }
-
 }
 
 

@@ -41,16 +41,12 @@ public:
     ~YouTubeUploader();
 
     void show(const QString &file, QWidget *parent);
+    void cancel();
 
 
 private:
-    enum State { Idle = 0, Upload = 1 };
-
-    State m_state;
     QPointer<QWidget> m_dialog;
     YouTubeService *m_service;
-
-    void setState(const State &state);
 
 
 private slots:
@@ -60,7 +56,7 @@ private slots:
     void uploadCanceled(const QString &id);
     void quitDialog();
     void authenticated(const QString &account);
-    void serviceError(const QString &error, const QString &id);
+    void serviceError(const QString &reason, const QString &id);
     void descriptionChanged();
     void addAccount();
     void removeAccount();

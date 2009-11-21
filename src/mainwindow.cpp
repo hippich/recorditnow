@@ -31,6 +31,7 @@
 #include "libs/upload/abstractuploader.h"
 #include "recordermanager.h"
 #include "encodermanager.h"
+#include "uploadmanager.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -93,6 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
 
+
     m_pluginManager = new RecordItNowPluginManager(this);
     connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
 
@@ -109,6 +111,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_encoderManager, SIGNAL(fileChanged(QString)), outputRequester, SLOT(setText(QString)));
     connect(m_encoderManager, SIGNAL(finished(QString)), this,
             SLOT(encoderFinished(QString)));
+
+    m_uploadManager = new UploadManager(this, m_pluginManager);
+    connect(m_uploadManager, SIGNAL(finished(QString)), this, SLOT(uploaderFinished(QString)));
+    connect(m_uploadManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
+
 
     setupTray();
     setupGUI();
@@ -150,6 +157,7 @@ MainWindow::~MainWindow()
     delete m_timer;
     delete m_recorderManager;
     delete m_encoderManager;
+    delete m_uploadManager;
     delete m_pluginManager;
 
 }
@@ -288,6 +296,7 @@ void MainWindow::stopRecord()
     } else {
         m_recorderManager->stop();
         m_encoderManager->stop();
+        m_uploadManager->stop();
     }
 
 }
@@ -608,6 +617,20 @@ void MainWindow::setState(const State &newState)
             centralWidget()->setEnabled(false);
             break;
         }
+    case Upload: {
+            setTrayOverlay("arrow-up-double");
+            getAction("pause")->setIcon(KIcon("media-playback-pause"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(false);
+            getAction("stop")->setEnabled(true);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
+            centralWidget()->setEnabled(false);
+            break;
+        }
     }
     m_state = newState;
 
@@ -766,11 +789,14 @@ void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
 }
 
 
-void MainWindow::uploaderFinished()
+void MainWindow::uploaderFinished(const QString &error)
 {
 
-    AbstractUploader *uploader = static_cast<AbstractUploader*>(sender());
-    m_pluginManager->unloadPlugin(uploader);
+    if (!error.isEmpty()) {
+        KMessageBox::error(this, error);
+        pluginStatus(error);
+    }
+    setState(Idle);
 
 }
 
@@ -901,15 +927,13 @@ void MainWindow::updateUploaderMenu()
     }
     menu->clear();
 
-    foreach (const KPluginInfo &info, m_pluginManager->getUploaderList()) {
-        if (info.isPluginEnabled()) {
-            KAction *uploadAction = new KAction(this);
-            uploadAction->setText(info.name());
-            uploadAction->setIcon(KIcon(info.icon()));
-            uploadAction->setData(info.name());
-            connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
-            menu->addAction(uploadAction);
-        }
+    foreach (const UploadData &d, m_uploadManager->getUploader()) {
+        KAction *uploadAction = new KAction(this);
+        uploadAction->setText(d.first);
+        uploadAction->setIcon(d.second);
+        uploadAction->setData(d.first);
+        connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
+        menu->addAction(uploadAction);
     }
 
 }
@@ -918,13 +942,13 @@ void MainWindow::updateUploaderMenu()
 void MainWindow::upload()
 {
 
-    QAction *uploadAction = static_cast<QAction*>(sender());
-    AbstractUploader *uploader = static_cast<AbstractUploader*>(
-            m_pluginManager->loadPlugin(uploadAction->data().toString()));
-    if (uploader) {
-        connect(uploader, SIGNAL(finished()), this, SLOT(uploaderFinished()));
-        uploader->show(outputRequester->text(), this);
+    if (state() == Upload) {
+        return;
     }
+
+    setState(Upload);
+    QAction *uploadAction = static_cast<QAction*>(sender());
+    m_uploadManager->startUpload(uploadAction->data().toString(), outputRequester->text(), this);
 
 }
 

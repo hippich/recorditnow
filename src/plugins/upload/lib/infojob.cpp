@@ -29,6 +29,7 @@
 
 // Qt
 #include <QtNetwork/QNetworkReply>
+#include <QtCore/QMutex>
 
 
 InfoJob::InfoJob(QNetworkReply *reply, QObject *parent)
@@ -183,11 +184,12 @@ void InfoJob::uploadFinished()
 bool InfoJob::doKill()
 {
 
-    kDebug() << "abort...";
-    m_reply->disconnect(this);
-    m_reply->abort();
-
-    setState(Kill);
+    if (state() != Kill) {
+        setState(Kill);
+        kDebug() << "abort...";
+        m_reply->disconnect(this);
+        m_reply->abort();
+    }
 
     return true;
 

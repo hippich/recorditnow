@@ -36,6 +36,7 @@ class RecorderManager;
 class EncoderManager;
 class RecordItNowPluginManager;
 class FrameBox;
+class UploadManager;
 class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
     Q_OBJECT
@@ -48,7 +49,8 @@ public:
         TimerPaused = 2,
         Recording = 3,
         Paused = 4,
-        Encode = 5
+        Encode = 5,
+        Upload = 6
     };
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -67,6 +69,7 @@ private:
     RecordItNowPluginManager *m_pluginManager;
     RecorderManager *m_recorderManager;
     EncoderManager *m_encoderManager;
+    UploadManager *m_uploadManager;
 
     KAction *getAction(const QString &name);
 
@@ -108,7 +111,7 @@ private slots:
     void removeFile();
     void outputFileChanged(const QString &newFile);
     void recorderStateChanged(const AbstractRecorder::State &newState);
-    void uploaderFinished();
+    void uploaderFinished(const QString &error);
 
 
 protected:

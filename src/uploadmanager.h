@@ -17,56 +17,55 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef BLIPUPLOADER_H
-#define BLIPUPLOADER_H
+#ifndef UPLOADMANAGER_H
+#define UPLOADMANAGER_H
+
 
 // own
 #include "abstractuploader.h"
-#include "ui_blip.h"
-#include "lib/blipvideo.h"
+
+// KDE
+#include <kicon.h>
 
 // Qt
-#include <QtCore/QVariantList>
+#include <QtCore/QObject>
+#include <QtCore/QPair>
 #include <QtCore/QPointer>
 
 
-class BlipService;
-class BlipUploader : public AbstractUploader, public Ui::Blip
+typedef QPair<QString, KIcon> UploadData;
+class RecordItNowPluginManager;
+class UploadManager : public QObject
 {
     Q_OBJECT
 
 
 public:
-    BlipUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~BlipUploader();
+    UploadManager(QObject *parent, RecordItNowPluginManager *manager);
+    ~UploadManager();
 
-    void show(const QString &file, QWidget *parent);
-    void cancel();
+    QList<UploadData> getUploader() const;
+
+    void startUpload(const QString &uploader, const QString &file, QWidget *parent);
+    void stop();
 
 
 private:
-    QHash<QString, QString> m_category;
-    QHash<BlipVideo::License, QString> m_license;
-    QPointer<QWidget> m_dialog;
-    BlipService *m_service;
+    RecordItNowPluginManager *m_manager;
+    QPointer<AbstractUploader> m_uploader;
 
+    void clean();
 
 private slots:
-    void upload();
-    void cancelUpload();
-    void uploadFinished(const QString &id);
-    void quitDialog();
-    void descriptionChanged();
-    void addAccount();
-    void removeAccount();
-    void editAccount();
-    void accountsChanged(const QStringList &accounts);
-    void currentAccountChanged(const QString &newAccount);
-    void gotPasswordForAccount(const QString &account, const QString &password);
-    void error(const QString &errorString, const QString &id);
+    void uploaderFinished(const QString &error);
+
+
+signals:
+    void status(const QString &status);
+    void finished(const QString &error);
 
 
 };
 
 
-#endif // BLIPUPLOADER_H
+#endif // UPLOADMANAGER_H
