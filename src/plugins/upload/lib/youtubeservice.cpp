@@ -347,7 +347,7 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
                     video = readEntry(&reader);
                 }
             }
-            if (reader.hasError() && ret != KIO::ERR_USER_CANCELED) {
+            if ((reader.hasError() || !video) && ret != KIO::ERR_USER_CANCELED) {
                 emit error(i18nc("%1 = error", "Upload failed!\n"
                                  "Response: %1", response), id);
                 break;
