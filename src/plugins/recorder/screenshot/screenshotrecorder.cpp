@@ -36,6 +36,7 @@
 // X
 #ifdef XFIXES_FOUND
     #include <X11/extensions/Xfixes.h>
+    #include <X11/Xlib.h>
 #endif
 
 
@@ -77,8 +78,8 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     // reload cfg
     Settings::self()->readConfig();
 
-    const int x = d.geometry.x();
-    const int y = d.geometry.y();
+    int x = d.geometry.x();
+    int y = d.geometry.y();
 
     const int w = d.geometry.width();
     const int h = d.geometry.height();
@@ -91,6 +92,20 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
 #ifdef XFIXES_FOUND
     // cursor
     if (Settings::drawCursor()) {
+
+        if (d.winId != -1) { // set x + y
+            XWindowAttributes attributes;
+            Window junkwin;
+
+            if (XGetWindowAttributes(QX11Info::display(), d.winId, &attributes)) {
+                (void) XTranslateCoordinates(QX11Info::display(), d.winId, attributes.root,
+                                             -attributes.border_width,
+                                             -attributes.border_width,
+                                             &x, &y, &junkwin);
+            }
+
+        }
+
         XFixesCursorImage *xcursor = XFixesGetCursorImage(QX11Info::display());
         unsigned char *pixels = (unsigned char*) malloc(xcursor->width*xcursor->height*4);
         for (int i = 0; i < xcursor->width*xcursor->height; i++) {
