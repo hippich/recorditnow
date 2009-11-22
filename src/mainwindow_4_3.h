@@ -22,8 +22,8 @@
 
 // own
 #include "ui_toolbarwidget.h"
-#include "libs/recorder/abstractrecorder.h"                                       
-#include "libs/encoder/abstractencoder.h" 
+#include "libs/recorder/abstractrecorder.h"
+#include "libs/encoder/abstractencoder.h"
 
 // KDE
 #include <kxmlguiwindow.h>
@@ -31,6 +31,7 @@
 #include <ksystemtrayicon.h>
 
 
+class KSqueezedTextLabel;
 class KAction;
 class RecorderManager;
 class EncoderManager;
@@ -70,6 +71,7 @@ private:
     RecorderManager *m_recorderManager;
     EncoderManager *m_encoderManager;
     UploadManager *m_uploadManager;
+    KSqueezedTextLabel *m_statusLabel;
 
     KAction *getAction(const QString &name);
 
@@ -112,6 +114,7 @@ private slots:
     void outputFileChanged(const QString &newFile);
     void recorderStateChanged(const AbstractRecorder::State &newState);
     void uploaderFinished(const QString &error);
+    void linkActivated(const QString &link);
 
 
 protected:
