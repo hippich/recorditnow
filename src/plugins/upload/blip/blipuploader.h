@@ -66,6 +66,10 @@ private slots:
     void error(const QString &errorString, const QString &id);
 
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
+
 };
 
 

@@ -33,7 +33,7 @@
 // Qt
 #include <QtCore/QFile>
 #include <QtCore/QDir>
-
+#include <QtCore/QEvent>
 
 
 #define GOOGLE                 "By clicking &apos;Continue&apos;, you certify that you own all rights to "\
@@ -91,6 +91,7 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     m_dialog = new QWidget(parent, Qt::Dialog);
     m_dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     m_dialog->setWindowIcon(KIcon("recorditnow_youtube"));
+    m_dialog->installEventFilter(this);
     setupUi(m_dialog);
 
     const QPixmap pixmap = KIcon("recorditnow_youtube").pixmap(KIconLoader::SizeLarge,
@@ -359,5 +360,16 @@ void YouTubeUploader::gotPasswordForAccount(const QString &account, const QStrin
     if (m_dialog && accountsCombo->currentText() == account) {
         passwordEdit->setText(password);
     }
+
+}
+
+
+bool YouTubeUploader::eventFilter(QObject *watched, QEvent *event)
+{
+
+    if (event->type() == QEvent::Close && !m_service) {
+        emit finished(QString());
+    }
+    return QObject::eventFilter(watched, event);
 
 }

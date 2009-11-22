@@ -66,6 +66,10 @@ private slots:
     void gotPasswordForAccount(const QString &account, const QString &password);
 
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
+
 };
 
 

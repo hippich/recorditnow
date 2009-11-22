@@ -76,6 +76,7 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     m_dialog = new QWidget(parent, Qt::Dialog);
     m_dialog->setAttribute(Qt::WA_DeleteOnClose, true);
     m_dialog->setWindowIcon(KIcon("recorditnow_blip"));
+    m_dialog->installEventFilter(this);
     setupUi(m_dialog);
 
     const QPixmap pixmap = KIcon("recorditnow_blip").pixmap(KIconLoader::SizeLarge,
@@ -294,5 +295,16 @@ void BlipUploader::gotPasswordForAccount(const QString &account, const QString &
     if (m_dialog && accountsCombo->currentText() == account) {
         passwordEdit->setText(password);
     }
+
+}
+
+
+bool BlipUploader::eventFilter(QObject *watched, QEvent *event)
+{
+
+    if (event->type() == QEvent::Close && !m_service) {
+        emit finished(QString());
+    }
+    return QObject::eventFilter(watched, event);
 
 }
