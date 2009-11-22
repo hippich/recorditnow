@@ -34,6 +34,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QDir>
 #include <QtCore/QEvent>
+#include <QtCore/QTimer>
 
 
 #define GOOGLE                 "By clicking &apos;Continue&apos;, you certify that you own all rights to "\
@@ -127,7 +128,7 @@ void YouTubeUploader::show(const QString &file, QWidget *parent)
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
 
-    m_dialog->show();
+    QTimer::singleShot(0, m_dialog, SLOT(show()));
 
 }
 

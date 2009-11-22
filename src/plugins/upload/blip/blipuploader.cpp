@@ -33,7 +33,7 @@
 // Qt
 #include <QtCore/QFile>
 #include <QtCore/QDir>
-
+#include <QtCore/QTimer>
 
 
 K_PLUGIN_FACTORY(myFactory, registerPlugin<BlipUploader>();)
@@ -114,7 +114,7 @@ void BlipUploader::show(const QString &file, QWidget *parent)
     Settings::self()->readConfig();
     accountsCombo->setCurrentItem(Settings::currentAccount(), false);
 
-    m_dialog->show();
+    QTimer::singleShot(0, m_dialog, SLOT(show()));
 
 }
 
