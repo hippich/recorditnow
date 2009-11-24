@@ -123,7 +123,7 @@ void CursorWidget::click(const int &button)
     XAllowEvents(x11Info().display(), ReplayPointer, CurrentTime);
     update();
 
-    m_resetTimer->start(250);
+    m_resetTimer->start(350);
 
 }
 
