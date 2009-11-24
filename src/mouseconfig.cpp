@@ -184,6 +184,8 @@ void MouseConfig::addClicked()
         }
     }
 
+    addEdit->clear();
+
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, addEdit->text());
 
