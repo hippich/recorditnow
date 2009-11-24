@@ -276,7 +276,7 @@ void MainWindow::startRecord()
     if (Settings::showActivity()) {
         m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
         m_cursor->setButtons(MouseConfig::getButtons());
-        m_cursor->setSize(QSize(30, 30));
+        m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
         m_cursor->setNormalColor(Settings::defaultColor());
     }
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);

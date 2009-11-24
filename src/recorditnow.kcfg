@@ -56,7 +56,10 @@
             <default>false</default>
     </entry>
     <entry name="defaultColor" type="Color">
-            <default>white</default>
+            <default>black</default>
+    </entry>
+    <entry name="cursorWidgetSize" type="Int">
+            <default>20</default>
     </entry>
   </group>
 </kcfg>

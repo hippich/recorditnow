@@ -154,3 +154,11 @@ void ConfigDialog::updateWidgetsDefault()
 
 }
 
+
+void ConfigDialog::updateSettings()
+{
+
+    KConfigDialog::updateSettings();
+    enableButtonApply(false);
+
+}

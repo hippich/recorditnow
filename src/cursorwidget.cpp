@@ -57,9 +57,9 @@ CursorWidget::CursorWidget(QWidget *parent)
 
     m_timer->start(1000/30);
 
-    setContentsMargins(1, 1, 1, 1);
+    setContentsMargins(2, 2, 2, 2);
 
-    setSize(QSize(30, 30));
+    setSize(QSize(40, 40));
 
     show();
 
@@ -196,15 +196,28 @@ void CursorWidget::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(Qt::transparent);
 
-    QRadialGradient grad(contentsRect().center(), contentsRect().height()/2);
-    grad.setColorAt(0, m_currentColor);
+    // base
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(m_currentColor);
+    painter.setBrush(brush);
+    painter.drawEllipse(contentsRect());
+
+    // spot
+    QRadialGradient grad(contentsRect().center(), size().height()/2);
+    grad.setColorAt(0, Qt::white);
     grad.setColorAt(1, Qt::transparent);
-
+    grad.setFocalPoint(contentsRect().center()-QPoint(size().height()/4, size().height()/4));
     painter.setBrush(QBrush(grad));
+    painter.drawEllipse(contentsRect());
 
-    painter.drawRect(contentsRect());
+    // border
+    QPen pen;
+    pen.setWidth(2);
+    pen.setColor(Qt::black);
+    painter.setPen(pen);
+    painter.drawEllipse(contentsRect());
 
 
 }

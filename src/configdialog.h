@@ -61,6 +61,7 @@ private slots:
 
 protected slots:
     void updateWidgetsDefault();
+    void updateSettings();
 
 
 signals:
