@@ -46,7 +46,6 @@ CursorWidget::CursorWidget(QWidget *parent)
 {
 
     setAttribute(Qt::WA_TranslucentBackground);
-    KWindowSystem::setState(winId(), NET::KeepAbove);
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updatePos()));
@@ -143,6 +142,7 @@ void CursorWidget::updatePos()
     QRect geo = geometry();
     geo.moveTopLeft(QCursor::pos()+QPoint(20, 20));
     setGeometry(geo);
+    raise();
 
 }
 
