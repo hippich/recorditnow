@@ -18,56 +18,63 @@
  ***************************************************************************/
 
 
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
-
-
 // own
-#include "ui_settings.h"
+#include "application.h"
+#include "cursorwidget.h"
 
 // KDE
-#include <kconfigdialog.h>
+#include <kdebug.h>
+
+// Qt
+#include <QtCore/QAbstractEventDispatcher>
+
+// X11
+#include <X11/Xlib.h>
 
 
-class MouseConfig;
-class RecordItNowPluginManager;
-class KPluginSelector;
-class ConfigDialog : public KConfigDialog
+Application::Application()
+    : KApplication(), m_cursor(0)
 {
-    Q_OBJECT
 
 
-public:
-    ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager);
-    ~ConfigDialog();
+}
 
 
-private:
-    RecordItNowPluginManager *m_pluginManager;
-    Ui::Settings ui_settings;
-    KPluginSelector *m_pluginSelector;
-    MouseConfig *m_mousePage;
-
-    void init();
+Application::~Application()
+{
 
 
-private slots:
-    void updateEncoderCombo();
-    void configFinished(const int &code);
-    void pluginSettingsChanged(const bool &changed);
-    void encoderChanged();
-    void mouseConfigChanged();
 
 
-protected slots:
-    void updateWidgetsDefault();
+}
 
 
-signals:
-    void dialogFinished();
+
+CursorWidget *Application::getCursorWidget(QWidget *parent)
+{
+
+    if (!m_cursor) {
+        m_cursor = new CursorWidget(parent);
+    }
+    return m_cursor;
+
+}
 
 
-};
 
+bool Application::x11EventFilter(XEvent *event)
+{
 
-#endif // CONFIGDIALOG_H
+    if (!m_cursor) {
+        return false;
+    }
+
+    if (event->type == ButtonPress) {
+        if (event->xany.window == QX11Info::appRootWindow()) {
+            m_cursor->click(event->xbutton.button);
+            return true; // dont process grabed events
+        }
+    }
+    return false;
+
+}

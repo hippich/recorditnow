@@ -17,57 +17,54 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
-
-
-// own
-#include "ui_settings.h"
-
-// KDE
-#include <kconfigdialog.h>
+#ifndef CURSORWIDGET_H
+#define CURSORWIDGET_H
 
 
-class MouseConfig;
-class RecordItNowPluginManager;
-class KPluginSelector;
-class ConfigDialog : public KConfigDialog
+// Qt
+#include <QtGui/QWidget>
+#include <QtCore/QThread>
+#include <QtGui/QColor>
+#include <QtCore/QHash>
+
+
+class QTimer;
+class CursorWidget : public QWidget
 {
     Q_OBJECT
 
 
 public:
-    ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager);
-    ~ConfigDialog();
+    CursorWidget(QWidget *parent = 0);
+    ~CursorWidget();
+
+    void setSize(const QSize &size);
+    void setNormalColor(const QColor &color);
+    void setButtons(const QHash<int, QColor> &buttons);
+
+    void click(const int &button);
+    WId getWindow() const;
 
 
 private:
-    RecordItNowPluginManager *m_pluginManager;
-    Ui::Settings ui_settings;
-    KPluginSelector *m_pluginSelector;
-    MouseConfig *m_mousePage;
-
-    void init();
+    QTimer *m_timer;
+    QTimer *m_resetTimer;
+    QColor m_normalColor;
+    QColor m_currentColor;
+    QHash<int, QColor> m_buttons;
 
 
 private slots:
-    void updateEncoderCombo();
-    void configFinished(const int &code);
-    void pluginSettingsChanged(const bool &changed);
-    void encoderChanged();
-    void mouseConfigChanged();
+    void updatePos();
+    void resetColor();
+    void updateGrab(const bool &grab);
 
 
-protected slots:
-    void updateWidgetsDefault();
-
-
-signals:
-    void dialogFinished();
+protected:
+    void paintEvent(QPaintEvent *event);
 
 
 };
 
 
-#endif // CONFIGDIALOG_H
+#endif // CURSORWIDGET_H

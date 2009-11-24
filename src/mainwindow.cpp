@@ -32,6 +32,9 @@
 #include "recordermanager.h"
 #include "encodermanager.h"
 #include "uploadmanager.h"
+#include "cursorwidget.h"
+#include "application.h"
+#include "mouseconfig.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -165,6 +168,10 @@ MainWindow::~MainWindow()
     delete m_uploadManager;
     delete m_pluginManager;
 
+    if (m_cursor) {
+        delete m_cursor;
+    }
+
 }
 
 
@@ -265,6 +272,13 @@ void MainWindow::startRecord()
 {
 
     setState(Recording);   
+
+    if (Settings::showActivity()) {
+        m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
+        m_cursor->setButtons(MouseConfig::getButtons());
+        m_cursor->setSize(QSize(30, 30));
+        m_cursor->setNormalColor(Settings::defaultColor());
+    }
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
 }
@@ -660,6 +674,10 @@ void MainWindow::pluginStatus(const QString &text)
 
 void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 {
+
+    if (m_cursor) {
+        delete m_cursor;
+    }
 
     if (!error.isEmpty()) {
         KMessageBox::error(this, error);

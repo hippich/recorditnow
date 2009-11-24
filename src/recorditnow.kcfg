@@ -52,5 +52,11 @@
     <entry name="currentTime" type="Int">
             <default>5</default>
     </entry>
+    <entry name="showActivity" type="Bool">
+            <default>false</default>
+    </entry>
+    <entry name="defaultColor" type="Color">
+            <default>white</default>
+    </entry>
   </group>
 </kcfg>

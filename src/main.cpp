@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 // own
+#include "application.h"
 #include <kdeversion.h>
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
     #include "mainwindow.h"
@@ -26,10 +27,10 @@
 #endif
 
 // KDE
-#include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>
+
 
 
 int main(int argc, char *argv[])
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
     options.add("o filename", ki18n("Name of recorded video/image."));
     KCmdLineArgs::addCmdLineOptions(options);
 
-    KApplication app;
+    Application app;
 
     if (app.isSessionRestored()) { // see if we are starting with session management
         RESTORE(MainWindow);

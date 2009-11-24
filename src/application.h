@@ -18,56 +18,40 @@
  ***************************************************************************/
 
 
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
-
-// own
-#include "ui_settings.h"
 
 // KDE
-#include <kconfigdialog.h>
+#include <kapplication.h>
+
+// Qt
+#include <QtCore/QPointer>
 
 
-class MouseConfig;
-class RecordItNowPluginManager;
-class KPluginSelector;
-class ConfigDialog : public KConfigDialog
+class QWidget;
+class CursorWidget;
+class Application : public KApplication
 {
     Q_OBJECT
 
 
 public:
-    ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager);
-    ~ConfigDialog();
+    Application();
+    ~Application();
+
+    CursorWidget *getCursorWidget(QWidget *parent);
 
 
 private:
-    RecordItNowPluginManager *m_pluginManager;
-    Ui::Settings ui_settings;
-    KPluginSelector *m_pluginSelector;
-    MouseConfig *m_mousePage;
-
-    void init();
+    QPointer<CursorWidget> m_cursor;
 
 
-private slots:
-    void updateEncoderCombo();
-    void configFinished(const int &code);
-    void pluginSettingsChanged(const bool &changed);
-    void encoderChanged();
-    void mouseConfigChanged();
-
-
-protected slots:
-    void updateWidgetsDefault();
-
-
-signals:
-    void dialogFinished();
+protected:
+    bool x11EventFilter(XEvent *event);
 
 
 };
 
 
-#endif // CONFIGDIALOG_H
+#endif // APPLICATION_H

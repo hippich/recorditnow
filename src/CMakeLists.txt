@@ -21,10 +21,13 @@ set(gui_SRCS
    configdialog.cpp
    recordermanager.cpp
    encodermanager.cpp
-   uploadmanager.cpp)
+   uploadmanager.cpp
+   cursorwidget.cpp
+   application.cpp
+   mouseconfig.cpp)
 
 # GUI
-kde4_add_ui_files(gui_SRCS ui/toolbarwidget.ui ui/settings.ui)
+kde4_add_ui_files(gui_SRCS ui/toolbarwidget.ui ui/settings.ui ui/mouse.ui)
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})
 target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KIO_LIBS} recorditnow_recorder recorditnow_encoder recorditnow_uploader)
@@ -33,4 +36,3 @@ install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
 ########### install files ###############
 install(FILES recorditnow.kcfg  DESTINATION  ${KCFG_INSTALL_DIR})
 install(FILES recorditnowui.rc  DESTINATION  ${DATA_INSTALL_DIR}/recorditnow)
-

@@ -17,57 +17,50 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
+#ifndef MOUSECONFIG_H
+#define MOUSECONFIG_H
 
 
 // own
-#include "ui_settings.h"
+#include "ui_mouse.h"
 
-// KDE
-#include <kconfigdialog.h>
+// Qt
+#include <QtGui/QWidget>
 
 
-class MouseConfig;
-class RecordItNowPluginManager;
-class KPluginSelector;
-class ConfigDialog : public KConfigDialog
+class KColorButton;
+class MouseConfig : public QWidget, public Ui::Mouse
 {
     Q_OBJECT
 
 
 public:
-    ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager);
-    ~ConfigDialog();
+    MouseConfig(QWidget *parent = 0);
+    ~MouseConfig();
+
+    void saveConfig();
+    void loadConfig();
+    void defaults();
+
+
+    static QHash<int, QColor> getButtons();
 
 
 private:
-    RecordItNowPluginManager *m_pluginManager;
-    Ui::Settings ui_settings;
-    KPluginSelector *m_pluginSelector;
-    MouseConfig *m_mousePage;
-
-    void init();
+    KColorButton *newButton();
 
 
 private slots:
-    void updateEncoderCombo();
-    void configFinished(const int &code);
-    void pluginSettingsChanged(const bool &changed);
-    void encoderChanged();
-    void mouseConfigChanged();
-
-
-protected slots:
-    void updateWidgetsDefault();
+    void addClicked();
+    void removeClicked();
+    void itemSelectionChanged();
 
 
 signals:
-    void dialogFinished();
+    void configChanged();
 
 
 };
 
 
-#endif // CONFIGDIALOG_H
+#endif // MOUSECONFIG_H

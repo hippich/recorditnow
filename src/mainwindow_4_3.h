@@ -30,7 +30,11 @@
 #include <kdeversion.h>
 #include <ksystemtrayicon.h>
 
+// Qt
+#include <QtCore/QPointer>
 
+
+class CursorWidget;
 class KSqueezedTextLabel;
 class KAction;
 class RecorderManager;
@@ -72,6 +76,7 @@ private:
     EncoderManager *m_encoderManager;
     UploadManager *m_uploadManager;
     KSqueezedTextLabel *m_statusLabel;
+    QPointer<CursorWidget> m_cursor;
 
     KAction *getAction(const QString &name);
 
