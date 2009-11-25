@@ -23,11 +23,11 @@
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
 #include "mouseconfig.h"
+#include "zoomconfig.h"
 
 // KDE
 #include <kdebug.h>
 #include <kpluginselector.h>
-
 
 
 ConfigDialog::ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager)
@@ -43,6 +43,8 @@ ConfigDialog::ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager)
 
 ConfigDialog::~ConfigDialog()
 {
+
+
 
 }
 
@@ -74,13 +76,17 @@ void ConfigDialog::init()
 
 
     m_mousePage = new MouseConfig(this);
-    connect(m_mousePage, SIGNAL(configChanged()), this, SLOT(mouseConfigChanged()));
+    connect(m_mousePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
     m_mousePage->loadConfig();
+
+    m_zoomPage = new ZoomConfig(this);
+    connect(m_mousePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
+    m_zoomPage->loadConfig();
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
     addPage(m_mousePage, i18n("Mouse"), "input-mouse");
-
+    addPage(m_zoomPage, i18n("Zoom"), "zoom-in");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
 
@@ -111,6 +117,7 @@ void ConfigDialog::configFinished(const int &code)
         Settings::setEncoderName(ui_settings.encoderCombo->currentText());
 
         m_mousePage->saveConfig();
+        m_zoomPage->saveConfig();
     }
     emit dialogFinished();
 
@@ -138,7 +145,7 @@ void ConfigDialog::encoderChanged()
 }
 
 
-void ConfigDialog::mouseConfigChanged()
+void ConfigDialog::pageConfigChanged()
 {
 
     enableButtonApply(true);
@@ -151,6 +158,7 @@ void ConfigDialog::updateWidgetsDefault()
 
     KConfigDialog::updateWidgetsDefault();
     m_mousePage->defaults();
+    m_zoomPage->defaults();
 
 }
 

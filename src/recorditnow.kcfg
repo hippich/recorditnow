@@ -61,5 +61,20 @@
     <entry name="cursorWidgetSize" type="Int">
             <default>20</default>
     </entry>
+    <entry name="zoomFactor" type="Int">
+            <default>2</default>
+    </entry>
+    <entry name="zoomWidth" type="Int">
+            <default>350</default>
+    </entry>
+    <entry name="zoomHeight" type="Int">
+            <default>250</default>
+    </entry>
+    <entry name="zoomShortcut" type="String">
+            <default></default>
+    </entry>
+    <entry name="zoomFollow" type="Bool">
+            <default>true</default>
+    </entry>
   </group>
 </kcfg>

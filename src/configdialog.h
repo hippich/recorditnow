@@ -29,6 +29,7 @@
 #include <kconfigdialog.h>
 
 
+class ZoomConfig;
 class MouseConfig;
 class RecordItNowPluginManager;
 class KPluginSelector;
@@ -47,6 +48,7 @@ private:
     Ui::Settings ui_settings;
     KPluginSelector *m_pluginSelector;
     MouseConfig *m_mousePage;
+    ZoomConfig *m_zoomPage;
 
     void init();
 
@@ -56,7 +58,7 @@ private slots:
     void configFinished(const int &code);
     void pluginSettingsChanged(const bool &changed);
     void encoderChanged();
-    void mouseConfigChanged();
+    void pageConfigChanged();
 
 
 protected slots:

@@ -17,54 +17,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
+#ifndef ZOOMCONFIG_H
+#define ZOOMCONFIG_H
 
+
+// own
+#include "ui_zoom.h"
 
 // Qt
 #include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
 
 
-class QTimer;
-class CursorWidget : public QWidget
+
+class ZoomConfig : public QWidget, public Ui::Zoom
 {
     Q_OBJECT
 
 
 public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
+    ZoomConfig(QWidget *parent = 0);
+    ~ZoomConfig();
 
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-
-    void click(const int &button);
-    WId getWindow() const;
-
-
-private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
+    void loadConfig();
+    void saveConfig();
+    void defaults();
 
 
 private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
+    void keySequenceChanged(const QKeySequence &seq);
 
 
-protected:
-    void paintEvent(QPaintEvent *event);
+signals:
+    void configChanged();
 
 
 };
 
 
-#endif // CURSORWIDGET_H
+#endif // ZOOMCONFIG_H

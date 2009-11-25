@@ -17,54 +17,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
+
+#ifndef ZOOMVIEW_H
+#define ZOOMVIEW_H
 
 
 // Qt
 #include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
 
 
 class QTimer;
-class CursorWidget : public QWidget
+class ZoomView : public QWidget
 {
     Q_OBJECT
 
 
 public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
+    ZoomView(QWidget *parent = 0);
+    ~ZoomView();
 
+    void setFactor(const qreal &factor);
     void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-
-    void click(const int &button);
-    WId getWindow() const;
+    void setFollowMouse(const bool &follow);
 
 
 private:
+    QPixmap m_pixmap;
+    qreal m_factor;
     QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
+    bool m_followMouse;
 
 
 private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
+    void updateView();
 
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void wheelEvent(QWheelEvent *event);
 
 
 };
 
 
-#endif // CURSORWIDGET_H
+#endif // ZOOMVIEW_H

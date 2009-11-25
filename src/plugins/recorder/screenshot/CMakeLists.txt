@@ -1,10 +1,3 @@
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
-
-macro_optional_find_package(XFixes)
-macro_log_feature(XFIXES_FOUND "XFixes" 
-    "X.Org Xfixes library"
-    "http://xorg.freedesktop.org/") 
-
 set(SRCS
   screenshotrecorder.cpp)
 
@@ -13,7 +6,6 @@ set(confg_SRCS
 
 set(LIBS ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KIO_LIBS})
 if (XFIXES_FOUND)
-    add_definitions(-DXFIXES_FOUND=true)
     set(LIBS ${LIBS} ${X11_Xfixes_LIB} ${X11_LIBRARIES})
 endif()
 

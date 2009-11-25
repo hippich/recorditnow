@@ -38,7 +38,7 @@
 
 // X11
 #include <X11/Xlib.h>
-
+#include <X11/Xcursor/Xcursor.h>
 
 
 CursorWidget::CursorWidget(QWidget *parent)
@@ -54,7 +54,7 @@ CursorWidget::CursorWidget(QWidget *parent)
     connect(m_resetTimer, SIGNAL(timeout()), this, SLOT(resetColor()));
     m_resetTimer->setSingleShot(true);
 
-    m_timer->start(1000/30);
+    m_timer->start(1000/25);
 
     setContentsMargins(2, 2, 2, 2);
 
@@ -140,7 +140,10 @@ void CursorWidget::updatePos()
 {
 
     QRect geo = geometry();
-    geo.moveTopLeft(QCursor::pos()+QPoint(20, 20));
+
+    const int size = XcursorGetDefaultSize(x11Info().display());
+    geo.moveTopLeft(QCursor::pos()+QPoint(size, size));
+
     setGeometry(geo);
     raise();
 

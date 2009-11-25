@@ -17,54 +17,66 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
 
 
-// Qt
-#include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
+// own
+#include "zoomconfig.h"
+#include <recorditnow.h>
+
+// KDE
+#include <kactioncollection.h>
+#include <kaction.h>
 
 
-class QTimer;
-class CursorWidget : public QWidget
+ZoomConfig::ZoomConfig(QWidget *parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
+
+    setupUi(this);
+
+}
 
 
-public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
-
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-
-    void click(const int &button);
-    WId getWindow() const;
+ZoomConfig::~ZoomConfig()
+{
 
 
-private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
+
+}
 
 
-private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
+void ZoomConfig::loadConfig()
+{
+
+    if (!Settings::zoomShortcut().isEmpty()) {
+        shortcutWidget->setKeySequence(QKeySequence(Settings::zoomShortcut()));
+    } else {
+        defaults();
+    }
+
+}
 
 
-protected:
-    void paintEvent(QPaintEvent *event);
+void ZoomConfig::saveConfig()
+{
+
+    Settings::self()->setZoomShortcut(shortcutWidget->keySequence().toString());
+
+}
 
 
-};
+void ZoomConfig::defaults()
+{
+
+    shortcutWidget->setKeySequence(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Z));
+
+}
 
 
-#endif // CURSORWIDGET_H
+void ZoomConfig::keySequenceChanged(const QKeySequence &seq)
+{
+
+    Q_UNUSED(seq);
+    emit configChanged();
+
+}

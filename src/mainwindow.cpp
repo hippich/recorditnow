@@ -35,6 +35,7 @@
 #include "cursorwidget.h"
 #include "application.h"
 #include "mouseconfig.h"
+#include "zoomview.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -94,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_box = new FrameBox(this, Settings::currentFrame());
 
     m_tray = 0;
+    m_zoom = 0;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -170,6 +172,10 @@ MainWindow::~MainWindow()
 
     if (m_cursor) {
         delete m_cursor;
+    }
+
+    if (m_zoom) {
+        delete m_zoom;
     }
 
 }
@@ -262,6 +268,13 @@ void MainWindow::setupActions()
     uploadAction->setIcon(KIcon("recorditnow-upload-media"));
     uploadAction->setText(i18n("Upload"));
     uploadAction->setShortcut(Qt::CTRL+Qt::Key_U);
+
+
+    KAction *zoomAction = getAction("zoom");
+    zoomAction->setIcon(KIcon("zoom-in"));
+    zoomAction->setText(i18n("Zoom"));
+    zoomAction->setGlobalShortcut(KShortcut(Settings::zoomShortcut()));
+    connect(zoomAction, SIGNAL(triggered()), this, SLOT(triggerZoom()));
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
 
@@ -679,6 +692,10 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         delete m_cursor;
     }
 
+    if (m_zoom) {
+        triggerZoom();
+    }
+
     if (!error.isEmpty()) {
         KMessageBox::error(this, error);
         pluginStatus(error);
@@ -730,6 +747,7 @@ void MainWindow::dialogFinished()
     setupTray();
     updateRecorderCombo();
     updateUploaderMenu();
+    getAction("zoom")->setGlobalShortcut(KShortcut(Settings::zoomShortcut()));
 
 }
 
@@ -1026,6 +1044,25 @@ void MainWindow::saveNewToolbarConfig()
 
     KXmlGuiWindow::saveNewToolbarConfig();
     menuBar()->clear();
+
+}
+
+
+void MainWindow::triggerZoom()
+{
+
+    if (m_zoom) {
+        delete m_zoom;
+        m_zoom = 0;
+    } else {
+       // if (state() == Recording) {
+            m_zoom = new ZoomView(this);
+            m_zoom->setSize(QSize(Settings::zoomWidth(), Settings::zoomHeight()));
+            m_zoom->setFactor(Settings::zoomFactor());
+            m_zoom->setFollowMouse(Settings::zoomFollow());
+            m_zoom->show();
+        //}
+    }
 
 }
 
