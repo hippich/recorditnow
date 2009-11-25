@@ -34,6 +34,7 @@
 #include <QtCore/QPointer>
 
 
+class ZoomView;
 class CursorWidget;
 class KSqueezedTextLabel;
 class KAction;
@@ -77,6 +78,7 @@ private:
     UploadManager *m_uploadManager;
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
+    ZoomView *m_zoom;
 
     KAction *getAction(const QString &name);
 
@@ -120,6 +122,7 @@ private slots:
     void recorderStateChanged(const AbstractRecorder::State &newState);
     void uploaderFinished(const QString &error);
     void linkActivated(const QString &link);
+    void triggerZoom();
 
 
 protected:
