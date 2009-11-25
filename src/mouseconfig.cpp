@@ -110,15 +110,31 @@ void MouseConfig::defaults()
 
     KColorButton *button1 = newButton();
     KColorButton *button3 = newButton();
+    KColorButton *button4 = newButton();
+    KColorButton *button5 = newButton();
+    KColorButton *button8 = newButton();
+    KColorButton *button9 = newButton();
 
     button1->setColor(Qt::red);
     button3->setColor(Qt::yellow);
+    button4->setColor(Qt::darkBlue);
+    button5->setColor(Qt::blue);
+    button8->setColor(Qt::magenta);
+    button9->setColor(Qt::darkMagenta);
 
     QTreeWidgetItem *item1 = new QTreeWidgetItem();
     QTreeWidgetItem *item3 = new QTreeWidgetItem();
+    QTreeWidgetItem *item4 = new QTreeWidgetItem();
+    QTreeWidgetItem *item5 = new QTreeWidgetItem();
+    QTreeWidgetItem *item8 = new QTreeWidgetItem();
+    QTreeWidgetItem *item9 = new QTreeWidgetItem();
 
     item1->setText(0, QString::number(1));
     item3->setText(0, QString::number(3));
+    item4->setText(0, QString::number(4));
+    item5->setText(0, QString::number(5));
+    item8->setText(0, QString::number(8));
+    item9->setText(0, QString::number(9));
 
     // left click
     treeWidget->addTopLevelItem(item1);
@@ -127,6 +143,21 @@ void MouseConfig::defaults()
     // right click
     treeWidget->addTopLevelItem(item3);
     treeWidget->setItemWidget(item3, 1, button3);
+
+    // mouse wheel
+    treeWidget->addTopLevelItem(item4);
+    treeWidget->setItemWidget(item4, 1, button4);
+    treeWidget->addTopLevelItem(item5);
+    treeWidget->setItemWidget(item5, 1, button5);
+
+    // special 1
+    treeWidget->addTopLevelItem(item8);
+    treeWidget->setItemWidget(item8, 1, button8);
+
+    // special 2
+    treeWidget->addTopLevelItem(item9);
+    treeWidget->setItemWidget(item9, 1, button9);
+
 
     emit configChanged();
 
@@ -184,14 +215,13 @@ void MouseConfig::addClicked()
         }
     }
 
-    addEdit->clear();
-
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, addEdit->text());
 
     treeWidget->addTopLevelItem(item);
     treeWidget->setItemWidget(item, 1, newButton());
 
+    addEdit->clear();
     emit configChanged();
 
 }
