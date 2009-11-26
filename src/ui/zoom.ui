@@ -7,24 +7,27 @@
     <x>0</x>
     <y>0</y>
     <width>427</width>
-    <height>93</height>
+    <height>99</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
+  </property>
+  <property name="toolTip">
+   <string notr="true"/>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="fieldGrowthPolicy">
     <enum>QFormLayout::ExpandingFieldsGrow</enum>
    </property>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Zoom factor</string>
+      <string>Default zoom factor</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <widget class="KIntSpinBox" name="kcfg_zoomFactor">
      <property name="minimum">
       <number>1</number>
@@ -34,45 +37,62 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Size</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+   <item row="2" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="KIntNumInput" name="kcfg_zoomWidth">
-       <property name="minimum">
-        <number>10</number>
-       </property>
-       <property name="maximum">
-        <number>800</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string notr="true">X</string>
+        <string>Width</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KIntNumInput" name="kcfg_zoomHeight">
-       <property name="minimum">
-        <number>10</number>
-       </property>
-       <property name="maximum">
-        <number>600</number>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="KIntNumInput" name="kcfg_zoomWidth">
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>800</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string notr="true">Height</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KIntNumInput" name="kcfg_zoomHeight">
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>600</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="0" column="0" colspan="2">
     <widget class="QCheckBox" name="kcfg_zoomFollow">
      <property name="text">
       <string>Follow the mouse</string>
