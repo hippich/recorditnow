@@ -29,6 +29,8 @@
 #include <QtGui/QPainter>
 #include <QtCore/QTimer>
 #include <QtGui/QWheelEvent>
+#include <QtGui/QApplication>
+#include <QtGui/QDesktopWidget>
 
 // X
 #ifdef XFIXES_FOUND
@@ -112,6 +114,12 @@ void ZoomView::updateView()
     QRect target(0, 0, size().width()/m_factor, size().height()/m_factor);
     target.moveCenter(QCursor::pos());
 
+
+    const int screen = x11Info().screen();
+    const QRect screenGeometry = QApplication::desktop()->screenGeometry(screen);
+
+    target = screenGeometry.intersected(target);
+
     m_pixmap = QPixmap::grabWindow(x11Info().appRootWindow(),
                                    target.x(),
                                    target.y(),
@@ -160,7 +168,7 @@ void ZoomView::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
 
     QPainter painter(this);
-    painter.drawPixmap(contentsRect(), m_pixmap);
+    painter.drawPixmap(contentsRect().topLeft(), m_pixmap);
 
     QPen pen;
     pen.setWidth(4);
