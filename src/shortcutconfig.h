@@ -17,34 +17,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ZOOMCONFIG_H
-#define ZOOMCONFIG_H
+#ifndef SHORTCUTCONFIG_H
+#define SHORTCUTCONFIG_H
 
-
-// own
-#include "ui_zoom.h"
 
 // Qt
 #include <QtGui/QWidget>
 
 
-
-class ZoomConfig : public QWidget, public Ui::Zoom
+class KActionCollection;
+class ShortcutConfig : public QWidget
 {
     Q_OBJECT
 
 
 public:
-    ZoomConfig(QWidget *parent = 0);
-    ~ZoomConfig();
+    ShortcutConfig(QWidget *parent, KActionCollection *collection);
+    ~ShortCutConfig();
 
-    void loadConfig();
-    void saveConfig();
     void defaults();
-
-
-private slots:
-    void keySequenceChanged(const QKeySequence &seq);
 
 
 signals:
@@ -53,5 +44,4 @@ signals:
 
 };
 
-
-#endif // ZOOMCONFIG_H
+#endif // SHORTCUTCONFIG_H

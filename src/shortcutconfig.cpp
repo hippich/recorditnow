@@ -18,65 +18,9 @@
  ***************************************************************************/
 
 
+#include "shortcutconfig.h"
 
-// own
-#include "zoomconfig.h"
-#include <recorditnow.h>
-
-// KDE
-#include <kactioncollection.h>
-#include <kaction.h>
-
-
-ZoomConfig::ZoomConfig(QWidget *parent)
-    : QWidget(parent)
+ShortcutConfig::ShortcutConfig(QWidget *parent) :
+    QWidget(parent)
 {
-
-    setupUi(this);
-
-}
-
-
-ZoomConfig::~ZoomConfig()
-{
-
-
-
-}
-
-
-void ZoomConfig::loadConfig()
-{
-
-    if (!Settings::zoomShortcut().isEmpty()) {
-        shortcutWidget->setKeySequence(QKeySequence(Settings::zoomShortcut()));
-    } else {
-        defaults();
-    }
-
-}
-
-
-void ZoomConfig::saveConfig()
-{
-
-    Settings::self()->setZoomShortcut(shortcutWidget->keySequence().toString());
-
-}
-
-
-void ZoomConfig::defaults()
-{
-
-    shortcutWidget->setKeySequence(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Z));
-
-}
-
-
-void ZoomConfig::keySequenceChanged(const QKeySequence &seq)
-{
-
-    Q_UNUSED(seq);
-    emit configChanged();
-
 }

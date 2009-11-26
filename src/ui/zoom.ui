@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>427</width>
-    <height>131</height>
+    <height>93</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,16 +72,6 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="1">
-    <widget class="KKeySequenceWidget" name="shortcutWidget"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Shortcut</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0" colspan="2">
     <widget class="QCheckBox" name="kcfg_zoomFollow">
      <property name="text">
@@ -96,11 +86,6 @@
    <class>KIntSpinBox</class>
    <extends>QSpinBox</extends>
    <header>knuminput.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KKeySequenceWidget</class>
-   <extends>QWidget</extends>
-   <header>kkeysequencewidget.h</header>
   </customwidget>
   <customwidget>
    <class>KIntNumInput</class>

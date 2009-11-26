@@ -59,6 +59,7 @@
 #include <kapplication.h>
 #include <kactionmenu.h>
 #include <ksqueezedtextlabel.h>
+#include <kactioncategory.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -210,8 +211,13 @@ KAction *MainWindow::getAction(const QString &name)
 
     KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
-        action = new KActionMenu(this);
-        static_cast<KActionMenu*>(action)->setDelayed(false);
+        if (name == "upload") {
+            action = new KActionMenu(this);
+            static_cast<KActionMenu*>(action)->setDelayed(false);
+        } else {
+            action = new KAction(this);
+        }
+        action->setShortcutConfigurable(true);
         actionCollection()->addAction(name, action);
     }
     return action;
@@ -225,21 +231,22 @@ void MainWindow::setupActions()
     KAction *recordAction = getAction("record");
     recordAction->setText(i18n("Record"));
     recordAction->setIcon(KIcon("media-record"));
-    recordAction->setShortcut(Qt::CTRL+Qt::Key_R);
+    recordAction->setShortcut(Qt::CTRL+Qt::Key_R, KAction::DefaultShortcut);
     connect(recordAction, SIGNAL(triggered()), this, SLOT(recordTriggred()));
 
+    
     KAction *pauseAction = getAction("pause");
     pauseAction->setObjectName("pause");
     pauseAction->setText(i18n("Pause"));
     pauseAction->setIcon(KIcon("media-playback-pause"));
-    pauseAction->setShortcut(Qt::CTRL+Qt::Key_P);
+    pauseAction->setShortcut(Qt::CTRL+Qt::Key_P, KAction::DefaultShortcut);
     pauseAction->setEnabled(false);
     connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseRecord()));
 
     KAction *stopAction = getAction("stop");
     stopAction->setText(i18n("Stop"));
     stopAction->setIcon(KIcon("media-playback-stop"));
-    stopAction->setShortcut(Qt::CTRL+Qt::Key_S);
+    stopAction->setShortcut(Qt::CTRL+Qt::Key_S, KAction::DefaultShortcut);
     stopAction->setEnabled(false);
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopRecord()));
 
@@ -247,34 +254,50 @@ void MainWindow::setupActions()
     KAction *recordWindowAction = getAction("recordWindow");
     recordWindowAction->setText(i18n("Record a Window"));
     recordWindowAction->setIcon(KIcon("edit-select"));
-    recordWindowAction->setShortcut(Qt::CTRL+Qt::Key_W);
+    recordWindowAction->setShortcut(Qt::CTRL+Qt::Key_W, KAction::DefaultShortcut);
     connect(recordWindowAction, SIGNAL(triggered()), this, SLOT(recordWindow()));
 
     KAction *boxAction = getAction("box");
     boxAction->setText(i18n("Show Frame"));
     boxAction->setIcon(KIcon("draw-rectangle"));
-    boxAction->setShortcut(Qt::CTRL+Qt::Key_F);
+    boxAction->setShortcut(Qt::CTRL+Qt::Key_F, KAction::DefaultShortcut);
     boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
 
     KAction *fullAction = getAction("recordFullScreen");
     fullAction->setText(i18n("Record the entire Screen"));
     fullAction->setIcon(KIcon("view-fullscreen"));
-    fullAction->setShortcut(Qt::CTRL+Qt::Key_A);
+    fullAction->setShortcut(Qt::CTRL+Qt::Key_A, KAction::DefaultShortcut);
     connect(fullAction, SIGNAL(triggered()), this, SLOT(recordFullScreen()));
 
 
     KAction *uploadAction = getAction("upload");
     uploadAction->setIcon(KIcon("recorditnow-upload-media"));
     uploadAction->setText(i18n("Upload"));
-    uploadAction->setShortcut(Qt::CTRL+Qt::Key_U);
+    uploadAction->setShortcut(Qt::CTRL+Qt::Key_U, KAction::DefaultShortcut);
 
 
     KAction *zoomAction = getAction("zoom");
-    zoomAction->setIcon(KIcon("zoom-in"));
+    zoomAction->setObjectName("RecordItNow_zoom");
+    zoomAction->setIcon(KIcon("page-zoom"));
     zoomAction->setText(i18n("Zoom"));
-    zoomAction->setGlobalShortcut(KShortcut(Settings::zoomShortcut()));
+    zoomAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Z));
     connect(zoomAction, SIGNAL(triggered()), this, SLOT(triggerZoom()));
+
+    KAction *zoomInAction = getAction("zoom-in");
+    zoomInAction->setObjectName("RecordItNow_zoom_in");
+    zoomInAction->setIcon(KIcon("zoom-in"));
+    zoomInAction->setText(i18n("Zoom in"));
+    zoomInAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Plus));
+    connect(zoomInAction, SIGNAL(triggered()), this, SLOT(zoomIn()));
+
+    KAction *zoomOutAction = getAction("zoom-out");
+    zoomOutAction->setObjectName("RecordItNow_zoom_out");
+    zoomOutAction->setIcon(KIcon("zoom-out"));
+    zoomOutAction->setText(i18n("Zoom out"));
+    zoomOutAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Minus));
+    connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
+
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
 
@@ -734,7 +757,7 @@ void MainWindow::encoderFinished(const QString &error)
 void MainWindow::configure()
 {
 
-    ConfigDialog *dialog = new ConfigDialog(this, m_pluginManager);
+    ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(dialogFinished()));
     dialog->show();
 
@@ -747,7 +770,6 @@ void MainWindow::dialogFinished()
     setupTray();
     updateRecorderCombo();
     updateUploaderMenu();
-    getAction("zoom")->setGlobalShortcut(KShortcut(Settings::zoomShortcut()));
 
 }
 
@@ -1055,13 +1077,35 @@ void MainWindow::triggerZoom()
         delete m_zoom;
         m_zoom = 0;
     } else {
-       // if (state() == Recording) {
+        if (state() == Recording) {
             m_zoom = new ZoomView(this);
             m_zoom->setSize(QSize(Settings::zoomWidth(), Settings::zoomHeight()));
             m_zoom->setFactor(Settings::zoomFactor());
             m_zoom->setFollowMouse(Settings::zoomFollow());
             m_zoom->show();
-        //}
+        }
+    }
+
+}
+
+
+void MainWindow::zoomIn()
+{
+
+    if (!m_zoom) {
+        triggerZoom();
+    } else {
+        m_zoom->setFactor(m_zoom->factor()+1);
+    }
+
+}
+
+
+void MainWindow::zoomOut()
+{
+
+    if (m_zoom) {
+        m_zoom->setFactor(m_zoom->factor()-1);
     }
 
 }

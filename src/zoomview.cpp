@@ -63,10 +63,20 @@ ZoomView::~ZoomView()
 }
 
 
+qreal ZoomView::factor() const
+{
+
+    return m_factor;
+
+}
+
+
 void ZoomView::setFactor(const qreal &factor)
 {
 
     m_factor = factor;
+    m_factor = qMin((int)m_factor, 10);
+    m_factor = qMax((int)m_factor, 1);
     updateView();
 
 }

@@ -122,6 +122,8 @@ private slots:
     void uploaderFinished(const QString &error);
     void linkActivated(const QString &link);
     void triggerZoom();
+    void zoomIn();
+    void zoomOut();
 
 
 protected:

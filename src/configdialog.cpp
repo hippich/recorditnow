@@ -23,15 +23,18 @@
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
 #include "mouseconfig.h"
-#include "zoomconfig.h"
 
 // KDE
 #include <kdebug.h>
 #include <kpluginselector.h>
+#include <kshortcutseditor.h>
 
 
-ConfigDialog::ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager)
-    : KConfigDialog(parent, "settings", Settings::self()), m_pluginManager(manager)
+ConfigDialog::ConfigDialog(QWidget *parent, KActionCollection *collection,
+                           RecordItNowPluginManager *manager)
+    : KConfigDialog(parent, "settings", Settings::self()),
+    m_pluginManager(manager),
+    m_collection(collection)
 {
 
     Q_ASSERT(m_pluginManager);
@@ -79,14 +82,17 @@ void ConfigDialog::init()
     connect(m_mousePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
     m_mousePage->loadConfig();
 
-    m_zoomPage = new ZoomConfig(this);
-    connect(m_mousePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
-    m_zoomPage->loadConfig();
+    QWidget *zoomPage = new QWidget(this);
+    ui_zoom.setupUi(zoomPage);
+
+    m_shortcutsPage = new KShortcutsEditor(m_collection, this);
+    connect(m_shortcutsPage, SIGNAL(keyChange()), this, SLOT(pageConfigChanged()));
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
     addPage(m_mousePage, i18n("Mouse"), "input-mouse");
-    addPage(m_zoomPage, i18n("Zoom"), "zoom-in");
+    addPage(zoomPage, i18n("Zoom"), "zoom-in");
+    addPage(m_shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
 
@@ -117,7 +123,7 @@ void ConfigDialog::configFinished(const int &code)
         Settings::setEncoderName(ui_settings.encoderCombo->currentText());
 
         m_mousePage->saveConfig();
-        m_zoomPage->saveConfig();
+        m_shortcutsPage->save();
     }
     emit dialogFinished();
 
@@ -158,7 +164,7 @@ void ConfigDialog::updateWidgetsDefault()
 
     KConfigDialog::updateWidgetsDefault();
     m_mousePage->defaults();
-    m_zoomPage->defaults();
+    m_shortcutsPage->allDefault();
 
 }
 

@@ -37,8 +37,8 @@ set(gui_SRCS
    cursorwidget.cpp
    application.cpp
    mouseconfig.cpp
-   zoomview.cpp
-   zoomconfig.cpp)
+   zoomview.cpp)
+
 
 # GUI
 kde4_add_ui_files(gui_SRCS ui/toolbarwidget.ui ui/settings.ui ui/mouse.ui ui/zoom.ui)

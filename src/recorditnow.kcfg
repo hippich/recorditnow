@@ -52,6 +52,8 @@
     <entry name="currentTime" type="Int">
             <default>5</default>
     </entry>
+  </group>
+ <group name="Mouse">
     <entry name="showActivity" type="Bool">
             <default>false</default>
     </entry>
@@ -61,6 +63,8 @@
     <entry name="cursorWidgetSize" type="Int">
             <default>20</default>
     </entry>
+  </group>
+  <group name="Zoom">
     <entry name="zoomFactor" type="Int">
             <default>2</default>
     </entry>
@@ -69,9 +73,6 @@
     </entry>
     <entry name="zoomHeight" type="Int">
             <default>250</default>
-    </entry>
-    <entry name="zoomShortcut" type="String">
-            <default></default>
     </entry>
     <entry name="zoomFollow" type="Bool">
             <default>true</default>

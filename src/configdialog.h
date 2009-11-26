@@ -24,12 +24,14 @@
 
 // own
 #include "ui_settings.h"
+#include "ui_zoom.h"
 
 // KDE
 #include <kconfigdialog.h>
 
 
-class ZoomConfig;
+class KShortcutsEditor;
+class KActionCollection;
 class MouseConfig;
 class RecordItNowPluginManager;
 class KPluginSelector;
@@ -39,16 +41,18 @@ class ConfigDialog : public KConfigDialog
 
 
 public:
-    ConfigDialog(QWidget *parent, RecordItNowPluginManager *manager);
+    ConfigDialog(QWidget *parent, KActionCollection *collection, RecordItNowPluginManager *manager);
     ~ConfigDialog();
 
 
 private:
     RecordItNowPluginManager *m_pluginManager;
     Ui::Settings ui_settings;
+    Ui::Zoom ui_zoom;
     KPluginSelector *m_pluginSelector;
     MouseConfig *m_mousePage;
-    ZoomConfig *m_zoomPage;
+    KActionCollection *m_collection;
+    KShortcutsEditor *m_shortcutsPage;
 
     void init();
 

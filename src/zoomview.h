@@ -36,6 +36,8 @@ public:
     ZoomView(QWidget *parent = 0);
     ~ZoomView();
 
+    qreal factor() const;
+
     void setFactor(const qreal &factor);
     void setSize(const QSize &size);
     void setFollowMouse(const bool &follow);
@@ -50,7 +52,7 @@ private:
 
 private slots:
     void updateView();
-
+    
 
 protected:
     void paintEvent(QPaintEvent *event);
