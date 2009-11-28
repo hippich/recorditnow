@@ -77,5 +77,8 @@
     <entry name="zoomFollow" type="Bool">
             <default>true</default>
     </entry>
+    <entry name="zoomHighQuality" type="Bool">
+            <default>false</default>
+    </entry>
   </group>
 </kcfg>

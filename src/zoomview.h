@@ -33,6 +33,11 @@ class ZoomView : public QWidget
 
 
 public:
+    enum Quality {
+        Low = 0,
+        High = 1
+    };
+
     ZoomView(QWidget *parent = 0);
     ~ZoomView();
 
@@ -41,6 +46,7 @@ public:
     void setFactor(const qreal &factor);
     void setSize(const QSize &size);
     void setFollowMouse(const bool &follow);
+    void setQuality(const ZoomView::Quality &quality);
 
 
 private:
@@ -48,6 +54,7 @@ private:
     qreal m_factor;
     QTimer *m_timer;
     bool m_followMouse;
+    Quality m_quality;
 
 
 private slots:

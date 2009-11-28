@@ -34,7 +34,6 @@
 #include <QtCore/QEvent>
 #include <QtCore/QDateTime>
 #include <QtCore/QThread>
-#include <QtCore/QAbstractEventDispatcher>
 
 // X11
 #include <X11/Xlib.h>
@@ -46,6 +45,7 @@ CursorWidget::CursorWidget(QWidget *parent)
 {
 
     setAttribute(Qt::WA_TranslucentBackground);
+    // setAttribute(Qt::WA_TransparentForMouseEvents);
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updatePos()));

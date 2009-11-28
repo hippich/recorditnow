@@ -45,6 +45,7 @@ ZoomView::ZoomView(QWidget *parent)
 
     m_factor = 2;
     m_followMouse = true;
+    m_quality = Low;
     setMinimumSize(350, 300);
     setMaximumSize(350, 300);
 
@@ -108,6 +109,15 @@ void ZoomView::setFollowMouse(const bool &follow)
 }
 
 
+void ZoomView::setQuality(const ZoomView::Quality &quality)
+{
+
+    m_quality = quality;
+    updateView();
+
+}
+
+
 void ZoomView::updateView()
 {
 
@@ -140,6 +150,16 @@ void ZoomView::updateView()
     QImage qcursor(pixels, xcursor->width, xcursor->height, QImage::Format_ARGB32);
     QPainter painter(&m_pixmap);
 
+    switch (m_quality) {
+    case Low: painter.setRenderHints(QPainter::Antialiasing); break;
+    case High: {
+            painter.setRenderHints(QPainter::Antialiasing |
+                                   QPainter::HighQualityAntialiasing |
+                                   QPainter::SmoothPixmapTransform);
+            break;
+        }
+    }
+
     painter.drawImage(xcursor->x-(target.x()+xcursor->xhot), xcursor->y-(target.y()+xcursor->xhot),
                       qcursor);
 
@@ -149,7 +169,14 @@ void ZoomView::updateView()
     XFree(xcursor);
 #endif
     
-    m_pixmap = m_pixmap.scaled(size(), Qt::KeepAspectRatio, Qt::FastTransformation);
+    Qt::TransformationMode mode;
+
+    switch (m_quality) {
+    case Low: mode = Qt::FastTransformation; break;
+    case High: mode = Qt::SmoothTransformation; break;
+    }
+
+    m_pixmap = m_pixmap.scaled(size(), Qt::KeepAspectRatio, mode);
 
     if (m_followMouse) {
         QRect geo = geometry();
@@ -174,6 +201,16 @@ void ZoomView::paintEvent(QPaintEvent *event)
     painter.setBrush(brush);
     painter.drawRect(rect());
     painter.setBrush(QBrush());
+
+    switch (m_quality) {
+    case Low: painter.setRenderHints(QPainter::Antialiasing); break;
+    case High: {
+            painter.setRenderHints(QPainter::Antialiasing |
+                                   QPainter::HighQualityAntialiasing |
+                                   QPainter::SmoothPixmapTransform);
+            break;
+        }
+    }
 
     painter.drawPixmap(contentsRect().topLeft(), m_pixmap);
 

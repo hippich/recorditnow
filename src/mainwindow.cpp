@@ -1082,6 +1082,9 @@ void MainWindow::triggerZoom()
             m_zoom->setSize(QSize(Settings::zoomWidth(), Settings::zoomHeight()));
             m_zoom->setFactor(Settings::zoomFactor());
             m_zoom->setFollowMouse(Settings::zoomFollow());
+            if (Settings::zoomHighQuality()) {
+                m_zoom->setQuality(ZoomView::High);
+            }
             m_zoom->show();
         }
     }
