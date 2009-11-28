@@ -89,8 +89,8 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
         if (d.geometry.y() > 0) {
             args << QString("-y") << QString::number(d.geometry.y());
         }
-        args << QString("-width") << QString::number(d.geometry.width());
-        args << QString("-height") << QString::number(d.geometry.height());
+        args << QString("--width") << QString::number(d.geometry.width());
+        args << QString("--height") << QString::number(d.geometry.height());
     }
     args << "--fps" << QString::number(d.fps);
     args << "--workdir" << d.workDir;
