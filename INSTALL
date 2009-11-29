@@ -5,5 +5,6 @@
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` -DCMAKE_BUILD_TYPE=debugfull ../ # or -DCMAKE_BUILD_TYPE=release
+                                                                                     # to install translations use -DLINGUAS="${linguas}" example: -DLINGUAS="de hu" for german and hungarian
 make install # as root (sudo/su)
 kbuildsycoca4 # <---- important
