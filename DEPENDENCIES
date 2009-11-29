@@ -3,6 +3,6 @@ recordmydesktop (tested with recordmydesktop-0.3.8.1)
 KDE-4.3 or KDE-4.4
 
 Optional:
-    ffmepg for ffmpeg encoder plugin                                  // runtime
-    mencoder (part of mplayer) for mencoder encoder plugin            // runtime
+    ffmepg for ffmpeg encoder plugin                                  // buildtime
+    mencoder (part of mplayer) for mencoder encoder plugin            // buildtime
     XFixes for the "Draw the cursor" option in the screenshot plugin  // buildtime
