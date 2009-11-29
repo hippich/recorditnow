@@ -437,20 +437,15 @@ void MainWindow::recordFullScreen()
 {
 
     initRecorder(&m_recordData);
-<<<<<<< HEAD
 
     const int screen = x11Info().appScreen();
     QWidget *desktop = kapp->desktop()->screen(screen);
-
     if (desktop) {
         m_recordData.winId = desktop->winId();
     } else {
         m_recordData.geometry = kapp->desktop()->screenGeometry(screen);
     }
 
-=======
-    m_recordData.winId = QApplication::desktop()->winId();
->>>>>>> 8d586a6... screen fix2
     startTimer();
 
 }
