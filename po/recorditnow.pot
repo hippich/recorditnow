@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-11-22 06:35+0100\n"
+"POT-Creation-Date: 2009-11-29 11:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,7 +224,7 @@ msgstr ""
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:81 po/rc.cpp:359 rc.cpp:81 rc.cpp:359
+#: po/rc.cpp:81 po/rc.cpp:377 rc.cpp:81 rc.cpp:377
 msgid "Sound"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgstr ""
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: file: src/ui/settings.ui:86
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:130 po/rc.cpp:344 rc.cpp:130 rc.cpp:344
+#: po/rc.cpp:130 po/rc.cpp:362 rc.cpp:130 rc.cpp:362
 msgid "Miscellaneous"
 msgstr ""
 
@@ -345,13 +345,19 @@ msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:326
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
-#: po/rc.cpp:139 rc.cpp:139
+#. i18n: file: src/ui/zoom.ui:98
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
+#. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:326
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
+#. i18n: file: src/ui/zoom.ui:98
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
+#: po/rc.cpp:139 po/rc.cpp:404 rc.cpp:139 rc.cpp:404
 msgid "Follow the mouse"
 msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:333
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
-#: po/rc.cpp:142 src/mainwindow.cpp:241 rc.cpp:142
+#: po/rc.cpp:142 src/mainwindow.cpp:261 rc.cpp:142
 msgid "Show Frame"
 msgstr ""
 
@@ -566,7 +572,7 @@ msgstr ""
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:230
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
 #: po/rc.cpp:247 po/rc.cpp:250 po/rc.cpp:308 po/rc.cpp:311
-#: src/mainwindow.cpp:256 src/plugins/upload/lib/infojob.cpp:117
+#: src/mainwindow.cpp:276 src/plugins/upload/lib/infojob.cpp:117
 #: src/plugins/upload/lib/infojob.cpp:129 rc.cpp:247 rc.cpp:250 rc.cpp:308
 #: rc.cpp:311
 msgid "Upload"
@@ -615,7 +621,7 @@ msgstr ""
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
 #. i18n: file: src/ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:320 po/rc.cpp:332 rc.cpp:320 rc.cpp:332
+#: po/rc.cpp:320 po/rc.cpp:350 rc.cpp:320 rc.cpp:350
 msgid "Hide RecordItNow while recording"
 msgstr ""
 
@@ -625,63 +631,99 @@ msgstr ""
 msgid "Main Toolbar"
 msgstr ""
 
+#. i18n: file: src/ui/mouse.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_showActivity)
+#: po/rc.cpp:326 rc.cpp:326
+msgid "Show mouse clicks"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:34
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:329 rc.cpp:329
+msgid "Mouse button"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:73
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:332 rc.cpp:332
+msgid "Mouse Button"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:78
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:335 rc.cpp:335
+msgid "Color"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:88
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:338 rc.cpp:338
+msgid "Default color"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:98
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: po/rc.cpp:341 rc.cpp:341
+msgid "Size"
+msgstr ""
+
 #. i18n: file: src/ui/settings.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:326 rc.cpp:326
+#: po/rc.cpp:344 rc.cpp:344
 msgid "Behavior "
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:32
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:329 rc.cpp:329
+#: po/rc.cpp:347 rc.cpp:347
 msgid "Enable system tray icon"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:46
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:335 rc.cpp:335
+#: po/rc.cpp:353 rc.cpp:353
 msgid "Overwrite existing files"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:338 rc.cpp:338
+#: po/rc.cpp:356 rc.cpp:356
 msgid "Show file after record"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
-#: po/rc.cpp:341 rc.cpp:341
+#: po/rc.cpp:359 rc.cpp:359
 msgid "Encode after record"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:95
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:347 rc.cpp:347
+#: po/rc.cpp:365 rc.cpp:365
 msgid "Directory for temporary files:"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:48
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: po/rc.cpp:350 rc.cpp:350
+#: po/rc.cpp:368 rc.cpp:368
 msgid "Timer"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:112
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:353 rc.cpp:353
+#: po/rc.cpp:371 rc.cpp:371
 msgid "Frames per second"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:115
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:356 rc.cpp:356
+#: po/rc.cpp:374 rc.cpp:374
 msgid " FPS"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:170
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:362 rc.cpp:362
+#: po/rc.cpp:380 rc.cpp:380
 msgid "Backend"
 msgstr ""
 
@@ -693,50 +735,86 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
 #. i18n: file: src/ui/toolbarwidget.ui:193
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:365 po/rc.cpp:368 rc.cpp:365 rc.cpp:368
+#: po/rc.cpp:383 po/rc.cpp:386 rc.cpp:383 rc.cpp:386
 msgid "Output file"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:203
 #. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
-#: po/rc.cpp:371 rc.cpp:371
+#: po/rc.cpp:389 rc.cpp:389
 msgid "Play/Open"
 msgstr ""
 
 #. i18n: file: src/ui/toolbarwidget.ui:213
 #. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
-#: po/rc.cpp:374 rc.cpp:374
+#: po/rc.cpp:392 rc.cpp:392
 msgid "Delete"
 msgstr ""
 
-#: po/rc.cpp:375 rc.cpp:375
+#. i18n: file: src/ui/zoom.ui:26
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: po/rc.cpp:395 rc.cpp:395
+msgid "Default zoom factor"
+msgstr ""
+
+#. i18n: file: src/ui/zoom.ui:45
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: po/rc.cpp:398 rc.cpp:398
+msgid "Width"
+msgstr ""
+
+#. i18n: file: src/ui/zoom.ui:64
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: po/rc.cpp:401 rc.cpp:401
+msgid "Height"
+msgstr ""
+
+#. i18n: file: src/ui/zoom.ui:105
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomHighQuality)
+#: po/rc.cpp:407 rc.cpp:407
+msgid "High quality"
+msgstr ""
+
+#: po/rc.cpp:408 rc.cpp:408
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: po/rc.cpp:376 rc.cpp:376
+#: po/rc.cpp:409 rc.cpp:409
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 
-#: src/configdialog.cpp:59
+#: src/configdialog.cpp:66
 msgid "Record Plugins"
 msgstr ""
 
-#: src/configdialog.cpp:62
+#: src/configdialog.cpp:69
 msgid "Encode Plugins"
 msgstr ""
 
-#: src/configdialog.cpp:65
+#: src/configdialog.cpp:72
 msgid "Upload Plugins"
 msgstr ""
 
-#: src/configdialog.cpp:73 src/main.cpp:40 src/mainwindow.cpp:469
+#: src/configdialog.cpp:91 src/main.cpp:41 src/mainwindow.cpp:519
 msgid "RecordItNow"
 msgstr ""
 
-#: src/configdialog.cpp:74
+#: src/configdialog.cpp:92
 msgid "Plugins"
+msgstr ""
+
+#: src/configdialog.cpp:93
+msgid "Mouse"
+msgstr ""
+
+#: src/configdialog.cpp:94 src/mainwindow.cpp:283
+msgid "Zoom"
+msgstr ""
+
+#: src/configdialog.cpp:95
+msgid "Shortcuts"
 msgstr ""
 
 #: src/encodermanager.cpp:73
@@ -756,82 +834,90 @@ msgstr ""
 msgid "Add a new Account"
 msgstr ""
 
-#: src/main.cpp:42
+#: src/main.cpp:43
 msgid "Plugin based desktop recorder"
 msgstr ""
 
-#: src/main.cpp:44
+#: src/main.cpp:45
 msgid "(C) 2009 Kai Dombrowe"
 msgstr ""
 
-#: src/main.cpp:54
+#: src/main.cpp:55
 msgid "Offset in x direction."
 msgstr ""
 
-#: src/main.cpp:55
+#: src/main.cpp:56
 msgid "Offset in y direction."
 msgstr ""
 
-#: src/main.cpp:56
+#: src/main.cpp:57
 msgid "Width of recorded window."
 msgstr ""
 
-#: src/main.cpp:57
+#: src/main.cpp:58
 msgid "Height of recorded window."
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:59
 msgid "The Backend to use. (Example: RecordMyDesktop/Screenshot)"
 msgstr ""
 
-#: src/main.cpp:59
+#: src/main.cpp:60
 msgid "Wait \"time\" seconds."
 msgstr ""
 
-#: src/main.cpp:60
+#: src/main.cpp:61
 msgid "Name of recorded video/image."
 msgstr ""
 
-#: src/mainwindow.cpp:213
+#: src/mainwindow.cpp:232
 msgid "Record"
 msgstr ""
 
-#: src/mainwindow.cpp:220
+#: src/mainwindow.cpp:240
 msgid "Pause"
 msgstr ""
 
-#: src/mainwindow.cpp:227
+#: src/mainwindow.cpp:247
 msgid "Stop"
 msgstr ""
 
-#: src/mainwindow.cpp:235
+#: src/mainwindow.cpp:255
 msgid "Record a Window"
 msgstr ""
 
-#: src/mainwindow.cpp:248
+#: src/mainwindow.cpp:268
 msgid "Record the entire Screen"
 msgstr ""
 
-#: src/mainwindow.cpp:314
+#: src/mainwindow.cpp:290
+msgid "Zoom in"
+msgstr ""
+
+#: src/mainwindow.cpp:297
+msgid "Zoom out"
+msgstr ""
+
+#: src/mainwindow.cpp:364
 msgid "No screen area selected."
 msgstr ""
 
-#: src/mainwindow.cpp:583 src/mainwindow.cpp:598
+#: src/mainwindow.cpp:633 src/mainwindow.cpp:648
 msgid "Continue"
 msgstr ""
 
-#: src/mainwindow.cpp:671 src/mainwindow.cpp:691
+#: src/mainwindow.cpp:729 src/mainwindow.cpp:749
 msgid "Finished!"
 msgstr ""
 
-#: src/mainwindow.cpp:742 src/mainwindow.cpp:757
+#: src/mainwindow.cpp:800 src/mainwindow.cpp:815
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:74
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:72
 msgctxt "%1 = file"
 msgid "%1 no such file!"
 msgstr ""
 
-#: src/mainwindow.cpp:762 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
+#: src/mainwindow.cpp:820 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:186
 msgctxt "%1 = file, %2 = error string"
 msgid ""
@@ -983,39 +1069,39 @@ msgid ""
 "Reason: %2"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:75
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:76
 msgid "Cheese!"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:155
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:170
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "screenshot: Remove failed: %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:166
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:181
 msgctxt "%1 = error string"
 msgid "Cannot open output file: %1"
 msgstr ""
 
-#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:174
+#: src/plugins/recorder/screenshot/screenshotrecorder.cpp:189
 msgid "Cannot save image."
 msgstr ""
 
-#: src/plugins/upload/blip/blipuploader.cpp:125
-#: src/plugins/upload/youtube/youtubeuploader.cpp:138
-#: src/plugins/upload/youtube/youtubeuploader.cpp:228
+#: src/plugins/upload/blip/blipuploader.cpp:126
+#: src/plugins/upload/youtube/youtubeuploader.cpp:140
+#: src/plugins/upload/youtube/youtubeuploader.cpp:230
 msgid "Upload canceled."
 msgstr ""
 
-#: src/plugins/upload/blip/blipuploader.cpp:155
-#: src/plugins/upload/youtube/youtubeuploader.cpp:258
+#: src/plugins/upload/blip/blipuploader.cpp:156
+#: src/plugins/upload/youtube/youtubeuploader.cpp:260
 msgid "Uploading..."
 msgstr ""
 
-#: src/plugins/upload/blip/blipuploader.cpp:188
-#: src/plugins/upload/youtube/youtubeuploader.cpp:214
+#: src/plugins/upload/blip/blipuploader.cpp:189
+#: src/plugins/upload/youtube/youtubeuploader.cpp:216
 msgid "Finished: %1"
 msgstr ""
 
@@ -1290,7 +1376,7 @@ msgstr ""
 msgid "Travel & Evends"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:46
+#: src/plugins/upload/youtube/youtubeuploader.cpp:47
 msgid ""
 "By clicking 'Continue', you certify that you own all rights to the content "
 "or that you are authorized by the owner to make the content publicly "
@@ -1299,19 +1385,19 @@ msgid ""
 "youtube.com/t/terms</a>."
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:158
+#: src/plugins/upload/youtube/youtubeuploader.cpp:160
 msgid "Translation:"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:178
+#: src/plugins/upload/youtube/youtubeuploader.cpp:180
 msgid "authenticate..."
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:219
+#: src/plugins/upload/youtube/youtubeuploader.cpp:221
 msgid "Invalid response from YouTube!"
 msgstr ""
 
-#: src/plugins/upload/youtube/youtubeuploader.cpp:248
+#: src/plugins/upload/youtube/youtubeuploader.cpp:250
 msgid "Authentication finished..."
 msgstr ""
 
