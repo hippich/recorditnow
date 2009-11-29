@@ -8,7 +8,7 @@ WDIR=`pwd`          # working dir
 echo "Preparing rc files"
 cd ${BASEDIR}
 # we use simple sorting to make sure the lines do not jump around too much from system to system
-find . -name '*.rc' -o -name '*.ui' -o -name '*.kcfg' | sort > ${WDIR}/rcfiles.list
+find . -name '*.rc' -o -name '*.ui' -o -name '*.kcfg' -o -name '*.desktop.in' | sort > ${WDIR}/rcfiles.list
 xargs --arg-file=${WDIR}/rcfiles.list extractrc > ${WDIR}/rc.cpp
 # additional string for KAboutData
 echo 'i18nc("NAME OF TRANSLATORS","Your names");' >> ${WDIR}/rc.cpp
@@ -42,7 +42,7 @@ echo "Done merging translations"
  
 echo "Cleaning up"
 cd ${WDIR}
-rm rcfiles.list
-rm infiles.list
-rm rc.cpp
+#rm rcfiles.list
+#rm infiles.list
+#rm rc.cpp
 echo "Done"

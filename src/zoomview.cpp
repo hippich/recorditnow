@@ -125,7 +125,7 @@ void ZoomView::updateView()
     target.moveCenter(QCursor::pos());
 
 
-    const int screen = x11Info().screen();
+    const int screen = x11Info().appScreen();
     const QRect screenGeometry = QApplication::desktop()->screenGeometry(screen);
 
     target = screenGeometry.intersected(target);

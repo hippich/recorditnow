@@ -438,7 +438,7 @@ void MainWindow::recordFullScreen()
 
     initRecorder(&m_recordData);
 
-    const int screen = x11Info().screen();
+    const int screen = x11Info().appScreen();
     QWidget *desktop = kapp->desktop()->screen(screen);
 
     if (desktop) {
