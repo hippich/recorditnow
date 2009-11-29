@@ -130,7 +130,7 @@ void ZoomView::updateView()
 
     target = screenGeometry.intersected(target);
 
-    m_pixmap = QPixmap::grabWindow(x11Info().appRootWindow(),
+    m_pixmap = QPixmap::grabWindow(x11Info().appRootWindow(screen),
                                    target.x(),
                                    target.y(),
                                    target.width(),

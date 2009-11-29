@@ -437,7 +437,7 @@ void MainWindow::recordFullScreen()
 {
 
     initRecorder(&m_recordData);
-    m_recordData.geometry = QApplication::desktop()->screenGeometry();
+    m_recordData.winId = QApplication::desktop()->winId();
     startTimer();
 
 }
