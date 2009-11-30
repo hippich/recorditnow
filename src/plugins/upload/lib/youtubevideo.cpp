@@ -43,9 +43,9 @@ YouTubeVideo::YouTubeVideo(QObject *parent)
     m_categorys["Nonprofit"] = i18n("Nonprofit & Activism");
     m_categorys["People"] = i18n("People & Blogs");
     m_categorys["Animals"] = i18n("Pets & Animals");
-    m_categorys["Tech"] = i18n("Sience & Technology");
+    m_categorys["Tech"] = i18n("Science & Technology");
     m_categorys["Sports"] = i18n("Sports");
-    m_categorys["Travel"] = i18n("Travel & Evends");
+    m_categorys["Travel"] = i18n("Travel & Events");
 
 }
 
