@@ -84,7 +84,8 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     const int w = d.geometry.width();
     const int h = d.geometry.height();
 
-    const qlonglong window = d.winId != -1 ? d.winId : QX11Info::appRootWindow();
+    const int screen = QX11Info::appScreen();
+    const qlonglong window = d.winId != -1 ? d.winId : QX11Info::appRootWindow(screen);
 
     QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h); // screenshot
     QPainter painter(&cheese);
