@@ -163,18 +163,19 @@ void CursorWidget::updateGrab(const bool &grab)
 {
 
     QHashIterator<int, QColor> it(m_buttons);
+    const int screen = x11Info().appScreen();
     if (grab) {
         while (it.hasNext()) {
             it.next();
             XGrabButton(x11Info().display(),
                         it.key(),
                         AnyModifier,
-                        x11Info().appRootWindow(),
+                        x11Info().appRootWindow(screen),
                         True,
                         ButtonPressMask,
                         GrabModeSync,
                         GrabModeAsync,
-                        x11Info().appRootWindow(),
+                        x11Info().appRootWindow(screen),
                         None);
         }
 
@@ -184,7 +185,7 @@ void CursorWidget::updateGrab(const bool &grab)
             XUngrabButton(x11Info().display(),
                           it.key(),
                           AnyModifier,
-                          x11Info().appRootWindow());
+                          x11Info().appRootWindow(screen));
         }
     }
 
