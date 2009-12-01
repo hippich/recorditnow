@@ -36,6 +36,7 @@
 #include "application.h"
 #include "mouseconfig.h"
 #include "zoomview.h"
+#include "timeline.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -43,6 +44,7 @@
 #include <QtGui/QDesktopWidget>
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
+#include <QtGui/QStackedLayout>
 
 // KDE
 #include <kicon.h>
@@ -97,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_tray = 0;
     m_zoom = 0;
+    m_timeLine = 0;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -128,6 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_statusLabel, SIGNAL(linkActivated(QString)), this, SLOT(linkActivated(QString)));
     statusBar()->addPermanentWidget(m_statusLabel, 1);
 
+    setupTimeLine();
     setupTray();
     setupGUI();
 
@@ -317,6 +321,10 @@ void MainWindow::startRecord()
     }
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
+    if (m_timeLine) {
+        m_timeLine->start();
+    }
+
 }
 
 
@@ -337,6 +345,9 @@ void MainWindow::pauseRecord()
         }
         m_recorderManager->pauseOrContinue();
         m_encoderManager->pauseOrContinue();
+        if (m_timeLine) {
+            m_timeLine->pauseOrContinue();
+        }
     }
 
 }
@@ -725,6 +736,10 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 
     if (m_zoom) {
         triggerZoom();
+    }
+
+    if (m_timeLine) {
+        m_timeLine->stop();
     }
 
     if (!error.isEmpty()) {
@@ -1120,6 +1135,38 @@ void MainWindow::zoomOut()
     }
 
 }
+
+
+void MainWindow::setupTimeLine()
+{
+
+    if (Settings::showTimeLine()) {
+        if (!m_timeLine) {
+            m_timeLine = new TimeLine(this);
+            timeLineLayout->addWidget(m_timeLine);
+
+            connect(m_timeLine, SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
+        }
+    } else {
+        if (m_timeLine) {
+            timeLineLayout->removeWidget(m_timeLine);
+            delete m_timeLine;
+            m_timeLine = 0;
+        }
+    }
+
+}
+
+
+void MainWindow::timeLineFinsihed()
+{
+
+    if (Settings::timeLineStop() && state() == Recording) {
+        stopRecord();
+    }
+
+}
+
 
 
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))

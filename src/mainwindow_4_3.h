@@ -34,6 +34,7 @@
 #include <QtCore/QPointer>
 
 
+class TimeLine;
 class ZoomView;
 class CursorWidget;
 class KSqueezedTextLabel;
@@ -79,6 +80,7 @@ private:
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
     ZoomView *m_zoom;
+    TimeLine *m_timeLine;
 
     KAction *getAction(const QString &name);
 
@@ -125,6 +127,8 @@ private slots:
     void triggerZoom();
     void zoomIn();
     void zoomOut();
+    void setupTimeLine();
+    void timeLineFinsihed();
 
 
 protected:

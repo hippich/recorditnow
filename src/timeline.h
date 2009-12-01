@@ -45,7 +45,7 @@ public:
 public slots:
     void start();
     void stop();
-    void pause();
+    void pauseOrContinue();
 
 
 private:
@@ -67,7 +67,8 @@ private slots:
     void configure();
 
 
-protected:
+signals:
+    void finished();
 
 
 };

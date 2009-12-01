@@ -81,4 +81,12 @@
             <default>false</default>
     </entry>
   </group>
+ <group name="TimeLine">
+    <entry name="showTimeLine" type="Bool">
+            <default>false</default>
+    </entry>
+    <entry name="timeLineStop" type="Bool">
+            <default>true</default>
+    </entry>
+  </group>
 </kcfg>

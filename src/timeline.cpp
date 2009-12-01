@@ -72,6 +72,7 @@ void TimeLine::start()
     }
 
     setState(Running);
+    slider->setValue(0);
     m_timer->start(1000);
 
 }
@@ -89,7 +90,7 @@ void TimeLine::stop()
 }
 
 
-void TimeLine::pause()
+void TimeLine::pauseOrContinue()
 {
 
     if (state() == Paused) {
@@ -127,6 +128,7 @@ void TimeLine::updateTime()
 
     if (slider->value() == slider->maximum()) {
         stop();
+        emit finished();
     }
 
 }
