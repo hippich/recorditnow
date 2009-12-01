@@ -21,6 +21,9 @@
 #include "timeline.h"
 #include "timelinetopicsdialog.h"
 
+// KDE
+#include <kdebug.h>
+
 // Qt
 #include <QtCore/QTimer>
 
@@ -37,9 +40,11 @@ TimeLine::TimeLine(QWidget *parent)
     editButton->setIcon(KIcon("configure"));
     connect(editButton, SIGNAL(clicked()), this, SLOT(configure()));
 
+    slider->setMaximum(0);
+
     topicWidget->addTopic(QTime(0, 0, 10, 0), "Linux?", "tux");
     topicWidget->addTopic(QTime(0, 0, 10, 0), "Small Pause", "system-run");
-    topicWidget->addTopic(QTime(0, 0, 10, 0), "Why KDE SC?", "kde-start-here");
+    topicWidget->addTopic(QTime(0, 0, 10, 0), "KDE SC?", "kde-start-here");
     topicWidget->addTopic(QTime(0, 0, 10, 0), "Something about Amarok", "amarok");
 
     setState(Idle);
@@ -55,11 +60,27 @@ TimeLine::~TimeLine()
 }
 
 
-void TimeLine::setTime(const int &seconds)
+unsigned long TimeLine::duration() const
+{
+
+    return slider->maximum();
+
+}
+
+
+void TimeLine::setTime(const unsigned long &seconds)
 {
 
     slider->setMaximum(seconds);
     topicWidget->setTime(seconds);
+
+}
+
+
+void TimeLine::resetTime()
+{
+
+    slider->setMaximum(0);
 
 }
 
@@ -125,6 +146,10 @@ void TimeLine::updateTime()
 
     slider->setValue(slider->value()+1);
     topicWidget->setCurrentSecond(slider->value());
+
+    const QString total = KGlobal::locale()->formatDuration(slider->maximum()*1000);
+    const QString passed = KGlobal::locale()->formatDuration(slider->value()*1000);
+    timeLabel->setText(passed+"/"+total);
 
     if (slider->value() == slider->maximum()) {
         stop();

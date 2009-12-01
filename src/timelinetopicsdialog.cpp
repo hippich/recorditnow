@@ -20,7 +20,6 @@
 
 // own
 #include "timelinetopicsdialog.h"
-#include "timeline.h"
 #include "topicwidget.h"
 #include "topic.h"
 
@@ -34,8 +33,8 @@
 #include <QtGui/QTimeEdit>
 
 
-TimeLineTopicsDialog::TimeLineTopicsDialog(TimeLine *parent, TopicWidget *topicWidget)
-    : KDialog(parent), m_timeLine(parent), m_topicWidget(topicWidget)
+TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWidget)
+    : KDialog(parent), m_topicWidget(topicWidget)
 {
 
     setAttribute(Qt::WA_DeleteOnClose);
@@ -122,7 +121,6 @@ void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
 
     m_topicWidget->clear();
 
-    unsigned long duration = 0;
     for (int i = 0; i < treeWidget->invisibleRootItem()->childCount(); i++) {
         QTreeWidgetItem *item = treeWidget->invisibleRootItem()->child(i);
 
@@ -132,10 +130,8 @@ void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
 
         kDebug() << "icon:" << static_cast<KIconButton*>(treeWidget->itemWidget(item, 1))->icon();
 
-        Topic *topic = m_topicWidget->addTopic(dTime, title, icon);
-        duration += topic->durationToSeconds();
+        m_topicWidget->addTopic(dTime, title, icon);
     }
-    m_timeLine->setTime(duration);
 
 }
 

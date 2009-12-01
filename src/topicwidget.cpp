@@ -21,6 +21,7 @@
 // own
 #include "topicwidget.h"
 #include "topic.h"
+#include "timeline.h"
 
 // KDE
 #include <kdebug.h>
@@ -66,6 +67,11 @@ Topic *TopicWidget::addTopic(const QTime &duration, const QString title, const Q
 
     Topic *topic = new Topic(this, duration, title, icon);
     m_layout->addWidget(topic);
+
+    unsigned long total = static_cast<TimeLine*>(parent())->duration();
+    total += topic->durationToSeconds();
+    static_cast<TimeLine*>(parent())->setTime(total);
+
     return topic;
 
 }
@@ -121,8 +127,9 @@ void TopicWidget::clear()
     while (!m_layout->isEmpty()) {
         delete m_layout->takeAt(0);
     }
-    m_noTopic = new Topic(this, QTime(), i18n("No Topic"), "dialog-information");
+    m_noTopic = new Topic(this, QTime(0, 0, 10, 0), i18n("No Topic"), "dialog-information");
     m_layout->addWidget(m_noTopic);
+    static_cast<TimeLine*>(parent())->resetTime();
 
 }
 

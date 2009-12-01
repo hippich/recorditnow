@@ -29,7 +29,6 @@
 #include <kdialog.h>
 
 
-class TimeLine;
 class TopicWidget;
 class TimeLineTopicsDialog : public KDialog, public Ui::TimeLineTopics
 {
@@ -37,12 +36,11 @@ class TimeLineTopicsDialog : public KDialog, public Ui::TimeLineTopics
 
 
 public:
-    TimeLineTopicsDialog(TimeLine *parent, TopicWidget *topicWidget);
+    TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWidget);
     ~TimeLineTopicsDialog();
 
 
 private:
-    TimeLine *m_timeLine;
     TopicWidget *m_topicWidget;
 
 

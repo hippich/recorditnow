@@ -39,7 +39,10 @@ public:
     TimeLine(QWidget *parent = 0);
     ~TimeLine();
 
-    void setTime(const int &seconds);
+    unsigned long duration() const;
+
+    void setTime(const unsigned long &seconds);
+    void resetTime();
 
 
 public slots:
