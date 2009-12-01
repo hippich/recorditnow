@@ -19,7 +19,7 @@
 
 
 // own
-#include "timelineconfig.h"
+#include "timelinetopicsdialog.h"
 #include "timeline.h"
 #include "topicwidget.h"
 #include "topic.h"
@@ -34,7 +34,7 @@
 #include <QtGui/QTimeEdit>
 
 
-TimeLineConfig::TimeLineConfig(TimeLine *parent, TopicWidget *topicWidget)
+TimeLineTopicsDialog::TimeLineTopicsDialog(TimeLine *parent, TopicWidget *topicWidget)
     : KDialog(parent), m_timeLine(parent), m_topicWidget(topicWidget)
 {
 
@@ -74,14 +74,14 @@ TimeLineConfig::TimeLineConfig(TimeLine *parent, TopicWidget *topicWidget)
 }
 
 
-TimeLineConfig::~TimeLineConfig()
+TimeLineTopicsDialog::~TimeLineTopicsDialog()
 {
 
 
 }
 
 
-void TimeLineConfig::addTopic()
+void TimeLineTopicsDialog::addTopic()
 {
 
     QTreeWidgetItem *item = new QTreeWidgetItem;
@@ -102,7 +102,7 @@ void TimeLineConfig::addTopic()
 }
 
 
-void TimeLineConfig::removeTopic()
+void TimeLineTopicsDialog::removeTopic()
 {
 
     QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
@@ -113,7 +113,7 @@ void TimeLineConfig::removeTopic()
 }
 
 
-void TimeLineConfig::updateTopicWidget(const int &ret)
+void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
 {
 
     if (ret != KDialog::Accepted) {

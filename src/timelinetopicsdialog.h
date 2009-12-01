@@ -18,12 +18,12 @@
  ***************************************************************************/
 
 
-#ifndef TIMELINECONFIG_H
-#define TIMELINECONFIG_H
+#ifndef TIMELINETOPICSDIALOG_H
+#define TIMELINETOPICSDIALOG_H
 
 
 // own
-#include "ui_timelineconfig.h"
+#include "ui_timelinetopics.h"
 
 // KDE
 #include <kdialog.h>
@@ -31,14 +31,14 @@
 
 class TimeLine;
 class TopicWidget;
-class TimeLineConfig : public KDialog, public Ui::TimeLineConfig
+class TimeLineTopicsDialog : public KDialog, public Ui::TimeLineTopics
 {
     Q_OBJECT
 
 
 public:
-    TimeLineConfig(TimeLine *parent, TopicWidget *topicWidget);
-    ~TimeLineConfig();
+    TimeLineTopicsDialog(TimeLine *parent, TopicWidget *topicWidget);
+    ~TimeLineTopicsDialog();
 
 
 private:
@@ -55,4 +55,4 @@ private slots:
 };
 
 
-#endif // TIMELINECONFIG_H
+#endif // TIMELINETOPICSDIALOG_H

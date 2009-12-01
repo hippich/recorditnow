@@ -19,7 +19,7 @@
 
 // own
 #include "timeline.h"
-#include "timelineconfig.h"
+#include "timelinetopicsdialog.h"
 
 // Qt
 #include <QtCore/QTimer>
@@ -137,7 +137,7 @@ void TimeLine::updateTime()
 void TimeLine::configure()
 {
 
-    TimeLineConfig *dialog = new TimeLineConfig(this, topicWidget);
+    TimeLineTopicsDialog *dialog = new TimeLineTopicsDialog(this, topicWidget);
     dialog->show();
 
 }

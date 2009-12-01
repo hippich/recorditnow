@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TimeLineConfig</class>
- <widget class="QWidget" name="TimeLineConfig">
+ <class>TimeLineTopics</class>
+ <widget class="QWidget" name="TimeLineTopics">
   <property name="geometry">
    <rect>
     <x>0</x>
