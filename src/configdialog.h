@@ -25,6 +25,7 @@
 // own
 #include "ui_settings.h"
 #include "ui_zoom.h"
+#include "ui_timelineconfig.h"
 
 // KDE
 #include <kconfigdialog.h>
@@ -49,6 +50,7 @@ private:
     RecordItNowPluginManager *m_pluginManager;
     Ui::Settings ui_settings;
     Ui::Zoom ui_zoom;
+    Ui::TimeLineConfig ui_timeline;
     KPluginSelector *m_pluginSelector;
     MouseConfig *m_mousePage;
     KActionCollection *m_collection;

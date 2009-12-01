@@ -85,6 +85,9 @@ void ConfigDialog::init()
     QWidget *zoomPage = new QWidget(this);
     ui_zoom.setupUi(zoomPage);
 
+    QWidget *timelinePage = new QWidget(this);
+    ui_timeline.setupUi(timelinePage);
+
     m_shortcutsPage = new KShortcutsEditor(m_collection, this);
     connect(m_shortcutsPage, SIGNAL(keyChange()), this, SLOT(pageConfigChanged()));
 
@@ -92,6 +95,7 @@ void ConfigDialog::init()
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
     addPage(m_mousePage, i18n("Mouse"), "input-mouse");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
+    addPage(timelinePage, i18n("Timeline"), "xclock");
     addPage(m_shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));

@@ -790,6 +790,7 @@ void MainWindow::configure()
 void MainWindow::dialogFinished()
 {
 
+    setupTimeLine();
     setupTray();
     updateRecorderCombo();
     updateUploaderMenu();
