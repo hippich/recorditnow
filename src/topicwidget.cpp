@@ -95,6 +95,8 @@ QList<Topic*> TopicWidget::topics() const
 void TopicWidget::setCurrentSecond(const unsigned long &second)
 {
 
+    Topic *oldTopic = static_cast<Topic*>(m_layout->currentWidget());
+
     bool found = false;
     unsigned long duration = 0;
     for (int i = 1; i < m_layout->count(); i++) {
@@ -116,6 +118,9 @@ void TopicWidget::setCurrentSecond(const unsigned long &second)
     Topic *topic = static_cast<Topic*>(m_layout->currentWidget());
     if (topic) {
         topic->setCurrentSecond((duration-second));
+        if (!oldTopic || topic != oldTopic) {
+            emit topicChanged(topic);
+        }
     }
 
 }

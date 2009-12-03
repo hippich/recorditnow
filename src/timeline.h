@@ -29,6 +29,7 @@
 #include <QtGui/QWidget>
 
 
+class Topic;
 class KConfigGroup;
 class QTimer;
 class TimeLine : public QWidget, public Ui::TimeLine
@@ -46,6 +47,7 @@ public:
     void resetTime();
     void loadTopics(KConfigGroup *cfg);
     void saveTopics(KConfigGroup *cfg);
+    void enableNotifications(const bool &enable);
 
 
 public slots:
@@ -63,6 +65,7 @@ private:
 
     QTimer *m_timer;
     State m_state;
+    bool m_notifications;
 
     inline State state() const;
     void setState(const State &state);
@@ -71,6 +74,7 @@ private:
 private slots:
     void updateTime();
     void configure();
+    void topicChanged(Topic *topic);
 
 
 signals:

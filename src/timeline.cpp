@@ -24,6 +24,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <knotification.h>
 
 // Qt
 #include <QtCore/QTimer>
@@ -41,6 +42,9 @@ TimeLine::TimeLine(QWidget *parent)
     editButton->setIcon(KIcon("configure"));
     connect(editButton, SIGNAL(clicked()), this, SLOT(configure()));
 
+    connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
+
+    m_notifications = false;
     slider->setMaximum(0);
     setState(Idle);
 
@@ -117,6 +121,13 @@ void TimeLine::saveTopics(KConfigGroup *cfg)
 
 }
 
+
+void TimeLine::enableNotifications(const bool &enable)
+{
+
+    m_notifications = enable;
+
+}
 
 
 void TimeLine::start()
@@ -207,3 +218,19 @@ void TimeLine::configure()
     dialog->show();
 
 }
+
+
+void TimeLine::topicChanged(Topic *topic)
+{
+
+    if (!m_notifications) {
+        return;
+    }
+
+    KNotification::event(KNotification::Notification,
+                         i18n("New Topic: <i>%1</i>", topic->title()),
+                         KIcon(topic->icon()).pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium),
+                         this);
+
+}
+

@@ -1163,6 +1163,7 @@ void MainWindow::setupTimeLine()
             KConfigGroup cfg(Settings::self()->config(), "Timeline");
             m_timeLine->loadTopics(&cfg);
         }
+        m_timeLine->enableNotifications(Settings::timelineNotifications());
     } else {
         if (m_timelineDock) {
             KConfigGroup cfg(Settings::self()->config(), "Timeline");

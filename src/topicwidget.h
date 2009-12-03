@@ -55,6 +55,10 @@ private:
     Topic *m_noTopic;
 
 
+signals:
+    void topicChanged(Topic *newTopic);
+
+
 };
 
 
