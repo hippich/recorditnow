@@ -1151,6 +1151,7 @@ void MainWindow::setupTimeLine()
             m_timelineDock = new QDockWidget(i18n("Timeline"), this);
             m_timelineDock->setWidget(m_timeLine);
             m_timelineDock->setObjectName("TimelineDockWidget");
+            m_timelineDock->setAllowedAreas(Qt::AllDockWidgetAreas);
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
         }
     } else {
