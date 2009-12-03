@@ -186,8 +186,10 @@ void TimeLine::updateTime()
     slider->setValue(slider->value()+1);
     topicWidget->setCurrentSecond(slider->value());
 
-    const QString total = KGlobal::locale()->formatDuration(slider->maximum()*1000);
-    const QString passed = KGlobal::locale()->formatDuration(slider->value()*1000);
+    const QString total = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->maximum()),
+                                                        true, true);
+    const QString passed = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->value()),
+                                                         true, true);
     timeLabel->setText(passed+"/"+total);
 
     if (slider->value() == slider->maximum()) {
