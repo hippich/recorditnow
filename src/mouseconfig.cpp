@@ -21,6 +21,7 @@
 // own
 #include "mouseconfig.h"
 #include <recorditnow.h>
+#include "mousebutton.h"
 
 // KDE
 #include <kicon.h>
@@ -37,11 +38,18 @@ MouseConfig::MouseConfig(QWidget *parent)
     setupUi(this);
 
     addButton->setIcon(KIcon("list-add"));
-    removeButton->setIcon(KIcon("list-remove"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
-    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeClicked()));
-    connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
+
+    buttonCombo->addItem(MouseButton::getName(MouseButton::LeftButton));
+    buttonCombo->addItem(MouseButton::getName(MouseButton::RightButton));
+    buttonCombo->addItem(MouseButton::getName(MouseButton::MiddleButton));
+    buttonCombo->addItem(MouseButton::getName(MouseButton::WheelUp));
+    buttonCombo->addItem(MouseButton::getName(MouseButton::WheelDown));
+    buttonCombo->addItem(MouseButton::getName(MouseButton::SpecialButton1));
+    buttonCombo->addItem(MouseButton::getName(MouseButton::SpecialButton2));
+
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
 }
 
@@ -64,8 +72,8 @@ void MouseConfig::saveConfig()
     int buttons = 0;
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const int button = item->text(0).toInt();
-        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 1))->color();
+        const int button =  static_cast<MouseButton*>(treeWidget->itemWidget(item, 1))->getXButton();
+        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
 
         cfgGroup.writeEntry(QString("Button %1 key").arg(QString::number(buttons)), button);
         cfgGroup.writeEntry(QString("Button %1 color").arg(QString::number(buttons)), color);
@@ -91,8 +99,13 @@ void MouseConfig::loadConfig()
         item->setText(0, QString::number(it.key()));
         button->setColor(it.value());
 
+        MouseButton *mouseButton = newMouseButton();
+        mouseButton->setXButton(it.key());
+
         treeWidget->addTopLevelItem(item);
-        treeWidget->setItemWidget(item, 1, button);
+        treeWidget->setItemWidget(item, 0, newRemoveButton());
+        treeWidget->setItemWidget(item, 1, mouseButton);
+        treeWidget->setItemWidget(item, 2, button);
 
     }
 
@@ -107,6 +120,20 @@ void MouseConfig::defaults()
 {
 
     treeWidget->clear();
+
+    MouseButton *mouseButton1 = newMouseButton();
+    MouseButton *mouseButton3 = newMouseButton();
+    MouseButton *mouseButton4 = newMouseButton();
+    MouseButton *mouseButton5 = newMouseButton();
+    MouseButton *mouseButton8 = newMouseButton();
+    MouseButton *mouseButton9 = newMouseButton();
+
+    mouseButton1->setButton(MouseButton::LeftButton);
+    mouseButton3->setButton(MouseButton::RightButton);
+    mouseButton4->setButton(MouseButton::WheelUp);
+    mouseButton5->setButton(MouseButton::WheelDown);
+    mouseButton8->setButton(MouseButton::SpecialButton1);
+    mouseButton9->setButton(MouseButton::SpecialButton2);
 
     KColorButton *button1 = newButton();
     KColorButton *button3 = newButton();
@@ -138,25 +165,37 @@ void MouseConfig::defaults()
 
     // left click
     treeWidget->addTopLevelItem(item1);
-    treeWidget->setItemWidget(item1, 1, button1);
+    treeWidget->setItemWidget(item1, 0, newRemoveButton());
+    treeWidget->setItemWidget(item1, 1, mouseButton1);
+    treeWidget->setItemWidget(item1, 2, button1);
 
     // right click
     treeWidget->addTopLevelItem(item3);
-    treeWidget->setItemWidget(item3, 1, button3);
+    treeWidget->setItemWidget(item3, 0, newRemoveButton());
+    treeWidget->setItemWidget(item3, 1, mouseButton3);
+    treeWidget->setItemWidget(item3, 2, button3);
 
     // mouse wheel
     treeWidget->addTopLevelItem(item4);
-    treeWidget->setItemWidget(item4, 1, button4);
+    treeWidget->setItemWidget(item4, 0, newRemoveButton());
+    treeWidget->setItemWidget(item4, 1, mouseButton4);
+    treeWidget->setItemWidget(item4, 2, button4);
     treeWidget->addTopLevelItem(item5);
-    treeWidget->setItemWidget(item5, 1, button5);
+    treeWidget->setItemWidget(item5, 0, newRemoveButton());
+    treeWidget->setItemWidget(item5, 1, mouseButton5);
+    treeWidget->setItemWidget(item5, 2, button5);
 
     // special 1
     treeWidget->addTopLevelItem(item8);
-    treeWidget->setItemWidget(item8, 1, button8);
+    treeWidget->setItemWidget(item8, 0, newRemoveButton());
+    treeWidget->setItemWidget(item8, 1, mouseButton8);
+    treeWidget->setItemWidget(item8, 2, button8);
 
     // special 2
     treeWidget->addTopLevelItem(item9);
-    treeWidget->setItemWidget(item9, 1, button9);
+    treeWidget->setItemWidget(item9, 0, newRemoveButton());
+    treeWidget->setItemWidget(item9, 1, mouseButton9);
+    treeWidget->setItemWidget(item9, 2, button9);
 
 
     emit configChanged();
@@ -196,32 +235,55 @@ KColorButton *MouseConfig::newButton()
 }
 
 
+QToolButton *MouseConfig::newRemoveButton()
+{
+
+    QToolButton *remove = new QToolButton(this);
+    remove->setMaximumWidth(KIconLoader::SizeMedium);
+    remove->setIcon(KIcon("list-remove"));
+    connect(remove, SIGNAL(clicked()), this, SLOT(removeClicked()));
+    return remove;
+
+}
+
+
+MouseButton *MouseConfig::newMouseButton()
+{
+
+    MouseButton *button = new MouseButton(this);
+    connect(button, SIGNAL(buttonChanged()), this, SIGNAL(configChanged()));
+    connect(button, SIGNAL(sizeChanged()), this, SLOT(updateColumnSize()));
+    return button;
+
+}
+
+
 void MouseConfig::addClicked()
 {
 
-    if (addEdit->text().isEmpty()) { // text?
-        return;
-    }
-
-    bool ok;
-    addEdit->text().toInt(&ok);
-    if (!ok) { // int?
+    MouseButton::Button mButton = MouseButton::getButtonFromName(buttonCombo->currentText());
+    if (mButton == MouseButton::NoButton) {
         return;
     }
 
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) { // double?
-        if (treeWidget->topLevelItem(i)->text(0) == addEdit->text()) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        MouseButton *button = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
+        if (button->getMouseButton() == mButton) {
             return;
         }
     }
 
+    MouseButton *button = newMouseButton();
+    button->setButton(mButton);
+
     QTreeWidgetItem *item = new QTreeWidgetItem();
-    item->setText(0, addEdit->text());
 
     treeWidget->addTopLevelItem(item);
-    treeWidget->setItemWidget(item, 1, newButton());
+    treeWidget->setItemWidget(item, 0, newRemoveButton());
+    treeWidget->setItemWidget(item, 1, button);
+    treeWidget->setItemWidget(item, 2, newButton());
 
-    addEdit->clear();
     emit configChanged();
 
 }
@@ -230,27 +292,20 @@ void MouseConfig::addClicked()
 void MouseConfig::removeClicked()
 {
 
-    QList<QTreeWidgetItem*> childs = treeWidget->selectedItems();
-
-    if (childs.isEmpty()) {
-        return;
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        if (sender() == treeWidget->itemWidget(item, 0)) {
+            treeWidget->invisibleRootItem()->removeChild(item);
+        }
     }
-
-    QTreeWidgetItem *root = treeWidget->invisibleRootItem();
-    foreach (QTreeWidgetItem *child, childs) {
-        root->removeChild(child);
-    }
-
     emit configChanged();
 
 }
 
 
-void MouseConfig::itemSelectionChanged()
+void MouseConfig::updateColumnSize()
 {
 
-    removeButton->setDisabled(treeWidget->selectedItems().isEmpty());
+    treeWidget->header()->resizeSections(QHeaderView::ResizeToContents);
 
 }
-
-

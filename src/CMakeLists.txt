@@ -41,7 +41,8 @@ set(gui_SRCS
    timeline.cpp
    timelinetopicsdialog.cpp
    topicwidget.cpp
-   topic.cpp)
+   topic.cpp
+   mousebutton.cpp)
 
 
 # GUI

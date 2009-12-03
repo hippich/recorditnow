@@ -17,53 +17,64 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSECONFIG_H
-#define MOUSECONFIG_H
+#ifndef MOUSEBUTTON_H
+#define MOUSEBUTTON_H
 
 
-// own
-#include "ui_mouse.h"
-
-// Qt
-#include <QtGui/QWidget>
+// KDE
+#include <kpushbutton.h>
 
 
-class MouseButton;
-class KColorButton;
-class MouseConfig : public QWidget, public Ui::Mouse
+class MouseButton : public KPushButton
 {
     Q_OBJECT
 
 
 public:
-    MouseConfig(QWidget *parent = 0);
-    ~MouseConfig();
+    enum Button {
+        NoButton = -1,
+        LeftButton = 0,
+        RightButton = 1,
+        MiddleButton = 2,
+        SpecialButton1 = 3,
+        SpecialButton2 = 4,
+        WheelUp = 5,
+        WheelDown = 6
+    };
 
-    void saveConfig();
-    void loadConfig();
-    void defaults();
+    MouseButton(QWidget *parent = 0);
+    ~MouseButton();
 
+    int getXButton() const;
+    MouseButton::Button getMouseButton() const;
+    static QString getName(const MouseButton::Button &button);
+    static MouseButton::Button getButtonFromName(const QString &name);
 
-    static QHash<int, QColor> getButtons();
+    void setXButton(const int &button);
+    void setButton(const Button &button);
 
 
 private:
-    KColorButton *newButton();
-    QToolButton *newRemoveButton();
-    MouseButton *newMouseButton();
+    Button m_button;
 
 
 private slots:
-    void addClicked();
-    void removeClicked();
-    void updateColumnSize();
+    void getButton();
+
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 
 signals:
-    void configChanged();
+    void buttonChanged();
+    void sizeChanged();
 
 
 };
 
 
-#endif // MOUSECONFIG_H
+#endif // MOUSEBUTTON_H
