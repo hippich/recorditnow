@@ -137,6 +137,11 @@ void TimeLine::setState(const State &state)
 {
 
     m_state = state;
+    switch (m_state) {
+    case Idle: editButton->setEnabled(true); break;
+    case Running: editButton->setEnabled(false); break;
+    default: break;
+    }
 
 }
 
