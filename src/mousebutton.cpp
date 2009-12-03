@@ -157,8 +157,15 @@ void MouseButton::setButton(const Button &button)
 
     setText(getName(button));
 
+}
+
+
+void MouseButton::setText(const QString &text)
+{
+
+    KPushButton::setText(text);
     QFontMetrics fm(font());
-    int width = fm.width(text());
+    int width = fm.width(text);
     width += fm.height()*3;
     setMinimumWidth(width);
 
@@ -177,6 +184,7 @@ void MouseButton::mousePressEvent(QMouseEvent *event)
 {
 
     if (!mouseGrabber()) {
+        setText(i18n("Press a mouse button..."));
         KPushButton::mousePressEvent(event);
     }
 

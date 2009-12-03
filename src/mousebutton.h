@@ -57,6 +57,8 @@ public:
 private:
     Button m_button;
 
+    void setText(const QString &text);
+
 
 private slots:
     void getButton();
