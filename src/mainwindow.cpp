@@ -326,7 +326,7 @@ void MainWindow::startRecord()
     }
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
-    if (m_timeLine) {
+    if (m_timeLine && m_recorderManager->hasFeature("TimelineEnabled", backendCombo->currentText())) {
         m_timeLine->start();
     }
 

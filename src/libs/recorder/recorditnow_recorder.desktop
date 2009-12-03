@@ -22,3 +22,7 @@ Type=QString
 
 [PropertyDef::X-RecordItNow-ConfigGroup]
 Type=QString
+
+[PropertyDef::X-RecordItNow-TimelineEnabled]
+Type=bool
+
