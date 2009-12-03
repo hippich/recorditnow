@@ -33,6 +33,7 @@
 #include <QtCore/QPointer>
 
 
+class QDockWidget;
 class TimeLine;
 class ZoomView;
 class CursorWidget;
@@ -80,6 +81,7 @@ private:
     QPointer<CursorWidget> m_cursor;
     ZoomView *m_zoom;
     TimeLine *m_timeLine;
+    QDockWidget *m_timelineDock;
 
     KAction *getAction(const QString &name);
 

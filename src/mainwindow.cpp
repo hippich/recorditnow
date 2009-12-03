@@ -45,6 +45,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
 #include <QtGui/QStackedLayout>
+#include <QtGui/QDockWidget>
 
 // KDE
 #include <kicon.h>
@@ -100,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_tray = 0;
     m_zoom = 0;
     m_timeLine = 0;
+    m_timelineDock = 0;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -1142,16 +1144,20 @@ void MainWindow::setupTimeLine()
 {
 
     if (Settings::showTimeLine()) {
-        if (!m_timeLine) {
+        if (!m_timelineDock) {
             m_timeLine = new TimeLine(this);
-            timeLineLayout->addWidget(m_timeLine);
-
             connect(m_timeLine, SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
+
+            m_timelineDock = new QDockWidget(i18n("Timeline"), this);
+            m_timelineDock->setWidget(m_timeLine);
+            m_timelineDock->setObjectName("TimelineDockWidget");
+            addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
         }
     } else {
-        if (m_timeLine) {
-            timeLineLayout->removeWidget(m_timeLine);
-            delete m_timeLine;
+        if (m_timelineDock) {
+            removeDockWidget(m_timelineDock);
+            delete m_timelineDock;
+            m_timelineDock = 0;
             m_timeLine = 0;
         }
     }
