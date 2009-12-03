@@ -153,6 +153,8 @@ void TimeLine::stop()
     setState(Idle);
     m_timer->stop();
 
+    QTimer::singleShot(100, this, SLOT(resetSlider()));
+
 }
 
 
@@ -231,6 +233,18 @@ void TimeLine::topicChanged(Topic *topic)
                          i18n("New Topic: <i>%1</i>", topic->title()),
                          KIcon(topic->icon()).pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium),
                          this);
+
+}
+
+
+void TimeLine::resetSlider()
+{
+
+    slider->setValue(0);
+    topicWidget->setCurrentSecond(-1);
+    const QString total = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
+    const QString passed = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
+    timeLabel->setText(passed+"/"+total);
 
 }
 

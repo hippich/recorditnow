@@ -75,6 +75,7 @@ private slots:
     void updateTime();
     void configure();
     void topicChanged(Topic *topic);
+    void resetSlider();
 
 
 signals:

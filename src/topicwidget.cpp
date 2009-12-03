@@ -95,6 +95,12 @@ QList<Topic*> TopicWidget::topics() const
 void TopicWidget::setCurrentSecond(const unsigned long &second)
 {
 
+    if (second == -1) {
+        m_layout->setCurrentWidget(m_noTopic);
+        return;
+    }
+
+
     Topic *oldTopic = static_cast<Topic*>(m_layout->currentWidget());
 
     bool found = false;
