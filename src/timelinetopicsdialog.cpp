@@ -51,6 +51,8 @@ TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWi
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removeTopic()));
     connect(this, SIGNAL(finished(int)), this, SLOT(updateTopicWidget(int)));
 
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
+
     // load
     QList<Topic*> topics = m_topicWidget->topics();
     for (int i = 0; i < topics.size(); i++) {
@@ -91,7 +93,10 @@ void TimeLineTopicsDialog::addTopic()
     QTimeEdit *begin = new QTimeEdit(this);
 
     begin->setDisplayFormat("hh:mm:ss");
-    button->setButtonIconSize(QFontMetrics(font()).height());
+    button->setMaximumSize(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
+    button->setMinimumSize(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
+    button->setIconSize(KIconLoader::SizeSmall);
+
     button->setIcon("dialog-information");
 
     treeWidget->invisibleRootItem()->addChild(item);
