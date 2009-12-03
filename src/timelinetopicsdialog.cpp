@@ -133,8 +133,6 @@ void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
         QString icon = static_cast<KIconButton*>(treeWidget->itemWidget(item, 1))->icon();
         QTime dTime = static_cast<QTimeEdit*>(treeWidget->itemWidget(item, 2))->time();
 
-        kDebug() << "icon:" << static_cast<KIconButton*>(treeWidget->itemWidget(item, 1))->icon();
-
         m_topicWidget->addTopic(dTime, title, icon);
     }
 

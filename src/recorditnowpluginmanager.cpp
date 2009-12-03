@@ -181,8 +181,6 @@ void RecordItNowPluginManager::loadPluginList()
 
     clear();
 
-    kDebug() << "load plugin list..";
-
     loadInfos("RecordItNowRecorder");
     if (m_plugins.isEmpty()) {
         printf("*********************************\n");
@@ -192,7 +190,6 @@ void RecordItNowPluginManager::loadPluginList()
     loadInfos("RecordItNowEncoder");
     loadInfos("RecordItNowUploader");
 
-    kDebug() << "plugins found:" << m_plugins.size();
     emit pluginsChanged();
 
 }
@@ -201,7 +198,6 @@ void RecordItNowPluginManager::loadPluginList()
 void RecordItNowPluginManager::loadInfos(const QString &type)
 {
 
-    kDebug() << "load infos:" << type;
     KConfig cfg("recorditnowrc");
     KConfigGroup pCfg(&cfg, "Plugins");
 
@@ -216,13 +212,11 @@ void RecordItNowPluginManager::loadInfos(const QString &type)
             kWarning() << "invalid plugin info:" << service->entryPath();
             continue;
         } else {
-            kDebug() << "found:" << info.name();
             info.setConfig(pCfg);
             info.load(pCfg);
             m_plugins[info] = 0;
         }
     }
-    kDebug() << "finished:" << type;
 
 }
 
