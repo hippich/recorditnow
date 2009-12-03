@@ -624,6 +624,12 @@ void MainWindow::setState(const State &newState)
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             centralWidget()->setEnabled(true);
             timerLcd->display(m_timer->property("Time").toInt());
+            if (Settings::stayOnTop()) {
+                const QPoint p = pos();
+                setWindowFlags(windowFlags()&~Qt::WindowStaysOnTopHint);
+                show(); // necessary to apply window flags
+                move(p);
+            }
             break;
         }
     case Timer: {
@@ -653,6 +659,13 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
             timerLcd->display(0);
+            if (Settings::stayOnTop()) {
+                getAction("box")->setChecked(false);
+                const QPoint p = pos();
+                setWindowFlags(windowFlags()|Qt::WindowStaysOnTopHint);
+                show(); // necessary to apply window flags
+                move(p);
+            }
             break;
         }
     case TimerPaused: {
