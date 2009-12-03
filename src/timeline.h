@@ -29,6 +29,7 @@
 #include <QtGui/QWidget>
 
 
+class KConfigGroup;
 class QTimer;
 class TimeLine : public QWidget, public Ui::TimeLine
 {
@@ -43,6 +44,8 @@ public:
 
     void setTime(const unsigned long &seconds);
     void resetTime();
+    void loadTopics(KConfigGroup *cfg);
+    void saveTopics(KConfigGroup *cfg);
 
 
 public slots:

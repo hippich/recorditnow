@@ -162,6 +162,9 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentTime(timerLcd->value());
     Settings::self()->writeConfig();
 
+    KConfigGroup cfg(Settings::self()->config(), "Timeline");
+    m_timeLine->saveTopics(&cfg);
+
     if (m_grabber) {
         delete m_grabber;
     }
@@ -1153,9 +1156,15 @@ void MainWindow::setupTimeLine()
             m_timelineDock->setObjectName("TimelineDockWidget");
             m_timelineDock->setAllowedAreas(Qt::AllDockWidgetAreas);
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+
+            KConfigGroup cfg(Settings::self()->config(), "Timeline");
+            m_timeLine->loadTopics(&cfg);
         }
     } else {
         if (m_timelineDock) {
+            KConfigGroup cfg(Settings::self()->config(), "Timeline");
+            m_timeLine->saveTopics(&cfg);
+
             removeDockWidget(m_timelineDock);
             delete m_timelineDock;
             m_timelineDock = 0;

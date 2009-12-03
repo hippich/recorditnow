@@ -117,6 +117,29 @@ unsigned long Topic::durationToSeconds() const
 }
 
 
+QTime Topic::secondsToTime(const unsigned long seconds)
+{
+
+    unsigned long secs = seconds;
+
+    int hours(0), minutes(0);
+    int hour(3600), minute(60);
+
+    while (secs >= hour) {
+        hours++;
+        secs -= hour;
+    }
+
+    while (secs >= minute) {
+        minutes++;
+        secs -= minute;
+    }
+
+    return QTime(hours, minutes, secs, 0);
+
+}
+
+
 void Topic::setCurrentSecond(const unsigned long &second)
 {
 

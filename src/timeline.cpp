@@ -20,6 +20,7 @@
 // own
 #include "timeline.h"
 #include "timelinetopicsdialog.h"
+#include "topic.h"
 
 // KDE
 #include <kdebug.h>
@@ -41,12 +42,6 @@ TimeLine::TimeLine(QWidget *parent)
     connect(editButton, SIGNAL(clicked()), this, SLOT(configure()));
 
     slider->setMaximum(0);
-
-    topicWidget->addTopic(QTime(0, 0, 10, 0), "Linux?", "tux");
-    topicWidget->addTopic(QTime(0, 0, 10, 0), "Small Pause", "system-run");
-    topicWidget->addTopic(QTime(0, 0, 10, 0), "KDE SC?", "kde-start-here");
-    topicWidget->addTopic(QTime(0, 0, 10, 0), "Something about Amarok", "amarok");
-
     setState(Idle);
 
 }
@@ -83,6 +78,45 @@ void TimeLine::resetTime()
     slider->setMaximum(0);
 
 }
+
+
+void TimeLine::loadTopics(KConfigGroup *cfg)
+{
+
+    topicWidget->clear();
+    const int count = cfg->readEntry("Topics", 0);
+    for (int i = 0; i < count; i++) {
+        const QString title = cfg->readEntry(QString("Topic %1 Title").arg(i), i18n("Untitled"));
+        const QString icon = cfg->readEntry(QString("Topic %1 Icon").arg(i), "dialog-information");
+        const unsigned long duration = cfg->readEntry(QString("Topic %1 Duration").arg(i), 10);
+
+        topicWidget->addTopic(Topic::secondsToTime(duration), title, icon);
+    }
+
+    if (count == 0) {
+        topicWidget->addTopic(Topic::secondsToTime(30), "Linux!", "tux");
+        topicWidget->addTopic(Topic::secondsToTime(10), "RecordItNow", "system-run");
+        topicWidget->addTopic(Topic::secondsToTime(50), "KDE SC", "kde-start-here");
+        topicWidget->addTopic(Topic::secondsToTime(111), "Something about Amarok", "amarok");
+    }
+
+}
+
+
+void TimeLine::saveTopics(KConfigGroup *cfg)
+{
+
+    int count = 0;
+    foreach (Topic *topic, topicWidget->topics()) {
+        cfg->writeEntry(QString("Topic %1 Title").arg(count), topic->title());
+        cfg->writeEntry(QString("Topic %1 Icon").arg(count), topic->icon());
+        cfg->writeEntry(QString("Topic %1 Duration").arg(count), (int)topic->durationToSeconds());
+        count++;
+    }
+    cfg->writeEntry("Topics", count);
+
+}
+
 
 
 void TimeLine::start()

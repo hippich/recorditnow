@@ -45,6 +45,7 @@ public:
     QString title() const;
     QTime duration() const;
     unsigned long durationToSeconds() const;
+    static QTime secondsToTime(const unsigned long seconds);
 
     void setCurrentSecond(const unsigned long &second);
     void setIcon(const QString &icon);
