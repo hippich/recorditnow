@@ -368,6 +368,9 @@ void MainWindow::stopRecord()
         m_recorderManager->stop();
         m_encoderManager->stop();
         m_uploadManager->stop();
+        if (m_timeLine) {
+            m_timeLine->stop();
+        }
     }
 
 }
