@@ -25,9 +25,11 @@
 #include <QtGui/QTreeWidgetItem>
 
 
+class QTimeEdit;
 class Topic;
-class TopicTreeItem : public QTreeWidgetItem
+class TopicTreeItem : public QObject, public QTreeWidgetItem
 {
+    Q_OBJECT
 
 
 public:
@@ -36,12 +38,17 @@ public:
     ~TopicTreeItem();
 
     Topic *topic() const;
+    unsigned long duration();
     void setTopic(Topic *topic);
 
 
 private:
     QTreeWidget *m_parent;
     Topic *m_topic;
+
+
+signals:
+    void durationChanged();
 
 
 };

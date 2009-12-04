@@ -83,7 +83,8 @@ TimeLineTopicsDialog::~TimeLineTopicsDialog()
 void TimeLineTopicsDialog::addTopic()
 {
 
-    new TopicTreeItem(treeWidget);
+    TopicTreeItem *item = new TopicTreeItem(treeWidget);
+    connect(item, SIGNAL(durationChanged()), this, SLOT(updateTotalDuration()));
 
 }
 
@@ -95,6 +96,7 @@ void TimeLineTopicsDialog::removeTopic()
     foreach (QTreeWidgetItem *child, items) {
         treeWidget->invisibleRootItem()->removeChild(child);
     }
+    updateTotalDuration();
 
 }
 
@@ -137,6 +139,8 @@ void TimeLineTopicsDialog::upClicked()
     }
 
     TopicTreeItem *copy = new TopicTreeItem(treeWidget, item, index);
+    connect(copy, SIGNAL(durationChanged()), this, SLOT(updateTotalDuration()));
+
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
 
@@ -159,6 +163,8 @@ void TimeLineTopicsDialog::downClicked()
     }
 
     TopicTreeItem *copy = new TopicTreeItem(treeWidget, item, index);
+    connect(copy, SIGNAL(durationChanged()), this, SLOT(updateTotalDuration()));
+
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
 
@@ -180,5 +186,19 @@ void TimeLineTopicsDialog::itemSelectionChanged()
     }
 
 }
+
+
+void TimeLineTopicsDialog::updateTotalDuration()
+{
+
+    unsigned long duration = 0;
+    for (int i = 0; i < treeWidget->invisibleRootItem()->childCount(); i++) {
+        TopicTreeItem *item = static_cast<TopicTreeItem*>(treeWidget->invisibleRootItem()->child(i));
+        duration += item->duration();
+    }
+    totalDurationEdit->setTime(Topic::secondsToTime(duration));
+
+}
+
 
 

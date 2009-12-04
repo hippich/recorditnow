@@ -51,6 +51,7 @@ private slots:
     void upClicked();
     void downClicked();
     void itemSelectionChanged();
+    void updateTotalDuration();
 
 
 };

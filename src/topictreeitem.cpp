@@ -39,6 +39,7 @@ TopicTreeItem::TopicTreeItem(QTreeWidget *parent)
 
     KIconButton *button = new KIconButton;
     QTimeEdit *duration = new QTimeEdit;
+    connect(duration, SIGNAL(timeChanged(QTime)), this, SIGNAL(durationChanged()));
 
     duration->setDisplayFormat("hh:mm:ss");
 
@@ -63,6 +64,7 @@ TopicTreeItem::TopicTreeItem(QTreeWidget *parent, TopicTreeItem *other, const in
 
     KIconButton *button = new KIconButton;
     QTimeEdit *duration = new QTimeEdit;
+    connect(duration, SIGNAL(timeChanged(QTime)), this, SIGNAL(durationChanged()));
 
     duration->setDisplayFormat("hh:mm:ss");
 
@@ -93,6 +95,18 @@ Topic *TopicTreeItem::topic() const
 {
 
     return m_topic;
+
+}
+
+
+unsigned long TopicTreeItem::duration()
+{
+
+    QTime time = static_cast<QTimeEdit*>(m_parent->itemWidget(this, 2))->time();
+    unsigned long duration = time.second();
+    duration += time.minute()*60;
+    duration += (time.hour()*60)*60;
+    return duration;
 
 }
 
