@@ -1173,6 +1173,7 @@ void MainWindow::setupTimeLine()
             m_timelineDock->setWidget(m_timeLine);
             m_timelineDock->setObjectName("TimelineDockWidget");
             m_timelineDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+            m_timelineDock->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
 
             KConfigGroup cfg(Settings::self()->config(), "Timeline");
