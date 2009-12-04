@@ -17,33 +17,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDMYDESKTOPCONFIG_H
-#define RECORDMYDESKTOPCONFIG_H
+#ifndef SOUNDCARDDIALOG_H
+#define SOUNDCARDDIALOG_H
 
 
 // own
-#include "ui_recordmydesktop.h"
+#include "ui_soundcarddialog.h"
 
 // KDE
-#include <kcmodule.h>
+#include <kdialog.h>
 
 
-class RecordMyDesktopConfig : public KCModule, public Ui::RecordMyDesktop
+class SoundCardDialog : public KDialog, public Ui::SoundCardDialog
 {
     Q_OBJECT
 
 
 public:
-    RecordMyDesktopConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
-    ~RecordMyDesktopConfig();
+    SoundCardDialog(QWidget *parent = 0);
+    ~SoundCardDialog();
 
 
 private slots:
-    void showDeviceDialog();
-    void deviceDialogFinished(const QString &id);
+    void dialogFinished(const int &ret);
+
+
+signals:
+    void cardSelected(const QString &id);
 
 
 };
 
 
-#endif // RECORDMYDESKTOPCONFIG_H
+#endif // SOUNDCARDDIALOG_H

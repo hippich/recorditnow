@@ -74,28 +74,39 @@
          <property name="fieldGrowthPolicy">
           <enum>QFormLayout::ExpandingFieldsGrow</enum>
          </property>
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_5">
            <property name="text">
             <string>Device</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="KLineEdit" name="kcfg___device">
-           <property name="text">
-            <string notr="true">hw:0,0</string>
-           </property>
-          </widget>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="KLineEdit" name="kcfg___device">
+             <property name="text">
+              <string notr="true">hw:0,0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="deviceButton">
+             <property name="text">
+              <string notr="true"/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
             <string>Channels</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="KIntNumInput" name="kcfg___channels">
            <property name="value">
             <number>-1</number>
@@ -108,14 +119,14 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>Frequency</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="KIntNumInput" name="kcfg___freq">
            <property name="value">
             <number>-1</number>
@@ -128,14 +139,14 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
             <string>Buffer size (only ALSA or OSS)</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="KIntNumInput" name="kcfg___buffer_size">
            <property name="value">
             <number>-1</number>
@@ -148,14 +159,14 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
             <string>Ring Buffer size (JACK only)</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="5" column="1">
           <widget class="KIntNumInput" name="kcfg___ring_buffer_size">
            <property name="value">
             <number>-1</number>
@@ -168,14 +179,14 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>JACK Ports</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="6" column="1">
           <widget class="KLineEdit" name="kcfg___use_jack"/>
          </item>
         </layout>

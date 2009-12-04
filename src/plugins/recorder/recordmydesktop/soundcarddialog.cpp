@@ -17,33 +17,62 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDMYDESKTOPCONFIG_H
-#define RECORDMYDESKTOPCONFIG_H
-
 
 // own
-#include "ui_recordmydesktop.h"
+#include "soundcarddialog.h"
+#include "soundcard.h"
 
 // KDE
-#include <kcmodule.h>
+#include <kicon.h>
+#include <klocalizedstring.h>
+
+// Qt
+#include <QtGui/QTreeWidgetItem>
 
 
-class RecordMyDesktopConfig : public KCModule, public Ui::RecordMyDesktop
+SoundCardDialog::SoundCardDialog(QWidget *parent)
+    : KDialog(parent)
 {
-    Q_OBJECT
+
+    setWindowTitle(i18n("Soundcards"));
+    setAttribute(Qt::WA_DeleteOnClose);
+    QWidget *widget = new QWidget(this);
+    setupUi(widget);
+    setMainWidget(widget);
+
+    foreach (const SoundCard &card, SoundCard::cards()) {
+        QTreeWidgetItem *item = new QTreeWidgetItem;
+        item->setText(0, card.name());
+        item->setIcon(0, KIcon(card.icon()));
+        item->setText(1, card.key());
+
+        treeWidget->addTopLevelItem(item);
+    }
+    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+
+    resize(600, 300);
+
+}
 
 
-public:
-    RecordMyDesktopConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
-    ~RecordMyDesktopConfig();
+
+SoundCardDialog::~SoundCardDialog()
+{
 
 
-private slots:
-    void showDeviceDialog();
-    void deviceDialogFinished(const QString &id);
 
 
-};
+}
 
 
-#endif // RECORDMYDESKTOPCONFIG_H
+void SoundCardDialog::dialogFinished(const int &ret)
+{
+
+    if (ret == KDialog::Accepted) {
+        QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
+        if (!items.isEmpty()) {
+            emit cardSelected(items[0]->text(1));
+        }
+    }
+
+}

@@ -17,33 +17,87 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDMYDESKTOPCONFIG_H
-#define RECORDMYDESKTOPCONFIG_H
-
 
 // own
-#include "ui_recordmydesktop.h"
+#include "soundcard.h"
 
 // KDE
-#include <kcmodule.h>
+#include <kdebug.h>
+
+// Qt
+#include <QtCore/QStringList>
+
+// Phonon
+#include <phonon/backendcapabilities.h>
 
 
-class RecordMyDesktopConfig : public KCModule, public Ui::RecordMyDesktop
+using namespace Phonon;
+SoundCard::SoundCard()
 {
-    Q_OBJECT
 
 
-public:
-    RecordMyDesktopConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
-    ~RecordMyDesktopConfig();
+
+}
 
 
-private slots:
-    void showDeviceDialog();
-    void deviceDialogFinished(const QString &id);
+QList<SoundCard> SoundCard::cards()
+{
+
+    QList<SoundCard> cards;
+    foreach (const AudioOutputDevice &dev, BackendCapabilities::availableAudioOutputDevices()) {
+        QStringList deviceIds = dev.property("deviceIds").toStringList();
+        if (deviceIds.isEmpty()) {
+            continue;
+        }
+        QString key = "hw:";
+        QString id = deviceIds.first();
+
+        const QRegExp cardRX("CARD=.*");
+        cardRX.indexIn(id);
+        if (cardRX.cap().isEmpty()) {
+            continue;
+        }
+        key += cardRX.cap().remove(QRegExp(",.*")).remove("CARD=");
+
+        key += ',';
+
+        const QRegExp devRX("DEV=.*");
+        devRX.indexIn(id);
+        if (devRX.cap().isEmpty()) {
+            continue;
+        }
+        key += devRX.cap().remove(QRegExp(",.*")).remove("DEV=");
+
+        SoundCard card;
+        card.m_key = key;
+        card.m_icon = dev.property("icon").toString();
+        card.m_name = dev.property("name").toString();
+        cards.append(card);
+    }
+    return cards;
+
+}
 
 
-};
+QString SoundCard::name() const
+{
+
+    return m_name;
+
+}
 
 
-#endif // RECORDMYDESKTOPCONFIG_H
+QString SoundCard::key() const
+{
+
+    return m_key;
+
+}
+
+
+QString SoundCard::icon() const
+{
+
+    return m_icon;
+
+}

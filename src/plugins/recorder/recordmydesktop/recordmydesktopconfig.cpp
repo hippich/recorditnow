@@ -21,6 +21,7 @@
 // own
 #include "recordmydesktopconfig.h"
 #include <recorditnow_recordmydesktop.h>
+#include "soundcarddialog.h"
 
 // KDE
 #include <kpluginfactory.h>
@@ -33,7 +34,10 @@ RecordMyDesktopConfig::RecordMyDesktopConfig(QWidget *parent, const QVariantList
     : KCModule(ConfigFactory::componentData(), parent, args)
 {
 
-    ui_cfg.setupUi(this);
+    setupUi(this);
+    deviceButton->setIcon(KIcon("audio-card"));
+    connect(deviceButton, SIGNAL(clicked()), this, SLOT(showDeviceDialog()));
+
     addConfig(Settings::self(), this);
 
 }
@@ -46,3 +50,22 @@ RecordMyDesktopConfig::~RecordMyDesktopConfig()
 }
 
 
+void RecordMyDesktopConfig::showDeviceDialog()
+{
+
+    SoundCardDialog *dialog = new SoundCardDialog(this);
+    connect(dialog, SIGNAL(cardSelected(QString)), this, SLOT(deviceDialogFinished(QString)));
+    dialog->show();
+
+}
+
+
+void RecordMyDesktopConfig::deviceDialogFinished(const QString &id)
+{
+
+    kDebug() << "card:" << id;
+    if (!id.isEmpty()) {
+        kcfg___device->setText(id);
+    }
+
+}
