@@ -46,6 +46,7 @@ TimeLine::TimeLine(QWidget *parent)
 
     m_notifications = false;
     slider->setMaximum(0);
+    resetSlider();
     setState(Idle);
 
 }
@@ -103,6 +104,7 @@ void TimeLine::loadTopics(KConfigGroup *cfg)
         topicWidget->addTopic(Topic::secondsToTime(50), "KDE SC", "kde-start-here");
         topicWidget->addTopic(Topic::secondsToTime(111), "Something about Amarok", "amarok");
     }
+    resetSlider();
 
 }
 
@@ -242,7 +244,8 @@ void TimeLine::resetSlider()
 
     slider->setValue(0);
     topicWidget->setCurrentSecond(-1);
-    const QString total = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
+    const QString total = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->maximum()),
+                                                        true, true);
     const QString passed = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
     timeLabel->setText(passed+"/"+total);
 
