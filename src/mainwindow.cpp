@@ -633,7 +633,7 @@ void MainWindow::setState(const State &newState)
             break;
         }
     case Timer: {
-            setTrayOverlay("player-time");
+            setTrayOverlay("recorditnow-timeline");
             getAction("pause")->setIcon(KIcon("media-playback-pause"));
             getAction("record")->setEnabled(false);
             getAction("pause")->setEnabled(true);

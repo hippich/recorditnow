@@ -39,7 +39,7 @@ TimeLine::TimeLine(QWidget *parent)
 
     setupUi(this);
 
-    editButton->setIcon(KIcon("configure"));
+    editButton->setIcon(KIcon("document-edit"));
     connect(editButton, SIGNAL(clicked()), this, SLOT(configure()));
 
     connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
