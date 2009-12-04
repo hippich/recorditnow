@@ -71,7 +71,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Up</string>
+            <string>Move Up</string>
            </property>
           </widget>
          </item>
@@ -81,7 +81,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Down</string>
+            <string>Move Down</string>
            </property>
           </widget>
          </item>
