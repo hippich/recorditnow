@@ -57,6 +57,7 @@ private:
 
 signals:
     void topicChanged(Topic *newTopic);
+    void durationChanged(const unsigned long &newDuration);
 
 
 };

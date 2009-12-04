@@ -43,6 +43,7 @@ TimeLine::TimeLine(QWidget *parent)
     connect(editButton, SIGNAL(clicked()), this, SLOT(configure()));
 
     connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
+    connect(topicWidget, SIGNAL(durationChanged(ulong)), this, SLOT(durationChanged(ulong)));
 
     m_notifications = false;
     slider->setMaximum(0);
@@ -73,6 +74,7 @@ void TimeLine::setTime(const unsigned long &seconds)
 
     slider->setMaximum(seconds);
     topicWidget->setTime(seconds);
+    resetSlider();
 
 }
 
@@ -249,4 +251,14 @@ void TimeLine::resetSlider()
     timeLabel->setText(passed+"/"+total);
 
 }
+
+
+void TimeLine::durationChanged(const unsigned long newDuration)
+{
+
+    slider->setMaximum(newDuration);
+    resetSlider();
+
+}
+
 

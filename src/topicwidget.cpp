@@ -21,7 +21,6 @@
 // own
 #include "topicwidget.h"
 #include "topic.h"
-#include "timeline.h"
 
 // KDE
 #include <kdebug.h>
@@ -65,14 +64,19 @@ void TopicWidget::setTime(const unsigned long &seconds)
 Topic *TopicWidget::addTopic(const QTime &duration, const QString title, const QString &icon)
 {
 
-    Topic *topic = new Topic(this, duration, title, icon);
-    m_layout->addWidget(topic);
+    Topic *newTopic = new Topic(this, duration, title, icon);
+    m_layout->addWidget(newTopic);
 
-    unsigned long total = static_cast<TimeLine*>(parent())->duration();
-    total += topic->durationToSeconds();
-    static_cast<TimeLine*>(parent())->setTime(total);
+    unsigned long total = 0;
+    for (int i = 0; i < m_layout->count(); i++) {
+        Topic *topic = static_cast<Topic*>(m_layout->widget(i));
+        if (topic != m_noTopic) {
+            total += topic->durationToSeconds();
+        }
+    }
+    emit durationChanged(total);
 
-    return topic;
+    return newTopic;
 
 }
 
@@ -95,7 +99,7 @@ QList<Topic*> TopicWidget::topics() const
 void TopicWidget::setCurrentSecond(const unsigned long &second)
 {
 
-    if (second == -1) {
+    if (second == (unsigned long)-1) {
         m_layout->setCurrentWidget(m_noTopic);
         return;
     }
@@ -140,7 +144,8 @@ void TopicWidget::clear()
     }
     m_noTopic = new Topic(this, QTime(0, 0, 10, 0), i18n("No Topic"), "dialog-information");
     m_layout->addWidget(m_noTopic);
-    static_cast<TimeLine*>(parent())->resetTime();
+
+    emit durationChanged(0);
 
 }
 
