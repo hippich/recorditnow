@@ -23,12 +23,12 @@
 
 // own
 #include "ui_mouse.h"
+#include "mousebutton.h"
 
 // Qt
 #include <QtGui/QWidget>
 
 
-class MouseButton;
 class KColorButton;
 class MouseConfig : public QWidget, public Ui::Mouse
 {
@@ -57,6 +57,7 @@ private slots:
     void addClicked();
     void removeClicked();
     void updateColumnSize();
+    void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
 
 
 signals:

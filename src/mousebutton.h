@@ -72,7 +72,7 @@ protected:
 
 
 signals:
-    void buttonChanged();
+    void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
     void sizeChanged();
 
 

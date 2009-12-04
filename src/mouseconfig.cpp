@@ -26,6 +26,7 @@
 // KDE
 #include <kicon.h>
 #include <kcolorbutton.h>
+#include <kmessagebox.h>
 
 // Qt
 #include <QtGui/QTreeWidget>
@@ -251,8 +252,9 @@ MouseButton *MouseConfig::newMouseButton()
 {
 
     MouseButton *button = new MouseButton(this);
-    connect(button, SIGNAL(buttonChanged()), this, SIGNAL(configChanged()));
     connect(button, SIGNAL(sizeChanged()), this, SLOT(updateColumnSize()));
+    connect(button, SIGNAL(buttonChanged(MouseButton::Button,MouseButton::Button)), this,
+            SLOT(buttonChanged(MouseButton::Button,MouseButton::Button)));
     return button;
 
 }
@@ -309,3 +311,24 @@ void MouseConfig::updateColumnSize()
     treeWidget->header()->resizeSections(QHeaderView::ResizeToContents);
 
 }
+
+
+void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
+                                const MouseButton::Button &newButton)
+{
+
+    MouseButton *changed = static_cast<MouseButton*>(sender());
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        MouseButton *button = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
+        if (changed != button && changed->getXButton() == button->getXButton()) {
+            KMessageBox::information(this, i18n("The button '%1' has already been defined",
+                                                MouseButton::getName(newButton)));
+            changed->setButton(oldButton);
+            return;
+        }
+    }
+    emit configChanged();
+
+}
+

@@ -154,7 +154,6 @@ void MouseButton::setButton(const Button &button)
 {
 
     m_button = button;
-
     setText(getName(button));
 
 }
@@ -198,6 +197,7 @@ void MouseButton::mouseReleaseEvent(QMouseEvent *event)
         KPushButton::mouseReleaseEvent(event);
     } else {
         releaseMouse();
+        const Button oldButton = m_button;
         switch (event->button()) {
         case Qt::NoButton: setButton(NoButton); break;
         case Qt::LeftButton: setButton(LeftButton); break;
@@ -208,7 +208,7 @@ void MouseButton::mouseReleaseEvent(QMouseEvent *event)
         default: setButton(NoButton); break;
         }
         setChecked(false);
-        emit buttonChanged();
+        emit buttonChanged(oldButton, m_button);
     }
 
 }
@@ -220,6 +220,7 @@ void MouseButton::wheelEvent(QWheelEvent *event)
     if (!mouseGrabber()) {
         KPushButton::wheelEvent(event);
     }   else {
+        const Button oldButton = m_button;
         releaseMouse();
         if (event->delta() > 0) {
             setButton(WheelUp);
@@ -227,7 +228,7 @@ void MouseButton::wheelEvent(QWheelEvent *event)
             setButton(WheelDown);
         }
         setChecked(false);
-        emit buttonChanged();
+        emit buttonChanged(oldButton, m_button);
     }
 
 }
