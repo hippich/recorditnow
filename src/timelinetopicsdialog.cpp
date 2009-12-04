@@ -22,6 +22,7 @@
 #include "timelinetopicsdialog.h"
 #include "topicwidget.h"
 #include "topic.h"
+#include "topictreeitem.h"
 
 // KDE
 #include <kicon.h>
@@ -46,10 +47,14 @@ TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWi
 
     addButton->setIcon(KIcon("list-add"));
     removeButton->setIcon(KIcon("list-remove"));
+    upButton->setIcon(KIcon("go-up"));
+    downButton->setIcon(KIcon("go-down"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(addTopic()));
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removeTopic()));
     connect(this, SIGNAL(finished(int)), this, SLOT(updateTopicWidget(int)));
+    connect(upButton, SIGNAL(clicked()), this, SLOT(upClicked()));
+    connect(downButton, SIGNAL(clicked()), this, SLOT(downClicked()));
 
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
@@ -60,17 +65,9 @@ TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWi
     }
 
     for (int i = 0; i < topics.size(); i++) {
-        Topic *topic = topics[i];
-        QTreeWidgetItem *item = treeWidget->invisibleRootItem()->child(i);
-
-        QTimeEdit *durationEdit = static_cast<QTimeEdit*>(treeWidget->itemWidget(item, 2));
-        KIconButton *button = static_cast<KIconButton*>(treeWidget->itemWidget(item, 1));
-
-        item->setText(0, topic->title());
-        button->setIcon(topic->icon());
-        durationEdit->setTime(topic->duration());
+        TopicTreeItem *item = static_cast<TopicTreeItem*>(treeWidget->invisibleRootItem()->child(i));
+        item->setTopic(topics[i]);
     }
-
 
 }
 
@@ -85,23 +82,7 @@ TimeLineTopicsDialog::~TimeLineTopicsDialog()
 void TimeLineTopicsDialog::addTopic()
 {
 
-    QTreeWidgetItem *item = new QTreeWidgetItem;
-    item->setText(0, i18n("Untitled"));
-    item->setFlags(Qt::ItemIsEditable|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-
-    KIconButton *button = new KIconButton(this);
-    QTimeEdit *begin = new QTimeEdit(this);
-
-    begin->setDisplayFormat("hh:mm:ss");
-    button->setMaximumSize(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
-    button->setMinimumSize(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
-    button->setIconSize(KIconLoader::SizeSmall);
-
-    button->setIcon("dialog-information");
-
-    treeWidget->invisibleRootItem()->addChild(item);
-    treeWidget->setItemWidget(item, 1, button);
-    treeWidget->setItemWidget(item, 2, begin);
+    new TopicTreeItem(treeWidget);
 
 }
 
@@ -137,4 +118,49 @@ void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
     }
 
 }
+
+
+void TimeLineTopicsDialog::upClicked()
+{
+
+    QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
+    if (items.isEmpty() || items.size() > 1) {
+        return;
+    }
+    TopicTreeItem *item = static_cast<TopicTreeItem*>(items[0]);
+
+    const int index = treeWidget->indexOfTopLevelItem(item)-1;
+
+    if (index < 0) {
+        return;
+    }
+
+    TopicTreeItem *copy = new TopicTreeItem(treeWidget, item, index);
+    treeWidget->invisibleRootItem()->removeChild(item);
+    treeWidget->setCurrentItem(copy);
+
+}
+
+
+void TimeLineTopicsDialog::downClicked()
+{
+
+    QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
+    if (items.isEmpty() || items.size() > 1) {
+        return;
+    }
+    TopicTreeItem *item = static_cast<TopicTreeItem*>(items[0]);
+
+    const int index = treeWidget->indexOfTopLevelItem(item)+2;
+
+    if (index > treeWidget->topLevelItemCount()) {
+        return;
+    }
+
+    TopicTreeItem *copy = new TopicTreeItem(treeWidget, item, index);
+    treeWidget->invisibleRootItem()->removeChild(item);
+    treeWidget->setCurrentItem(copy);
+
+}
+
 

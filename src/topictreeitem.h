@@ -17,42 +17,34 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef TIMELINETOPICSDIALOG_H
-#define TIMELINETOPICSDIALOG_H
-
-
-// own
-#include "ui_timelinetopics.h"
-
-// KDE
-#include <kdialog.h>
+#ifndef TOPICTREEITEM_H
+#define TOPICTREEITEM_H
 
 
-class TopicWidget;
-class TimeLineTopicsDialog : public KDialog, public Ui::TimeLineTopics
+// Qt
+#include <QtGui/QTreeWidgetItem>
+
+
+class Topic;
+class TopicTreeItem : public QTreeWidgetItem
 {
-    Q_OBJECT
 
 
 public:
-    TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWidget);
-    ~TimeLineTopicsDialog();
+    TopicTreeItem(QTreeWidget *parent);
+    TopicTreeItem(QTreeWidget *parent, TopicTreeItem *other, const int &index);
+    ~TopicTreeItem();
+
+    Topic *topic() const;
+    void setTopic(Topic *topic);
 
 
 private:
-    TopicWidget *m_topicWidget;
-
-
-private slots:
-    void addTopic();
-    void removeTopic();
-    void updateTopicWidget(const int &ret);
-    void upClicked();
-    void downClicked();
+    QTreeWidget *m_parent;
+    Topic *m_topic;
 
 
 };
 
 
-#endif // TIMELINETOPICSDIALOG_H
+#endif // TOPICTREEITEM_H
