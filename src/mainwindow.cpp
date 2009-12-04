@@ -162,8 +162,10 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentTime(timerLcd->value());
     Settings::self()->writeConfig();
 
-    KConfigGroup cfg(Settings::self()->config(), "Timeline");
-    m_timeLine->saveTopics(&cfg);
+    if (m_timeLine) {
+        KConfigGroup cfg(Settings::self()->config(), "Timeline");
+        m_timeLine->saveTopics(&cfg);
+    }
 
     if (m_grabber) {
         delete m_grabber;
