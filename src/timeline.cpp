@@ -69,24 +69,6 @@ unsigned long TimeLine::duration() const
 }
 
 
-void TimeLine::setTime(const unsigned long &seconds)
-{
-
-    slider->setMaximum(seconds);
-    topicWidget->setTime(seconds);
-    resetSlider();
-
-}
-
-
-void TimeLine::resetTime()
-{
-
-    slider->setMaximum(0);
-
-}
-
-
 void TimeLine::loadTopics(KConfigGroup *cfg)
 {
 

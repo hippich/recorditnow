@@ -43,8 +43,6 @@ public:
 
     unsigned long duration() const;
 
-    void setTime(const unsigned long &seconds);
-    void resetTime();
     void loadTopics(KConfigGroup *cfg);
     void saveTopics(KConfigGroup *cfg);
     void enableNotifications(const bool &enable);
