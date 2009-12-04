@@ -48,6 +48,7 @@ SoundCardDialog::SoundCardDialog(QWidget *parent)
 
         treeWidget->addTopLevelItem(item);
     }
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
 
     resize(600, 300);
