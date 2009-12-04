@@ -99,10 +99,9 @@ void TimeLine::loadTopics(KConfigGroup *cfg)
     }
 
     if (count == 0) {
-        topicWidget->addTopic(Topic::secondsToTime(30), "Linux!", "tux");
-        topicWidget->addTopic(Topic::secondsToTime(10), "RecordItNow", "system-run");
-        topicWidget->addTopic(Topic::secondsToTime(50), "KDE SC", "kde-start-here");
-        topicWidget->addTopic(Topic::secondsToTime(111), "Something about Amarok", "amarok");
+        topicWidget->addTopic(Topic::secondsToTime(60), "Linux!", "computer");
+        topicWidget->addTopic(Topic::secondsToTime(30), "RecordItNow", "recorditnow");
+        topicWidget->addTopic(Topic::secondsToTime(300), "KDE SC", "kde-start-here");
     }
     resetSlider();
 
