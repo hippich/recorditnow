@@ -43,6 +43,8 @@ private:
     QString m_key;
     QString m_icon;
 
+    static QList<SoundCard> scanASoundCard(const QString &dir);
+
 
 };
 

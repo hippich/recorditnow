@@ -26,12 +26,11 @@
 
 // Qt
 #include <QtCore/QStringList>
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
+#include <QtCore/QDir>
 
-// Phonon
-#include <phonon/backendcapabilities.h>
 
-
-using namespace Phonon;
 SoundCard::SoundCard()
 {
 
@@ -44,36 +43,23 @@ QList<SoundCard> SoundCard::cards()
 {
 
     QList<SoundCard> cards;
-    foreach (const AudioOutputDevice &dev, BackendCapabilities::availableAudioOutputDevices()) {
-        QStringList deviceIds = dev.property("deviceIds").toStringList();
-        if (deviceIds.isEmpty()) {
-            continue;
-        }
-        QString key = "hw:";
-        QString id = deviceIds.first();
 
-        const QRegExp cardRX("CARD=.*");
-        cardRX.indexIn(id);
-        if (cardRX.cap().isEmpty()) {
-            continue;
-        }
-        key += cardRX.cap().remove(QRegExp(",.*")).remove("CARD=");
-
-        key += ',';
-
-        const QRegExp devRX("DEV=.*");
-        devRX.indexIn(id);
-        if (devRX.cap().isEmpty()) {
-            continue;
-        }
-        key += devRX.cap().remove(QRegExp(",.*")).remove("DEV=");
-
-        SoundCard card;
-        card.m_key = key;
-        card.m_icon = dev.property("icon").toString();
-        card.m_name = dev.property("name").toString();
-        cards.append(card);
+    // asound
+    QDir asound("/proc/asound");
+    if (!asound.exists()) {
+        kWarning() << "/proc/asound does not exists.";
+        return cards;
     }
+
+    const QRegExp cardRX("^card[0-9]+$");
+    const QStringList subDirs = asound.entryList(QStringList(), QDir::Dirs|QDir::NoDotAndDotDot);
+    foreach (const QString &dir, subDirs) {
+        if (cardRX.exactMatch(dir)) {
+            kDebug() << "found card:" << dir;
+            cards.append(scanASoundCard("/proc/asound/"+dir));
+        }
+    }
+
     return cards;
 
 }
@@ -99,5 +85,55 @@ QString SoundCard::icon() const
 {
 
     return m_icon;
+
+}
+
+
+QList<SoundCard> SoundCard::scanASoundCard(const QString &dir)
+{
+
+    QList<SoundCard> cards;
+    const QRegExp pcmRX("^pcm[0-9]+c$");
+
+    QDir cardDir(dir);
+    const QStringList subDirs = cardDir.entryList(QStringList(), QDir::Dirs|QDir::NoDotAndDotDot);
+    foreach (const QString &subDir, subDirs) {
+        if (pcmRX.exactMatch(subDir)) {
+            kDebug() << "found pcm:" << subDir;
+
+            QFile info(dir+'/'+subDir+"/info");
+            if (!info.exists()) {
+                kWarning() << "info does not exists:" << info.fileName();
+                continue;
+            }
+
+            if (!info.open(QIODevice::ReadOnly|QIODevice::Text)) {
+                kWarning() << "open failed:" << info.error() << info.errorString();
+                continue;
+            }
+
+            QTextStream stream(&info);
+            SoundCard card;
+
+            QString CARD, DEVICE;
+            QString line = stream.readLine();
+            while (!line.isNull()) {
+                if (line.startsWith("name:")) {
+                    card.m_name = line.remove("name:").trimmed();
+                } else if (line.startsWith("card:")) {
+                    CARD = line.remove("card:").trimmed();
+                } else if (line.startsWith("device:")) {
+                    DEVICE = line.remove("device:").trimmed();
+                }
+                line = stream.readLine();
+            }
+            info.close();
+
+            card.m_key = QString("hw:%1,%2").arg(CARD).arg(DEVICE);
+            card.m_icon = "audio-card";
+            cards.append(card);
+        }
+    }
+    return cards;
 
 }
