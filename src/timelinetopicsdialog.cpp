@@ -55,6 +55,7 @@ TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWi
     connect(this, SIGNAL(finished(int)), this, SLOT(updateTopicWidget(int)));
     connect(upButton, SIGNAL(clicked()), this, SLOT(upClicked()));
     connect(downButton, SIGNAL(clicked()), this, SLOT(downClicked()));
+    connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
 
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
@@ -160,6 +161,17 @@ void TimeLineTopicsDialog::downClicked()
     TopicTreeItem *copy = new TopicTreeItem(treeWidget, item, index);
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
+
+}
+
+
+void TimeLineTopicsDialog::itemSelectionChanged()
+{
+
+    const bool enabled = !treeWidget->selectedItems().isEmpty();
+    upButton->setEnabled(enabled);
+    downButton->setEnabled(enabled);
+    removeButton->setEnabled(enabled);
 
 }
 

@@ -57,6 +57,9 @@
          </item>
          <item>
           <widget class="KPushButton" name="removeButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Remove</string>
            </property>
@@ -64,6 +67,9 @@
          </item>
          <item>
           <widget class="KPushButton" name="upButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Up</string>
            </property>
@@ -71,6 +77,9 @@
          </item>
          <item>
           <widget class="KPushButton" name="downButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Down</string>
            </property>

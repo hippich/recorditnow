@@ -50,6 +50,7 @@ private slots:
     void updateTopicWidget(const int &ret);
     void upClicked();
     void downClicked();
+    void itemSelectionChanged();
 
 
 };
