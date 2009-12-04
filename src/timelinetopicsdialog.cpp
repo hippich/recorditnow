@@ -168,10 +168,16 @@ void TimeLineTopicsDialog::downClicked()
 void TimeLineTopicsDialog::itemSelectionChanged()
 {
 
-    const bool enabled = !treeWidget->selectedItems().isEmpty();
-    upButton->setEnabled(enabled);
-    downButton->setEnabled(enabled);
-    removeButton->setEnabled(enabled);
+    if(treeWidget->selectedItems().isEmpty() || treeWidget->selectedItems().size() > 1) {
+        upButton->setEnabled(false);
+        downButton->setEnabled(false);
+        removeButton->setEnabled(false);
+    } else {
+        const int index = treeWidget->indexOfTopLevelItem(treeWidget->selectedItems().first());
+        upButton->setEnabled(index != 0);
+        downButton->setEnabled(index != treeWidget->topLevelItemCount()-1);
+        removeButton->setEnabled(true);
+    }
 
 }
 
