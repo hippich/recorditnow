@@ -42,13 +42,13 @@
             <default>false</default>
     </entry>
     <entry name="__v_quality" type="Int">
-            <default>63</default>
+            <default>100</default>
     </entry>
     <entry name="__v_bitrate" type="Int">
             <default>45000</default>
     </entry>
     <entry name="__s_quality" type="Int">
-            <default>10</default>
+            <default>100</default>
     </entry>
     <entry name="__no_wm_check" type="Bool">
             <default>false</default>

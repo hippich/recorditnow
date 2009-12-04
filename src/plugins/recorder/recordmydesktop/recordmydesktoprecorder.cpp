@@ -137,9 +137,17 @@ void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
         args << "--on-the-fly-encoding";
     }
 
-    args << "--v_quality" << QString::number(Settings::__v_quality());
+    double videoQualityMax = 63;
+    double videoQualityOne = videoQualityMax/100;
+    int videoQuality = qRound(Settings::__v_quality()*videoQualityOne);
+
+    double soundQualityMax = 10;
+    double soundQualityOne = soundQualityMax/100;
+    int soundQuality = qRound(Settings::__s_quality()*soundQualityOne);
+
+    args << "--v_quality" << QString::number(qMin(videoQuality, 63));
     args << "--v_bitrate" << QString::number(Settings::__v_bitrate());
-    args << "--s_quality" << QString::number(Settings::__s_quality());
+    args << "--s_quality" << QString::number(qMin(soundQuality, 10));
 
     // misc
     if (Settings::__no_wm_check()) {

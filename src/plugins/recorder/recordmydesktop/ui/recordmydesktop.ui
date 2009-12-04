@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>383</width>
-    <height>217</height>
+    <height>221</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -212,7 +212,10 @@
             <number>0</number>
            </property>
            <property name="maximum">
-            <number>63</number>
+            <number>100</number>
+           </property>
+           <property name="suffix">
+            <string notr="true"> %</string>
            </property>
            <property name="specialValueText">
             <string notr="true"/>
@@ -244,7 +247,10 @@
             <number>0</number>
            </property>
            <property name="maximum">
-            <number>10</number>
+            <number>100</number>
+           </property>
+           <property name="suffix">
+            <string notr="true"> %</string>
            </property>
            <property name="sliderEnabled">
             <bool>true</bool>
