@@ -17,7 +17,10 @@
    <item>
     <widget class="QGroupBox" name="kcfg_showTimeLine">
      <property name="title">
-      <string>Enable Timeline</string>
+      <string>Enable the Timeline</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
      </property>
      <property name="checkable">
       <bool>true</bool>
