@@ -60,6 +60,12 @@ private:
     QTime m_duration;
     QString m_icon;
 
+    void updateSize();
+
+
+protected:
+    bool event(QEvent *eevent);
+
 
 };
 

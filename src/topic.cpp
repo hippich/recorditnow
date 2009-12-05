@@ -32,6 +32,8 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QToolButton>
+#include <QtGui/QStyle>
+#include <QtGui/QStyleOptionProgressBarV2>
 
 
 Topic::Topic(QWidget *parent, const QTime duration, const QString &title, const QString &icon)
@@ -60,6 +62,8 @@ Topic::Topic(QWidget *parent, const QTime duration, const QString &title, const 
 
     setMaximum(durationToSeconds());
     setValue(0);
+
+    updateSize();
 
 }
 
@@ -166,6 +170,31 @@ void Topic::setTitle(const QString &title)
 {
 
     m_titleLabel->setText(title);
+
+}
+
+
+void Topic::updateSize()
+{
+
+    QStyleOptionProgressBarV2 option;
+    initStyleOption(&option);
+
+    QRect rect = style()->subElementRect(QStyle::SE_ProgressBarContents, &option, this);
+
+    setMinimumHeight(rect.height());
+
+}
+
+
+bool Topic::event(QEvent *event)
+{
+
+    if (event->type() == QEvent::StyleChange || event->type() == QEvent::FontChange) {
+        updateSize();
+    }
+
+    return QProgressBar::event(event);
 
 }
 

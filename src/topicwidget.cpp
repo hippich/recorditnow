@@ -36,8 +36,6 @@ TopicWidget::TopicWidget(QWidget *parent)
     : QWidget(parent)
 {
 
-    setContentsMargins(2, 2, 2, 2);
-
     m_layout = new QStackedLayout;
     setLayout(m_layout);
 
