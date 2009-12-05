@@ -214,10 +214,10 @@ void TimeLine::topicChanged(Topic *topic)
         return;
     }
 
-    KNotification::event(KNotification::Notification,
-                         i18n("New Topic: <i>%1</i>", topic->title()),
-                         KIcon(topic->icon()).pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium),
-                         this);
+    KNotification *notification = new KNotification("newTopic", KNotification::CloseOnTimeout, this);
+    notification->setText(i18n("New Topic: <i>%1</i>", topic->title()));
+    notification->setPixmap(KIcon(topic->icon()).pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
+    notification->sendEvent();
 
 }
 

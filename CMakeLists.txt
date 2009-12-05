@@ -10,7 +10,7 @@ set(KDE_MIN_VERSION "4.3.0")
 
 ########### install files ###############
 install(FILES recorditnow.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
-
+install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
 
 add_subdirectory(src)
 
