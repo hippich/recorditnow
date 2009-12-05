@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-12-05 10:59+0100\n"
-"PO-Revision-Date: 2009-11-29 15:53+0100\n"
+"PO-Revision-Date: 2009-12-05 15:52+0100\n"
 "Last-Translator: Sebastien Vrillaud <kochka@gmail.com>\n"
 "Language-Team: French <kde-i18n-fr@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -217,7 +217,7 @@ msgstr "Désactiver l'affichage du curseur"
 #: po/rc.cpp:72 rc.cpp:72
 msgid "Disable usage of MIT-shared memory extension(Not Recommended!)"
 msgstr ""
-"Déactiver l'utilisation de l'extension \"mémoire partagée MIT\" (Non "
+"Désactiver l'utilisation de l'extension \"mémoire partagée MIT\" (Non "
 "Recommandé!)"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
@@ -387,7 +387,7 @@ msgstr "Afficher le cadre"
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: po/rc.cpp:150 rc.cpp:150
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_branding)
@@ -708,7 +708,6 @@ msgstr "Incruster dans la boîte à mignatures"
 #. i18n: file: src/ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
 #: po/rc.cpp:361 rc.cpp:361
-#, fuzzy
 msgid "Hide RecordItNow during record"
 msgstr "Cacher RecordItNow pendant l'enregistrement"
 
@@ -734,7 +733,7 @@ msgstr "Encoder après l'enregistrement"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_stayOnTop)
 #: po/rc.cpp:373 rc.cpp:373
 msgid "Stay above all other windows during record"
-msgstr ""
+msgstr "Rester au dessus des autres fenêtres pendant l'enregistrement"
 
 #. i18n: file: src/ui/settings.ui:102
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -746,57 +745,55 @@ msgstr "Répertoire des fichiers temporaires:"
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
 #: po/rc.cpp:382 rc.cpp:382
 msgid "Enable Timeline"
-msgstr ""
+msgstr "Activer la barre de temps"
 
 #. i18n: file: src/ui/timelineconfig.ui:35
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timeLineStop)
 #: po/rc.cpp:385 rc.cpp:385
 msgid "Stop recording when the timeline reaches the end"
-msgstr ""
+msgstr "Arrêter l'enregistrement quand la barre de temps a atteint la fin"
 
 #. i18n: file: src/ui/timelineconfig.ui:42
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timelineNotifications)
 #: po/rc.cpp:388 rc.cpp:388
 msgid "Enable Notifications"
-msgstr ""
+msgstr "Activer les notifications"
 
 #. i18n: file: src/ui/timelinetopics.ui:30
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: po/rc.cpp:391 rc.cpp:391
-#, fuzzy
 msgid "Total duration"
-msgstr "Traduction:"
+msgstr "Durée totale"
 
 #. i18n: file: src/ui/timelinetopics.ui:55
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: po/rc.cpp:395 rc.cpp:395
 msgid "Topic"
-msgstr ""
+msgstr "Sujet"
 
 #. i18n: file: src/ui/timelinetopics.ui:60
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: po/rc.cpp:398 rc.cpp:398
 msgid "Icon"
-msgstr ""
+msgstr "Icône"
 
 #. i18n: file: src/ui/timelinetopics.ui:65
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: po/rc.cpp:401 rc.cpp:401
-#, fuzzy
 msgid "Duration"
-msgstr "Education"
+msgstr "Durée"
 
 #. i18n: file: src/ui/timelinetopics.ui:95
 #. i18n: ectx: property (text), widget (KPushButton, upButton)
 #: po/rc.cpp:410 rc.cpp:410
 msgid "Move Up"
-msgstr ""
+msgstr "Monter"
 
 #. i18n: file: src/ui/timelinetopics.ui:105
 #. i18n: ectx: property (text), widget (KPushButton, downButton)
 #: po/rc.cpp:413 rc.cpp:413
 msgid "Move Down"
-msgstr ""
+msgstr "Descendre"
 
 #. i18n: file: src/ui/toolbarwidget.ui:48
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
@@ -909,9 +906,8 @@ msgid "Zoom"
 msgstr "Zoom"
 
 #: src/configdialog.cpp:98 src/mainwindow.cpp:1172
-#, fuzzy
 msgid "Timeline"
-msgstr "Titre"
+msgstr "Barre de temps"
 
 #: src/configdialog.cpp:99
 msgid "Shortcuts"
@@ -1028,48 +1024,44 @@ msgstr ""
 "Raison: %2"
 
 #: src/mousebutton.cpp:86 src/mousebutton.cpp:103
-#, fuzzy
 msgid "Left-Button"
-msgstr "Bouton de souris"
+msgstr "Bouton gauche"
 
 #: src/mousebutton.cpp:87 src/mousebutton.cpp:107
 msgid "Right-Button"
-msgstr ""
+msgstr "Bouton droit"
 
 #: src/mousebutton.cpp:88 src/mousebutton.cpp:111
-#, fuzzy
 msgid "Middle-Button"
-msgstr "Bouton de souris"
+msgstr "Bouton central"
 
 #: src/mousebutton.cpp:89 src/mousebutton.cpp:115
 msgid "Special-Button 1"
-msgstr ""
+msgstr "Bouton spécial 1"
 
 #: src/mousebutton.cpp:90 src/mousebutton.cpp:119
 msgid "Special-Button 2"
-msgstr ""
+msgstr "Bouton spécial 2"
 
 #: src/mousebutton.cpp:91 src/mousebutton.cpp:123
 msgid "Wheel up"
-msgstr ""
+msgstr "Molette haut"
 
 #: src/mousebutton.cpp:92 src/mousebutton.cpp:127
 msgid "Wheel down"
-msgstr ""
+msgstr "Molette bas"
 
 #: src/mousebutton.cpp:93
-#, fuzzy
 msgid "No-Button"
-msgstr "Bouton de souris"
+msgstr "Pas de bouton"
 
 #: src/mousebutton.cpp:186
-#, fuzzy
 msgid "Press a mouse button..."
-msgstr "Bouton de souris"
+msgstr "Pressez un bouton de la souris..."
 
 #: src/mouseconfig.cpp:325
 msgid "The button '%1' has already been defined"
-msgstr ""
+msgstr "Le bouton '%1' à déjà été défini"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:67
 #: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:65
@@ -1227,9 +1219,8 @@ msgstr ""
 "Raison: %2"
 
 #: src/plugins/recorder/recordmydesktop/soundcarddialog.cpp:37
-#, fuzzy
 msgid "Soundcards"
-msgstr "Son"
+msgstr "Cartes son"
 
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:76
 msgid "Cheese!"
@@ -1537,12 +1528,10 @@ msgid "Pets & Animals"
 msgstr "Animaux"
 
 #: src/plugins/upload/lib/youtubevideo.cpp:46
-#, fuzzy
 msgid "Science & Technology"
 msgstr "Sience & Technologie"
 
 #: src/plugins/upload/lib/youtubevideo.cpp:48
-#, fuzzy
 msgid "Travel & Events"
 msgstr "Voyage & Evénements"
 
@@ -1589,21 +1578,20 @@ msgid "The recorder has crashed!"
 msgstr "L'enregistreur à planté!"
 
 #: src/timeline.cpp:78 src/topictreeitem.cpp:37
-#, fuzzy
 msgid "Untitled"
-msgstr "Titre"
+msgstr "Sans titre"
 
 #: src/timeline.cpp:218
 msgid "New Topic: <i>%1</i>"
-msgstr ""
+msgstr "Nouveau sujet: <i>%1</i>"
 
 #: src/timelinetopicsdialog.cpp:42
 msgid "Topics"
-msgstr ""
+msgstr "Sujets"
 
 #: src/topicwidget.cpp:145
 msgid "No Topic"
-msgstr ""
+msgstr "Pas de sujet"
 
 #: src/uploadmanager.cpp:75
 msgid "Cannot load upload plugin \"%1\"."
