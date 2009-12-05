@@ -180,7 +180,7 @@ void Topic::updateSize()
     QStyleOptionProgressBarV2 option;
     initStyleOption(&option);
 
-    QRect rect = style()->subElementRect(QStyle::SE_ProgressBarContents, &option, this);
+    const QRect rect = style()->subElementRect(QStyle::SE_ProgressBarContents, &option, this);
 
     setMinimumHeight(rect.height());
 
