@@ -221,3 +221,4 @@ void RecordItNowPluginManager::loadInfos(const QString &type)
 }
 
 
+#include "recorditnowpluginmanager.moc"

@@ -347,3 +347,6 @@ BlipVideo *BlipService::readEntry(QXmlStreamReader *reader)
     return video;
 
 }
+
+
+#include "blipservice.moc"

@@ -125,3 +125,5 @@ void TopicTreeItem::setTopic(Topic *topic)
 
 }
 
+
+#include "topictreeitem.moc"

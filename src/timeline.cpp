@@ -244,3 +244,4 @@ void TimeLine::durationChanged(const unsigned long newDuration)
 }
 
 
+#include "timeline.moc"

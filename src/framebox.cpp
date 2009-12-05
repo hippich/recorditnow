@@ -366,3 +366,5 @@ bool FrameBox::eventFilter(QObject *watched, QEvent *event)
 }
 
 
+#include "framebox.moc"
+

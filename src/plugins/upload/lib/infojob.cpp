@@ -195,3 +195,6 @@ bool InfoJob::doKill()
 
 }
 
+
+#include "infojob.moc"
+

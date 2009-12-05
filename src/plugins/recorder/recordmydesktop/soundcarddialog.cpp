@@ -77,3 +77,7 @@ void SoundCardDialog::dialogFinished(const int &ret)
     }
 
 }
+
+
+#include "soundcarddialog.moc"
+

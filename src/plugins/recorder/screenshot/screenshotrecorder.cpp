@@ -212,3 +212,6 @@ void ScreenshotRecorder::stop()
 }
 
 
+#include "screenshotrecorder.moc"
+
+

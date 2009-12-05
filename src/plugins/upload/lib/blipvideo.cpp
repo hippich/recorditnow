@@ -217,3 +217,6 @@ QString BlipVideo::getLicenseCode() const
     return QString::number(m_license);
 
 }
+
+
+#include "blipvideo.moc"

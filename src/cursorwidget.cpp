@@ -227,3 +227,5 @@ void CursorWidget::paintEvent(QPaintEvent *event)
 }
 
 
+#include "cursorwidget.moc"
+

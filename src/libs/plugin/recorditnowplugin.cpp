@@ -100,3 +100,6 @@ QString RecordItNowPlugin::unique(const QString &file) const
 
 }
 
+
+#include "recorditnowplugin.moc"
+

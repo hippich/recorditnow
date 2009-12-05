@@ -180,3 +180,7 @@ void ConfigDialog::updateSettings()
     enableButtonApply(false);
 
 }
+
+
+#include "configdialog.moc"
+

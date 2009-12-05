@@ -137,3 +137,5 @@ void EncoderManager::encoderFinished(const AbstractEncoder::ExitStatus &status)
 
 }
 
+
+#include "encodermanager.moc"

@@ -67,3 +67,6 @@ void FormatDialog::dialogFinished(const int &ret)
 
 }
 
+
+#include "formatdialog.moc"
+

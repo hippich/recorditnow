@@ -262,3 +262,6 @@ void FfmpegEncoder::ffmpegFinished(const int &ret)
 
 }
 
+
+#include "ffmpegencoder.moc"
+

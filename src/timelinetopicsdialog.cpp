@@ -201,4 +201,5 @@ void TimeLineTopicsDialog::updateTotalDuration()
 }
 
 
+#include "timelinetopicsdialog.moc"
 

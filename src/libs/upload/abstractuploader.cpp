@@ -173,3 +173,7 @@ void AbstractUploader::newPassword(const QString &account, const QString &passwo
 
 }
 
+
+#include "abstractuploader.moc"
+
+

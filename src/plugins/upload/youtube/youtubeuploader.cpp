@@ -374,3 +374,6 @@ bool YouTubeUploader::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 
 }
+
+
+#include "youtubeuploader.moc"

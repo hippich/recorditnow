@@ -238,3 +238,5 @@ void ZoomView::wheelEvent(QWheelEvent *event)
 
 }
 
+
+#include "zoomview.moc"

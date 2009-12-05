@@ -451,3 +451,7 @@ YouTubeVideo *YouTubeService::readEntry(QXmlStreamReader *reader)
     return video;
 
 }
+
+
+#include "youtubeservice.moc"
+

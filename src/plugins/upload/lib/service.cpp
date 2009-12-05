@@ -206,3 +206,5 @@ void Service::jobFinished(KJob *job, const QByteArray &data)
 }; // KYouBlip
 
 
+#include "service.moc"
+

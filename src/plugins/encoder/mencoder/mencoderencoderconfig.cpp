@@ -197,3 +197,6 @@ void MencoderEncoderConfig::addFinished(const QString &format, const QString &co
     changed();
 
 }
+
+
+#include "mencoderencoderconfig.moc"

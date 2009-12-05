@@ -332,3 +332,6 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
 
 }
 
+
+#include "mouseconfig.moc"
+

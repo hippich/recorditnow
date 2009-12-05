@@ -79,3 +79,6 @@ void ScreenshotRecorderConfig::defaults()
     KCModule::defaults();
 
 }
+
+
+#include "screenshotrecorderconfig.moc"

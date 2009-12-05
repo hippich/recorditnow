@@ -69,3 +69,6 @@ void RecordMyDesktopConfig::deviceDialogFinished(const QString &id)
     }
 
 }
+
+
+#include "recordmydesktopconfig.moc"

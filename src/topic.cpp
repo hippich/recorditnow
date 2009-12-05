@@ -169,3 +169,6 @@ void Topic::setTitle(const QString &title)
 
 }
 
+
+#include "topic.moc"
+

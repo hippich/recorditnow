@@ -308,3 +308,6 @@ void Video::jobFinished(KJob *job, const QByteArray &data)
 
 
 }; // namespace KYouBlip
+
+
+#include "video.moc"

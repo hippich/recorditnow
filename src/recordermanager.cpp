@@ -206,3 +206,6 @@ void RecorderManager::recorderFinished(const AbstractRecorder::ExitStatus &statu
 
 }
 
+
+#include "recordermanager.moc"
+

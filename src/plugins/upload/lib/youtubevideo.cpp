@@ -156,3 +156,6 @@ QString YouTubeVideo::getCategory() const
 }
 
 
+#include "youtubevideo.moc"
+
+

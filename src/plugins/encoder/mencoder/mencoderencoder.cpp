@@ -246,3 +246,5 @@ void MencoderEncoder::mencoderFinished(const int &ret)
 
 }
 
+
+#include "mencoderencoder.moc"

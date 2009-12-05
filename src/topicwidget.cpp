@@ -150,6 +150,6 @@ void TopicWidget::clear()
 }
 
 
-
+#include "topicwidget.moc"
 
 

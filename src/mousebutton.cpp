@@ -241,3 +241,6 @@ void MouseButton::resizeEvent(QResizeEvent *event)
     emit sizeChanged();
 
 }
+
+
+#include "mousebutton.moc"

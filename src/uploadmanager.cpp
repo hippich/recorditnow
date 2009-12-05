@@ -114,3 +114,6 @@ void UploadManager::uploaderFinished(const QString &error)
 
 }
 
+
+#include "uploadmanager.moc"
+

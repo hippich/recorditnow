@@ -308,3 +308,7 @@ bool BlipUploader::eventFilter(QObject *watched, QEvent *event)
     return QObject::eventFilter(watched, event);
 
 }
+
+
+#include "blipuploader.moc"
+

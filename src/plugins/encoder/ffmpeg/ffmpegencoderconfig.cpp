@@ -199,3 +199,5 @@ void FfmpegEncoderConfig::addFinished(const QString &format, const QString &comm
 
 }
 
+
+#include "ffmpegencoderconfig.moc"

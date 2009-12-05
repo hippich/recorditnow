@@ -196,4 +196,5 @@ void Line::mouseMoveEvent(QMouseEvent *event)
 }
 
 
+#include "line.moc"
 

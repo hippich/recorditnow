@@ -78,3 +78,6 @@ bool Application::x11EventFilter(XEvent *event)
     return false;
 
 }
+
+
+#include "application.moc"
