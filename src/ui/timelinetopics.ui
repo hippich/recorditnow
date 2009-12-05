@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -37,7 +37,7 @@
           <bool>false</bool>
          </property>
          <property name="displayFormat">
-          <string>HH:mm:ss</string>
+          <string notr="true">HH:mm:ss</string>
          </property>
         </widget>
        </item>

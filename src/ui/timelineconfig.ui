@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>417</width>
     <height>99</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
@@ -32,7 +32,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_timeLineStop">
         <property name="text">
-         <string>Stop recording when the timeline is finished</string>
+         <string>Stop recording when the timeline reaches the end</string>
         </property>
        </widget>
       </item>

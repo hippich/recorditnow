@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="margin">
@@ -22,7 +22,7 @@
      <item>
       <widget class="QToolButton" name="editButton">
        <property name="text">
-        <string>...</string>
+        <string notr="true"/>
        </property>
       </widget>
      </item>
