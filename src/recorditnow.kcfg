@@ -72,10 +72,10 @@
             <default>2</default>
     </entry>
     <entry name="zoomWidth" type="Int">
-            <default>350</default>
+            <default>200</default>
     </entry>
     <entry name="zoomHeight" type="Int">
-            <default>250</default>
+            <default>200</default>
     </entry>
     <entry name="zoomFollow" type="Bool">
             <default>true</default>
