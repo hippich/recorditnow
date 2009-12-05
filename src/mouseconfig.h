@@ -29,6 +29,7 @@
 #include <QtGui/QWidget>
 
 
+class QToolButton;
 class KColorButton;
 class MouseConfig : public QWidget, public Ui::Mouse
 {

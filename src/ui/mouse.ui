@@ -39,9 +39,9 @@
          <widget class="KComboBox" name="buttonCombo"/>
         </item>
         <item>
-         <widget class="QToolButton" name="addButton">
+         <widget class="KPushButton" name="addButton">
           <property name="text">
-           <string notr="true"/>
+           <string>Add</string>
           </property>
          </widget>
         </item>
@@ -74,15 +74,6 @@
         <property name="columnCount">
          <number>3</number>
         </property>
-        <attribute name="headerDefaultSectionSize">
-         <number>100</number>
-        </attribute>
-        <attribute name="headerMinimumSectionSize">
-         <number>22</number>
-        </attribute>
-        <attribute name="headerStretchLastSection">
-         <bool>false</bool>
-        </attribute>
         <attribute name="headerDefaultSectionSize">
          <number>100</number>
         </attribute>
@@ -153,6 +144,11 @@
    <class>KIntSpinBox</class>
    <extends>QSpinBox</extends>
    <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KComboBox</class>

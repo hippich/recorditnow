@@ -30,6 +30,7 @@
 
 // Qt
 #include <QtGui/QTreeWidget>
+#include <QtGui/QToolButton>
 
 
 MouseConfig::MouseConfig(QWidget *parent)
