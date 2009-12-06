@@ -133,6 +133,23 @@ MouseButton::Button MouseButton::getButtonFromName(const QString &name)
 }
 
 
+MouseButton::Button MouseButton::getButtonFromXButton(const int &button)
+{
+
+    switch (button) {
+    case Button1: return LeftButton;
+    case Button3: return RightButton;
+    case Button2: return MiddleButton;
+    case 8: return SpecialButton1;
+    case 9: return SpecialButton2;
+    case Button4: return WheelUp;
+    case Button5: return WheelDown;
+    default: return NoButton;
+    }
+
+}
+
+
 void MouseButton::setXButton(const int &button)
 {
 

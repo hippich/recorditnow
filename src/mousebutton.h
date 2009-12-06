@@ -49,6 +49,7 @@ public:
     MouseButton::Button getMouseButton() const;
     static QString getName(const MouseButton::Button &button);
     static MouseButton::Button getButtonFromName(const QString &name);
+    static MouseButton::Button getButtonFromXButton(const int &button);
 
     void setXButton(const int &button);
     void setButton(const Button &button);

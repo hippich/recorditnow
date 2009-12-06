@@ -42,6 +42,7 @@ public:
     void setNormalColor(const QColor &color);
     void setButtons(const QHash<int, QColor> &buttons);
 
+    void start();
     void click(const int &button);
     WId getWindow() const;
 
@@ -62,6 +63,10 @@ private slots:
 
 protected:
     void paintEvent(QPaintEvent *event);
+
+
+signals:
+    void error(const QString &message);
 
 
 };

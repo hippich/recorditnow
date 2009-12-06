@@ -130,6 +130,7 @@ private slots:
     void zoomOut();
     void setupTimeLine();
     void timeLineFinsihed();
+    void cursorError(const QString &message);
 
 
 protected:

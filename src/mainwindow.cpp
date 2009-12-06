@@ -63,6 +63,7 @@
 #include <kactionmenu.h>
 #include <ksqueezedtextlabel.h>
 #include <kactioncategory.h>
+#include <knotification.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -322,9 +323,13 @@ void MainWindow::startRecord()
 
     if (Settings::showActivity()) {
         m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
+        connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
+
         m_cursor->setButtons(MouseConfig::getButtons());
         m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
         m_cursor->setNormalColor(Settings::defaultColor());
+
+        m_cursor->start();
     }
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
@@ -1204,6 +1209,17 @@ void MainWindow::timeLineFinsihed()
 
 }
 
+
+void MainWindow::cursorError(const QString &message)
+{
+
+    kDebug() << "error:" << message;
+    KNotification *notification = new KNotification("error", KNotification::CloseOnTimeout, this);
+    notification->setText(message);
+    notification->setPixmap(KIcon("dialog-error").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
+    notification->sendEvent();
+
+}
 
 
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))

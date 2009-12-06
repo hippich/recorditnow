@@ -20,12 +20,14 @@
 
 // own
 #include "cursorwidget.h"
+#include "mousebutton.h"
 
 // KDE
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kwindowsystem.h>
 #include <kxerrorhandler.h>
+#include <klocalizedstring.h>
 
 // Qt
 #include <QtGui/QCursor>
@@ -65,8 +67,6 @@ CursorWidget::CursorWidget(QWidget *parent)
     m_normalColor = Qt::black;
     m_currentColor = m_normalColor;
 
-    updateGrab(true);
-
 }
 
 
@@ -102,18 +102,23 @@ void CursorWidget::setNormalColor(const QColor &color)
 void CursorWidget::setButtons(const QHash<int, QColor> &buttons)
 {
 
-    updateGrab(false); // ungrab old buttons
     m_buttons = buttons;
+
+}
+
+
+void CursorWidget::start()
+{
+
+    updateGrab(false); // ungrab old buttons
     updateGrab(true);
 
 }
 
 
-
 void CursorWidget::click(const int &button)
 {
 
-    kDebug() << "click";
     if (m_resetTimer->isActive()) {
         m_resetTimer->stop();
     }
@@ -167,6 +172,7 @@ void CursorWidget::updateGrab(const bool &grab)
     if (grab) {
         while (it.hasNext()) {
             it.next();
+            KXErrorHandler handler;
             XGrabButton(x11Info().display(),
                         it.key(),
                         AnyModifier,
@@ -177,6 +183,16 @@ void CursorWidget::updateGrab(const bool &grab)
                         GrabModeAsync,
                         x11Info().appRootWindow(screen),
                         None);
+            if (handler.error(true)) {
+                XErrorEvent event = handler.errorEvent();
+                if (event.error_code == 10) { // BadAccess
+                    MouseButton::Button button = MouseButton::getButtonFromXButton(it.key());
+                    const QString buttonName = MouseButton::getName(button);
+                    emit error(i18n("Grab failed!\n"
+                                    "Perhaps the button \"%1\" is already grabbed by another"
+                                    " application.", buttonName));
+                }
+            }
         }
 
     } else {

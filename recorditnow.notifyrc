@@ -8,3 +8,8 @@ Name=New Topic
 Comment=The current topic has changed
 Action=Popup
 
+[Event/error]
+Name=Error
+Comment=An error occurred
+Action=Popup
+
