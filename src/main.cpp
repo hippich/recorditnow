@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
                      0,
                      "just89@gmx.de");
     about.setProgramIconName("recorditnow");
-    about.setHomepage("http://kde-apps.org/content/show.php/RecordItNow?content=114610");
+    about.setHomepage("http://recorditnow.sourceforge.net/index.html");
 
     KCmdLineArgs::init(argc, argv, &about);
 
