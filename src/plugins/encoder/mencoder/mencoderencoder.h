@@ -34,7 +34,7 @@ class MencoderEncoder : public AbstractEncoder
 
 
 public:
-    MencoderEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit MencoderEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~MencoderEncoder();
 
     void encode(const Data &d);

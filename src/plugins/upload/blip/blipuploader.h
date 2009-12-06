@@ -37,7 +37,7 @@ class BlipUploader : public AbstractUploader, public Ui::Blip
 
 
 public:
-    BlipUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit BlipUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~BlipUploader();
 
     void show(const QString &file, QWidget *parent);

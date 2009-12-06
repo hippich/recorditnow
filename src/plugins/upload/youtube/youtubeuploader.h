@@ -37,7 +37,7 @@ class YouTubeUploader : public AbstractUploader, public Ui::YouTube
 
 
 public:
-    YouTubeUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit YouTubeUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~YouTubeUploader();
 
     void show(const QString &file, QWidget *parent);

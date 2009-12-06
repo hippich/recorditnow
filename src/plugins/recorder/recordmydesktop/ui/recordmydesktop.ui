@@ -42,7 +42,7 @@
          <item row="2" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___no_shared">
            <property name="text">
-            <string>Disable usage of MIT-shared memory extension(Not Recommended!)</string>
+            <string>Disable usage of MIT-shared memory extension(Not Recomended!)</string>
            </property>
           </widget>
          </item>

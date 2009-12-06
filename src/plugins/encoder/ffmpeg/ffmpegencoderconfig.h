@@ -35,8 +35,9 @@ class FfmpegEncoderConfig : public KCModule, public Ui::Ffmpeg
 
 
 public:
-    FfmpegEncoderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    explicit FfmpegEncoderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
     ~FfmpegEncoderConfig();
+
 
 public slots:
     void defaults();

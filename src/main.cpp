@@ -19,7 +19,7 @@
 
 // own
 #include "application.h"
-#include <kdeversion.h>
+#include <kdeversion.h> // krazy:exclude=includes
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
     #include "mainwindow.h"
 #else

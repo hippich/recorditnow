@@ -212,7 +212,7 @@ QString YouTubeService::upload(const YouTubeVideo *video, const QString &account
 
     QHash<QString, QString> header;
     header["Authorization"] = "GoogleLogin auth="+m_token[account].toLatin1();
-    header["GData-Version"] = "2";
+    header["GData-Version"] = '2';
     header["X-GData-Key"] = "key="+QString(DEV_KEY).toLatin1();
     header["Connection"] = "close";
     header["Slug"] = fileName.toLatin1();
@@ -318,7 +318,7 @@ void YouTubeService::jobFinished(KJob *job, const QByteArray &data)
             id = m_accountIds.key(key);
             m_accountIds.remove(key);
 
-            if (response.startsWith("Auth=")) {
+            if (response.startsWith(QLatin1String("Auth="))) {
                 response.remove("Auth=");
 
                 const QStringList lines = response.split('\n');

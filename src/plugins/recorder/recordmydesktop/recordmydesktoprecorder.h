@@ -36,7 +36,7 @@ class RecordMyDesktopRecorder : public AbstractRecorder
 
 
 public:
-    RecordMyDesktopRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit RecordMyDesktopRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~RecordMyDesktopRecorder();
 
     void record(const AbstractRecorder::Data &d);

@@ -49,7 +49,7 @@ public:
         bool overwrite;
     };
 
-    AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit AbstractEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractEncoder();
 
     virtual void encode(const Data &d) = 0;

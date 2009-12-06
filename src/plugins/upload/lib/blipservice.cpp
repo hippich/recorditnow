@@ -86,7 +86,7 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
 
 
     QHash<QString, QString> fields;
-    fields["post"] = "1";
+    fields["post"] = '1';
     fields["skin"] = "xmlhttprequest";
     fields["file_role"] = "Web";
     fields["item_type"] = "file";
@@ -134,7 +134,7 @@ QString BlipService::upload(const BlipVideo *video, const QString &account, cons
         if (!file.open(QIODevice::ReadOnly)) {
             kDebug() << "open failed!";
             return "Error: "+i18nc("%1 = file, %2 = error string", "Cannot open %1.\n"
-                                   "Reason: %1", fit.value(), file.errorString());
+                                   "Reason: %2", fit.value(), file.errorString());
         }
         data.append(file.readAll());
         data.append(CRLF);
@@ -226,7 +226,7 @@ void BlipService::jobFinished(KJob *job, const QByteArray &data)
             } else if (ret != 0 && ret != KIO::ERR_USER_CANCELED) {
                 errorString = job->errorString();
                 if (errorString.isEmpty()) {
-                    errorString = i18nc("%1 = error", "Unkown error: %1.", ret);
+                    errorString = i18nc("%1 = error", "Unknown error: %1.", ret);
                 }
             }
 

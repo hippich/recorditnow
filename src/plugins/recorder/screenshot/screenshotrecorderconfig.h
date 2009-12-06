@@ -33,7 +33,7 @@ class ScreenshotRecorderConfig : public KCModule, public Ui::Screenshot
 
 
 public:
-    ScreenshotRecorderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    explicit ScreenshotRecorderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
     ~ScreenshotRecorderConfig();
 
     void load();

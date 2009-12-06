@@ -32,7 +32,7 @@ class ScreenshotRecorder : public AbstractRecorder
 
 
 public:
-    ScreenshotRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit ScreenshotRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~ScreenshotRecorder();
 
     bool isVideoRecorder() const;

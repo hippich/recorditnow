@@ -123,16 +123,16 @@ QList<KPluginInfo> RecordItNowPluginManager::getList(const QString &category) co
 {
 
     QHashIterator<KPluginInfo, RecordItNowPlugin*> it(m_plugins);
-    QList<KPluginInfo> infos;
+    QList<KPluginInfo> infoList;
 
     while (it.hasNext()) {
         it.next();
         if (it.key().category() == category) {
-            infos.append(it.key());
+            infoList.append(it.key());
         }
     }
 
-    return infos;
+    return infoList;
 
 }
 

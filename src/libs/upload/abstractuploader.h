@@ -43,7 +43,7 @@ class KDE_EXPORT AbstractUploader : public RecordItNowPlugin
 
 
 public:
-    AbstractUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit AbstractUploader(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractUploader();
 
     virtual void show(const QString &file, QWidget *parent) = 0;

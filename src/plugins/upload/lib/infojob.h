@@ -43,7 +43,7 @@ public:
         Kill = 3
     };
 
-    InfoJob(QNetworkReply *reply, QObject *parent = 0);
+    explicit InfoJob(QNetworkReply *reply, QObject *parent = 0);
     ~InfoJob();
 
     InfoJob::State state() const;

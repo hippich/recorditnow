@@ -34,7 +34,7 @@ class RecordMyDesktopConfig : public KCModule, public Ui::RecordMyDesktop
 
 
 public:
-    RecordMyDesktopConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    explicit RecordMyDesktopConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
     ~RecordMyDesktopConfig();
 
 

@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 // own
-#include <kdeversion.h>
+#include <kdeversion.h> // krazy:exclude=includes
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
     #include "mainwindow.h"
 #else
@@ -772,7 +772,7 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
     } else if (Settings::encoderName().isEmpty() || !Settings::encode() || !isVideo) {
         setState(Idle);
         playFile(false);
-        pluginStatus(i18n("Finished!"));
+        pluginStatus(i18nc("Recording finished", "Finished!"));
     } else {
         AbstractEncoder::Data d;
         initEncoder(&d);
@@ -792,7 +792,7 @@ void MainWindow::encoderFinished(const QString &error)
         pluginStatus(error);
     } else {
         playFile(false);
-        pluginStatus(i18n("Finished!"));
+        pluginStatus(i18nc("Encoding finished", "Finished!"));
     }
     setState(Idle);
     outputFileChanged(outputRequester->text());

@@ -62,7 +62,7 @@ public:
         bool overwrite;
     };
 
-    AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractRecorder();
 
     AbstractRecorder::State state() const;

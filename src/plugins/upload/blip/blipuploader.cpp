@@ -157,7 +157,7 @@ void BlipUploader::upload()
 
     QString id = m_service->upload(&video, accountsCombo->currentText(), passwordEdit->text());
 
-    if (id.startsWith("Error:")) {
+    if (id.startsWith(QLatin1String("Error:"))) {
         error(id.remove(0, 7), QString());
     }
 
@@ -186,7 +186,7 @@ void BlipUploader::uploadFinished(const KUrl &link, const QString &id)
     }
 
     QString html = "<a href='%1'>%1</a>";
-    emit status(i18n("Finished: %1", html.arg(link.pathOrUrl())));
+    emit status(i18nc("%1 = link to video", "Finished: %1", html.arg(link.pathOrUrl())));
     emit finished(QString());
 
 }

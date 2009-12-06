@@ -34,7 +34,7 @@ class FfmpegEncoder : public AbstractEncoder
 
 
 public:
-    FfmpegEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
+    explicit FfmpegEncoder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~FfmpegEncoder();
 
     void encode(const Data &d);

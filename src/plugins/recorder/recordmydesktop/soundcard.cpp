@@ -118,11 +118,11 @@ QList<SoundCard> SoundCard::scanASoundCard(const QString &dir)
             QString CARD, DEVICE;
             QString line = stream.readLine();
             while (!line.isNull()) {
-                if (line.startsWith("name:")) {
+                if (line.startsWith(QLatin1String("name:"))) {
                     card.m_name = line.remove("name:").trimmed();
-                } else if (line.startsWith("card:")) {
+                } else if (line.startsWith(QLatin1String("card:"))) {
                     CARD = line.remove("card:").trimmed();
-                } else if (line.startsWith("device:")) {
+                } else if (line.startsWith(QLatin1String("device:"))) {
                     DEVICE = line.remove("device:").trimmed();
                 }
                 line = stream.readLine();

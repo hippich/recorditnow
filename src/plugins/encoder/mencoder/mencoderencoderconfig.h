@@ -34,7 +34,7 @@ class MencoderEncoderConfig : public KCModule, public Ui::Mencoder
 
 
 public:
-    MencoderEncoderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
+    explicit MencoderEncoderConfig(QWidget *parent = 0, const QVariantList &args = QVariantList());
     ~MencoderEncoderConfig();
 
 

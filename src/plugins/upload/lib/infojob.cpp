@@ -114,19 +114,22 @@ void InfoJob::setState(const InfoJob::State &newState)
             break;
         }
     case InfoJob::Upload: {
-            emit description(this, i18n("Upload"),
-                             qMakePair(i18n("Source"), m_source),
-                             qMakePair(i18n("Destination"), m_reply->request().url().toString()));
+            emit description(this, i18nc("Title", "Upload"),
+                             qMakePair(i18nc("video file", "Source"), m_source),
+                             qMakePair(i18nc("upload url", "Destination"),
+                                       m_reply->request().url().toString()));
             emit infoMessage(this, i18n("Transmit Data"), QString());
             break;
         }
     case InfoJob::Download: {
-            emit description(this, i18n("Download"),
-                             qMakePair(i18n("Source"), m_reply->request().url().toString()));
+            emit description(this, i18nc("Title", "Download"),
+                             qMakePair(i18nc("video file", "Source"),
+                                       m_reply->request().url().toString()));
             break;
         }
     case InfoJob::Kill: {
-            emit description(this, i18n("Upload"), qMakePair(i18n("Canceled"), m_source));
+            emit description(this, i18nc("Title", "Upload"), qMakePair(i18nc("Upload canceled",
+                                                                             "Canceled"), m_source));
             break;
         }
     }

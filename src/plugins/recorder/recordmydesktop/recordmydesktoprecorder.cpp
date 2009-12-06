@@ -224,12 +224,12 @@ void RecordMyDesktopRecorder::newRecorderOutput()
         return;
     }
 
-    foreach (QString line, output.split('\n')) {
+    foreach (QString line, output.split('\n')) { // krazy:exclude=foreach
         kDebug() << "New Line:" << line;
         line = line.trimmed();
 
 
-        if (line.startsWith("Cached")) {
+        if (line.startsWith(QLatin1String("Cached"))) {
             QString cached = line.remove(0, 7);
             QString rec = line.remove(0, line.indexOf("from ")+5);
 
@@ -238,13 +238,13 @@ void RecordMyDesktopRecorder::newRecorderOutput()
 
             emit status(i18n("Cached: %1", cached));
             emit status(i18n("Received: %1", rec));
-        } else if (line.startsWith("Saved ")) {
+        } else if (line.startsWith(QLatin1String("Saved "))) {
             QString frames = line.remove("Saved ");
             frames.remove(frames.indexOf("frames"), frames.length());
             emit status(i18n("Frames: %1", frames));
-        } else if (line.startsWith("Output file:")) {
+        } else if (line.startsWith(QLatin1String("Output file:"))) {
             m_data.tmpFile = line.remove(0, 13);
-        } else if (line.startsWith("[")) {
+        } else if (line.startsWith('[')) {
             for (int i = 0; i < line.length(); i++) {
                 if (line[i] == '[') {
 
@@ -254,8 +254,7 @@ void RecordMyDesktopRecorder::newRecorderOutput()
                     const int percent = line.mid(0, line.indexOf('%', 0)).toInt();
                     line.remove(0, line.indexOf("]"));
                     i = 0;
-                    emit status(i18n("Encoding: %1",
-                                     QString::number(percent > 100 ? 100 : percent)+'%'));
+                    emit status(i18n("Encoding: %1", percent > 100 ? 100 : percent)+'%');
                 }
             }
         }
@@ -266,18 +265,18 @@ void RecordMyDesktopRecorder::newRecorderOutput()
         } else if (line == "Encoding started!") {
             emit status(i18n("Encoding started!"));
         } else if (line == "Done!!!") {
-            emit status(i18n("Done!"));
-        } else if (line.startsWith("Cannot open file")) {
+            emit status(i18nc("RecordMyDesktop is done", "Done!"));
+        } else if (line.startsWith(QLatin1String("Cannot open file"))) {
             line = line.remove("Cannot open file ");
-            line = line.remove(" for writting!");
-            emit error(i18n("Cannot open file %1 for writting!", line));
-        } else if (line.startsWith("Could not create temporary directory")) {
+            line = line.remove(QRegExp(" for .*"));
+            emit error(i18n("Cannot open file %1 for writing!", line));
+        } else if (line.startsWith(QLatin1String("Could not create temporary directory"))) {
             emit error(i18n("Could not create temporary directory, check your config."));
-        } else if (line.startsWith("recordMyDesktop is not compiled with Jack support!")) {
+        } else if (line.startsWith(QLatin1String("recordMyDesktop is not compiled with Jack support!"))) {
             emit error(i18n("recordMyDesktop is not compiled with Jack support."));
-        } else if (line.startsWith("Error while opening/configuring soundcard")) {
+        } else if (line.startsWith(QLatin1String("Error while opening/configuring soundcard"))) {
             emit error(i18n("Error while opening/configuring soundcard."));
-        } else if (line.startsWith("Window size specification out of bounds!")) {
+        } else if (line.startsWith(QLatin1String("Window size specification out of bounds!"))) {
             emit error(i18n("Window size specification out of bounds!"));
         }
     }

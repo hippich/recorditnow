@@ -188,7 +188,7 @@ void TimeLine::updateTime()
                                                         true, true);
     const QString passed = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->value()),
                                                          true, true);
-    timeLabel->setText(passed+"/"+total);
+    timeLabel->setText(passed+'/'+total);
 
     if (slider->value() == slider->maximum()) {
         stop();
@@ -230,7 +230,7 @@ void TimeLine::resetSlider()
     const QString total = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->maximum()),
                                                         true, true);
     const QString passed = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
-    timeLabel->setText(passed+"/"+total);
+    timeLabel->setText(passed+'/'+total);
 
 }
 

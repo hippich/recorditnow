@@ -181,7 +181,7 @@ void YouTubeUploader::upload()
 
     QString id = m_service->authenticate(accountsCombo->currentText(), passwordEdit->text());
 
-    if (id.startsWith("Error: ")) {
+    if (id.startsWith(QLatin1String("Error: "))) {
         serviceError(id.remove(0, 7), QString());
     }
 
@@ -213,7 +213,7 @@ void YouTubeUploader::uploadFinished(YouTubeVideo *video, const QString &id)
         delete video;
         m_service->deleteLater();
         m_service = 0;
-        emit status(i18n("Finished: %1", html));
+        emit status(i18nc("%1 = link to video", "Finished: %1", html));
         emit finished(QString());
     } else {
         m_service->deleteLater();
@@ -261,7 +261,7 @@ void YouTubeUploader::authenticated(const QString &account)
 
     QString id = m_service->upload(&video, accountsCombo->currentText());
 
-    if (id.startsWith("Error:")) {
+    if (id.startsWith(QLatin1String("Error:"))) {
         serviceError(id.remove(0, 7), QString());
     }
 
