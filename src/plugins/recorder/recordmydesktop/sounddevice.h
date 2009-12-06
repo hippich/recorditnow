@@ -17,36 +17,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef SOUNDCARDDIALOG_H
-#define SOUNDCARDDIALOG_H
+#ifndef SOUNDDEVICE_H
+#define SOUNDDEVICE_H
 
 
-// own
-#include "ui_soundcarddialog.h"
-
-// KDE
-#include <kdialog.h>
+#include <QtCore/QString>
 
 
-class SoundCardDialog : public KDialog, public Ui::SoundCardDialog
+class SoundDevice
 {
-    Q_OBJECT
 
 
 public:
-    SoundCardDialog(QWidget *parent = 0);
-    ~SoundCardDialog();
+    SoundDevice();
+
+    static QList<SoundDevice> getDeviceList();
+
+    QString name() const;
+    QString key() const;
+    QString icon() const;
 
 
-private slots:
-    void dialogFinished(const int &ret);
+private:
+    QString m_name;
+    QString m_key;
+    QString m_icon;
 
-
-signals:
-    void cardSelected(const QString &id);
+    static QList<SoundDevice> scanASoundDevice(const QString &dir);
 
 
 };
 
 
-#endif // SOUNDCARDDIALOG_H
+#endif // SOUNDDEVICE_H

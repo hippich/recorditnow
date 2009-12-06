@@ -21,7 +21,7 @@
 // own
 #include "recordmydesktopconfig.h"
 #include <recorditnow_recordmydesktop.h>
-#include "soundcarddialog.h"
+#include "sounddevicedialog.h"
 
 // KDE
 #include <kpluginfactory.h>
@@ -53,8 +53,8 @@ RecordMyDesktopConfig::~RecordMyDesktopConfig()
 void RecordMyDesktopConfig::showDeviceDialog()
 {
 
-    SoundCardDialog *dialog = new SoundCardDialog(this);
-    connect(dialog, SIGNAL(cardSelected(QString)), this, SLOT(deviceDialogFinished(QString)));
+    SoundDeviceDialog *dialog = new SoundDeviceDialog(this);
+    connect(dialog, SIGNAL(deviceSelected(QString)), this, SLOT(deviceDialogFinished(QString)));
     dialog->show();
 
 }
@@ -63,7 +63,6 @@ void RecordMyDesktopConfig::showDeviceDialog()
 void RecordMyDesktopConfig::deviceDialogFinished(const QString &id)
 {
 
-    kDebug() << "card:" << id;
     if (!id.isEmpty()) {
         kcfg___device->setText(id);
     }

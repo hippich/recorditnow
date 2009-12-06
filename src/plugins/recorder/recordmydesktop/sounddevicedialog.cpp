@@ -17,36 +17,67 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef SOUNDCARD_H
-#define SOUNDCARD_H
+
+// own
+#include "sounddevicedialog.h"
+#include "sounddevice.h"
+
+// KDE
+#include <kicon.h>
+#include <klocalizedstring.h>
+
+// Qt
+#include <QtGui/QTreeWidgetItem>
 
 
-#include <QtCore/QString>
+SoundDeviceDialog::SoundDeviceDialog(QWidget *parent)
+    : KDialog(parent)
+{
+
+    setWindowTitle(i18n("Soundcards"));
+    setAttribute(Qt::WA_DeleteOnClose);
+    QWidget *widget = new QWidget(this);
+    setupUi(widget);
+    setMainWidget(widget);
+
+    foreach (const SoundDevice &dev, SoundDevice::getDeviceList()) {
+        QTreeWidgetItem *item = new QTreeWidgetItem;
+        item->setText(0, dev.name());
+        item->setIcon(0, KIcon(dev.icon()));
+        item->setText(1, dev.key());
+
+        treeWidget->addTopLevelItem(item);
+    }
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
+    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+
+    resize(600, 300);
+
+}
 
 
-class SoundCard
+
+SoundDeviceDialog::~SoundDeviceDialog()
 {
 
 
-public:
-    SoundCard();
-
-    static QList<SoundCard> cards();
-
-    QString name() const;
-    QString key() const;
-    QString icon() const;
 
 
-private:
-    QString m_name;
-    QString m_key;
-    QString m_icon;
-
-    static QList<SoundCard> scanASoundCard(const QString &dir);
+}
 
 
-};
+void SoundDeviceDialog::dialogFinished(const int &ret)
+{
+
+    if (ret == KDialog::Accepted) {
+        QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
+        if (!items.isEmpty()) {
+            emit deviceSelected(items[0]->text(1));
+        }
+    }
+
+}
 
 
-#endif // SOUNDCARD_H
+#include "sounddevicedialog.moc"
+

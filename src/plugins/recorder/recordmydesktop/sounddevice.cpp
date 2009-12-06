@@ -19,7 +19,7 @@
 
 
 // own
-#include "soundcard.h"
+#include "sounddevice.h"
 
 // KDE
 #include <kdebug.h>
@@ -31,7 +31,7 @@
 #include <QtCore/QDir>
 
 
-SoundCard::SoundCard()
+SoundDevice::SoundDevice()
 {
 
 
@@ -39,10 +39,10 @@ SoundCard::SoundCard()
 }
 
 
-QList<SoundCard> SoundCard::cards()
+QList<SoundDevice> SoundDevice::getDeviceList()
 {
 
-    QList<SoundCard> cards;
+    QList<SoundDevice> cards;
 
     // asound
     QDir asound("/proc/asound");
@@ -56,7 +56,7 @@ QList<SoundCard> SoundCard::cards()
     foreach (const QString &dir, subDirs) {
         if (cardRX.exactMatch(dir)) {
             kDebug() << "found card:" << dir;
-            cards.append(scanASoundCard("/proc/asound/"+dir));
+            cards.append(scanASoundDevice("/proc/asound/"+dir));
         }
     }
 
@@ -65,7 +65,7 @@ QList<SoundCard> SoundCard::cards()
 }
 
 
-QString SoundCard::name() const
+QString SoundDevice::name() const
 {
 
     return m_name;
@@ -73,7 +73,7 @@ QString SoundCard::name() const
 }
 
 
-QString SoundCard::key() const
+QString SoundDevice::key() const
 {
 
     return m_key;
@@ -81,7 +81,7 @@ QString SoundCard::key() const
 }
 
 
-QString SoundCard::icon() const
+QString SoundDevice::icon() const
 {
 
     return m_icon;
@@ -89,10 +89,10 @@ QString SoundCard::icon() const
 }
 
 
-QList<SoundCard> SoundCard::scanASoundCard(const QString &dir)
+QList<SoundDevice> SoundDevice::scanASoundDevice(const QString &dir)
 {
 
-    QList<SoundCard> cards;
+    QList<SoundDevice> cards;
     const QRegExp pcmRX("^pcm[0-9]+c$");
 
     QDir cardDir(dir);
@@ -113,7 +113,7 @@ QList<SoundCard> SoundCard::scanASoundCard(const QString &dir)
             }
 
             QTextStream stream(&info);
-            SoundCard card;
+            SoundDevice card;
 
             QString CARD, DEVICE;
             QString line = stream.readLine();

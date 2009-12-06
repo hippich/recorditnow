@@ -17,67 +17,36 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef SOUNDDEVICEDIALOG_H
+#define SOUNDDEVICEDIALOG_H
+
 
 // own
-#include "soundcarddialog.h"
-#include "soundcard.h"
+#include "ui_sounddevicedialog.h"
 
 // KDE
-#include <kicon.h>
-#include <klocalizedstring.h>
-
-// Qt
-#include <QtGui/QTreeWidgetItem>
+#include <kdialog.h>
 
 
-SoundCardDialog::SoundCardDialog(QWidget *parent)
-    : KDialog(parent)
+class SoundDeviceDialog : public KDialog, public Ui::SoundDeviceDialog
 {
-
-    setWindowTitle(i18n("Soundcards"));
-    setAttribute(Qt::WA_DeleteOnClose);
-    QWidget *widget = new QWidget(this);
-    setupUi(widget);
-    setMainWidget(widget);
-
-    foreach (const SoundCard &card, SoundCard::cards()) {
-        QTreeWidgetItem *item = new QTreeWidgetItem;
-        item->setText(0, card.name());
-        item->setIcon(0, KIcon(card.icon()));
-        item->setText(1, card.key());
-
-        treeWidget->addTopLevelItem(item);
-    }
-    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
-
-    resize(600, 300);
-
-}
+    Q_OBJECT
 
 
-
-SoundCardDialog::~SoundCardDialog()
-{
-
-
+public:
+    SoundDeviceDialog(QWidget *parent = 0);
+    ~SoundDeviceDialog();
 
 
-}
+private slots:
+    void dialogFinished(const int &ret);
 
 
-void SoundCardDialog::dialogFinished(const int &ret)
-{
-
-    if (ret == KDialog::Accepted) {
-        QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
-        if (!items.isEmpty()) {
-            emit cardSelected(items[0]->text(1));
-        }
-    }
-
-}
+signals:
+    void deviceSelected(const QString &id);
 
 
-#include "soundcarddialog.moc"
+};
 
+
+#endif // SOUNDDEVICEDIALOG_H
