@@ -310,6 +310,7 @@ void MouseConfig::updateColumnSize()
 {
 
     treeWidget->header()->resizeSections(QHeaderView::ResizeToContents);
+    treeWidget->header()->setStretchLastSection(true);
 
 }
 

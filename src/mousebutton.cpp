@@ -184,6 +184,7 @@ void MouseButton::setText(const QString &text)
     int width = fm.width(text);
     width += fm.height()*3;
     setMinimumWidth(width);
+    resize(width, height());
 
 }
 
