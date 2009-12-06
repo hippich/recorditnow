@@ -129,12 +129,12 @@ QTime Topic::secondsToTime(const unsigned long seconds)
     int hours(0), minutes(0);
     int hour(3600), minute(60);
 
-    while (secs >= hour) {
+    while (secs >= (unsigned long)hour) {
         hours++;
         secs -= hour;
     }
 
-    while (secs >= minute) {
+    while (secs >= (unsigned long)minute) {
         minutes++;
         secs -= minute;
     }
