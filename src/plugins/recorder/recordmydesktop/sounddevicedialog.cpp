@@ -34,7 +34,7 @@ SoundDeviceDialog::SoundDeviceDialog(QWidget *parent)
     : KDialog(parent)
 {
 
-    setWindowTitle(i18n("Soundcards"));
+    setWindowTitle(i18n("Sound Device"));
     setAttribute(Qt::WA_DeleteOnClose);
     QWidget *widget = new QWidget(this);
     setupUi(widget);
