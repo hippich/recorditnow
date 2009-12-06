@@ -42,14 +42,14 @@
          <item row="2" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___no_shared">
            <property name="text">
-            <string>Disable usage of MIT-shared memory extension(Not Recomended!)</string>
+            <string>Disable usage of MIT-shared memory extension(Not Recommended!)</string>
            </property>
           </widget>
          </item>
          <item row="3" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___full_shots">
            <property name="text">
-            <string>Take full screenshot at every frame(Not Recomended!)</string>
+            <string>Take full screenshot at every frame(Not Recommended!)</string>
            </property>
           </widget>
          </item>
