@@ -29,8 +29,10 @@
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QPair>
 
 
+typedef QPair<QString, QString> DeviceData;
 class QSocketNotifier;
 namespace SNoop {
 
@@ -44,9 +46,8 @@ public:
     explicit Device(QObject *parent, const QString &file);
     ~Device();
 
-    static QStringList getDeviceList();
-    static QString getDeviceName(const QString &file);
-    static QString fileForDevice(const QString &device);
+    static QList<DeviceData> getDeviceList();
+    static DeviceData getDevice(const QString &file);
 
 
 private:

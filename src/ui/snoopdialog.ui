@@ -24,6 +24,11 @@
      </property>
      <column>
       <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>Device</string>
       </property>
      </column>

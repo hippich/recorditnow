@@ -41,6 +41,8 @@ public:
 
 private slots:
     void dialogFinished(const int &ret);
+    void loadDeviceList();
+    void loadDeviceList2();
 
 
 signals:

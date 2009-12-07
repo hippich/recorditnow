@@ -46,12 +46,7 @@ Manager::~Manager()
 SNoop::Device *Manager::watch(const QString &device, QObject *parent)
 {
 
-    const QString file = SNoop::Device::fileForDevice(device);
-    if (file.isEmpty()) {
-        return 0;
-    }
-
-    SNoop::Device *dev = new SNoop::Device(parent, file);
+    SNoop::Device *dev = new SNoop::Device(parent, device);
     return dev;
 
 }

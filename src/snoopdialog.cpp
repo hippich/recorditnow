@@ -22,8 +22,15 @@
 #include "snoopdialog.h"
 #include "snoop/device.h"
 
+// KDE
+#include <kdebug.h>
+
 // Qt
 #include <QtGui/QTreeWidget>
+#include <QtDBus/QDBusConnection>
+#include <QtDBus/QDBusConnectionInterface>
+#include <QtDBus/QDBusMessage>
+#include <QtDBus/QDBusInterface>
 
 
 SNoopDialog::SNoopDialog(QWidget *parent)
@@ -36,15 +43,11 @@ SNoopDialog::SNoopDialog(QWidget *parent)
     setupUi(widget);
     setMainWidget(widget);
 
-    foreach (const QString &dev, SNoop::Device::getDeviceList()) {
-        QTreeWidgetItem *item = new QTreeWidgetItem;
-        item->setText(0, dev);
-        treeWidget->addTopLevelItem(item);
-    }
-    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
 
     resize(600, 300);
+
+    loadDeviceList();
 
 }
 
@@ -65,8 +68,65 @@ void SNoopDialog::dialogFinished(const int &ret)
     if (ret == KDialog::Accepted) {
         QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
         if (!items.isEmpty()) {
-            emit deviceSelected(items[0]->text(0));
+            emit deviceSelected(items[0]->text(1));
         }
+    }
+
+}
+
+
+void SNoopDialog::loadDeviceList()
+{
+
+    treeWidget->clear();
+    QDBusInterface interface("org.freedesktop.Hal",
+                             "/org/freedesktop/Hal/Manager",
+                             "org.freedesktop.Hal.Manager",
+                             QDBusConnection::systemBus());
+
+
+    QDBusMessage reply = interface.call("FindDeviceByCapability", "input.mouse");
+    if (!reply.errorName().isEmpty() || !reply.errorMessage().isEmpty() || reply.arguments().isEmpty()) {
+        loadDeviceList2();
+    } else {
+        QStringList files;
+        foreach (const QString &uuid, reply.arguments().first().toStringList()) {
+            kDebug() << "uuid:" << uuid;
+            QDBusInterface devInterface("org.freedesktop.Hal",
+                                           uuid,
+                                           "org.freedesktop.Hal.Device",
+                                           QDBusConnection::systemBus());
+            reply = devInterface.call("GetProperty", "input.device");
+            if (reply.errorName().isEmpty() && reply.errorMessage().isEmpty()) {
+                const DeviceData data = SNoop::Device::getDevice(reply.arguments().first().toString());
+                if (!data.first.isEmpty() || data.second.isEmpty()) {
+                    QTreeWidgetItem *item = new QTreeWidgetItem;
+                    item->setText(0, data.first);
+                    item->setText(1, data.second);
+                    treeWidget->addTopLevelItem(item);
+                }
+            }
+        }
+    }
+
+    if (treeWidget->topLevelItemCount() == 0) {
+        loadDeviceList2();
+    }
+
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
+
+}
+
+
+// worst case
+void SNoopDialog::loadDeviceList2()
+{
+
+    foreach (const DeviceData &dev, SNoop::Device::getDeviceList()) {
+        QTreeWidgetItem *item = new QTreeWidgetItem;
+        item->setText(0, dev.first);
+        item->setText(1, dev.second);
+        treeWidget->addTopLevelItem(item);
     }
 
 }

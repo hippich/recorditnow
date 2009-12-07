@@ -63,10 +63,10 @@ Device::~Device()
 }
 
 
-QStringList Device::getDeviceList()
+QList<DeviceData> Device::getDeviceList()
 {
 
-    QStringList deviceList;
+    QList<DeviceData> deviceList;
     QDir input("/dev/input");
     if (!input.exists()) {
         kWarning() << "/dev/input: no such directory!";
@@ -77,9 +77,9 @@ QStringList Device::getDeviceList()
     const QRegExp rx("^event[0-9]+$");
 
     foreach (const QString &file, files) {
-        if (rx.exactMatch(file)) {
-            const QString device = getDeviceName(file);
-            if (!device.isEmpty()) {
+        if (rx.exactMatch(file)) {                        
+            const DeviceData device = getDevice(file);
+            if (!device.first.isEmpty() && !device.second.isEmpty()) {
                 deviceList.append(device);
             }
         }
@@ -89,48 +89,31 @@ QStringList Device::getDeviceList()
 }
 
 
-QString Device::getDeviceName(const QString &file)
+DeviceData Device::getDevice(const QString &file)
 {
 
-    QString name;
+    QString path = file;
+    DeviceData device;
     int fd;
-    if ((fd = open ("/dev/input/"+file.toLatin1(), O_RDONLY)) == -1) {
-        kWarning() << file << ": open failed!";
-        return name;
+
+    if (!path.startsWith(QLatin1String("/dev/input/"))) {
+        path.prepend("/dev/input/");
+    }
+
+    if ((fd = open (path.toLatin1(), O_RDONLY)) == -1) {
+        kWarning() << path << ": open failed!";
+        return device;
     }
 
     char buff[32];
     ioctl(fd, EVIOCGNAME(sizeof(buff)), buff);
 
-    return name.append(buff);
+    device.first = QString(buff);
+    device.second = path;
+
+    return device;
 
 }
-
-
-QString Device::fileForDevice(const QString &device)
-{
-
-    QDir input("/dev/input");
-    if (!input.exists()) {
-        kWarning() << "/dev/input: no such directory!";
-        return QString();
-    }
-
-    QStringList files = input.entryList(QDir::System);
-    const QRegExp rx("^event[0-9]+$");
-
-    foreach (const QString &fileName, files) {
-        if (rx.exactMatch(fileName)) {
-            const QString deviceName = getDeviceName(fileName);
-            if (deviceName == device) {
-                return "/dev/input/"+fileName;
-            }
-        }
-    }
-    return QString();
-
-}
-
 
 
 void Device::readEvents()
