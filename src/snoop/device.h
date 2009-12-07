@@ -17,72 +17,55 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
+#ifndef DEVICE_H
+#define DEVICE_H
 
 
 // own
-#include "snoop/event.h"
+#include "event.h"
+
+// KDE
+#include <kdemacros.h>
 
 // Qt
-#include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
+#include <QtCore/QObject>
 
 
+class QSocketNotifier;
 namespace SNoop {
-    class Device;
-};
 
-class QTimer;
-class CursorWidget : public QWidget
+class Thread;
+class KDE_EXPORT Device : public QObject
 {
     Q_OBJECT
 
 
 public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
+    explicit Device(QObject *parent, const QString &file);
+    ~Device();
 
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-    void setUseSNoop(const bool &use, const QString &deviceName = QString());
-
-    void start();
-    void stop();
-    void click(const int &button);
-    WId getWindow() const;
+    static QStringList getDeviceList();
+    static QString getDeviceName(const QString &file);
+    static QString fileForDevice(const QString &device);
 
 
 private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
-    bool m_useSNoop;
-    SNoop::Device *m_device;
-    QString m_deviceName;
+    QSocketNotifier *m_socketNotifier;
 
 
 private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
-    void buttonPressed(const SNoop::Event &event);
-
-
-protected:
-    void paintEvent(QPaintEvent *event);
+    void readEvents();
 
 
 signals:
-    void error(const QString &message);
+    void buttonPressed(const SNoop::Event &event);
+    void finished();
 
 
 };
 
 
-#endif // CURSORWIDGET_H
+}; // Namespace SNoop
+
+
+#endif // DEVICE_H

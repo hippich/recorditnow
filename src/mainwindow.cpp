@@ -328,6 +328,7 @@ void MainWindow::startRecord()
         m_cursor->setButtons(MouseConfig::getButtons());
         m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
         m_cursor->setNormalColor(Settings::defaultColor());
+        m_cursor->setUseSNoop(Settings::useSNoop(), Settings::snoopDevice());
 
         m_cursor->start();
     }
@@ -759,7 +760,8 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 {
 
     if (m_cursor) {
-        delete m_cursor;
+        m_cursor->stop();
+        m_cursor = 0;
     }
 
     if (m_zoom) {

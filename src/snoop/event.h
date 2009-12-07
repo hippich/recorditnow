@@ -17,72 +17,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
+#ifndef EVENT_H
+#define EVENT_H
 
 
-// own
-#include "snoop/event.h"
+// KDE
+#include <kdemacros.h>
 
 // Qt
-#include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
+#include <QtCore/QString>
 
 
 namespace SNoop {
-    class Device;
-};
 
-class QTimer;
-class CursorWidget : public QWidget
+
+class KDE_EXPORT Event
 {
-    Q_OBJECT
 
 
 public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
+    enum Key {
+        LeftButton = 0,
+        RightButton = 1,
+        MiddleButton = 3,
+        SpecialButton1 = 4,
+        SpecialButton2 = 5,
+        WheelUp = 6,
+        WheelDown = 7,
+        NoButton = -1
+    };
+    Event();
+    Event(const SNoop::Event &other);
+    ~Event();
 
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-    void setUseSNoop(const bool &use, const QString &deviceName = QString());
-
-    void start();
-    void stop();
-    void click(const int &button);
-    WId getWindow() const;
-
-
-private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
-    bool m_useSNoop;
-    SNoop::Device *m_device;
-    QString m_deviceName;
+    Key key;
+    bool pressed;
 
 
-private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
-    void buttonPressed(const SNoop::Event &event);
-
-
-protected:
-    void paintEvent(QPaintEvent *event);
-
-
-signals:
-    void error(const QString &message);
+    static QString name(const SNoop::Event::Key &key);
+    static SNoop::Event::Key keyFromName(const QString &name);
+    static SNoop::Event::Key xButtonToKey(const int &button);
+    static int keyToXButton(const SNoop::Event::Key &key);
 
 
 };
 
 
-#endif // CURSORWIDGET_H
+}; // Namespace SNoop
+
+
+#endif // EVENT_H

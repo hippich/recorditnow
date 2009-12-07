@@ -17,72 +17,59 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
-
 
 // own
-#include "snoop/event.h"
+#include "snoopdialog.h"
+#include "snoop/device.h"
 
 // Qt
-#include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
+#include <QtGui/QTreeWidget>
 
 
-namespace SNoop {
-    class Device;
-};
-
-class QTimer;
-class CursorWidget : public QWidget
+SNoopDialog::SNoopDialog(QWidget *parent)
+    : KDialog(parent)
 {
-    Q_OBJECT
+
+    setWindowTitle(i18n("Sound Device"));
+    setAttribute(Qt::WA_DeleteOnClose);
+    QWidget *widget = new QWidget(this);
+    setupUi(widget);
+    setMainWidget(widget);
+
+    foreach (const QString &dev, SNoop::Device::getDeviceList()) {
+        QTreeWidgetItem *item = new QTreeWidgetItem;
+        item->setText(0, dev);
+        treeWidget->addTopLevelItem(item);
+    }
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
+    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+
+    resize(600, 300);
+
+}
 
 
-public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
-
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-    void setUseSNoop(const bool &use, const QString &deviceName = QString());
-
-    void start();
-    void stop();
-    void click(const int &button);
-    WId getWindow() const;
+SNoopDialog::~SNoopDialog()
+{
 
 
-private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
-    bool m_useSNoop;
-    SNoop::Device *m_device;
-    QString m_deviceName;
+
+}
 
 
-private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
-    void buttonPressed(const SNoop::Event &event);
 
 
-protected:
-    void paintEvent(QPaintEvent *event);
+void SNoopDialog::dialogFinished(const int &ret)
+{
+
+    if (ret == KDialog::Accepted) {
+        QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
+        if (!items.isEmpty()) {
+            emit deviceSelected(items[0]->text(0));
+        }
+    }
+
+}
 
 
-signals:
-    void error(const QString &message);
-
-
-};
-
-
-#endif // CURSORWIDGET_H
+#include "snoopdialog.moc"

@@ -17,72 +17,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
+
+#ifndef SNOOPDIALOG_H
+#define SNOOPDIALOG_H
 
 
 // own
-#include "snoop/event.h"
+#include "ui_snoopdialog.h"
 
-// Qt
-#include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
+// KDE
+#include <kdialog.h>
 
 
-namespace SNoop {
-    class Device;
-};
-
-class QTimer;
-class CursorWidget : public QWidget
+class SNoopDialog : public KDialog, public Ui::SNoopDialog
 {
     Q_OBJECT
 
 
 public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
-
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-    void setUseSNoop(const bool &use, const QString &deviceName = QString());
-
-    void start();
-    void stop();
-    void click(const int &button);
-    WId getWindow() const;
-
-
-private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
-    bool m_useSNoop;
-    SNoop::Device *m_device;
-    QString m_deviceName;
+    explicit SNoopDialog(QWidget *parent = 0);
+    ~SNoopDialog();
 
 
 private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
-    void buttonPressed(const SNoop::Event &event);
-
-
-protected:
-    void paintEvent(QPaintEvent *event);
+    void dialogFinished(const int &ret);
 
 
 signals:
-    void error(const QString &message);
+    void deviceSelected(const QString &id);
 
 
 };
 
 
-#endif // CURSORWIDGET_H
+#endif // SNOOPDIALOG_H

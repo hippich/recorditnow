@@ -27,6 +27,34 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QCheckBox" name="kcfg_useSNoop">
+          <property name="text">
+           <string>Use evdev</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KLineEdit" name="kcfg_snoopDevice">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="snoopButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="label">
@@ -79,9 +107,6 @@
         </attribute>
         <attribute name="headerMinimumSectionSize">
          <number>22</number>
-        </attribute>
-        <attribute name="headerStretchLastSection">
-         <bool>true</bool>
         </attribute>
         <attribute name="headerStretchLastSection">
          <bool>true</bool>
@@ -154,6 +179,11 @@
    <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
@@ -165,5 +195,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_useSNoop</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_snoopDevice</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>123</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useSNoop</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>snoopButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>73</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>315</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

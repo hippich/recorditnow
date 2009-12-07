@@ -21,6 +21,8 @@
 // own
 #include "cursorwidget.h"
 #include "mousebutton.h"
+#include "snoop/device.h"
+#include "snoop/manager.h"
 
 // KDE
 #include <kdebug.h>
@@ -48,6 +50,9 @@ CursorWidget::CursorWidget(QWidget *parent)
 
     setAttribute(Qt::WA_TranslucentBackground);
     // setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    m_useSNoop = false;
+    m_device = 0;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updatePos()));
@@ -107,6 +112,15 @@ void CursorWidget::setButtons(const QHash<int, QColor> &buttons)
 }
 
 
+void CursorWidget::setUseSNoop(const bool &use, const QString &deviceName)
+{
+
+    m_useSNoop = use;
+    m_deviceName = deviceName;
+
+}
+
+
 void CursorWidget::start()
 {
 
@@ -114,6 +128,17 @@ void CursorWidget::start()
     updateGrab(true);
 
 }
+
+
+void CursorWidget::stop()
+{
+
+    hide();
+    updateGrab(false);
+    deleteLater();
+
+}
+
 
 
 void CursorWidget::click(const int &button)
@@ -170,31 +195,40 @@ void CursorWidget::updateGrab(const bool &grab)
     QHashIterator<int, QColor> it(m_buttons);
     const int screen = x11Info().appScreen();
     if (grab) {
-        while (it.hasNext()) {
-            it.next();
-            KXErrorHandler handler;
-            XGrabButton(x11Info().display(),
-                        it.key(),
-                        AnyModifier,
-                        x11Info().appRootWindow(screen),
-                        True,
-                        ButtonPressMask,
-                        GrabModeSync,
-                        GrabModeAsync,
-                        x11Info().appRootWindow(screen),
-                        None);
-            if (handler.error(true)) {
-                XErrorEvent event = handler.errorEvent();
-                if (event.error_code == 10) { // BadAccess
-                    MouseButton::Button button = MouseButton::getButtonFromXButton(it.key());
-                    const QString buttonName = MouseButton::getName(button);
-                    emit error(i18n("Grab failed!\n"
-                                    "Perhaps the button \"%1\" is already grabbed by another"
-                                    " application.", buttonName));
+        if (!m_useSNoop) {
+            while (it.hasNext()) {
+                it.next();
+                KXErrorHandler handler;
+                XGrabButton(x11Info().display(),
+                            it.key(),
+                            AnyModifier,
+                            x11Info().appRootWindow(screen),
+                            True,
+                            ButtonPressMask,
+                            GrabModeSync,
+                            GrabModeAsync,
+                            x11Info().appRootWindow(screen),
+                            None);
+                if (handler.error(true)) {
+                    XErrorEvent event = handler.errorEvent();
+                    if (event.error_code == 10) { // BadAccess
+                        MouseButton::Button button = MouseButton::getButtonFromXButton(it.key());
+                        const QString buttonName = MouseButton::getName(button);
+                        emit error(i18n("Grab failed!\n"
+                                        "Perhaps the button \"%1\" is already grabbed by another"
+                                        " application.", buttonName));
+                    }
                 }
             }
+        } else {
+            m_device = SNoop::Manager::watch(m_deviceName, this);
+            if (m_device) {
+                connect(m_device, SIGNAL(buttonPressed(SNoop::Event)), this,
+                        SLOT(buttonPressed(SNoop::Event)));
+            } else {
+                emit error(i18n("Grab failed!"));
+            }
         }
-
     } else {
         while (it.hasNext()) {
             it.next();
@@ -203,10 +237,42 @@ void CursorWidget::updateGrab(const bool &grab)
                           AnyModifier,
                           x11Info().appRootWindow(screen));
         }
+        if (m_device) {
+            m_device->disconnect(this);
+            m_device->deleteLater();
+            m_device = 0;
+        }
     }
 
 }
 
+
+void CursorWidget::buttonPressed(const SNoop::Event &event)
+{
+
+    if (m_resetTimer->isActive()) {
+        m_resetTimer->stop();
+    }
+
+    switch (event.key) {
+    case SNoop::Event::WheelUp:
+    case SNoop::Event::WheelDown: {
+            m_currentColor = m_buttons[event.keyToXButton(event.key)];
+            m_resetTimer->start(350);
+            break;
+        }
+    default: {
+            if (event.pressed) {
+                m_currentColor = m_buttons[event.keyToXButton(event.key)];
+            } else {
+                m_currentColor = m_normalColor;
+            }
+            break;
+        }
+    }
+    update();
+
+}
 
 
 void CursorWidget::paintEvent(QPaintEvent *event)
