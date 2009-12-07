@@ -1215,7 +1215,7 @@ void MainWindow::timeLineFinsihed()
 void MainWindow::cursorError(const QString &message)
 {
 
-    KNotification *notification = new KNotification("error", KNotification::CloseOnTimeout, this);
+    KNotification *notification = new KNotification("error", this, KNotification::CloseOnTimeout);
     notification->setText(message);
     notification->setPixmap(KIcon("dialog-error").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
     notification->sendEvent();

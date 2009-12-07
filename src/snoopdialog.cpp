@@ -157,7 +157,6 @@ void SNoopDialog::loadDeviceList2()
 void SNoopDialog::updateStatus()
 {
 
-
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
         QFile file(item->text(1));
@@ -165,6 +164,7 @@ void SNoopDialog::updateStatus()
             item->setIcon(2, KIcon("dialog-error"));
             item->setText(2, i18n("File not found"));
         } else if (!file.open(QIODevice::ReadOnly)) {
+            file.close();
             item->setIcon(2, KIcon("dialog-error"));
             item->setText(2, i18nc("%1 = error string", "Cannot open file: %1", file.errorString()));
         } else {
@@ -172,7 +172,6 @@ void SNoopDialog::updateStatus()
             item->setText(2, i18n("Ok"));
         }
     }
-
 
 }
 
