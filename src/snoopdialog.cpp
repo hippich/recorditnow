@@ -163,7 +163,7 @@ void SNoopDialog::updateStatus()
             item->setText(2, i18n("File not found"));
         } else if (!file.open(QIODevice::ReadOnly)) {
             item->setIcon(2, KIcon("dialog-error"));
-            item->setText(2, i18n("Can not open file"));
+            item->setText(2, i18nc("%1 = error string", "Cannot open file: %1", file.errorString()));
         } else {
             item->setIcon(2, KIcon("dialog-ok"));
             item->setText(2, i18n("Ok"));
