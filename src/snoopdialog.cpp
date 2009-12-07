@@ -24,13 +24,14 @@
 
 // KDE
 #include <kdebug.h>
+#include <klocalizedstring.h>
 
 // Qt
-#include <QtGui/QTreeWidget>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusConnectionInterface>
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusInterface>
+#include <QtCore/QFile>
 
 
 SNoopDialog::SNoopDialog(QWidget *parent)
@@ -99,9 +100,13 @@ void SNoopDialog::loadDeviceList()
             reply = devInterface.call("GetProperty", "input.device");
             if (reply.errorName().isEmpty() && reply.errorMessage().isEmpty()) {
                 const DeviceData data = SNoop::Device::getDevice(reply.arguments().first().toString());
-                if (!data.first.isEmpty() || data.second.isEmpty()) {
+                if (!data.second.isEmpty()) {
                     QTreeWidgetItem *item = new QTreeWidgetItem;
-                    item->setText(0, data.first);
+                    if (!data.first.isEmpty()) {
+                        item->setText(0, data.first);
+                    } else {
+                        item->setText(0, i18n("Unkown"));
+                    }
                     item->setText(1, data.second);
                     treeWidget->addTopLevelItem(item);
                 }
@@ -113,6 +118,7 @@ void SNoopDialog::loadDeviceList()
         loadDeviceList2();
     }
 
+    updateStatus();
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
 }
@@ -123,13 +129,43 @@ void SNoopDialog::loadDeviceList2()
 {
 
     foreach (const DeviceData &dev, SNoop::Device::getDeviceList()) {
-        QTreeWidgetItem *item = new QTreeWidgetItem;
-        item->setText(0, dev.first);
-        item->setText(1, dev.second);
-        treeWidget->addTopLevelItem(item);
+        if (!dev.second.isEmpty()) {
+            QTreeWidgetItem *item = new QTreeWidgetItem;
+            if (!dev.first.isEmpty()) {
+                item->setText(0, dev.first);
+            } else {
+                item->setText(0, i18n("Unkown"));
+            }
+            item->setText(1, dev.second);
+            treeWidget->addTopLevelItem(item);
+        }
     }
 
 }
+
+
+void SNoopDialog::updateStatus()
+{
+
+
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        QFile file(item->text(1));
+        if (!file.exists()) {
+            item->setIcon(2, KIcon("dialog-error"));
+            item->setText(2, i18n("File not found"));
+        } else if (!file.open(QIODevice::ReadOnly)) {
+            item->setIcon(2, KIcon("dialog-error"));
+            item->setText(2, i18n("Can not open file"));
+        } else {
+            item->setIcon(2, KIcon("dialog-ok"));
+            item->setText(2, i18n("Ok"));
+        }
+    }
+
+
+}
+
 
 
 #include "snoopdialog.moc"

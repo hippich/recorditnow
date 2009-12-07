@@ -102,13 +102,12 @@ DeviceData Device::getDevice(const QString &file)
 
     if ((fd = open (path.toLatin1(), O_RDONLY)) == -1) {
         kWarning() << path << ": open failed!";
-        return device;
+    } else {
+        char buff[32];
+        ioctl(fd, EVIOCGNAME(sizeof(buff)), buff);
+
+        device.first = QString(buff);
     }
-
-    char buff[32];
-    ioctl(fd, EVIOCGNAME(sizeof(buff)), buff);
-
-    device.first = QString(buff);
     device.second = path;
 
     return device;
