@@ -25,6 +25,7 @@
 // KDE
 #include <kdebug.h>
 #include <klocalizedstring.h>
+#include <kpushbutton.h>
 
 // Qt
 #include <QtDBus/QDBusConnection>
@@ -40,11 +41,17 @@ SNoopDialog::SNoopDialog(QWidget *parent)
 
     setWindowTitle(i18n("Sound Device"));
     setAttribute(Qt::WA_DeleteOnClose);
+
     QWidget *widget = new QWidget(this);
     setupUi(widget);
     setMainWidget(widget);
 
+    setButtons(KDialog::Ok|KDialog::Cancel|KDialog::User1);
+    setButtonText(KDialog::User1, i18n("Reload"));
+    this->setButtonIcon(KDialog::User1, KIcon("view-refresh"));
+
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+    connect(button(KDialog::User1), SIGNAL(clicked()), this, SLOT(loadDeviceList()));
 
     resize(600, 300);
 
