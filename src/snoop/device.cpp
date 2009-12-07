@@ -96,7 +96,7 @@ DeviceData Device::getDevice(const QString &file)
     DeviceData device;
     int fd;
 
-    if (!path.startsWith(QLatin1String("/dev/input/"))) {
+    if (!path.startsWith(QLatin1Char('/'))) {
         path.prepend("/dev/input/");
     }
 
