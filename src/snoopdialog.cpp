@@ -26,6 +26,9 @@
 #include <kdebug.h>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
+#include <kmessagebox.h>
+#include <kstandarddirs.h>
+#include <kprocess.h>
 
 // Qt
 #include <QtDBus/QDBusConnection>
@@ -39,7 +42,7 @@ SNoopDialog::SNoopDialog(QWidget *parent)
     : KDialog(parent)
 {
 
-    setWindowTitle(i18n("Sound Device"));
+    setWindowTitle(i18n("Mouse"));
     setAttribute(Qt::WA_DeleteOnClose);
 
     QWidget *widget = new QWidget(this);
@@ -48,7 +51,7 @@ SNoopDialog::SNoopDialog(QWidget *parent)
 
     setButtons(KDialog::Ok|KDialog::Cancel|KDialog::User1);
     setButtonText(KDialog::User1, i18n("Reload"));
-    this->setButtonIcon(KDialog::User1, KIcon("view-refresh"));
+    setButtonIcon(KDialog::User1, KIcon("view-refresh"));
 
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
     connect(button(KDialog::User1), SIGNAL(clicked()), this, SLOT(loadDeviceList()));
@@ -172,7 +175,6 @@ void SNoopDialog::updateStatus()
 
 
 }
-
 
 
 #include "snoopdialog.moc"
