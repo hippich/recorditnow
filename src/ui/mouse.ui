@@ -44,6 +44,9 @@
         </item>
         <item>
          <widget class="KPushButton" name="snoopButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Search</string>
           </property>
@@ -206,6 +209,22 @@
     <hint type="destinationlabel">
      <x>123</x>
      <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_useSNoop</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>snoopButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>45</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>57</y>
     </hint>
    </hints>
   </connection>
