@@ -31,7 +31,7 @@
         <item>
          <widget class="QCheckBox" name="kcfg_useSNoop">
           <property name="text">
-           <string>Use evdev</string>
+           <string>Device</string>
           </property>
          </widget>
         </item>
