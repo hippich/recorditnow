@@ -30,12 +30,10 @@
 #include <kstandarddirs.h>
 
 // Qt
-#include <QtGui/QTreeWidgetItem>
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusConnectionInterface>
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusInterface>
 #include <QtCore/QFile>
+#include <QtCore/QTimer>
 
 
 SNoopDialog::SNoopDialog(QWidget *parent)
@@ -62,7 +60,7 @@ SNoopDialog::SNoopDialog(QWidget *parent)
 
     resize(600, 300);
 
-    loadDeviceList();
+    QTimer::singleShot(0, this, SLOT(loadDeviceList()));
 
 }
 
