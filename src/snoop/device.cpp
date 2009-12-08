@@ -122,8 +122,9 @@ void Device::readEvents()
     for (;;) {
         struct input_event ev;
         int bytesRead = read(fd, &ev, sizeof(ev));
-        if (bytesRead <= 0)
+        if (bytesRead <= 0) {
             break;
+        }
         if (bytesRead != sizeof(ev)) {
             kWarning("Internal error!");
             return;
