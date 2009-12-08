@@ -17,44 +17,52 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef SNOOPDIALOG_H
-#define SNOOPDIALOG_H
-
-
-// own
-#include "ui_snoopdialog.h"
-
-// KDE
-#include <kdialog.h>
-#include <kprocess.h>
+#ifndef DEVICE_H
+#define DEVICE_H
 
 
-class SNoopDialog : public KDialog, public Ui::SNoopDialog
+// Qt
+#include <QtCore/QObject>
+
+
+class Device : public QObject
 {
     Q_OBJECT
 
 
 public:
-    explicit SNoopDialog(QWidget *parent = 0);
-    ~SNoopDialog();
+    enum Error {
+        ERR_NOERROR = 0,
+        ERR_NOSUCHFILE = 1,
+        ERR_PERMDENIED = 2,
+        ERR_GROUPADDNOTFOUND = 3,
+        ERR_INTERNALERROR = 4,
+        ERR_GPASSWDNOTFOUND = 5,
+        ERR_NOUSER = 6,
+        ERR_OPENFAILED = 7,
+        ERR_WRITEFAILED = 8,
+        ERR_CHMODNOTFOUND = 9,
+        ERR_CHMODFIALED = 10
+    };
+
+    explicit Device(const QString &device, QObject *parent = 0);
+    ~Device();
+
+
+private:
+    QString m_device;
 
 
 private slots:
-    void dialogFinished(const int &ret);
-    void loadDeviceList();
-    void loadDeviceList2();
-    void updateStatus();
-    void fixPermissions();
-    void fixFinished(const int &exitCode, const QProcess::ExitStatus &exitStatus);
-    void itemSelectionChanged();
+    void fix();
 
 
-signals:
-    void deviceSelected(const QString &id);
+protected:
+    void exit(const Device::Error &code);
+
 
 
 };
 
 
-#endif // SNOOPDIALOG_H
+#endif // DEVICE_H

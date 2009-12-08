@@ -18,43 +18,55 @@
  ***************************************************************************/
 
 
-#ifndef SNOOPDIALOG_H
-#define SNOOPDIALOG_H
-
-
 // own
-#include "ui_snoopdialog.h"
+#include "device.h"
 
 // KDE
-#include <kdialog.h>
-#include <kprocess.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kcmdlineargs.h>
+#include <kdebug.h>
 
 
-class SNoopDialog : public KDialog, public Ui::SNoopDialog
+
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
 
+    KAboutData about("recorditnow_fix_permissions",
+                     0,
+                     ki18n("recorditnow_fix_permissions"),
+                     "0.1",
+                     ki18n(""),
+                     KAboutData::License_GPL,
+                     ki18n("(C) 2009 Kai Dombrowe"),
+                     KLocalizedString(),
+                     0,
+                     "just89@gmx.de");
+    about.setProgramIconName("recorditnow");
+    about.setHomepage("http://recorditnow.sourceforge.net/index.html");
 
-public:
-    explicit SNoopDialog(QWidget *parent = 0);
-    ~SNoopDialog();
+    KCmdLineArgs::init(argc, argv, &about);
 
+    KCmdLineOptions options;
+    options.add("device <device>", ki18n("Path to device"));
+    KCmdLineArgs::addCmdLineOptions(options);
 
-private slots:
-    void dialogFinished(const int &ret);
-    void loadDeviceList();
-    void loadDeviceList2();
-    void updateStatus();
-    void fixPermissions();
-    void fixFinished(const int &exitCode, const QProcess::ExitStatus &exitStatus);
-    void itemSelectionChanged();
+    KApplication app;
+    KCmdLineArgs *parsed = KCmdLineArgs::parsedArgs();
 
+    QString device;
+    if (parsed->isSet("device")) {
+        device = parsed->getOption("device");
+    }
+    parsed->clear();
 
-signals:
-    void deviceSelected(const QString &id);
+    if (device.isEmpty()) {
+        return Device::ERR_NOSUCHFILE;
+    }
 
+    Device *dev = new Device(device);
+    Q_UNUSED(dev);
 
-};
+    return app.exec();
 
-
-#endif // SNOOPDIALOG_H
+}

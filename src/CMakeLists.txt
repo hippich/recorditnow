@@ -22,6 +22,7 @@ add_subdirectory(libs)
 add_subdirectory(plugins)
 add_subdirectory(icons)
 add_subdirectory(snoop)
+add_subdirectory(fixperm)
 
 macro_display_feature_log()
 
