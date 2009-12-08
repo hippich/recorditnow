@@ -2,14 +2,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Sebastien Vrillaud <kochka@gmail.com>, 2009.
+# Sébastien Vrillaud <kochka@gmail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2009-12-08 11:16+0100\n"
-"PO-Revision-Date: 2009-12-05 15:52+0100\n"
-"Last-Translator: Sebastien Vrillaud <kochka@gmail.com>\n"
-"Language-Team: French <kde-i18n-fr@kde.org>\n"
+"PO-Revision-Date: 2009-12-08 11:59+0100\n"
+"Last-Translator: Sébastien Vrillaud <kochka@gmail.com>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -227,7 +228,6 @@ msgstr ""
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___full_shots)
 #: po/rc.cpp:75 rc.cpp:75
-#, fuzzy
 msgid "Take full screenshot at every frame(Not Recommended!)"
 msgstr "Prendre une capture d'écran pour chaque image(Non Recommandé!)"
 
@@ -280,7 +280,7 @@ msgstr "Périphérique"
 #. i18n: ectx: property (text), widget (KPushButton, snoopButton)
 #: po/rc.cpp:88 po/rc.cpp:343 rc.cpp:88 rc.cpp:343
 msgid "Search"
-msgstr ""
+msgstr "Recherche"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:105
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -775,18 +775,17 @@ msgstr "Répertoire des fichiers temporaires:"
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: po/rc.cpp:394 rc.cpp:394
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. i18n: file: src/ui/snoopdialog.ui:37
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: po/rc.cpp:400 rc.cpp:400
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #. i18n: file: src/ui/timelineconfig.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
 #: po/rc.cpp:403 rc.cpp:403
-#, fuzzy
 msgid "Enable the Timeline"
 msgstr "Activer la barre de temps"
 
@@ -961,10 +960,12 @@ msgid ""
 "Grab failed!\n"
 "Perhaps the button \"%1\" is already grabbed by another application."
 msgstr ""
+"La capture a échouée!\n"
+"Peut-être que le bouton \"%1\" est déjà capturé par une autre application."
 
 #: src/cursorwidget.cpp:229
 msgid "Grab failed!"
-msgstr ""
+msgstr "La capture à échouée!"
 
 #: src/encodermanager.cpp:73
 msgid "Cannot load Encoder %1."
@@ -1056,13 +1057,11 @@ msgid "Continue"
 msgstr "Continuer"
 
 #: src/mainwindow.cpp:782
-#, fuzzy
 msgctxt "Recording finished"
 msgid "Finished!"
 msgstr "Terminé!"
 
 #: src/mainwindow.cpp:802
-#, fuzzy
 msgctxt "Encoding finished"
 msgid "Finished!"
 msgstr "Terminé!"
@@ -1253,13 +1252,11 @@ msgid "Encoding started!"
 msgstr "L'encodage a démarré!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:268
-#, fuzzy
 msgctxt "RecordMyDesktop is done"
 msgid "Done!"
 msgstr "Terminé!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:272
-#, fuzzy
 msgid "Cannot open file %1 for writing!"
 msgstr "Impossible d'ouvrir le fichier %1 en écriture!"
 
@@ -1290,9 +1287,8 @@ msgstr ""
 "Raison: %2"
 
 #: src/plugins/recorder/recordmydesktop/sounddevicedialog.cpp:37
-#, fuzzy
 msgid "Sound Device"
-msgstr "Périphérique"
+msgstr "Périphérique de son"
 
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:76
 msgid "Cheese!"
@@ -1329,7 +1325,6 @@ msgstr "Téléchargement..."
 
 #: src/plugins/upload/blip/blipuploader.cpp:189
 #: src/plugins/upload/youtube/youtubeuploader.cpp:216
-#, fuzzy
 msgctxt "%1 = link to video"
 msgid "Finished: %1"
 msgstr "Terminé: %1"
@@ -1358,7 +1353,6 @@ msgid "Invalid license."
 msgstr "Licence invalide."
 
 #: src/plugins/upload/lib/blipservice.cpp:136
-#, fuzzy
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "Cannot open %1.\n"
@@ -1368,7 +1362,6 @@ msgstr ""
 "Raison: %1"
 
 #: src/plugins/upload/lib/blipservice.cpp:229
-#, fuzzy
 msgctxt "%1 = error"
 msgid "Unknown error: %1."
 msgstr "Erreur inconnue: %1."
@@ -1495,20 +1488,17 @@ msgstr "Développement Internet et sites"
 
 #: src/plugins/upload/lib/infojob.cpp:117
 #: src/plugins/upload/lib/infojob.cpp:131
-#, fuzzy
 msgctxt "Title"
 msgid "Upload"
 msgstr "Télécharger"
 
 #: src/plugins/upload/lib/infojob.cpp:118
 #: src/plugins/upload/lib/infojob.cpp:126
-#, fuzzy
 msgctxt "video file"
 msgid "Source"
 msgstr "Source"
 
 #: src/plugins/upload/lib/infojob.cpp:119
-#, fuzzy
 msgctxt "upload url"
 msgid "Destination"
 msgstr "Destination"
@@ -1518,13 +1508,11 @@ msgid "Transmit Data"
 msgstr "Transfert de données"
 
 #: src/plugins/upload/lib/infojob.cpp:125
-#, fuzzy
 msgctxt "Title"
 msgid "Download"
 msgstr "Téléchargement"
 
 #: src/plugins/upload/lib/infojob.cpp:132
-#, fuzzy
 msgctxt "Upload canceled"
 msgid "Canceled"
 msgstr "Annulé"
@@ -1669,27 +1657,25 @@ msgid "The recorder has crashed!"
 msgstr "L'enregistreur à planté!"
 
 #: src/snoopdialog.cpp:53
-#, fuzzy
 msgid "Reload"
-msgstr "Télécharger"
+msgstr "Recharger"
 
 #: src/snoopdialog.cpp:118 src/snoopdialog.cpp:147
 msgid "Unkown"
-msgstr ""
+msgstr "Inconnu"
 
 #: src/snoopdialog.cpp:165
 msgid "File not found"
-msgstr ""
+msgstr "Fichier introuvable"
 
 #: src/snoopdialog.cpp:169
-#, fuzzy
 msgctxt "%1 = error string"
 msgid "Cannot open file: %1"
-msgstr "Impossible d'ouvrir le fichier de sortie: %1"
+msgstr "Impossible d'ouvrir le fichier: %1"
 
 #: src/snoopdialog.cpp:172
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: src/timeline.cpp:78 src/topictreeitem.cpp:37
 msgid "Untitled"
