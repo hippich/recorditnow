@@ -46,7 +46,13 @@ Device::Device(QObject *parent, const QString &file)
 
     qRegisterMetaType<SNoop::Event>("SNoop::Event");
 
+    m_socketNotifier = 0;
     int fd = open(file.toLatin1(), O_RDONLY|O_NONBLOCK);
+    if (fd == -1) {
+        kWarning() << "open failed!";
+        return;
+    }
+
     m_socketNotifier = new QSocketNotifier(fd, QSocketNotifier::Read, this);
     connect(m_socketNotifier, SIGNAL(activated(int)), this, SLOT(readEvents()));
 
