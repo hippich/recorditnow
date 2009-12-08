@@ -73,6 +73,21 @@ SNoopDialog::~SNoopDialog()
 }
 
 
+QTreeWidgetItem *SNoopDialog::newDeviceItem(const DeviceData *d)
+{
+
+    QTreeWidgetItem *item = new QTreeWidgetItem;
+    if (!d->first.isEmpty()) {
+        item->setText(0, d->first);
+    } else {
+        item->setText(0, i18n("Unkown"));
+    }
+    item->setText(1, d->second);
+    item->setIcon(0, KIcon("input-mouse"));
+
+    return item;
+
+}
 
 
 void SNoopDialog::dialogFinished(const int &ret)
@@ -113,13 +128,7 @@ void SNoopDialog::loadDeviceList()
             if (reply.errorName().isEmpty() && reply.errorMessage().isEmpty()) {
                 const DeviceData data = SNoop::Device::getDevice(reply.arguments().first().toString());
                 if (!data.second.isEmpty()) {
-                    QTreeWidgetItem *item = new QTreeWidgetItem;
-                    if (!data.first.isEmpty()) {
-                        item->setText(0, data.first);
-                    } else {
-                        item->setText(0, i18n("Unkown"));
-                    }
-                    item->setText(1, data.second);
+                    QTreeWidgetItem *item = newDeviceItem(&data);
                     treeWidget->addTopLevelItem(item);
                 }
             }
@@ -143,13 +152,7 @@ void SNoopDialog::loadDeviceList2()
 
     foreach (const DeviceData &dev, SNoop::Device::getDeviceList()) {
         if (!dev.second.isEmpty()) {
-            QTreeWidgetItem *item = new QTreeWidgetItem;
-            if (!dev.first.isEmpty()) {
-                item->setText(0, dev.first);
-            } else {
-                item->setText(0, i18n("Unkown"));
-            }
-            item->setText(1, dev.second);
+            QTreeWidgetItem *item = newDeviceItem(&dev);
             treeWidget->addTopLevelItem(item);
         }
     }

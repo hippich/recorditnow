@@ -30,6 +30,8 @@
 #include <kprocess.h>
 
 
+typedef QPair<QString, QString> DeviceData;
+class QTreeWidgetItem;
 class SNoopDialog : public KDialog, public Ui::SNoopDialog
 {
     Q_OBJECT
@@ -38,6 +40,10 @@ class SNoopDialog : public KDialog, public Ui::SNoopDialog
 public:
     explicit SNoopDialog(QWidget *parent = 0);
     ~SNoopDialog();
+
+
+private:
+    QTreeWidgetItem *newDeviceItem(const DeviceData *d);
 
 
 private slots:
