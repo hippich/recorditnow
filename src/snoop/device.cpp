@@ -129,7 +129,6 @@ void Device::readEvents()
             return;
         }
 
-        int size = sizeof (struct input_event);
         const bool pressed = (ev.value == 1);
         SNoop::Event::Key key;
         switch(ev.code)
