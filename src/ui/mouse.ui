@@ -43,12 +43,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="snoopButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
+         <widget class="KPushButton" name="snoopButton">
           <property name="text">
-           <string notr="true"/>
+           <string>Search</string>
           </property>
          </widget>
         </item>
@@ -208,22 +205,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>123</x>
-     <y>50</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_useSNoop</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>snoopButton</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>73</x>
-     <y>48</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>315</x>
      <y>50</y>
     </hint>
    </hints>

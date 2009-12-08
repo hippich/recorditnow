@@ -91,9 +91,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QToolButton" name="deviceButton">
+            <widget class="KPushButton" name="deviceButton">
              <property name="text">
-              <string notr="true"/>
+              <string>Search</string>
              </property>
             </widget>
            </item>
@@ -360,6 +360,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
