@@ -38,6 +38,7 @@
 #include <QtCore/QEvent>
 #include <QtCore/QDateTime>
 #include <QtCore/QThread>
+#include <QtGui/QDesktopWidget>
 
 // X11
 #include <X11/Xlib.h>
@@ -173,6 +174,20 @@ void CursorWidget::updatePos()
 
     const int size = XcursorGetDefaultSize(x11Info().display());
     geo.moveTopLeft(QCursor::pos()+QPoint(size, size));
+
+    const QRect desktop = kapp->desktop()->screenGeometry(x11Info().appScreen());
+    if (!desktop.contains(geo)) {
+        if (geo.x()+geo.width() > desktop.width()) {
+            geo.moveRight(desktop.right());
+        }
+        if (geo.y()+geo.height() > desktop.height()) {
+            geo.moveBottom(desktop.bottom());
+        }
+
+        if (geo.contains(QCursor::pos())) {
+            geo.moveBottomRight(QCursor::pos()-QPoint(size/2, size/2));
+        }
+    }
 
     setGeometry(geo);
     raise();
