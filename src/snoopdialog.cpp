@@ -47,16 +47,12 @@ SNoopDialog::SNoopDialog(QWidget *parent)
     setupUi(widget);
     setMainWidget(widget);
 
-    setButtons(KDialog::Ok|KDialog::Cancel|KDialog::User1|KDialog::User2);
+    setButtons(KDialog::Ok|KDialog::Cancel|KDialog::User1);
     setButtonText(KDialog::User1, i18n("Reload"));
     setButtonIcon(KDialog::User1, KIcon("view-refresh"));
-    setButtonText(KDialog::User2, i18n("Fix Permissions"));
-    setButtonIcon(KDialog::User2, KIcon("tools-wizard"));
 
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
     connect(button(KDialog::User1), SIGNAL(clicked()), this, SLOT(loadDeviceList()));
-    connect(button(KDialog::User2), SIGNAL(clicked()), this, SLOT(fixPermissions()));
-    connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
 
     resize(600, 300);
 
@@ -141,7 +137,6 @@ void SNoopDialog::loadDeviceList()
 
     updateStatus();
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
-    itemSelectionChanged();
 
 }
 
@@ -180,96 +175,6 @@ void SNoopDialog::updateStatus()
             item->setText(2, i18n("Ok"));
             item->setData(0, Qt::UserRole, "ERR_NOERROR");
         }
-    }
-
-}
-
-
-void SNoopDialog::fixPermissions()
-{
-
-    QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    const QString exe = KGlobal::dirs()->findExe("recorditnow_fix_permissions");
-    if (exe.isEmpty()) {
-        KMessageBox::error(this, i18n("Cannot find \"%1\"", QString("recorditnow_fix_permissions")));
-        return;
-    }
-
-    const QString su = KGlobal::dirs()->findExe("kdesu");
-    if (exe.isEmpty()) {
-        KMessageBox::error(this, i18n("Cannot find \"%1\"", QString("kdesu")));
-        return;
-    }
-
-    const QString device = items[0]->text(1);
-    const QString cmd = exe+' '+"--device "+device;
-    const QStringList args = QStringList() << "-i" << "recorditnow"  << "--attach"
-                             << QString::number(winId()) << "--noignorebutton" << "-c" << cmd;
-
-    kDebug() << "args:" << args;
-
-    setEnabled(false);
-
-    KProcess *process = new KProcess(this);
-    connect(process, SIGNAL(finished(int,QProcess::ExitStatus)), this,
-            SLOT(fixFinished(int,QProcess::ExitStatus)));
-
-    process->setProgram(su, args);
-    process->setOutputChannelMode(KProcess::MergedChannels);
-    process->start();
-
-}
-
-
-void SNoopDialog::fixFinished(const int &exitCode, const QProcess::ExitStatus &exitStatus)
-{
-
-    // TODO
-    switch (exitCode) {
-    case 0: break; // no error
-    case 1:        // no such file
-    case 2:        // perm denied
-    case 3:        // groupadd not found
-    case 4:        // internal error
-    case 5:        // gpasswd not found
-    case 6:        // no user
-    case 7:        // open failed
-    case 8:        // write failed
-    case 9:        // chmod not found
-    case 10:       // chmod failed
-    default: break;
-    }
-
-    KProcess *process = static_cast<KProcess*>(sender());
-
-    kDebug() << "fix finished:" << "exitCode:" << exitCode << "exitStatus:" << exitStatus <<
-            "output:" << process->readAllStandardOutput();
-
-    delete process;
-
-    loadDeviceList();
-    setEnabled(true);
-
-}
-
-
-void SNoopDialog::itemSelectionChanged()
-{
-
-    QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
-    if (items.isEmpty() || items.size() > 1) {
-        button(KDialog::User2)->setEnabled(false);
-        return;
-    }
-
-    if (items[0]->data(0, Qt::UserRole).toString() == "ERR_OPENFAILED") {
-        button(KDialog::User2)->setEnabled(true);
-    } else {
-        button(KDialog::User2)->setEnabled(false);
     }
 
 }

@@ -51,9 +51,6 @@ private slots:
     void loadDeviceList();
     void loadDeviceList2();
     void updateStatus();
-    void fixPermissions();
-    void fixFinished(const int &exitCode, const QProcess::ExitStatus &exitStatus);
-    void itemSelectionChanged();
 
 
 signals:
