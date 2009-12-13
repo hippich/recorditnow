@@ -69,7 +69,6 @@
 #include <X11/Xlib.h>
 
 
-
 MainWindow::MainWindow(QWidget *parent)
     : KXmlGuiWindow(parent),
     m_grabber(0)

@@ -23,6 +23,10 @@
 #include "snoop/device.h"
 
 // KDE
+#include <kdeversion.h>
+#if KDE_IS_VERSION(4,3,80)
+    #include <kauth.h>
+#endif
 #include <kdebug.h>
 #include <klocalizedstring.h>
 #include <kpushbutton.h>
@@ -122,11 +126,31 @@ void SNoopDialog::loadDeviceList()
                                            QDBusConnection::systemBus());
             reply = devInterface.call("GetProperty", "input.device");
             if (reply.errorName().isEmpty() && reply.errorMessage().isEmpty()) {
+#if KDE_IS_VERSION(4,3,80)
+                const QString file = reply.arguments().first().toString();
+                if (file.isEmpty()) {
+                    continue;
+                }
+
+                KAuth::Action action("org.kde.recorditnow.helper.name");
+                QVariantMap args;
+                args["Device"] = file;
+                action.setArguments(args);
+                KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
+
+                DeviceData d;
+                d.first = reply.data().value("Name").toString();
+                d.second = file;
+
+                QTreeWidgetItem *item = newDeviceItem(&d);
+                treeWidget->addTopLevelItem(item);
+#else
                 const DeviceData data = SNoop::Device::getDevice(reply.arguments().first().toString());
                 if (!data.second.isEmpty()) {
                     QTreeWidgetItem *item = newDeviceItem(&data);
                     treeWidget->addTopLevelItem(item);
                 }
+#endif
             }
         }
     }
@@ -158,6 +182,32 @@ void SNoopDialog::loadDeviceList2()
 void SNoopDialog::updateStatus()
 {
 
+#if KDE_IS_VERSION(4,3,80)
+    KAuth::Action action("org.kde.recorditnow.helper.name");
+    KAuth::Action::AuthStatus status = action.authorize();
+
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        QFile file(item->text(1));
+        if (!file.exists()) {
+            item->setIcon(2, KIcon("dialog-error"));
+            item->setText(2, i18n("File not found"));
+            item->setData(0, Qt::UserRole, "ERR_FILENOTFOUND");
+        } else if (status != KAuth::Action::Authorized) {
+            item->setIcon(2, KIcon("dialog-error"));
+            switch (status) {
+            case KAuth::Action::Denied: item->setText(2, i18n("The authorization has been denied "
+                                                              "by the authorization backend.")); break;
+            default: item->setText(2, i18n("The authorization has been denied.")); break;
+            }
+            item->setData(0, Qt::UserRole, "ERR_OPENFAILED");
+        } else {
+            item->setIcon(2, KIcon("dialog-ok"));
+            item->setText(2, i18n("Ok"));
+            item->setData(0, Qt::UserRole, "ERR_NOERROR");
+        }
+    }
+#else
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
         QFile file(item->text(1));
@@ -176,6 +226,7 @@ void SNoopDialog::updateStatus()
             item->setData(0, Qt::UserRole, "ERR_NOERROR");
         }
     }
+#endif
 
 }
 

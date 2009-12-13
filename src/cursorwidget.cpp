@@ -25,6 +25,10 @@
 #include "snoop/manager.h"
 
 // KDE
+#include <kdeversion.h>
+#if KDE_IS_VERSION(4,3,80)
+    #include <kauth.h>
+#endif
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kwindowsystem.h>
@@ -53,6 +57,7 @@ CursorWidget::CursorWidget(QWidget *parent)
     // setAttribute(Qt::WA_TransparentForMouseEvents);
 
     m_useSNoop = false;
+    m_grab = false;
     m_device = 0;
 
     m_timer = new QTimer(this);
@@ -236,6 +241,26 @@ void CursorWidget::updateGrab(const bool &grab)
                 }
             }
         } else {
+#if KDE_IS_VERSION(4,3,80)
+            m_grab = true;
+            KAuth::Action action("org.kde.recorditnow.helper.watch");
+            action.setHelperID("org.kde.recorditnow.helper");
+            connect(action.watcher(), SIGNAL(progressStep(QVariantMap)), this,
+                    SLOT(progressStep(QVariantMap)));
+
+            QVariantMap args;
+            args["Device"] = m_deviceName;
+            action.setArguments(args);
+            action.setExecutesAsync(true);
+            action.authorize();
+
+            KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
+            if (reply.type() != 2) {
+                emit error(i18n("Grab failed!"));
+            } else {
+                kDebug() << "watch started";
+            }
+#else
             m_device = SNoop::Manager::watch(m_deviceName, this);
             if (m_device) {
                 connect(m_device, SIGNAL(buttonPressed(SNoop::Event)), this,
@@ -243,6 +268,7 @@ void CursorWidget::updateGrab(const bool &grab)
             } else {
                 emit error(i18n("Grab failed!"));
             }
+#endif
         }
     } else {
         while (it.hasNext()) {
@@ -252,11 +278,21 @@ void CursorWidget::updateGrab(const bool &grab)
                           AnyModifier,
                           x11Info().appRootWindow(screen));
         }
+#if KDE_IS_VERSION(4,3,80)
+        if (m_grab) {
+            KAuth::Action action;
+            action.setName("wattch");
+            action.setHelperID("org.kde.recorditnow.helper");
+            action.stop();
+            m_grab = false;
+        }
+#else
         if (m_device) {
             m_device->disconnect(this);
             m_device->deleteLater();
             m_device = 0;
         }
+#endif
     }
 
 }
@@ -286,6 +322,21 @@ void CursorWidget::buttonPressed(const SNoop::Event &event)
         }
     }
     update();
+
+}
+
+
+void CursorWidget::progressStep(const QVariantMap &data)
+{
+
+#if KDE_IS_VERSION(4,3,80)
+    SNoop::Event event;
+    event.key = static_cast<SNoop::Event::Key>(data["Key"].toInt());
+    event.pressed = data["Pressed"].toBool();
+    buttonPressed(event);
+#else
+    Q_UNUSED(data);
+#endif
 
 }
 

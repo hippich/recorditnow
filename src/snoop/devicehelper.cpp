@@ -17,75 +17,61 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
-
 
 // own
-#include "snoop/event.h"
+#include "devicehelper.h"
 
-// Qt
-#include <QtGui/QWidget>
-#include <QtCore/QThread>
-#include <QtGui/QColor>
-#include <QtCore/QHash>
-#include <QtCore/QVariantMap>
+// KDE
+#include <kdebug.h>
+
+// c
+#include <unistd.h>
 
 
-namespace SNoop {
-    class Device;
-};
-
-class QTimer;
-class CursorWidget : public QWidget
+ActionReply DeviceHelper::watch(QVariantMap args)
 {
-    Q_OBJECT
+
+    m_device = new SNoop::Device(this, args["Device"].toString());
+    if (!m_device) {
+        return ActionReply::HelperError;
+    }
+    connect(m_device, SIGNAL(buttonPressed(SNoop::Event)), this, SLOT(key(SNoop::Event)));
+
+    while (!HelperSupport::isStopped()) {
+        usleep(10000);
+    }
+    delete m_device;
+    return ActionReply::SuccessReply;
+
+}
 
 
-public:
-    CursorWidget(QWidget *parent);
-    ~CursorWidget();
+ActionReply DeviceHelper::name(QVariantMap args)
+{
 
-    void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
-    void setButtons(const QHash<int, QColor> &buttons);
-    void setUseSNoop(const bool &use, const QString &deviceName = QString());
+    DeviceData data = SNoop::Device::getDevice(args["Device"].toString());
 
-    void start();
-    void stop();
-    void click(const int &button);
-    WId getWindow() const;
+    QVariantMap map;
+    map["Name"] = data.first;
+    map["File"] = data.second;
 
+    ActionReply reply = ActionReply::SuccessReply;
+    reply.setData(map);
 
-private:
-    QTimer *m_timer;
-    QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
-    bool m_useSNoop;
-    SNoop::Device *m_device;
-    QString m_deviceName;
-    bool m_grab;
+    return reply;
+
+}
 
 
-private slots:
-    void updatePos();
-    void resetColor();
-    void updateGrab(const bool &grab);
-    void buttonPressed(const SNoop::Event &event);
-    void progressStep(const QVariantMap &data);
+void DeviceHelper::key(const SNoop::Event &event)
+{
+
+    QVariantMap data;
+    data["Key"] = event.key;
+    data["Pressed"] = event.pressed;
+    HelperSupport::progressStep(data);
+
+}
 
 
-protected:
-    void paintEvent(QPaintEvent *event);
-
-
-signals:
-    void error(const QString &message);
-
-
-};
-
-
-#endif // CURSORWIDGET_H
+KDE4_AUTH_HELPER_MAIN("org.kde.recorditnow.helper", DeviceHelper)
