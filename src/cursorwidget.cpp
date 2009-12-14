@@ -279,7 +279,7 @@ void CursorWidget::updateGrab(const bool &grab)
 #if KDE_IS_VERSION(4,3,80)
         if (m_grab) {
             KAuth::Action action;
-            action.setName("wattch");
+            action.setName("watch");
             action.setHelperID("org.kde.recorditnow.helper");
             action.stop();
             m_grab = false;
