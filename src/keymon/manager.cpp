@@ -17,47 +17,44 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef SNOOPDIALOG_H
-#define SNOOPDIALOG_H
-
-
 // own
-#include "ui_snoopdialog.h"
-
-// KDE
-#include <kdialog.h>
-#include <kprocess.h>
+#include "manager.h"
+#include "device.h"
 
 
-typedef QPair<QString, QString> DeviceData;
-class QTreeWidgetItem;
-class SNoopDialog : public KDialog, public Ui::SNoopDialog
+namespace KeyMon {
+
+
+
+Manager::Manager(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
 
 
-public:
-    explicit SNoopDialog(QWidget *parent = 0);
-    ~SNoopDialog();
+
+}
 
 
-private:
-    QTreeWidgetItem *newDeviceItem(const DeviceData *d);
+Manager::~Manager()
+{
 
 
-private slots:
-    void dialogFinished(const int &ret);
-    void loadDeviceList();
-    void loadDeviceList2();
-    void updateStatus();
+
+}
 
 
-signals:
-    void deviceSelected(const QString &id);
+KeyMon::Device *Manager::watch(const QString &device, QObject *parent)
+{
+
+    KeyMon::Device *dev = new KeyMon::Device(parent, device);
+    return dev;
+
+}
 
 
-};
+
+}; // Namespace KeyMon
 
 
-#endif // SNOOPDIALOG_H
+#include "manager.moc"
+

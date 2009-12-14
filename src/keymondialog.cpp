@@ -19,8 +19,8 @@
 
 
 // own
-#include "snoopdialog.h"
-#include "snoop/device.h"
+#include "keymondialog.h"
+#include "keymon/device.h"
 
 // KDE
 #include <kdeversion.h>
@@ -40,7 +40,7 @@
 #include <QtCore/QTimer>
 
 
-SNoopDialog::SNoopDialog(QWidget *parent)
+KeyMonDialog::KeyMonDialog(QWidget *parent)
     : KDialog(parent)
 {
 
@@ -65,7 +65,7 @@ SNoopDialog::SNoopDialog(QWidget *parent)
 }
 
 
-SNoopDialog::~SNoopDialog()
+KeyMonDialog::~KeyMonDialog()
 {
 
 
@@ -73,7 +73,7 @@ SNoopDialog::~SNoopDialog()
 }
 
 
-QTreeWidgetItem *SNoopDialog::newDeviceItem(const DeviceData *d)
+QTreeWidgetItem *KeyMonDialog::newDeviceItem(const DeviceData *d)
 {
 
     QTreeWidgetItem *item = new QTreeWidgetItem;
@@ -90,7 +90,7 @@ QTreeWidgetItem *SNoopDialog::newDeviceItem(const DeviceData *d)
 }
 
 
-void SNoopDialog::dialogFinished(const int &ret)
+void KeyMonDialog::dialogFinished(const int &ret)
 {
 
     if (ret == KDialog::Accepted) {
@@ -103,7 +103,7 @@ void SNoopDialog::dialogFinished(const int &ret)
 }
 
 
-void SNoopDialog::loadDeviceList()
+void KeyMonDialog::loadDeviceList()
 {
 
     treeWidget->clear();
@@ -145,7 +145,7 @@ void SNoopDialog::loadDeviceList()
                 QTreeWidgetItem *item = newDeviceItem(&d);
                 treeWidget->addTopLevelItem(item);
 #else
-                const DeviceData data = SNoop::Device::getDevice(reply.arguments().first().toString());
+                const DeviceData data = KeyMon::Device::getDevice(reply.arguments().first().toString());
                 if (!data.second.isEmpty()) {
                     QTreeWidgetItem *item = newDeviceItem(&data);
                     treeWidget->addTopLevelItem(item);
@@ -166,10 +166,10 @@ void SNoopDialog::loadDeviceList()
 
 
 // worst case
-void SNoopDialog::loadDeviceList2()
+void KeyMonDialog::loadDeviceList2()
 {
 
-    foreach (const DeviceData &dev, SNoop::Device::getDeviceList()) {
+    foreach (const DeviceData &dev, KeyMon::Device::getDeviceList()) {
         if (!dev.second.isEmpty()) {
             QTreeWidgetItem *item = newDeviceItem(&dev);
             treeWidget->addTopLevelItem(item);
@@ -179,7 +179,7 @@ void SNoopDialog::loadDeviceList2()
 }
 
 
-void SNoopDialog::updateStatus()
+void KeyMonDialog::updateStatus()
 {
 
 #if KDE_IS_VERSION(4,3,80)
@@ -232,4 +232,4 @@ void SNoopDialog::updateStatus()
 
 
 
-#include "snoopdialog.moc"
+#include "keymondialog.moc"

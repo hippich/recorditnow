@@ -31,7 +31,7 @@
 #include <X11/Xlib.h>
 
 
-namespace SNoop {
+namespace KeyMon {
 
 
 Event::Event()
@@ -41,7 +41,7 @@ Event::Event()
 }
 
 
-Event::Event(const SNoop::Event &other)
+Event::Event(const KeyMon::Event &other)
 {
 
     key = other.key;
@@ -59,7 +59,7 @@ Event::~Event()
 
 
 
-QString Event::name(const SNoop::Event::Key &key)
+QString Event::name(const KeyMon::Event::Key &key)
 {
 
     switch (key) {
@@ -76,7 +76,7 @@ QString Event::name(const SNoop::Event::Key &key)
 }
 
 
-SNoop::Event::Key Event::keyFromName(const QString &name)
+KeyMon::Event::Key Event::keyFromName(const QString &name)
 {
 
 
@@ -113,7 +113,7 @@ SNoop::Event::Key Event::keyFromName(const QString &name)
 }
 
 
-SNoop::Event::Key Event::xButtonToKey(const int &button)
+KeyMon::Event::Key Event::xButtonToKey(const int &button)
 {
 
     switch (button) {
@@ -130,7 +130,7 @@ SNoop::Event::Key Event::xButtonToKey(const int &button)
 }
 
 
-int Event::keyToXButton(const SNoop::Event::Key &key)
+int Event::keyToXButton(const KeyMon::Event::Key &key)
 {
 
     switch (key) {
@@ -148,4 +148,4 @@ int Event::keyToXButton(const SNoop::Event::Key &key)
 
 
 
-}; // Namespace SNoop
+}; // Namespace KeyMon

@@ -30,7 +30,7 @@
 
 
 
-namespace SNoop {
+namespace KeyMon {
 
 class Device;
 class KDE_EXPORT Manager : public QObject
@@ -42,13 +42,13 @@ public:
     explicit Manager(QObject *parent = 0);
     ~Manager();
 
-    static SNoop::Device *watch(const QString &device, QObject *parent);
+    static KeyMon::Device *watch(const QString &device, QObject *parent);
 
 
 };
 
 
-}; // Namespace SNoop
+}; // Namespace KeyMon
 
 
 #endif // MANAGER_H

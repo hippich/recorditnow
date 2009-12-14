@@ -59,7 +59,7 @@ private slots:
     void removeClicked();
     void updateColumnSize();
     void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
-    void showSNoopDialog();
+    void showKeyMonDialog();
 
 
 signals:

@@ -66,10 +66,10 @@
     <entry name="cursorWidgetSize" type="Int">
             <default>20</default>
     </entry>
-    <entry name="useSNoop" type="Bool">
+    <entry name="useKeyMon" type="Bool">
             <default>false</default>
     </entry>
-    <entry name="snoopDevice" type="String">
+    <entry name="keyMonDevice" type="String">
             <default></default>
     </entry>
   </group>

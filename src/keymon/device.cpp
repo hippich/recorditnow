@@ -37,14 +37,14 @@
 
 
 
-namespace SNoop {
+namespace KeyMon {
 
 
 Device::Device(QObject *parent, const QString &file)
     : QObject(parent)
 {
 
-    qRegisterMetaType<SNoop::Event>("SNoop::Event");
+    qRegisterMetaType<KeyMon::Event>("KeyMon::Event");
 
     m_socketNotifier = 0;
     int fd = open(file.toLatin1(), O_RDONLY|O_NONBLOCK);
@@ -137,38 +137,38 @@ void Device::readEvents()
         }
 
         const bool pressed = (ev.value == 1);
-        SNoop::Event::Key key;
+        KeyMon::Event::Key key;
         switch(ev.code)
         {
         case BTN_LEFT:
-            key = SNoop::Event::LeftButton;
+            key = KeyMon::Event::LeftButton;
             break;
         case BTN_RIGHT:
-            key = SNoop::Event::RightButton;
+            key = KeyMon::Event::RightButton;
             break;
         case BTN_MIDDLE:
-            key = SNoop::Event::MiddleButton;
+            key = KeyMon::Event::MiddleButton;
             break;
         case BTN_EXTRA:
-            key = SNoop::Event::SpecialButton1;
+            key = KeyMon::Event::SpecialButton1;
             break;
         case BTN_SIDE:
-            key = SNoop::Event::SpecialButton2;
+            key = KeyMon::Event::SpecialButton2;
             break;
         case REL_WHEEL:
             if (pressed) {
-                key = SNoop::Event::WheelUp;
+                key = KeyMon::Event::WheelUp;
             } else {
-                key = SNoop::Event::WheelDown;
+                key = KeyMon::Event::WheelDown;
             }
             break;
             default:
-            key = SNoop::Event::NoButton;
+            key = KeyMon::Event::NoButton;
             break;
         };
 
-        if (key != SNoop::Event::NoButton) {
-            SNoop::Event sEvent;
+        if (key != KeyMon::Event::NoButton) {
+            KeyMon::Event sEvent;
             sEvent.key = key;
             sEvent.pressed = pressed;
             emit buttonPressed(sEvent);
@@ -178,7 +178,7 @@ void Device::readEvents()
 }
 
 
-}; // Namespace SNoop
+}; // Namespace KeyMon
 
 
 #include "device.moc"

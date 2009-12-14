@@ -17,44 +17,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-// own
-#include "manager.h"
-#include "device.h"
+#ifndef EVENT_H
+#define EVENT_H
 
 
-namespace SNoop {
+// KDE
+#include <kdemacros.h>
+
+// Qt
+#include <QtCore/QString>
 
 
+namespace KeyMon {
 
-Manager::Manager(QObject *parent)
-    : QObject(parent)
+
+class KDE_EXPORT Event
 {
 
 
+public:
+    enum Key {
+        LeftButton = 0,
+        RightButton = 1,
+        MiddleButton = 3,
+        SpecialButton1 = 4,
+        SpecialButton2 = 5,
+        WheelUp = 6,
+        WheelDown = 7,
+        NoButton = -1
+    };
+    Event();
+    Event(const KeyMon::Event &other);
+    ~Event();
 
-}
-
-
-Manager::~Manager()
-{
-
-
-
-}
-
-
-SNoop::Device *Manager::watch(const QString &device, QObject *parent)
-{
-
-    SNoop::Device *dev = new SNoop::Device(parent, device);
-    return dev;
-
-}
+    Key key;
+    bool pressed;
 
 
+    static QString name(const KeyMon::Event::Key &key);
+    static KeyMon::Event::Key keyFromName(const QString &name);
+    static KeyMon::Event::Key xButtonToKey(const int &button);
+    static int keyToXButton(const KeyMon::Event::Key &key);
 
-}; // Namespace SNoop
+
+};
 
 
-#include "manager.moc"
+}; // Namespace KeyMon
 
+
+#endif // EVENT_H

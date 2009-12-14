@@ -21,7 +21,7 @@ endif()
 add_subdirectory(libs)
 add_subdirectory(plugins)
 add_subdirectory(icons)
-add_subdirectory(snoop)
+add_subdirectory(keymon)
 
 macro_display_feature_log()
 
@@ -45,11 +45,19 @@ set(gui_SRCS
    topic.cpp
    mousebutton.cpp
    topictreeitem.cpp
-   snoopdialog.cpp)
+   keymondialog.cpp)
 
 
 # GUI
-kde4_add_ui_files(gui_SRCS ui/toolbarwidget.ui ui/settings.ui ui/mouse.ui ui/zoom.ui ui/timeline.ui ui/timelinetopics.ui ui/timelineconfig.ui ui/snoopdialog.ui)
+kde4_add_ui_files(gui_SRCS 
+    ui/toolbarwidget.ui
+    ui/settings.ui
+    ui/mouse.ui 
+    ui/zoom.ui 
+    ui/timeline.ui 
+    ui/timelinetopics.ui 
+    ui/timelineconfig.ui 
+    ui/keymondialog.ui)
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})
 target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KIO_LIBS} recorditnow_recorder recorditnow_encoder recorditnow_uploader recorditnow_snoop ${X11_Xcursor_LIB})

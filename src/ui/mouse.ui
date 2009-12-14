@@ -29,14 +29,14 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QCheckBox" name="kcfg_useSNoop">
+         <widget class="QCheckBox" name="kcfg_useKeyMon">
           <property name="text">
            <string>Device</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="KLineEdit" name="kcfg_snoopDevice">
+         <widget class="KLineEdit" name="kcfg_keyMonDevice">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -197,9 +197,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>kcfg_useSNoop</sender>
+   <sender>kcfg_useKeyMon</sender>
    <signal>toggled(bool)</signal>
-   <receiver>kcfg_snoopDevice</receiver>
+   <receiver>kcfg_keyMonDevice</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -213,7 +213,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>kcfg_useSNoop</sender>
+   <sender>kcfg_useKeyMon</sender>
    <signal>toggled(bool)</signal>
    <receiver>snoopButton</receiver>
    <slot>setEnabled(bool)</slot>

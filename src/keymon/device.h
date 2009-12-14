@@ -17,53 +17,56 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef DEVICE_H
+#define DEVICE_H
 
+
+// own
+#include "event.h"
 
 // KDE
 #include <kdemacros.h>
 
 // Qt
-#include <QtCore/QString>
+#include <QtCore/QObject>
+#include <QtCore/QPair>
 
 
-namespace SNoop {
+typedef QPair<QString, QString> DeviceData;
+class QSocketNotifier;
+namespace KeyMon {
 
-
-class KDE_EXPORT Event
+class Thread;
+class KDE_EXPORT Device : public QObject
 {
+    Q_OBJECT
 
 
 public:
-    enum Key {
-        LeftButton = 0,
-        RightButton = 1,
-        MiddleButton = 3,
-        SpecialButton1 = 4,
-        SpecialButton2 = 5,
-        WheelUp = 6,
-        WheelDown = 7,
-        NoButton = -1
-    };
-    Event();
-    Event(const SNoop::Event &other);
-    ~Event();
+    explicit Device(QObject *parent, const QString &file);
+    ~Device();
 
-    Key key;
-    bool pressed;
+    static QList<DeviceData> getDeviceList();
+    static DeviceData getDevice(const QString &file);
 
 
-    static QString name(const SNoop::Event::Key &key);
-    static SNoop::Event::Key keyFromName(const QString &name);
-    static SNoop::Event::Key xButtonToKey(const int &button);
-    static int keyToXButton(const SNoop::Event::Key &key);
+private:
+    QSocketNotifier *m_socketNotifier;
+
+
+private slots:
+    void readEvents();
+
+
+signals:
+    void buttonPressed(const KeyMon::Event &event);
+    void finished();
 
 
 };
 
 
-}; // Namespace SNoop
+}; // Namespace KeyMon
 
 
-#endif // EVENT_H
+#endif // DEVICE_H

@@ -17,61 +17,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef DEVICEHELPER_H
+#define DEVICEHELPER_H
+
 
 // own
-#include "devicehelper.h"
+#include "device.h"
+#include "event.h"
 
 // KDE
-#include <kdebug.h>
+#include <kauth.h>
 
-// c
-#include <unistd.h>
+// Qt
+#include <QtCore/QObject>
 
 
-ActionReply DeviceHelper::watch(QVariantMap args)
+using namespace KAuth;
+class DeviceHelper : public QObject
 {
-
-    m_device = new SNoop::Device(this, args["Device"].toString());
-    if (!m_device) {
-        return ActionReply::HelperError;
-    }
-    connect(m_device, SIGNAL(buttonPressed(SNoop::Event)), this, SLOT(key(SNoop::Event)));
-
-    while (!HelperSupport::isStopped()) {
-        usleep(10000);
-    }
-    delete m_device;
-    return ActionReply::SuccessReply;
-
-}
+    Q_OBJECT
 
 
-ActionReply DeviceHelper::name(QVariantMap args)
-{
-
-    DeviceData data = SNoop::Device::getDevice(args["Device"].toString());
-
-    QVariantMap map;
-    map["Name"] = data.first;
-    map["File"] = data.second;
-
-    ActionReply reply = ActionReply::SuccessReply;
-    reply.setData(map);
-
-    return reply;
-
-}
+public slots:
+    ActionReply watch(QVariantMap args);
+    ActionReply name(QVariantMap args);
 
 
-void DeviceHelper::key(const SNoop::Event &event)
-{
-
-    QVariantMap data;
-    data["Key"] = event.key;
-    data["Pressed"] = event.pressed;
-    HelperSupport::progressStep(data);
-
-}
+private:
+    KeyMon::Device *m_device;
 
 
-KDE4_AUTH_HELPER_MAIN("org.kde.recorditnow.helper", DeviceHelper)
+private slots:
+    void key(const KeyMon::Event &event);
+
+
+};
+
+
+#endif // DEVICEHELPER_H

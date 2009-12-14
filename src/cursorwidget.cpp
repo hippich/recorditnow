@@ -21,8 +21,8 @@
 // own
 #include "cursorwidget.h"
 #include "mousebutton.h"
-#include "snoop/device.h"
-#include "snoop/manager.h"
+#include "keymon/device.h"
+#include "keymon/manager.h"
 
 // KDE
 #include <kdeversion.h>
@@ -56,7 +56,7 @@ CursorWidget::CursorWidget(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground);
     // setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    m_useSNoop = false;
+    m_useKeyMon = false;
     m_grab = false;
     m_device = 0;
 
@@ -118,10 +118,10 @@ void CursorWidget::setButtons(const QHash<int, QColor> &buttons)
 }
 
 
-void CursorWidget::setUseSNoop(const bool &use, const QString &deviceName)
+void CursorWidget::setUseKeyMon(const bool &use, const QString &deviceName)
 {
 
-    m_useSNoop = use;
+    m_useKeyMon = use;
     m_deviceName = deviceName;
 
 }
@@ -215,7 +215,7 @@ void CursorWidget::updateGrab(const bool &grab)
     QHashIterator<int, QColor> it(m_buttons);
     const int screen = x11Info().appScreen();
     if (grab) {
-        if (!m_useSNoop) {
+        if (!m_useKeyMon) {
             while (it.hasNext()) {
                 it.next();
                 KXErrorHandler handler;
@@ -255,16 +255,17 @@ void CursorWidget::updateGrab(const bool &grab)
 
             KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
             if (reply.type() != 2) {
+                kDebug() << "reply:" << reply.type();
                 hide();
                 emit error(i18n("Grab failed!"));
             } else {
                 kDebug() << "watch started";
             }
 #else
-            m_device = SNoop::Manager::watch(m_deviceName, this);
+            m_device = KeyMon::Manager::watch(m_deviceName, this);
             if (m_device) {
-                connect(m_device, SIGNAL(buttonPressed(SNoop::Event)), this,
-                        SLOT(buttonPressed(SNoop::Event)));
+                connect(m_device, SIGNAL(buttonPressed(KeyMon::Event)), this,
+                        SLOT(buttonPressed(KeyMon::Event)));
             } else {
                 emit error(i18n("Grab failed!"));
             }
@@ -298,7 +299,7 @@ void CursorWidget::updateGrab(const bool &grab)
 }
 
 
-void CursorWidget::buttonPressed(const SNoop::Event &event)
+void CursorWidget::buttonPressed(const KeyMon::Event &event)
 {
 
     if (m_resetTimer->isActive()) {
@@ -306,8 +307,8 @@ void CursorWidget::buttonPressed(const SNoop::Event &event)
     }
 
     switch (event.key) {
-    case SNoop::Event::WheelUp:
-    case SNoop::Event::WheelDown: {
+    case KeyMon::Event::WheelUp:
+    case KeyMon::Event::WheelDown: {
             m_currentColor = m_buttons[event.keyToXButton(event.key)];
             m_resetTimer->start(350);
             break;
@@ -330,8 +331,8 @@ void CursorWidget::progressStep(const QVariantMap &data)
 {
 
 #if KDE_IS_VERSION(4,3,80)
-    SNoop::Event event;
-    event.key = static_cast<SNoop::Event::Key>(data["Key"].toInt());
+    KeyMon::Event event;
+    event.key = static_cast<KeyMon::Event::Key>(data["Key"].toInt());
     event.pressed = data["Pressed"].toBool();
     buttonPressed(event);
 #else
@@ -370,7 +371,6 @@ void CursorWidget::paintEvent(QPaintEvent *event)
     pen.setColor(Qt::black);
     painter.setPen(pen);
     painter.drawEllipse(contentsRect());
-
 
 }
 

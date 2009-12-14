@@ -17,56 +17,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef DEVICE_H
-#define DEVICE_H
+
+#ifndef SNOOPDIALOG_H
+#define SNOOPDIALOG_H
 
 
 // own
-#include "event.h"
+#include "ui_keymondialog.h"
 
 // KDE
-#include <kdemacros.h>
-
-// Qt
-#include <QtCore/QObject>
-#include <QtCore/QPair>
+#include <kdialog.h>
+#include <kprocess.h>
 
 
 typedef QPair<QString, QString> DeviceData;
-class QSocketNotifier;
-namespace SNoop {
-
-class Thread;
-class KDE_EXPORT Device : public QObject
+class QTreeWidgetItem;
+class KeyMonDialog : public KDialog, public Ui::KeyMonDialog
 {
     Q_OBJECT
 
 
 public:
-    explicit Device(QObject *parent, const QString &file);
-    ~Device();
-
-    static QList<DeviceData> getDeviceList();
-    static DeviceData getDevice(const QString &file);
+    explicit KeyMonDialog(QWidget *parent = 0);
+    ~KeyMonDialog();
 
 
 private:
-    QSocketNotifier *m_socketNotifier;
+    QTreeWidgetItem *newDeviceItem(const DeviceData *d);
 
 
 private slots:
-    void readEvents();
+    void dialogFinished(const int &ret);
+    void loadDeviceList();
+    void loadDeviceList2();
+    void updateStatus();
 
 
 signals:
-    void buttonPressed(const SNoop::Event &event);
-    void finished();
+    void deviceSelected(const QString &id);
 
 
 };
 
 
-}; // Namespace SNoop
-
-
-#endif // DEVICE_H
+#endif // SNOOPDIALOG_H

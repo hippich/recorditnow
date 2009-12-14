@@ -22,7 +22,7 @@
 #include "mouseconfig.h"
 #include <recorditnow.h>
 #include "mousebutton.h"
-#include "snoopdialog.h"
+#include "keymondialog.h"
 
 // KDE
 #include <kicon.h>
@@ -44,7 +44,7 @@ MouseConfig::MouseConfig(QWidget *parent)
     snoopButton->setIcon(KIcon("input-mouse"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
-    connect(snoopButton, SIGNAL(clicked()), this, SLOT(showSNoopDialog()));
+    connect(snoopButton, SIGNAL(clicked()), this, SLOT(showKeyMonDialog()));
 
     buttonCombo->addItem(MouseButton::getName(MouseButton::LeftButton));
     buttonCombo->addItem(MouseButton::getName(MouseButton::RightButton));
@@ -338,11 +338,11 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
 }
 
 
-void MouseConfig::showSNoopDialog()
+void MouseConfig::showKeyMonDialog()
 {
 
-    SNoopDialog *dialog = new SNoopDialog(this);
-    connect(dialog, SIGNAL(deviceSelected(QString)), kcfg_snoopDevice, SLOT(setText(QString)));
+    KeyMonDialog *dialog = new KeyMonDialog(this);
+    connect(dialog, SIGNAL(deviceSelected(QString)), kcfg_keyMonDevice, SLOT(setText(QString)));
     dialog->show();
 
 }

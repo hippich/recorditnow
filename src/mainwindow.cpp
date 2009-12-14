@@ -850,7 +850,7 @@ void MainWindow::setupRecordWidgets(const bool &start)
             m_cursor->setButtons(MouseConfig::getButtons());
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
             m_cursor->setNormalColor(Settings::defaultColor());
-            m_cursor->setUseSNoop(Settings::useSNoop(), Settings::snoopDevice());
+            m_cursor->setUseKeyMon(Settings::useKeyMon(), Settings::keyMonDevice());
 
             m_cursor->start();
         }

@@ -22,7 +22,7 @@
 
 
 // own
-#include "snoop/event.h"
+#include "keymon/event.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -32,7 +32,7 @@
 #include <QtCore/QVariantMap>
 
 
-namespace SNoop {
+namespace KeyMon {
     class Device;
 };
 
@@ -49,7 +49,7 @@ public:
     void setSize(const QSize &size);
     void setNormalColor(const QColor &color);
     void setButtons(const QHash<int, QColor> &buttons);
-    void setUseSNoop(const bool &use, const QString &deviceName = QString());
+    void setUseKeyMon(const bool &use, const QString &deviceName = QString());
 
     void start();
     void stop();
@@ -63,8 +63,8 @@ private:
     QColor m_normalColor;
     QColor m_currentColor;
     QHash<int, QColor> m_buttons;
-    bool m_useSNoop;
-    SNoop::Device *m_device;
+    bool m_useKeyMon;
+    KeyMon::Device *m_device;
     QString m_deviceName;
     bool m_grab;
 
@@ -73,7 +73,7 @@ private slots:
     void updatePos();
     void resetColor();
     void updateGrab(const bool &grab);
-    void buttonPressed(const SNoop::Event &event);
+    void buttonPressed(const KeyMon::Event &event);
     void progressStep(const QVariantMap &data);
 
 
