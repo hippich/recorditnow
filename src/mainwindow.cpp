@@ -749,11 +749,6 @@ void MainWindow::pluginStatus(const QString &text)
 void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 {
 
-    if (m_cursor) {
-        m_cursor->stop();
-        m_cursor = 0;
-    }
-
     if (m_zoom) {
         triggerZoom();
     }
@@ -856,6 +851,7 @@ void MainWindow::setupRecordWidgets(const bool &start)
         }
     } else {
         if (m_cursor) {
+            m_cursor->stop();
             delete m_cursor;
             m_cursor = 0;
         }
