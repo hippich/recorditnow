@@ -255,11 +255,8 @@ void CursorWidget::updateGrab(const bool &grab)
 
             KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
             if (reply.type() != 2) {
-                kDebug() << "reply:" << reply.type();
                 hide();
                 emit error(i18n("Grab failed!"));
-            } else {
-                kDebug() << "watch started";
             }
 #else
             m_device = KeyMon::Manager::watch(m_deviceName, this);
