@@ -252,10 +252,10 @@ void CursorWidget::updateGrab(const bool &grab)
             args["Device"] = m_deviceName;
             action.setArguments(args);
             action.setExecutesAsync(true);
-            action.authorize();
 
             KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
             if (reply.type() != 2) {
+                hide();
                 emit error(i18n("Grab failed!"));
             } else {
                 kDebug() << "watch started";

@@ -93,6 +93,7 @@ private:
     void setState(const State &newState);
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
+    void setupRecordWidgets(const bool &start);
 
 
 private slots:

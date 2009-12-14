@@ -132,6 +132,7 @@ private slots:
     void setupTimeLine();
     void timeLineFinsihed();
     void cursorError(const QString &message);
+    void setupRecordWidgets(const bool &start);
 
 
 protected:

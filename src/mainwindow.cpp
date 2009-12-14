@@ -319,18 +319,6 @@ void MainWindow::startRecord()
 {
 
     setState(Recording);   
-
-    if (Settings::showActivity()) {
-        m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
-        connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
-
-        m_cursor->setButtons(MouseConfig::getButtons());
-        m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
-        m_cursor->setNormalColor(Settings::defaultColor());
-        m_cursor->setUseSNoop(Settings::useSNoop(), Settings::snoopDevice());
-
-        m_cursor->start();
-    }
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
     if (m_timeLine && m_recorderManager->hasFeature("TimelineEnabled", backendCombo->currentText())) {
@@ -637,6 +625,7 @@ void MainWindow::setState(const State &newState)
                 show(); // necessary to apply window flags
                 move(p);
             }
+            setupRecordWidgets(false);
             break;
         }
     case Timer: {
@@ -651,6 +640,7 @@ void MainWindow::setState(const State &newState)
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
+            setupRecordWidgets(true);
             break;
         }
     case Recording: {
@@ -717,6 +707,7 @@ void MainWindow::setState(const State &newState)
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
+            setupRecordWidgets(false);
             break;
         }
     case Upload: {
@@ -839,6 +830,35 @@ void MainWindow::updateRecorderCombo()
 
     if (backendCombo->contains(oldBackend)) {
         backendCombo->setCurrentItem(oldBackend, false);
+    }
+
+}
+
+
+void MainWindow::setupRecordWidgets(const bool &start)
+{
+
+    // mouse
+    if (start) {
+        if (Settings::showActivity()) {
+            if (m_cursor) {
+                delete m_cursor;
+            }
+            m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
+            connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
+
+            m_cursor->setButtons(MouseConfig::getButtons());
+            m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
+            m_cursor->setNormalColor(Settings::defaultColor());
+            m_cursor->setUseSNoop(Settings::useSNoop(), Settings::snoopDevice());
+
+            m_cursor->start();
+        }
+    } else {
+        if (m_cursor) {
+            delete m_cursor;
+            m_cursor = 0;
+        }
     }
 
 }
