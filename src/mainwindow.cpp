@@ -852,7 +852,6 @@ void MainWindow::setupRecordWidgets(const bool &start)
     } else {
         if (m_cursor) {
             m_cursor->stop();
-            delete m_cursor;
             m_cursor = 0;
         }
     }
