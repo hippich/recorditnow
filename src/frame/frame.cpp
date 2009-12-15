@@ -25,7 +25,7 @@
 // Qt
 #include <QtGui/QResizeEvent>
 
-#define FRAME_MIN_SIZE 50
+#define FRAME_MIN_SIZE 100
 
 
 Frame::Frame(QWidget *parent) :
