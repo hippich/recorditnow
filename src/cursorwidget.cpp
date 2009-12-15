@@ -71,13 +71,9 @@ CursorWidget::CursorWidget(QWidget *parent)
     connect(m_resetTimer, SIGNAL(timeout()), this, SLOT(resetColor()));
     m_resetTimer->setSingleShot(true);
 
-    m_timer->start(1000/25);
-
     setContentsMargins(2, 2, 2, 2);
 
     setSize(QSize(40, 40));
-
-    show();
 
     m_normalColor = Qt::black;
     m_currentColor = m_normalColor;
@@ -155,9 +151,23 @@ void CursorWidget::setOpacity(const qreal &opacity)
 }
 
 
+void CursorWidget::switchToPreviewMode()
+{
+
+    setWindowFlags(windowFlags()&~(Qt::X11BypassWindowManagerHint|Qt::FramelessWindowHint|Qt::Tool));
+    show(); // necessary to apply window flags
+    m_timer->disconnect(this);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(previewColors()));
+    m_timer->start(2000);
+
+}
+
+
 void CursorWidget::start()
 {
 
+    m_timer->start(1000/25);
+    show();
     updateGrab(false); // ungrab old buttons
     updateGrab(true);
 
@@ -369,6 +379,24 @@ void CursorWidget::progressStep(const QVariantMap &data)
 #else
     Q_UNUSED(data);
 #endif
+
+}
+
+
+void CursorWidget::previewColors()
+{
+
+    QHash<int, QColor>::const_iterator it = m_buttons.find(m_buttons.key(m_currentColor));
+    if (it == m_buttons.constEnd()) {
+        it = m_buttons.constBegin();
+    } else {
+        it++;
+    }
+    m_currentColor = it.value();
+    if (!m_currentColor.isValid()) {
+        m_currentColor = m_normalColor;
+    }
+    update();
 
 }
 

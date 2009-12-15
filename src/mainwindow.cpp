@@ -876,6 +876,8 @@ void MainWindow::setupRecordWidgets(const bool &start)
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
             m_cursor->setNormalColor(Settings::defaultColor());
             m_cursor->setUseKeyMon(Settings::useKeyMon(), Settings::keyMonDevice());
+            m_cursor->setMode(Settings::led() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
+            m_cursor->setOpacity(Settings::cursorOpacity());
 
             m_cursor->start();
         }

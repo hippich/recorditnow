@@ -57,6 +57,7 @@ public:
     void setUseKeyMon(const bool &use, const QString &deviceName = QString());
     void setMode(const CursorWidget::WidgetMode &mode);
     void setOpacity(const qreal &opacity);
+    void switchToPreviewMode();
 
     void start();
     void stop();
@@ -84,6 +85,7 @@ private slots:
     void updateGrab(const bool &grab);
     void buttonPressed(const KeyMon::Event &event);
     void progressStep(const QVariantMap &data);
+    void previewColors();
 
 
 protected:

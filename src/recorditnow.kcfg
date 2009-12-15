@@ -72,6 +72,15 @@
     <entry name="keyMonDevice" type="String">
             <default></default>
     </entry>
+    <entry name="led" type="Bool">
+            <default>true</default>
+    </entry>
+    <entry name="circle" type="String">
+            <default>false</default>
+    </entry>
+    <entry name="cursorOpacity" type="Double">
+            <default>0.5</default>
+    </entry>
   </group>
   <group name="Zoom">
     <entry name="zoomFactor" type="Int">

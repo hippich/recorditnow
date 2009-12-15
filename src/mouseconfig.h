@@ -60,6 +60,7 @@ private slots:
     void updateColumnSize();
     void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
     void showKeyMonDialog();
+    void buttonsChanged();
 
 
 signals:

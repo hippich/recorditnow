@@ -55,6 +55,14 @@ MouseConfig::MouseConfig(QWidget *parent)
     buttonCombo->addItem(MouseButton::getName(MouseButton::SpecialButton2));
 
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
+    cursorWidget->switchToPreviewMode();
+
+    connect(this, SIGNAL(configChanged()), this, SLOT(buttonsChanged()));
+    connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
+    connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
+    connect(kcfg_cursorOpacity, SIGNAL(valueChanged(double)), this, SLOT(buttonsChanged()));
+
+    buttonsChanged();
 
 }
 
@@ -339,6 +347,25 @@ void MouseConfig::showKeyMonDialog()
 
 }
 
+
+void MouseConfig::buttonsChanged()
+{
+
+    QHash<int, QColor> buttons;
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        const int button =  static_cast<MouseButton*>(treeWidget->itemWidget(item, 1))->getXButton();
+        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
+
+        buttons[button] = color;
+    }
+    cursorWidget->setButtons(buttons);
+    cursorWidget->setNormalColor(kcfg_defaultColor->color());
+    cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
+    cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
+    cursorWidget->setOpacity(kcfg_cursorOpacity->value());
+
+}
 
 
 #include "mouseconfig.moc"
