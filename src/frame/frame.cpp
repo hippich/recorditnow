@@ -173,7 +173,6 @@ void Frame::mouseMoveEvent(QMouseEvent *event)
     } else { // resize
         QRect geometry = this->geometry();
         QRect tmp = geometry;
-        const QPoint pos = mapToGlobal(event->pos());
         switch (m_side) {
         case Left: {
                 tmp.setLeft(event->globalX());
