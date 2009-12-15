@@ -29,7 +29,7 @@
 
 
 Frame::Frame(QWidget *parent) :
-        QWidget(parent, Qt::FramelessWindowHint|Qt::X11BypassWindowManagerHint|Qt::Tool)
+        QWidget(parent, Qt::FramelessWindowHint|Qt::Tool)
 {
 
     Q_ASSERT(parentWidget());
