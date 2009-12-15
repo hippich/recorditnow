@@ -39,6 +39,7 @@ FrameInfoWidget::FrameInfoWidget(Frame *parent)
 
     parent->installEventFilter(this);
     setAlignment(Qt::AlignCenter);
+    setFrameStyle(QFrame::Panel|QFrame::Raised);
 
 }
 
