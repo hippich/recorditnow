@@ -101,7 +101,6 @@ void MouseConfig::loadConfig()
         QTreeWidgetItem *item = new QTreeWidgetItem();
         KColorButton *button = newButton();
 
-        item->setText(0, QString::number(it.key()));
         button->setColor(it.value());
 
         MouseButton *mouseButton = newMouseButton();
@@ -160,13 +159,6 @@ void MouseConfig::defaults()
     QTreeWidgetItem *item5 = new QTreeWidgetItem();
     QTreeWidgetItem *item8 = new QTreeWidgetItem();
     QTreeWidgetItem *item9 = new QTreeWidgetItem();
-
-    item1->setText(0, QString::number(1));
-    item3->setText(0, QString::number(3));
-    item4->setText(0, QString::number(4));
-    item5->setText(0, QString::number(5));
-    item8->setText(0, QString::number(8));
-    item9->setText(0, QString::number(9));
 
     // left click
     treeWidget->addTopLevelItem(item1);
