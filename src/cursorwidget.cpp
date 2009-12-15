@@ -43,10 +43,12 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QThread>
 #include <QtGui/QDesktopWidget>
+#include <QtGui/QPaintEvent>
 
 // X11
 #include <X11/Xlib.h>
 #include <X11/Xcursor/Xcursor.h>
+#include <X11/extensions/shape.h>
 
 
 CursorWidget::CursorWidget(QWidget *parent)
@@ -54,11 +56,13 @@ CursorWidget::CursorWidget(QWidget *parent)
 {
 
     setAttribute(Qt::WA_TranslucentBackground);
-    // setAttribute(Qt::WA_TransparentForMouseEvents);
+    setAutoFillBackground(false);
 
     m_useKeyMon = false;
     m_grab = false;
     m_device = 0;
+    m_mode = LEDMode;
+    m_opacity = 0.4;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updatePos()));
@@ -77,6 +81,11 @@ CursorWidget::CursorWidget(QWidget *parent)
 
     m_normalColor = Qt::black;
     m_currentColor = m_normalColor;
+
+    // click-through
+    Pixmap mask = XCreatePixmap(x11Info().display(), winId(), 1, 1, 1);
+    XShapeCombineMask(x11Info().display(), winId(), ShapeInput, 0, 0, mask, ShapeSet);
+    XFreePixmap(x11Info().display(), mask);
 
 }
 
@@ -106,6 +115,7 @@ void CursorWidget::setNormalColor(const QColor &color)
 
     m_normalColor = color;
     resetColor();
+    update();
 
 }
 
@@ -123,6 +133,24 @@ void CursorWidget::setUseKeyMon(const bool &use, const QString &deviceName)
 
     m_useKeyMon = use;
     m_deviceName = deviceName;
+
+}
+
+
+void CursorWidget::setMode(const CursorWidget::WidgetMode &mode)
+{
+
+    m_mode = mode;
+    update();
+
+}
+
+
+void CursorWidget::setOpacity(const qreal &opacity)
+{
+
+    m_opacity = opacity;
+    update();
 
 }
 
@@ -177,21 +205,27 @@ void CursorWidget::updatePos()
 
     QRect geo = geometry();
 
-    const int size = XcursorGetDefaultSize(x11Info().display());
-    geo.moveTopLeft(QCursor::pos()+QPoint(size, size));
+    switch (m_mode) {
+    case LEDMode: {
+            const int size = XcursorGetDefaultSize(x11Info().display());
+            geo.moveTopLeft(QCursor::pos()+QPoint(size, size));
 
-    const QRect desktop = kapp->desktop()->screenGeometry(x11Info().appScreen());
-    if (!desktop.contains(geo)) {
-        if (geo.x()+geo.width() > desktop.width()) {
-            geo.moveRight(desktop.right());
-        }
-        if (geo.y()+geo.height() > desktop.height()) {
-            geo.moveBottom(desktop.bottom());
-        }
+            const QRect desktop = kapp->desktop()->screenGeometry(x11Info().appScreen());
+            if (!desktop.contains(geo)) {
+                if (geo.x()+geo.width() > desktop.width()) {
+                    geo.moveRight(desktop.right());
+                }
+                if (geo.y()+geo.height() > desktop.height()) {
+                    geo.moveBottom(desktop.bottom());
+                }
 
-        if (geo.contains(QCursor::pos())) {
-            geo.moveBottomRight(QCursor::pos()-QPoint(size/2, size/2));
+                if (geo.contains(QCursor::pos())) {
+                    geo.moveBottomRight(QCursor::pos()-QPoint(size/2, size/2));
+                }
+            }
+            break;
         }
+    case CircleMode: geo.moveCenter(QCursor::pos()); break;
     }
 
     setGeometry(geo);
@@ -342,32 +376,58 @@ void CursorWidget::progressStep(const QVariantMap &data)
 void CursorWidget::paintEvent(QPaintEvent *event)
 {
 
-    Q_UNUSED(event);
-
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setClipRegion(event->region());
+
+    switch (m_mode) {
+    case LEDMode: paintLED(&painter); break;
+    case CircleMode: paintCircle(&painter); break;
+    }
+
+}
+
+
+void CursorWidget::paintLED(QPainter *painter)
+{
+
+    painter->setRenderHint(QPainter::Antialiasing);
 
     // base
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(m_currentColor);
-    painter.setBrush(brush);
-    painter.drawEllipse(contentsRect());
+    painter->setBrush(brush);
+    painter->drawEllipse(contentsRect());
 
     // spot
     QRadialGradient grad(contentsRect().center(), size().height()/2);
     grad.setColorAt(0, Qt::white);
     grad.setColorAt(1, Qt::transparent);
     grad.setFocalPoint(contentsRect().center()-QPoint(size().height()/4, size().height()/4));
-    painter.setBrush(QBrush(grad));
-    painter.drawEllipse(contentsRect());
+    painter->setBrush(QBrush(grad));
+    painter->drawEllipse(contentsRect());
 
     // border
     QPen pen;
     pen.setWidth(2);
     pen.setColor(Qt::black);
-    painter.setPen(pen);
-    painter.drawEllipse(contentsRect());
+    painter->setPen(pen);
+    painter->drawEllipse(contentsRect());
+
+}
+
+
+void CursorWidget::paintCircle(QPainter *painter)
+{
+
+    painter->setRenderHints(QPainter::Antialiasing|QPainter::HighQualityAntialiasing);
+
+    QRadialGradient grad(contentsRect().center(), size().height());
+    grad.setColorAt(0, m_currentColor);
+    grad.setColorAt(1, Qt::transparent);
+    painter->setBrush(QBrush(grad));
+    painter->setOpacity(m_opacity);
+    painter->drawEllipse(contentsRect());
 
 }
 

@@ -43,6 +43,11 @@ class CursorWidget : public QWidget
 
 
 public:
+    enum WidgetMode {
+        LEDMode = 0,
+        CircleMode = 1
+    };
+
     CursorWidget(QWidget *parent);
     ~CursorWidget();
 
@@ -50,6 +55,8 @@ public:
     void setNormalColor(const QColor &color);
     void setButtons(const QHash<int, QColor> &buttons);
     void setUseKeyMon(const bool &use, const QString &deviceName = QString());
+    void setMode(const CursorWidget::WidgetMode &mode);
+    void setOpacity(const qreal &opacity);
 
     void start();
     void stop();
@@ -67,6 +74,8 @@ private:
     KeyMon::Device *m_device;
     QString m_deviceName;
     bool m_grab;
+    WidgetMode m_mode;
+    qreal m_opacity;
 
 
 private slots:
@@ -79,6 +88,8 @@ private slots:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void paintLED(QPainter *painter);
+    void paintCircle(QPainter *painter);
 
 
 signals:
