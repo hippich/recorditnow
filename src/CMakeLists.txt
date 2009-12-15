@@ -28,8 +28,6 @@ macro_display_feature_log()
 set(gui_SRCS
    main.cpp
    mainwindow.cpp
-   framebox.cpp
-   line.cpp
    recorditnowpluginmanager.cpp
    configdialog.cpp
    recordermanager.cpp
@@ -45,7 +43,9 @@ set(gui_SRCS
    topic.cpp
    mousebutton.cpp
    topictreeitem.cpp
-   keymondialog.cpp)
+   keymondialog.cpp
+   frame/frame.cpp
+   frame/frameinfowidget.cpp)
 
 
 # GUI

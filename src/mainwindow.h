@@ -42,7 +42,7 @@ class KAction;
 class RecorderManager;
 class EncoderManager;
 class RecordItNowPluginManager;
-class FrameBox;
+class Frame;
 class UploadManager;
 class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
@@ -68,7 +68,7 @@ public:
 
 private:
     QWidget *m_grabber;
-    FrameBox *m_box;
+    Frame *m_frame;
     KStatusNotifierItem *m_tray;
     QTimer *m_timer;
     AbstractRecorder::Data m_recordData;

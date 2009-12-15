@@ -17,49 +17,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef LINE_H
-#define LINE_H
+
+#ifndef FRAMEINFOWIDGET_H
+#define FRAMEINFOWIDGET_H
 
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QLabel>
 
 
-
-class Line : public QWidget
+class Frame;
+class QTimer;
+class FrameInfoWidget : public QLabel
 {
     Q_OBJECT
 
 
 public:
-    enum Side {
-        Left = 0,
-        Top = 1,
-        Right = 2,
-        Bottom = 3
-    };
-    Line(const Line::Side &side);
-    ~Line();
-
-    Line::Side side() const;
-
+    explicit FrameInfoWidget(Frame *parent);
+    ~FrameInfoWidget();
 
 
 private:
-    Side m_side;
-    QWidget *m_parent;
+    QTimer *m_timer;
+    Frame *m_frame;
 
+    void moveToFrame();
+
+
+private slots:
+    void timeout();
 
 
 protected:
-    void mouseMoveEvent(QMouseEvent *event);
-
-
-signals:
-    void geometryChanged(const Line::Side &side, const QRect &geometry);
+    bool eventFilter(QObject *watched, QEvent *event);
 
 
 };
 
 
-#endif // LINE_H
+#endif // FRAMEINFOWIDGET_H

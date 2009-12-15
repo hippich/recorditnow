@@ -24,7 +24,7 @@
 #else
     #include "mainwindow_4_3.h" // moc workaround
 #endif
-#include "framebox.h"
+#include "frame/frame.h"
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
 #include "configdialog.h"
@@ -96,7 +96,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChanged(QString)));
 
-    m_box = new FrameBox(this, Settings::currentFrame());
+    m_frame = new Frame(this);
+    m_frame->setFrameSize(Settings::currentFrame().size());
 
     m_tray = 0;
     m_zoom = 0;
@@ -158,7 +159,7 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentBackend(backendCombo->currentText());
     Settings::self()->setSoundEnabled(soundCheck->isChecked());
     Settings::self()->setCurrentFps(fpsSpinBox->value());
-    Settings::self()->setCurrentFrame(m_box->boxGeometry());
+    Settings::self()->setCurrentFrame(m_frame->getFrameGeometry());
     Settings::self()->setCurrentTime(timerLcd->value());
     Settings::self()->writeConfig();
 
@@ -171,7 +172,7 @@ MainWindow::~MainWindow()
         delete m_grabber;
     }
 
-    delete m_box;
+    delete m_frame;
 
     if (m_tray) {
         delete m_tray;
@@ -374,13 +375,13 @@ void MainWindow::stopRecord()
 void MainWindow::recordTriggred()
 {
 
-    if (!m_box->isEnabled()) {
+    if (!m_frame->isVisible()) {
         KMessageBox::sorry(this, i18n("No screen area selected."));
         return;
     }
 
     initRecorder(&m_recordData);
-    m_recordData.geometry = m_box->boxGeometry();
+    m_recordData.geometry = m_frame->getFrameGeometry();
 
     startTimer();
     
@@ -437,11 +438,11 @@ void MainWindow::triggerFrame(const bool &checked)
 {
 
     if (!isVisible() && !checked) {
-        m_box->setEnabled(false);
+        m_frame->setVisible(false);
     } else if (!isVisible() && checked) {
-        m_box->setEnabled(false);
+        m_frame->setVisible(false);
     } else {
-        m_box->setEnabled(!m_box->isEnabled());
+        m_frame->setVisible(!m_frame->isVisible());
     }
 
 }
@@ -492,8 +493,8 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 void MainWindow::initRecorder(AbstractRecorder::Data *d)
 {
 
-    if (m_box->isEnabled()) {
-        m_box->setEnabled(false);
+    if (m_frame->isVisible()) {
+        m_frame->setVisible(false);
     }
 
     d->geometry = QRect(-1, -1, -1, -1);
@@ -612,7 +613,7 @@ void MainWindow::setState(const State &newState)
             getAction("recordWindow")->setEnabled(true);
             getAction("recordFullScreen")->setEnabled(true);
             getAction("box")->setEnabled(true);
-            getAction("box")->setChecked(m_box->isEnabled());
+            getAction("box")->setChecked(m_frame->isVisible());
             getAction("options_configure")->setEnabled(true);
             getAction("upload")->setEnabled(true);
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
@@ -1096,7 +1097,7 @@ void MainWindow::hideEvent(QHideEvent *event)
 {
 
     KXmlGuiWindow::hideEvent(event);
-    if (m_box->isEnabled()) {
+    if (m_frame->isVisible()) {
         triggerFrame(false);
         getAction("box")->setChecked(true);
     }

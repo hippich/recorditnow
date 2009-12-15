@@ -17,59 +17,60 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FRAMEBOX_H
-#define FRAMEBOX_H
+#ifndef FRAME_H
+#define FRAME_H
 
-
-// own
-#include "line.h"
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QWidget>
 
 
-class QLabel;
-class FrameBox : public QObject
+class FrameInfoWidget;
+class Frame : public QWidget
 {
     Q_OBJECT
 
 
 public:
-    FrameBox(QWidget *parentconst, QRect pos);
-    ~FrameBox();
+    explicit Frame(QWidget *parent = 0);
+    ~Frame();
 
-    QRect boxGeometry() const;
-    bool isEnabled() const;
-
-    void setEnabled(const bool &enabled);
+    QRect getFrameGeometry() const;
+    void setFrameSize(const QSize &size);
 
 
 private:
-    QWidget *m_parent;
-    Line *m_left;
-    Line *m_top;
-    Line *m_right;
-    Line *m_bottom;
-    QFrame *m_sizeFrame;
-    QLabel *m_sizeLabel;
-    QTimer *m_timer;
-    bool m_enabled;
+    enum Side {
+        NoSide = -1,
+        Left = 0,
+        Top = 1,
+        Right = 2,
+        Bottom = 3,
+        TopLeft = 4,
+        TopRight = 5,
+        BottomLeft = 6,
+        BottomRight = 7
+    };
+    Side m_side;
+    FrameInfoWidget *m_infoWidget;
 
-    void adjustToParent();
-    void adjustLines();
-    void adjustSizeFrame(const QRect &boxGeo);
+    inline QRect getRect(const Side &side) const;
+    inline int getLineSize() const;
 
-
-private slots:
-    void lineGeometryChanged(const Line::Side &side, const QRect &geometry);
-    void hideFrame();
+    void moveToParent();
+    void moveParentToFrame();
 
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
 
+    void resizeEvent(QResizeEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
 
 };
 
 
-#endif // FRAMEBOX_H
+#endif // FRAME_H
