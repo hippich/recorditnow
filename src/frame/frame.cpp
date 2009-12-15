@@ -25,7 +25,6 @@
 // Qt
 #include <QtGui/QResizeEvent>
 
-
 #define FRAME_MIN_SIZE 50
 
 
@@ -70,7 +69,7 @@ QRect Frame::getFrameGeometry() const
 void Frame::setFrameSize(const QSize &size)
 {
 
-    resize(size.width()+getLineSize(), size.height()+getLineSize());
+    resize(size.width()+(getLineSize()*2), size.height()+(getLineSize()*2));
 
 }
 
