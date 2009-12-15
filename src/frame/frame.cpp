@@ -151,8 +151,7 @@ void Frame::resizeEvent(QResizeEvent *event)
 void Frame::mouseMoveEvent(QMouseEvent *event)
 {
 
-    const bool move = m_side != NoSide;
-    if (!move) { // set cursor
+    if (m_side == NoSide) { // set cursor
         if (getRect(TopLeft).contains(event->pos())) {
             setCursor(Qt::SizeFDiagCursor);
         } else if (getRect(TopRight).contains(event->pos())) {
