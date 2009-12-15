@@ -24,12 +24,13 @@
 
 // Qt
 #include <QtGui/QResizeEvent>
+#include <QtCore/QTimer>
+
+
 
 #define FRAME_MIN_SIZE 100
-
-
 Frame::Frame(QWidget *parent) :
-        QWidget(parent, Qt::FramelessWindowHint|Qt::Tool)
+        QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint)
 {
 
     Q_ASSERT(parentWidget());
@@ -70,6 +71,7 @@ void Frame::setFrameSize(const QSize &size)
 {
 
     resize(size.width()+(getLineSize()*2), size.height()+(getLineSize()*2));
+    moveToParent();
 
 }
 
@@ -310,6 +312,15 @@ void Frame::mouseReleaseEvent(QMouseEvent *event)
 
     Q_UNUSED(event);
     m_side = NoSide;
+
+}
+
+
+void Frame::showEvent(QShowEvent *event)
+{
+
+    QWidget::showEvent(event);
+    moveToParent();
 
 }
 

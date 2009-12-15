@@ -223,9 +223,11 @@ KAction *MainWindow::getAction(const QString &name)
 
     KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
-        if (name == "upload") {
+        if (name == "upload" || name == "box") {
             action = new KActionMenu(this);
-            static_cast<KActionMenu*>(action)->setDelayed(false);
+            if (name == "upload") {
+                static_cast<KActionMenu*>(action)->setDelayed(false);
+            }
         } else {
             action = new KAction(this);
         }
@@ -244,7 +246,7 @@ void MainWindow::setupActions()
     recordAction->setText(i18n("Record"));
     recordAction->setIcon(KIcon("media-record"));
     recordAction->setShortcut(Qt::CTRL+Qt::Key_R, KAction::DefaultShortcut);
-    connect(recordAction, SIGNAL(triggered()), this, SLOT(recordTriggred()));
+    connect(recordAction, SIGNAL(triggered()), this, SLOT(recordTriggered()));
 
     
     KAction *pauseAction = getAction("pause");
@@ -269,12 +271,38 @@ void MainWindow::setupActions()
     recordWindowAction->setShortcut(Qt::CTRL+Qt::Key_W, KAction::DefaultShortcut);
     connect(recordWindowAction, SIGNAL(triggered()), this, SLOT(recordWindow()));
 
-    KAction *boxAction = getAction("box");
+    KActionMenu *boxAction = static_cast<KActionMenu*>(getAction("box"));
     boxAction->setText(i18n("Show Frame"));
     boxAction->setIcon(KIcon("draw-rectangle"));
     boxAction->setShortcut(Qt::CTRL+Qt::Key_F, KAction::DefaultShortcut);
     boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
+
+    KAction *frameRes1Action = getAction("frame_640");
+    frameRes1Action->setData(QSize(640, 480));
+    frameRes1Action->setText("640 x 480 (4:3 SD)");
+    connect(frameRes1Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+    KAction *frameRes2Action = getAction("frame_800");
+    frameRes2Action->setData(QSize(800, 600));
+    frameRes2Action->setText("800 x 600");
+    connect(frameRes2Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+    KAction *frameRes3Action = getAction("frame_1024");
+    frameRes3Action->setData(QSize(1024, 768));
+    frameRes3Action->setText("1024 x 768");
+    connect(frameRes3Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+    KAction *frameRes4Action = getAction("frame_1280");
+    frameRes4Action->setData(QSize(1280, 720));
+    frameRes4Action->setText("1280 x 720 (16x9 HD)");
+    connect(frameRes4Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+    boxAction->addAction(frameRes1Action);
+    boxAction->addAction(frameRes2Action);
+    boxAction->addAction(frameRes3Action);
+    boxAction->addAction(frameRes4Action);
+
 
     KAction *fullAction = getAction("recordFullScreen");
     fullAction->setText(i18n("Record the entire Screen"));
@@ -372,7 +400,7 @@ void MainWindow::stopRecord()
 }
 
 
-void MainWindow::recordTriggred()
+void MainWindow::recordTriggered()
 {
 
     if (!m_frame->isVisible()) {
@@ -1234,6 +1262,15 @@ void MainWindow::cursorError(const QString &message)
     notification->setText(message);
     notification->setPixmap(KIcon("dialog-error").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
     notification->sendEvent();
+
+}
+
+
+void MainWindow::resolutionActionTriggered()
+{
+
+    KAction *action = static_cast<KAction*>(sender());
+    m_frame->setFrameSize(action->data().toSize());
 
 }
 

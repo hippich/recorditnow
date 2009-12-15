@@ -100,7 +100,7 @@ private slots:
     void startRecord();
     void pauseRecord();
     void stopRecord();
-    void recordTriggred();
+    void recordTriggered();
     void recordWindow();
     void recordCurrentWindow();
     void triggerFrame(const bool &checked);
@@ -132,6 +132,7 @@ private slots:
     void setupTimeLine();
     void timeLineFinsihed();
     void cursorError(const QString &message);
+    void resolutionActionTriggered();
 
 
 protected:
