@@ -37,6 +37,7 @@ public:
 
     QRect getFrameGeometry() const;
     void setFrameSize(const QSize &size);
+    void setVisible(bool visible);
 
 
 private:
@@ -53,12 +54,15 @@ private:
     };
     Side m_side;
     FrameInfoWidget *m_infoWidget;
+    bool m_active;
 
     inline QRect getRect(const Side &side) const;
     inline int getLineSize() const;
 
     void moveToParent();
     void moveParentToFrame();
+    void show();
+    void hide();
 
 
 protected:

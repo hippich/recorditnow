@@ -27,7 +27,6 @@
 #include <QtCore/QTimer>
 
 
-
 #define FRAME_MIN_SIZE 100
 Frame::Frame(QWidget *parent) :
         QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint)
@@ -40,6 +39,7 @@ Frame::Frame(QWidget *parent) :
     parent->installEventFilter(this);
     setMouseTracking(true);
     m_side = NoSide;
+    m_active = false;
 
     m_infoWidget = new FrameInfoWidget(this);
     m_infoWidget->hide();
@@ -72,6 +72,15 @@ void Frame::setFrameSize(const QSize &size)
 
     resize(size.width()+(getLineSize()*2), size.height()+(getLineSize()*2));
     moveToParent();
+
+}
+
+
+void Frame::setVisible(bool visible)
+{
+
+    m_active = visible;
+    QWidget::setVisible(visible);
 
 }
 
@@ -124,6 +133,22 @@ void Frame::moveParentToFrame()
 }
 
 
+void Frame::show()
+{
+
+    QWidget::setVisible(true);
+
+}
+
+
+void Frame::hide()
+{
+
+    QWidget::setVisible(false);
+
+}
+
+
 bool Frame::eventFilter(QObject *watched, QEvent *event)
 {
 
@@ -132,6 +157,18 @@ bool Frame::eventFilter(QObject *watched, QEvent *event)
             switch (event->type()) {
             case QEvent::Move:
             case QEvent::Resize: moveToParent(); break;
+            case QEvent::WindowDeactivate: {
+                    if (m_active) {
+                        hide();
+                    }
+                    break;
+                }
+            case QEvent::WindowActivate: {
+                    if (m_active) {
+                        show();
+                    }
+                    break;
+                }
             default: break;
             }
         }
