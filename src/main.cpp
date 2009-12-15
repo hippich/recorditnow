@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     KAboutData about("recorditnow",
                      0,
                      ki18n("RecordItNow"),
-                     "0.6",
+                     "0.7",
                      ki18n("Plugin based desktop recorder"),
                      KAboutData::License_GPL,
                      ki18n("(C) 2009 Kai Dombrowe"),
