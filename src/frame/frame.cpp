@@ -279,23 +279,26 @@ void Frame::mouseMoveEvent(QMouseEvent *event)
 void Frame::mousePressEvent(QMouseEvent *event)
 {
 
-
-    if (getRect(TopLeft).contains(event->pos())) {
-        m_side = TopLeft;
-    } else if (getRect(TopRight).contains(event->pos())) {
-        m_side = TopRight;
-    } else if (getRect(BottomLeft).contains(event->pos())) {
-        m_side = BottomLeft;
-    } else if (getRect(BottomRight).contains(event->pos())) {
-        m_side = BottomRight;
-    } else if (getRect(Left).contains(event->pos())) {
-        m_side = Left;
-    } else if (getRect(Right).contains(event->pos())) {
-        m_side = Right;
-    } else if (getRect(Top).contains(event->pos())) {
-        m_side = Top;
-    } else if (getRect(Bottom).contains(event->pos())) {
-        m_side = Bottom;
+    if (event->button() & Qt::LeftButton) {
+        if (getRect(TopLeft).contains(event->pos())) {
+            m_side = TopLeft;
+        } else if (getRect(TopRight).contains(event->pos())) {
+            m_side = TopRight;
+        } else if (getRect(BottomLeft).contains(event->pos())) {
+            m_side = BottomLeft;
+        } else if (getRect(BottomRight).contains(event->pos())) {
+            m_side = BottomRight;
+        } else if (getRect(Left).contains(event->pos())) {
+            m_side = Left;
+        } else if (getRect(Right).contains(event->pos())) {
+            m_side = Right;
+        } else if (getRect(Top).contains(event->pos())) {
+            m_side = Top;
+        } else if (getRect(Bottom).contains(event->pos())) {
+            m_side = Bottom;
+        } else {
+            m_side = NoSide;
+        }
     } else {
         m_side = NoSide;
     }
