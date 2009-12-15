@@ -107,7 +107,9 @@ QRect Frame::getRect(const Side &side) const
 int Frame::getLineSize() const
 {
 
-    return contentsMargins().top();
+    int left, top, right, bottom;
+    getContentsMargins(&left, &top, &right, &bottom);
+    return top;
 
 }
 
