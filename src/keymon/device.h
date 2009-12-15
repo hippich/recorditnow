@@ -46,12 +46,14 @@ public:
     explicit Device(QObject *parent, const QString &file);
     ~Device();
 
+    bool error() const;
     static QList<DeviceData> getDeviceList();
     static DeviceData getDevice(const QString &file);
 
 
 private:
     QSocketNotifier *m_socketNotifier;
+    bool m_error;
 
 
 private slots:

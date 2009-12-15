@@ -20,6 +20,7 @@
 
 // own
 #include "devicehelper.h"
+#include "device.h"
 
 // KDE
 #include <kdebug.h>
@@ -31,16 +32,15 @@
 ActionReply DeviceHelper::watch(QVariantMap args)
 {
 
-    m_device = new KeyMon::Device(this, args["Device"].toString());
-    if (!m_device) {
+    KeyMon::Device device(this, args["Device"].toString());
+    if (device.error()) {
         return ActionReply::HelperError;
     }
-    connect(m_device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
+    connect(&device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
 
     while (!HelperSupport::isStopped()) {
         usleep(10000);
     }
-    delete m_device;
     return ActionReply::SuccessReply;
 
 }

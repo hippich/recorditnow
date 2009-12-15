@@ -22,7 +22,6 @@
 
 
 // own
-#include "device.h"
 #include "event.h"
 
 // KDE
@@ -41,10 +40,6 @@ class DeviceHelper : public QObject
 public slots:
     ActionReply watch(QVariantMap args);
     ActionReply name(QVariantMap args);
-
-
-private:
-    KeyMon::Device *m_device;
 
 
 private slots:
