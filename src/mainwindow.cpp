@@ -864,7 +864,8 @@ void MainWindow::setupRecordWidgets(const bool &start)
 
     // mouse
     if (start) {
-        if (Settings::showActivity()) {
+        const QString recorder = backendCombo->currentText();
+        if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", recorder)) {
             if (m_cursor) {
                 delete m_cursor;
             }

@@ -26,3 +26,6 @@ Type=QString
 [PropertyDef::X-RecordItNow-TimelineEnabled]
 Type=bool
 
+[PropertyDef::X-RecordItNow-LEDEnabled]
+Type=bool
+
