@@ -105,6 +105,10 @@ void CursorWidget::setSize(const QSize &size)
 void CursorWidget::setNormalColor(const QColor &color)
 {
 
+    if (m_normalColor == color) {
+        return;
+    }
+
     m_normalColor = color;
     resetColor();
     update();
@@ -155,6 +159,10 @@ void CursorWidget::setMode(const CursorWidget::WidgetMode &mode)
 
 void CursorWidget::setOpacity(const qreal &opacity)
 {
+
+    if (m_opacity == opacity) {
+        return;
+    }
 
     m_opacity = opacity;
     update();
