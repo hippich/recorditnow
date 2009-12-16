@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>348</width>
-    <height>304</height>
+    <width>414</width>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -129,71 +129,51 @@
        </widget>
       </item>
       <item>
+       <layout class="QFormLayout" name="formLayout_2">
+        <property name="verticalSpacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Mode</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QRadioButton" name="kcfg_led">
+            <property name="text">
+             <string>LED next to the mouse cursor</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="kcfg_circle">
+            <property name="text">
+             <string>Circle under the mouse cursor</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <layout class="QFormLayout" name="formLayout">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::ExpandingFieldsGrow</enum>
           </property>
           <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Default color</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="KColorButton" name="kcfg_defaultColor"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Size</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="KIntSpinBox" name="kcfg_cursorWidgetSize">
-            <property name="suffix">
-             <string/>
-            </property>
-            <property name="minimum">
-             <number>15</number>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Mode</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <item>
-             <widget class="QRadioButton" name="kcfg_led">
-              <property name="text">
-               <string>LED</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="kcfg_circle">
-              <property name="text">
-               <string>Circle</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="0">
            <widget class="QLabel" name="opacityLabel">
             <property name="enabled">
              <bool>false</bool>
@@ -203,7 +183,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="0" column="1">
            <widget class="KDoubleNumInput" name="kcfg_cursorOpacity">
             <property name="enabled">
              <bool>false</bool>
@@ -219,6 +199,36 @@
             </property>
             <property name="sliderEnabled">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Default color</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="KColorButton" name="kcfg_defaultColor"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Size</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="KIntSpinBox" name="kcfg_cursorWidgetSize">
+            <property name="suffix">
+             <string/>
+            </property>
+            <property name="minimum">
+             <number>15</number>
+            </property>
+            <property name="maximum">
+             <number>100</number>
             </property>
            </widget>
           </item>
