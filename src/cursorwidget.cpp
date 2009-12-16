@@ -79,11 +79,6 @@ CursorWidget::CursorWidget(QWidget *parent)
     m_normalColor = Qt::black;
     m_currentColor = m_normalColor;
 
-    // click-through
-    Pixmap mask = XCreatePixmap(x11Info().display(), winId(), 1, 1, 1);
-    XShapeCombineMask(x11Info().display(), winId(), ShapeInput, 0, 0, mask, ShapeSet);
-    XFreePixmap(x11Info().display(), mask);
-
 }
 
 
@@ -138,6 +133,20 @@ void CursorWidget::setMode(const CursorWidget::WidgetMode &mode)
 {
 
     m_mode = mode;
+
+    if (m_mode == CircleMode) {
+        // click-through
+        int junk;
+        if (XQueryExtension(x11Info().display(), "SHAPE", &junk, &junk, &junk)) {
+            Pixmap mask = XCreatePixmap(x11Info().display(), winId(), 1, 1, 1);
+            XShapeCombineMask(x11Info().display(), winId(), ShapeInput, 0, 0, mask, ShapeSet);
+            XFreePixmap(x11Info().display(), mask);
+        } else {
+            kWarning() << "SHAPE extension is _NOT_ present!";
+            m_mode = LEDMode;
+        }
+    }
+
     updateMask();
     update();
 
