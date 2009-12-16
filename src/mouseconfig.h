@@ -61,6 +61,7 @@ private slots:
     void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
     void showKeyMonDialog();
     void buttonsChanged();
+    void modeChanged();
 
 
 signals:

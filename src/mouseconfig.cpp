@@ -28,6 +28,7 @@
 #include <kicon.h>
 #include <kcolorbutton.h>
 #include <kmessagebox.h>
+#include <kwindowsystem.h>
 
 // Qt
 #include <QtGui/QTreeWidget>
@@ -61,6 +62,7 @@ MouseConfig::MouseConfig(QWidget *parent)
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(double)), this, SLOT(buttonsChanged()));
+    connect(kcfg_circle, SIGNAL(toggled(bool)), this, SLOT(modeChanged()));
 
     buttonsChanged();
 
@@ -364,6 +366,17 @@ void MouseConfig::buttonsChanged()
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
     cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
+
+}
+
+
+void MouseConfig::modeChanged()
+{
+
+    if (!KWindowSystem::compositingActive()) {
+        kcfg_cursorOpacity->setDisabled(true);
+        opacityLabel->setDisabled(true);
+    }
 
 }
 

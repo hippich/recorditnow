@@ -92,6 +92,8 @@ protected:
     void paintEvent(QPaintEvent *event);
     void paintLED(QPainter *painter);
     void paintCircle(QPainter *painter);
+    void resizeEvent(QResizeEvent *event);
+    void updateMask();
 
 
 signals:

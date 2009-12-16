@@ -34,6 +34,7 @@
 #include <kwindowsystem.h>
 #include <kxerrorhandler.h>
 #include <klocalizedstring.h>
+#include <kwindowsystem.h>
 
 // Qt
 #include <QtGui/QCursor>
@@ -137,6 +138,7 @@ void CursorWidget::setMode(const CursorWidget::WidgetMode &mode)
 {
 
     m_mode = mode;
+    updateMask();
     update();
 
 }
@@ -450,12 +452,43 @@ void CursorWidget::paintCircle(QPainter *painter)
 
     painter->setRenderHints(QPainter::Antialiasing|QPainter::HighQualityAntialiasing);
 
-    QRadialGradient grad(contentsRect().center(), size().height());
-    grad.setColorAt(0, m_currentColor);
-    grad.setColorAt(1, Qt::transparent);
-    painter->setBrush(QBrush(grad));
-    painter->setOpacity(m_opacity);
-    painter->drawEllipse(contentsRect());
+    if (KWindowSystem::compositingActive()) {
+        QRadialGradient grad(contentsRect().center(), size().height());
+        grad.setColorAt(0, m_currentColor);
+        grad.setColorAt(1, Qt::transparent);
+        painter->setBrush(QBrush(grad));
+        painter->setOpacity(m_opacity);
+        painter->drawEllipse(contentsRect());
+    } else {
+        painter->fillRect(contentsRect(), m_currentColor);
+    }
+
+}
+
+
+void CursorWidget::resizeEvent(QResizeEvent *event)
+{
+
+    QWidget::resizeEvent(event);
+    updateMask();
+
+}
+
+
+void CursorWidget::updateMask()
+{
+
+    switch (m_mode) {
+    case CircleMode: {
+            if (!KWindowSystem::compositingActive()) {
+                setMask(QRegion(contentsRect(), QRegion::Ellipse));
+            } else {
+                setMask(QRegion());
+            }
+            break;
+        }
+    case LEDMode: setMask(QRegion()); break;
+    }
 
 }
 
