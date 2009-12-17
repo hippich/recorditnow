@@ -438,6 +438,16 @@ void CursorWidget::paintLED(QPainter *painter)
 {
 
     painter->setRenderHint(QPainter::Antialiasing);
+    const bool compositing = KWindowSystem::compositingActive();
+
+
+    if (!compositing) {
+        QBrush brush;
+        brush.setColor(Qt::gray);
+        brush.setStyle(Qt::SolidPattern);
+        painter->setBrush(brush);
+        painter->drawRect(rect());
+    }
 
     // base
     QBrush brush;
@@ -455,11 +465,13 @@ void CursorWidget::paintLED(QPainter *painter)
     painter->drawEllipse(contentsRect());
 
     // border
-    QPen pen;
-    pen.setWidth(2);
-    pen.setColor(Qt::black);
-    painter->setPen(pen);
-    painter->drawEllipse(contentsRect());
+    if (compositing) {
+        QPen pen;
+        pen.setWidth(2);
+        pen.setColor(Qt::black);
+        painter->setPen(pen);
+        painter->drawEllipse(contentsRect());
+    }
 
 }
 
