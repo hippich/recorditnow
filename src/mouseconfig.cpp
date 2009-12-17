@@ -64,6 +64,10 @@ MouseConfig::MouseConfig(QWidget *parent)
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(double)), this, SLOT(buttonsChanged()));
     connect(kcfg_circle, SIGNAL(toggled(bool)), this, SLOT(modeChanged()));
 
+    if (!KWindowSystem::compositingActive()) {
+        kcfg_circle->setText(i18n("Square under the mouse cursor"));
+    }
+
     buttonsChanged();
 
 }

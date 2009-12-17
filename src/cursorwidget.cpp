@@ -477,7 +477,7 @@ void CursorWidget::paintCircle(QPainter *painter)
         painter->setOpacity(m_opacity);
         painter->drawEllipse(contentsRect());
     } else {
-        painter->fillRect(contentsRect(), m_currentColor);
+        painter->fillRect(rect(), m_currentColor);
     }
 
 }
@@ -498,7 +498,11 @@ void CursorWidget::updateMask()
     switch (m_mode) {
     case CircleMode: {
             if (!KWindowSystem::compositingActive()) {
-                setMask(QRegion(contentsRect(), QRegion::Ellipse));
+                QRect maskRect = rect();
+                maskRect.setHeight(maskRect.height()-10);
+                maskRect.setWidth(maskRect.width()-10);
+                maskRect.moveCenter(rect().center());
+                setMask(QRegion(maskRect).xored(QRegion(rect())));
             } else {
                 setMask(QRegion());
             }
