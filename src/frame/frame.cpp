@@ -408,8 +408,8 @@ void Frame::mouseReleaseEvent(QMouseEvent *event)
 void Frame::showEvent(QShowEvent *event)
 {
 
-    QWidget::showEvent(event);
     moveToParent();
+    QWidget::showEvent(event);
 
 }
 
