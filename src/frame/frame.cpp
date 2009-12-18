@@ -23,6 +23,10 @@
 #include "frameinfowidget.h"
 #include "movewidget.h"
 
+// KDE
+#include <kdebug.h>
+#include <kwindowsystem.h>
+
 // Qt
 #include <QtGui/QResizeEvent>
 #include <QtCore/QTimer>
@@ -145,6 +149,13 @@ void Frame::moveToParent(const bool &force)
     }
 
     QRect parentGeometry = parentWidget()->geometry();
+    // geometry() returns sometimes/always x(0) y(0) if the window has not yet moved
+    if (parentGeometry.x() == 0 && parentGeometry.y() == 0) {
+        const KWindowInfo info = KWindowSystem::self()->windowInfo(parentWidget()->winId(),
+                                                                   NET::WMGeometry);
+        parentGeometry = info.geometry();
+    }
+
     QRect newGeometry = geometry();
     newGeometry.moveTopLeft(parentGeometry.bottomLeft()+QPoint(0, 20));
     setGeometry(newGeometry);
