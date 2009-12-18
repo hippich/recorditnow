@@ -152,7 +152,7 @@ void Frame::moveToParent(const bool &force)
 
     QRect parentGeometry = parentWidget()->frameGeometry();
     // geometry() returns sometimes/always x(0) y(0) if the window has not yet moved
-    if (parentGeometry.x() == 0 && parentGeometry.y() == 0) {
+    if (parentGeometry.x() < 1 && parentGeometry.y() < 1) {
         const KWindowInfo info = KWindowSystem::self()->windowInfo(parentWidget()->winId(),
                                                                    NET::WMFrameExtents);
         parentGeometry = info.frameGeometry();
