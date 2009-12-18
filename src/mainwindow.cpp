@@ -873,7 +873,7 @@ void MainWindow::setupRecordWidgets(const bool &start)
         const QString recorder = backendCombo->currentText();
         if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", recorder)) {
             if (m_cursor) {
-                delete m_cursor;
+                return; // timer was paused
             }
             m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
             connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
