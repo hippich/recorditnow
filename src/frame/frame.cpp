@@ -148,16 +148,16 @@ void Frame::moveToParent(const bool &force)
         return;
     }
 
-    QRect parentGeometry = parentWidget()->geometry();
+    QRect parentGeometry = parentWidget()->frameGeometry();
     // geometry() returns sometimes/always x(0) y(0) if the window has not yet moved
     if (parentGeometry.x() == 0 && parentGeometry.y() == 0) {
         const KWindowInfo info = KWindowSystem::self()->windowInfo(parentWidget()->winId(),
-                                                                   NET::WMGeometry);
-        parentGeometry = info.geometry();
+                                                                   NET::WMFrameExtents);
+        parentGeometry = info.frameGeometry();
     }
 
     QRect newGeometry = geometry();
-    newGeometry.moveTopLeft(parentGeometry.bottomLeft()+QPoint(0, 20));
+    newGeometry.moveTopLeft(parentGeometry.bottomLeft()+QPoint(0, 10));
     setGeometry(newGeometry);
 
 }
@@ -170,8 +170,14 @@ void Frame::moveParentToFrame()
         return;
     }
 
-    QRect geometry = parentWidget()->geometry();
-    geometry.moveBottomLeft(this->geometry().topLeft()-QPoint(0, 20));
+    QRect geometry = parentWidget()->frameGeometry();
+    const QPoint pos = geometry.topLeft()-parentWidget()->geometry().topLeft();
+    const QSize size = geometry.size()-parentWidget()->geometry().size();
+
+    geometry.moveBottomLeft(this->geometry().topLeft()-QPoint(0, 10));
+    geometry.moveTopLeft(geometry.topLeft()-pos);
+    geometry.setSize(geometry.size()-size);
+
     parentWidget()->setGeometry(geometry);
 
 }
