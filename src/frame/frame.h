@@ -79,6 +79,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void showEvent(QShowEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 
 };

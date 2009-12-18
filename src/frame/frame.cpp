@@ -30,6 +30,7 @@
 // Qt
 #include <QtGui/QResizeEvent>
 #include <QtCore/QTimer>
+#include <QtGui/QPainter>
 
 
 #define FRAME_MIN_SIZE 100
@@ -43,7 +44,7 @@ Frame::Frame(QWidget *parent) :
     m_moveWidget = 0;
 
     resize(FRAME_MIN_SIZE, FRAME_MIN_SIZE);
-    setContentsMargins(7, 7, 7, 7);
+    setContentsMargins(8, 8, 8, 8);
     parent->installEventFilter(this);
     setMouseTracking(true);
     m_side = NoSide;
@@ -410,6 +411,31 @@ void Frame::showEvent(QShowEvent *event)
 
     moveToParent();
     QWidget::showEvent(event);
+
+}
+
+
+void Frame::paintEvent(QPaintEvent *event)
+{
+
+    QWidget::paintEvent(event);
+
+    QPainter painter(this);
+    QPen pen;
+    pen.setWidth(1);
+    pen.setColor(palette().color(QPalette::Shadow));
+    painter.setPen(pen);
+
+    QRect in = contentsRect();
+    in.setHeight(in.height()+painter.pen().width());
+    in.setWidth(in.width()+painter.pen().width());
+    in.moveTopLeft(in.topLeft()-QPoint(painter.pen().width(), painter.pen().width()));
+    painter.drawRect(in);
+
+    QRect out = rect();
+    out.setHeight(out.height()-painter.pen().width());
+    out.setWidth(out.width()-painter.pen().width());
+    painter.drawRect(out);
 
 }
 
