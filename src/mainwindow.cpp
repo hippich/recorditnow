@@ -280,7 +280,7 @@ void MainWindow::setupActions()
 
     KAction *frameMoveAction = getAction("frame_move");
     frameMoveAction->setCheckable(true);
-    frameMoveAction->setText("Freely movable");
+    frameMoveAction->setText(i18n("Freely movable"));
     frameMoveAction->setIcon(KIcon("transform-move"));
     connect(frameMoveAction, SIGNAL(triggered(bool)), m_frame, SLOT(setMoveEnabled(bool)));
 
