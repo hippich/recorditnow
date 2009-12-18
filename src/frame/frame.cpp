@@ -33,6 +33,8 @@
 
 
 #define FRAME_MIN_SIZE 100
+#define PARENT_SPACING QPoint(0, 10)
+
 Frame::Frame(QWidget *parent) :
         QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint)
 {
@@ -157,7 +159,7 @@ void Frame::moveToParent(const bool &force)
     }
 
     QRect newGeometry = geometry();
-    newGeometry.moveTopLeft(parentGeometry.bottomLeft()+QPoint(0, 10));
+    newGeometry.moveTopLeft(parentGeometry.bottomLeft()+PARENT_SPACING);
     setGeometry(newGeometry);
 
 }
@@ -174,7 +176,7 @@ void Frame::moveParentToFrame()
     const QPoint pos = geometry.topLeft()-parentWidget()->geometry().topLeft();
     const QSize size = geometry.size()-parentWidget()->geometry().size();
 
-    geometry.moveBottomLeft(this->geometry().topLeft()-QPoint(0, 10));
+    geometry.moveBottomLeft(this->geometry().topLeft()-PARENT_SPACING);
     geometry.moveTopLeft(geometry.topLeft()-pos);
     geometry.setSize(geometry.size()-size);
 
