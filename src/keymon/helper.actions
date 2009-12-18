@@ -1,12 +1,12 @@
 [org.kde.recorditnow.helper.watch]
 Name=Open Device
-Description=Read mouse events
+Description=Opens a device file
 Policy=auth_admin
 Persistence=session
 
 [org.kde.recorditnow.helper.name]
 Name=Device Name
-Description=Get the device name
+Description=Read the device name
 Policy=auth_admin
 Persistence=session
 
