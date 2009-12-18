@@ -45,7 +45,8 @@ set(gui_SRCS
    topictreeitem.cpp
    keymondialog.cpp
    frame/frame.cpp
-   frame/frameinfowidget.cpp)
+   frame/frameinfowidget.cpp
+   frame/movewidget.cpp)
 
 
 # GUI

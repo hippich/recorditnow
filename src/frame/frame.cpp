@@ -21,6 +21,7 @@
 // own
 #include "frame.h"
 #include "frameinfowidget.h"
+#include "movewidget.h"
 
 // Qt
 #include <QtGui/QResizeEvent>
@@ -33,6 +34,7 @@ Frame::Frame(QWidget *parent) :
 {
 
     Q_ASSERT(parentWidget());
+    m_moveWidget = 0;
 
     resize(FRAME_MIN_SIZE, FRAME_MIN_SIZE);
     setContentsMargins(7, 7, 7, 7);
@@ -51,6 +53,9 @@ Frame::~Frame()
 {
 
     delete m_infoWidget;
+    if (m_moveWidget) {
+        delete m_moveWidget;
+    }
 
 }
 
@@ -85,6 +90,24 @@ void Frame::setVisible(bool visible)
 }
 
 
+void Frame::setMoveEnabled(const bool &enabled)
+{
+
+    if (enabled) {
+        if (!m_moveWidget) {
+            m_moveWidget = new MoveWidget(this);
+        }
+    } else {
+        if (m_moveWidget) {
+            delete m_moveWidget;
+            m_moveWidget = 0;
+        }
+    }
+    moveToParent(true);
+
+}
+
+
 QRect Frame::getRect(const Side &side) const
 {
 
@@ -114,8 +137,12 @@ int Frame::getLineSize() const
 }
 
 
-void Frame::moveToParent()
+void Frame::moveToParent(const bool &force)
 {
+
+    if (m_moveWidget && !force) {
+        return;
+    }
 
     QRect parentGeometry = parentWidget()->geometry();
     QRect newGeometry = geometry();
@@ -127,6 +154,10 @@ void Frame::moveToParent()
 
 void Frame::moveParentToFrame()
 {
+
+    if (m_moveWidget) {
+        return;
+    }
 
     QRect geometry = parentWidget()->geometry();
     geometry.moveBottomLeft(this->geometry().topLeft()-QPoint(0, 20));
@@ -160,13 +191,13 @@ bool Frame::eventFilter(QObject *watched, QEvent *event)
             case QEvent::Move:
             case QEvent::Resize: moveToParent(); break;
             case QEvent::WindowDeactivate: {
-                    if (m_active) {
+                    if (m_active && !m_moveWidget) {
                         hide();
                     }
                     break;
                 }
             case QEvent::WindowActivate: {
-                    if (m_active) {
+                    if (m_active && !m_moveWidget) {
                         show();
                     }
                     break;

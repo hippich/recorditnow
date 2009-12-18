@@ -17,64 +17,34 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FRAME_H
-#define FRAME_H
+#ifndef MOVEWIDGET_H
+#define MOVEWIDGET_H
 
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QFrame>
 
 
-class MoveWidget;
-class FrameInfoWidget;
-class Frame : public QWidget
+
+class MoveWidget : public QFrame
 {
     Q_OBJECT
 
 
 public:
-    explicit Frame(QWidget *parent = 0);
-    ~Frame();
-
-    QRect getFrameGeometry() const;
-    void setFrameSize(const QSize &size);
-    void setVisible(bool visible);
-
-
-public slots:
-    void setMoveEnabled(const bool &enabled);
+    explicit MoveWidget(QWidget *parent);
+    ~MoveWidget();
 
 
 private:
-    enum Side {
-        NoSide = -1,
-        Left = 0,
-        Top = 1,
-        Right = 2,
-        Bottom = 3,
-        TopLeft = 4,
-        TopRight = 5,
-        BottomLeft = 6,
-        BottomRight = 7
-    };
-    Side m_side;
-    FrameInfoWidget *m_infoWidget;
-    MoveWidget *m_moveWidget;
-    bool m_active;
+    bool m_move;
+    QPoint m_pos;
 
-    inline QRect getRect(const Side &side) const;
-    inline int getLineSize() const;
-
-    void moveToParent(const bool &force = false);
-    void moveParentToFrame();
-    void show();
-    void hide();
+    void moveToParent();
 
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
-
-    void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
@@ -84,4 +54,4 @@ protected:
 };
 
 
-#endif // FRAME_H
+#endif // MOVEWIDGET_H

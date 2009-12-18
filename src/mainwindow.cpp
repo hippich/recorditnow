@@ -74,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_grabber(0)
 {
 
+    m_frame = new Frame(this);
+    m_frame->setFrameSize(Settings::currentFrame().size());
+
     setupActions();
 
     QWidget *toolWidget = new QWidget(this);
@@ -95,9 +98,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(removeFile()));
 
     connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChanged(QString)));
-
-    m_frame = new Frame(this);
-    m_frame->setFrameSize(Settings::currentFrame().size());
 
     m_tray = 0;
     m_zoom = 0;
@@ -278,6 +278,12 @@ void MainWindow::setupActions()
     boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
 
+    KAction *frameMoveAction = getAction("frame_move");
+    frameMoveAction->setCheckable(true);
+    frameMoveAction->setText("Freely movable");
+    frameMoveAction->setIcon(KIcon("transform-move"));
+    connect(frameMoveAction, SIGNAL(triggered(bool)), m_frame, SLOT(setMoveEnabled(bool)));
+
     KAction *frameRes1Action = getAction("frame_640");
     frameRes1Action->setData(QSize(640, 480));
     frameRes1Action->setText("640 x 480 (4:3 SD)");
@@ -298,6 +304,8 @@ void MainWindow::setupActions()
     frameRes4Action->setText("1280 x 720 (16x9 HD)");
     connect(frameRes4Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
 
+    boxAction->addAction(frameMoveAction);
+    boxAction->addSeparator();
     boxAction->addAction(frameRes1Action);
     boxAction->addAction(frameRes2Action);
     boxAction->addAction(frameRes3Action);
