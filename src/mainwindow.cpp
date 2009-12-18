@@ -473,12 +473,10 @@ void MainWindow::recordCurrentWindow()
 void MainWindow::triggerFrame(const bool &checked)
 {
 
-    if (!isVisible() && !checked) {
-        m_frame->setVisible(false);
-    } else if (!isVisible() && checked) {
+    if (!isVisible()) {
         m_frame->setVisible(false);
     } else {
-        m_frame->setVisible(!m_frame->isVisible());
+        m_frame->setVisible(checked);
     }
 
 }
