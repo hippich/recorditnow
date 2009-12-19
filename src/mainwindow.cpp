@@ -36,8 +36,8 @@
 #include "application.h"
 #include "mouseconfig.h"
 #include "zoomview.h"
-#include "timeline.h"
-#include "timelinedock.h"
+#include "timeline/timeline.h"
+#include "timeline/timelinedock.h"
 
 // Qt
 #include <QtGui/QX11Info>

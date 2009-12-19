@@ -37,17 +37,17 @@ set(gui_SRCS
    application.cpp
    mouseconfig.cpp
    zoomview.cpp
-   timeline.cpp
-   timelinetopicsdialog.cpp
-   topicwidget.cpp
-   topic.cpp
    mousebutton.cpp
-   topictreeitem.cpp
    keymondialog.cpp
    frame/frame.cpp
    frame/frameinfowidget.cpp
    frame/movewidget.cpp
-   timelinedock.cpp)
+   timeline/timelinedock.cpp
+   timeline/timeline.cpp
+   timeline/timelinetopicsdialog.cpp
+   timeline/topicwidget.cpp
+   timeline/topic.cpp
+   timeline/topictreeitem.cpp)
 
 
 # GUI

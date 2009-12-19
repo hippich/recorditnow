@@ -67,7 +67,7 @@
   <customwidget>
    <class>TopicWidget</class>
    <extends>QWidget</extends>
-   <header>topicwidget.h</header>
+   <header>timeline/topicwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
