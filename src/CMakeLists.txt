@@ -46,7 +46,8 @@ set(gui_SRCS
    keymondialog.cpp
    frame/frame.cpp
    frame/frameinfowidget.cpp
-   frame/movewidget.cpp)
+   frame/movewidget.cpp
+   timelinedock.cpp)
 
 
 # GUI

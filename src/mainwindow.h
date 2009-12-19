@@ -33,8 +33,7 @@
 #include <QtCore/QPointer>
 
 
-class QDockWidget;
-class TimeLine;
+class TimelineDock;
 class ZoomView;
 class CursorWidget;
 class KSqueezedTextLabel;
@@ -80,8 +79,7 @@ private:
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
     ZoomView *m_zoom;
-    TimeLine *m_timeLine;
-    QDockWidget *m_timelineDock;
+    TimelineDock *m_timelineDock;
 
     KAction *getAction(const QString &name);
 
@@ -129,7 +127,7 @@ private slots:
     void triggerZoom();
     void zoomIn();
     void zoomOut();
-    void setupTimeLine();
+    void setupTimeline();
     void timeLineFinsihed();
     void cursorError(const QString &message);
     void resolutionActionTriggered();

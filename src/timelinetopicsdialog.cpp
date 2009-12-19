@@ -34,7 +34,7 @@
 #include <QtGui/QTimeEdit>
 
 
-TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWidget)
+TimelineTopicsDialog::TimelineTopicsDialog(QWidget *parent, TopicWidget *topicWidget)
     : KDialog(parent), m_topicWidget(topicWidget)
 {
 
@@ -73,14 +73,14 @@ TimeLineTopicsDialog::TimeLineTopicsDialog(QWidget *parent, TopicWidget *topicWi
 }
 
 
-TimeLineTopicsDialog::~TimeLineTopicsDialog()
+TimelineTopicsDialog::~TimelineTopicsDialog()
 {
 
 
 }
 
 
-void TimeLineTopicsDialog::addTopic()
+void TimelineTopicsDialog::addTopic()
 {
 
     TopicTreeItem *item = new TopicTreeItem(treeWidget);
@@ -89,7 +89,7 @@ void TimeLineTopicsDialog::addTopic()
 }
 
 
-void TimeLineTopicsDialog::removeTopic()
+void TimelineTopicsDialog::removeTopic()
 {
 
     QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
@@ -101,7 +101,7 @@ void TimeLineTopicsDialog::removeTopic()
 }
 
 
-void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
+void TimelineTopicsDialog::updateTopicWidget(const int &ret)
 {
 
     if (ret != KDialog::Accepted) {
@@ -123,7 +123,7 @@ void TimeLineTopicsDialog::updateTopicWidget(const int &ret)
 }
 
 
-void TimeLineTopicsDialog::upClicked()
+void TimelineTopicsDialog::upClicked()
 {
 
     QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
@@ -147,7 +147,7 @@ void TimeLineTopicsDialog::upClicked()
 }
 
 
-void TimeLineTopicsDialog::downClicked()
+void TimelineTopicsDialog::downClicked()
 {
 
     QList<QTreeWidgetItem*> items = treeWidget->selectedItems();
@@ -171,7 +171,7 @@ void TimeLineTopicsDialog::downClicked()
 }
 
 
-void TimeLineTopicsDialog::itemSelectionChanged()
+void TimelineTopicsDialog::itemSelectionChanged()
 {
 
     if(treeWidget->selectedItems().isEmpty() || treeWidget->selectedItems().size() > 1) {
@@ -188,7 +188,7 @@ void TimeLineTopicsDialog::itemSelectionChanged()
 }
 
 
-void TimeLineTopicsDialog::updateTotalDuration()
+void TimelineTopicsDialog::updateTotalDuration()
 {
 
     unsigned long duration = 0;

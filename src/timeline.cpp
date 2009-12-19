@@ -30,7 +30,7 @@
 #include <QtCore/QTimer>
 
 
-TimeLine::TimeLine(QWidget *parent)
+Timeline::Timeline(QWidget *parent)
     : QWidget(parent)
 {
 
@@ -53,7 +53,7 @@ TimeLine::TimeLine(QWidget *parent)
 }
 
 
-TimeLine::~TimeLine()
+Timeline::~Timeline()
 {
 
     delete m_timer;
@@ -61,7 +61,7 @@ TimeLine::~TimeLine()
 }
 
 
-unsigned long TimeLine::duration() const
+unsigned long Timeline::duration() const
 {
 
     return slider->maximum();
@@ -69,7 +69,7 @@ unsigned long TimeLine::duration() const
 }
 
 
-void TimeLine::loadTopics(KConfigGroup *cfg)
+void Timeline::loadTopics(KConfigGroup *cfg)
 {
 
     topicWidget->clear();
@@ -92,7 +92,7 @@ void TimeLine::loadTopics(KConfigGroup *cfg)
 }
 
 
-void TimeLine::saveTopics(KConfigGroup *cfg)
+void Timeline::saveTopics(KConfigGroup *cfg)
 {
 
     int count = 0;
@@ -107,7 +107,7 @@ void TimeLine::saveTopics(KConfigGroup *cfg)
 }
 
 
-void TimeLine::enableNotifications(const bool &enable)
+void Timeline::enableNotifications(const bool &enable)
 {
 
     m_notifications = enable;
@@ -115,7 +115,7 @@ void TimeLine::enableNotifications(const bool &enable)
 }
 
 
-void TimeLine::start()
+void Timeline::start()
 {
 
     if (state() != Idle) {
@@ -129,7 +129,7 @@ void TimeLine::start()
 }
 
 
-void TimeLine::stop()
+void Timeline::stop()
 {
 
     if (m_state == Idle) {
@@ -143,7 +143,7 @@ void TimeLine::stop()
 }
 
 
-void TimeLine::pauseOrContinue()
+void Timeline::pauseOrContinue()
 {
 
     if (state() == Paused) {
@@ -157,7 +157,7 @@ void TimeLine::pauseOrContinue()
 }
 
 
-TimeLine::State TimeLine::state() const
+Timeline::State Timeline::state() const
 {
 
     return m_state;
@@ -165,7 +165,7 @@ TimeLine::State TimeLine::state() const
 }
 
 
-void TimeLine::setState(const State &state)
+void Timeline::setState(const State &state)
 {
 
     m_state = state;
@@ -178,7 +178,7 @@ void TimeLine::setState(const State &state)
 }
 
 
-void TimeLine::updateTime()
+void Timeline::updateTime()
 {
 
     slider->setValue(slider->value()+1);
@@ -198,16 +198,16 @@ void TimeLine::updateTime()
 }
 
 
-void TimeLine::configure()
+void Timeline::configure()
 {
 
-    TimeLineTopicsDialog *dialog = new TimeLineTopicsDialog(this, topicWidget);
+    TimelineTopicsDialog *dialog = new TimelineTopicsDialog(this, topicWidget);
     dialog->show();
 
 }
 
 
-void TimeLine::topicChanged(Topic *topic)
+void Timeline::topicChanged(Topic *topic)
 {
 
     if (!m_notifications) {
@@ -222,7 +222,7 @@ void TimeLine::topicChanged(Topic *topic)
 }
 
 
-void TimeLine::resetSlider()
+void Timeline::resetSlider()
 {
 
     slider->setValue(0);
@@ -235,7 +235,7 @@ void TimeLine::resetSlider()
 }
 
 
-void TimeLine::durationChanged(const unsigned long newDuration)
+void Timeline::durationChanged(const unsigned long newDuration)
 {
 
     slider->setMaximum(newDuration);

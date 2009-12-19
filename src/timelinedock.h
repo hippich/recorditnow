@@ -17,44 +17,30 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef TIMELINETOPICSDIALOG_H
-#define TIMELINETOPICSDIALOG_H
-
-
-// own
-#include "ui_timelinetopics.h"
-
-// KDE
-#include <kdialog.h>
+#ifndef TIMELINEDOCK_H
+#define TIMELINEDOCK_H
 
 
-class TopicWidget;
-class TimelineTopicsDialog : public KDialog, public Ui::TimelineTopics
+// Qt
+#include <QtGui/QDockWidget>
+
+
+class Timeline;
+class TimelineDock : public QDockWidget
 {
     Q_OBJECT
 
 
 public:
-    TimelineTopicsDialog(QWidget *parent, TopicWidget *topicWidget);
-    ~TimelineTopicsDialog();
+    explicit TimelineDock(QWidget *parent = 0);
+    ~TimelineDock();
 
 
-private:
-    TopicWidget *m_topicWidget;
+    Timeline *timeline() const;
 
-
-private slots:
-    void addTopic();
-    void removeTopic();
-    void updateTopicWidget(const int &ret);
-    void upClicked();
-    void downClicked();
-    void itemSelectionChanged();
-    void updateTotalDuration();
 
 
 };
 
 
-#endif // TIMELINETOPICSDIALOG_H
+#endif // TIMELINEDOCK_H

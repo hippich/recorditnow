@@ -18,43 +18,47 @@
  ***************************************************************************/
 
 
-#ifndef TIMELINETOPICSDIALOG_H
-#define TIMELINETOPICSDIALOG_H
-
-
 // own
-#include "ui_timelinetopics.h"
+#include "timelinedock.h"
+#include "timeline.h"
+#include <recorditnow.h>
 
 // KDE
-#include <kdialog.h>
+#include <klocalizedstring.h>
+#include <kconfiggroup.h>
 
 
-class TopicWidget;
-class TimelineTopicsDialog : public KDialog, public Ui::TimelineTopics
+TimelineDock::TimelineDock(QWidget *parent)
+    : QDockWidget(i18n("Timeline"), parent)
 {
-    Q_OBJECT
+
+    setObjectName("Timeline");
+    setAllowedAreas(Qt::AllDockWidgetAreas);
+    setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
+    Timeline *line = new Timeline(this);
+    setWidget(line);
+
+    KConfigGroup cfg(Settings::self()->config(), "Timeline");
+    line->loadTopics(&cfg);
+
+}
 
 
-public:
-    TimelineTopicsDialog(QWidget *parent, TopicWidget *topicWidget);
-    ~TimelineTopicsDialog();
+TimelineDock::~TimelineDock()
+{
+
+    KConfigGroup cfg(Settings::self()->config(), "Timeline");
+    timeline()->saveTopics(&cfg);
+
+}
 
 
-private:
-    TopicWidget *m_topicWidget;
+Timeline *TimelineDock::timeline() const
+{
+
+    return static_cast<Timeline*>(widget());
+
+}
 
 
-private slots:
-    void addTopic();
-    void removeTopic();
-    void updateTopicWidget(const int &ret);
-    void upClicked();
-    void downClicked();
-    void itemSelectionChanged();
-    void updateTotalDuration();
-
-
-};
-
-
-#endif // TIMELINETOPICSDIALOG_H
+#include "timelinedock.moc"

@@ -32,14 +32,14 @@
 class Topic;
 class KConfigGroup;
 class QTimer;
-class TimeLine : public QWidget, public Ui::TimeLine
+class Timeline : public QWidget, public Ui::Timeline
 {
     Q_OBJECT
 
 
 public:
-    TimeLine(QWidget *parent = 0);
-    ~TimeLine();
+    Timeline(QWidget *parent = 0);
+    ~Timeline();
 
     unsigned long duration() const;
 

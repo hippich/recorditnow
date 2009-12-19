@@ -37,6 +37,7 @@
 #include "mouseconfig.h"
 #include "zoomview.h"
 #include "timeline.h"
+#include "timelinedock.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -101,7 +102,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_tray = 0;
     m_zoom = 0;
-    m_timeLine = 0;
     m_timelineDock = 0;
 
     m_timer = new QTimer(this);
@@ -134,7 +134,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_statusLabel, SIGNAL(linkActivated(QString)), this, SLOT(linkActivated(QString)));
     statusBar()->addPermanentWidget(m_statusLabel, 1);
 
-    setupTimeLine();
+    setupTimeline();
     setupTray();
     setupGUI();
 
@@ -162,11 +162,6 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentFrame(m_frame->getFrameGeometry());
     Settings::self()->setCurrentTime(timerLcd->value());
     Settings::self()->writeConfig();
-
-    if (m_timeLine) {
-        KConfigGroup cfg(Settings::self()->config(), "Timeline");
-        m_timeLine->saveTopics(&cfg);
-    }
 
     if (m_grabber) {
         delete m_grabber;
@@ -358,8 +353,8 @@ void MainWindow::startRecord()
     setState(Recording);   
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
-    if (m_timeLine && m_recorderManager->hasFeature("TimelineEnabled", backendCombo->currentText())) {
-        m_timeLine->start();
+    if (m_timelineDock && m_recorderManager->hasFeature("TimelineEnabled", backendCombo->currentText())) {
+        m_timelineDock->timeline()->start();
     }
 
 }
@@ -382,8 +377,8 @@ void MainWindow::pauseRecord()
         }
         m_recorderManager->pauseOrContinue();
         m_encoderManager->pauseOrContinue();
-        if (m_timeLine) {
-            m_timeLine->pauseOrContinue();
+        if (m_timelineDock) {
+            m_timelineDock->timeline()->pauseOrContinue();
         }
     }
 
@@ -400,8 +395,8 @@ void MainWindow::stopRecord()
         m_recorderManager->stop();
         m_encoderManager->stop();
         m_uploadManager->stop();
-        if (m_timeLine) {
-            m_timeLine->stop();
+        if (m_timelineDock) {
+            m_timelineDock->timeline()->stop();
         }
     }
 
@@ -788,8 +783,8 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         triggerZoom();
     }
 
-    if (m_timeLine) {
-        m_timeLine->stop();
+    if (m_timelineDock) {
+        m_timelineDock->timeline()->stop();
     }
 
     if (!error.isEmpty()) {
@@ -840,7 +835,7 @@ void MainWindow::configure()
 void MainWindow::dialogFinished()
 {
 
-    setupTimeLine();
+    setupTimeline();
     setupTray();
     updateRecorderCombo();
     updateUploaderMenu();
@@ -1220,34 +1215,21 @@ void MainWindow::zoomOut()
 }
 
 
-void MainWindow::setupTimeLine()
+void MainWindow::setupTimeline()
 {
 
     if (Settings::showTimeLine()) {
         if (!m_timelineDock) {
-            m_timeLine = new TimeLine(this);
-            connect(m_timeLine, SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
-
-            m_timelineDock = new QDockWidget(i18n("Timeline"), this);
-            m_timelineDock->setWidget(m_timeLine);
-            m_timelineDock->setObjectName("TimelineDockWidget");
-            m_timelineDock->setAllowedAreas(Qt::AllDockWidgetAreas);
-            m_timelineDock->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
+            m_timelineDock = new TimelineDock(this);
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
-
-            KConfigGroup cfg(Settings::self()->config(), "Timeline");
-            m_timeLine->loadTopics(&cfg);
+            connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
         }
-        m_timeLine->enableNotifications(Settings::timelineNotifications());
+        m_timelineDock->timeline()->enableNotifications(Settings::timelineNotifications());
     } else {
         if (m_timelineDock) {
-            KConfigGroup cfg(Settings::self()->config(), "Timeline");
-            m_timeLine->saveTopics(&cfg);
-
             removeDockWidget(m_timelineDock);
             delete m_timelineDock;
             m_timelineDock = 0;
-            m_timeLine = 0;
         }
     }
 
