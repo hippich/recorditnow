@@ -34,8 +34,7 @@
 #include <QtCore/QPointer>
 
 
-class QDockWidget;
-class TimeLine;
+class TimelineDock;
 class ZoomView;
 class CursorWidget;
 class KSqueezedTextLabel;
@@ -81,8 +80,7 @@ private:
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
     ZoomView *m_zoom;
-    TimeLine *m_timeLine;
-    QDockWidget *m_timelineDock;
+    TimelineDock *m_timelineDock;
 
     KAction *getAction(const QString &name);
 
@@ -94,6 +92,7 @@ private:
     void setState(const State &newState);
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
+    void setupRecordWidgets(const bool &start);
 
 
 private slots:
@@ -129,10 +128,9 @@ private slots:
     void triggerZoom();
     void zoomIn();
     void zoomOut();
-    void setupTimeLine();
+    void setupTimeline();
     void timeLineFinsihed();
     void cursorError(const QString &message);
-    void setupRecordWidgets(const bool &start);
     void resolutionActionTriggered();
 
 
