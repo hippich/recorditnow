@@ -138,8 +138,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupTray();
     setupGUI();
 
-    //setMenuBar(0); // crash on saveNewToolbarConfig()... KDE bug?
-    menuBar()->clear(); // see saveNewToolbarConfig()
+    menuBar()->clear();
 
     setState(Idle);
     m_pluginManager->init();
@@ -455,8 +454,6 @@ void MainWindow::recordCurrentWindow()
     if (child == None) {
         return;
     }
-
-    kDebug() << "WinId:" << child;
 
     initRecorder(&m_recordData);
     m_recordData.winId = child;
