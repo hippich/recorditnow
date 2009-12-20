@@ -77,6 +77,9 @@
            <property name="text">
             <string notr="true"/>
            </property>
+           <property name="autoRepeat">
+            <bool>true</bool>
+           </property>
            <property name="autoRaise">
             <bool>true</bool>
            </property>
@@ -86,6 +89,9 @@
           <widget class="QToolButton" name="timeDownButton">
            <property name="text">
             <string notr="true"/>
+           </property>
+           <property name="autoRepeat">
+            <bool>true</bool>
            </property>
            <property name="autoRaise">
             <bool>true</bool>
