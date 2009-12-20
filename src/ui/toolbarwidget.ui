@@ -175,6 +175,9 @@
            <property name="toolTip">
             <string>Backend</string>
            </property>
+           <property name="insertPolicy">
+            <enum>QComboBox::InsertAlphabetically</enum>
+           </property>
            <property name="sizeAdjustPolicy">
             <enum>QComboBox::AdjustToContents</enum>
            </property>
