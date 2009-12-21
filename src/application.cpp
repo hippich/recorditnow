@@ -70,7 +70,7 @@ bool Application::x11EventFilter(XEvent *event)
     }
 
     if (event->type == ButtonPress) {
-        if (event->xany.window == QX11Info::appRootWindow()) {
+        if (event->xany.window == QX11Info::appRootWindow(QX11Info::appScreen())) {
             m_cursor->click(event->xbutton.button);
             return true; // don`t process grabed events
         }
