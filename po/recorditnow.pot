@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-12-08 11:16+0100\n"
+"POT-Creation-Date: 2009-12-21 16:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,8 +126,8 @@ msgstr ""
 #. i18n: file: src/ui/timelinetopics.ui:75
 #. i18n: ectx: property (text), widget (KPushButton, addButton)
 #: po/rc.cpp:21 po/rc.cpp:24 po/rc.cpp:48 po/rc.cpp:51 po/rc.cpp:246
-#: po/rc.cpp:307 po/rc.cpp:349 po/rc.cpp:425 rc.cpp:21 rc.cpp:24 rc.cpp:48
-#: rc.cpp:51 rc.cpp:246 rc.cpp:307 rc.cpp:349 rc.cpp:425
+#: po/rc.cpp:307 po/rc.cpp:358 po/rc.cpp:437 rc.cpp:21 rc.cpp:24 rc.cpp:48
+#: rc.cpp:51 rc.cpp:246 rc.cpp:307 rc.cpp:358 rc.cpp:437
 msgid "Add"
 msgstr ""
 
@@ -172,7 +172,7 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:198
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#. i18n: file: src/ui/mouse.ui:116
+#. i18n: file: src/ui/mouse.ui:122
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/ui/timelinetopics.ui:85
 #. i18n: ectx: property (text), widget (KPushButton, removeButton)
@@ -188,13 +188,13 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:198
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#. i18n: file: src/ui/mouse.ui:116
+#. i18n: file: src/ui/mouse.ui:122
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/ui/timelinetopics.ui:85
 #. i18n: ectx: property (text), widget (KPushButton, removeButton)
 #: po/rc.cpp:33 po/rc.cpp:36 po/rc.cpp:60 po/rc.cpp:63 po/rc.cpp:252
-#: po/rc.cpp:313 po/rc.cpp:352 po/rc.cpp:428 rc.cpp:33 rc.cpp:36 rc.cpp:60
-#: rc.cpp:63 rc.cpp:252 rc.cpp:313 rc.cpp:352 rc.cpp:428
+#: po/rc.cpp:313 po/rc.cpp:361 po/rc.cpp:440 rc.cpp:33 rc.cpp:36 rc.cpp:60
+#: rc.cpp:63 rc.cpp:252 rc.cpp:313 rc.cpp:361 rc.cpp:440
 msgid "Remove"
 msgstr ""
 
@@ -236,13 +236,13 @@ msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#. i18n: file: src/ui/toolbarwidget.ui:144
+#. i18n: file: src/ui/toolbarwidget.ui:131
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#. i18n: file: src/ui/toolbarwidget.ui:144
+#. i18n: file: src/ui/toolbarwidget.ui:131
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:81 po/rc.cpp:446 rc.cpp:81 rc.cpp:446
+#: po/rc.cpp:81 po/rc.cpp:458 rc.cpp:81 rc.cpp:458
 msgid "Sound"
 msgstr ""
 
@@ -250,32 +250,32 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:27
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: src/ui/mouse.ui:34
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSNoop)
-#. i18n: file: src/ui/snoopdialog.ui:32
+#. i18n: file: src/ui/keymondialog.ui:32
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#. i18n: file: src/ui/mouse.ui:34
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKeyMon)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:80
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:27
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: src/ui/mouse.ui:34
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSNoop)
-#. i18n: file: src/ui/snoopdialog.ui:32
+#. i18n: file: src/ui/keymondialog.ui:32
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:84 po/rc.cpp:150 po/rc.cpp:340 po/rc.cpp:397 rc.cpp:84 rc.cpp:150
-#: rc.cpp:340 rc.cpp:397
+#. i18n: file: src/ui/mouse.ui:34
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKeyMon)
+#: po/rc.cpp:84 po/rc.cpp:150 po/rc.cpp:340 po/rc.cpp:349 rc.cpp:84 rc.cpp:150
+#: rc.cpp:340 rc.cpp:349
 msgid "Device"
 msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:96
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
 #. i18n: file: src/ui/mouse.ui:51
-#. i18n: ectx: property (text), widget (KPushButton, snoopButton)
+#. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:96
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
 #. i18n: file: src/ui/mouse.ui:51
-#. i18n: ectx: property (text), widget (KPushButton, snoopButton)
-#: po/rc.cpp:88 po/rc.cpp:343 rc.cpp:88 rc.cpp:343
+#. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
+#: po/rc.cpp:88 po/rc.cpp:352 rc.cpp:88 rc.cpp:352
 msgid "Search"
 msgstr ""
 
@@ -372,7 +372,7 @@ msgstr ""
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: file: src/ui/settings.ui:93
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:135 po/rc.cpp:388 rc.cpp:135 rc.cpp:388
+#: po/rc.cpp:135 po/rc.cpp:409 rc.cpp:135 rc.cpp:409
 msgid "Miscellaneous"
 msgstr ""
 
@@ -396,13 +396,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
 #. i18n: file: src/ui/zoom.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
-#: po/rc.cpp:144 po/rc.cpp:464 rc.cpp:144 rc.cpp:464
+#: po/rc.cpp:144 po/rc.cpp:476 rc.cpp:144 rc.cpp:476
 msgid "Follow the mouse"
 msgstr ""
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:350
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
-#: po/rc.cpp:147 src/mainwindow.cpp:273 rc.cpp:147
+#: po/rc.cpp:147 src/mainwindow.cpp:269 rc.cpp:147
 msgid "Show Frame"
 msgstr ""
 
@@ -420,7 +420,13 @@ msgstr ""
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:45
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: po/rc.cpp:162 rc.cpp:162
+#. i18n: file: src/ui/mouse.ui:188
+#. i18n: ectx: property (text), widget (QLabel, opacityLabel)
+#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:45
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: file: src/ui/mouse.ui:188
+#. i18n: ectx: property (text), widget (QLabel, opacityLabel)
+#: po/rc.cpp:162 po/rc.cpp:379 rc.cpp:162 rc.cpp:379
 msgid "Opacity"
 msgstr ""
 
@@ -623,7 +629,7 @@ msgstr ""
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:230
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
 #: po/rc.cpp:258 po/rc.cpp:261 po/rc.cpp:319 po/rc.cpp:322
-#: src/mainwindow.cpp:288 rc.cpp:258 rc.cpp:261 rc.cpp:319 rc.cpp:322
+#: src/mainwindow.cpp:318 rc.cpp:258 rc.cpp:261 rc.cpp:319 rc.cpp:322
 msgid "Upload"
 msgstr ""
 
@@ -674,240 +680,258 @@ msgstr ""
 msgid "Main Toolbar"
 msgstr ""
 
+#. i18n: file: src/ui/keymondialog.ui:27
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:337 rc.cpp:337
+msgid "Name"
+msgstr ""
+
+#. i18n: file: src/ui/keymondialog.ui:37
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:343 rc.cpp:343
+msgid "Status"
+msgstr ""
+
 #. i18n: file: src/ui/mouse.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showActivity)
-#: po/rc.cpp:337 rc.cpp:337
+#: po/rc.cpp:346 rc.cpp:346
 msgid "Show mouse clicks"
 msgstr ""
 
 #. i18n: file: src/ui/mouse.ui:62
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:346 rc.cpp:346
+#: po/rc.cpp:355 rc.cpp:355
 msgid "Mouse button"
 msgstr ""
 
-#. i18n: file: src/ui/mouse.ui:121
+#. i18n: file: src/ui/mouse.ui:127
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:355 rc.cpp:355
+#: po/rc.cpp:364 rc.cpp:364
 msgid "Mouse Button"
 msgstr ""
 
-#. i18n: file: src/ui/mouse.ui:126
+#. i18n: file: src/ui/mouse.ui:132
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:358 rc.cpp:358
+#: po/rc.cpp:367 rc.cpp:367
 msgid "Color"
 msgstr ""
 
-#. i18n: file: src/ui/mouse.ui:136
+#. i18n: file: src/ui/mouse.ui:145
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: po/rc.cpp:370 rc.cpp:370
+msgid "Mode"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:154
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_led)
+#: po/rc.cpp:373 rc.cpp:373
+msgid "LED next to the mouse cursor"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:164
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_circle)
+#: po/rc.cpp:376 rc.cpp:376
+msgid "Circle under the mouse cursor"
+msgstr ""
+
+#. i18n: file: src/ui/mouse.ui:214
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:361 rc.cpp:361
+#: po/rc.cpp:382 rc.cpp:382
 msgid "Default color"
 msgstr ""
 
-#. i18n: file: src/ui/mouse.ui:146
+#. i18n: file: src/ui/mouse.ui:224
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: file: src/ui/zoom.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/ui/mouse.ui:146
+#. i18n: file: src/ui/mouse.ui:224
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: file: src/ui/zoom.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:364 po/rc.cpp:474 rc.cpp:364 rc.cpp:474
+#: po/rc.cpp:385 po/rc.cpp:486 rc.cpp:385 rc.cpp:486
 msgid "Size"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:367 rc.cpp:367
+#: po/rc.cpp:388 rc.cpp:388
 msgid "Behavior "
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:32
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:370 rc.cpp:370
+#: po/rc.cpp:391 rc.cpp:391
 msgid "Enable system tray icon"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:373 rc.cpp:373
+#: po/rc.cpp:394 rc.cpp:394
 msgid "Hide RecordItNow during record"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:46
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:376 rc.cpp:376
+#: po/rc.cpp:397 rc.cpp:397
 msgid "Overwrite existing files"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:379 rc.cpp:379
+#: po/rc.cpp:400 rc.cpp:400
 msgid "Show file after record"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
-#: po/rc.cpp:382 rc.cpp:382
+#: po/rc.cpp:403 rc.cpp:403
 msgid "Encode after record"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:83
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_stayOnTop)
-#: po/rc.cpp:385 rc.cpp:385
+#: po/rc.cpp:406 rc.cpp:406
 msgid "Stay above all other windows during record"
 msgstr ""
 
 #. i18n: file: src/ui/settings.ui:102
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:391 rc.cpp:391
+#: po/rc.cpp:412 rc.cpp:412
 msgid "Directory for temporary files:"
-msgstr ""
-
-#. i18n: file: src/ui/snoopdialog.ui:27
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:394 rc.cpp:394
-msgid "Name"
-msgstr ""
-
-#. i18n: file: src/ui/snoopdialog.ui:37
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:400 rc.cpp:400
-msgid "Status"
 msgstr ""
 
 #. i18n: file: src/ui/timelineconfig.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
-#: po/rc.cpp:403 rc.cpp:403
+#: po/rc.cpp:415 rc.cpp:415
 msgid "Enable the Timeline"
 msgstr ""
 
 #. i18n: file: src/ui/timelineconfig.ui:38
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timeLineStop)
-#: po/rc.cpp:406 rc.cpp:406
+#: po/rc.cpp:418 rc.cpp:418
 msgid "Stop recording when the timeline reaches the end"
 msgstr ""
 
 #. i18n: file: src/ui/timelineconfig.ui:45
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timelineNotifications)
-#: po/rc.cpp:409 rc.cpp:409
+#: po/rc.cpp:421 rc.cpp:421
 msgid "Enable Notifications"
 msgstr ""
 
 #. i18n: file: src/ui/timelinetopics.ui:30
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:412 rc.cpp:412
+#: po/rc.cpp:424 rc.cpp:424
 msgid "Total duration"
 msgstr ""
 
 #. i18n: file: src/ui/timelinetopics.ui:55
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:416 rc.cpp:416
+#: po/rc.cpp:428 rc.cpp:428
 msgid "Topic"
 msgstr ""
 
 #. i18n: file: src/ui/timelinetopics.ui:60
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:419 rc.cpp:419
+#: po/rc.cpp:431 rc.cpp:431
 msgid "Icon"
 msgstr ""
 
 #. i18n: file: src/ui/timelinetopics.ui:65
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:422 rc.cpp:422
+#: po/rc.cpp:434 rc.cpp:434
 msgid "Duration"
 msgstr ""
 
 #. i18n: file: src/ui/timelinetopics.ui:95
 #. i18n: ectx: property (text), widget (KPushButton, upButton)
-#: po/rc.cpp:431 rc.cpp:431
+#: po/rc.cpp:443 rc.cpp:443
 msgid "Move Up"
 msgstr ""
 
 #. i18n: file: src/ui/timelinetopics.ui:105
 #. i18n: ectx: property (text), widget (KPushButton, downButton)
-#: po/rc.cpp:434 rc.cpp:434
+#: po/rc.cpp:446 rc.cpp:446
 msgid "Move Down"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:48
+#. i18n: file: src/ui/toolbarwidget.ui:32
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: po/rc.cpp:437 rc.cpp:437
+#: po/rc.cpp:449 rc.cpp:449
 msgid "Timer"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:112
+#. i18n: file: src/ui/toolbarwidget.ui:99
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:440 rc.cpp:440
+#: po/rc.cpp:452 rc.cpp:452
 msgid "Frames per second"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:115
+#. i18n: file: src/ui/toolbarwidget.ui:102
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:443 rc.cpp:443
+#: po/rc.cpp:455 rc.cpp:455
 msgid " FPS"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:170
+#. i18n: file: src/ui/toolbarwidget.ui:157
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:449 rc.cpp:449
+#: po/rc.cpp:461 rc.cpp:461
 msgid "Backend"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:187
+#. i18n: file: src/ui/toolbarwidget.ui:175
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:193
+#. i18n: file: src/ui/toolbarwidget.ui:181
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:187
+#. i18n: file: src/ui/toolbarwidget.ui:175
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:193
+#. i18n: file: src/ui/toolbarwidget.ui:181
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:452 po/rc.cpp:455 rc.cpp:452 rc.cpp:455
+#: po/rc.cpp:464 po/rc.cpp:467 rc.cpp:464 rc.cpp:467
 msgid "Output file"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:203
+#. i18n: file: src/ui/toolbarwidget.ui:191
 #. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
-#: po/rc.cpp:458 rc.cpp:458
+#: po/rc.cpp:470 rc.cpp:470
 msgid "Play/Open"
 msgstr ""
 
-#. i18n: file: src/ui/toolbarwidget.ui:213
+#. i18n: file: src/ui/toolbarwidget.ui:201
 #. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
-#: po/rc.cpp:461 rc.cpp:461
+#: po/rc.cpp:473 rc.cpp:473
 msgid "Delete"
 msgstr ""
 
 #. i18n: file: src/ui/zoom.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomHighQuality)
-#: po/rc.cpp:467 rc.cpp:467
+#: po/rc.cpp:479 rc.cpp:479
 msgid "High quality"
 msgstr ""
 
 #. i18n: file: src/ui/zoom.ui:40
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:470 rc.cpp:470
+#: po/rc.cpp:482 rc.cpp:482
 msgid "Default zoom factor"
 msgstr ""
 
 #. i18n: file: src/ui/zoom.ui:71
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:477 rc.cpp:477
+#: po/rc.cpp:489 rc.cpp:489
 msgid "Width"
 msgstr ""
 
 #. i18n: file: src/ui/zoom.ui:88
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:480 rc.cpp:480
+#: po/rc.cpp:492 rc.cpp:492
 msgid "Height"
 msgstr ""
 
-#: po/rc.cpp:481 rc.cpp:481
+#: po/rc.cpp:493 rc.cpp:493
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: po/rc.cpp:482 rc.cpp:482
+#: po/rc.cpp:494 rc.cpp:494
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
@@ -924,7 +948,7 @@ msgstr ""
 msgid "Upload Plugins"
 msgstr ""
 
-#: src/configdialog.cpp:95 src/main.cpp:41 src/mainwindow.cpp:554
+#: src/configdialog.cpp:95 src/main.cpp:41 src/mainwindow.cpp:568
 msgid "RecordItNow"
 msgstr ""
 
@@ -932,15 +956,15 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: src/configdialog.cpp:97 src/snoopdialog.cpp:45
+#: src/configdialog.cpp:97 src/keymondialog.cpp:47
 msgid "Mouse"
 msgstr ""
 
-#: src/configdialog.cpp:98 src/mainwindow.cpp:295
+#: src/configdialog.cpp:98 src/mainwindow.cpp:325
 msgid "Zoom"
 msgstr ""
 
-#: src/configdialog.cpp:99 src/mainwindow.cpp:1179
+#: src/configdialog.cpp:99 src/timeline/timelinedock.cpp:32
 msgid "Timeline"
 msgstr ""
 
@@ -948,13 +972,13 @@ msgstr ""
 msgid "Shortcuts"
 msgstr ""
 
-#: src/cursorwidget.cpp:217
+#: src/cursorwidget.cpp:299
 msgid ""
 "Grab failed!\n"
 "Perhaps the button \"%1\" is already grabbed by another application."
 msgstr ""
 
-#: src/cursorwidget.cpp:229
+#: src/cursorwidget.cpp:321 src/cursorwidget.cpp:329
 msgid "Grab failed!"
 msgstr ""
 
@@ -964,6 +988,74 @@ msgstr ""
 
 #: src/encodermanager.cpp:133
 msgid "The encoder has crashed!"
+msgstr ""
+
+#: src/keymondialog.cpp:55
+msgid "Reload"
+msgstr ""
+
+#: src/keymondialog.cpp:83
+msgid "Unknown"
+msgstr ""
+
+#: src/keymondialog.cpp:194 src/keymondialog.cpp:216
+msgid "File not found"
+msgstr ""
+
+#: src/keymondialog.cpp:199
+msgid "The authorization has been denied by the authorization backend."
+msgstr ""
+
+#: src/keymondialog.cpp:201
+msgid "The authorization has been denied."
+msgstr ""
+
+#: src/keymondialog.cpp:206 src/keymondialog.cpp:225
+msgid "Ok"
+msgstr ""
+
+#: src/keymondialog.cpp:221
+msgctxt "%1 = error string"
+msgid "Cannot open file: %1"
+msgstr ""
+
+#: src/keymon/event.cpp:66 src/keymon/event.cpp:83 src/mousebutton.cpp:86
+#: src/mousebutton.cpp:103
+msgid "Left-Button"
+msgstr ""
+
+#: src/keymon/event.cpp:67 src/keymon/event.cpp:87 src/mousebutton.cpp:87
+#: src/mousebutton.cpp:107
+msgid "Right-Button"
+msgstr ""
+
+#: src/keymon/event.cpp:68 src/keymon/event.cpp:91 src/mousebutton.cpp:88
+#: src/mousebutton.cpp:111
+msgid "Middle-Button"
+msgstr ""
+
+#: src/keymon/event.cpp:69 src/keymon/event.cpp:95 src/mousebutton.cpp:89
+#: src/mousebutton.cpp:115
+msgid "Special-Button 1"
+msgstr ""
+
+#: src/keymon/event.cpp:70 src/keymon/event.cpp:99 src/mousebutton.cpp:90
+#: src/mousebutton.cpp:119
+msgid "Special-Button 2"
+msgstr ""
+
+#: src/keymon/event.cpp:71 src/keymon/event.cpp:103 src/mousebutton.cpp:91
+#: src/mousebutton.cpp:123
+msgid "Wheel up"
+msgstr ""
+
+#: src/keymon/event.cpp:72 src/keymon/event.cpp:107 src/mousebutton.cpp:92
+#: src/mousebutton.cpp:127
+msgid "Wheel down"
+msgstr ""
+
+#: src/keymon/event.cpp:73 src/mousebutton.cpp:93
+msgid "No-Button"
 msgstr ""
 
 #: src/libs/upload/addaccountdialog.cpp:50
@@ -1011,60 +1103,64 @@ msgstr ""
 msgid "Name of recorded video/image."
 msgstr ""
 
-#: src/mainwindow.cpp:244
+#: src/mainwindow.cpp:240
 msgid "Record"
 msgstr ""
 
-#: src/mainwindow.cpp:252
+#: src/mainwindow.cpp:248
 msgid "Pause"
 msgstr ""
 
-#: src/mainwindow.cpp:259
+#: src/mainwindow.cpp:255
 msgid "Stop"
 msgstr ""
 
-#: src/mainwindow.cpp:267
+#: src/mainwindow.cpp:263
 msgid "Record a Window"
 msgstr ""
 
-#: src/mainwindow.cpp:280
+#: src/mainwindow.cpp:277
+msgid "Freely movable"
+msgstr ""
+
+#: src/mainwindow.cpp:310
 msgid "Record the entire Screen"
 msgstr ""
 
-#: src/mainwindow.cpp:302
+#: src/mainwindow.cpp:332
 msgid "Zoom in"
 msgstr ""
 
-#: src/mainwindow.cpp:309
+#: src/mainwindow.cpp:339
 msgid "Zoom out"
 msgstr ""
 
-#: src/mainwindow.cpp:391
+#: src/mainwindow.cpp:409
 msgid "No screen area selected."
 msgstr ""
 
-#: src/mainwindow.cpp:681 src/mainwindow.cpp:696
+#: src/mainwindow.cpp:697 src/mainwindow.cpp:712
 msgid "Continue"
 msgstr ""
 
-#: src/mainwindow.cpp:782
+#: src/mainwindow.cpp:794
 msgctxt "Recording finished"
 msgid "Finished!"
 msgstr ""
 
-#: src/mainwindow.cpp:802
+#: src/mainwindow.cpp:814
 msgctxt "Encoding finished"
 msgid "Finished!"
 msgstr ""
 
-#: src/mainwindow.cpp:854 src/mainwindow.cpp:869
+#: src/mainwindow.cpp:898 src/mainwindow.cpp:913
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:74
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:72
 msgctxt "%1 = file"
 msgid "%1 no such file!"
 msgstr ""
 
-#: src/mainwindow.cpp:874 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
+#: src/mainwindow.cpp:918 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:186
 msgctxt "%1 = file, %2 = error string"
 msgid ""
@@ -1072,50 +1168,15 @@ msgid ""
 "Reason: %2"
 msgstr ""
 
-#: src/mousebutton.cpp:86 src/mousebutton.cpp:103 src/snoop/event.cpp:66
-#: src/snoop/event.cpp:83
-msgid "Left-Button"
-msgstr ""
-
-#: src/mousebutton.cpp:87 src/mousebutton.cpp:107 src/snoop/event.cpp:67
-#: src/snoop/event.cpp:87
-msgid "Right-Button"
-msgstr ""
-
-#: src/mousebutton.cpp:88 src/mousebutton.cpp:111 src/snoop/event.cpp:68
-#: src/snoop/event.cpp:91
-msgid "Middle-Button"
-msgstr ""
-
-#: src/mousebutton.cpp:89 src/mousebutton.cpp:115 src/snoop/event.cpp:69
-#: src/snoop/event.cpp:95
-msgid "Special-Button 1"
-msgstr ""
-
-#: src/mousebutton.cpp:90 src/mousebutton.cpp:119 src/snoop/event.cpp:70
-#: src/snoop/event.cpp:99
-msgid "Special-Button 2"
-msgstr ""
-
-#: src/mousebutton.cpp:91 src/mousebutton.cpp:123 src/snoop/event.cpp:71
-#: src/snoop/event.cpp:103
-msgid "Wheel up"
-msgstr ""
-
-#: src/mousebutton.cpp:92 src/mousebutton.cpp:127 src/snoop/event.cpp:72
-#: src/snoop/event.cpp:107
-msgid "Wheel down"
-msgstr ""
-
-#: src/mousebutton.cpp:93 src/snoop/event.cpp:73
-msgid "No-Button"
-msgstr ""
-
 #: src/mousebutton.cpp:204
 msgid "Press a mouse button..."
 msgstr ""
 
-#: src/mouseconfig.cpp:330
+#: src/mouseconfig.cpp:70
+msgid "Square under the mouse cursor"
+msgstr ""
+
+#: src/mouseconfig.cpp:353
 msgid "The button '%1' has already been defined"
 msgstr ""
 
@@ -1623,40 +1684,19 @@ msgstr ""
 msgid "The recorder has crashed!"
 msgstr ""
 
-#: src/snoopdialog.cpp:53
-msgid "Reload"
-msgstr ""
-
-#: src/snoopdialog.cpp:118 src/snoopdialog.cpp:147
-msgid "Unkown"
-msgstr ""
-
-#: src/snoopdialog.cpp:165
-msgid "File not found"
-msgstr ""
-
-#: src/snoopdialog.cpp:169
-msgctxt "%1 = error string"
-msgid "Cannot open file: %1"
-msgstr ""
-
-#: src/snoopdialog.cpp:172
-msgid "Ok"
-msgstr ""
-
-#: src/timeline.cpp:78 src/topictreeitem.cpp:37
+#: src/timeline/timeline.cpp:78 src/timeline/topictreeitem.cpp:37
 msgid "Untitled"
 msgstr ""
 
-#: src/timeline.cpp:218
+#: src/timeline/timeline.cpp:218
 msgid "New Topic: <i>%1</i>"
 msgstr ""
 
-#: src/timelinetopicsdialog.cpp:42
+#: src/timeline/timelinetopicsdialog.cpp:42
 msgid "Topics"
 msgstr ""
 
-#: src/topicwidget.cpp:143
+#: src/timeline/topicwidget.cpp:143
 msgid "No Topic"
 msgstr ""
 
