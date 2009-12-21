@@ -348,18 +348,6 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
                                 const MouseButton::Button &newButton)
 {
 
-  /*  MouseButton *changed = static_cast<MouseButton*>(sender());
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        MouseButton *button = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
-        if (changed != button && changed->getXButton() == button->getXButton()) {
-            KMessageBox::information(this, i18n("The button '%1' has already been defined",
-                                                MouseButton::getName(newButton)));
-            changed->setButton(oldButton);
-            return;
-        }
-    }*/
-
     MouseButton *changed = static_cast<MouseButton*>(sender());
     if (contains(newButton, changed)) {
         KMessageBox::information(this, i18n("The button '%1' has already been defined",
