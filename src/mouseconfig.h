@@ -53,6 +53,8 @@ private:
     QToolButton *newRemoveButton();
     MouseButton *newMouseButton();
 
+    bool contains(const MouseButton::Button &button) const;
+
 
 private slots:
     void addClicked();
@@ -62,6 +64,7 @@ private slots:
     void showKeyMonDialog();
     void buttonsChanged();
     void modeChanged();
+    void currentButtonChanged();
 
 
 signals:

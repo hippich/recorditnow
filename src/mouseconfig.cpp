@@ -63,12 +63,15 @@ MouseConfig::MouseConfig(QWidget *parent)
     connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(double)), this, SLOT(buttonsChanged()));
     connect(kcfg_circle, SIGNAL(toggled(bool)), this, SLOT(modeChanged()));
+    connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
+    connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(currentButtonChanged()));
 
     if (!KWindowSystem::compositingActive()) {
         kcfg_circle->setText(i18n("Square under the mouse cursor"));
     }
 
     buttonsChanged();
+    currentButtonChanged();
 
 }
 
@@ -130,6 +133,7 @@ void MouseConfig::loadConfig()
     if (buttons.isEmpty()) {
         defaults();
     }
+    currentButtonChanged();
 
 }
 
@@ -270,6 +274,21 @@ MouseButton *MouseConfig::newMouseButton()
 }
 
 
+bool MouseConfig::contains(const MouseButton::Button &button) const
+{
+
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        const MouseButton *widget = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
+        if (widget->getMouseButton() == button) {
+            return true;
+        }
+    }
+    return false;
+
+}
+
+
 void MouseConfig::addClicked()
 {
 
@@ -278,12 +297,8 @@ void MouseConfig::addClicked()
         return;
     }
 
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) { // double?
-        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        MouseButton *button = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
-        if (button->getMouseButton() == mButton) {
-            return;
-        }
+    if (contains(mButton)) {
+        return;
     }
 
     MouseButton *button = newMouseButton();
@@ -370,6 +385,7 @@ void MouseConfig::buttonsChanged()
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
     cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
+    currentButtonChanged();
 
 }
 
@@ -380,6 +396,19 @@ void MouseConfig::modeChanged()
     if (!KWindowSystem::compositingActive()) {
         kcfg_cursorOpacity->setDisabled(true);
         opacityLabel->setDisabled(true);
+    }
+
+}
+
+
+void MouseConfig::currentButtonChanged()
+{
+
+    MouseButton::Button button = MouseButton::getButtonFromName(buttonCombo->currentText());
+    if (button == MouseButton::NoButton || contains(button)) {
+        addButton->setEnabled(false);
+    } else {
+        addButton->setEnabled(true);
     }
 
 }
