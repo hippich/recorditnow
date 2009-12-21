@@ -274,12 +274,17 @@ MouseButton *MouseConfig::newMouseButton()
 }
 
 
-bool MouseConfig::contains(const MouseButton::Button &button) const
+bool MouseConfig::contains(const MouseButton::Button &button, QWidget *exclude) const
 {
 
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
         const MouseButton *widget = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
+
+        if (exclude && exclude == widget) {
+            continue;
+        }
+
         if (widget->getMouseButton() == button) {
             return true;
         }
@@ -343,7 +348,7 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
                                 const MouseButton::Button &newButton)
 {
 
-    MouseButton *changed = static_cast<MouseButton*>(sender());
+  /*  MouseButton *changed = static_cast<MouseButton*>(sender());
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
         MouseButton *button = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
@@ -353,6 +358,13 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
             changed->setButton(oldButton);
             return;
         }
+    }*/
+
+    MouseButton *changed = static_cast<MouseButton*>(sender());
+    if (contains(newButton, changed)) {
+        KMessageBox::information(this, i18n("The button '%1' has already been defined",
+                                            MouseButton::getName(newButton)));
+        changed->setButton(oldButton);
     }
     emit configChanged();
 
@@ -404,7 +416,7 @@ void MouseConfig::modeChanged()
 void MouseConfig::currentButtonChanged()
 {
 
-    MouseButton::Button button = MouseButton::getButtonFromName(buttonCombo->currentText());
+    const MouseButton::Button button = MouseButton::getButtonFromName(buttonCombo->currentText());
     if (button == MouseButton::NoButton || contains(button)) {
         addButton->setEnabled(false);
     } else {

@@ -53,7 +53,7 @@ private:
     QToolButton *newRemoveButton();
     MouseButton *newMouseButton();
 
-    bool contains(const MouseButton::Button &button) const;
+    bool contains(const MouseButton::Button &button, QWidget *exclude = 0) const;
 
 
 private slots:
