@@ -89,7 +89,7 @@ bool FrameInfoWidget::eventFilter(QObject *watched, QEvent *event)
                     text += " x ";
                     text += QString::number(geometry.height());
                     setText(text);
-                    if (!isVisible()) {
+                    if (!isVisible() && parentWidget()->isVisible()) {
                         show();
                     }
                     moveToFrame();
