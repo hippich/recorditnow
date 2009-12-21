@@ -80,7 +80,7 @@ QTreeWidgetItem *KeyMonDialog::newDeviceItem(const DeviceData *d)
     if (!d->first.isEmpty()) {
         item->setText(0, d->first);
     } else {
-        item->setText(0, i18n("Unkown"));
+        item->setText(0, i18n("Unknown"));
     }
     item->setText(1, d->second);
     item->setIcon(0, KIcon("input-mouse"));

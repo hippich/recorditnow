@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 
-#ifndef SNOOPDIALOG_H
-#define SNOOPDIALOG_H
+#ifndef KEYMONDIALOG_H
+#define KEYMONDIALOG_H
 
 
 // own
@@ -60,4 +60,4 @@ signals:
 };
 
 
-#endif // SNOOPDIALOG_H
+#endif // KEYMONDIALOG_H

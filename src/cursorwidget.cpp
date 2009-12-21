@@ -34,7 +34,6 @@
 #include <kwindowsystem.h>
 #include <kxerrorhandler.h>
 #include <klocalizedstring.h>
-#include <kwindowsystem.h>
 
 // Qt
 #include <QtGui/QCursor>
