@@ -42,10 +42,10 @@ MouseConfig::MouseConfig(QWidget *parent)
     setupUi(this);
 
     addButton->setIcon(KIcon("list-add"));
-    snoopButton->setIcon(KIcon("input-mouse"));
+    keyMonButton->setIcon(KIcon("system-search"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
-    connect(snoopButton, SIGNAL(clicked()), this, SLOT(showKeyMonDialog()));
+    connect(keyMonButton, SIGNAL(clicked()), this, SLOT(showKeyMonDialog()));
 
     buttonCombo->addItem(MouseButton::getName(MouseButton::LeftButton));
     buttonCombo->addItem(MouseButton::getName(MouseButton::RightButton));

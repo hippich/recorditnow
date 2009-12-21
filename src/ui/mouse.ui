@@ -43,7 +43,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KPushButton" name="snoopButton">
+         <widget class="KPushButton" name="keyMonButton">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -316,7 +316,7 @@
   <connection>
    <sender>kcfg_useKeyMon</sender>
    <signal>toggled(bool)</signal>
-   <receiver>snoopButton</receiver>
+   <receiver>keyMonButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
