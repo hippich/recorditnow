@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: recorditnow\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2009-12-21 16:33+0100\n"
-"PO-Revision-Date: 2009-11-10 22:21+0100\n"
+"POT-Creation-Date: 2009-12-08 11:16+0100\n"
+"PO-Revision-Date: 2009-12-10 01:27+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Hungary <info@blackpanther.hu>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,12 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:210
 #. i18n: ectx: property (text), widget (QLabel, label_8)
-#: po/rc.cpp:3 po/rc.cpp:255 po/rc.cpp:316 rc.cpp:3 rc.cpp:255 rc.cpp:316
+#: po/rc.cpp:3
+#: po/rc.cpp:255
+#: po/rc.cpp:316
+#: rc.cpp:3
+#: rc.cpp:255
+#: rc.cpp:316
 msgid "Account"
 msgstr "Azonosító"
 
@@ -45,13 +50,19 @@ msgstr "Azonosító"
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:166
 #. i18n: ectx: property (text), widget (QLabel, label_6)
-#: po/rc.cpp:6 po/rc.cpp:243 po/rc.cpp:304 rc.cpp:6 rc.cpp:243 rc.cpp:304
+#: po/rc.cpp:6
+#: po/rc.cpp:243
+#: po/rc.cpp:304
+#: rc.cpp:6
+#: rc.cpp:243
+#: rc.cpp:304
 msgid "Password"
 msgstr "Jelszó"
 
 #. i18n: file: src/libs/upload/ui/addaccount.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, saveCheck)
-#: po/rc.cpp:9 rc.cpp:9
+#: po/rc.cpp:9
+#: rc.cpp:9
 msgid "Save password with KWallet"
 msgstr "Jelszó elmentése KWallet programmal"
 
@@ -75,10 +86,18 @@ msgstr "Jelszó elmentése KWallet programmal"
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:130
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:12 po/rc.cpp:18 po/rc.cpp:39 po/rc.cpp:45 po/rc.cpp:189
+#: po/rc.cpp:12
+#: po/rc.cpp:18
+#: po/rc.cpp:39
+#: po/rc.cpp:45
+#: po/rc.cpp:189
 #: src/plugins/encoder/ffmpeg/formatdialog.cpp:43
-#: src/plugins/encoder/mencoder/formatdialog.cpp:43 rc.cpp:12 rc.cpp:18
-#: rc.cpp:39 rc.cpp:45 rc.cpp:189
+#: src/plugins/encoder/mencoder/formatdialog.cpp:43
+#: rc.cpp:12
+#: rc.cpp:18
+#: rc.cpp:39
+#: rc.cpp:45
+#: rc.cpp:189
 msgid "Format"
 msgstr "Formátum"
 
@@ -90,10 +109,12 @@ msgstr "Formátum"
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: file: src/plugins/encoder/mencoder/ui/addformat.ui:30
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:15 po/rc.cpp:42 rc.cpp:15 rc.cpp:42
-#, fuzzy
+#: po/rc.cpp:15
+#: po/rc.cpp:42
+#: rc.cpp:15
+#: rc.cpp:42
 msgid "Command"
-msgstr "Egyéni parancs"
+msgstr "Parancs"
 
 #. i18n: file: src/plugins/encoder/ffmpeg/ui/ffmpeg.ui:51
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
@@ -127,9 +148,22 @@ msgstr "Egyéni parancs"
 #. i18n: ectx: property (text), widget (KPushButton, addButton)
 #. i18n: file: src/ui/timelinetopics.ui:75
 #. i18n: ectx: property (text), widget (KPushButton, addButton)
-#: po/rc.cpp:21 po/rc.cpp:24 po/rc.cpp:48 po/rc.cpp:51 po/rc.cpp:246
-#: po/rc.cpp:307 po/rc.cpp:358 po/rc.cpp:437 rc.cpp:21 rc.cpp:24 rc.cpp:48
-#: rc.cpp:51 rc.cpp:246 rc.cpp:307 rc.cpp:358 rc.cpp:437
+#: po/rc.cpp:21
+#: po/rc.cpp:24
+#: po/rc.cpp:48
+#: po/rc.cpp:51
+#: po/rc.cpp:246
+#: po/rc.cpp:307
+#: po/rc.cpp:349
+#: po/rc.cpp:425
+#: rc.cpp:21
+#: rc.cpp:24
+#: rc.cpp:48
+#: rc.cpp:51
+#: rc.cpp:246
+#: rc.cpp:307
+#: rc.cpp:349
+#: rc.cpp:425
 msgid "Add"
 msgstr "Hozzáadás"
 
@@ -157,8 +191,18 @@ msgstr "Hozzáadás"
 #. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:188
 #. i18n: ectx: property (toolTip), widget (QToolButton, editAccountButton)
-#: po/rc.cpp:27 po/rc.cpp:30 po/rc.cpp:54 po/rc.cpp:57 po/rc.cpp:249
-#: po/rc.cpp:310 rc.cpp:27 rc.cpp:30 rc.cpp:54 rc.cpp:57 rc.cpp:249 rc.cpp:310
+#: po/rc.cpp:27
+#: po/rc.cpp:30
+#: po/rc.cpp:54
+#: po/rc.cpp:57
+#: po/rc.cpp:249
+#: po/rc.cpp:310
+#: rc.cpp:27
+#: rc.cpp:30
+#: rc.cpp:54
+#: rc.cpp:57
+#: rc.cpp:249
+#: rc.cpp:310
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -174,7 +218,7 @@ msgstr "Szerkesztés"
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:198
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#. i18n: file: src/ui/mouse.ui:122
+#. i18n: file: src/ui/mouse.ui:116
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/ui/timelinetopics.ui:85
 #. i18n: ectx: property (text), widget (KPushButton, removeButton)
@@ -190,13 +234,26 @@ msgstr "Szerkesztés"
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:198
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeAccountButton)
-#. i18n: file: src/ui/mouse.ui:122
+#. i18n: file: src/ui/mouse.ui:116
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/ui/timelinetopics.ui:85
 #. i18n: ectx: property (text), widget (KPushButton, removeButton)
-#: po/rc.cpp:33 po/rc.cpp:36 po/rc.cpp:60 po/rc.cpp:63 po/rc.cpp:252
-#: po/rc.cpp:313 po/rc.cpp:361 po/rc.cpp:440 rc.cpp:33 rc.cpp:36 rc.cpp:60
-#: rc.cpp:63 rc.cpp:252 rc.cpp:313 rc.cpp:361 rc.cpp:440
+#: po/rc.cpp:33
+#: po/rc.cpp:36
+#: po/rc.cpp:60
+#: po/rc.cpp:63
+#: po/rc.cpp:252
+#: po/rc.cpp:313
+#: po/rc.cpp:352
+#: po/rc.cpp:428
+#: rc.cpp:33
+#: rc.cpp:36
+#: rc.cpp:60
+#: rc.cpp:63
+#: rc.cpp:252
+#: rc.cpp:313
+#: rc.cpp:352
+#: rc.cpp:428
 msgid "Remove"
 msgstr "Eltávolítás"
 
@@ -208,44 +265,53 @@ msgstr "Eltávolítás"
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:35
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:66 po/rc.cpp:159 rc.cpp:66 rc.cpp:159
+#: po/rc.cpp:66
+#: po/rc.cpp:159
+#: rc.cpp:66
+#: rc.cpp:159
 msgid "Image"
 msgstr "Kép"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:38
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_cursor)
-#: po/rc.cpp:69 rc.cpp:69
+#: po/rc.cpp:69
+#: rc.cpp:69
 msgid "Disable drawing of the cursor"
 msgstr "Kikapcsolja a kurzor rajzolását"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:45
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_shared)
-#: po/rc.cpp:72 rc.cpp:72
+#: po/rc.cpp:72
+#: rc.cpp:72
 msgid "Disable usage of MIT-shared memory extension(Not Recommended!)"
 msgstr "Kikapcsolja az MIT-megosztott memória kiterjesztést (Nem ajánlott)"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:52
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___full_shots)
-#: po/rc.cpp:75 rc.cpp:75
-#, fuzzy
+#: po/rc.cpp:75
+#: rc.cpp:75
 msgid "Take full screenshot at every frame(Not Recommended!)"
 msgstr "Teljes képernyőkép készítése minden kockában (Nem ajánlott)"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:59
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___subsampling)
-#: po/rc.cpp:78 rc.cpp:78
+#: po/rc.cpp:78
+#: rc.cpp:78
 msgid "Quick subsampling"
 msgstr "Gyors almintázás"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#. i18n: file: src/ui/toolbarwidget.ui:131
+#. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:69
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
-#. i18n: file: src/ui/toolbarwidget.ui:131
+#. i18n: file: src/ui/toolbarwidget.ui:144
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: po/rc.cpp:81 po/rc.cpp:458 rc.cpp:81 rc.cpp:458
+#: po/rc.cpp:81
+#: po/rc.cpp:446
+#: rc.cpp:81
+#: rc.cpp:446
 msgid "Sound"
 msgstr "Hang"
 
@@ -253,38 +319,48 @@ msgstr "Hang"
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:27
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: src/ui/keymondialog.ui:32
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/ui/mouse.ui:34
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKeyMon)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSNoop)
+#. i18n: file: src/ui/snoopdialog.ui:32
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:80
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:27
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: src/ui/keymondialog.ui:32
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #. i18n: file: src/ui/mouse.ui:34
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useKeyMon)
-#: po/rc.cpp:84 po/rc.cpp:150 po/rc.cpp:340 po/rc.cpp:349 rc.cpp:84 rc.cpp:150
-#: rc.cpp:340 rc.cpp:349
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSNoop)
+#. i18n: file: src/ui/snoopdialog.ui:32
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:84
+#: po/rc.cpp:150
+#: po/rc.cpp:340
+#: po/rc.cpp:397
+#: rc.cpp:84
+#: rc.cpp:150
+#: rc.cpp:340
+#: rc.cpp:397
 msgid "Device"
 msgstr "Eszköz"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:96
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
 #. i18n: file: src/ui/mouse.ui:51
-#. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
+#. i18n: ectx: property (text), widget (KPushButton, snoopButton)
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:96
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
 #. i18n: file: src/ui/mouse.ui:51
-#. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
-#: po/rc.cpp:88 po/rc.cpp:352 rc.cpp:88 rc.cpp:352
+#. i18n: ectx: property (text), widget (KPushButton, snoopButton)
+#: po/rc.cpp:88
+#: po/rc.cpp:343
+#: rc.cpp:88
+#: rc.cpp:343
 msgid "Search"
-msgstr ""
+msgstr "Keresés"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:105
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:91 rc.cpp:91
+#: po/rc.cpp:91
+#: rc.cpp:91
 msgid "Channels"
 msgstr "Csatornák"
 
@@ -308,62 +384,79 @@ msgstr "Csatornák"
 #. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___ring_buffer_size)
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:188
 #. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg_quality)
-#: po/rc.cpp:94 po/rc.cpp:100 po/rc.cpp:106 po/rc.cpp:112 po/rc.cpp:199
-#: rc.cpp:94 rc.cpp:100 rc.cpp:106 rc.cpp:112 rc.cpp:199
+#: po/rc.cpp:94
+#: po/rc.cpp:100
+#: po/rc.cpp:106
+#: po/rc.cpp:112
+#: po/rc.cpp:199
+#: rc.cpp:94
+#: rc.cpp:100
+#: rc.cpp:106
+#: rc.cpp:112
+#: rc.cpp:199
 msgid "Default"
 msgstr "Alapértelmezett"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:125
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:97 rc.cpp:97
+#: po/rc.cpp:97
+#: rc.cpp:97
 msgid "Frequency"
 msgstr "Frekvencia"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:145
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:103 rc.cpp:103
+#: po/rc.cpp:103
+#: rc.cpp:103
 msgid "Buffer size (only ALSA or OSS)"
 msgstr "Buffer mérete (csak ALSA vagy OSS)"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:165
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: po/rc.cpp:109 rc.cpp:109
+#: po/rc.cpp:109
+#: rc.cpp:109
 msgid "Ring Buffer size (JACK only)"
 msgstr "Csengetési puffer mérete (csak JACK)"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:185
 #. i18n: ectx: property (text), widget (QLabel, label_6)
-#: po/rc.cpp:115 rc.cpp:115
+#: po/rc.cpp:115
+#: rc.cpp:115
 msgid "JACK Ports"
 msgstr "JACK Portok"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:198
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
-#: po/rc.cpp:118 rc.cpp:118
+#: po/rc.cpp:118
+#: rc.cpp:118
 msgid "Encoding"
 msgstr "Átalakítás"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:231
 #. i18n: ectx: property (text), widget (QLabel, lab_2)
-#: po/rc.cpp:122 rc.cpp:122
+#: po/rc.cpp:122
+#: rc.cpp:122
 msgid "Audio Quality"
 msgstr "Hang minősége"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:263
 #. i18n: ectx: property (text), widget (QLabel, lab_3)
-#: po/rc.cpp:126 rc.cpp:126
+#: po/rc.cpp:126
+#: rc.cpp:126
 msgid "Bitrate"
 msgstr "Bitráta"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:298
 #. i18n: ectx: property (text), widget (QLabel, lab)
-#: po/rc.cpp:129 rc.cpp:129
+#: po/rc.cpp:129
+#: rc.cpp:129
 msgid "Video Quality"
 msgstr "Videó minősége"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:308
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___on_the_fly_encoding)
-#: po/rc.cpp:132 rc.cpp:132
+#: po/rc.cpp:132
+#: rc.cpp:132
 msgid "Encode the audio-video data, while recording"
 msgstr "Átalakítja a hang-videó adatot a felvétel közben"
 
@@ -375,19 +468,24 @@ msgstr "Átalakítja a hang-videó adatot a felvétel közben"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: file: src/ui/settings.ui:93
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:135 po/rc.cpp:409 rc.cpp:135 rc.cpp:409
+#: po/rc.cpp:135
+#: po/rc.cpp:388
+#: rc.cpp:135
+#: rc.cpp:388
 msgid "Miscellaneous"
 msgstr "Egyéb"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:329
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___no_wm_check)
-#: po/rc.cpp:138 rc.cpp:138
+#: po/rc.cpp:138
+#: rc.cpp:138
 msgid "Do not try to detect the window manager."
 msgstr "Ne próbálja felismerni az ablakkezelőt"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:336
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___compress_cache)
-#: po/rc.cpp:141 rc.cpp:141
+#: po/rc.cpp:141
+#: rc.cpp:141
 msgid "Compress Cache"
 msgstr "Gyorsítótár tömörítése"
 
@@ -399,111 +497,118 @@ msgstr "Gyorsítótár tömörítése"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
 #. i18n: file: src/ui/zoom.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
-#: po/rc.cpp:144 po/rc.cpp:476 rc.cpp:144 rc.cpp:476
+#: po/rc.cpp:144
+#: po/rc.cpp:464
+#: rc.cpp:144
+#: rc.cpp:464
 msgid "Follow the mouse"
 msgstr "Az egér követése"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:350
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frame)
-#: po/rc.cpp:147 src/mainwindow.cpp:269 rc.cpp:147
+#: po/rc.cpp:147
+#: src/mainwindow.cpp:273
+#: rc.cpp:147
 msgid "Show Frame"
 msgstr "Keret megjelenítése"
 
 #. i18n: file: src/plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:32
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:153 rc.cpp:153
+#: po/rc.cpp:153
+#: rc.cpp:153
 msgid "Id"
-msgstr ""
+msgstr "Azonosító"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_branding)
-#: po/rc.cpp:156 rc.cpp:156
-#, fuzzy
+#: po/rc.cpp:156
+#: rc.cpp:156
 msgid "Branding"
-msgstr "Átalakítás"
+msgstr "Márkajelzett"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:45
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#. i18n: file: src/ui/mouse.ui:188
-#. i18n: ectx: property (text), widget (QLabel, opacityLabel)
-#. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:45
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#. i18n: file: src/ui/mouse.ui:188
-#. i18n: ectx: property (text), widget (QLabel, opacityLabel)
-#: po/rc.cpp:162 po/rc.cpp:379 rc.cpp:162 rc.cpp:379
+#: po/rc.cpp:162
+#: rc.cpp:162
 msgid "Opacity"
-msgstr ""
+msgstr "Átlátszatlanság"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:74
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:165 rc.cpp:165
-#, fuzzy
+#: po/rc.cpp:165
+#: rc.cpp:165
 msgid "Position"
-msgstr "Leírás"
+msgstr "Pozíció"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:85
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
-#: po/rc.cpp:168 rc.cpp:168
+#: po/rc.cpp:168
+#: rc.cpp:168
 msgid "Top left corner"
-msgstr ""
+msgstr "Bal felső sarok"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:90
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
-#: po/rc.cpp:171 rc.cpp:171
+#: po/rc.cpp:171
+#: rc.cpp:171
 msgid "Top right corner"
-msgstr ""
+msgstr "Jobb felső sarok"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:95
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
-#: po/rc.cpp:174 rc.cpp:174
+#: po/rc.cpp:174
+#: rc.cpp:174
 msgid "Bottom left corner"
-msgstr ""
+msgstr "Bal alsó sarok"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:100
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
-#: po/rc.cpp:177 rc.cpp:177
+#: po/rc.cpp:177
+#: rc.cpp:177
 msgid "Bottom right corner"
-msgstr ""
+msgstr "Jobb alsó sarok"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:105
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
-#: po/rc.cpp:180 rc.cpp:180
+#: po/rc.cpp:180
+#: rc.cpp:180
 msgid "Top center"
-msgstr ""
+msgstr "Felső közép"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:110
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
-#: po/rc.cpp:183 rc.cpp:183
+#: po/rc.cpp:183
+#: rc.cpp:183
 msgid "Bottom center"
-msgstr ""
+msgstr "Alsó közép"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:124
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:186 rc.cpp:186
+#: po/rc.cpp:186
+#: rc.cpp:186
 msgid "Screenshot"
-msgstr ""
+msgstr "Képernyőfelvétel"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:198
 #. i18n: ectx: property (text), widget (QLabel, label_5)
-#: po/rc.cpp:202 rc.cpp:202
-#, fuzzy
+#: po/rc.cpp:202
+#: rc.cpp:202
 msgid "Quality"
-msgstr "Kilépés"
+msgstr "Minőség"
 
 #. i18n: file: src/plugins/recorder/screenshot/ui/screenshot.ui:205
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_drawCursor)
-#: po/rc.cpp:205 rc.cpp:205
-#, fuzzy
+#: po/rc.cpp:205
+#: rc.cpp:205
 msgid "Draw the cursor"
-msgstr "Kikapcsolja a kurzor rajzolását"
+msgstr "Rajzol a kurzor"
 
 #. i18n: file: src/plugins/upload/blip/ui/blip.ui:37
 #. i18n: ectx: property (text), widget (KTitleWidget, titleWidget)
-#: po/rc.cpp:209 rc.cpp:209
-msgid ""
-"<html><font size=\"5\">blip.tv</font><br /><b>The next generation television "
-"network!</html>"
-msgstr ""
+#: po/rc.cpp:209
+#: rc.cpp:209
+msgid "<html><font size=\"5\">blip.tv</font><br /><b>The next generation television network!</html>"
+msgstr "<html><font size=\"5\">blip.tv</font><br /><b>A következő generációs televízió hálózat!</html>"
 
 #. i18n: file: src/plugins/upload/blip/ui/blip.ui:47
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
@@ -513,7 +618,10 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:47
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: po/rc.cpp:212 po/rc.cpp:276 rc.cpp:212 rc.cpp:276
+#: po/rc.cpp:212
+#: po/rc.cpp:276
+#: rc.cpp:212
+#: rc.cpp:276
 msgid "Video"
 msgstr "Videó"
 
@@ -525,7 +633,10 @@ msgstr "Videó"
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:59
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: po/rc.cpp:215 po/rc.cpp:279 rc.cpp:215 rc.cpp:279
+#: po/rc.cpp:215
+#: po/rc.cpp:279
+#: rc.cpp:215
+#: rc.cpp:279
 msgid "Category"
 msgstr "Kategória"
 
@@ -537,7 +648,10 @@ msgstr "Kategória"
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:73
 #. i18n: ectx: property (text), widget (QLabel, label_7)
-#: po/rc.cpp:218 po/rc.cpp:282 rc.cpp:218 rc.cpp:282
+#: po/rc.cpp:218
+#: po/rc.cpp:282
+#: rc.cpp:218
+#: rc.cpp:282
 msgid "File"
 msgstr "Fájl"
 
@@ -549,7 +663,10 @@ msgstr "Fájl"
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:80
 #. i18n: ectx: property (text), widget (KLineEdit, tagsEdit)
-#: po/rc.cpp:221 po/rc.cpp:285 rc.cpp:221 rc.cpp:285
+#: po/rc.cpp:221
+#: po/rc.cpp:285
+#: rc.cpp:221
+#: rc.cpp:285
 msgid "linux, kde"
 msgstr "linux, kde"
 
@@ -561,7 +678,10 @@ msgstr "linux, kde"
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:93
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:224 po/rc.cpp:288 rc.cpp:224 rc.cpp:288
+#: po/rc.cpp:224
+#: po/rc.cpp:288
+#: rc.cpp:224
+#: rc.cpp:288
 msgid "Tags"
 msgstr "Címkék"
 
@@ -573,7 +693,10 @@ msgstr "Címkék"
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:123
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:228 po/rc.cpp:292 rc.cpp:228 rc.cpp:292
+#: po/rc.cpp:228
+#: po/rc.cpp:292
+#: rc.cpp:228
+#: rc.cpp:292
 msgid "Description"
 msgstr "Leírás"
 
@@ -585,7 +708,10 @@ msgstr "Leírás"
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:130
 #. i18n: ectx: property (text), widget (KLineEdit, titleEdit)
-#: po/rc.cpp:231 po/rc.cpp:295 rc.cpp:231 rc.cpp:295
+#: po/rc.cpp:231
+#: po/rc.cpp:295
+#: rc.cpp:231
+#: rc.cpp:295
 msgid "My Title"
 msgstr "Személyes megnevezés"
 
@@ -597,15 +723,19 @@ msgstr "Személyes megnevezés"
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:140
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:234 po/rc.cpp:298 rc.cpp:234 rc.cpp:298
+#: po/rc.cpp:234
+#: po/rc.cpp:298
+#: rc.cpp:234
+#: rc.cpp:298
 msgid "Title"
 msgstr "Megnevezés"
 
 #. i18n: file: src/plugins/upload/blip/ui/blip.ui:151
 #. i18n: ectx: property (text), widget (QLabel, label_5)
-#: po/rc.cpp:237 rc.cpp:237
+#: po/rc.cpp:237
+#: rc.cpp:237
 msgid "License"
-msgstr ""
+msgstr "Licenc"
 
 #. i18n: file: src/plugins/upload/blip/ui/blip.ui:168
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -615,7 +745,10 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:150
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:240 po/rc.cpp:301 rc.cpp:240 rc.cpp:301
+#: po/rc.cpp:240
+#: po/rc.cpp:301
+#: rc.cpp:240
+#: rc.cpp:301
 msgid "Login"
 msgstr "Bejelentkezés"
 
@@ -635,8 +768,15 @@ msgstr "Bejelentkezés"
 #. i18n: ectx: property (toolTip), widget (KPushButton, uploadButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:230
 #. i18n: ectx: property (text), widget (KPushButton, uploadButton)
-#: po/rc.cpp:258 po/rc.cpp:261 po/rc.cpp:319 po/rc.cpp:322
-#: src/mainwindow.cpp:318 rc.cpp:258 rc.cpp:261 rc.cpp:319 rc.cpp:322
+#: po/rc.cpp:258
+#: po/rc.cpp:261
+#: po/rc.cpp:319
+#: po/rc.cpp:322
+#: src/mainwindow.cpp:288
+#: rc.cpp:258
+#: rc.cpp:261
+#: rc.cpp:319
+#: rc.cpp:322
 msgid "Upload"
 msgstr "Feltöltés"
 
@@ -656,296 +796,321 @@ msgstr "Feltöltés"
 #. i18n: ectx: property (toolTip), widget (KPushButton, quitButton)
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:253
 #. i18n: ectx: property (text), widget (KPushButton, quitButton)
-#: po/rc.cpp:264 po/rc.cpp:267 po/rc.cpp:325 po/rc.cpp:328 rc.cpp:264
-#: rc.cpp:267 rc.cpp:325 rc.cpp:328
+#: po/rc.cpp:264
+#: po/rc.cpp:267
+#: po/rc.cpp:325
+#: po/rc.cpp:328
+#: rc.cpp:264
+#: rc.cpp:267
+#: rc.cpp:325
+#: rc.cpp:328
 msgid "Quit"
 msgstr "Kilépés"
 
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:14
 #. i18n: ectx: property (windowTitle), widget (QWidget, YouTube)
-#: po/rc.cpp:270 rc.cpp:270
+#: po/rc.cpp:270
+#: rc.cpp:270
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
 #. i18n: file: src/plugins/upload/youtube/ui/youtube.ui:37
 #. i18n: ectx: property (text), widget (KTitleWidget, titleWidget)
-#: po/rc.cpp:273 rc.cpp:273
-msgid ""
-"<html><font size=\"5\">YouTube</font><br /><b>Upload and share your videos!</"
-"html>"
-msgstr ""
+#: po/rc.cpp:273
+#: rc.cpp:273
+msgid "<html><font size=\"5\">YouTube</font><br /><b>Upload and share your videos!</html>"
+msgstr "<html><font size=\"5\">YouTube</font><br /><b>Töltse fel vagy ossza meg a videóit!</html>"
 
 #. i18n: file: src/recorditnow.kcfg:12
 #. i18n: ectx: label, entry (hideOnRecord), group (Preferences)
-#: po/rc.cpp:331 rc.cpp:331
+#: po/rc.cpp:331
+#: rc.cpp:331
 msgid "Hide RecordItNow while recording"
 msgstr "A RecordItNow elrejtése a felvétel alatt"
 
 #. i18n: file: src/recorditnowui.rc:7
 #. i18n: ectx: ToolBar (mainToolBar)
-#: po/rc.cpp:334 rc.cpp:334
+#: po/rc.cpp:334
+#: rc.cpp:334
 msgid "Main Toolbar"
 msgstr "Fő eszköztár"
 
-#. i18n: file: src/ui/keymondialog.ui:27
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:337 rc.cpp:337
-msgid "Name"
-msgstr ""
-
-#. i18n: file: src/ui/keymondialog.ui:37
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:343 rc.cpp:343
-msgid "Status"
-msgstr ""
-
 #. i18n: file: src/ui/mouse.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showActivity)
-#: po/rc.cpp:346 rc.cpp:346
+#: po/rc.cpp:337
+#: rc.cpp:337
 msgid "Show mouse clicks"
-msgstr ""
+msgstr "Egérkattintások mutatása"
 
 #. i18n: file: src/ui/mouse.ui:62
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:355 rc.cpp:355
+#: po/rc.cpp:346
+#: rc.cpp:346
 msgid "Mouse button"
-msgstr ""
+msgstr "Egérgomb"
 
-#. i18n: file: src/ui/mouse.ui:127
+#. i18n: file: src/ui/mouse.ui:121
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:364 rc.cpp:364
+#: po/rc.cpp:355
+#: rc.cpp:355
 msgid "Mouse Button"
-msgstr ""
+msgstr "Egérgomb"
 
-#. i18n: file: src/ui/mouse.ui:132
+#. i18n: file: src/ui/mouse.ui:126
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:367 rc.cpp:367
+#: po/rc.cpp:358
+#: rc.cpp:358
 msgid "Color"
-msgstr ""
+msgstr "Szín"
 
-#. i18n: file: src/ui/mouse.ui:145
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: po/rc.cpp:370 rc.cpp:370
-#, fuzzy
-msgid "Mode"
-msgstr "Szünet"
-
-#. i18n: file: src/ui/mouse.ui:154
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_led)
-#: po/rc.cpp:373 rc.cpp:373
-msgid "LED next to the mouse cursor"
-msgstr ""
-
-#. i18n: file: src/ui/mouse.ui:164
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_circle)
-#: po/rc.cpp:376 rc.cpp:376
-msgid "Circle under the mouse cursor"
-msgstr ""
-
-#. i18n: file: src/ui/mouse.ui:214
+#. i18n: file: src/ui/mouse.ui:136
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:382 rc.cpp:382
-#, fuzzy
+#: po/rc.cpp:361
+#: rc.cpp:361
 msgid "Default color"
-msgstr "Alapértelmezett"
+msgstr "Az alapértelmezett szín"
 
-#. i18n: file: src/ui/mouse.ui:224
+#. i18n: file: src/ui/mouse.ui:146
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: file: src/ui/zoom.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#. i18n: file: src/ui/mouse.ui:224
+#. i18n: file: src/ui/mouse.ui:146
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: file: src/ui/zoom.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:385 po/rc.cpp:486 rc.cpp:385 rc.cpp:486
+#: po/rc.cpp:364
+#: po/rc.cpp:474
+#: rc.cpp:364
+#: rc.cpp:474
 msgid "Size"
-msgstr ""
+msgstr "Méret"
 
 #. i18n: file: src/ui/settings.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: po/rc.cpp:388 rc.cpp:388
+#: po/rc.cpp:367
+#: rc.cpp:367
 msgid "Behavior "
 msgstr "Működés"
 
 #. i18n: file: src/ui/settings.ui:32
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: po/rc.cpp:391 rc.cpp:391
+#: po/rc.cpp:370
+#: rc.cpp:370
 msgid "Enable system tray icon"
 msgstr "Tálcaikon engedélyezése"
 
 #. i18n: file: src/ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: po/rc.cpp:394 rc.cpp:394
-#, fuzzy
+#: po/rc.cpp:373
+#: rc.cpp:373
 msgid "Hide RecordItNow during record"
 msgstr "A RecordItNow elrejtése a felvétel alatt"
 
 #. i18n: file: src/ui/settings.ui:46
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: po/rc.cpp:397 rc.cpp:397
+#: po/rc.cpp:376
+#: rc.cpp:376
 msgid "Overwrite existing files"
 msgstr "A meglévő fájlok felülírása"
 
 #. i18n: file: src/ui/settings.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: po/rc.cpp:400 rc.cpp:400
+#: po/rc.cpp:379
+#: rc.cpp:379
 msgid "Show file after record"
 msgstr "Mutassa a fájlt felvétel után"
 
 #. i18n: file: src/ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
-#: po/rc.cpp:403 rc.cpp:403
+#: po/rc.cpp:382
+#: rc.cpp:382
 msgid "Encode after record"
 msgstr "Átalakítás felvétel után"
 
 #. i18n: file: src/ui/settings.ui:83
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_stayOnTop)
-#: po/rc.cpp:406 rc.cpp:406
+#: po/rc.cpp:385
+#: rc.cpp:385
 msgid "Stay above all other windows during record"
-msgstr ""
+msgstr "Maradjon minden más ablak a felvétel alatt"
 
 #. i18n: file: src/ui/settings.ui:102
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:412 rc.cpp:412
+#: po/rc.cpp:391
+#: rc.cpp:391
 msgid "Directory for temporary files:"
 msgstr "Ideiglenes fájlok könyvtára:"
 
+#. i18n: file: src/ui/snoopdialog.ui:27
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:394
+#: rc.cpp:394
+msgid "Name"
+msgstr "Név"
+
+#. i18n: file: src/ui/snoopdialog.ui:37
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: po/rc.cpp:400
+#: rc.cpp:400
+msgid "Status"
+msgstr "Állapot"
+
 #. i18n: file: src/ui/timelineconfig.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
-#: po/rc.cpp:415 rc.cpp:415
+#: po/rc.cpp:403
+#: rc.cpp:403
 msgid "Enable the Timeline"
-msgstr ""
+msgstr "Idővonal bekapcsolása"
 
 #. i18n: file: src/ui/timelineconfig.ui:38
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timeLineStop)
-#: po/rc.cpp:418 rc.cpp:418
+#: po/rc.cpp:406
+#: rc.cpp:406
 msgid "Stop recording when the timeline reaches the end"
-msgstr ""
+msgstr "A felvétel leállítása mikor az idővonal végéhez ér"
 
 #. i18n: file: src/ui/timelineconfig.ui:45
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timelineNotifications)
-#: po/rc.cpp:421 rc.cpp:421
+#: po/rc.cpp:409
+#: rc.cpp:409
 msgid "Enable Notifications"
-msgstr ""
+msgstr "Értesítések engedélyezése"
 
 #. i18n: file: src/ui/timelinetopics.ui:30
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:424 rc.cpp:424
-#, fuzzy
+#: po/rc.cpp:412
+#: rc.cpp:412
 msgid "Total duration"
-msgstr "Oktatás"
+msgstr "Teljes időtartam"
 
 #. i18n: file: src/ui/timelinetopics.ui:55
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:428 rc.cpp:428
+#: po/rc.cpp:416
+#: rc.cpp:416
 msgid "Topic"
-msgstr ""
+msgstr "Téma"
 
 #. i18n: file: src/ui/timelinetopics.ui:60
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:431 rc.cpp:431
+#: po/rc.cpp:419
+#: rc.cpp:419
 msgid "Icon"
-msgstr ""
+msgstr "Ikon"
 
 #. i18n: file: src/ui/timelinetopics.ui:65
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: po/rc.cpp:434 rc.cpp:434
-#, fuzzy
+#: po/rc.cpp:422
+#: rc.cpp:422
 msgid "Duration"
-msgstr "Oktatás"
+msgstr "Időtartam"
 
 #. i18n: file: src/ui/timelinetopics.ui:95
 #. i18n: ectx: property (text), widget (KPushButton, upButton)
-#: po/rc.cpp:443 rc.cpp:443
+#: po/rc.cpp:431
+#: rc.cpp:431
 msgid "Move Up"
-msgstr ""
+msgstr "Felfelé"
 
 #. i18n: file: src/ui/timelinetopics.ui:105
 #. i18n: ectx: property (text), widget (KPushButton, downButton)
-#: po/rc.cpp:446 rc.cpp:446
+#: po/rc.cpp:434
+#: rc.cpp:434
 msgid "Move Down"
-msgstr ""
+msgstr "Lefelé"
 
-#. i18n: file: src/ui/toolbarwidget.ui:32
+#. i18n: file: src/ui/toolbarwidget.ui:48
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: po/rc.cpp:449 rc.cpp:449
+#: po/rc.cpp:437
+#: rc.cpp:437
 msgid "Timer"
 msgstr "Időzítő"
 
-#. i18n: file: src/ui/toolbarwidget.ui:99
+#. i18n: file: src/ui/toolbarwidget.ui:112
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:452 rc.cpp:452
+#: po/rc.cpp:440
+#: rc.cpp:440
 msgid "Frames per second"
 msgstr "Képkocka/másodperc "
 
-#. i18n: file: src/ui/toolbarwidget.ui:102
+#. i18n: file: src/ui/toolbarwidget.ui:115
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: po/rc.cpp:455 rc.cpp:455
+#: po/rc.cpp:443
+#: rc.cpp:443
 msgid " FPS"
 msgstr " FPS"
 
-#. i18n: file: src/ui/toolbarwidget.ui:157
+#. i18n: file: src/ui/toolbarwidget.ui:170
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: po/rc.cpp:461 rc.cpp:461
+#: po/rc.cpp:449
+#: rc.cpp:449
 msgid "Backend"
 msgstr "Háttérprogram"
 
-#. i18n: file: src/ui/toolbarwidget.ui:175
+#. i18n: file: src/ui/toolbarwidget.ui:187
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:181
+#. i18n: file: src/ui/toolbarwidget.ui:193
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:175
+#. i18n: file: src/ui/toolbarwidget.ui:187
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
-#. i18n: file: src/ui/toolbarwidget.ui:181
+#. i18n: file: src/ui/toolbarwidget.ui:193
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: po/rc.cpp:464 po/rc.cpp:467 rc.cpp:464 rc.cpp:467
+#: po/rc.cpp:452
+#: po/rc.cpp:455
+#: rc.cpp:452
+#: rc.cpp:455
 msgid "Output file"
 msgstr "Kimeneti fájl"
 
-#. i18n: file: src/ui/toolbarwidget.ui:191
+#. i18n: file: src/ui/toolbarwidget.ui:203
 #. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
-#: po/rc.cpp:470 rc.cpp:470
+#: po/rc.cpp:458
+#: rc.cpp:458
 msgid "Play/Open"
 msgstr "Lejátszás/Megnyitás"
 
-#. i18n: file: src/ui/toolbarwidget.ui:201
+#. i18n: file: src/ui/toolbarwidget.ui:213
 #. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
-#: po/rc.cpp:473 rc.cpp:473
+#: po/rc.cpp:461
+#: rc.cpp:461
 msgid "Delete"
 msgstr "Törlés"
 
 #. i18n: file: src/ui/zoom.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomHighQuality)
-#: po/rc.cpp:479 rc.cpp:479
-#, fuzzy
+#: po/rc.cpp:467
+#: rc.cpp:467
 msgid "High quality"
-msgstr "Hang minősége"
+msgstr "Magas minőség"
 
 #. i18n: file: src/ui/zoom.ui:40
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: po/rc.cpp:482 rc.cpp:482
-#, fuzzy
+#: po/rc.cpp:470
+#: rc.cpp:470
 msgid "Default zoom factor"
-msgstr "Kategória"
+msgstr "A nagyítási tényező"
 
 #. i18n: file: src/ui/zoom.ui:71
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: po/rc.cpp:489 rc.cpp:489
+#: po/rc.cpp:477
+#: rc.cpp:477
 msgid "Width"
-msgstr ""
+msgstr "Szélesség"
 
 #. i18n: file: src/ui/zoom.ui:88
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: po/rc.cpp:492 rc.cpp:492
+#: po/rc.cpp:480
+#: rc.cpp:480
 msgid "Height"
-msgstr ""
+msgstr "Magasság"
 
-#: po/rc.cpp:493 rc.cpp:493
+#: po/rc.cpp:481
+#: rc.cpp:481
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Barcza Károly (blackPanther OS - www.blackpanther.hu)"
 
-#: po/rc.cpp:494 rc.cpp:494
+#: po/rc.cpp:482
+#: rc.cpp:482
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kbarcza@blackpanther.hu"
@@ -962,7 +1127,9 @@ msgstr "Átalakító modul"
 msgid "Upload Plugins"
 msgstr "Feltöltő modul"
 
-#: src/configdialog.cpp:95 src/main.cpp:41 src/mainwindow.cpp:568
+#: src/configdialog.cpp:95
+#: src/main.cpp:41
+#: src/mainwindow.cpp:554
 msgid "RecordItNow"
 msgstr "RecordItNow"
 
@@ -970,34 +1137,36 @@ msgstr "RecordItNow"
 msgid "Plugins"
 msgstr "Bővítőmodulok"
 
-#: src/configdialog.cpp:97 src/keymondialog.cpp:47
-#, fuzzy
+#: src/configdialog.cpp:97
+#: src/snoopdialog.cpp:45
 msgid "Mouse"
-msgstr "Szünet"
+msgstr "Egér"
 
-#: src/configdialog.cpp:98 src/mainwindow.cpp:325
+#: src/configdialog.cpp:98
+#: src/mainwindow.cpp:295
 msgid "Zoom"
-msgstr ""
+msgstr "Nagyítás"
 
-#: src/configdialog.cpp:99 src/timeline/timelinedock.cpp:32
-#, fuzzy
+#: src/configdialog.cpp:99
+#: src/mainwindow.cpp:1179
 msgid "Timeline"
-msgstr "Megnevezés"
+msgstr "Idővonal"
 
 #: src/configdialog.cpp:100
-#, fuzzy
 msgid "Shortcuts"
-msgstr "Sportok"
+msgstr "Billentyűparancsok"
 
-#: src/cursorwidget.cpp:299
+#: src/cursorwidget.cpp:217
 msgid ""
 "Grab failed!\n"
 "Perhaps the button \"%1\" is already grabbed by another application."
 msgstr ""
+"Elkapás sikertelen!\n"
+"Talán a(z) \"% 1 \" gombot már elkapta egy másik alkalmazás."
 
-#: src/cursorwidget.cpp:321 src/cursorwidget.cpp:329
+#: src/cursorwidget.cpp:229
 msgid "Grab failed!"
-msgstr ""
+msgstr "Elkapás sikertelen!"
 
 #: src/encodermanager.cpp:73
 msgid "Cannot load Encoder %1."
@@ -1006,77 +1175,6 @@ msgstr "Nem sikerült betölteni az átalakító modult: %1"
 #: src/encodermanager.cpp:133
 msgid "The encoder has crashed!"
 msgstr "A felvevő összeomlott!"
-
-#: src/keymondialog.cpp:55
-#, fuzzy
-msgid "Reload"
-msgstr "Feltöltés"
-
-#: src/keymondialog.cpp:83
-#, fuzzy
-msgid "Unknown"
-msgstr "Ismeretlen formátum."
-
-#: src/keymondialog.cpp:194 src/keymondialog.cpp:216
-msgid "File not found"
-msgstr ""
-
-#: src/keymondialog.cpp:199
-msgid "The authorization has been denied by the authorization backend."
-msgstr ""
-
-#: src/keymondialog.cpp:201
-msgid "The authorization has been denied."
-msgstr ""
-
-#: src/keymondialog.cpp:206 src/keymondialog.cpp:225
-msgid "Ok"
-msgstr ""
-
-#: src/keymondialog.cpp:221
-#, fuzzy
-msgctxt "%1 = error string"
-msgid "Cannot open file: %1"
-msgstr "Nem lehet megnyitni a kimeneti fájlt: %1"
-
-#: src/keymon/event.cpp:66 src/keymon/event.cpp:83 src/mousebutton.cpp:86
-#: src/mousebutton.cpp:103
-msgid "Left-Button"
-msgstr ""
-
-#: src/keymon/event.cpp:67 src/keymon/event.cpp:87 src/mousebutton.cpp:87
-#: src/mousebutton.cpp:107
-msgid "Right-Button"
-msgstr ""
-
-#: src/keymon/event.cpp:68 src/keymon/event.cpp:91 src/mousebutton.cpp:88
-#: src/mousebutton.cpp:111
-msgid "Middle-Button"
-msgstr ""
-
-#: src/keymon/event.cpp:69 src/keymon/event.cpp:95 src/mousebutton.cpp:89
-#: src/mousebutton.cpp:115
-msgid "Special-Button 1"
-msgstr ""
-
-#: src/keymon/event.cpp:70 src/keymon/event.cpp:99 src/mousebutton.cpp:90
-#: src/mousebutton.cpp:119
-msgid "Special-Button 2"
-msgstr ""
-
-#: src/keymon/event.cpp:71 src/keymon/event.cpp:103 src/mousebutton.cpp:91
-#: src/mousebutton.cpp:123
-msgid "Wheel up"
-msgstr ""
-
-#: src/keymon/event.cpp:72 src/keymon/event.cpp:107 src/mousebutton.cpp:92
-#: src/mousebutton.cpp:127
-msgid "Wheel down"
-msgstr ""
-
-#: src/keymon/event.cpp:73 src/mousebutton.cpp:93
-msgid "No-Button"
-msgstr ""
 
 #: src/libs/upload/addaccountdialog.cpp:50
 msgctxt "%1 = account name"
@@ -1113,8 +1211,7 @@ msgstr "A felvételi ablak magassága"
 
 #: src/main.cpp:59
 msgid "The Backend to use. (Example: RecordMyDesktop/Screenshot)"
-msgstr ""
-"A háttérprogram a használathoz. (Például: RecordMyDesktop/Pillanatfelvétel)"
+msgstr "A háttérprogram a használathoz. (Például: RecordMyDesktop/Pillanatfelvétel)"
 
 #: src/main.cpp:60
 msgid "Wait \"time\" seconds."
@@ -1124,66 +1221,63 @@ msgstr "A várakozási idő (másodpercben):"
 msgid "Name of recorded video/image."
 msgstr "A felvett videó/kép neve"
 
-#: src/mainwindow.cpp:240
+#: src/mainwindow.cpp:244
 msgid "Record"
 msgstr "Felvétel"
 
-#: src/mainwindow.cpp:248
+#: src/mainwindow.cpp:252
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/mainwindow.cpp:255
+#: src/mainwindow.cpp:259
 msgid "Stop"
 msgstr "Megállítás"
 
-#: src/mainwindow.cpp:263
+#: src/mainwindow.cpp:267
 msgid "Record a Window"
 msgstr "Egy ablak felvétele"
 
-#: src/mainwindow.cpp:277
-msgid "Freely movable"
-msgstr ""
-
-#: src/mainwindow.cpp:310
+#: src/mainwindow.cpp:280
 msgid "Record the entire Screen"
 msgstr "Az egész képernyő felvétele"
 
-#: src/mainwindow.cpp:332
+#: src/mainwindow.cpp:302
 msgid "Zoom in"
-msgstr ""
+msgstr "Nagyítás"
 
-#: src/mainwindow.cpp:339
+#: src/mainwindow.cpp:309
 msgid "Zoom out"
-msgstr ""
+msgstr "Kicsinyítés"
 
-#: src/mainwindow.cpp:409
+#: src/mainwindow.cpp:391
 msgid "No screen area selected."
 msgstr "Nincs képernyőterület kijelölve."
 
-#: src/mainwindow.cpp:697 src/mainwindow.cpp:712
+#: src/mainwindow.cpp:681
+#: src/mainwindow.cpp:696
 msgid "Continue"
 msgstr "Folytatás"
 
-#: src/mainwindow.cpp:794
-#, fuzzy
+#: src/mainwindow.cpp:782
 msgctxt "Recording finished"
 msgid "Finished!"
 msgstr "Kész!"
 
-#: src/mainwindow.cpp:814
-#, fuzzy
+#: src/mainwindow.cpp:802
 msgctxt "Encoding finished"
 msgid "Finished!"
 msgstr "Kész!"
 
-#: src/mainwindow.cpp:898 src/mainwindow.cpp:913
+#: src/mainwindow.cpp:854
+#: src/mainwindow.cpp:869
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:74
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:72
 msgctxt "%1 = file"
 msgid "%1 no such file!"
 msgstr "Nincs ilyen fájl: „%1“"
 
-#: src/mainwindow.cpp:918 src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
+#: src/mainwindow.cpp:874
+#: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:186
 msgctxt "%1 = file, %2 = error string"
 msgid ""
@@ -1193,17 +1287,67 @@ msgstr ""
 "Az eltávolítás nem sikerült: %1\n"
 "Válasza: %2"
 
+#: src/mousebutton.cpp:86
+#: src/mousebutton.cpp:103
+#: src/snoop/event.cpp:66
+#: src/snoop/event.cpp:83
+msgid "Left-Button"
+msgstr "Bal egérgomb"
+
+#: src/mousebutton.cpp:87
+#: src/mousebutton.cpp:107
+#: src/snoop/event.cpp:67
+#: src/snoop/event.cpp:87
+msgid "Right-Button"
+msgstr "Jobb egérgomb"
+
+#: src/mousebutton.cpp:88
+#: src/mousebutton.cpp:111
+#: src/snoop/event.cpp:68
+#: src/snoop/event.cpp:91
+msgid "Middle-Button"
+msgstr "Középső egérgomb"
+
+#: src/mousebutton.cpp:89
+#: src/mousebutton.cpp:115
+#: src/snoop/event.cpp:69
+#: src/snoop/event.cpp:95
+msgid "Special-Button 1"
+msgstr "Speciális gomb 1"
+
+#: src/mousebutton.cpp:90
+#: src/mousebutton.cpp:119
+#: src/snoop/event.cpp:70
+#: src/snoop/event.cpp:99
+msgid "Special-Button 2"
+msgstr "Speciális gomb 2"
+
+#: src/mousebutton.cpp:91
+#: src/mousebutton.cpp:123
+#: src/snoop/event.cpp:71
+#: src/snoop/event.cpp:103
+msgid "Wheel up"
+msgstr "Görgetés fel"
+
+#: src/mousebutton.cpp:92
+#: src/mousebutton.cpp:127
+#: src/snoop/event.cpp:72
+#: src/snoop/event.cpp:107
+msgid "Wheel down"
+msgstr "Görgetés le"
+
+#: src/mousebutton.cpp:93
+#: src/snoop/event.cpp:73
+msgid "No-Button"
+msgstr "Nincs gomb"
+
 #: src/mousebutton.cpp:204
 msgid "Press a mouse button..."
-msgstr ""
+msgstr "Nyomjon le egy egérgombot..."
 
-#: src/mouseconfig.cpp:70
-msgid "Square under the mouse cursor"
-msgstr ""
-
-#: src/mouseconfig.cpp:353
+#: src/mouseconfig.cpp:330
 msgid "The button '%1' has already been defined"
-msgstr ""
+msgstr "A(z) '%1'  gomb már be van állítva"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:67
 #: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:65
@@ -1218,16 +1362,16 @@ msgstr "avi"
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:69
 #: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:68
 msgid "wmv"
-msgstr ""
+msgstr "wmv"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:70
 msgid "mpeg"
-msgstr ""
+msgstr "mpeg"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoderconfig.cpp:71
 #: src/plugins/encoder/mencoder/mencoderencoderconfig.cpp:70
 msgid "mkv"
-msgstr ""
+msgstr "mkv"
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:70
 msgid "Starting ffmpeg!"
@@ -1236,7 +1380,7 @@ msgstr "FFMpeg indítása!"
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:100
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:98
 msgid "Input/output file is missing."
-msgstr ""
+msgstr "Bemeneti/kimeneti fájl elveszett."
 
 #: src/plugins/encoder/ffmpeg/ffmpegencoder.cpp:131
 msgid ""
@@ -1278,10 +1422,9 @@ msgstr "Átalakítás: %1"
 
 #: src/plugins/encoder/ffmpeg/formatdialog.cpp:39
 #: src/plugins/encoder/mencoder/formatdialog.cpp:39
-#, fuzzy
 msgctxt "%1 = format"
 msgid "Edit %1"
-msgstr "%1 szerkesztése"
+msgstr "%1 módosítása"
 
 #: src/plugins/encoder/mencoder/mencoderencoder.cpp:68
 msgid "Starting mencoder!"
@@ -1328,20 +1471,17 @@ msgid "Encoding started!"
 msgstr "Elkezdődött az átalakítás!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:268
-#, fuzzy
 msgctxt "RecordMyDesktop is done"
 msgid "Done!"
 msgstr "Kész!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:272
-#, fuzzy
 msgid "Cannot open file %1 for writing!"
-msgstr "Nem sikerült írásra megnyitni a(z) %1 fájlt"
+msgstr "Nem sikerült megnyitni a(z) \"%1\" fájlt írásra!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:274
 msgid "Could not create temporary directory, check your config."
-msgstr ""
-"Nem lehetett létrehozni az ideiglenes könyvtárat, ellenőrizze a beállításait."
+msgstr "Nem lehetett létrehozni az ideiglenes könyvtárat, ellenőrizze a beállításait."
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:276
 msgid "recordMyDesktop is not compiled with Jack support."
@@ -1353,7 +1493,7 @@ msgstr "Hiba történt a hangkártya megnyitása/beállításakor."
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:280
 msgid "Window size specification out of bounds!"
-msgstr ""
+msgstr "Az ablakméret specifikáció kilóg!"
 
 #: src/plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:292
 msgctxt "%1 = file, %2 = error string"
@@ -1365,9 +1505,8 @@ msgstr ""
 "Válasza: %2"
 
 #: src/plugins/recorder/recordmydesktop/sounddevicedialog.cpp:37
-#, fuzzy
 msgid "Sound Device"
-msgstr "Eszköz"
+msgstr "Hangeszköz"
 
 #: src/plugins/recorder/screenshot/screenshotrecorder.cpp:76
 msgid "Cheese!"
@@ -1395,7 +1534,7 @@ msgstr "Nem lehetett menteni a képet."
 #: src/plugins/upload/youtube/youtubeuploader.cpp:140
 #: src/plugins/upload/youtube/youtubeuploader.cpp:230
 msgid "Upload canceled."
-msgstr ""
+msgstr "Feltöltés megszakítva."
 
 #: src/plugins/upload/blip/blipuploader.cpp:156
 #: src/plugins/upload/youtube/youtubeuploader.cpp:260
@@ -1404,59 +1543,54 @@ msgstr "Feltöltés..."
 
 #: src/plugins/upload/blip/blipuploader.cpp:189
 #: src/plugins/upload/youtube/youtubeuploader.cpp:216
-#, fuzzy
 msgctxt "%1 = link to video"
 msgid "Finished: %1"
-msgstr "Kész!"
+msgstr "%1 Elkészült"
 
 #: src/plugins/upload/lib/blipservice.cpp:58
 #: src/plugins/upload/lib/youtubeservice.cpp:122
-#, fuzzy
 msgid "No title specified."
-msgstr "Nincs megadva kimeneti fájl"
+msgstr "Nincs cím megadva."
 
 #: src/plugins/upload/lib/blipservice.cpp:62
-#, fuzzy
 msgid "No video specified."
-msgstr "Nincs megadva kimeneti fájl"
+msgstr "Nincs videó megadva."
 
 #: src/plugins/upload/lib/blipservice.cpp:66
 #: src/plugins/upload/lib/youtubeservice.cpp:65
-#, fuzzy
 msgid "No account/password specified."
-msgstr "Nincs megadva kimeneti fájl"
+msgstr "Nincs azonosító/jelszó megadva."
 
 #: src/plugins/upload/lib/blipservice.cpp:70
 #: src/plugins/upload/lib/youtubeservice.cpp:135
-#, fuzzy
 msgid "Invalid category."
-msgstr "Kategória"
+msgstr "Érvénytelen kategória."
 
 #: src/plugins/upload/lib/blipservice.cpp:74
 msgid "Invalid license."
-msgstr ""
+msgstr "Érvénytelen licenc."
 
 #: src/plugins/upload/lib/blipservice.cpp:136
-#, fuzzy
 msgctxt "%1 = file, %2 = error string"
 msgid ""
 "Cannot open %1.\n"
 "Reason: %2"
-msgstr "Nem lehet megnyitni a kimeneti fájlt: %1"
+msgstr ""
+"%1 nem nyitható meg.\n"
+"Válasza: %2"
 
 #: src/plugins/upload/lib/blipservice.cpp:229
-#, fuzzy
 msgctxt "%1 = error"
 msgid "Unknown error: %1."
-msgstr "Ismeretlen hiba"
+msgstr "Ismeretlen hiba: %1"
 
 #: src/plugins/upload/lib/blipservice.cpp:244
 msgid "Invalid response from blip.tv!"
-msgstr ""
+msgstr "Érvénytelen válasz a blip.tv-től!"
 
 #: src/plugins/upload/lib/blipvideo.cpp:66
 msgid "Art"
-msgstr ""
+msgstr "Művészetek"
 
 #: src/plugins/upload/lib/blipvideo.cpp:68
 #: src/plugins/upload/lib/youtubevideo.cpp:34
@@ -1465,11 +1599,11 @@ msgstr "Autók & Járművek"
 
 #: src/plugins/upload/lib/blipvideo.cpp:70
 msgid "Business"
-msgstr ""
+msgstr "Üzleti élet"
 
 #: src/plugins/upload/lib/blipvideo.cpp:72
 msgid "Citizen Journalism"
-msgstr ""
+msgstr "Citizen Journalism"
 
 #: src/plugins/upload/lib/blipvideo.cpp:74
 #: src/plugins/upload/lib/youtubevideo.cpp:35
@@ -1478,29 +1612,27 @@ msgstr "Vígjáték"
 
 #: src/plugins/upload/lib/blipvideo.cpp:76
 msgid "Conferences and other Events"
-msgstr ""
+msgstr "Konferenciák és egyéb események"
 
 #: src/plugins/upload/lib/blipvideo.cpp:78
-#, fuzzy
 msgid "Default Category"
-msgstr "Kategória"
+msgstr "Alapértelmezett kategória"
 
 #: src/plugins/upload/lib/blipvideo.cpp:80
 msgid "Documentary"
-msgstr ""
+msgstr "Dokumentációs"
 
 #: src/plugins/upload/lib/blipvideo.cpp:82
-#, fuzzy
 msgid "Educational"
 msgstr "Oktatás"
 
 #: src/plugins/upload/lib/blipvideo.cpp:84
 msgid "Food & Drink"
-msgstr ""
+msgstr "Étel és ital"
 
 #: src/plugins/upload/lib/blipvideo.cpp:86
 msgid "Friends"
-msgstr ""
+msgstr "Barátok"
 
 #: src/plugins/upload/lib/blipvideo.cpp:88
 #: src/plugins/upload/lib/youtubevideo.cpp:39
@@ -1508,45 +1640,40 @@ msgid "Gaming"
 msgstr "Játék"
 
 #: src/plugins/upload/lib/blipvideo.cpp:90
-#, fuzzy
 msgid "Health"
-msgstr "Alapértelmezett"
+msgstr "Egészség"
 
 #: src/plugins/upload/lib/blipvideo.cpp:92
-#, fuzzy
 msgid "Literature"
-msgstr "Bitráta"
+msgstr "Irodalom"
 
 #: src/plugins/upload/lib/blipvideo.cpp:94
 msgid "Movies and Television"
-msgstr ""
+msgstr "Mozi és televízió"
 
 #: src/plugins/upload/lib/blipvideo.cpp:96
-#, fuzzy
 msgid "Music and Entertainment"
-msgstr "Szórakozás"
+msgstr "Zene és Szórakozás"
 
 #: src/plugins/upload/lib/blipvideo.cpp:98
 msgid "Personal or Auto-biographical"
-msgstr ""
+msgstr "Személyes vagy auto-biográfia"
 
 #: src/plugins/upload/lib/blipvideo.cpp:100
-#, fuzzy
 msgid "Politics"
-msgstr "Hírek & Politika"
+msgstr "Politika"
 
 #: src/plugins/upload/lib/blipvideo.cpp:102
 msgid "Religion"
-msgstr ""
+msgstr "Vallás"
 
 #: src/plugins/upload/lib/blipvideo.cpp:104
-#, fuzzy
 msgid "School and Education"
-msgstr "Oktatás"
+msgstr "Iskola és Oktatás"
 
 #: src/plugins/upload/lib/blipvideo.cpp:106
 msgid "Science"
-msgstr ""
+msgstr "Tudomány"
 
 #: src/plugins/upload/lib/blipvideo.cpp:108
 #: src/plugins/upload/lib/youtubevideo.cpp:47
@@ -1554,33 +1681,31 @@ msgid "Sports"
 msgstr "Sportok"
 
 #: src/plugins/upload/lib/blipvideo.cpp:110
-#, fuzzy
 msgid "Technology"
-msgstr "Tudomány & Technológia"
+msgstr "Technológia"
 
 #: src/plugins/upload/lib/blipvideo.cpp:112
 msgid "The Environment"
-msgstr ""
+msgstr "A Környezet"
 
 #: src/plugins/upload/lib/blipvideo.cpp:114
 msgid "The Mainstream Media"
-msgstr ""
+msgstr "A mainstream média"
 
 #: src/plugins/upload/lib/blipvideo.cpp:116
 msgid "Travel"
-msgstr ""
+msgstr "Utazás"
 
 #: src/plugins/upload/lib/blipvideo.cpp:118
 msgid "Videoblogging"
-msgstr ""
+msgstr "Videóbloggolás"
 
 #: src/plugins/upload/lib/blipvideo.cpp:120
 msgid "Web Development and Sites"
-msgstr ""
+msgstr "Webfejlesztés és portálok"
 
 #: src/plugins/upload/lib/infojob.cpp:117
 #: src/plugins/upload/lib/infojob.cpp:131
-#, fuzzy
 msgctxt "Title"
 msgid "Upload"
 msgstr "Feltöltés"
@@ -1589,90 +1714,79 @@ msgstr "Feltöltés"
 #: src/plugins/upload/lib/infojob.cpp:126
 msgctxt "video file"
 msgid "Source"
-msgstr ""
+msgstr "Forrás"
 
 #: src/plugins/upload/lib/infojob.cpp:119
-#, fuzzy
 msgctxt "upload url"
 msgid "Destination"
-msgstr "Leírás"
+msgstr "Cél"
 
 #: src/plugins/upload/lib/infojob.cpp:121
 msgid "Transmit Data"
-msgstr ""
+msgstr "Átküldött adat"
 
 #: src/plugins/upload/lib/infojob.cpp:125
 msgctxt "Title"
 msgid "Download"
-msgstr ""
+msgstr "Letöltés"
 
 #: src/plugins/upload/lib/infojob.cpp:132
-#, fuzzy
 msgctxt "Upload canceled"
 msgid "Canceled"
-msgstr "Mégsem"
+msgstr "Megszakítva"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:92
 msgid "Please authenticate first!"
-msgstr ""
+msgstr "Kérjük kapcsolódjon először!"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:106
-#, fuzzy
 msgid "No such file: %1."
-msgstr "Nincs ilyen fájl: „%s“"
+msgstr "Nincs ilyen fájl: „%1“"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:110
-#, fuzzy
 msgid "Title too long."
-msgstr "A(z) %1 címke túl hosszú."
+msgstr "A cím túl hosszú"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:114
-#, fuzzy
 msgid "Description too long."
-msgstr "Leírás"
+msgstr "A leírás túl hosszú"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:118
 msgid "Too long tags."
-msgstr ""
+msgstr "A tagok túl hosszúak"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:126
-#, fuzzy
 msgid "No description specified."
-msgstr "Nincs megadva kimeneti fájl"
+msgstr "Nincs megadva leírás"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:130
-#, fuzzy
 msgid "No tags specified."
-msgstr "Nincs megadva kimeneti fájl"
+msgstr "Nincsenek tagok megadva."
 
 #: src/plugins/upload/lib/youtubeservice.cpp:140
-#, fuzzy
 msgid "Tag \"%1\" is too long."
-msgstr "A(z) %1 címke túl hosszú."
+msgstr "A(z) \"%1\" tag túl hosszú."
 
 #: src/plugins/upload/lib/youtubeservice.cpp:143
-#, fuzzy
 msgid "Tag \"%1\" is too short."
-msgstr "A(z) %1 címke túl hosszú."
+msgstr "A(z) \"%1\" tag  túl rövid"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:159
-#, fuzzy
 msgid "Cannot open video!"
-msgstr "Nem lehet megnyitni a kimeneti fájlt: %1"
+msgstr "Videó-fájlt nem lehet megnyitni! "
 
 #: src/plugins/upload/lib/youtubeservice.cpp:332
 msgid "Authentication failed!"
 msgstr "Hitelesítés sikertelen!"
 
 #: src/plugins/upload/lib/youtubeservice.cpp:351
-#, fuzzy
 msgctxt "%1 = error"
 msgid ""
 "Upload failed!\n"
 "Response: %1"
 msgstr ""
-"Az eltávolítás nem sikerült: %1\n"
-"Válasza: %2"
+"Nem sikerült a feltöltés!\n"
+"A válasz: %1"
 
 #: src/plugins/upload/lib/youtubevideo.cpp:36
 msgid "Education"
@@ -1711,41 +1825,32 @@ msgid "Pets & Animals"
 msgstr "Házi- és egyéb állatok"
 
 #: src/plugins/upload/lib/youtubevideo.cpp:46
-#, fuzzy
 msgid "Science & Technology"
 msgstr "Tudomány & Technológia"
 
 #: src/plugins/upload/lib/youtubevideo.cpp:48
-#, fuzzy
 msgid "Travel & Events"
-msgstr "Utazás & Események"
+msgstr "Események betöltése..."
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:47
-msgid ""
-"By clicking 'Continue', you certify that you own all rights to the content "
-"or that you are authorized by the owner to make the content publicly "
-"available on YouTube, and that it otherwise complies with the YouTube Terms "
-"of Service located at <a href='http://www.youtube.com/t/terms'>http://www."
-"youtube.com/t/terms</a>."
-msgstr ""
+msgid "By clicking 'Continue', you certify that you own all rights to the content or that you are authorized by the owner to make the content publicly available on YouTube, and that it otherwise complies with the YouTube Terms of Service located at <a href='http://www.youtube.com/t/terms'>http://www.youtube.com/t/terms</a>."
+msgstr "A \"Folytatás\" gombra kattintással igazolja, hogy Ön  jogosult a tulajdonos, vagy ehhez minden joggal rendelkezik, hogy a tartalmat a nyilvánosan elérhető a YouTube-on, közzé tegye és, hogy egyébként megfelel a YouTube Szolgáltatási feltételeknek. <a href = \"http://www.youtube.com/t/terms '> http://www.youtube.com/t/terms </ a>."
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:160
 msgid "Translation:"
-msgstr ""
+msgstr "Fordítás:"
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:180
-#, fuzzy
 msgid "authenticate..."
-msgstr "Hitelesítés ..."
+msgstr "Hitelesítés..."
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:221
 msgid "Invalid response from YouTube!"
-msgstr ""
+msgstr "Érvénytelen válasz érkezett a YouTube-tól!"
 
 #: src/plugins/upload/youtube/youtubeuploader.cpp:250
-#, fuzzy
 msgid "Authentication finished..."
-msgstr "Hitelesítés sikertelen!"
+msgstr "Hitelesítés befejezve..."
 
 #: src/recordermanager.cpp:136
 msgid "Cannot load Recorder %1."
@@ -1759,72 +1864,73 @@ msgstr "Nincs megadva kimeneti fájl"
 msgid "The recorder has crashed!"
 msgstr "A felvevő összeomlott"
 
-#: src/timeline/timeline.cpp:78 src/timeline/topictreeitem.cpp:37
-#, fuzzy
+#: src/snoopdialog.cpp:53
+msgid "Reload"
+msgstr "Újratöltés"
+
+#: src/snoopdialog.cpp:118
+#: src/snoopdialog.cpp:147
+msgid "Unkown"
+msgstr "Ismeretlen "
+
+#: src/snoopdialog.cpp:165
+msgid "File not found"
+msgstr "A fájl nem található"
+
+#: src/snoopdialog.cpp:169
+msgctxt "%1 = error string"
+msgid "Cannot open file: %1"
+msgstr "Nem lehet megnyitni a(z) '%1' fájlt"
+
+#: src/snoopdialog.cpp:172
+msgid "Ok"
+msgstr "OK"
+
+#: src/timeline.cpp:78
+#: src/topictreeitem.cpp:37
 msgid "Untitled"
-msgstr "Megnevezés"
+msgstr "Névtelen"
 
-#: src/timeline/timeline.cpp:218
+#: src/timeline.cpp:218
 msgid "New Topic: <i>%1</i>"
-msgstr ""
+msgstr "Új téma: <i>%1</i>"
 
-#: src/timeline/timelinetopicsdialog.cpp:42
+#: src/timelinetopicsdialog.cpp:42
 msgid "Topics"
-msgstr ""
+msgstr "Témák"
 
-#: src/timeline/topicwidget.cpp:143
+#: src/topicwidget.cpp:143
 msgid "No Topic"
-msgstr ""
+msgstr "Nincs téma"
 
 #: src/uploadmanager.cpp:75
-#, fuzzy
 msgid "Cannot load upload plugin \"%1\"."
-msgstr "Nem sikerült betölteni az átalakító modult: %1"
-
-#, fuzzy
-#~ msgid "Soundcards"
-#~ msgstr "Hang"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Formátum"
-
-#~ msgid "Cancel"
-#~ msgstr "Mégsem"
-
-#~ msgid "Upload to YouTube"
-#~ msgstr "Feltöltés a YouTube-ra"
-
-#~ msgid "Log in..."
-#~ msgstr "Bejelentkezés..."
-
-#~ msgid "Please fill out all the fields."
-#~ msgstr "Minden mezőt ki kell tölteni."
+msgstr "Nem sikerült betölteni a(z) %1 modult."
 
 #~ msgid "PNG"
 #~ msgstr "PNG"
-
 #~ msgid "JPG"
 #~ msgstr "JPG"
-
 #~ msgid "BMP"
 #~ msgstr "BMP 2"
-
 #~ msgid "PPM"
 #~ msgstr "PPM-kép"
-
 #~ msgid "TIFF"
 #~ msgstr "TIFF-modul"
-
 #~ msgid "XBM"
 #~ msgstr "XBM"
-
 #~ msgid "XPM"
 #~ msgstr "XPM"
-
 #~ msgid "Encoder Plugin"
 #~ msgstr "Átalakítómodul"
-
+#~ msgid "Unkown format."
+#~ msgstr "Ismeretlen formátum."
+#~ msgid "Upload to YouTube"
+#~ msgstr "Feltöltés a YouTube-ra"
+#~ msgid "Log in..."
+#~ msgstr "Bejelentkezés..."
+#~ msgid "Please fill out all the fields."
+#~ msgstr "Minden mezőt ki kell tölteni."
 #~ msgid "Error: %1"
 #~ msgstr "Hiba: %1"
 
@@ -1835,10 +1941,8 @@ msgstr "Nem sikerült betölteni az átalakító modult: %1"
 #, fuzzy
 #~ msgid "Mencoder Configuration"
 #~ msgstr "RecordMyDesktop beállítások"
-
 #~ msgid "RecordMyDesktop Configuration"
 #~ msgstr "RecordMyDesktop beállítások"
-
 #~ msgid "Screenshot Configuration"
 #~ msgstr "Pillanatkép beállítások"
 
@@ -1853,7 +1957,6 @@ msgstr "Nem sikerült betölteni az átalakító modult: %1"
 #, fuzzy
 #~ msgid "Encoder"
 #~ msgstr "Átalakítás"
-
 #~ msgid ""
 #~ "Location where a temporary directory will be created to hold project files"
 #~ msgstr "Az átmeneti fájlok helye ahol létre lesznek hozva a projekt fájlok"
@@ -1865,15 +1968,16 @@ msgstr "Nem sikerült betölteni az átalakító modult: %1"
 #, fuzzy
 #~ msgid "Cannot find mencoder."
 #~ msgstr "Nem található a recordmydesktop."
-
 #~ msgid "Cannot find recordmydesktop."
 #~ msgstr "Nem található a recordmydesktop."
 
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Formátum"
 #~ msgid "Image Options"
 #~ msgstr "Képbeállítások"
-
 #~ msgid "Sound Options"
 #~ msgstr "Hang beállítások"
-
 #~ msgid "Encoding Options"
 #~ msgstr "Átalakítási opciók"
+
