@@ -836,6 +836,7 @@ void MainWindow::dialogFinished()
     setupTray();
     updateRecorderCombo();
     updateUploaderMenu();
+    triggerFrame(false); // update KAction
 
 }
 
