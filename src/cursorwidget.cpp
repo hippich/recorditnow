@@ -58,6 +58,9 @@ CursorWidget::CursorWidget(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground);
     setAutoFillBackground(false);
 
+    // _UGLY_ HACK: Prevents KWin to draw a shadow
+    setAttribute(Qt::WA_X11NetWmWindowTypeDock);
+
     m_useKeyMon = false;
     m_grab = false;
     m_device = 0;
