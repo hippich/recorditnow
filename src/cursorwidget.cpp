@@ -66,6 +66,7 @@ CursorWidget::CursorWidget(QWidget *parent)
     m_device = 0;
     m_mode = LEDMode;
     m_opacity = 0.4;
+    m_show = true;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updatePos()));
@@ -100,20 +101,6 @@ void CursorWidget::setSize(const QSize &size)
 
     setMinimumSize(size);
     setMaximumSize(size);
-
-}
-
-
-void CursorWidget::setNormalColor(const QColor &color)
-{
-
-    if (m_normalColor == color) {
-        return;
-    }
-
-    m_normalColor = color;
-    resetColor();
-    update();
 
 }
 
@@ -172,6 +159,14 @@ void CursorWidget::setOpacity(const qreal &opacity)
 }
 
 
+void CursorWidget::setShowAlways(const bool &show)
+{
+
+    m_show = show;
+
+}
+
+
 void CursorWidget::switchToPreviewMode()
 {
 
@@ -188,7 +183,11 @@ void CursorWidget::start()
 {
 
     m_timer->start(1000/25);
-    show();
+
+    if (m_show) {
+        show();
+    }
+
     updateGrab(false); // ungrab old buttons
     updateGrab(true);
 
@@ -217,7 +216,11 @@ void CursorWidget::click(const int &button)
     XAllowEvents(x11Info().display(), ReplayPointer, CurrentTime);
     update();
 
-    m_resetTimer->start(350);
+    if (!isVisible()) {
+        show();
+    }
+
+    m_resetTimer->start(500);
 
 }
 
@@ -269,7 +272,12 @@ void CursorWidget::resetColor()
 {
 
     m_currentColor = m_normalColor;
-    update();
+
+    if (m_show) {
+        update();
+    } else {
+        hide();
+    }
 
 }
 
@@ -368,18 +376,22 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
         m_resetTimer->stop();
     }
 
+    if (!isVisible()) {
+        show();
+    }
+
     switch (event.key) {
     case KeyMon::Event::WheelUp:
     case KeyMon::Event::WheelDown: {
             m_currentColor = m_buttons[event.keyToXButton(event.key)];
-            m_resetTimer->start(350);
+            m_resetTimer->start(500);
             break;
         }
     default: {
             if (event.pressed) {
                 m_currentColor = m_buttons[event.keyToXButton(event.key)];
             } else {
-                m_currentColor = m_normalColor;
+                resetColor();
             }
             break;
         }

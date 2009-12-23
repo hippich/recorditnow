@@ -52,11 +52,11 @@ public:
     ~CursorWidget();
 
     void setSize(const QSize &size);
-    void setNormalColor(const QColor &color);
     void setButtons(const QHash<int, QColor> &buttons);
     void setUseKeyMon(const bool &use, const QString &deviceName = QString());
     void setMode(const CursorWidget::WidgetMode &mode);
     void setOpacity(const qreal &opacity);
+    void setShowAlways(const bool &show);
     void switchToPreviewMode();
 
     void start();
@@ -77,6 +77,7 @@ private:
     bool m_grab;
     WidgetMode m_mode;
     qreal m_opacity;
+    bool m_show;
 
 
 private slots:

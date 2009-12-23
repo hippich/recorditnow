@@ -381,7 +381,6 @@ void MouseConfig::buttonsChanged()
         buttons[button] = color;
     }
     cursorWidget->setButtons(buttons);
-    cursorWidget->setNormalColor(kcfg_defaultColor->color());
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
     cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
