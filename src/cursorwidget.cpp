@@ -391,7 +391,7 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
             if (event.pressed) {
                 m_currentColor = m_buttons[event.keyToXButton(event.key)];
             } else {
-                resetColor();
+                m_resetTimer->start(250);
             }
             break;
         }
