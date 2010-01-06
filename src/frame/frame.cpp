@@ -45,6 +45,8 @@ Frame::Frame(QWidget *parent) :
 
     resize(FRAME_MIN_SIZE, FRAME_MIN_SIZE);
     setContentsMargins(8, 8, 8, 8);
+    setMinimumSize(FRAME_MIN_SIZE-(8*2), FRAME_MIN_SIZE-(8*2));
+
     parent->installEventFilter(this);
     setMouseTracking(true);
     m_side = NoSide;
