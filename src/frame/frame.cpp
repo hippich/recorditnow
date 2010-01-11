@@ -36,8 +36,8 @@
 #define FRAME_MIN_SIZE 100
 #define PARENT_SPACING QPoint(0, 10)
 
-Frame::Frame(QWidget *parent) :
-        QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint)
+Frame::Frame(QWidget *parent)
+    : QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint)
 {
 
     Q_ASSERT(parentWidget());
