@@ -24,10 +24,6 @@
 // Qt
 #include <QWizard>
 
-// JoschyCore
-#include <joschycore/plugininfo.h>
-#include <joschycore/video.h>
-
 
 class UploadWizard : public QWizard
 {
@@ -36,9 +32,6 @@ Q_OBJECT
 
 public:
     explicit UploadWizard(QWidget *parent = 0);
-
-
-    Joschy::PluginInfo provider() const;
 
 
 };

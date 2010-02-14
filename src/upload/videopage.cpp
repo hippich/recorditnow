@@ -20,7 +20,6 @@
 
 // own
 #include "videopage.h"
-#include "uploadwizard.h"
 
 // JoschyCore
 #include <joschycore/manager.h>
@@ -52,11 +51,11 @@ VideoPage::VideoPage(QWidget *parent)
 void VideoPage::initializePage()
 {
 
-    const Joschy::PluginInfo provider = static_cast<UploadWizard*>(wizard())->provider();
-    Joschy::AbstractProvider *plugin = Joschy::Manager::self()->createProvider(provider.name(), "QNetworkLayer");
+    Joschy::AbstractProvider *plugin = Joschy::Manager::self()->createProvider(field("Provider").toString(),
+                                                                               "QNetworkLayer");
 
     if (!plugin) {
-        KMessageBox::error(this, i18n("Cannot load: %1", provider.name()));
+        KMessageBox::error(this, i18n("Cannot load: %1", field("Provider").toString()));
         return;
     }
 

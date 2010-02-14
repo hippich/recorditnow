@@ -14,7 +14,10 @@
    <string>WizardPage</string>
   </property>
   <property name="title">
-   <string>Account</string>
+   <string>Login</string>
+  </property>
+  <property name="subTitle">
+   <string>Please enter your account and password to log in</string>
   </property>
   <attribute name="pageId">
    <string notr="true">1</string>

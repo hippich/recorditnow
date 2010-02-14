@@ -46,12 +46,5 @@ UploadWizard::UploadWizard(QWidget *parent)
 }
 
 
-Joschy::PluginInfo UploadWizard::provider() const
-{
-
-    return static_cast<PluginPage*>(page(0))->plugin();
-
-}
-
 
 #include "uploadwizard.moc"

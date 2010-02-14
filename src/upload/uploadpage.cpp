@@ -20,7 +20,6 @@
 
 // own
 #include "uploadpage.h"
-#include "uploadwizard.h"
 
 // JoschyCore
 #include <joschycore/manager.h>
@@ -62,8 +61,8 @@ bool UploadPage::isComplete() const
 void UploadPage::initializePage()
 {
 
-    const Joschy::PluginInfo provider = static_cast<UploadWizard*>(wizard())->provider();
-    Joschy::AbstractProvider *plugin = Joschy::Manager::self()->createProvider(provider.name(), "QNetworkLayer");
+    Joschy::AbstractProvider *plugin = Joschy::Manager::self()->createProvider(field("Provider").toString(),
+                                                                               "QNetworkLayer");
 
     if (!plugin) {
         logBrowser->append(i18n("Error: Plugin load failed!"));

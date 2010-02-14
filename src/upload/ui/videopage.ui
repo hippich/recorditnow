@@ -16,6 +16,9 @@
   <property name="title">
    <string>Video</string>
   </property>
+  <property name="subTitle">
+   <string>Please select a video and enter the appropriate data</string>
+  </property>
   <attribute name="pageId">
    <string notr="true">2</string>
   </attribute>
