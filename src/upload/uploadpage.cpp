@@ -124,7 +124,7 @@ void UploadPage::authenticated(const QString &id)
     video.setTitle(field("Title").toString());
     video.setDescription(field("Description").toString());
     video.setCategory(field("Category").toString());
-    video.setKeywords(field("Tags").toString().split(", "));
+    video.setKeywords(field("Tags").toStringList());
 
     const Joschy::ActionReply reply = m_provider->upload(field("Account").toString(), &video);
     logBrowser->append(i18n("Upload started..."));
@@ -162,7 +162,8 @@ void UploadPage::uploadFinsihed(const QString &id, const Joschy::Video &video)
     if (id != m_currentId) {
         return;
     }
-    logBrowser->append(i18nc("%1 = video url", "Upload finished: %1", video.url().toString()));
+    logBrowser->append(i18nc("%1 = video url", "Upload finished: <a href='%1'>%1</a>",
+                             video.url().toString()));
 
 
     m_currentId = "fin";

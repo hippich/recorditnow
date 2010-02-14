@@ -44,7 +44,7 @@ VideoPage::VideoPage(QWidget *parent)
     registerField("Title*", titleEdit);
     registerField("Description*", descriptionEdit, "plainText", SIGNAL(textChanged()));
     registerField("Category*", categoryCombo, "currentText", SIGNAL(currentIndexChanged(QString)));
-    registerField("Tags*", tagsEdit);
+    registerField("Tags*", tagBox, "items", SIGNAL(changed()));
 
 }
 

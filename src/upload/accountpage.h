@@ -28,6 +28,11 @@
 #include <QtGui/QWizardPage>
 
 
+namespace KWallet {
+    class Wallet;
+};
+
+
 class AccountPage : public QWizardPage, public Ui::AccountPage
 {
 Q_OBJECT
@@ -35,8 +40,32 @@ Q_OBJECT
 
 public:
     explicit AccountPage(QWidget *parent = 0);
+    ~AccountPage();
 
     void initializePage();
+
+
+private:
+    enum WalletWait {
+        None = 0,
+        Read = 1,
+        Write = 2
+    };
+
+    WalletWait m_walletWait;
+    KWallet::Wallet *m_wallet;
+    QString m_folder;
+
+    void getWallet();
+    bool enterWalletFolder(const QString &folder);
+    bool validatePage();
+
+
+private slots:
+    void readWallet(bool success);
+    void writeWallet(bool success);
+    void setPassword();
+    void getPassword();
 
 
 };

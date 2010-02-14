@@ -25,6 +25,10 @@
 #include "uploadpage.h"
 #include "accountpage.h"
 
+// KDE
+#include <kicon.h>
+#include <kiconloader.h>
+
 
 UploadWizard::UploadWizard(QWidget *parent)
     : QWizard(parent)
@@ -37,7 +41,8 @@ UploadWizard::UploadWizard(QWidget *parent)
     addPage(new UploadPage(this));
 
     setOption(QWizard::DisabledBackButtonOnLastPage, true);
-
+    setPixmap(QWizard::LogoPixmap, KIcon("recorditnow-upload-media").pixmap(KIconLoader::SizeMedium,
+                                                                            KIconLoader::SizeMedium));
 }
 
 

@@ -26,6 +26,8 @@
 
 // KDE
 #include <kicon.h>
+#include <kiconloader.h>
+#include <kdebug.h>
 
 // Qt
 #include <QtGui/QListWidgetItem>
@@ -40,13 +42,7 @@ PluginPage::PluginPage(QWidget *parent)
 
     connect(providerList, SIGNAL(currentRowChanged(int)), this, SLOT(currentRowChanged(int)));
 
-}
-
-
-bool PluginPage::isComplete() const
-{
-
-    return providerList->currentRow() != -1;
+    registerField("Provider*", nameLine);
 
 }
 
@@ -76,6 +72,7 @@ void PluginPage::initializePage()
         providerList->addItem(item);
     }
     providerList->setCurrentRow(0);
+    currentRowChanged(0);
 
 }
 
@@ -83,21 +80,17 @@ void PluginPage::initializePage()
 void PluginPage::currentRowChanged(int currentRow)
 {
 
-    if (currentRow == -1) {
-        return;
-    }
-
     QListWidgetItem *item = providerList->item(currentRow);
     if (!item) {
         return;
     }
 
     const Joschy::PluginInfo info = item->data(Qt::UserRole+1).value<Joschy::PluginInfo>();
-    nameLabel->setText(info.name());
-    descriptionLabel->setText(info.description());
-    versionLabel->setText(info.version());
+    nameLine->setText(info.name());
+    descriptionLine->setText(info.description());
+    versionLine->setText(info.version());
 
-    emit completeChanged();
+    setField("Provider", info.name());
 
 }
 

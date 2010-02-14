@@ -38,7 +38,6 @@ Q_OBJECT
 public:
     explicit PluginPage(QWidget *parent = 0);
 
-    bool isComplete() const;
     Joschy::PluginInfo plugin() const;
 
     void initializePage();
