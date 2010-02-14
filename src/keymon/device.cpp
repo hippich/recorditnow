@@ -142,7 +142,7 @@ void Device::readEvents()
             break;
         }
         if (bytesRead != sizeof(ev)) {
-            kWarning("Internal error!");
+            kWarning() << "Internal error!";
             return;
         }
 
