@@ -5,12 +5,21 @@ include (KDE4Defaults)
 
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+
 
 set(KDE_MIN_VERSION "4.3.0")
 
 ########### install files ###############
 install(FILES recorditnow.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
+
+
+macro_optional_find_package(JoschyCore)
+macro_log_feature(JOSCHYCORE_FOUND "JoschyCore"
+    "Video upload library"
+    "httl://www.xyz.de")
+
 
 add_subdirectory(src)
 

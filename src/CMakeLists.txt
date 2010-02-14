@@ -60,9 +60,38 @@ kde4_add_ui_files(gui_SRCS
     ui/timelinetopics.ui 
     ui/timelineconfig.ui 
     ui/keymondialog.ui)
+
+if (JOSCHYCORE_FOUND)
+    add_definitions(-DJOSCHYCORE_FOUND)
+    set(gui_SRCS ${gui_SRCS}
+        upload/pluginpage.cpp
+        upload/uploadwizard.cpp
+        upload/videopage.cpp
+        upload/accountpage.cpp
+        upload/uploadpage.cpp)
+
+    kde4_add_ui_files(gui_SRCS upload/ui/pluginpage.ui
+        upload/ui/videopage.ui
+        upload/ui/uploadpage.ui
+        upload/ui/accountpage.ui)
+endif(JOSCHYCORE_FOUND)
+
+
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})
-target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KIO_LIBS} recorditnow_recorder recorditnow_encoder recorditnow_uploader recorditnow_snoop ${X11_Xcursor_LIB})
+target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
+                                  ${KDE4_KUTILS_LIBS}
+                                  ${KDE4_KIO_LIBS}
+                                  recorditnow_recorder
+                                  recorditnow_encoder
+                                  recorditnow_uploader
+                                  recorditnow_snoop
+                                  ${X11_Xcursor_LIB})
+
+if (JOSCHYCORE_FOUND)
+    target_link_libraries(recorditnow ${JOSCHYCORE_LIBRARIES})
+endif(JOSCHYCORE_FOUND)
+
 install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############

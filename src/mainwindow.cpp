@@ -38,6 +38,9 @@
 #include "zoomview.h"
 #include "timeline/timeline.h"
 #include "timeline/timelinedock.h"
+#ifdef JOSCHYCORE_FOUND
+    #include "upload/uploadwizard.h"
+#endif
 
 // Qt
 #include <QtGui/QX11Info>
@@ -217,7 +220,11 @@ KAction *MainWindow::getAction(const QString &name)
 
     KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
-        if (name == "upload" || name == "box") {
+        if (
+#ifndef JOSCHYCORE_FOUND
+                name == "upload" ||
+#endif
+                name == "box") {
             action = new KActionMenu(this);
             if (name == "upload") {
                 static_cast<KActionMenu*>(action)->setDelayed(false);
@@ -317,7 +324,9 @@ void MainWindow::setupActions()
     uploadAction->setIcon(KIcon("recorditnow-upload-media"));
     uploadAction->setText(i18n("Upload"));
     uploadAction->setShortcut(Qt::CTRL+Qt::Key_U, KAction::DefaultShortcut);
-
+#ifdef JOSCHYCORE_FOUND
+    connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
+#endif
 
     KAction *zoomAction = getAction("zoom");
     zoomAction->setObjectName("RecordItNow_zoom");
@@ -1081,6 +1090,7 @@ void MainWindow::pluginsChanged()
 void MainWindow::updateUploaderMenu()
 {
 
+#ifndef JOSCHYCORE_FOUND
     KActionMenu *action = static_cast<KActionMenu*>(getAction("upload"));
     KMenu *menu = action->menu();
     if (!menu) {
@@ -1097,13 +1107,14 @@ void MainWindow::updateUploaderMenu()
         connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
         menu->addAction(uploadAction);
     }
+#endif
 
 }
 
 
 void MainWindow::upload()
 {
-
+#ifndef JOSCHYCORE_FOUND
     if (state() == Upload) {
         return;
     }
@@ -1111,6 +1122,10 @@ void MainWindow::upload()
     setState(Upload);
     QAction *uploadAction = static_cast<QAction*>(sender());
     m_uploadManager->startUpload(uploadAction->data().toString(), outputRequester->text(), this);
+#else
+    UploadWizard *wizard = new UploadWizard(this);
+    wizard->show();
+#endif
 
 }
 
