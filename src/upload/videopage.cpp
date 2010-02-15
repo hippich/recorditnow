@@ -59,9 +59,17 @@ void VideoPage::initializePage()
         return;
     }
 
+    connect(plugin, SIGNAL(categorysChanged(QStringList)), this, SLOT(categorysChanged(QStringList)));
     categoryCombo->addItems(plugin->categorys());
 
-    Joschy::Manager::self()->unloadProvider(plugin);
+}
+
+
+void VideoPage::categorysChanged(const QStringList &categorys)
+{
+
+    categoryCombo->clear();
+    categoryCombo->addItems(categorys);
 
 }
 

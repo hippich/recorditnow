@@ -43,6 +43,7 @@ public:
 
 
 private slots:
+    void categorysChanged(const QStringList &categorys);
 
 
 };
