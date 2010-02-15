@@ -28,6 +28,7 @@
 
 // KDE
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 // Qt
 #include <QtCore/QFile>
@@ -44,6 +45,10 @@ VideoPage::VideoPage(QWidget *parent)
     registerField("Description*", descriptionEdit, "plainText", SIGNAL(textChanged()));
     registerField("Category*", categoryCombo, "currentText", SIGNAL(currentIndexChanged(QString)));
     registerField("Tags*", tagBox, "items", SIGNAL(changed()));
+
+    connect(descriptionEdit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
+
+    descriptionEdit->setCheckSpellingEnabled(true);
 
 }
 
@@ -90,6 +95,19 @@ void VideoPage::categorysChanged(const QStringList &categorys)
     categoryCombo->addItems(categorys);
 
 }
+
+
+void VideoPage::descriptionChanged()
+{
+
+    QString text = descriptionEdit->toPlainText();
+    if (text.length() > 5000) {
+        text.resize(5000);
+        descriptionEdit->setText(text);
+    }
+
+}
+
 
 
 #include "videopage.moc"

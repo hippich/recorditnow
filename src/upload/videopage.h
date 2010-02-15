@@ -50,6 +50,7 @@ private:
 
 private slots:
     void categorysChanged(const QStringList &categorys);
+    void descriptionChanged();
 
 
 };
