@@ -34,7 +34,7 @@
 
 
 VideoPage::VideoPage(QWidget *parent)
-    : QWizardPage(parent)
+    : QWizardPage(parent), m_provider(0)
 {
 
     setupUi(this);
@@ -48,8 +48,23 @@ VideoPage::VideoPage(QWidget *parent)
 }
 
 
+VideoPage::~VideoPage()
+{
+
+    if (m_provider) {
+        Joschy::Manager::self()->unloadProvider(m_provider);
+    }
+
+}
+
+
 void VideoPage::initializePage()
 {
+
+    if (m_provider) {
+        Joschy::Manager::self()->unloadProvider(m_provider);
+        m_provider = 0;
+    }
 
     Joschy::AbstractProvider *plugin = Joschy::Manager::self()->createProvider(field("Provider").toString(),
                                                                                "QNetworkLayer");
@@ -58,6 +73,8 @@ void VideoPage::initializePage()
         KMessageBox::error(this, i18n("Cannot load: %1", field("Provider").toString()));
         return;
     }
+
+    m_provider = plugin;
 
     connect(plugin, SIGNAL(categorysChanged(QStringList)), this, SLOT(categorysChanged(QStringList)));
     categoryCombo->addItems(plugin->categorys());

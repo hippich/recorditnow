@@ -26,6 +26,7 @@
 
 // JoschyCore
 #include <joschycore/video.h>
+#include <joschycore/abstractprovider.h>
 
 // Qt
 #include <QtGui/QWizardPage>
@@ -38,8 +39,13 @@ Q_OBJECT
 
 public:
     explicit VideoPage(QWidget *parent = 0);
+    ~VideoPage();
 
     void initializePage();
+
+
+private:
+    Joschy::AbstractProvider *m_provider;
 
 
 private slots:
