@@ -19,34 +19,33 @@
 
 
 // own
-#include "uploadwizard.h"
-#include "pluginpage.h"
-#include "videopage.h"
-#include "uploadpage.h"
-#include "accountpage.h"
 #include "termspage.h"
 
-// KDE
-#include <kicon.h>
-#include <kiconloader.h>
 
 
-UploadWizard::UploadWizard(QWidget *parent)
-    : QWizard(parent)
+TermsPage::TermsPage(QWidget *parent)
+    : QWizardPage(parent)
 {
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    addPage(new PluginPage(this));
-    addPage(new AccountPage(this));
-    addPage(new VideoPage(this));
-    addPage(new TermsPage(this));
-    addPage(new UploadPage(this));
+    setupUi(this);
+    registerField("Terms*", termsCheck);
 
-    setOption(QWizard::DisabledBackButtonOnLastPage, true);
-    setPixmap(QWizard::LogoPixmap, KIcon("recorditnow-upload-media").pixmap(KIconLoader::SizeMedium,
-                                                                            KIconLoader::SizeMedium));
 }
 
 
+void TermsPage::initializePage()
+{
 
-#include "uploadwizard.moc"
+    const QString button = buttonText(QWizard::NextButton).remove('&').remove('>').trimmed();
+    const QString provider = field("Provider").toString();
+
+    termsBrowser->setHtml(i18n("By clicking &apos;%1&apos;, you certify that you own all rights to "\
+                               "the content or that you are authorized by the owner to make the "\
+                               "content publicly available on %2, and that it otherwise "\
+                               "complies with the %2 Terms of Service.", button, provider));
+
+}
+
+
+#include "termspage.moc"
+

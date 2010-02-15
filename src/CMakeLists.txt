@@ -68,11 +68,13 @@ if (JOSCHYCORE_FOUND)
         upload/uploadwizard.cpp
         upload/videopage.cpp
         upload/accountpage.cpp
+        upload/termspage.cpp
         upload/uploadpage.cpp)
 
     kde4_add_ui_files(gui_SRCS upload/ui/pluginpage.ui
         upload/ui/videopage.ui
         upload/ui/uploadpage.ui
+        upload/ui/termspage.ui
         upload/ui/accountpage.ui)
 endif(JOSCHYCORE_FOUND)
 

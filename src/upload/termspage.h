@@ -17,36 +17,29 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef TERMSPAGE_H
+#define TERMSPAGE_H
+
 
 // own
-#include "uploadwizard.h"
-#include "pluginpage.h"
-#include "videopage.h"
-#include "uploadpage.h"
-#include "accountpage.h"
-#include "termspage.h"
+#include "ui_termspage.h"
 
-// KDE
-#include <kicon.h>
-#include <kiconloader.h>
+// Qt
+#include <QtGui/QWizardPage>
 
 
-UploadWizard::UploadWizard(QWidget *parent)
-    : QWizard(parent)
+class TermsPage : public QWizardPage, public Ui::TermsPage
 {
-
-    setAttribute(Qt::WA_DeleteOnClose);
-    addPage(new PluginPage(this));
-    addPage(new AccountPage(this));
-    addPage(new VideoPage(this));
-    addPage(new TermsPage(this));
-    addPage(new UploadPage(this));
-
-    setOption(QWizard::DisabledBackButtonOnLastPage, true);
-    setPixmap(QWizard::LogoPixmap, KIcon("recorditnow-upload-media").pixmap(KIconLoader::SizeMedium,
-                                                                            KIconLoader::SizeMedium));
-}
+    Q_OBJECT
 
 
+public:
+    explicit TermsPage(QWidget *parent = 0);
 
-#include "uploadwizard.moc"
+    void initializePage();
+
+
+};
+
+
+#endif // TERMSPAGE_H
