@@ -113,7 +113,7 @@ void UploadPage::cleanupPage()
 void UploadPage::authenticated(const QString &id)
 {
 
-    if (id != m_currentId) {
+    if (id != m_currentId || !m_provider) {
         return;
     }
     logBrowser->append(i18n("Authentification finished..."));
