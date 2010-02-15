@@ -76,8 +76,9 @@ void VideoPage::initializePage()
 
     m_provider = plugin;
 
-    connect(plugin, SIGNAL(categorysChanged(QStringList)), this, SLOT(categorysChanged(QStringList)));
-    categoryCombo->addItems(plugin->categorys());
+    categorysChanged(plugin->categorys());
+    connect(m_provider, SIGNAL(categorysChanged(QStringList)), this,
+            SLOT(categorysChanged(QStringList)));
 
 }
 
