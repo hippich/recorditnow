@@ -23,6 +23,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <kstandarddirs.h>
 
 // Qt
 #include <QtCore/QStringList>
@@ -58,6 +59,14 @@ QList<SoundDevice> SoundDevice::getDeviceList()
             kDebug() << "found card:" << dir;
             cards.append(scanASoundDevice("/proc/asound/"+dir));
         }
+    }
+
+    if (!KGlobal::dirs()->findExe("pulseaudio").isEmpty()) {
+        SoundDevice dev;
+        dev.m_name = "Pulseaudio";
+        dev.m_key = "pulse";
+        dev.m_icon = "audio-card";
+        cards.append(dev);
     }
 
     return cards;
