@@ -37,6 +37,7 @@ ActionReply DeviceHelper::watch(QVariantMap args)
         return ActionReply::HelperError;
     }
     connect(&device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
+    connect(&device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
 
     while (!HelperSupport::isStopped()) {
         usleep(10000);
@@ -68,6 +69,7 @@ void DeviceHelper::key(const KeyMon::Event &event)
 
     QVariantMap data;
     data["Key"] = event.key;
+    data["KeyCode"] = event.keyCode;
     data["Pressed"] = event.pressed;
     HelperSupport::progressStep(data);
 

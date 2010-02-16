@@ -196,7 +196,6 @@ void Device::readEvents()
             event.pressed = pressed;
 
             emit keyPressed(event);
-
         }
     }
 
