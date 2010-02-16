@@ -43,7 +43,6 @@ class RecorderManager;
 class EncoderManager;
 class RecordItNowPluginManager;
 class Frame;
-class UploadManager;
 class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
     Q_OBJECT
@@ -76,7 +75,6 @@ private:
     RecordItNowPluginManager *m_pluginManager;
     RecorderManager *m_recorderManager;
     EncoderManager *m_encoderManager;
-    UploadManager *m_uploadManager;
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
     ZoomView *m_zoom;
@@ -117,7 +115,6 @@ private slots:
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
     void pluginsChanged();
-    void updateUploaderMenu();
     void upload();
     void playFile(const bool &force = true);
     void removeFile();
