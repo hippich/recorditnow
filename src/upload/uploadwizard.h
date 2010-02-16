@@ -25,6 +25,7 @@
 #include <QWizard>
 
 
+class QCloseEvent;
 class UploadWizard : public QWizard
 {
 Q_OBJECT
@@ -32,6 +33,10 @@ Q_OBJECT
 
 public:
     explicit UploadWizard(QWidget *parent = 0);
+
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 
 };

@@ -29,6 +29,10 @@
 // KDE
 #include <kicon.h>
 #include <kiconloader.h>
+#include <kmessagebox.h>
+
+// Qt
+#include <QtGui/QCloseEvent>
 
 
 UploadWizard::UploadWizard(QWidget *parent)
@@ -45,6 +49,25 @@ UploadWizard::UploadWizard(QWidget *parent)
     setOption(QWizard::DisabledBackButtonOnLastPage, true);
     setPixmap(QWizard::LogoPixmap, KIcon("recorditnow-upload-media").pixmap(KIconLoader::SizeMedium,
                                                                             KIconLoader::SizeMedium));
+}
+
+
+void UploadWizard::closeEvent(QCloseEvent *event)
+{
+
+    if (currentId() == 4) { // upload
+        UploadPage *page = static_cast<UploadPage*>(currentPage());
+        if (!page->isComplete()) {
+            const int ret = KMessageBox::warningYesNo(this, i18n("Do you want to cancel the upload?"));
+            if (ret == KMessageBox::No) {
+                event->ignore();
+                return;
+
+            }
+        }
+    }
+    QWizard::closeEvent(event);
+
 }
 
 
