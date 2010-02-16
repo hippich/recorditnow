@@ -28,6 +28,7 @@
 #include <QtGui/QWidget>
 
 
+class KIntNumInput;
 class QTreeWidgetItem;
 class SizeWidget;
 class FrameConfig : public QWidget, public Ui::FrameConfig
@@ -48,12 +49,13 @@ private slots:
     void down();
     void itemSelectionChanged();
     void textChanged(const QString &text);
-    void updateColumnSize();
     void itemChanged(QTreeWidgetItem *item, int column);
 
 
 private:
-    SizeWidget *newSizeWidget();
+    KIntNumInput *newSizeWidget();
+
+    void move(const int &from, const int &to);
 
 
 signals:

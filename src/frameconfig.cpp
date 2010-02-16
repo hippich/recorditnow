@@ -24,6 +24,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <knuminput.h>
 
 // Qt
 #include <QtGui/QTreeWidgetItem>
@@ -37,17 +38,19 @@ FrameConfig::FrameConfig(const QList<QPair<QString,QSize> > &sizes, QWidget *par
     setupUi(this);
 
     foreach (const Size &s, sizes) {
-
         QTreeWidgetItem *item = new QTreeWidgetItem;
         item->setText(0, s.first);
         item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
 
         sizeTree->addTopLevelItem(item);
 
-        SizeWidget *widget = newSizeWidget();
-        widget->setSize(s.second);
-
+        KIntNumInput *widget = newSizeWidget();
+        widget->setValue(s.second.width());
         sizeTree->setItemWidget(item, 1, widget);
+
+        widget = newSizeWidget();
+        widget->setValue(s.second.height());
+        sizeTree->setItemWidget(item, 2, widget);
     }
 
     addButton->setIcon(KIcon("list-add"));
@@ -77,8 +80,11 @@ QList<Size> FrameConfig::sizes() const
     QList<Size> sizes;
     for (int i = 0; i < sizeTree->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = sizeTree->topLevelItem(i);
-        sizes.append(qMakePair(item->text(0),
-                               static_cast<SizeWidget*>(sizeTree->itemWidget(item, 1))->getSize()));
+
+        const KIntNumInput *width = static_cast<KIntNumInput*>(sizeTree->itemWidget(item, 1));
+        const KIntNumInput *height = static_cast<KIntNumInput*>(sizeTree->itemWidget(item, 2));
+
+        sizes.append(qMakePair(item->text(0), QSize(width->value(), height->value())));
     }
     return sizes;
 
@@ -97,6 +103,7 @@ void FrameConfig::add()
 
     sizeTree->addTopLevelItem(item);
     sizeTree->setItemWidget(item, 1, new SizeWidget(this));
+    sizeTree->setItemWidget(item, 2, new SizeWidget(this));
 
     sizeEdit->clear();
 
@@ -113,7 +120,10 @@ void FrameConfig::remove()
         return;
     }
 
-    delete sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(items.first()));
+    QTreeWidgetItem *item = items.first();
+
+    sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(item));
+    delete item;
 
     emit configChanged();
 
@@ -128,25 +138,11 @@ void FrameConfig::up()
         return;
     }
 
-    const int index = sizeTree->indexOfTopLevelItem(items.first());
-    if (index < 1) {
-        return;
-    }
+    const int from = sizeTree->indexOfTopLevelItem(items.first());
+    const int to = from-1;
 
-    SizeWidget *widget = newSizeWidget();
-    QTreeWidgetItem *item = new QTreeWidgetItem;
-    item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
+    move(from, to);
 
-    item->setText(0, items.first()->text(0));
-    widget->setSize(static_cast<SizeWidget*>(sizeTree->itemWidget(items.first(), 1))->getSize());
-
-    sizeTree->insertTopLevelItem(index-1, item);
-    sizeTree->setItemWidget(item, 1, widget);
-
-    delete sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(items.first()));
-    sizeTree->setCurrentItem(item);
-
-    emit configChanged();
 
 }
 
@@ -159,23 +155,50 @@ void FrameConfig::down()
         return;
     }
 
-    const int index = sizeTree->indexOfTopLevelItem(items.first());
-    if (index+1 == -1 || index+1 >= sizeTree->topLevelItemCount()) {
+    const int from = sizeTree->indexOfTopLevelItem(items.first());
+    const int to = from+1;
+
+    move(from, to);
+
+}
+
+
+void FrameConfig::move(const int &from, const int &to)
+{
+
+    if (to > sizeTree->topLevelItemCount() || to < 0) {
         return;
     }
 
-    SizeWidget *widget = newSizeWidget();
+    QTreeWidgetItem *oldItem = sizeTree->topLevelItem(from);
+
+    const int width = static_cast<KIntNumInput*>(sizeTree->itemWidget(oldItem, 1))->value();
+    const int height = static_cast<KIntNumInput*>(sizeTree->itemWidget(oldItem, 2))->value();
+
     QTreeWidgetItem *item = new QTreeWidgetItem;
     item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
 
-    item->setText(0, items.first()->text(0));
-    widget->setSize(static_cast<SizeWidget*>(sizeTree->itemWidget(items.first(), 1))->getSize());
+    item->setText(0, oldItem->text(0));
 
-    sizeTree->insertTopLevelItem(index+2, item);
+    KIntNumInput *widget = newSizeWidget();
+    widget->setValue(width);
+
+    if (to < from) {
+        sizeTree->insertTopLevelItem(to, item);
+    } else {
+        sizeTree->insertTopLevelItem(to+1, item);
+    }
+
     sizeTree->setItemWidget(item, 1, widget);
 
-    delete sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(items.first()));
-    sizeTree->setCurrentItem(item);    
+    widget = newSizeWidget();
+    widget->setValue(height);
+    sizeTree->setItemWidget(item, 2, widget);
+
+    sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(oldItem));
+    delete oldItem;
+
+    sizeTree->setCurrentItem(item);
 
     emit configChanged();
 
@@ -220,15 +243,6 @@ void FrameConfig::textChanged(const QString &text)
 }
 
 
-void FrameConfig::updateColumnSize()
-{
-
-    sizeTree->header()->resizeSections(QHeaderView::ResizeToContents);
-    sizeTree->header()->setStretchLastSection(true);
-
-}
-
-
 void FrameConfig::itemChanged(QTreeWidgetItem *item, int column)
 {
 
@@ -240,12 +254,14 @@ void FrameConfig::itemChanged(QTreeWidgetItem *item, int column)
 }
 
 
-SizeWidget *FrameConfig::newSizeWidget()
+KIntNumInput *FrameConfig::newSizeWidget()
 {
 
-    SizeWidget *widget = new SizeWidget(this);
-    connect(widget, SIGNAL(valueChanged()), this, SIGNAL(configChanged()));
-    connect(widget, SIGNAL(sizeChanged()), this, SLOT(updateColumnSize()));
+    KIntNumInput *widget = new KIntNumInput(this);
+    widget->setMaximum(4000);
+    widget->setMinimum(100);
+
+    connect(widget, SIGNAL(valueChanged(int)), this, SIGNAL(configChanged()));
 
     return widget;
 

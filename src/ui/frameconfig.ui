@@ -17,7 +17,7 @@
    <item row="0" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Bookmarks</string>
+      <string>Quickslots</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0" colspan="4">
@@ -38,7 +38,12 @@
         </column>
         <column>
          <property name="text">
-          <string>Size</string>
+          <string>Width</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Height</string>
          </property>
         </column>
        </widget>
