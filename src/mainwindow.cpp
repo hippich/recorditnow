@@ -31,16 +31,13 @@
 #include "libs/upload/abstractuploader.h"
 #include "recordermanager.h"
 #include "encodermanager.h"
-#include "uploadmanager.h"
 #include "cursorwidget.h"
 #include "application.h"
 #include "mouseconfig.h"
 #include "zoomview.h"
 #include "timeline/timeline.h"
 #include "timeline/timelinedock.h"
-#ifdef JOSCHYCORE_FOUND
-    #include "upload/uploadwizard.h"
-#endif
+#include "upload/uploadwizard.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -129,10 +126,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_encoderManager, SIGNAL(finished(QString)), this,
             SLOT(encoderFinished(QString)));
 
-    m_uploadManager = new UploadManager(this, m_pluginManager);
-    connect(m_uploadManager, SIGNAL(finished(QString)), this, SLOT(uploaderFinished(QString)));
-    connect(m_uploadManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
-
 
     m_statusLabel = new KSqueezedTextLabel(this);
     connect(m_statusLabel, SIGNAL(linkActivated(QString)), this, SLOT(linkActivated(QString)));
@@ -178,7 +171,6 @@ MainWindow::~MainWindow()
     delete m_timer;
     delete m_recorderManager;
     delete m_encoderManager;
-    delete m_uploadManager;
     delete m_pluginManager;
 
     if (m_cursor) {
@@ -221,11 +213,7 @@ KAction *MainWindow::getAction(const QString &name)
 
     KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
-        if (
-#ifndef JOSCHYCORE_FOUND
-                name == "upload" ||
-#endif
-                name == "box") {
+        if (name == "box") {
             action = new KActionMenu(this);
             if (name == "upload") {
                 static_cast<KActionMenu*>(action)->setDelayed(false);
@@ -344,9 +332,7 @@ void MainWindow::setupActions()
     uploadAction->setIcon(KIcon("recorditnow-upload-media"));
     uploadAction->setText(i18n("Upload"));
     uploadAction->setShortcut(Qt::CTRL+Qt::Key_U, KAction::DefaultShortcut);
-#ifdef JOSCHYCORE_FOUND
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
-#endif
 
     KAction *zoomAction = getAction("zoom");
     zoomAction->setObjectName("RecordItNow_zoom");
@@ -422,7 +408,6 @@ void MainWindow::stopRecord()
     } else {
         m_recorderManager->stop();
         m_encoderManager->stop();
-        m_uploadManager->stop();
         if (m_timelineDock) {
             m_timelineDock->timeline()->stop();
         }
@@ -866,7 +851,6 @@ void MainWindow::dialogFinished()
     setupTimeline();
     setupTray();
     updateRecorderCombo();
-    updateUploaderMenu();
     triggerFrame(false); // update KAction
 
 }
@@ -1103,51 +1087,15 @@ void MainWindow::pluginsChanged()
     }
     // recorder
     updateRecorderCombo();
-    // upload
-    updateUploaderMenu();
-
-}
-
-
-void MainWindow::updateUploaderMenu()
-{
-
-#ifndef JOSCHYCORE_FOUND
-    KActionMenu *action = static_cast<KActionMenu*>(getAction("upload"));
-    KMenu *menu = action->menu();
-    if (!menu) {
-        menu = new KMenu(this);
-        action->setMenu(menu);
-    }
-    menu->clear();
-
-    foreach (const UploadData &d, m_uploadManager->getUploader()) {
-        KAction *uploadAction = new KAction(this);
-        uploadAction->setText(d.first);
-        uploadAction->setIcon(d.second);
-        uploadAction->setData(d.first);
-        connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
-        menu->addAction(uploadAction);
-    }
-#endif
 
 }
 
 
 void MainWindow::upload()
 {
-#ifndef JOSCHYCORE_FOUND
-    if (state() == Upload) {
-        return;
-    }
 
-    setState(Upload);
-    QAction *uploadAction = static_cast<QAction*>(sender());
-    m_uploadManager->startUpload(uploadAction->data().toString(), outputRequester->text(), this);
-#else
     UploadWizard *wizard = new UploadWizard(this);
     wizard->show();
-#endif
 
 }
 

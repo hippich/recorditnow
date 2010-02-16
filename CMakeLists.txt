@@ -15,10 +15,7 @@ install(FILES recorditnow.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
 
 
-macro_optional_find_package(JoschyCore)
-macro_log_feature(JOSCHYCORE_FOUND "JoschyCore"
-    "Video upload library"
-    "httl://www.xyz.de")
+find_package(JoschyCore REQUIRED)
 
 
 add_subdirectory(src)
