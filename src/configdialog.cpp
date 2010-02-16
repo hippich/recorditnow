@@ -109,8 +109,8 @@ void ConfigDialog::init()
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
-    addPage(m_mousePage, i18n("Mouse"), "input-mouse");
     addPage(m_framePage, i18n("Frame"), "draw-rectangle");
+    addPage(m_mousePage, i18n("Mouse"), "input-mouse");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
     addPage(m_shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
