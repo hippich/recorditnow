@@ -51,6 +51,7 @@ public:
     ~Event();
 
     Key key;
+    int keyCode;
     bool pressed;
 
 

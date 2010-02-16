@@ -40,8 +40,8 @@
 namespace KeyMon {
 
 
-Device::Device(QObject *parent, const QString &file)
-    : QObject(parent)
+Device::Device(QObject *parent, const QString &file, const bool &mouse)
+    : QObject(parent), m_watchMouse(mouse)
 {
 
     qRegisterMetaType<KeyMon::Event>("KeyMon::Event");
@@ -146,42 +146,57 @@ void Device::readEvents()
             return;
         }
 
-        const bool pressed = (ev.value == 1);
-        KeyMon::Event::Key key;
-        switch(ev.code)
-        {
-        case BTN_LEFT:
-            key = KeyMon::Event::LeftButton;
-            break;
-        case BTN_RIGHT:
-            key = KeyMon::Event::RightButton;
-            break;
-        case BTN_MIDDLE:
-            key = KeyMon::Event::MiddleButton;
-            break;
-        case BTN_EXTRA:
-            key = KeyMon::Event::SpecialButton1;
-            break;
-        case BTN_SIDE:
-            key = KeyMon::Event::SpecialButton2;
-            break;
-        case REL_WHEEL:
-            if (pressed) {
-                key = KeyMon::Event::WheelUp;
-            } else {
-                key = KeyMon::Event::WheelDown;
-            }
-            break;
+        if (m_watchMouse) {
+            const bool pressed = (ev.value == 1);
+            KeyMon::Event::Key key;
+            switch(ev.code)
+            {
+            case BTN_LEFT:
+                key = KeyMon::Event::LeftButton;
+                break;
+            case BTN_RIGHT:
+                key = KeyMon::Event::RightButton;
+                break;
+            case BTN_MIDDLE:
+                key = KeyMon::Event::MiddleButton;
+                break;
+            case BTN_EXTRA:
+                key = KeyMon::Event::SpecialButton1;
+                break;
+            case BTN_SIDE:
+                key = KeyMon::Event::SpecialButton2;
+                break;
+            case REL_WHEEL:
+                if (pressed) {
+                    key = KeyMon::Event::WheelUp;
+                } else {
+                    key = KeyMon::Event::WheelDown;
+                }
+                break;
             default:
-            key = KeyMon::Event::NoButton;
-            break;
-        };
+                key = KeyMon::Event::NoButton;
+                break;
+            };
 
-        if (key != KeyMon::Event::NoButton) {
-            KeyMon::Event sEvent;
-            sEvent.key = key;
-            sEvent.pressed = pressed;
-            emit buttonPressed(sEvent);
+            if (key != KeyMon::Event::NoButton) {
+                KeyMon::Event sEvent;
+                sEvent.key = key;
+                sEvent.pressed = pressed;
+                emit buttonPressed(sEvent);
+            }
+        } else { // keyboard
+            if (ev.type != EV_KEY) {
+                continue;
+            }
+
+            const bool pressed = (ev.value == 1 || ev.value == 2);
+
+            KeyMon::Event event;
+            event.keyCode = ev.code;
+            event.pressed = pressed;
+
+            emit keyPressed(event);
+
         }
     }
 

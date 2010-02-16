@@ -43,7 +43,7 @@ class KDE_EXPORT Device : public QObject
 
 
 public:
-    explicit Device(QObject *parent, const QString &file);
+    explicit Device(QObject *parent, const QString &file, const bool &mouse = true);
     ~Device();
 
     bool error() const;
@@ -54,6 +54,7 @@ public:
 private:
     QSocketNotifier *m_socketNotifier;
     bool m_error;
+    bool m_watchMouse;
 
 
 private slots:
@@ -62,6 +63,7 @@ private slots:
 
 signals:
     void buttonPressed(const KeyMon::Event &event);
+    void keyPressed(const KeyMon::Event &event);
     void finished();
 
 
