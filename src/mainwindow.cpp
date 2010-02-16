@@ -73,6 +73,7 @@
 #include <X11/Xlib.h>
 
 
+typedef QPair<QString, QSize> Size;
 MainWindow::MainWindow(QWidget *parent)
     : KXmlGuiWindow(parent),
     m_grabber(0)
@@ -285,32 +286,51 @@ void MainWindow::setupActions()
     frameMoveAction->setIcon(KIcon("transform-move"));
     connect(frameMoveAction, SIGNAL(triggered(bool)), m_frame, SLOT(setMoveEnabled(bool)));
 
-    KAction *frameRes1Action = getAction("frame_640");
-    frameRes1Action->setData(QSize(640, 480));
-    frameRes1Action->setText("640 x 480 (4:3 SD)");
-    connect(frameRes1Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-    KAction *frameRes2Action = getAction("frame_800");
-    frameRes2Action->setData(QSize(800, 600));
-    frameRes2Action->setText("800 x 600");
-    connect(frameRes2Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-    KAction *frameRes3Action = getAction("frame_1024");
-    frameRes3Action->setData(QSize(1024, 768));
-    frameRes3Action->setText("1024 x 768");
-    connect(frameRes3Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-    KAction *frameRes4Action = getAction("frame_1280");
-    frameRes4Action->setData(QSize(1280, 720));
-    frameRes4Action->setText("1280 x 720 (16x9 HD)");
-    connect(frameRes4Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
     boxAction->addAction(frameMoveAction);
     boxAction->addSeparator();
-    boxAction->addAction(frameRes1Action);
-    boxAction->addAction(frameRes2Action);
-    boxAction->addAction(frameRes3Action);
-    boxAction->addAction(frameRes4Action);
+
+    if (Settings::firstStart()) {
+        KAction *frameRes1Action = new KAction(this);
+        frameRes1Action->setData(QSize(640, 480));
+        frameRes1Action->setText("640 x 480 (4:3 SD)");
+        frameRes1Action->setProperty("CleanText", "640 x 480 (4:3 SD)");
+        connect(frameRes1Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+        KAction *frameRes2Action = new KAction(this);
+        frameRes2Action->setData(QSize(800, 600));
+        frameRes2Action->setText("800 x 600");
+        frameRes2Action->setProperty("CleanText", "800 x 600");
+        connect(frameRes2Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+        KAction *frameRes3Action = new KAction(this);
+        frameRes3Action->setData(QSize(1024, 768));
+        frameRes3Action->setText("1024 x 768");
+        frameRes3Action->setProperty("CleanText", "1024 x 768");
+        connect(frameRes3Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+        KAction *frameRes4Action = new KAction(this);
+        frameRes4Action->setData(QSize(1280, 720));
+        frameRes4Action->setText("1280 x 720 (16x9 HD)");
+        frameRes4Action->setProperty("CleanText", "1280 x 720 (16x9 HD)");
+        connect(frameRes4Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+        boxAction->addAction(frameRes1Action);
+        boxAction->addAction(frameRes2Action);
+        boxAction->addAction(frameRes3Action);
+        boxAction->addAction(frameRes4Action);
+
+        Settings::self()->setFirstStart(false);
+    }
+
+    KConfigGroup cfg(Settings::self()->config(), "Frame");
+    foreach (const QString &name, cfg.readEntry("Names", QStringList())) {
+        KAction *act = new KAction(this);
+        act->setText(name);
+        act->setProperty("CleanText", name);
+        act->setData(cfg.readEntry(QString("Size %1").arg(name), QSize()));
+
+        boxAction->addAction(act);
+    }
 
 
     KAction *fullAction = getAction("recordFullScreen");
@@ -833,6 +853,8 @@ void MainWindow::configure()
 
     ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(dialogFinished()));
+    connect(dialog, SIGNAL(frameSizesChanged(QList<QPair<QString,QSize> >)), this,
+            SLOT(frameSizesChanged(QList<QPair<QString,QSize> >)));
     dialog->show();
 
 }
@@ -1277,6 +1299,39 @@ void MainWindow::resolutionActionTriggered()
     m_frame->setFrameSize(action->data().toSize());
 
 }
+
+
+void MainWindow::frameSizesChanged(const QList< QPair<QString, QSize> > &sizes)
+{
+
+    KActionMenu *boxAction = static_cast<KActionMenu*>(getAction("box"));
+    foreach (QAction *act, boxAction->menu()->actions()) {
+        if (act->data().isNull()) {
+            continue;
+        }
+        boxAction->removeAction(act);
+    }
+
+    QStringList list;
+    KConfigGroup cfg(Settings::self()->config(), "Frame");
+    if (!sizes.isEmpty()) {
+        foreach (const Size &s, sizes) {
+            KAction *frameResAction = new KAction(this);
+            frameResAction->setData(s.second);
+            frameResAction->setText(s.first);
+            frameResAction->setProperty("CleanText", s.first);
+            connect(frameResAction, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+
+            boxAction->addAction(frameResAction);
+
+            cfg.writeEntry(QString("Size %1").arg(s.first), s.second);
+            list.append(s.first);
+        }
+    }
+    cfg.writeEntry("Names", list);
+
+}
+
 
 
 #if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))

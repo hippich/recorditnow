@@ -23,11 +23,14 @@
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
 #include "mouseconfig.h"
+#include "frameconfig.h"
 
 // KDE
 #include <kdebug.h>
 #include <kpluginselector.h>
 #include <kshortcutseditor.h>
+#include <kactioncollection.h>
+#include <kmenu.h>
 
 
 ConfigDialog::ConfigDialog(QWidget *parent, KActionCollection *collection,
@@ -92,9 +95,22 @@ void ConfigDialog::init()
     m_shortcutsPage = new KShortcutsEditor(m_collection, this);
     connect(m_shortcutsPage, SIGNAL(keyChange()), this, SLOT(pageConfigChanged()));
 
+    QAction *boxAction = m_collection->action("box");
+    QList<QPair<QString,QSize> > sizes;
+    foreach (QAction *act, boxAction->menu()->actions()) {
+        if (act->data().isNull()) {
+            continue;
+        }
+        sizes.append(qMakePair(act->property("CleanText").toString(), act->data().toSize()));
+    }
+    m_framePage = new FrameConfig(sizes, this);
+    connect(m_framePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
+
+
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
     addPage(m_mousePage, i18n("Mouse"), "input-mouse");
+    addPage(m_framePage, i18n("Frame"), "draw-rectangle");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
     addPage(m_shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
@@ -129,6 +145,8 @@ void ConfigDialog::configFinished(const int &code)
 
         m_mousePage->saveConfig();
         m_shortcutsPage->save();
+
+        emit frameSizesChanged(m_framePage->sizes());
     }
     emit dialogFinished();
 

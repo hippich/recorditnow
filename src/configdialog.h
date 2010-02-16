@@ -31,6 +31,7 @@
 #include <kconfigdialog.h>
 
 
+class FrameConfig;
 class KShortcutsEditor;
 class KActionCollection;
 class MouseConfig;
@@ -55,6 +56,7 @@ private:
     MouseConfig *m_mousePage;
     KActionCollection *m_collection;
     KShortcutsEditor *m_shortcutsPage;
+    FrameConfig *m_framePage;
 
     void init();
 
@@ -74,6 +76,7 @@ protected slots:
 
 signals:
     void dialogFinished();
+    void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
 
 
 };

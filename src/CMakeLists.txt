@@ -42,6 +42,8 @@ set(gui_SRCS
    frame/frame.cpp
    frame/frameinfowidget.cpp
    frame/movewidget.cpp
+   frameconfig.cpp
+   sizewidget.cpp
    timeline/timelinedock.cpp
    timeline/timeline.cpp
    timeline/timelinetopicsdialog.cpp
@@ -59,7 +61,10 @@ kde4_add_ui_files(gui_SRCS
     ui/timeline.ui 
     ui/timelinetopics.ui 
     ui/timelineconfig.ui 
-    ui/keymondialog.ui)
+    ui/keymondialog.ui
+    ui/sizewidget.ui
+    ui/frameconfig.ui)
+
 
 if (JOSCHYCORE_FOUND)
     add_definitions(-DJOSCHYCORE_FOUND)

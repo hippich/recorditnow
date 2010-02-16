@@ -17,74 +17,50 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FRAME_H
-#define FRAME_H
+#ifndef FRAMECONFIG_H
+#define FRAMECONFIG_H
 
+
+// own
+#include "ui_frameconfig.h"
 
 // Qt
 #include <QtGui/QWidget>
-#include <QtCore/QHash>
 
 
-class MoveWidget;
-class FrameInfoWidget;
-class Frame : public QWidget
+class QTreeWidgetItem;
+class SizeWidget;
+class FrameConfig : public QWidget, public Ui::FrameConfig
 {
     Q_OBJECT
 
 
 public:
-    explicit Frame(QWidget *parent = 0);
-    ~Frame();
+    explicit FrameConfig(const QList<QPair<QString,QSize> > &sizes, QWidget *parent = 0);
 
-    QRect getFrameGeometry() const;
-    void setFrameSize(const QSize &size);
-    void setVisible(bool visible);
+    QList< QPair<QString, QSize> > sizes() const;
 
 
-public slots:
-    void setMoveEnabled(const bool &enabled);
+private slots:
+    void add();
+    void remove();
+    void up();
+    void down();
+    void itemSelectionChanged();
+    void textChanged(const QString &text);
+    void updateColumnSize();
+    void itemChanged(QTreeWidgetItem *item, int column);
 
 
 private:
-    enum Side {
-        NoSide = -1,
-        Left = 0,
-        Top = 1,
-        Right = 2,
-        Bottom = 3,
-        TopLeft = 4,
-        TopRight = 5,
-        BottomLeft = 6,
-        BottomRight = 7
-    };
-    Side m_side;
-    FrameInfoWidget *m_infoWidget;
-    MoveWidget *m_moveWidget;
-    bool m_active;
-    QHash<QString, QSize> m_sizes;
-
-    inline QRect getRect(const Side &side) const;
-    inline int getLineSize() const;
-
-    void moveToParent(const bool &force = false);
-    void moveParentToFrame();
-    void show();
-    void hide();
+    SizeWidget *newSizeWidget();
 
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event);
-
-    void resizeEvent(QResizeEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void showEvent(QShowEvent *event);
-    void paintEvent(QPaintEvent *event);
+signals:
+    void configChanged();
 
 
 };
 
 
-#endif // FRAME_H
+#endif // FRAMECONFIG_H

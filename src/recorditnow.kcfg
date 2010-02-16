@@ -115,4 +115,9 @@
             <default>false</default>
     </entry>
   </group>
+ <group name="Misc">
+    <entry name="firstStart" type="Bool">
+            <default>true</default>
+    </entry>
+  </group>  
 </kcfg>

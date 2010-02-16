@@ -17,74 +17,44 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FRAME_H
-#define FRAME_H
+#ifndef SIZEWIDGET_H
+#define SIZEWIDGET_H
 
+
+// own
+#include "ui_sizewidget.h"
 
 // Qt
 #include <QtGui/QWidget>
-#include <QtCore/QHash>
 
 
-class MoveWidget;
-class FrameInfoWidget;
-class Frame : public QWidget
+class SizeWidget : public QWidget, public Ui::SizeWidget
 {
     Q_OBJECT
 
 
 public:
-    explicit Frame(QWidget *parent = 0);
-    ~Frame();
+    explicit SizeWidget(QWidget *parent = 0);
 
-    QRect getFrameGeometry() const;
-    void setFrameSize(const QSize &size);
-    void setVisible(bool visible);
+    QSize getSize() const;
 
-
-public slots:
-    void setMoveEnabled(const bool &enabled);
+    void setSize(const QSize &size);
 
 
-private:
-    enum Side {
-        NoSide = -1,
-        Left = 0,
-        Top = 1,
-        Right = 2,
-        Bottom = 3,
-        TopLeft = 4,
-        TopRight = 5,
-        BottomLeft = 6,
-        BottomRight = 7
-    };
-    Side m_side;
-    FrameInfoWidget *m_infoWidget;
-    MoveWidget *m_moveWidget;
-    bool m_active;
-    QHash<QString, QSize> m_sizes;
-
-    inline QRect getRect(const Side &side) const;
-    inline int getLineSize() const;
-
-    void moveToParent(const bool &force = false);
-    void moveParentToFrame();
-    void show();
-    void hide();
+private slots:
+    void valueChanged(const int &value);
 
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event);
-
     void resizeEvent(QResizeEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void showEvent(QShowEvent *event);
-    void paintEvent(QPaintEvent *event);
+
+
+signals:
+    void valueChanged();
+    void sizeChanged();
 
 
 };
 
 
-#endif // FRAME_H
+#endif // SIZEWIDGET_H

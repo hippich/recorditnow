@@ -131,6 +131,7 @@ private slots:
     void timeLineFinsihed();
     void cursorError(const QString &message);
     void resolutionActionTriggered();
+    void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
 
 
 protected:

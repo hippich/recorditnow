@@ -17,74 +17,73 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FRAME_H
-#define FRAME_H
+
+// own
+#include "sizewidget.h"
+
+// KDE
+#include <kdebug.h>
 
 
-// Qt
-#include <QtGui/QWidget>
-#include <QtCore/QHash>
-
-
-class MoveWidget;
-class FrameInfoWidget;
-class Frame : public QWidget
+SizeWidget::SizeWidget(QWidget *parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
+
+    setupUi(this);
+
+    connect(widthInput, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
+    connect(heightInput, SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
+
+}
 
 
-public:
-    explicit Frame(QWidget *parent = 0);
-    ~Frame();
+QSize SizeWidget::getSize() const
+{
 
-    QRect getFrameGeometry() const;
-    void setFrameSize(const QSize &size);
-    void setVisible(bool visible);
+    return QSize(widthInput->value(), heightInput->value());
 
-
-public slots:
-    void setMoveEnabled(const bool &enabled);
+}
 
 
-private:
-    enum Side {
-        NoSide = -1,
-        Left = 0,
-        Top = 1,
-        Right = 2,
-        Bottom = 3,
-        TopLeft = 4,
-        TopRight = 5,
-        BottomLeft = 6,
-        BottomRight = 7
-    };
-    Side m_side;
-    FrameInfoWidget *m_infoWidget;
-    MoveWidget *m_moveWidget;
-    bool m_active;
-    QHash<QString, QSize> m_sizes;
+void SizeWidget::setSize(const QSize &size)
+{
 
-    inline QRect getRect(const Side &side) const;
-    inline int getLineSize() const;
+    widthInput->setValue(size.width());
+    heightInput->setValue(size.height());
 
-    void moveToParent(const bool &force = false);
-    void moveParentToFrame();
-    void show();
-    void hide();
+}
 
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event);
+void SizeWidget::valueChanged(const int &value)
+{
 
-    void resizeEvent(QResizeEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void showEvent(QShowEvent *event);
-    void paintEvent(QPaintEvent *event);
+    Q_UNUSED(value);
+
+    widthInput->setMinimumSize(widthInput->sizeHint());
+    heightInput->setMinimumSize(heightInput->sizeHint());
+    widthInput->setMaximumSize(widthInput->sizeHint());
+    heightInput->setMaximumSize(heightInput->sizeHint());
+
+    int width = widthInput->size().width();
+    width += heightInput->sizeHint().width();
+    width += label->sizeHint().width();
+    width += (layout()->spacing()*3);
+    width += layout()->contentsMargins().left()+layout()->contentsMargins().right();
+
+    setMinimumSize(width, height());
+    emit valueChanged();
+
+}
 
 
-};
+
+void SizeWidget::resizeEvent(QResizeEvent *event)
+{
+
+    QWidget::resizeEvent(event);
+    emit sizeChanged();
+
+}
 
 
-#endif // FRAME_H
+#include "sizewidget.moc"
