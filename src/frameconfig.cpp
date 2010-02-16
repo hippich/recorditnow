@@ -20,7 +20,6 @@
 
 // own
 #include "frameconfig.h"
-#include "sizewidget.h"
 
 // KDE
 #include <kdebug.h>
@@ -102,8 +101,8 @@ void FrameConfig::add()
     item->setText(0, sizeEdit->text());
 
     sizeTree->addTopLevelItem(item);
-    sizeTree->setItemWidget(item, 1, new SizeWidget(this));
-    sizeTree->setItemWidget(item, 2, new SizeWidget(this));
+    sizeTree->setItemWidget(item, 1, newSizeWidget());
+    sizeTree->setItemWidget(item, 2, newSizeWidget());
 
     sizeEdit->clear();
 
