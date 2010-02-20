@@ -8,7 +8,7 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_BINA
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 
-set(KDE_MIN_VERSION "4.3.0")
+set(KDE_MIN_VERSION "4.4.0")
 
 ########### install files ###############
 install(FILES recorditnow.desktop  DESTINATION ${XDG_APPS_INSTALL_DIR})
