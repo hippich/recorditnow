@@ -35,6 +35,7 @@ KeyboardKeyIconPage::KeyboardKeyIconPage(QWidget *parent)
 {
 
     setupUi(this);
+    searchLine->setListWidget(iconList);
 
     registerField("Icon*", iconEdit, "text", SIGNAL(textChanged(QString)));
 

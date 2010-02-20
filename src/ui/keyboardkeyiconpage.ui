@@ -14,14 +14,14 @@
    <string>WizardPage</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
-   <item row="1" column="0">
+   <item row="2" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Icon:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
+   <item row="1" column="0" colspan="2">
     <widget class="KListWidget" name="iconList">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
@@ -40,8 +40,22 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="1">
     <widget class="KUrlRequester" name="iconEdit"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="KListWidgetSearchLine" name="searchLine">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Search:</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -55,6 +69,16 @@
    <class>KListWidget</class>
    <extends>QListWidget</extends>
    <header>klistwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KListWidgetSearchLine</class>
+   <extends>KLineEdit</extends>
+   <header>klistwidgetsearchline.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
