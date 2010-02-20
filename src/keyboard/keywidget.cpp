@@ -99,6 +99,16 @@ void KeyWidget::paintEvent(QPaintEvent *event)
 }
 
 
+void KeyWidget::resizeEvent(QResizeEvent *event)
+{
+
+    const int w = event->size().width();
+    resize(w, w);
+
+    QWidget::resizeEvent(event);
+
+}
+
 
 #include "keywidget.moc"
 
