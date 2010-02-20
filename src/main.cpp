@@ -19,12 +19,8 @@
 
 // own
 #include "application.h"
-#include <kdeversion.h> // krazy:exclude=includes
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-    #include "mainwindow.h"
-#else
-    #include "mainwindow_4_3.h" // moc workaround
-#endif
+#include "mainwindow.h"
+
 
 // KDE
 #include <kaboutdata.h>
