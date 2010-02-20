@@ -44,15 +44,14 @@ ActionReply DeviceHelper::watch(QVariantMap args)
     QList<KeyMon::Device*> devs;
     foreach (const QString &dev, args.value("Devs").toStringList()) {
         KeyMon::Device *device = new KeyMon::Device(this, dev);
+        devs.append(device);
         if (device->error()) {
             kDebug() << "error";
-            delete device;
+            qDeleteAll(devs);
             return ActionReply::HelperError;
         }
         connect(device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
         connect(device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
-
-        devs.append(device);
     }
 
     kDebug() << "start...";
