@@ -84,6 +84,7 @@ void KeyWidget::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     painter.setClipRegion(event->region());
+    painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
 
     if (!m_pressed) {
         painter.setOpacity(0.3);
