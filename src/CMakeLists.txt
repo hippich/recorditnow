@@ -35,7 +35,7 @@ set(gui_SRCS
    encodermanager.cpp
    cursorwidget.cpp
    application.cpp
-   zoomview.cpp
+   zoom/zoomview.cpp
    keymonmanager.cpp
    devicesearchdialog.cpp
 

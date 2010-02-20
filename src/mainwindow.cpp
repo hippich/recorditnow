@@ -29,7 +29,7 @@
 #include "cursorwidget.h"
 #include "application.h"
 #include "config/mouseconfig.h"
-#include "zoomview.h"
+#include "zoom/zoomview.h"
 #include "timeline/timeline.h"
 #include "timeline/timelinedock.h"
 #include "upload/uploadwizard.h"
