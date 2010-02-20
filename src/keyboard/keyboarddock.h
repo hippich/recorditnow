@@ -43,17 +43,13 @@ public:
     ~KeyboardDock();
 
     void init(const QHash<int, QString> &map);
-    void start(const QString &file);
-    void stop();
 
 
 private:
     QHash<int, KeyWidget*> m_keys;
-    bool m_grab;
 
 
 private slots:
-    void progressStep(const QVariantMap &data);
     void keyPressed(const KeyMon::Event &event);
 
 

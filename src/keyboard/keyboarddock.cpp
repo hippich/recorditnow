@@ -33,7 +33,7 @@
 
 
 KeyboardDock::KeyboardDock(QWidget *parent)
-    : QDockWidget(parent), m_grab(false)
+    : QDockWidget(parent)
 {
 
     setObjectName("Keyboard");
@@ -51,7 +51,6 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 KeyboardDock::~KeyboardDock()
 {
 
-    stop();
 
 }
 
@@ -74,66 +73,6 @@ void KeyboardDock::init(const QHash<int, QString> &map)
         m_keys[it.key()] = widget;
         keyLayout->addWidget(widget);
     }
-
-}
-
-
-void KeyboardDock::start(const QString &file)
-{
-
-    kDebug() << "start:" << file;
-
-  /*  KAuth::Action action("org.kde.recorditnow.helper.watch");
-    action.setHelperID("org.kde.recorditnow.helper");
-    connect(action.watcher(), SIGNAL(progressStep(QVariantMap)), this,
-            SLOT(progressStep(QVariantMap)));
-
-    QVariantMap args;
-    args["Device"] = file;
-    args["Keyboard"] = true;
-
-    action.setArguments(args);
-    action.setExecutesAsync(true);
-
-    KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
-    if (reply.errorCode() != KAuth::ActionReply::NoError) {
-        kDebug() << "Grab failed!";
-    } else {
-        kDebug() << "Grab started...";
-    }
-
-    m_grab = true;
-*/
-
-
-}
-
-
-void KeyboardDock::stop()
-{
-/*
-    if (m_grab) {
-        kDebug() << "stopping...";
-
-        KAuth::Action action("org.kde.recorditnow.helper.watch");
-        action.setHelperID("org.kde.recorditnow.helper");
-        action.watcher()->disconnect(this);
-        action.stop();
-
-        m_grab = false;
-    }
-*/
-}
-
-
-void KeyboardDock::progressStep(const QVariantMap &data)
-{
-
-    KeyMon::Event event;
-    event.keyCode = data.value("KeyCode").toInt();
-    event.pressed = data.value("Pressed").toBool();
-
-    keyPressed(event);
 
 }
 

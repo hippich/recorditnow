@@ -727,15 +727,6 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         triggerZoom();
     }
 
-    if (m_timelineDock) {
-        m_timelineDock->timeline()->stop();
-    }
-
-    if (m_keyboardDock) {
-        m_keyboardDock->stop();
-    }
-    KeyMonManager::self()->stop();
-
     if (!error.isEmpty()) {
         KMessageBox::error(this, error);
         pluginStatus(error);
@@ -1225,18 +1216,15 @@ void MainWindow::initRecordWidgets(const bool &start)
     }
 
     // keyboard
-    if (m_keyboardDock) {
-        if (start) {
-            m_keyboardDock->start(Settings::keyboardDevice().toLocalFile());
-            keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
-        } else {
-            m_keyboardDock->stop();
-        }
+    if (m_keyboardDock && start) {
+        keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
     }
 
     // keymon
     if (!keyMonDevs.isEmpty() && start) {
         KeyMonManager::self()->start(keyMonDevs);
+    } else if (!start) {
+        KeyMonManager::self()->stop();
     }
 
 }
