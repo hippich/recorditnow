@@ -106,7 +106,7 @@ private slots:
     void recorderFinished(const QString &error, const bool &isVideo);
     void encoderFinished(const QString &error);
     void configure();
-    void dialogFinished();
+    void configDialogFinished();
     void startTimer();
     void tick();
     void lcdUp();

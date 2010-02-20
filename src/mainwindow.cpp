@@ -22,7 +22,7 @@
 #include "frame/frame.h"
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
-#include "configdialog.h"
+#include "config/configdialog.h"
 #include "libs/upload/abstractuploader.h"
 #include "recordermanager.h"
 #include "encodermanager.h"
@@ -766,13 +766,13 @@ void MainWindow::configure()
 {
 
     ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
-    connect(dialog, SIGNAL(dialogFinished()), this, SLOT(dialogFinished()));
+    connect(dialog, SIGNAL(dialogFinished()), this, SLOT(configDialogFinished()));
     dialog->show();
 
 }
 
 
-void MainWindow::dialogFinished()
+void MainWindow::configDialogFinished()
 {
 
     setupTimeline();
