@@ -55,7 +55,7 @@ KeyboardDock::~KeyboardDock()
 }
 
 
-void KeyboardDock::init(const QHash<int, QString> &map)
+void KeyboardDock::init(const QList<KeyboardKey> &map)
 {
 
     QHashIterator<int, KeyWidget*> i(m_keys);
@@ -66,11 +66,9 @@ void KeyboardDock::init(const QHash<int, QString> &map)
     }
     m_keys.clear();
 
-    QHashIterator<int, QString> it(map);
-    while (it.hasNext()) {
-        it.next();
-        KeyWidget *widget = new KeyWidget(it.value(), this);
-        m_keys[it.key()] = widget;
+    foreach (const KeyboardKey &key, map) {
+        KeyWidget *widget = new KeyWidget(key.second, this);
+        m_keys[key.first] = widget;
         keyLayout->addWidget(widget);
     }
 

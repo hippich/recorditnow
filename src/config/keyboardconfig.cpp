@@ -56,17 +56,17 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
 }
 
 
-QHash<int, QString> KeyboardConfig::readConfig(KConfig *cfg)
+QList<KeyboardKey> KeyboardConfig::readConfig(KConfig *cfg)
 {
 
     KConfigGroup group(cfg, "Keyboard");
     const int count = group.readEntry("Keys", 0);
-    QHash<int, QString> keyMap;
+    QList<KeyboardKey> keyMap;
 
     for (int i = 0; i < count; i++) {
         const int key = group.readEntry(QString("Key %1 Code").arg(i), -1);
         const QString icon = group.readEntry(QString("Key %1 Icon").arg(i), QString());
-        keyMap[key] = icon;
+        keyMap.append(qMakePair(key, icon));
     }
 
     return keyMap;
@@ -77,15 +77,13 @@ QHash<int, QString> KeyboardConfig::readConfig(KConfig *cfg)
 void KeyboardConfig::loadConfig()
 {
 
-    QHashIterator<int, QString> it(readConfig(config()));
-    while (it.hasNext()) {
-        it.next();
-
+    QList<KeyboardKey> list(readConfig(config()));
+    foreach (const KeyboardKey &key, list) {
         QListWidgetItem *item = new QListWidgetItem();
-        item->setText(QString::number(it.key()));
-        item->setIcon(KIcon(it.value()));
-        item->setData(Qt::UserRole+1, it.key());
-        item->setData(Qt::UserRole+2, it.value());
+        item->setText(QString::number(key.first));
+        item->setIcon(KIcon(key.second));
+        item->setData(Qt::UserRole+1, key.first);
+        item->setData(Qt::UserRole+2, key.second);
 
         listWidget->addItem(item);
     }

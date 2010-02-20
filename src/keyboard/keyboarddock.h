@@ -24,6 +24,7 @@
 // own
 #include "ui_keyboarddock.h"
 #include "../keymon/event.h"
+#include "../config/keyboardconfig.h"
 
 // Qt
 #include <QtGui/QDockWidget>
@@ -42,11 +43,12 @@ public:
     explicit KeyboardDock(QWidget *parent = 0);
     ~KeyboardDock();
 
-    void init(const QHash<int, QString> &map);
+    void init(const QList<KeyboardKey> &map);
 
 
 private:
     QHash<int, KeyWidget*> m_keys;
+
 
 
 private slots:

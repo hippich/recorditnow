@@ -30,6 +30,7 @@
 #include <QtGui/QWidget>
 
 
+typedef QPair<int, QString> KeyboardKey;
 class KConfig;
 class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
 {
@@ -39,7 +40,7 @@ class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
 public:
     explicit KeyboardConfig(KConfig *cfg, QWidget *parent = 0);
 
-    static QHash<int, QString> readConfig(KConfig *cfg);
+    static QList<KeyboardKey> readConfig(KConfig *cfg);
 
     void saveConfig();
     void loadConfig();
