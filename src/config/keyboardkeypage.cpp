@@ -136,7 +136,7 @@ void KeyboardKeyPage::keyReleaseEvent(QKeyEvent *event)
     if (m_key != -1) {
         keyCode->setValue(m_key);
         
-        QString text = event->text();
+        QString text = event->text().trimmed();
         if (text.isEmpty()) {
             text = i18n("Special key");
         }
