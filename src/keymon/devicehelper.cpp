@@ -28,33 +28,9 @@
 // Qt
 #include <QtCore/QTimer>
 #include <QtCore/QStringList>
-#include <QtCore/QFile>
-#include <QtDBus>
 
 // c
 #include <unistd.h>
-
-
-
-DeviceHelper::~DeviceHelper()
-{
-
-    QFile f("/home/just/watch.txt");
-    f.open(QIODevice::Append);
-
-    f.write("shutdown...\n");
-
-    QDBusConnection::systemBus().unregisterObject("/", QDBusConnection::UnregisterTree);
-    if (QDBusConnection::systemBus().interface()->unregisterService("org.kde.recorditnow.helper")) {
-        f.write("Unregister success\n");
-    } else {
-        f.write("Unregister failed!\n");
-    }
-    f.close();
-
-    QDBusConnection::systemBus().disconnectFromBus("org.kde.recorditnow.helper");
-
-}
 
 
 ActionReply DeviceHelper::watch(QVariantMap args)
@@ -87,24 +63,6 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 
     kDebug() << "done...";
     return ActionReply::SuccessReply;
-
-}
-
-
-ActionReply DeviceHelper::name(QVariantMap args)
-{
-
-#warning "remove me"
-  //  DeviceData data = KeyMon::Device::getDevice(args["Device"].toString());
-
-    //QVariantMap map;
-    //map["Name"] = data.first;
-    //map["File"] = data.second;
-
-    ActionReply reply;// = ActionReply::SuccessReply;
-   // reply.setData(map);
-
-    return reply;
 
 }
 

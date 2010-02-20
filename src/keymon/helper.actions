@@ -1,18 +1,11 @@
 [org.kde.recorditnow.helper.watch]
 Name=Open Device
 Description=Opens a device file
-Policy=yes
-Persistence=session
-
-[org.kde.recorditnow.helper.name]
-Name=Device Name
-Description=Read the device name
-Policy=yes
+Policy=auth_self
 Persistence=session
 
 [org.kde.recorditnow.helper.inputdevicelist]
 Name=Input device list
 Description=
 Policy=yes       
-Persistence=session
 

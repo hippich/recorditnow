@@ -39,13 +39,8 @@ class DeviceHelper : public QObject
     Q_OBJECT
 
 
-public:
-    ~DeviceHelper();
-
-
 public slots:
     ActionReply watch(QVariantMap args);
-    ActionReply name(QVariantMap args);
     ActionReply inputdevicelist(QVariantMap args);
 
 
