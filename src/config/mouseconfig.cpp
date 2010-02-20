@@ -20,9 +20,8 @@
 
 // own
 #include "mouseconfig.h"
-#include <recorditnow.h>
 #include "mousebutton.h"
-#include "keymondialog.h"
+#include "devicesearchdialog.h"
 
 // KDE
 #include <kicon.h>
@@ -35,8 +34,8 @@
 #include <QtGui/QToolButton>
 
 
-MouseConfig::MouseConfig(QWidget *parent)
-    : QWidget(parent)
+MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
+    : RecordItNow::ConfigPage(cfg, parent)
 {
 
     setupUi(this);
@@ -88,8 +87,7 @@ MouseConfig::~MouseConfig()
 void MouseConfig::saveConfig()
 {
 
-    KConfig *cfg = Settings::self()->config();
-    KConfigGroup cfgGroup(cfg, "Mouse");
+    KConfigGroup cfgGroup(config(), "Mouse");
 
     int buttons = 0;
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
@@ -110,7 +108,7 @@ void MouseConfig::saveConfig()
 void MouseConfig::loadConfig()
 {
 
-    QHash<int, QColor> buttons = getButtons();
+    QHash<int, QColor> buttons = getButtons(config());
     QHashIterator<int, QColor> it(buttons);
     while (it.hasNext()) {
         it.next();
@@ -131,14 +129,14 @@ void MouseConfig::loadConfig()
     }
 
     if (buttons.isEmpty()) {
-        defaults();
+        setDefaults();
     }
     currentButtonChanged();
 
 }
 
 
-void MouseConfig::defaults()
+void MouseConfig::setDefaults()
 {
 
     treeWidget->clear();
@@ -212,18 +210,14 @@ void MouseConfig::defaults()
     treeWidget->setItemWidget(item9, 1, mouseButton9);
     treeWidget->setItemWidget(item9, 2, button9);
 
-
-    emit configChanged();
-
 }
 
 
-QHash<int, QColor> MouseConfig::getButtons()
+QHash<int, QColor> MouseConfig::getButtons(KConfig *cfg)
 {
 
     QHash<int, QColor> buttons;
 
-    KConfig *cfg = Settings::self()->config();
     KConfigGroup cfgGroup(cfg, "Mouse");
 
     int keys = cfgGroup.readEntry("Buttons", 0);
@@ -362,8 +356,9 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
 void MouseConfig::showKeyMonDialog()
 {
 
-    KeyMonDialog *dialog = new KeyMonDialog(this);
+    DeviceSearchDialog *dialog = new DeviceSearchDialog(true, this);
     connect(dialog, SIGNAL(deviceSelected(QString)), kcfg_keyMonDevice, SLOT(setText(QString)));
+
     dialog->show();
 
 }

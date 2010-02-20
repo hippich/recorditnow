@@ -24,33 +24,18 @@
 // KDE
 #include <kdebug.h>
 #include <knuminput.h>
+#include <kconfiggroup.h>
 
 // Qt
 #include <QtGui/QTreeWidgetItem>
 
 
 typedef QPair<QString, QSize> Size;
-FrameConfig::FrameConfig(const QList<QPair<QString,QSize> > &sizes, QWidget *parent)
-    : QWidget(parent)
+FrameConfig::FrameConfig(KConfig *cfg, QWidget *parent)
+    : RecordItNow::ConfigPage(cfg, parent)
 {
 
     setupUi(this);
-
-    foreach (const Size &s, sizes) {
-        QTreeWidgetItem *item = new QTreeWidgetItem;
-        item->setText(0, s.first);
-        item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
-
-        sizeTree->addTopLevelItem(item);
-
-        KIntNumInput *widget = newSizeWidget();
-        widget->setValue(s.second.width());
-        sizeTree->setItemWidget(item, 1, widget);
-
-        widget = newSizeWidget();
-        widget->setValue(s.second.height());
-        sizeTree->setItemWidget(item, 2, widget);
-    }
 
     addButton->setIcon(KIcon("list-add"));
     removeButton->setIcon(KIcon("list-remove"));
@@ -90,6 +75,79 @@ QList<Size> FrameConfig::sizes() const
 }
 
 
+QList< QPair<QString, QSize> > FrameConfig::defaultSizes()
+{
+
+    QList< QPair<QString, QSize> > defaults;
+
+    defaults.append(qMakePair(QString("640 x 480 (4:3 SD)"), QSize(640, 480)));
+    defaults.append(qMakePair(QString("800 x 600"), QSize(800, 600)));
+    defaults.append(qMakePair(QString("1024 x 768"), QSize(1024, 768)));
+    defaults.append(qMakePair(QString("1280 x 720 (16x9 HD)"), QSize(1280, 720)));
+
+    return defaults;
+
+}
+
+
+QList< QPair<QString, QSize> > FrameConfig::readSizes(KConfig *config)
+{
+
+    QList< QPair<QString, QSize> > list;
+
+    KConfigGroup cfg(config, "Frame");
+    foreach (const QString &name, cfg.readEntry("Names", QStringList())) {
+        QPair<QString, QSize> s;
+
+        s.first = name;
+        s.second = cfg.readEntry(QString("Size %1").arg(name), QSize());
+
+        list.append(s);
+    }
+
+    return list;
+
+}
+
+
+void FrameConfig::saveConfig()
+{
+
+    QStringList list;
+
+    KConfigGroup cfg(config(), "Frame");
+    foreach (const Size &s, sizes()) {
+        cfg.writeEntry(QString("Size %1").arg(s.first), s.second);
+        list.append(s.first);
+    }
+    cfg.writeEntry("Names", list);
+    cfg.sync();
+
+}
+
+
+void FrameConfig::setDefaults()
+{
+
+    sizeTree->clear();
+
+    foreach (const Size &s, defaultSizes()) {
+        newTreeWidgetItem(s.first, s.second, sizeTree->topLevelItemCount());
+    }
+
+}
+
+
+void FrameConfig::loadConfig()
+{
+
+    foreach (const Size &s, readSizes(config())) {
+        newTreeWidgetItem(s.first, s.second, sizeTree->topLevelItemCount());
+    }
+
+}
+
+
 void FrameConfig::add()
 {
 
@@ -97,13 +155,7 @@ void FrameConfig::add()
         return;
     }
 
-    QTreeWidgetItem *item = new QTreeWidgetItem;
-    item->setText(0, sizeEdit->text());
-
-    sizeTree->addTopLevelItem(item);
-    sizeTree->setItemWidget(item, 1, newSizeWidget());
-    sizeTree->setItemWidget(item, 2, newSizeWidget());
-
+    newTreeWidgetItem(sizeEdit->text(), QSize(100, 100), sizeTree->topLevelItemCount());
     sizeEdit->clear();
 
     emit configChanged();
@@ -174,25 +226,7 @@ void FrameConfig::move(const int &from, const int &to)
     const int width = static_cast<KIntNumInput*>(sizeTree->itemWidget(oldItem, 1))->value();
     const int height = static_cast<KIntNumInput*>(sizeTree->itemWidget(oldItem, 2))->value();
 
-    QTreeWidgetItem *item = new QTreeWidgetItem;
-    item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
-
-    item->setText(0, oldItem->text(0));
-
-    KIntNumInput *widget = newSizeWidget();
-    widget->setValue(width);
-
-    if (to < from) {
-        sizeTree->insertTopLevelItem(to, item);
-    } else {
-        sizeTree->insertTopLevelItem(to+1, item);
-    }
-
-    sizeTree->setItemWidget(item, 1, widget);
-
-    widget = newSizeWidget();
-    widget->setValue(height);
-    sizeTree->setItemWidget(item, 2, widget);
+    QTreeWidgetItem *item = newTreeWidgetItem(oldItem->text(0), QSize(width, height), to < from ? to : to+1);
 
     sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(oldItem));
     delete oldItem;
@@ -263,6 +297,28 @@ KIntNumInput *FrameConfig::newSizeWidget()
     connect(widget, SIGNAL(valueChanged(int)), this, SIGNAL(configChanged()));
 
     return widget;
+
+}
+
+
+QTreeWidgetItem *FrameConfig::newTreeWidgetItem(const QString &text, const QSize &size, const int &index)
+{
+
+    QTreeWidgetItem *item = new QTreeWidgetItem;
+    item->setText(0, text);
+    item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
+
+    sizeTree->insertTopLevelItem(index, item);
+
+    KIntNumInput *widget = newSizeWidget();
+    widget->setValue(size.width());
+    sizeTree->setItemWidget(item, 1, widget);
+
+    widget = newSizeWidget();
+    widget->setValue(size.height());
+    sizeTree->setItemWidget(item, 2, widget);
+
+    return item;
 
 }
 

@@ -25,23 +25,67 @@
 // KDE
 #include <kdebug.h>
 
+// Qt
+#include <QtCore/QTimer>
+#include <QtCore/QStringList>
+#include <QtCore/QFile>
+#include <QtDBus>
+
 // c
 #include <unistd.h>
+
+
+
+DeviceHelper::~DeviceHelper()
+{
+
+    QFile f("/home/just/watch.txt");
+    f.open(QIODevice::Append);
+
+    f.write("shutdown...\n");
+
+    QDBusConnection::systemBus().unregisterObject("/", QDBusConnection::UnregisterTree);
+    if (QDBusConnection::systemBus().interface()->unregisterService("org.kde.recorditnow.helper")) {
+        f.write("Unregister success\n");
+    } else {
+        f.write("Unregister failed!\n");
+    }
+    f.close();
+
+    QDBusConnection::systemBus().disconnectFromBus("org.kde.recorditnow.helper");
+
+}
 
 
 ActionReply DeviceHelper::watch(QVariantMap args)
 {
 
-    KeyMon::Device device(this, args["Device"].toString());
-    if (device.error()) {
-        return ActionReply::HelperError;
-    }
-    connect(&device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
-    connect(&device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
+    kDebug() << "watch...";
+    QTimer timer(this);
+    connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    timer.start(500);
 
-    while (!HelperSupport::isStopped()) {
-        usleep(10000);
+    QList<KeyMon::Device*> devs;
+    foreach (const QString &dev, args.value("Devs").toStringList()) {
+        KeyMon::Device *device = new KeyMon::Device(this, dev);
+        if (device->error()) {
+            kDebug() << "error";
+            delete device;
+            return ActionReply::HelperError;
+        }
+        connect(device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
+        connect(device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
+
+        devs.append(device);
     }
+
+    kDebug() << "start...";
+
+    m_loop.exec();
+
+    qDeleteAll(devs);
+
+    kDebug() << "done...";
     return ActionReply::SuccessReply;
 
 }
@@ -50,14 +94,33 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 ActionReply DeviceHelper::name(QVariantMap args)
 {
 
-    DeviceData data = KeyMon::Device::getDevice(args["Device"].toString());
+#warning "remove me"
+  //  DeviceData data = KeyMon::Device::getDevice(args["Device"].toString());
 
-    QVariantMap map;
-    map["Name"] = data.first;
-    map["File"] = data.second;
+    //QVariantMap map;
+    //map["Name"] = data.first;
+    //map["File"] = data.second;
+
+    ActionReply reply;// = ActionReply::SuccessReply;
+   // reply.setData(map);
+
+    return reply;
+
+}
+
+
+ActionReply DeviceHelper::inputdevicelist(QVariantMap args)
+{
+
+    QVariantMap result;
+
+    QVariant var;
+    var.setValue(KeyMon::DeviceInfo::toArray(KeyMon::Manager::getInputDeviceList()));
+
+    result["List"] = var;
 
     ActionReply reply = ActionReply::SuccessReply;
-    reply.setData(map);
+    reply.setData(result);
 
     return reply;
 
@@ -71,7 +134,19 @@ void DeviceHelper::key(const KeyMon::Event &event)
     data["Key"] = event.key;
     data["KeyCode"] = event.keyCode;
     data["Pressed"] = event.pressed;
+    data["MouseEvent"] = event.mouseEvent;
     HelperSupport::progressStep(data);
+
+}
+
+
+void DeviceHelper::timeout()
+{
+
+    if (HelperSupport::isStopped()) {
+        kDebug() << "isStopped = true";
+        m_loop.quit();
+    }
 
 }
 

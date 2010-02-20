@@ -21,6 +21,18 @@
 #include "manager.h"
 #include "device.h"
 
+// KDE
+#include <kdebug.h>
+
+// Qt
+#include <QtCore/QFile>
+#include <QtCore/QDir>
+
+// C
+#include <linux/input.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 
 namespace KeyMon {
 
@@ -43,11 +55,34 @@ Manager::~Manager()
 }
 
 
-KeyMon::Device *Manager::watch(const QString &device, QObject *parent)
+QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
 {
 
-    KeyMon::Device *dev = new KeyMon::Device(parent, device);
-    return dev;
+    const QDir dir("/dev/input/by-id");
+    QList<KeyMon::DeviceInfo> list;
+
+    foreach (const QFileInfo &info, dir.entryInfoList(QStringList(), QDir::Files)) {
+        if (!info.isSymLink()) {
+            continue;
+        }
+
+        int fd;
+        if ((fd = open(info.symLinkTarget().toLatin1(), O_RDONLY)) == -1) {
+            kWarning() << info.symLinkTarget() << ": open failed!";
+        } else {
+            char buff[32];
+            ioctl(fd, EVIOCGNAME(sizeof(buff)), buff);
+
+            KeyMon::DeviceInfo device;
+            device.file = info.symLinkTarget();
+            device.name = QString(buff);
+            device.uuid = info.absoluteFilePath();
+
+            list.append(device);
+        }
+    }
+
+    return list;
 
 }
 

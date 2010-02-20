@@ -22,39 +22,57 @@ add_subdirectory(libs)
 add_subdirectory(plugins)
 add_subdirectory(icons)
 add_subdirectory(keymon)
+add_subdirectory(keyboard/images)
 
 macro_display_feature_log()
+
 
 set(gui_SRCS
    main.cpp
    mainwindow.cpp
    recorditnowpluginmanager.cpp
-   configdialog.cpp
    recordermanager.cpp
    encodermanager.cpp
-   #uploadmanager.cpp
    cursorwidget.cpp
    application.cpp
-   mouseconfig.cpp
    zoomview.cpp
-   mousebutton.cpp
-   keymondialog.cpp
+   keymonmanager.cpp
+   devicesearchdialog.cpp
+
    frame/frame.cpp
    frame/frameinfowidget.cpp
    frame/movewidget.cpp
-   frameconfig.cpp
+
    timeline/timelinedock.cpp
    timeline/timeline.cpp
    timeline/timelinetopicsdialog.cpp
    timeline/topicwidget.cpp
    timeline/topic.cpp
    timeline/topictreeitem.cpp
+
    upload/pluginpage.cpp
    upload/uploadwizard.cpp
    upload/videopage.cpp
    upload/accountpage.cpp
    upload/termspage.cpp
-   upload/uploadpage.cpp)
+   upload/uploadpage.cpp
+
+   keyboard/keyboarddock.cpp
+   keyboard/keywidget.cpp
+
+   configdialog.cpp
+   config/frameconfig.cpp
+   config/keyboardconfig.cpp
+   config/keyboardwizard.cpp
+   config/keyboardkeypage.cpp
+   config/keyboardkeyiconpage.cpp
+   config/mouseconfig.cpp
+   config/mousebutton.cpp
+   config/configpage.cpp
+   config/shortcutsconfig.cpp
+   config/zoomconfig.cpp
+   config/timelineconfig.cpp
+   config/pluginconfig.cpp)
 
 
 # GUI
@@ -72,7 +90,14 @@ kde4_add_ui_files(gui_SRCS
     upload/ui/videopage.ui
     upload/ui/uploadpage.ui
     upload/ui/termspage.ui
-    upload/ui/accountpage.ui)
+    upload/ui/accountpage.ui
+    ui/keyboarddock.ui
+    ui/keyboardconfig.ui
+    ui/keyboardkeypage.ui
+    ui/keyboardkeyiconpage.ui
+    ui/devicesearchdialog.ui
+    ui/shortcutsconfig.ui
+    ui/pluginconfig.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
@@ -85,6 +110,8 @@ target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
                                   recorditnow_snoop
                                   ${X11_Xcursor_LIB}
                                   ${JOSCHYCORE_LIBRARIES})
+
+
 
 install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,61 +17,32 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSECONFIG_H
-#define MOUSECONFIG_H
+
+#ifndef SHORTCUTSCONFIG_H
+#define SHORTCUTSCONFIG_H
 
 
 // own
-#include "ui_mouse.h"
-#include "mousebutton.h"
+#include "configpage.h"
+#include "ui_shortcutsconfig.h"
 
-// Qt
-#include <QtGui/QWidget>
-
-
-class QToolButton;
-class KColorButton;
-class MouseConfig : public QWidget, public Ui::Mouse
+class KActionCollection;
+class ShortcutsConfig : public RecordItNow::ConfigPage, Ui::ShortcutsConfig
 {
     Q_OBJECT
 
 
 public:
-    MouseConfig(QWidget *parent = 0);
-    ~MouseConfig();
+    explicit ShortcutsConfig(KActionCollection *collection, KConfig *cfg, QWidget *parent = 0);
 
+
+public slots:
     void saveConfig();
+    void setDefaults();
     void loadConfig();
-    void defaults();
-
-
-    static QHash<int, QColor> getButtons();
-
-
-private:
-    KColorButton *newButton();
-    QToolButton *newRemoveButton();
-    MouseButton *newMouseButton();
-
-    bool contains(const MouseButton::Button &button, QWidget *exclude = 0) const;
-
-
-private slots:
-    void addClicked();
-    void removeClicked();
-    void updateColumnSize();
-    void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
-    void showKeyMonDialog();
-    void buttonsChanged();
-    void modeChanged();
-    void currentButtonChanged();
-
-
-signals:
-    void configChanged();
 
 
 };
 
 
-#endif // MOUSECONFIG_H
+#endif // SHORTCUTSCONFIG_H

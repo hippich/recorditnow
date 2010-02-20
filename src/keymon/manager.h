@@ -22,15 +22,20 @@
 #define MANAGER_H
 
 
+// own
+#include "deviceinfo.h"
+
 // KDE
 #include <kdemacros.h>
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QList>
 
 
 
 namespace KeyMon {
+
 
 class Device;
 class KDE_EXPORT Manager : public QObject
@@ -39,16 +44,23 @@ class KDE_EXPORT Manager : public QObject
 
 
 public:
+    struct DeviceData
+    {
+        QString name;
+        QString file;
+        QString uuid;
+    };
     explicit Manager(QObject *parent = 0);
     ~Manager();
 
-    static KeyMon::Device *watch(const QString &device, QObject *parent);
+    static QList<KeyMon::DeviceInfo> getInputDeviceList();
 
 
 };
 
 
 }; // Namespace KeyMon
+
 
 
 #endif // MANAGER_H

@@ -4,6 +4,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR})
 set(SRCS
     event.cpp
     manager.cpp
+    deviceinfo.cpp
     device.cpp)
 
 #SNoop
@@ -16,7 +17,9 @@ if(${KDE_VERSION} VERSION_GREATER "4.3.80")
     set(HELPER_SRCS
         device.cpp
         event.cpp
-        devicehelper.cpp)
+        manager.cpp
+        devicehelper.cpp
+        deviceinfo.cpp)
 
     kde4_add_executable(recorditnow_helper ${HELPER_SRCS})
     target_link_libraries(recorditnow_helper ${KDE4_KDECORE_LIBS})

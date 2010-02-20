@@ -1,0 +1,4 @@
+
+
+file(STRINGS icons.list KEYBOARD_ICONS)
+install(FILES ${KEYBOARD_ICONS} DESTINATION ${DATA_INSTALL_DIR}/recorditnow/icons)

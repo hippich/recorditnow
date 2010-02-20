@@ -79,58 +79,6 @@ bool Device::error() const
 }
 
 
-QList<DeviceData> Device::getDeviceList()
-{
-
-    QList<DeviceData> deviceList;
-    QDir input("/dev/input");
-    if (!input.exists()) {
-        kWarning() << "/dev/input: no such directory!";
-        return deviceList;
-    }
-
-    QStringList files = input.entryList(QDir::System);
-    const QRegExp rx("^event[0-9]+$");
-
-    foreach (const QString &file, files) {
-        if (rx.exactMatch(file)) {                        
-            const DeviceData device = getDevice(file);
-            if (!device.first.isEmpty() && !device.second.isEmpty()) {
-                deviceList.append(device);
-            }
-        }
-    }
-    return deviceList;
-
-}
-
-
-DeviceData Device::getDevice(const QString &file)
-{
-
-    QString path = file;
-    DeviceData device;
-    int fd;
-
-    if (!path.startsWith(QLatin1Char('/'))) {
-        path.prepend("/dev/input/");
-    }
-
-    if ((fd = open (path.toLatin1(), O_RDONLY)) == -1) {
-        kWarning() << path << ": open failed!";
-    } else {
-        char buff[32];
-        ioctl(fd, EVIOCGNAME(sizeof(buff)), buff);
-
-        device.first = QString(buff);
-    }
-    device.second = path;
-
-    return device;
-
-}
-
-
 void Device::readEvents()
 {
 
@@ -145,45 +93,44 @@ void Device::readEvents()
             kWarning() << "Internal error!";
             return;
         }
-
-        if (m_watchMouse) {
-            const bool pressed = (ev.value == 1);
-            KeyMon::Event::Key key;
-            switch(ev.code)
-            {
-            case BTN_LEFT:
-                key = KeyMon::Event::LeftButton;
-                break;
-            case BTN_RIGHT:
-                key = KeyMon::Event::RightButton;
-                break;
-            case BTN_MIDDLE:
-                key = KeyMon::Event::MiddleButton;
-                break;
-            case BTN_EXTRA:
-                key = KeyMon::Event::SpecialButton1;
-                break;
-            case BTN_SIDE:
-                key = KeyMon::Event::SpecialButton2;
-                break;
-            case REL_WHEEL:
-                if (pressed) {
-                    key = KeyMon::Event::WheelUp;
-                } else {
-                    key = KeyMon::Event::WheelDown;
-                }
-                break;
-            default:
-                key = KeyMon::Event::NoButton;
-                break;
-            };
-
-            if (key != KeyMon::Event::NoButton) {
-                KeyMon::Event sEvent;
-                sEvent.key = key;
-                sEvent.pressed = pressed;
-                emit buttonPressed(sEvent);
+        const bool pressed = (ev.value == 1);
+        KeyMon::Event::Key key;
+        switch(ev.code)
+        {
+        case BTN_LEFT:
+            key = KeyMon::Event::LeftButton;
+            break;
+        case BTN_RIGHT:
+            key = KeyMon::Event::RightButton;
+            break;
+        case BTN_MIDDLE:
+            key = KeyMon::Event::MiddleButton;
+            break;
+        case BTN_EXTRA:
+            key = KeyMon::Event::SpecialButton1;
+            break;
+        case BTN_SIDE:
+            key = KeyMon::Event::SpecialButton2;
+            break;
+        case REL_WHEEL:
+            if (pressed) {
+                key = KeyMon::Event::WheelUp;
+            } else {
+                key = KeyMon::Event::WheelDown;
             }
+            break;
+            default:
+            key = KeyMon::Event::NoButton;
+            break;
+        };
+
+        if (key != KeyMon::Event::NoButton) { // mouse
+            KeyMon::Event event;
+            event.key = key;
+            event.pressed = pressed;
+            event.mouseEvent = true;
+
+            emit buttonPressed(event);
         } else { // keyboard
             if (ev.type != EV_KEY) {
                 continue;
@@ -194,6 +141,7 @@ void Device::readEvents()
             KeyMon::Event event;
             event.keyCode = ev.code;
             event.pressed = pressed;
+            event.mouseEvent = false;
 
             emit keyPressed(event);
         }

@@ -22,13 +22,17 @@
 #include "configdialog.h"
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
-#include "mouseconfig.h"
-#include "frameconfig.h"
+#include "config/mouseconfig.h"
+#include "config/frameconfig.h"
+#include "config/keyboardconfig.h"
+#include "config/shortcutsconfig.h"
+#include "config/zoomconfig.h"
+#include "config/timelineconfig.h"
+#include "config/pluginconfig.h"
 
 // KDE
 #include <kdebug.h>
 #include <kpluginselector.h>
-#include <kshortcutseditor.h>
 #include <kactioncollection.h>
 #include <kmenu.h>
 
@@ -59,22 +63,13 @@ ConfigDialog::~ConfigDialog()
 void ConfigDialog::init()
 {
 
+    setFaceType(KConfigDialog::List);
+
+    KConfig *cfg = Settings::self()->config();
+
     QWidget *generalPage = new QWidget(this);
     ui_settings.setupUi(generalPage);
 
-    m_pluginSelector = new KPluginSelector(this);
-    connect(m_pluginSelector, SIGNAL(changed(bool)), this, SLOT(pluginSettingsChanged(bool)));
-
-    m_pluginSelector->addPlugins(m_pluginManager->getRecorderList(),
-                               KPluginSelector::ReadConfigFile,
-                               i18n("Record Plugins"), "Recorder");
-    m_pluginSelector->addPlugins(m_pluginManager->getEncoderList(),
-                               KPluginSelector::ReadConfigFile,
-                               i18n("Encode Plugins"), "Encoder");
-    m_pluginSelector->addPlugins(m_pluginManager->getUploaderList(),
-                               KPluginSelector::ReadConfigFile,
-                               i18n("Upload Plugins"), "Uploader");
-    
     updateEncoderCombo();
     ui_settings.encoderCombo->setCurrentItem(Settings::encoderName(), false);
 
@@ -82,40 +77,37 @@ void ConfigDialog::init()
             SLOT(encoderChanged()));
 
 
-    m_mousePage = new MouseConfig(this);
-    connect(m_mousePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
-    m_mousePage->loadConfig();
+    RecordItNow::ConfigPage *pluginPage = new PluginConfig(m_pluginManager, cfg, this);
+    RecordItNow::ConfigPage *mousePage = new MouseConfig(cfg, this);
+    RecordItNow::ConfigPage *zoomPage = new ZoomConfig(cfg, this);
+    RecordItNow::ConfigPage *timelinePage = new TimelineConfig(cfg, this);
+    RecordItNow::ConfigPage *shortcutsPage = new ShortcutsConfig(m_collection, cfg, this);
+    RecordItNow::ConfigPage *framePage = new FrameConfig(cfg, this);
+    RecordItNow::ConfigPage *keyboardPage = new KeyboardConfig(cfg, this);
 
-    QWidget *zoomPage = new QWidget(this);
-    ui_zoom.setupUi(zoomPage);
-
-    QWidget *timelinePage = new QWidget(this);
-    ui_timeline.setupUi(timelinePage);
-
-    m_shortcutsPage = new KShortcutsEditor(m_collection, this);
-    connect(m_shortcutsPage, SIGNAL(keyChange()), this, SLOT(pageConfigChanged()));
-
-    QAction *boxAction = m_collection->action("box");
-    QList<QPair<QString,QSize> > sizes;
-    foreach (QAction *act, boxAction->menu()->actions()) {
-        if (act->data().isNull()) {
-            continue;
-        }
-        sizes.append(qMakePair(act->property("CleanText").toString(), act->data().toSize()));
-    }
-    m_framePage = new FrameConfig(sizes, this);
-    connect(m_framePage, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
-
+    m_pageList.append(pluginPage);
+    m_pageList.append(mousePage);
+    m_pageList.append(zoomPage);
+    m_pageList.append(timelinePage);
+    m_pageList.append(shortcutsPage);
+    m_pageList.append(framePage);
+    m_pageList.append(keyboardPage);
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
-    addPage(m_pluginSelector, i18n("Plugins"), "preferences-plugin");
-    addPage(m_framePage, i18n("Frame"), "draw-rectangle");
-    addPage(m_mousePage, i18n("Mouse"), "input-mouse");
+    addPage(pluginPage, i18n("Plugins"), "preferences-plugin");
+    addPage(framePage, i18n("Frame"), "draw-rectangle");
+    addPage(mousePage, i18n("Mouse"), "input-mouse");
+    addPage(keyboardPage, i18n("Keyboard"), "input-keyboard");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
-    addPage(m_shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
+    addPage(shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
+
+    foreach (RecordItNow::ConfigPage *page, m_pageList) {
+        connect(page, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
+        page->loadConfig();
+    }
 
 }
 
@@ -139,29 +131,13 @@ void ConfigDialog::configFinished(const int &code)
 {
 
     if (code == KConfigDialog::Accepted) {
-        m_pluginSelector->updatePluginsState();
-        m_pluginSelector->save();
         Settings::setEncoderName(ui_settings.encoderCombo->currentText());
 
-        m_mousePage->saveConfig();
-        m_shortcutsPage->save();
-
-        emit frameSizesChanged(m_framePage->sizes());
+        foreach (RecordItNow::ConfigPage *page, m_pageList) {
+            page->saveConfig();
+        }
     }
     emit dialogFinished();
-
-}
-
-
-void ConfigDialog::pluginSettingsChanged(const bool &changed)
-{
-
-    enableButtonApply(true);
-    if (!changed) {
-        return;
-    }
-    m_pluginSelector->updatePluginsState();
-    updateEncoderCombo();
 
 }
 
@@ -178,6 +154,7 @@ void ConfigDialog::pageConfigChanged()
 {
 
     enableButtonApply(true);
+    updateEncoderCombo();
 
 }
 
@@ -186,8 +163,11 @@ void ConfigDialog::updateWidgetsDefault()
 {
 
     KConfigDialog::updateWidgetsDefault();
-    m_mousePage->defaults();
-    m_shortcutsPage->allDefault();
+
+    foreach (RecordItNow::ConfigPage *page, m_pageList) {
+        page->setDefaults();
+    }
+    enableButtonApply(true);
 
 }
 

@@ -20,20 +20,14 @@
 
 // own
 #include "application.h"
-#include "cursorwidget.h"
 
 // KDE
 #include <kdebug.h>
 
-// Qt
-#include <QtCore/QAbstractEventDispatcher>
-
-// X11
-#include <X11/Xlib.h>
 
 
 Application::Application()
-    : KApplication(), m_cursor(0)
+    : KUniqueApplication()
 {
 
 
@@ -48,36 +42,6 @@ Application::~Application()
 
 }
 
-
-
-CursorWidget *Application::getCursorWidget(QWidget *parent)
-{
-
-    if (!m_cursor) {
-        m_cursor = new CursorWidget(parent);
-    }
-    return m_cursor;
-
-}
-
-
-
-bool Application::x11EventFilter(XEvent *event)
-{
-
-    if (!m_cursor) {
-        return false;
-    }
-
-    if (event->type == ButtonPress) {
-        if (event->xany.window == QX11Info::appRootWindow(QX11Info::appScreen())) {
-            m_cursor->click(event->xbutton.button);
-            return true; // don`t process grabed events
-        }
-    }
-    return false;
-
-}
 
 
 #include "application.moc"

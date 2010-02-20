@@ -24,19 +24,18 @@
 
 // own
 #include "ui_settings.h"
-#include "ui_zoom.h"
-#include "ui_timelineconfig.h"
 
 // KDE
 #include <kconfigdialog.h>
 
 
-class FrameConfig;
-class KShortcutsEditor;
+namespace RecordItNow {
+    class ConfigPage;
+}
+
+
 class KActionCollection;
-class MouseConfig;
 class RecordItNowPluginManager;
-class KPluginSelector;
 class ConfigDialog : public KConfigDialog
 {
     Q_OBJECT
@@ -50,13 +49,8 @@ public:
 private:
     RecordItNowPluginManager *m_pluginManager;
     Ui::Settings ui_settings;
-    Ui::Zoom ui_zoom;
-    Ui::TimeLineConfig ui_timeline;
-    KPluginSelector *m_pluginSelector;
-    MouseConfig *m_mousePage;
     KActionCollection *m_collection;
-    KShortcutsEditor *m_shortcutsPage;
-    FrameConfig *m_framePage;
+    QList<RecordItNow::ConfigPage*> m_pageList;
 
     void init();
 
@@ -64,7 +58,6 @@ private:
 private slots:
     void updateEncoderCombo();
     void configFinished(const int &code);
-    void pluginSettingsChanged(const bool &changed);
     void encoderChanged();
     void pageConfigChanged();
 
@@ -76,7 +69,6 @@ protected slots:
 
 signals:
     void dialogFinished();
-    void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
 
 
 };

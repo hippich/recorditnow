@@ -53,7 +53,7 @@ public:
 
     void setSize(const QSize &size);
     void setButtons(const QHash<int, QColor> &buttons);
-    void setUseKeyMon(const bool &use, const QString &deviceName = QString());
+    void setDevice(const QString &deviceName);
     void setMode(const CursorWidget::WidgetMode &mode);
     void setOpacity(const qreal &opacity);
     void setShowAlways(const bool &show);
@@ -61,8 +61,6 @@ public:
 
     void start();
     void stop();
-    void click(const int &button);
-    WId getWindow() const;
 
 
 private:
@@ -71,8 +69,6 @@ private:
     QColor m_normalColor;
     QColor m_currentColor;
     QHash<int, QColor> m_buttons;
-    bool m_useKeyMon;
-    KeyMon::Device *m_device;
     QString m_deviceName;
     bool m_grab;
     WidgetMode m_mode;
@@ -83,9 +79,7 @@ private:
 private slots:
     void updatePos();
     void resetColor();
-    void updateGrab(const bool &grab);
     void buttonPressed(const KeyMon::Event &event);
-    void progressStep(const QVariantMap &data);
     void previewColors();
 
 

@@ -33,6 +33,7 @@
 #include <QtCore/QPointer>
 
 
+class KeyboardDock;
 class TimelineDock;
 class ZoomView;
 class CursorWidget;
@@ -78,6 +79,7 @@ private:
     QPointer<CursorWidget> m_cursor;
     ZoomView *m_zoom;
     TimelineDock *m_timelineDock;
+    KeyboardDock *m_keyboardDock;
 
     KAction *getAction(const QString &name);
 
@@ -89,7 +91,6 @@ private:
     void setState(const State &newState);
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
-    void setupRecordWidgets(const bool &start);
 
 
 private slots:
@@ -129,6 +130,7 @@ private slots:
     void cursorError(const QString &message);
     void resolutionActionTriggered();
     void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
+    void initRecordWidgets(const bool &start);
 
 
 protected:

@@ -23,15 +23,10 @@
 
 
 // KDE
-#include <kapplication.h>
-
-// Qt
-#include <QtCore/QPointer>
+#include <kuniqueapplication.h>
 
 
-class QWidget;
-class CursorWidget;
-class Application : public KApplication
+class Application : public KUniqueApplication
 {
     Q_OBJECT
 
@@ -39,17 +34,6 @@ class Application : public KApplication
 public:
     Application();
     ~Application();
-
-    CursorWidget *getCursorWidget(QWidget *parent);
-
-
-private:
-    QPointer<CursorWidget> m_cursor;
-
-
-protected:
-    bool x11EventFilter(XEvent *event);
-
 
 };
 

@@ -18,12 +18,7 @@
  ***************************************************************************/
 
 // own
-#include <kdeversion.h> // krazy:exclude=includes
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-    #include "mainwindow.h"
-#else
-    #include "mainwindow_4_3.h" // moc workaround
-#endif
+#include "mainwindow.h"
 #include "frame/frame.h"
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
@@ -33,11 +28,15 @@
 #include "encodermanager.h"
 #include "cursorwidget.h"
 #include "application.h"
-#include "mouseconfig.h"
+#include "config/mouseconfig.h"
 #include "zoomview.h"
 #include "timeline/timeline.h"
 #include "timeline/timelinedock.h"
 #include "upload/uploadwizard.h"
+#include "keyboard/keyboarddock.h"
+#include "config/keyboardconfig.h"
+#include "keymonmanager.h"
+#include "config/frameconfig.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -104,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_tray = 0;
     m_zoom = 0;
     m_timelineDock = 0;
+    m_keyboardDock = 0;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -277,49 +277,14 @@ void MainWindow::setupActions()
     boxAction->addAction(frameMoveAction);
     boxAction->addSeparator();
 
+    QList<Size> sizes;
     if (Settings::firstStart()) {
-        KAction *frameRes1Action = new KAction(this);
-        frameRes1Action->setData(QSize(640, 480));
-        frameRes1Action->setText("640 x 480 (4:3 SD)");
-        frameRes1Action->setProperty("CleanText", "640 x 480 (4:3 SD)");
-        connect(frameRes1Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-        KAction *frameRes2Action = new KAction(this);
-        frameRes2Action->setData(QSize(800, 600));
-        frameRes2Action->setText("800 x 600");
-        frameRes2Action->setProperty("CleanText", "800 x 600");
-        connect(frameRes2Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-        KAction *frameRes3Action = new KAction(this);
-        frameRes3Action->setData(QSize(1024, 768));
-        frameRes3Action->setText("1024 x 768");
-        frameRes3Action->setProperty("CleanText", "1024 x 768");
-        connect(frameRes3Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-        KAction *frameRes4Action = new KAction(this);
-        frameRes4Action->setData(QSize(1280, 720));
-        frameRes4Action->setText("1280 x 720 (16x9 HD)");
-        frameRes4Action->setProperty("CleanText", "1280 x 720 (16x9 HD)");
-        connect(frameRes4Action, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
-
-        boxAction->addAction(frameRes1Action);
-        boxAction->addAction(frameRes2Action);
-        boxAction->addAction(frameRes3Action);
-        boxAction->addAction(frameRes4Action);
-
+        sizes = FrameConfig::defaultSizes();
         Settings::self()->setFirstStart(false);
+    } else {
+        sizes = FrameConfig::readSizes(Settings::self()->config());
     }
-
-    KConfigGroup cfg(Settings::self()->config(), "Frame");
-    foreach (const QString &name, cfg.readEntry("Names", QStringList())) {
-        KAction *act = new KAction(this);
-        act->setText(name);
-        act->setProperty("CleanText", name);
-        act->setData(cfg.readEntry(QString("Size %1").arg(name), QSize()));
-
-        boxAction->addAction(act);
-    }
-
+    frameSizesChanged(sizes);
 
     KAction *fullAction = getAction("recordFullScreen");
     fullAction->setText(i18n("Record the entire Screen"));
@@ -367,9 +332,7 @@ void MainWindow::startRecord()
     setState(Recording);   
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
-    if (m_timelineDock && m_recorderManager->hasFeature("TimelineEnabled", backendCombo->currentText())) {
-        m_timelineDock->timeline()->start();
-    }
+    initRecordWidgets(true);
 
 }
 
@@ -408,10 +371,9 @@ void MainWindow::stopRecord()
     } else {
         m_recorderManager->stop();
         m_encoderManager->stop();
-        if (m_timelineDock) {
-            m_timelineDock->timeline()->stop();
-        }
     }
+
+    initRecordWidgets(false);
 
 }
 
@@ -574,7 +536,6 @@ void MainWindow::setupTray()
 
     if (Settings::tray()) {
         if (!m_tray) {
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
             m_tray = new KStatusNotifierItem(this);
             m_tray->setStatus(KStatusNotifierItem::Active);
             m_tray->setCategory(KStatusNotifierItem::ApplicationStatus);
@@ -582,14 +543,6 @@ void MainWindow::setupTray()
             m_tray->setToolTip("recorditnow", i18n("RecordItNow"), "");
             connect(m_tray, SIGNAL(activateRequested(bool,QPoint)), this,
                     SLOT(trayActivated(bool,QPoint)));
-#else
-            m_tray = new KSystemTrayIcon(this);
-            m_tray->setIcon(KIcon("recorditnow"));
-            connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
-            SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
-            m_tray->show();
-#endif
-
 
             KMenu *context = new KMenu(this);
             context->addAction(getAction("record"));
@@ -599,11 +552,6 @@ void MainWindow::setupTray()
             context->addAction(getAction("box"));
             context->addAction(getAction("recordWindow"));
             context->addAction(getAction("recordFullScreen"));
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-#else
-            context->addSeparator();
-            context->addAction((QAction*)KStandardAction::quit(kapp, SLOT(quit()), actionCollection()));
-#endif
             m_tray->setContextMenu(context);
         }
     } else {
@@ -620,20 +568,7 @@ void MainWindow::setTrayOverlay(const QString &name)
 {
 
     if (m_tray) {
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
         m_tray->setOverlayIconByName(name);
-#else
-        QPixmap icon = KIcon("recorditnow").pixmap(KIconLoader::SizeSmallMedium,
-                                                     KIconLoader::SizeSmallMedium);
-        if (!name.isEmpty()) {
-            QPixmap overlay = KIcon(name).pixmap(KIconLoader::SizeSmallMedium/2,
-                                                 KIconLoader::SizeSmallMedium/2);
-            QPainter p(&icon);
-            p.drawPixmap(icon.width()-overlay.width(), icon.height()-overlay.height(), overlay);
-            p.end();
-        }
-        m_tray->setIcon(icon);
-#endif
     }
 
 }
@@ -666,7 +601,6 @@ void MainWindow::setState(const State &newState)
                 show(); // necessary to apply window flags
                 move(p);
             }
-            setupRecordWidgets(false);
             break;
         }
     case Timer: {
@@ -681,7 +615,6 @@ void MainWindow::setState(const State &newState)
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
-            setupRecordWidgets(true);
             break;
         }
     case Recording: {
@@ -748,7 +681,7 @@ void MainWindow::setState(const State &newState)
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
-            setupRecordWidgets(false);
+            initRecordWidgets(false);
             break;
         }
     case Upload: {
@@ -798,6 +731,11 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         m_timelineDock->timeline()->stop();
     }
 
+    if (m_keyboardDock) {
+        m_keyboardDock->stop();
+    }
+    KeyMonManager::self()->stop();
+
     if (!error.isEmpty()) {
         KMessageBox::error(this, error);
         pluginStatus(error);
@@ -838,8 +776,6 @@ void MainWindow::configure()
 
     ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(dialogFinished()));
-    connect(dialog, SIGNAL(frameSizesChanged(QList<QPair<QString,QSize> >)), this,
-            SLOT(frameSizesChanged(QList<QPair<QString,QSize> >)));
     dialog->show();
 
 }
@@ -852,6 +788,9 @@ void MainWindow::dialogFinished()
     setupTray();
     updateRecorderCombo();
     triggerFrame(false); // update KAction
+
+    // update frame menu
+    frameSizesChanged(FrameConfig::readSizes(Settings::self()->config()));
 
 }
 
@@ -868,38 +807,6 @@ void MainWindow::updateRecorderCombo()
 
     if (backendCombo->contains(oldBackend)) {
         backendCombo->setCurrentItem(oldBackend, false);
-    }
-
-}
-
-
-void MainWindow::setupRecordWidgets(const bool &start)
-{
-
-    // mouse
-    if (start) {
-        const QString recorder = backendCombo->currentText();
-        if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", recorder)) {
-            if (m_cursor) {
-                return; // timer was paused
-            }
-            m_cursor = static_cast<Application*>(kapp)->getCursorWidget(this);
-            connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
-
-            m_cursor->setButtons(MouseConfig::getButtons());
-            m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
-            m_cursor->setUseKeyMon(Settings::useKeyMon(), Settings::keyMonDevice());
-            m_cursor->setMode(Settings::led() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
-            m_cursor->setOpacity(Settings::cursorOpacity());
-            m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
-
-            m_cursor->start();
-        }
-    } else {
-        if (m_cursor) {
-            m_cursor->stop();
-            m_cursor = 0;
-        }
     }
 
 }
@@ -1036,7 +943,6 @@ void MainWindow::lcdDown()
 
 }
 
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
 void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 {
 
@@ -1047,19 +953,7 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
     }
 
 }
-#else
-void MainWindow::trayActivated(const QSystemTrayIcon::ActivationReason &reason)
-{
 
-    if (reason == QSystemTrayIcon::Trigger &&
-        isVisible() &&
-        (state() == Recording || state() == Paused) &&
-        m_recorderManager->currentState() == AbstractRecorder::Record) {
-        stopRecord();
-    }
-
-}
-#endif
 
 void MainWindow::backendChanged(const QString &newBackend)
 {
@@ -1216,6 +1110,20 @@ void MainWindow::setupTimeline()
         }
     }
 
+    if (Settings::enableKeyboard()) {
+        if (!m_keyboardDock) {
+            m_keyboardDock = new KeyboardDock(this);
+            addDockWidget(Qt::BottomDockWidgetArea, m_keyboardDock);
+        }
+        m_keyboardDock->init(KeyboardConfig::readConfig(Settings::self()->config()));
+    } else {
+        if (m_keyboardDock) {
+            removeDockWidget(m_keyboardDock);
+            delete m_keyboardDock;
+            m_keyboardDock = 0;
+        }
+    }
+
 }
 
 
@@ -1260,32 +1168,79 @@ void MainWindow::frameSizesChanged(const QList< QPair<QString, QSize> > &sizes)
         boxAction->removeAction(act);
     }
 
-    QStringList list;
-    KConfigGroup cfg(Settings::self()->config(), "Frame");
-    if (!sizes.isEmpty()) {
-        foreach (const Size &s, sizes) {
-            KAction *frameResAction = new KAction(this);
-            frameResAction->setData(s.second);
-            frameResAction->setText(s.first);
-            frameResAction->setProperty("CleanText", s.first);
-            connect(frameResAction, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
+    foreach (const Size &s, sizes) {
+        KAction *frameResAction = new KAction(this);
+        frameResAction->setData(s.second);
+        frameResAction->setText(s.first);
+        frameResAction->setProperty("CleanText", s.first);
+        connect(frameResAction, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
 
-            boxAction->addAction(frameResAction);
-
-            cfg.writeEntry(QString("Size %1").arg(s.first), s.second);
-            list.append(s.first);
-        }
+        boxAction->addAction(frameResAction);
     }
-    cfg.writeEntry("Names", list);
 
 }
 
 
+void MainWindow::initRecordWidgets(const bool &start)
+{
 
-#if (KDE_VERSION >= KDE_MAKE_VERSION(4,3,64))
-    #include "mainwindow.moc"
-#else
-    #include "mainwindow_4_3.moc"
-#endif
+    const QString recorder = backendCombo->currentText();
+    QStringList keyMonDevs;
+    // mouse
+    if (start) {
+        if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", recorder)) {
+            if (m_cursor) {
+                return; // timer was paused
+            }
+            m_cursor = new CursorWidget(this);
+            connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
 
+            m_cursor->setButtons(MouseConfig::getButtons(Settings::self()->config()));
+            m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
+            m_cursor->setDevice(Settings::keyMonDevice());
+            m_cursor->setMode(Settings::led() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
+            m_cursor->setOpacity(Settings::cursorOpacity());
+            m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
+
+            m_cursor->start();
+
+            keyMonDevs.append(Settings::keyMonDevice());
+        }
+    } else {
+        if (m_cursor) {
+            m_cursor->stop();
+            m_cursor = 0;
+        }
+    }
+
+    // timeline
+    if (m_timelineDock) {
+        if (start) {
+            if (m_recorderManager->hasFeature("TimelineEnabled", recorder)) {
+                m_timelineDock->timeline()->start();
+            }
+        } else {
+            m_timelineDock->timeline()->stop();
+        }
+    }
+
+    // keyboard
+    if (m_keyboardDock) {
+        if (start) {
+            m_keyboardDock->start(Settings::keyboardDevice().toLocalFile());
+            keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
+        } else {
+            m_keyboardDock->stop();
+        }
+    }
+
+    // keymon
+    if (!keyMonDevs.isEmpty() && start) {
+        KeyMonManager::self()->start(keyMonDevs);
+    }
+
+}
+
+
+#include "mainwindow.moc"
 

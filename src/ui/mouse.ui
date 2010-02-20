@@ -29,23 +29,23 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QCheckBox" name="kcfg_useKeyMon">
+         <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Device</string>
+           <string>Device:</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="KLineEdit" name="kcfg_keyMonDevice">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="KPushButton" name="keyMonButton">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>Search</string>
@@ -108,6 +108,15 @@
         <property name="columnCount">
          <number>3</number>
         </property>
+        <attribute name="headerDefaultSectionSize">
+         <number>100</number>
+        </attribute>
+        <attribute name="headerMinimumSectionSize">
+         <number>22</number>
+        </attribute>
+        <attribute name="headerStretchLastSection">
+         <bool>true</bool>
+        </attribute>
         <attribute name="headerDefaultSectionSize">
          <number>100</number>
         </attribute>
@@ -310,38 +319,6 @@
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>kcfg_useKeyMon</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_keyMonDevice</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>54</x>
-     <y>49</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>123</x>
-     <y>50</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_useKeyMon</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>keyMonButton</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>45</x>
-     <y>48</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>419</x>
-     <y>59</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>kcfg_circle</sender>
    <signal>toggled(bool)</signal>

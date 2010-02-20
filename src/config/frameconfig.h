@@ -23,6 +23,7 @@
 
 // own
 #include "ui_frameconfig.h"
+#include "config/configpage.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -31,15 +32,24 @@
 class KIntNumInput;
 class QTreeWidgetItem;
 class SizeWidget;
-class FrameConfig : public QWidget, public Ui::FrameConfig
+class FrameConfig : public RecordItNow::ConfigPage, Ui::FrameConfig
 {
     Q_OBJECT
 
 
 public:
-    explicit FrameConfig(const QList<QPair<QString,QSize> > &sizes, QWidget *parent = 0);
+    explicit FrameConfig(KConfig *cfg, QWidget *parent = 0);
 
     QList< QPair<QString, QSize> > sizes() const;
+
+    static QList< QPair<QString, QSize> > defaultSizes();
+    static QList< QPair<QString, QSize> > readSizes(KConfig *config);
+
+
+public slots:
+    void saveConfig();
+    void setDefaults();
+    void loadConfig();
 
 
 private slots:
@@ -54,12 +64,9 @@ private slots:
 
 private:
     KIntNumInput *newSizeWidget();
+    QTreeWidgetItem *newTreeWidgetItem(const QString &text, const QSize &size, const int &index);
 
     void move(const int &from, const int &to);
-
-
-signals:
-    void configChanged();
 
 
 };

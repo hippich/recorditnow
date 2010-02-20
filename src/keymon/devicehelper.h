@@ -23,12 +23,14 @@
 
 // own
 #include "event.h"
+#include "manager.h"
 
 // KDE
 #include <kauth.h>
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QEventLoop>
 
 
 using namespace KAuth;
@@ -37,13 +39,24 @@ class DeviceHelper : public QObject
     Q_OBJECT
 
 
+public:
+    ~DeviceHelper();
+
+
 public slots:
     ActionReply watch(QVariantMap args);
     ActionReply name(QVariantMap args);
+    ActionReply inputdevicelist(QVariantMap args);
+
+
+private:
+    QEventLoop m_loop;
+    int m_pipe;
 
 
 private slots:
     void key(const KeyMon::Event &event);
+    void timeout();
 
 
 };

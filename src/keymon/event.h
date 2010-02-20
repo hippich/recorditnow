@@ -53,7 +53,7 @@ public:
     Key key;
     int keyCode;
     bool pressed;
-
+    bool mouseEvent;
 
     static QString name(const KeyMon::Event::Key &key);
     static KeyMon::Event::Key keyFromName(const QString &name);

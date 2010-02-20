@@ -29,14 +29,12 @@
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QPair>
 
 
-typedef QPair<QString, QString> DeviceData;
 class QSocketNotifier;
 namespace KeyMon {
 
-class Thread;
+
 class KDE_EXPORT Device : public QObject
 {
     Q_OBJECT
@@ -47,8 +45,6 @@ public:
     ~Device();
 
     bool error() const;
-    static QList<DeviceData> getDeviceList();
-    static DeviceData getDevice(const QString &file);
 
 
 private:
