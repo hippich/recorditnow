@@ -44,6 +44,7 @@ public:
 
     static QList< QPair<QString, QSize> > defaultSizes();
     static QList< QPair<QString, QSize> > readSizes(KConfig *config);
+    static void writeSizes(const QList< QPair<QString, QSize> > &sizes, KConfig *config);
 
 
 public slots:

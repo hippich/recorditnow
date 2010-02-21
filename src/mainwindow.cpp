@@ -281,6 +281,7 @@ void MainWindow::setupActions()
     if (Settings::firstStart()) {
         sizes = FrameConfig::defaultSizes();
         Settings::self()->setFirstStart(false);
+        FrameConfig::writeSizes(sizes, Settings::self()->config());
     } else {
         sizes = FrameConfig::readSizes(Settings::self()->config());
     }

@@ -110,18 +110,26 @@ QList< QPair<QString, QSize> > FrameConfig::readSizes(KConfig *config)
 }
 
 
-void FrameConfig::saveConfig()
+void FrameConfig::writeSizes(const QList< QPair<QString, QSize> > &sizes, KConfig *config)
 {
 
     QStringList list;
 
-    KConfigGroup cfg(config(), "Frame");
-    foreach (const Size &s, sizes()) {
+    KConfigGroup cfg(config, "Frame");
+    foreach (const Size &s, sizes) {
         cfg.writeEntry(QString("Size %1").arg(s.first), s.second);
         list.append(s.first);
     }
     cfg.writeEntry("Names", list);
     cfg.sync();
+
+}
+
+
+void FrameConfig::saveConfig()
+{
+
+    writeSizes(sizes(), config());
 
 }
 
