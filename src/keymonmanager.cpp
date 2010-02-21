@@ -157,6 +157,11 @@ void KeyMonManager::stop()
 void KeyMonManager::progressStep(const QVariantMap &data)
 {
 
+    if (data.contains("Started")) {
+        emit started();
+        return;
+    }
+
     KeyMon::Event event;
     event.key = static_cast<KeyMon::Event::Key>(data["Key"].toInt());
     event.pressed = data["Pressed"].toBool();
@@ -186,5 +191,12 @@ void KeyMonManager::actionPerformed(const ActionReply &reply)
 
 }
 
+
+void KeyMonManager::actionStarted()
+{
+
+    emit started();
+
+}
 
 #include "keymonmanager.moc"

@@ -55,6 +55,7 @@ private:
 
 private slots:
     void start();
+    void startGrab();
     void stop();
     void keyEvent(const KeyMon::Event &event);
     void keymonStopped();

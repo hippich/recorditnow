@@ -62,11 +62,13 @@ private:
 private slots:
     void progressStep(const QVariantMap &data);
     void actionPerformed(const ActionReply &reply);
+    void actionStarted();
 
 
 signals:
     void keyEvent(const KeyMon::Event &event);
     void stopped();
+    void started();
 
 
 };

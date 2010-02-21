@@ -56,6 +56,11 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 
     kDebug() << "start...";
 
+
+    QVariantMap data;
+    data["Started"] = true;
+    HelperSupport::progressStep(data);
+
     m_loop.exec();
 
     qDeleteAll(devs);

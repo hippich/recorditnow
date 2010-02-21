@@ -46,6 +46,7 @@ KeyboardKeyPage::KeyboardKeyPage(const QString &device, QWidget *parent)
     connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
             SLOT(keyEvent(KeyMon::Event)));
     connect(KeyMonManager::self(), SIGNAL(stopped()), this, SLOT(keymonStopped()));
+    connect(KeyMonManager::self(), SIGNAL(started()), this, SLOT(startGrab()));
 
     registerField("KeyCode*", keyCode);
 
@@ -80,6 +81,12 @@ void KeyboardKeyPage::start()
         stop();
         return;
     }
+
+}
+
+
+void KeyboardKeyPage::startGrab()
+{
 
     grabKeyboard();
     m_grab = true;
