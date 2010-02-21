@@ -39,6 +39,7 @@ KeyWidget::KeyWidget(const QString &image, const int &code, QWidget *parent)
 
     setContentsMargins(2, 2, 2, 2);
     setMinimumSize(50, 50);
+    setMaximumSize(100, 100);
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
@@ -105,17 +106,6 @@ void KeyWidget::paintEvent(QPaintEvent *event)
     rect.moveCenter(contentsRect().center());
 
     painter.drawPixmap(rect, m_image);
-
-}
-
-
-void KeyWidget::resizeEvent(QResizeEvent *event)
-{
-
-    const int w = event->size().width();
-    resize(w, w);
-
-    QWidget::resizeEvent(event);
 
 }
 

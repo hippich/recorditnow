@@ -62,8 +62,7 @@ void KeyboardDock::init(const QList<KeyboardKey> &map)
 {
 
     foreach (KeyWidget *widget, m_keyList) {
-        hLayout->removeWidget(widget);
-        vLayout->removeWidget(widget);
+        keyLayout->removeWidget(widget);
         delete widget;
     }
     m_keyList.clear();
@@ -99,19 +98,19 @@ void KeyboardDock::relayout(const Qt::DockWidgetArea &area)
 {
 
     foreach (KeyWidget *widget, m_keyList) {
-        hLayout->removeWidget(widget);
-        vLayout->removeWidget(widget);
+        keyLayout->removeWidget(widget);
     }
 
     foreach (KeyWidget *widget, m_keyList) {
         switch (area) {
         case Qt::LeftDockWidgetArea:
-        case Qt::RightDockWidgetArea: vLayout->addWidget(widget); break;
+        case Qt::RightDockWidgetArea: keyLayout->addWidget(widget, keyLayout->rowCount(), 0); break;
         case Qt::TopDockWidgetArea:
         case Qt::BottomDockWidgetArea:
-        default: hLayout->addWidget(widget); break;
+        default: keyLayout->addWidget(widget, 0, keyLayout->columnCount()); break;
         }
     }
+
 
 }
 
