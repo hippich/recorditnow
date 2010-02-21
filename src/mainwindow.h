@@ -131,6 +131,7 @@ private slots:
     void resolutionActionTriggered();
     void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
     void initRecordWidgets(const bool &start);
+    void initKeyMon(const bool &start);
 
 
 protected:

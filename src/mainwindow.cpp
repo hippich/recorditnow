@@ -332,8 +332,6 @@ void MainWindow::startRecord()
     setState(Recording);   
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
 
-    initRecordWidgets(true);
-
 }
 
 
@@ -601,6 +599,8 @@ void MainWindow::setState(const State &newState)
                 show(); // necessary to apply window flags
                 move(p);
             }
+            initRecordWidgets(false);
+            initKeyMon(false);
             break;
         }
     case Timer: {
@@ -615,6 +615,7 @@ void MainWindow::setState(const State &newState)
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
+            initKeyMon(true);
             break;
         }
     case Recording: {
@@ -637,6 +638,7 @@ void MainWindow::setState(const State &newState)
                 show(); // necessary to apply window flags
                 move(p);
             }
+            initRecordWidgets(true);
             break;
         }
     case TimerPaused: {
@@ -682,6 +684,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             centralWidget()->setEnabled(false);
             initRecordWidgets(false);
+            initKeyMon(false);
             break;
         }
     case Upload: {
@@ -1176,7 +1179,6 @@ void MainWindow::initRecordWidgets(const bool &start)
 {
 
     const QString recorder = backendCombo->currentText();
-    QStringList keyMonDevs;
     // mouse
     if (start) {
         if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", recorder)) {
@@ -1194,8 +1196,6 @@ void MainWindow::initRecordWidgets(const bool &start)
             m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
 
             m_cursor->start();
-
-            keyMonDevs.append(Settings::keyMonDevice());
         }
     } else {
         if (m_cursor) {
@@ -1215,19 +1215,28 @@ void MainWindow::initRecordWidgets(const bool &start)
         }
     }
 
-    // keyboard
-    if (m_keyboardDock && start) {
+}
+
+
+void MainWindow::initKeyMon(const bool &start)
+{
+
+    QStringList keyMonDevs;
+    if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", backendCombo->currentText())) {
+        keyMonDevs.append(Settings::keyMonDevice());
+    }
+
+    if (m_keyboardDock) {
         keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
     }
 
-    // keymon
     if (!keyMonDevs.isEmpty() && start) {
         KeyMonManager::self()->start(keyMonDevs);
     } else if (!start) {
         KeyMonManager::self()->stop();
     }
-
 }
+
 
 
 #include "mainwindow.moc"
