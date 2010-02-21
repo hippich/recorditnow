@@ -56,7 +56,8 @@ public:
         Recording = 3,
         Paused = 4,
         Encode = 5,
-        Upload = 6
+        Upload = 6,
+        Config = 7
     };
     MainWindow(QWidget *parent = 0);
     ~MainWindow();

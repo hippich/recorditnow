@@ -701,6 +701,20 @@ void MainWindow::setState(const State &newState)
             centralWidget()->setEnabled(false);
             break;
         }
+        case Config: {
+            setTrayOverlay("configure");
+            getAction("pause")->setIcon(KIcon("media-playback-pause"));
+            getAction("record")->setEnabled(false);
+            getAction("pause")->setEnabled(false);
+            getAction("stop")->setEnabled(false);
+            getAction("recordWindow")->setEnabled(false);
+            getAction("recordFullScreen")->setEnabled(false);
+            getAction("box")->setEnabled(false);
+            getAction("options_configure")->setEnabled(false);
+            getAction("upload")->setEnabled(false);
+            centralWidget()->setEnabled(false);
+            break;
+        }
     }
     m_state = newState;
 
@@ -768,6 +782,8 @@ void MainWindow::encoderFinished(const QString &error)
 void MainWindow::configure()
 {
 
+    setState(Config);
+
     ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(configDialogFinished()));
     dialog->show();
@@ -777,6 +793,8 @@ void MainWindow::configure()
 
 void MainWindow::configDialogFinished()
 {
+
+    setState(Idle);
 
     setupTimeline();
     setupTray();
