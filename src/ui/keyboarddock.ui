@@ -67,7 +67,7 @@
        </property>
        <layout class="QGridLayout" name="keyLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SetMinAndMaxSize</enum>
+         <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <property name="margin">
          <number>0</number>
