@@ -31,6 +31,7 @@
 
 // Qt
 #include <QtGui/QWizardPage>
+#include <QtCore/QPointer>
 
 
 class UploadPage : public QWizardPage, public Ui::UploadPage
@@ -55,7 +56,7 @@ private slots:
 
 
 private:
-    Joschy::AbstractProvider *m_provider;
+    QPointer<Joschy::AbstractProvider> m_provider;
     QString m_currentId;
 
 
