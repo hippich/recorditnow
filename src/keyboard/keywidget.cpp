@@ -31,9 +31,11 @@
 #include <QtGui/QSizePolicy>
 
 
-KeyWidget::KeyWidget(const QString &image, QWidget *parent)
+KeyWidget::KeyWidget(const QString &image, const int &code, QWidget *parent)
     : QWidget(parent), m_image(image), m_pressed(false)
 {
+
+    m_keyCode = code;
 
     setContentsMargins(2, 2, 2, 2);
     setMinimumSize(50, 50);
@@ -49,6 +51,14 @@ KeyWidget::~KeyWidget()
 {
 
     delete m_timer;
+
+}
+
+
+int KeyWidget::keyCode() const
+{
+
+    return m_keyCode;
 
 }
 

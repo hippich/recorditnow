@@ -47,12 +47,12 @@ public:
 
 
 private:
-    QHash<int, KeyWidget*> m_keys;
-
+    QList<KeyWidget*> m_keyList;
 
 
 private slots:
     void keyPressed(const KeyMon::Event &event);
+    void relayout(const Qt::DockWidgetArea &area);
 
 
 };

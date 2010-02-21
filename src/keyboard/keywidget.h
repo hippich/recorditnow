@@ -32,9 +32,10 @@ class KeyWidget : public QWidget
 
 
 public:
-    explicit KeyWidget(const QString &image, QWidget *parent = 0);
+    explicit KeyWidget(const QString &image, const int &code, QWidget *parent = 0);
     ~KeyWidget();
 
+    int keyCode() const;
     void setPressed(const bool &pressed);
 
 
@@ -42,6 +43,7 @@ private:
     QPixmap m_image;
     bool m_pressed;
     QTimer *m_timer;
+    int m_keyCode;
 
 
 private slots:

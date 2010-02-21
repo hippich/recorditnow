@@ -30,6 +30,7 @@
 // Qt
 #include <QtCore/QFile>
 #include <QtCore/QTimer>
+#include <QtGui/QMainWindow>
 
 
 KeyboardDock::KeyboardDock(QWidget *parent)
@@ -44,6 +45,8 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 
     connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
             SLOT(keyPressed(KeyMon::Event)));
+    connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this,
+            SLOT(relayout(Qt::DockWidgetArea)));
 
 }
 
@@ -58,19 +61,18 @@ KeyboardDock::~KeyboardDock()
 void KeyboardDock::init(const QList<KeyboardKey> &map)
 {
 
-    QHashIterator<int, KeyWidget*> i(m_keys);
-    while (i.hasNext()) {
-        i.next();
-        keyLayout->removeWidget(i.value());
-        delete i.value();
+    foreach (KeyWidget *widget, m_keyList) {
+        hLayout->removeWidget(widget);
+        vLayout->removeWidget(widget);
+        delete widget;
     }
-    m_keys.clear();
+    m_keyList.clear();
 
     foreach (const KeyboardKey &key, map) {
-        KeyWidget *widget = new KeyWidget(key.second, this);
-        m_keys[key.first] = widget;
-        keyLayout->addWidget(widget);
+        KeyWidget *widget = new KeyWidget(key.second, key.first, this);
+        m_keyList.append(widget);
     }
+    relayout(static_cast<QMainWindow*>(parentWidget())->dockWidgetArea(this));
 
 }
 
@@ -78,14 +80,40 @@ void KeyboardDock::init(const QList<KeyboardKey> &map)
 void KeyboardDock::keyPressed(const KeyMon::Event &event)
 {
 
-    kDebug() << "key pressed:" << event.keyCode << event.pressed;
-    if (!m_keys.contains(event.keyCode) || event.mouseEvent) {
+    if (event.mouseEvent) {
         return;
     }
-    m_keys.value(event.keyCode)->setPressed(event.pressed);
+
+    foreach (KeyWidget * widget, m_keyList) {
+        if (widget->keyCode() == event.keyCode) {
+            kDebug() << "key pressed:" << event.keyCode << event.pressed;
+            widget->setPressed(event.pressed);
+            break;
+        }
+    }
 
 }
 
+
+void KeyboardDock::relayout(const Qt::DockWidgetArea &area)
+{
+
+    foreach (KeyWidget *widget, m_keyList) {
+        hLayout->removeWidget(widget);
+        vLayout->removeWidget(widget);
+    }
+
+    foreach (KeyWidget *widget, m_keyList) {
+        switch (area) {
+        case Qt::LeftDockWidgetArea:
+        case Qt::RightDockWidgetArea: vLayout->addWidget(widget); break;
+        case Qt::TopDockWidgetArea:
+        case Qt::BottomDockWidgetArea:
+        default: hLayout->addWidget(widget); break;
+        }
+    }
+
+}
 
 
 #include "keyboarddock.moc"
