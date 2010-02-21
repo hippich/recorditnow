@@ -127,11 +127,11 @@ private slots:
     void zoomOut();
     void setupTimeline();
     void timeLineFinsihed();
-    void cursorError(const QString &message);
     void resolutionActionTriggered();
     void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
     void initRecordWidgets(const bool &start);
     void initKeyMon(const bool &start);
+    void errorNotification(const QString &error);
 
 
 protected:

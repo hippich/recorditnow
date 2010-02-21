@@ -1131,17 +1131,6 @@ void MainWindow::timeLineFinsihed()
 }
 
 
-void MainWindow::cursorError(const QString &message)
-{
-
-    KNotification *notification = new KNotification("error", this, KNotification::CloseOnTimeout);
-    notification->setText(message);
-    notification->setPixmap(KIcon("dialog-error").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
-    notification->sendEvent();
-
-}
-
-
 void MainWindow::resolutionActionTriggered()
 {
 
@@ -1186,7 +1175,7 @@ void MainWindow::initRecordWidgets(const bool &start)
                 return; // timer was paused
             }
             m_cursor = new CursorWidget(this);
-            connect(m_cursor, SIGNAL(error(QString)), this, SLOT(cursorError(QString)));
+            connect(m_cursor, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
 
             m_cursor->setButtons(MouseConfig::getButtons(Settings::self()->config()));
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
@@ -1231,12 +1220,25 @@ void MainWindow::initKeyMon(const bool &start)
     }
 
     if (!keyMonDevs.isEmpty() && start) {
-        KeyMonManager::self()->start(keyMonDevs);
+        if (!KeyMonManager::self()->start(keyMonDevs)) {
+            errorNotification(KeyMonManager::self()->error());
+        }
     } else if (!start) {
         KeyMonManager::self()->stop();
     }
+
 }
 
+
+void MainWindow::errorNotification(const QString &error)
+{
+
+    KNotification *notification = new KNotification("error", this, KNotification::CloseOnTimeout);
+    notification->setText(error);
+    notification->setPixmap(KIcon("dialog-error").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
+    notification->sendEvent();
+
+}
 
 
 #include "mainwindow.moc"
