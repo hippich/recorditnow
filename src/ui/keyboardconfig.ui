@@ -17,7 +17,7 @@
    <item>
     <widget class="QGroupBox" name="kcfg_enableKeyboard">
      <property name="title">
-      <string>Enable The Keyboard</string>
+      <string>Enable The Keyboard Monitor</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
