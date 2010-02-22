@@ -1,6 +1,0 @@
-# Code generation options for kconfig_compiler
-File=recorditnow_blip.kcfg
-ClassName=Settings
-Singleton=true
-Mutators=currentAccount, savePassword, title, category, description, tags
-# will create the necessary code for setting those variables
