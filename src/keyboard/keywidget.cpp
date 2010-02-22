@@ -23,6 +23,7 @@
 // KDE
 #include <kdebug.h>
 #include <kicon.h>
+#include <kiconloader.h>
 
 // Qt
 #include <QtGui/QPainter>

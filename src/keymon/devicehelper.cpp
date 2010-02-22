@@ -24,6 +24,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <klocalizedstring.h>
 
 // Qt
 #include <QtCore/QTimer>
@@ -48,7 +49,14 @@ ActionReply DeviceHelper::watch(QVariantMap args)
         if (device->error()) {
             kDebug() << "error";
             qDeleteAll(devs);
-            return ActionReply::HelperError;
+
+            KAuth::ActionReply reply = ActionReply::HelperError;
+
+            QVariantMap data;
+            data["ErrorString"] = i18n("Could not open device file %1", dev);
+            reply.setData(data);
+
+            return reply;
         }
         connect(device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
         connect(device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));

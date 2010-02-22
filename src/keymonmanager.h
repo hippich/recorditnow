@@ -58,6 +58,8 @@ private:
 
     explicit KeyMonManager(QObject *parent = 0);
 
+    QString parseError(const int &errorCode);
+
 
 private slots:
     void progressStep(const QVariantMap &data);

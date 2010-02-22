@@ -112,14 +112,13 @@ bool KeyMonManager::start(const QStringList &devs)
 
     KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
     if (reply.errorCode() != KAuth::ActionReply::NoError) {
-        switch (reply.errorCode()) {
-        case KAuth::ActionReply::AuthorizationDenied: {
-                m_error = i18n("You don't have the authorization to use this feature.");
-                break;
-            }
-        default: m_error = i18n("An internal error occurd!"); break;
+        if (reply.errorCode() == KAuth::ActionReply::UserCancelled) {
+            m_error.clear();
+            return false;
+        } else {
+            m_error = parseError(reply.errorCode());
+            return false;
         }
-        return false;
     }
     m_started = true;
 
@@ -154,6 +153,29 @@ void KeyMonManager::stop()
 }
 
 
+QString KeyMonManager::parseError(const int &errorCode)
+{
+
+    KAuth::ActionReply::Error reply = static_cast<KAuth::ActionReply::Error>(errorCode);
+
+    QString error;
+    switch (reply) {
+    case KAuth::ActionReply::NoResponder:
+    case KAuth::ActionReply::NoSuchAction:
+    case KAuth::ActionReply::InvalidAction:
+    case KAuth::ActionReply::HelperBusy:
+    case KAuth::ActionReply::DBusError: error = i18n("An internal error has occurred.\n"
+                                                     "Error code: %1\n", errorCode); break;
+    case KAuth::ActionReply::AuthorizationDenied: error = i18n("You don't have the authorization to"
+                                                               " use this feature."); break;
+    default: break;
+    }
+
+    return error;
+
+}
+
+
 void KeyMonManager::progressStep(const QVariantMap &data)
 {
 
@@ -176,14 +198,13 @@ void KeyMonManager::progressStep(const QVariantMap &data)
 void KeyMonManager::actionPerformed(const ActionReply &reply)
 {
 
-    if (reply.failed()) {
+    if (reply.type() != KAuth::ActionReply::Success) {
         if (reply.type() == KAuth::ActionReply::HelperError) {
-            m_error = i18n("Could not open the device!");
+            m_error = reply.data().value("ErrorString").toString();
         } else {
-            m_error = i18n("An internal error occurd!");
+            m_error = parseError(reply.errorCode());
         }
     }
-
     kDebug() << "action performed:" << reply.type() << reply.errorCode() << reply.errorDescription();
 
     m_started = false;

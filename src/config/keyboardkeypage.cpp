@@ -97,14 +97,11 @@ void KeyboardKeyPage::startGrab()
 void KeyboardKeyPage::stop()
 {
 
-    if (m_grab) {
-        kDebug() << "stop called";
-        m_grab = false;
-        releaseKeyboard();
-        startButton->setDisabled(false);
-        KeyMonManager::self()->stop();
-    }
-
+    m_grab = false;
+    releaseKeyboard();
+    startButton->setDisabled(false);
+    KeyMonManager::self()->stop();
+    
 }
 
 
@@ -121,8 +118,8 @@ void KeyboardKeyPage::keyEvent(const KeyMon::Event &event)
 void KeyboardKeyPage::keymonStopped()
 {
 
-    if (m_grab) {
-        stop();
+    stop();
+    if (!KeyMonManager::self()->error().isEmpty()) {
         KMessageBox::error(this, i18n("An error occurd: %1", KeyMonManager::self()->error()));
     }
 
