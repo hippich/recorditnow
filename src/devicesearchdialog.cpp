@@ -60,6 +60,7 @@ DeviceSearchDialog::DeviceSearchDialog(const bool &input, QWidget *parent)
     }
 
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
 }
 
