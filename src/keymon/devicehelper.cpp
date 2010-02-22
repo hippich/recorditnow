@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -62,9 +62,6 @@ ActionReply DeviceHelper::watch(QVariantMap args)
         connect(device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
     }
 
-    kDebug() << "start...";
-
-
     QVariantMap data;
     data["Started"] = true;
     HelperSupport::progressStep(data);
@@ -73,7 +70,6 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 
     qDeleteAll(devs);
 
-    kDebug() << "done...";
     return ActionReply::SuccessReply;
 
 }
@@ -114,7 +110,6 @@ void DeviceHelper::timeout()
 {
 
     if (HelperSupport::isStopped()) {
-        kDebug() << "isStopped = true";
         m_loop.quit();
     }
 
