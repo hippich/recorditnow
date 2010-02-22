@@ -61,9 +61,6 @@ void PluginConfig::loadConfig()
     pluginSelector->addPlugins(m_manager->getEncoderList(),
                                KPluginSelector::ReadConfigFile,
                                i18n("Encode Plugins"), "Encoder");
-    pluginSelector->addPlugins(m_manager->getUploaderList(),
-                               KPluginSelector::ReadConfigFile,
-                               i18n("Upload Plugins"), "Uploader");
 
 }
 

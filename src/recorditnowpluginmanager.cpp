@@ -153,14 +153,6 @@ QList<KPluginInfo> RecordItNowPluginManager::getEncoderList() const
 }
 
 
-QList<KPluginInfo> RecordItNowPluginManager::getUploaderList() const
-{
-
-    return getList("Uploader");
-
-}
-
-
 void RecordItNowPluginManager::clear()
 {
 

@@ -49,7 +49,6 @@ public:
     QList<KPluginInfo> getList(const QString &category) const;
     QList<KPluginInfo> getRecorderList() const;
     QList<KPluginInfo> getEncoderList() const;
-    QList<KPluginInfo> getUploaderList() const;
 
 
 private:
