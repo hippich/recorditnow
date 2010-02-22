@@ -17,10 +17,13 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="kcfg_showActivity">
      <property name="title">
-      <string>Show mouse clicks</string>
+      <string extracomment="@title:group">Show mouse clicks</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -31,7 +34,7 @@
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Device:</string>
+           <string extracomment="@label">Device:</string>
           </property>
          </widget>
         </item>
@@ -48,7 +51,7 @@
            <bool>true</bool>
           </property>
           <property name="text">
-           <string>Search</string>
+           <string extracomment="@action:button">Search</string>
           </property>
          </widget>
         </item>
@@ -59,7 +62,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Mouse button</string>
+           <string extracomment="@label">Mouse button</string>
           </property>
          </widget>
         </item>
@@ -69,7 +72,7 @@
         <item>
          <widget class="KPushButton" name="addButton">
           <property name="text">
-           <string>Add</string>
+           <string extracomment="@action:button">Add</string>
           </property>
          </widget>
         </item>
@@ -128,17 +131,17 @@
         </attribute>
         <column>
          <property name="text">
-          <string>Remove</string>
+          <string extracomment="@title:column">Remove</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Mouse Button</string>
+          <string extracomment="@title:column">Mouse Button</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Color</string>
+          <string extracomment="@title:column">Color</string>
          </property>
         </column>
        </widget>
@@ -146,7 +149,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
-         <string>Appearance</string>
+         <string extracomment="@title:group">Appearance</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
@@ -154,7 +157,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Mode</string>
+              <string extracomment="@label">Mode</string>
              </property>
             </widget>
            </item>
@@ -163,7 +166,7 @@
              <item>
               <widget class="QRadioButton" name="kcfg_led">
                <property name="text">
-                <string>LED next to the mouse cursor</string>
+                <string extracomment="@option:radio">LED next to the mouse cursor</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -173,7 +176,7 @@
              <item>
               <widget class="QRadioButton" name="kcfg_circle">
                <property name="text">
-                <string>Circle under the mouse cursor</string>
+                <string extracomment="@option:radio">Circle under the mouse cursor</string>
                </property>
               </widget>
              </item>
@@ -213,7 +216,7 @@
              <item row="2" column="0">
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>Size</string>
+                <string extracomment="@label">Size</string>
                </property>
               </widget>
              </item>
@@ -242,14 +245,14 @@
                 <bool>false</bool>
                </property>
                <property name="text">
-                <string>Opacity</string>
+                <string extracomment="@label">Opacity</string>
                </property>
               </widget>
              </item>
              <item row="3" column="0" colspan="2">
               <widget class="QCheckBox" name="kcfg_mouseWidgetAlwaysVisible">
                <property name="text">
-                <string>Always visible</string>
+                <string extracomment="@option:check">Always visible</string>
                </property>
                <property name="checked">
                 <bool>true</bool>

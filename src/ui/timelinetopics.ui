@@ -20,6 +20,9 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
@@ -27,7 +30,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Total duration</string>
+          <string extracomment="@label">Total duration</string>
          </property>
         </widget>
        </item>
@@ -52,17 +55,17 @@
          </property>
          <column>
           <property name="text">
-           <string>Topic</string>
+           <string extracomment="@title:column">Topic</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Icon</string>
+           <string extracomment="@title:column">Icon</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Duration</string>
+           <string extracomment="@title:column">Duration</string>
           </property>
          </column>
         </widget>
@@ -72,7 +75,7 @@
          <item>
           <widget class="KPushButton" name="addButton">
            <property name="text">
-            <string>Add</string>
+            <string extracomment="@action:button">Add</string>
            </property>
           </widget>
          </item>
@@ -82,7 +85,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Remove</string>
+            <string extracomment="@action:button">Remove</string>
            </property>
           </widget>
          </item>
@@ -92,7 +95,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Move Up</string>
+            <string extracomment="@action:button">Move Up</string>
            </property>
           </widget>
          </item>
@@ -102,7 +105,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>Move Down</string>
+            <string extracomment="@action:button">Move Down</string>
            </property>
           </widget>
          </item>

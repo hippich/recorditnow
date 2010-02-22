@@ -11,13 +11,16 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="kcfg_enableKeyboard">
      <property name="title">
-      <string>Enable The Keyboard Monitor</string>
+      <string extracomment="@title:group">Enable The Keyboard Monitor</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -31,7 +34,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Device:</string>
+           <string extracomment="@label:textbox">Device:</string>
           </property>
          </widget>
         </item>
@@ -50,7 +53,7 @@
           <item>
            <widget class="QPushButton" name="searchButton">
             <property name="text">
-             <string>Search</string>
+             <string extracomment="@action:button">Search</string>
             </property>
            </widget>
           </item>
@@ -61,7 +64,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
-         <string>Keys</string>
+         <string extracomment="@title:group">Keys</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
@@ -69,21 +72,21 @@
            <item row="1" column="1">
             <widget class="QPushButton" name="removeButton">
              <property name="text">
-              <string>Remove</string>
+              <string extracomment="@action:button">Remove</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="upButton">
              <property name="text">
-              <string>Move Up</string>
+              <string extracomment="@action:button">Move Up</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
             <widget class="QPushButton" name="downButton">
              <property name="text">
-              <string>Move Down</string>
+              <string extracomment="@action:button">Move Down</string>
              </property>
             </widget>
            </item>
@@ -103,7 +106,7 @@
            <item row="0" column="1">
             <widget class="QPushButton" name="addButton">
              <property name="text">
-              <string>Add</string>
+              <string extracomment="@action:button">Add</string>
              </property>
             </widget>
            </item>

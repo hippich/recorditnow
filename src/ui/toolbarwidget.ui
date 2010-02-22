@@ -20,6 +20,9 @@
    <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <item row="0" column="0" rowspan="2">
     <widget class="QLCDNumber" name="timerLcd">
      <property name="sizePolicy">
