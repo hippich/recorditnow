@@ -509,7 +509,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     d->overwrite = Settings::overwrite();
     d->workDir = Settings::workDir().path();
 
-    pluginStatus("");
+    pluginStatus(""); // clear the status bar
 
     if (Settings::hideOnRecord()) {
         if (Settings::tray()) {
@@ -748,7 +748,6 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
     }
 
     if (!error.isEmpty()) {
-        KMessageBox::error(this, error);
         pluginStatus(error);
         setState(Idle);
     } else if (Settings::encoderName().isEmpty() || !Settings::encode() || !isVideo) {
@@ -770,7 +769,6 @@ void MainWindow::encoderFinished(const QString &error)
 {
 
     if (!error.isEmpty()) {
-        KMessageBox::error(this, error);
         pluginStatus(error);
     } else {
         playFile(false);
