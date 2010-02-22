@@ -66,7 +66,7 @@ ActionReply DeviceHelper::watch(QVariantMap args)
     data["Started"] = true;
     HelperSupport::progressStep(data);
 
-    m_loop.exec();
+    m_loop.exec(); // krazy:exclude=crashy
 
     qDeleteAll(devs);
 

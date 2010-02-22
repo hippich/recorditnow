@@ -67,7 +67,7 @@ QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
         }
 
         int fd;
-        if ((fd = open(info.symLinkTarget().toLatin1(), O_RDONLY)) == -1) {
+        if ((fd = open(info.symLinkTarget().toLatin1(), O_RDONLY)) == -1) { // krazy:exclude=syscalls
             kWarning() << info.symLinkTarget() << ": open failed!";
         } else {
             char buff[32];

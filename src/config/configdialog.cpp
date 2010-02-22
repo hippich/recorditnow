@@ -95,7 +95,7 @@ void ConfigDialog::init()
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(pluginPage, i18n("Plugins"), "preferences-plugin");
-    addPage(framePage, i18n("Frame"), "draw-rectangle");
+    addPage(framePage, i18nc("Widget to select a screen area", "Frame"), "draw-rectangle");
     addPage(mousePage, i18n("Mouse"), "input-mouse");
     addPage(keyboardPage, i18n("Keyboard"), "input-keyboard");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");

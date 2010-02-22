@@ -83,10 +83,10 @@ void UploadPage::initializePage()
     const QString password = field("Password").toString();
 
     const Joschy::ActionReply reply = m_provider->authenticate(account, password);
-    logBrowser->append(i18n("Authentification started..."));
+    logBrowser->append(i18n("Authentication started..."));
 
     if (reply.error()) {
-        logBrowser->append(i18nc("1 = error code", "Error %1: Authentification failed!", reply.errorType()));
+        logBrowser->append(i18nc("1 = error code", "Error %1: Authentication failed!", reply.errorType()));
         if (!reply.errorString().isEmpty()) {
             logBrowser->append(i18n("Error message: %1", reply.errorString()));
         }
@@ -116,7 +116,7 @@ void UploadPage::authenticated(const QString &id)
     if (id != m_currentId || !m_provider) {
         return;
     }
-    logBrowser->append(i18n("Authentification finished..."));
+    logBrowser->append(i18n("Authentication finished..."));
 
     Joschy::Video video;
     video.setUrl(field("Video").toString());

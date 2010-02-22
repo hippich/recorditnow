@@ -47,7 +47,7 @@ Device::Device(QObject *parent, const QString &file, const bool &mouse)
     qRegisterMetaType<KeyMon::Event>("KeyMon::Event");
 
     m_socketNotifier = 0;
-    int fd = open(file.toLatin1(), O_RDONLY|O_NONBLOCK);
+    int fd = open(file.toLatin1(), O_RDONLY|O_NONBLOCK); // krazy:exclude=syscalls
     if (fd == -1) {
         kWarning() << "open failed!";
         m_error = true;

@@ -38,7 +38,7 @@ class MouseConfig : public RecordItNow::ConfigPage, Ui::Mouse
 
 
 public:
-    MouseConfig(KConfig *cfg, QWidget *parent = 0);
+    explicit MouseConfig(KConfig *cfg, QWidget *parent = 0);
     ~MouseConfig();
 
     void saveConfig();

@@ -128,7 +128,7 @@ bool KeyMonManager::start(const QStringList &devs)
     kDebug() << "Invalid:" << bool(ActionReply::InvalidActionReply == reply);
     kDebug() << "Denied:" << bool(ActionReply::AuthorizationDeniedReply == reply);
     kDebug() << "Canceled:" << bool(ActionReply::UserCancelledReply == reply);
-    kDebug() << "sucess:" << bool(ActionReply::SuccessReply == reply);
+    kDebug() << "success:" << bool(ActionReply::SuccessReply == reply);
 
     return true;
 
