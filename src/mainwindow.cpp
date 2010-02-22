@@ -460,7 +460,8 @@ void MainWindow::recordFullScreen()
     if (desktop) {
         m_recordData.winId = desktop->winId();
     } else {
-        m_recordData.geometry = kapp->desktop()->screenGeometry(screen);
+        KMessageBox::error(this, i18n("An internal error occurred!"));
+        return;
     }
 
     startTimer();
