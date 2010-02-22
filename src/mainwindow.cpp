@@ -1230,11 +1230,12 @@ void MainWindow::initKeyMon(const bool &start)
 {
 
     QStringList keyMonDevs;
-    if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", backendCombo->currentText())) {
+    const bool feature = m_recorderManager->hasFeature("LEDEnabled", backendCombo->currentText());
+    if (Settings::showActivity() && feature) {
         keyMonDevs.append(Settings::keyMonDevice());
     }
 
-    if (m_keyboardDock) {
+    if (m_keyboardDock && feature) {
         keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
     }
 
