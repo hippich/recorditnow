@@ -62,6 +62,8 @@ KeyboardKeyIconPage::KeyboardKeyIconPage(QWidget *parent)
 void KeyboardKeyIconPage::currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
 
+    Q_UNUSED(previous);
+
     if (!current) {
         iconEdit->clear();
     } else {

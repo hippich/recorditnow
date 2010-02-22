@@ -28,7 +28,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string extracomment="@label">Name:</string>
+           <string comment="The name of the new item" extracomment="@label">Name:</string>
           </property>
          </widget>
         </item>
@@ -49,23 +49,26 @@
           </property>
           <column>
            <property name="text">
-            <string extracomment="@title:column">Name</string>
+            <string comment="The name of the item" extracomment="@title:column">Name</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string extracomment="@title:column">Width</string>
+            <string comment="the width of the frame" extracomment="@title:column">Width</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string extracomment="@title:column">Height</string>
+            <string comment="the height of the frame" extracomment="@title:column">Height</string>
            </property>
           </column>
          </widget>
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="addButton">
+          <property name="toolTip">
+           <string/>
+          </property>
           <property name="text">
            <string extracomment="@action:button">Add</string>
           </property>

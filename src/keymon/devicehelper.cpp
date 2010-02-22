@@ -78,6 +78,8 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 ActionReply DeviceHelper::inputdevicelist(QVariantMap args)
 {
 
+    Q_UNUSED(args);
+
     QVariantMap result;
 
     QVariant var;
@@ -117,3 +119,6 @@ void DeviceHelper::timeout()
 
 
 KDE4_AUTH_HELPER_MAIN("org.kde.recorditnow.helper", DeviceHelper)
+
+
+#include "devicehelper.moc"

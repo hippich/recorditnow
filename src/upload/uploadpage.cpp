@@ -147,7 +147,7 @@ void UploadPage::error(const QString &id, const Joschy::Plugin::ErrorType &error
         return;
     }
 
-    logBrowser->append(i18nc("1 = error code, %2 = error message", "Error %1", error, errorString));
+    logBrowser->append(i18nc("1 = error code, %2 = error message", "Error %1: %2", error, errorString));
     if (!errorString.isEmpty()) {
         logBrowser->append(i18n("Error message: %1", errorString));
     }
