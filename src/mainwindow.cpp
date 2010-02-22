@@ -1240,7 +1240,7 @@ void MainWindow::initKeyMon(const bool &start)
     }
 
     if (!keyMonDevs.isEmpty() && start) {
-        if (!KeyMonManager::self()->start(keyMonDevs)) {
+        if (!KeyMonManager::self()->start(keyMonDevs) && !KeyMonManager::self()->error().isEmpty()) {
             errorNotification(KeyMonManager::self()->error());
         }
     } else if (!start) {
