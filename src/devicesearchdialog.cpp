@@ -49,6 +49,12 @@ DeviceSearchDialog::DeviceSearchDialog(const bool &input, QWidget *parent)
             item->setText(1, info.file);
             item->setText(2, info.uuid);
 
+            if (info.name.toLower().contains(QRegExp(".*keyboard.*"))) {
+                item->setIcon(0, KIcon("input-keyboard"));
+            } else if (info.name.toLower().contains(QRegExp(".*mouse.*"))) {
+                item->setIcon(0, KIcon("input-mouse"));
+            }
+
             treeWidget->addTopLevelItem(item);
         }
     }
