@@ -69,6 +69,7 @@
 #include <X11/Xlib.h>
 
 
+
 typedef QPair<QString, QSize> Size;
 MainWindow::MainWindow(QWidget *parent)
     : KXmlGuiWindow(parent),

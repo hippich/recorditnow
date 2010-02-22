@@ -14,19 +14,19 @@ install(TARGETS recorditnow_snoop ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 set(KAUTH_HELPER_BACKEND_NAME "DBUS")
-    #helper
-    set(HELPER_SRCS
-        device.cpp
-        event.cpp
-        manager.cpp
-        devicehelper.cpp
-        deviceinfo.cpp)
+#helper
+set(HELPER_SRCS
+    device.cpp
+    event.cpp
+    manager.cpp
+    devicehelper.cpp
+    deviceinfo.cpp)
 
-    kde4_add_executable(recorditnow_helper ${HELPER_SRCS})
-    target_link_libraries(recorditnow_helper ${KDE4_KDECORE_LIBS})
-    install(TARGETS recorditnow_helper DESTINATION ${LIBEXEC_INSTALL_DIR})
+kde4_add_executable(recorditnow_helper ${HELPER_SRCS})
+target_link_libraries(recorditnow_helper ${KDE4_KDECORE_LIBS})
+install(TARGETS recorditnow_helper DESTINATION ${LIBEXEC_INSTALL_DIR})
 
-    kde4_install_auth_helper_files(recorditnow_helper org.kde.recorditnow.helper root)
-    kde4_install_auth_actions(org.kde.recorditnow.helper helper.actions)
+kde4_install_auth_helper_files(recorditnow_helper org.kde.recorditnow.helper root)
+kde4_install_auth_actions(org.kde.recorditnow.helper helper.actions)
 
 
