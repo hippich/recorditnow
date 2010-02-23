@@ -180,7 +180,6 @@ void RecordItNowPluginManager::loadPluginList()
         printf("*********************************\n");
     }
     loadInfos("RecordItNowEncoder");
-    loadInfos("RecordItNowUploader");
 
     emit pluginsChanged();
 
