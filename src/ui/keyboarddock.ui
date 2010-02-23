@@ -69,6 +69,9 @@
         <property name="spacing">
          <number>0</number>
         </property>
+        <property name="margin">
+         <number>2</number>
+        </property>
        </layout>
       </widget>
      </widget>

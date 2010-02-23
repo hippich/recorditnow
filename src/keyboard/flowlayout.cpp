@@ -30,6 +30,7 @@ FlowLayout::FlowLayout()
 {
 
     setSpacing(10);
+    setMargin(0);
 
 }
 
