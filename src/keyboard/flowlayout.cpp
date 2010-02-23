@@ -45,7 +45,7 @@ FlowLayout::~FlowLayout()
 void FlowLayout::addItem(QLayoutItem *item)
 {
 
-    itemList.append(item);
+    m_itemList.append(item);
 
 }
 
@@ -53,7 +53,7 @@ void FlowLayout::addItem(QLayoutItem *item)
 int FlowLayout::count() const
 {
 
-    return itemList.size();
+    return m_itemList.size();
 
 }
 
@@ -61,15 +61,15 @@ int FlowLayout::count() const
 QLayoutItem *FlowLayout::itemAt(int index) const
 {
 
-    return itemList.value(index);
+    return m_itemList.value(index);
 
 }
 
 
 QLayoutItem *FlowLayout::takeAt(int index)
 {
-    if (index >= 0 && index < itemList.size()) {
-        return itemList.takeAt(index);
+    if (index >= 0 && index < m_itemList.size()) {
+        return m_itemList.takeAt(index);
     } else {
         return 0;
     }
@@ -166,7 +166,7 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
     int y = rect.y();
     int lineHeight = 0;
 
-    foreach (QLayoutItem *item, itemList) {
+    foreach (QLayoutItem *item, m_itemList) {
         int nextX = x + m_itemHeight + spacing();
         if (nextX - spacing() > rect.right() && lineHeight > 0) {
             x = rect.x();

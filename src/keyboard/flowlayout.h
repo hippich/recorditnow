@@ -51,7 +51,7 @@ public:
  private:
     int doLayout(const QRect &rect, bool testOnly) const;
     int m_itemHeight;
-    QList<QLayoutItem *> itemList;
+    QList<QLayoutItem*> m_itemList;
 
 
 };
