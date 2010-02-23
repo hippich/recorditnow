@@ -72,6 +72,11 @@ void KeyboardKeyPage::initializePage()
 void KeyboardKeyPage::start()
 {
 
+    if (m_device.isEmpty()) {
+        KMessageBox::error(this, i18n("Please select a device."));
+        return;
+    }
+
     startButton->setDisabled(true);
     m_key = -1;
     keyEdit->clear();
