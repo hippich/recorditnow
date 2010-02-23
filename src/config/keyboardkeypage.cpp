@@ -79,7 +79,9 @@ void KeyboardKeyPage::start()
 
     startButton->setDisabled(true);
     m_key = -1;
-    keyEdit->clear();
+
+    keyLabel->clear();
+    keyCodeLabel->clear();
 
     if (!KeyMonManager::self()->start(QStringList() << m_device)) {
         KMessageBox::error(this, i18n("An error occurd: %1", KeyMonManager::self()->error()));
@@ -204,7 +206,8 @@ void KeyboardKeyPage::keyReleaseEvent(QKeyEvent *event)
             text = i18n("Special key");
         }
 
-        keyEdit->setText(text);
+        keyLabel->setText(text);
+        keyCodeLabel->setText(QString::number(m_key));
     } else {
         KMessageBox::information(this, i18n("Grab failed!\n"
                                             "Perhaps you have selected the wrong device."));
