@@ -74,9 +74,7 @@ KeyboardDock::~KeyboardDock()
 void KeyboardDock::init(const QList<KeyboardKey> &map)
 {
 
-    while (m_layout->count() != 0) {
-        delete m_layout->takeAt(0);
-    }
+    m_layout->clear();
     m_keyList.clear();
 
     foreach (const KeyboardKey &key, map) {

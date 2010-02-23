@@ -45,6 +45,7 @@ public:
     void addItem(QLayoutItem *item);
     void setGeometry(const QRect &rect);
     void setItemHeight(const int &height);
+    void clear();
 
 
  private:

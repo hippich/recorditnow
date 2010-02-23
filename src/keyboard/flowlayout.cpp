@@ -37,9 +37,7 @@ FlowLayout::FlowLayout()
 FlowLayout::~FlowLayout()
 {
 
-    while (count() != 0) {
-        delete takeAt(0);
-    }
+    clear();
 
 }
 
@@ -121,6 +119,20 @@ void FlowLayout::setItemHeight(const int &height)
 
     m_itemHeight = height;
     doLayout(geometry(), false);
+
+}
+
+
+void FlowLayout::clear()
+{
+
+    while (count() != 0) {
+        QLayoutItem *item = takeAt(0);
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
 
 }
 
