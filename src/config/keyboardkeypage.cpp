@@ -126,6 +126,18 @@ void KeyboardKeyPage::keymonStopped()
 }
 
 
+void KeyboardKeyPage::keyPressEvent(QKeyEvent *event)
+{
+
+    if (!m_grab) {
+        QWizardPage::keyPressEvent(event);
+    } else { // don`t close the dialog if the user presses Esc
+        event->accept();
+    }
+
+}
+
+
 void KeyboardKeyPage::keyReleaseEvent(QKeyEvent *event)
 {
 
