@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>452</width>
-    <height>327</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,92 +58,101 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string extracomment="@label">Mouse button</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="KComboBox" name="buttonCombo"/>
-        </item>
-        <item>
-         <widget class="KPushButton" name="addButton">
-          <property name="text">
-           <string extracomment="@action:button">Add</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QTreeWidget" name="treeWidget">
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="title">
+         <string extracomment="@title:group">Mouse Buttons</string>
         </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>false</bool>
-        </property>
-        <property name="uniformRowHeights">
-         <bool>false</bool>
-        </property>
-        <property name="animated">
-         <bool>false</bool>
-        </property>
-        <property name="columnCount">
-         <number>3</number>
-        </property>
-        <attribute name="headerDefaultSectionSize">
-         <number>100</number>
-        </attribute>
-        <attribute name="headerMinimumSectionSize">
-         <number>22</number>
-        </attribute>
-        <attribute name="headerStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="headerDefaultSectionSize">
-         <number>100</number>
-        </attribute>
-        <attribute name="headerMinimumSectionSize">
-         <number>22</number>
-        </attribute>
-        <attribute name="headerStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string extracomment="@title:column">Remove</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string extracomment="@title:column">Mouse Button</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string extracomment="@title:column">Color</string>
-         </property>
-        </column>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string extracomment="@label">Mouse button</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="KComboBox" name="buttonCombo"/>
+           </item>
+           <item>
+            <widget class="KPushButton" name="addButton">
+             <property name="text">
+              <string extracomment="@action:button">Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTreeWidget" name="treeWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>false</bool>
+           </property>
+           <property name="uniformRowHeights">
+            <bool>false</bool>
+           </property>
+           <property name="animated">
+            <bool>false</bool>
+           </property>
+           <property name="columnCount">
+            <number>3</number>
+           </property>
+           <attribute name="headerDefaultSectionSize">
+            <number>100</number>
+           </attribute>
+           <attribute name="headerMinimumSectionSize">
+            <number>22</number>
+           </attribute>
+           <attribute name="headerStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="headerDefaultSectionSize">
+            <number>100</number>
+           </attribute>
+           <attribute name="headerMinimumSectionSize">
+            <number>22</number>
+           </attribute>
+           <attribute name="headerStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string extracomment="@title:column">Remove</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string extracomment="@title:column">Mouse Button</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string extracomment="@title:column">Color</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>

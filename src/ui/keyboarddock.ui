@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>187</height>
+    <height>89</height>
    </rect>
   </property>
   <property name="floating">
@@ -50,7 +50,7 @@
          <x>0</x>
          <y>0</y>
          <width>394</width>
-         <height>162</height>
+         <height>64</height>
         </rect>
        </property>
        <property name="sizePolicy">
