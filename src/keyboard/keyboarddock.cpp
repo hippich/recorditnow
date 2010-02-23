@@ -22,6 +22,8 @@
 #include "keyboarddock.h"
 #include "keywidget.h"
 #include "../keymonmanager.h"
+#include "flowlayout.h"
+#include <recorditnow.h>
 
 // KDE
 #include <kauth.h>
@@ -31,6 +33,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QTimer>
 #include <QtGui/QMainWindow>
+#include <QtGui/QSlider>
 
 
 KeyboardDock::KeyboardDock(QWidget *parent)
@@ -45,8 +48,19 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 
     connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
             SLOT(keyPressed(KeyMon::Event)));
-    connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this,
-            SLOT(relayout(Qt::DockWidgetArea)));
+
+    m_layout = new FlowLayout;
+    mainLayout->addLayout(m_layout);
+
+    QWidget *title = new QWidget(this);
+    ui_title.setupUi(title);
+
+    ui_title.sizeSlider->setValue(Settings::keySize());
+    connect(ui_title.sizeSlider, SIGNAL(valueChanged(int)), this, SLOT(sizeChanged(int)));
+
+    setTitleBarWidget(title);
+
+    sizeChanged(Settings::keySize());
 
 }
 
@@ -54,24 +68,22 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 KeyboardDock::~KeyboardDock()
 {
 
-
 }
 
 
 void KeyboardDock::init(const QList<KeyboardKey> &map)
 {
 
-    foreach (KeyWidget *widget, m_keyList) {
-        keyLayout->removeWidget(widget);
-        delete widget;
+    while (m_layout->count() != 0) {
+        delete m_layout->takeAt(0);
     }
     m_keyList.clear();
 
     foreach (const KeyboardKey &key, map) {
         KeyWidget *widget = new KeyWidget(key.second, key.first, this);
         m_keyList.append(widget);
+        m_layout->addWidget(widget);
     }
-    relayout(static_cast<QMainWindow*>(parentWidget())->dockWidgetArea(this));
 
 }
 
@@ -94,23 +106,12 @@ void KeyboardDock::keyPressed(const KeyMon::Event &event)
 }
 
 
-void KeyboardDock::relayout(const Qt::DockWidgetArea &area)
+void KeyboardDock::sizeChanged(const int &value)
 {
 
-    foreach (KeyWidget *widget, m_keyList) {
-        keyLayout->removeWidget(widget);
-    }
-
-    foreach (KeyWidget *widget, m_keyList) {
-        switch (area) {
-        case Qt::LeftDockWidgetArea:
-        case Qt::RightDockWidgetArea: keyLayout->addWidget(widget, keyLayout->rowCount(), 0); break;
-        case Qt::TopDockWidgetArea:
-        case Qt::BottomDockWidgetArea:
-        default: keyLayout->addWidget(widget, 0, keyLayout->columnCount()); break;
-        }
-    }
-
+    m_layout->setItemHeight(value);
+    Settings::self()->setKeySize(value);
+    scrollAreaWidgetContents->adjustSize();
 
 }
 

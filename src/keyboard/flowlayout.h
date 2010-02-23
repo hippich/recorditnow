@@ -17,49 +17,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYBOARDDOCK_H
-#define KEYBOARDDOCK_H
+#ifndef FLOWLAYOUT_H
+#define FLOWLAYOUT_H
 
-
-// own
-#include "ui_keyboarddock.h"
-#include "ui_keyboarddocktitlewidget.h"
-#include "../keymon/event.h"
-#include "../config/keyboardconfig.h"
 
 // Qt
-#include <QtGui/QDockWidget>
-#include <QtCore/QVariantMap>
+#include <QtGui/QLayout>
 
 
-class FlowLayout;
-class KeyWidget;
-class KConfig;
-class KConfigGroup;
-class KeyboardDock: public QDockWidget, Ui::KeyboardDock
+class FlowLayout : public QLayout
 {
-    Q_OBJECT
 
 
 public:
-    explicit KeyboardDock(QWidget *parent = 0);
-    ~KeyboardDock();
+    FlowLayout();
+    ~FlowLayout();
 
-    void init(const QList<KeyboardKey> &map);
+    Qt::Orientations expandingDirections() const;
+    bool hasHeightForWidth() const;
+    int heightForWidth(int) const;
+    int count() const;
+    QLayoutItem *itemAt(int index) const;
+    QSize minimumSize() const;
+    QSize sizeHint() const;
+    QLayoutItem *takeAt(int index);
+
+    void addItem(QLayoutItem *item);
+    void setGeometry(const QRect &rect);
+    void setItemHeight(const int &height);
 
 
-private:
-    Ui::KeyboardDockTitleWidget ui_title;
-    QList<KeyWidget*> m_keyList;
-    FlowLayout *m_layout;
-
-
-private slots:
-    void keyPressed(const KeyMon::Event &event);
-    void sizeChanged(const int &value);
+ private:
+    int doLayout(const QRect &rect, bool testOnly) const;
+    int m_itemHeight;
+    QList<QLayoutItem *> itemList;
 
 
 };
 
 
-#endif // KEYBOARDDOCK_H
+#endif // FLOWLAYOUT_H

@@ -39,8 +39,8 @@ KeyWidget::KeyWidget(const QString &image, const int &code, QWidget *parent)
     m_keyCode = code;
 
     setContentsMargins(2, 2, 2, 2);
-    setMinimumSize(50, 50);
-    setMaximumSize(100, 100);
+    setMinimumSize(36, 36);
+    setMaximumSize(200, 200);
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);

@@ -88,6 +88,9 @@
     </entry>
     <entry name="keyboardDevice" type="Url">
     </entry>
+    <entry name="keySize" type="Int">
+            <default>50</default>
+    </entry>
   </group>
   <group name="Zoom">
     <entry name="zoomFactor" type="Int">

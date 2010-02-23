@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>152</height>
+    <height>187</height>
    </rect>
   </property>
   <property name="floating">
@@ -50,7 +50,7 @@
          <x>0</x>
          <y>0</y>
          <width>394</width>
-         <height>127</height>
+         <height>162</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -65,15 +65,9 @@
          <height>0</height>
         </size>
        </property>
-       <layout class="QGridLayout" name="keyLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-        <property name="margin">
-         <number>0</number>
-        </property>
+       <layout class="QVBoxLayout" name="mainLayout">
         <property name="spacing">
-         <number>-1</number>
+         <number>0</number>
         </property>
        </layout>
       </widget>

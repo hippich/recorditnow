@@ -59,6 +59,7 @@ set(gui_SRCS
 
    keyboard/keyboarddock.cpp
    keyboard/keywidget.cpp
+   keyboard/flowlayout.cpp
 
    config/configdialog.cpp
    config/frameconfig.cpp
@@ -95,6 +96,7 @@ kde4_add_ui_files(gui_SRCS
     ui/keyboardconfig.ui
     ui/keyboardkeypage.ui
     ui/keyboardkeyiconpage.ui
+    ui/keyboarddocktitlewidget.ui
     ui/devicesearchdialog.ui
     ui/shortcutsconfig.ui
     ui/pluginconfig.ui)
