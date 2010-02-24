@@ -65,7 +65,7 @@ Device::~Device()
 {
 
     if (m_socketNotifier) {
-        close(m_socketNotifier->socket());
+        close(m_socketNotifier->socket());  // krazy:exclude=syscalls
         delete m_socketNotifier;
     }
 
