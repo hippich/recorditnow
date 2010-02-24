@@ -50,7 +50,7 @@ KeyMonManager::KeyMonManager(QObject *parent)
 KeyMonManager::~KeyMonManager()
 {
 
-    stop();
+//    stop(); crash
 
 }
 

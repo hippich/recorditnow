@@ -981,6 +981,7 @@ void MainWindow::backendChanged(const QString &newBackend)
 void MainWindow::aboutToQuit()
 {
 
+    KeyMonManager::self()->stop();
     deleteLater(); // bug???
 
 }
