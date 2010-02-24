@@ -212,7 +212,7 @@ void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const Q
 
     for (int i = 0; i < listWidget->count(); i++) {
         if (listWidget->item(i)->data(Qt::UserRole+1).toInt() == key) {
-            KMessageBox::error(this, i18n("There is already a key '%1' in your list!", key));
+            KMessageBox::error(this, i18n("There is already a key with code '%1' in your list!", key));
             return;
         }
 
