@@ -30,7 +30,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string extracomment="@label">Total duration</string>
+          <string>Total duration</string>
          </property>
         </widget>
        </item>
@@ -55,17 +55,17 @@
          </property>
          <column>
           <property name="text">
-           <string extracomment="@title:column">Topic</string>
+           <string>Topic</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string extracomment="@title:column">Icon</string>
+           <string>Icon</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string extracomment="@title:column">Duration</string>
+           <string>Duration</string>
           </property>
          </column>
         </widget>
@@ -75,7 +75,7 @@
          <item>
           <widget class="KPushButton" name="addButton">
            <property name="text">
-            <string extracomment="@action:button">Add</string>
+            <string>Add</string>
            </property>
           </widget>
          </item>
@@ -85,7 +85,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string extracomment="@action:button">Remove</string>
+            <string>Remove</string>
            </property>
           </widget>
          </item>
@@ -95,7 +95,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string extracomment="@action:button">Move Up</string>
+            <string>Move Up</string>
            </property>
           </widget>
          </item>
@@ -105,7 +105,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string extracomment="@action:button">Move Down</string>
+            <string>Move Down</string>
            </property>
           </widget>
          </item>

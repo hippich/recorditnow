@@ -20,7 +20,7 @@
    <item>
     <widget class="QGroupBox" name="kcfg_showTimeLine">
      <property name="title">
-      <string extracomment="@title:group">Enable the Timeline</string>
+      <string>Enable the Timeline</string>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -38,14 +38,14 @@
       <item row="0" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_timeLineStop">
         <property name="text">
-         <string extracomment="@option:check">Stop recording when the timeline reaches the end</string>
+         <string>Stop recording when the timeline reaches the end</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_timelineNotifications">
         <property name="text">
-         <string extracomment="@option:check">Enable Notifications</string>
+         <string>Enable Notifications</string>
         </property>
        </widget>
       </item>

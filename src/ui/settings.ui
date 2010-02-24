@@ -20,7 +20,7 @@
    <item row="0" column="0">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string extracomment="@title:group">Behavior </string>
+      <string>Behavior </string>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
       <property name="fieldGrowthPolicy">
@@ -36,28 +36,28 @@
       <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_hideOnRecord">
         <property name="text">
-         <string extracomment="@option:check">Hide RecordItNow during record</string>
+         <string>Hide RecordItNow during record</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_overwrite">
         <property name="text">
-         <string extracomment="@option:check">Overwrite existing files</string>
+         <string>Overwrite existing files</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_showVideo">
         <property name="text">
-         <string extracomment="@option:check">Show file after record</string>
+         <string>Show file after record</string>
         </property>
        </widget>
       </item>
       <item row="6" column="0">
        <widget class="QCheckBox" name="kcfg_encode">
         <property name="text">
-         <string extracomment="@option:check">Encode after record</string>
+         <string>Encode after record</string>
         </property>
        </widget>
       </item>
@@ -80,7 +80,7 @@
       <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_stayOnTop">
         <property name="text">
-         <string extracomment="@option:check">Stay above all other windows during record</string>
+         <string>Stay above all other windows during record</string>
         </property>
        </widget>
       </item>
@@ -90,7 +90,7 @@
    <item row="1" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string extracomment="@title:group">Miscellaneous</string>
+      <string>Miscellaneous</string>
      </property>
      <layout class="QFormLayout" name="formLayout_4">
       <property name="fieldGrowthPolicy">
@@ -99,7 +99,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string extracomment="@label">Directory for temporary files:</string>
+         <string>Directory for temporary files:</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

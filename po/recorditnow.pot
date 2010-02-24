@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2010-02-23 22:28+0100\n"
+"POT-Creation-Date: 2010-02-24 11:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -778,7 +778,16 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
 #. i18n: file: plugins/encoder/mencoder/ui/mencoder.ui:54
 #. i18n: ectx: property (text), widget (QToolButton, addButton)
-#: rc.cpp:21 rc.cpp:24 rc.cpp:48 rc.cpp:51
+#. i18n: file: ui/frameconfig.ui:76
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#. i18n: file: ui/keyboardconfig.ui:109
+#. i18n: ectx: property (text), widget (QPushButton, addButton)
+#. i18n: file: ui/mouse.ui:81
+#. i18n: ectx: property (text), widget (KPushButton, addButton)
+#. i18n: file: ui/timelinetopics.ui:78
+#. i18n: ectx: property (text), widget (KPushButton, addButton)
+#: rc.cpp:21 rc.cpp:24 rc.cpp:48 rc.cpp:51 rc.cpp:238 rc.cpp:271 rc.cpp:331
+#: rc.cpp:413
 msgid "Add"
 msgstr ""
 
@@ -802,7 +811,16 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
 #. i18n: file: plugins/encoder/mencoder/ui/mencoder.ui:74
 #. i18n: ectx: property (text), widget (QToolButton, removeButton)
-#: rc.cpp:33 rc.cpp:36 rc.cpp:60 rc.cpp:63
+#. i18n: file: ui/frameconfig.ui:83
+#. i18n: ectx: property (text), widget (QPushButton, removeButton)
+#. i18n: file: ui/keyboardconfig.ui:75
+#. i18n: ectx: property (text), widget (QPushButton, removeButton)
+#. i18n: file: ui/mouse.ui:140
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#. i18n: file: ui/timelinetopics.ui:88
+#. i18n: ectx: property (text), widget (KPushButton, removeButton)
+#: rc.cpp:33 rc.cpp:36 rc.cpp:60 rc.cpp:63 rc.cpp:241 rc.cpp:262 rc.cpp:334
+#: rc.cpp:416
 msgid "Remove"
 msgstr ""
 
@@ -860,7 +878,11 @@ msgstr ""
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:96
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
-#: rc.cpp:88
+#. i18n: file: ui/keyboardconfig.ui:56
+#. i18n: ectx: property (text), widget (QPushButton, searchButton)
+#. i18n: file: ui/mouse.ui:54
+#. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
+#: rc.cpp:88 rc.cpp:256 rc.cpp:322
 msgid "Search"
 msgstr ""
 
@@ -940,7 +962,9 @@ msgstr ""
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:318
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
-#: rc.cpp:135
+#. i18n: file: ui/settings.ui:93
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:135 rc.cpp:385
 msgid "Miscellaneous"
 msgstr ""
 
@@ -958,7 +982,9 @@ msgstr ""
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:343
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
-#: rc.cpp:144
+#. i18n: file: ui/zoom.ui:26
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
+#: rc.cpp:144 rc.cpp:452
 msgid "Follow the mouse"
 msgstr ""
 
@@ -978,7 +1004,9 @@ msgstr ""
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:45
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: rc.cpp:162
+#. i18n: file: ui/mouse.ui:257
+#. i18n: ectx: property (text), widget (QLabel, opacityLabel)
+#: rc.cpp:162 rc.cpp:358
 msgid "Opacity"
 msgstr ""
 
@@ -1063,7 +1091,6 @@ msgstr ""
 #. i18n: file: ui/frameconfig.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:223
-msgctxt "@title:group"
 msgid "Frame Sizes"
 msgstr ""
 
@@ -1074,177 +1101,130 @@ msgctxt "The name of the new item"
 msgid "Name:"
 msgstr ""
 
-#. i18n: file: ui/frameconfig.ui:52
+#. i18n: file: ui/frameconfig.ui:55
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:229
 msgctxt "The name of the item"
 msgid "Name"
 msgstr ""
 
-#. i18n: file: ui/frameconfig.ui:57
+#. i18n: file: ui/frameconfig.ui:60
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:232
 msgctxt "the width of the frame"
 msgid "Width"
 msgstr ""
 
-#. i18n: file: ui/frameconfig.ui:62
+#. i18n: file: ui/frameconfig.ui:65
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:235
 msgctxt "the height of the frame"
 msgid "Height"
 msgstr ""
 
-#. i18n: file: ui/frameconfig.ui:73
-#. i18n: ectx: property (text), widget (QPushButton, addButton)
-#. i18n: file: ui/keyboardconfig.ui:109
-#. i18n: ectx: property (text), widget (QPushButton, addButton)
-#. i18n: file: ui/mouse.ui:81
-#. i18n: ectx: property (text), widget (KPushButton, addButton)
-#. i18n: file: ui/timelinetopics.ui:78
-#. i18n: ectx: property (text), widget (KPushButton, addButton)
-#: rc.cpp:238 rc.cpp:271 rc.cpp:331 rc.cpp:413
-msgctxt "@action:button"
-msgid "Add"
-msgstr ""
-
-#. i18n: file: ui/frameconfig.ui:80
-#. i18n: ectx: property (text), widget (QPushButton, removeButton)
-#. i18n: file: ui/keyboardconfig.ui:75
-#. i18n: ectx: property (text), widget (QPushButton, removeButton)
-#. i18n: file: ui/timelinetopics.ui:88
-#. i18n: ectx: property (text), widget (KPushButton, removeButton)
-#: rc.cpp:241 rc.cpp:262 rc.cpp:416
-msgctxt "@action:button"
-msgid "Remove"
-msgstr ""
-
-#. i18n: file: ui/frameconfig.ui:87
+#. i18n: file: ui/frameconfig.ui:90
 #. i18n: ectx: property (text), widget (QPushButton, upButton)
 #. i18n: file: ui/keyboardconfig.ui:82
 #. i18n: ectx: property (text), widget (QPushButton, upButton)
 #. i18n: file: ui/timelinetopics.ui:98
 #. i18n: ectx: property (text), widget (KPushButton, upButton)
 #: rc.cpp:244 rc.cpp:265 rc.cpp:419
-msgctxt "@action:button"
 msgid "Move Up"
 msgstr ""
 
-#. i18n: file: ui/frameconfig.ui:94
+#. i18n: file: ui/frameconfig.ui:97
 #. i18n: ectx: property (text), widget (QPushButton, downButton)
 #. i18n: file: ui/keyboardconfig.ui:89
 #. i18n: ectx: property (text), widget (QPushButton, downButton)
 #. i18n: file: ui/timelinetopics.ui:108
 #. i18n: ectx: property (text), widget (KPushButton, downButton)
 #: rc.cpp:247 rc.cpp:268 rc.cpp:422
-msgctxt "@action:button"
 msgid "Move Down"
 msgstr ""
 
 #. i18n: file: ui/keyboardconfig.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_enableKeyboard)
 #: rc.cpp:250
-msgctxt "@title:group"
 msgid "Enable The Keyboard Monitor"
 msgstr ""
 
 #. i18n: file: ui/keyboardconfig.ui:37
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:253
-msgctxt "@label:textbox"
+#. i18n: file: ui/mouse.ui:37
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:253 rc.cpp:319
 msgid "Device:"
-msgstr ""
-
-#. i18n: file: ui/keyboardconfig.ui:56
-#. i18n: ectx: property (text), widget (QPushButton, searchButton)
-#. i18n: file: ui/mouse.ui:54
-#. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
-#: rc.cpp:256 rc.cpp:322
-msgctxt "@action:button"
-msgid "Search"
 msgstr ""
 
 #. i18n: file: ui/keyboardconfig.ui:67
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:259
-msgctxt "@title:group"
 msgid "Keys"
 msgstr ""
 
 #. i18n: file: ui/keyboarddocktitlewidget.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:274
-msgctxt "@label"
 msgid "Keyboard Monitor"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, KeyboardKeyIconPage)
 #: rc.cpp:277
-msgctxt "@title"
 msgid "Key Icon"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, KeyboardKeyIconPage)
 #: rc.cpp:280
-msgctxt "@label"
 msgid "Please select an icon"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:283
-msgctxt "@label:textbox"
 msgid "Icon:"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:71
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:286
-msgctxt "@label:textbox"
 msgid "Search:"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, KeyboardKeyPage)
 #: rc.cpp:289
-msgctxt "@title"
 msgid "Key"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, KeyboardKeyPage)
 #: rc.cpp:292
-msgctxt "@label"
 msgid "Please click on Start and press a key"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:29
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:295
-msgctxt "@title:group"
 msgid "Information"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:35
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:298
-msgctxt "@label"
 msgid "Key:"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:301
-msgctxt "@label"
 msgid "Code:"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:103
 #. i18n: ectx: property (text), widget (QPushButton, startButton)
 #: rc.cpp:304
-msgctxt "@action:button"
 msgid "Start"
 msgstr ""
 
@@ -1263,105 +1243,74 @@ msgstr ""
 #. i18n: file: ui/mouse.ui:26
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showActivity)
 #: rc.cpp:316
-msgctxt "@title:group"
 msgid "Show mouse clicks"
-msgstr ""
-
-#. i18n: file: ui/mouse.ui:37
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: rc.cpp:319
-msgctxt "@label"
-msgid "Device:"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:325
-msgctxt "@title:group"
 msgid "Mouse Buttons"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:71
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:328
-msgctxt "@label"
 msgid "Mouse button"
-msgstr ""
-
-#. i18n: file: ui/mouse.ui:140
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:334
-msgctxt "@title:column"
-msgid "Remove"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:145
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: rc.cpp:337
-msgctxt "@title:column"
 msgid "Mouse Button"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:150
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: rc.cpp:340
-msgctxt "@title:column"
 msgid "Color"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:161
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:343
-msgctxt "@title:group"
 msgid "Appearance"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:169
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:346
-msgctxt "@label"
 msgid "Mode"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:178
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_led)
 #: rc.cpp:349
-msgctxt "@option:radio"
 msgid "LED next to the mouse cursor"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:188
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_circle)
 #: rc.cpp:352
-msgctxt "@option:radio"
 msgid "Circle under the mouse cursor"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:228
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:355
-msgctxt "@label"
+#. i18n: file: ui/zoom.ui:63
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:355 rc.cpp:462
 msgid "Size"
-msgstr ""
-
-#. i18n: file: ui/mouse.ui:257
-#. i18n: ectx: property (text), widget (QLabel, opacityLabel)
-#: rc.cpp:358
-msgctxt "@label"
-msgid "Opacity"
 msgstr ""
 
 #. i18n: file: ui/mouse.ui:264
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mouseWidgetAlwaysVisible)
 #: rc.cpp:361
-msgctxt "@option:check"
 msgid "Always visible"
 msgstr ""
 
 #. i18n: file: ui/settings.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:364
-msgctxt "@title:group"
 msgid "Behavior "
 msgstr ""
 
@@ -1374,98 +1323,78 @@ msgstr ""
 #. i18n: file: ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
 #: rc.cpp:370
-msgctxt "@option:check"
 msgid "Hide RecordItNow during record"
 msgstr ""
 
 #. i18n: file: ui/settings.ui:46
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
 #: rc.cpp:373
-msgctxt "@option:check"
 msgid "Overwrite existing files"
 msgstr ""
 
 #. i18n: file: ui/settings.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
 #: rc.cpp:376
-msgctxt "@option:check"
 msgid "Show file after record"
 msgstr ""
 
 #. i18n: file: ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
 #: rc.cpp:379
-msgctxt "@option:check"
 msgid "Encode after record"
 msgstr ""
 
 #. i18n: file: ui/settings.ui:83
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_stayOnTop)
 #: rc.cpp:382
-msgctxt "@option:check"
 msgid "Stay above all other windows during record"
-msgstr ""
-
-#. i18n: file: ui/settings.ui:93
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: rc.cpp:385
-msgctxt "@title:group"
-msgid "Miscellaneous"
 msgstr ""
 
 #. i18n: file: ui/settings.ui:102
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:388
-msgctxt "@label"
 msgid "Directory for temporary files:"
 msgstr ""
 
 #. i18n: file: ui/timelineconfig.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
 #: rc.cpp:391
-msgctxt "@title:group"
 msgid "Enable the Timeline"
 msgstr ""
 
 #. i18n: file: ui/timelineconfig.ui:41
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timeLineStop)
 #: rc.cpp:394
-msgctxt "@option:check"
 msgid "Stop recording when the timeline reaches the end"
 msgstr ""
 
 #. i18n: file: ui/timelineconfig.ui:48
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timelineNotifications)
 #: rc.cpp:397
-msgctxt "@option:check"
 msgid "Enable Notifications"
 msgstr ""
 
 #. i18n: file: ui/timelinetopics.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:400
-msgctxt "@label"
 msgid "Total duration"
 msgstr ""
 
 #. i18n: file: ui/timelinetopics.ui:58
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: rc.cpp:404
-msgctxt "@title:column"
 msgid "Topic"
 msgstr ""
 
 #. i18n: file: ui/timelinetopics.ui:63
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: rc.cpp:407
-msgctxt "@title:column"
 msgid "Icon"
 msgstr ""
 
 #. i18n: file: ui/timelinetopics.ui:68
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: rc.cpp:410
-msgctxt "@title:column"
 msgid "Duration"
 msgstr ""
 
@@ -1513,45 +1442,27 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#. i18n: file: ui/zoom.ui:26
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
-#: rc.cpp:452
-msgctxt "@option:check"
-msgid "Follow the mouse"
-msgstr ""
-
 #. i18n: file: ui/zoom.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomHighQuality)
 #: rc.cpp:455
-msgctxt "@option:check"
 msgid "High quality"
 msgstr ""
 
 #. i18n: file: ui/zoom.ui:40
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:458
-msgctxt "@label"
 msgid "Default zoom factor"
-msgstr ""
-
-#. i18n: file: ui/zoom.ui:63
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:462
-msgctxt "@title:group"
-msgid "Size"
 msgstr ""
 
 #. i18n: file: ui/zoom.ui:71
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:465
-msgctxt "@label"
 msgid "Width"
 msgstr ""
 
 #. i18n: file: ui/zoom.ui:88
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:468
-msgctxt "@label"
 msgid "Height"
 msgstr ""
 

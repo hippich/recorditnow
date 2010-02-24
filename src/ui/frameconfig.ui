@@ -20,7 +20,7 @@
    <item row="0" column="1">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string extracomment="@title:group">Frame Sizes</string>
+      <string>Frame Sizes</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -28,7 +28,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string comment="The name of the new item" extracomment="@label">Name:</string>
+           <string comment="The name of the new item">Name:</string>
           </property>
          </widget>
         </item>
@@ -39,6 +39,9 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_3">
+        <property name="spacing">
+         <number>-1</number>
+        </property>
         <item row="0" column="0" rowspan="5">
          <widget class="QTreeWidget" name="sizeTree">
           <property name="alternatingRowColors">
@@ -49,17 +52,17 @@
           </property>
           <column>
            <property name="text">
-            <string comment="The name of the item" extracomment="@title:column">Name</string>
+            <string comment="The name of the item">Name</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string comment="the width of the frame" extracomment="@title:column">Width</string>
+            <string comment="the width of the frame">Width</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string comment="the height of the frame" extracomment="@title:column">Height</string>
+            <string comment="the height of the frame">Height</string>
            </property>
           </column>
          </widget>
@@ -70,28 +73,28 @@
            <string/>
           </property>
           <property name="text">
-           <string extracomment="@action:button">Add</string>
+           <string>Add</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
          <widget class="QPushButton" name="removeButton">
           <property name="text">
-           <string extracomment="@action:button">Remove</string>
+           <string>Remove</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <widget class="QPushButton" name="upButton">
           <property name="text">
-           <string extracomment="@action:button">Move Up</string>
+           <string>Move Up</string>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
          <widget class="QPushButton" name="downButton">
           <property name="text">
-           <string extracomment="@action:button">Move Down</string>
+           <string>Move Down</string>
           </property>
          </widget>
         </item>

@@ -14,10 +14,10 @@
    <string notr="true"/>
   </property>
   <property name="title">
-   <string extracomment="@title">Key Icon</string>
+   <string>Key Icon</string>
   </property>
   <property name="subTitle">
-   <string extracomment="@label">Please select an icon</string>
+   <string>Please select an icon</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="horizontalSpacing">
@@ -29,7 +29,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string extracomment="@label:textbox">Icon:</string>
+      <string>Icon:</string>
      </property>
     </widget>
    </item>
@@ -68,7 +68,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string extracomment="@label:textbox">Search:</string>
+      <string>Search:</string>
      </property>
     </widget>
    </item>

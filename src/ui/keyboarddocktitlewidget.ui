@@ -23,7 +23,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string extracomment="@label">Keyboard Monitor</string>
+      <string>Keyboard Monitor</string>
      </property>
     </widget>
    </item>

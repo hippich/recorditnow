@@ -14,10 +14,10 @@
    <string notr="true"/>
   </property>
   <property name="title">
-   <string extracomment="@title">Key</string>
+   <string>Key</string>
   </property>
   <property name="subTitle">
-   <string extracomment="@label">Please click on Start and press a key</string>
+   <string>Please click on Start and press a key</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -26,20 +26,20 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string extracomment="@title:group">Information</string>
+      <string>Information</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string extracomment="@label">Key:</string>
+         <string>Key:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string extracomment="@label">Code:</string>
+         <string>Code:</string>
         </property>
        </widget>
       </item>
@@ -100,7 +100,7 @@
      <item>
       <widget class="QPushButton" name="startButton">
        <property name="text">
-        <string extracomment="@action:button">Start</string>
+        <string>Start</string>
        </property>
       </widget>
      </item>

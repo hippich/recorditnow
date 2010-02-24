@@ -23,21 +23,21 @@
    <item row="0" column="0" colspan="2">
     <widget class="QCheckBox" name="kcfg_zoomFollow">
      <property name="text">
-      <string extracomment="@option:check">Follow the mouse</string>
+      <string>Follow the mouse</string>
      </property>
     </widget>
    </item>
    <item row="1" column="0" colspan="2">
     <widget class="QCheckBox" name="kcfg_zoomHighQuality">
      <property name="text">
-      <string extracomment="@option:check">High quality</string>
+      <string>High quality</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string extracomment="@label">Default zoom factor</string>
+      <string>Default zoom factor</string>
      </property>
     </widget>
    </item>
@@ -60,7 +60,7 @@
    <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string extracomment="@title:group">Size</string>
+      <string>Size</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -68,7 +68,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string extracomment="@label">Width</string>
+           <string>Width</string>
           </property>
          </widget>
         </item>
@@ -85,7 +85,7 @@
         <item row="1" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string extracomment="@label">Height</string>
+           <string>Height</string>
           </property>
          </widget>
         </item>
