@@ -65,6 +65,7 @@ Device::~Device()
 {
 
     if (m_socketNotifier) {
+        close(m_socketNotifier->socket());
         delete m_socketNotifier;
     }
 
