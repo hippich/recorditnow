@@ -175,7 +175,7 @@ void CursorWidget::switchToPreviewMode()
 void CursorWidget::start()
 {
 
-    m_timer->start(1000/25);
+    m_timer->start(1000/50);
 
     if (m_show) {
         show();
