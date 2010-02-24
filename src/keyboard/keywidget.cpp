@@ -32,11 +32,9 @@
 #include <QtGui/QSizePolicy>
 
 
-KeyWidget::KeyWidget(const QString &image, const int &code, QWidget *parent)
-    : QWidget(parent), m_image(image), m_pressed(false)
+KeyWidget::KeyWidget(const KeyboardKey &key, QWidget *parent)
+    : QWidget(parent), m_key(key), m_image(key.icon()), m_pressed(false)
 {
-
-    m_keyCode = code;
 
     setContentsMargins(2, 2, 2, 2);
     setMinimumSize(36, 36);
@@ -60,7 +58,7 @@ KeyWidget::~KeyWidget()
 int KeyWidget::keyCode() const
 {
 
-    return m_keyCode;
+    return m_key.code();
 
 }
 

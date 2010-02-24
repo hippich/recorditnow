@@ -21,6 +21,9 @@
 #define KEYWIDGET_H
 
 
+// own
+#include "keyboardkey.h"
+
 // Qt
 #include <QtGui/QWidget>
 
@@ -32,7 +35,7 @@ class KeyWidget : public QWidget
 
 
 public:
-    explicit KeyWidget(const QString &image, const int &code, QWidget *parent = 0);
+    explicit KeyWidget(const KeyboardKey &key, QWidget *parent = 0);
     ~KeyWidget();
 
     int keyCode() const;
@@ -40,10 +43,10 @@ public:
 
 
 private:
+    KeyboardKey m_key;
     QPixmap m_image;
     bool m_pressed;
     QTimer *m_timer;
-    int m_keyCode;
 
 
 private slots:

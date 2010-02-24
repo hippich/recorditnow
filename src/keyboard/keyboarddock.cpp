@@ -79,7 +79,7 @@ void KeyboardDock::init(const QList<KeyboardKey> &map)
     m_keyList.clear();
 
     foreach (const KeyboardKey &key, map) {
-        KeyWidget *widget = new KeyWidget(key.second, key.first, this);
+        KeyWidget *widget = new KeyWidget(key, this);
         m_keyList.append(widget);
         m_layout->addWidget(widget);
     }
@@ -96,7 +96,7 @@ void KeyboardDock::keyPressed(const KeyMon::Event &event)
 
     foreach (KeyWidget * widget, m_keyList) {
         if (widget->keyCode() == event.keyCode) {
-            kDebug() << "key pressed:" << event.keyCode << event.pressed;
+            kDebug() << "Event:" << "Code:" << event.keyCode << "Pressed?" << event.pressed;
             widget->setPressed(event.pressed);
             break;
         }

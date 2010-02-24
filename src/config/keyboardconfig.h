@@ -25,12 +25,12 @@
 // own
 #include "config/configpage.h"
 #include "ui_keyboardconfig.h"
+#include "../keyboard/keyboardkey.h"
 
 // Qt
 #include <QtGui/QWidget>
 
 
-typedef QPair<int, QString> KeyboardKey;
 class KConfig;
 class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
 {
@@ -53,7 +53,7 @@ private slots:
     void up();
     void down();
     void itemSelectionChanged();
-    void wizardFinished(const int &key, const QString &icon);
+    void wizardFinished(const int &key, const QString &icon, const QString &text);
     void showSearchDialog();
     void searchDialogFinished(const QString &uuid);
 

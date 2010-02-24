@@ -66,7 +66,9 @@ QList<KeyboardKey> KeyboardConfig::readConfig(KConfig *cfg)
     for (int i = 0; i < count; i++) {
         const int key = group.readEntry(QString("Key %1 Code").arg(i), -1);
         const QString icon = group.readEntry(QString("Key %1 Icon").arg(i), QString());
-        keyMap.append(qMakePair(key, icon));
+        const QString text = group.readEntry(QString("Key %1 Text").arg(i), QString());
+
+        keyMap.append(KeyboardKey(key, icon, text));
     }
 
     return keyMap;
@@ -80,10 +82,10 @@ void KeyboardConfig::loadConfig()
     QList<KeyboardKey> list(readConfig(config()));
     foreach (const KeyboardKey &key, list) {
         QListWidgetItem *item = new QListWidgetItem();
-        item->setText(QString::number(key.first));
-        item->setIcon(KIcon(key.second));
-        item->setData(Qt::UserRole+1, key.first);
-        item->setData(Qt::UserRole+2, key.second);
+        item->setText(key.text());
+        item->setIcon(KIcon(key.icon()));
+        item->setData(Qt::UserRole+1, key.code());
+        item->setData(Qt::UserRole+2, key.icon());
 
         listWidget->addItem(item);
     }
@@ -100,6 +102,7 @@ void KeyboardConfig::saveConfig()
         QListWidgetItem *item = listWidget->item(i);
         group.writeEntry(QString("Key %1 Code").arg(i), item->data(Qt::UserRole+1).toInt());
         group.writeEntry(QString("Key %1 Icon").arg(i), item->data(Qt::UserRole+2).toString());
+        group.writeEntry(QString("Key %1 Text").arg(i), item->text());
         count++;
     }
     group.writeEntry("Keys", count);
@@ -119,7 +122,8 @@ void KeyboardConfig::add()
 {
 
     KeyboardWizard *wizard = new KeyboardWizard(kcfg_keyboardDevice->text(), this);
-    connect(wizard, SIGNAL(wizardFinished(int, QString)), this, SLOT(wizardFinished(int,QString)));
+    connect(wizard, SIGNAL(wizardFinished(int, QString, QString)), this,
+            SLOT(wizardFinished(int, QString, QString)));
 
     wizard->show();
 
@@ -203,7 +207,7 @@ void KeyboardConfig::itemSelectionChanged()
 }
 
 
-void KeyboardConfig::wizardFinished(const int &key, const QString &icon)
+void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const QString &text)
 {
 
     for (int i = 0; i < listWidget->count(); i++) {
@@ -215,7 +219,7 @@ void KeyboardConfig::wizardFinished(const int &key, const QString &icon)
     }
 
     QListWidgetItem *item = new QListWidgetItem();
-    item->setText(QString::number(key));
+    item->setText(text);
     item->setIcon(KIcon(icon));
     item->setData(Qt::UserRole+1, key);
     item->setData(Qt::UserRole+2, icon);

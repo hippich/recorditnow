@@ -60,6 +60,7 @@ set(gui_SRCS
    keyboard/keyboarddock.cpp
    keyboard/keywidget.cpp
    keyboard/flowlayout.cpp
+   keyboard/keyboardkey.cpp
 
    config/configdialog.cpp
    config/frameconfig.cpp

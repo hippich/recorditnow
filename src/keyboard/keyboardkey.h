@@ -17,32 +17,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYBOARDWIZARD_H
-#define KEYBOARDWIZARD_H
+
+#ifndef KEYBOARDKEY_H
+#define KEYBOARDKEY_H
 
 
 // Qt
-#include <QtGui/QWizard>
+#include <QtCore/QString>
 
 
-class KeyboardWizard : public QWizard
+class QKeyEvent;
+class KeyboardKey
 {
-    Q_OBJECT
 
 
 public:
-    explicit KeyboardWizard(const QString &device, QWidget *parent = 0);
+    explicit KeyboardKey(const int &code, const QString &icon, const QString &text);
+    ~KeyboardKey();
+
+    int code() const;
+    QString icon() const;
+    QString text() const;
+
+    static KeyboardKey eventToKey(const QKeyEvent *event);
+
+    void setCode(const int &code);
+    void setIcon(const QString &icon);
+    void setText(const QString &text);
 
 
-private slots:
-    void wizardFinished(int result);
-
-
-signals:
-    void wizardFinished(const int &key, const QString &icon, const QString &text);
+private:
+    int m_code;
+    QString m_icon;
+    QString m_text;
 
 
 };
 
-
-#endif // KEYBOARDWIZARD_H
+#endif // KEYBOARDKEY_H

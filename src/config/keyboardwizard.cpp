@@ -47,7 +47,8 @@ void KeyboardWizard::wizardFinished(int result)
 {
 
     if (result == QDialog::Accepted) {
-        emit wizardFinished(field("KeyCode").toInt(), field("Icon").toString());
+        emit wizardFinished(field("KeyCode").toInt(), field("Icon").toString(),
+                            field("Text").toString());
     }
 
 }
