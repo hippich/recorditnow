@@ -62,6 +62,7 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 
     sizeChanged(Settings::keySize());
 
+
 }
 
 

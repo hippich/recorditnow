@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>277</height>
+    <height>285</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Image</string>
+         <string>Image:</string>
         </property>
        </widget>
       </item>
@@ -42,7 +42,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Opacity</string>
+         <string>Opacity:</string>
         </property>
        </widget>
       </item>
@@ -71,7 +71,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Position</string>
+         <string>Position:</string>
         </property>
        </widget>
       </item>
@@ -127,7 +127,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Format</string>
+         <string>Format:</string>
         </property>
        </widget>
       </item>
@@ -195,7 +195,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Quality</string>
+         <string>Quality:</string>
         </property>
        </widget>
       </item>

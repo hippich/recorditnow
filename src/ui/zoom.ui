@@ -37,7 +37,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Default zoom factor</string>
+      <string>Default zoom factor:</string>
      </property>
     </widget>
    </item>
@@ -60,15 +60,18 @@
    <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Size</string>
+      <string>Window Size</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QFormLayout" name="formLayout_2">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::ExpandingFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Width</string>
+           <string>Width:</string>
           </property>
          </widget>
         </item>
@@ -82,13 +85,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Height</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="KIntNumInput" name="kcfg_zoomHeight">
           <property name="minimum">
@@ -96,6 +92,13 @@
           </property>
           <property name="maximum">
            <number>600</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Height:</string>
           </property>
          </widget>
         </item>
