@@ -785,6 +785,10 @@ void MainWindow::configure()
 
     setState(Config);
 
+    if(ConfigDialog::showDialog("settings")) {
+        return;
+    }
+
     ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(configDialogFinished()));
     dialog->show();
