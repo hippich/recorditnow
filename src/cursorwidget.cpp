@@ -46,6 +46,7 @@
 #include <X11/extensions/shape.h>
 
 
+#define RESET_TIME 600
 CursorWidget::CursorWidget(QWidget *parent)
     : QWidget(parent, Qt::X11BypassWindowManagerHint|Qt::FramelessWindowHint|Qt::Tool)
 {
@@ -260,14 +261,14 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
     case KeyMon::Event::WheelUp:
     case KeyMon::Event::WheelDown: {
             m_currentColor = m_buttons[event.keyToXButton(event.key)];
-            m_resetTimer->start(500);
+            m_resetTimer->start(RESET_TIME);
             break;
         }
     default: {
             if (event.pressed) {
                 m_currentColor = m_buttons[event.keyToXButton(event.key)];
             } else {
-                m_resetTimer->start(250);
+                m_resetTimer->start(RESET_TIME);
             }
             break;
         }
