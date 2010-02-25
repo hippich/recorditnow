@@ -46,7 +46,7 @@ ConfigDialog::ConfigDialog(QWidget *parent, KActionCollection *collection,
 
     Q_ASSERT(m_pluginManager);
     setAttribute(Qt::WA_DeleteOnClose);
-    setInitialSize(QSize(550, 500));
+    setInitialSize(QSize(600, 550));
     init();
 
 }

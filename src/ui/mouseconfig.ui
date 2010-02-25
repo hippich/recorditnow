@@ -257,6 +257,9 @@
          <property name="alternatingRowColors">
           <bool>false</bool>
          </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
          <property name="uniformRowHeights">
           <bool>false</bool>
          </property>
