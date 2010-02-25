@@ -21,10 +21,14 @@
 #define TIMELINEDOCK_H
 
 
+// own
+#include <ui_timelinedocktitlewidget.h>
+
 // Qt
 #include <QtGui/QDockWidget>
 
 
+class Topic;
 class Timeline;
 class TimelineDock : public QDockWidget
 {
@@ -38,6 +42,13 @@ public:
 
     Timeline *timeline() const;
 
+
+private:
+    Ui::TimelineDockTitleWidget ui_titleWidget;
+
+
+private slots:
+    void topicChanged(Topic *topic);
 
 
 };

@@ -100,7 +100,8 @@ kde4_add_ui_files(gui_SRCS
     ui/keyboarddocktitlewidget.ui
     ui/devicesearchdialog.ui
     ui/shortcutsconfig.ui
-    ui/pluginconfig.ui)
+    ui/pluginconfig.ui
+    ui/timelinedocktitlewidget.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)

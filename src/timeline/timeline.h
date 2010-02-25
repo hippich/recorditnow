@@ -79,6 +79,7 @@ private slots:
 
 signals:
     void finished();
+    void currentTopicChanged(Topic *current);
 
 
 };

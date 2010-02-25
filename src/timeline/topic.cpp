@@ -41,20 +41,6 @@ Topic::Topic(QWidget *parent, const QTime duration, const QString &title, const 
 {
 
     m_currentSecond = 0;
-    m_icon = icon;
-
-    setTextVisible(false);
-
-    m_button = new QToolButton(this);
-    m_button->setAutoRaise(true);
-    m_titleLabel = new QLabel(this);
-    m_timeLabel = new QLabel(this);
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(m_button);
-    layout->addWidget(m_titleLabel);
-    layout->addWidget(m_timeLabel);
-    setLayout(layout);
 
     setTitle(title);
     setIcon(icon);
@@ -94,7 +80,7 @@ QString Topic::icon() const
 QString Topic::title() const
 {
 
-    return m_titleLabel->text();
+    return m_title;
 
 }
 
@@ -161,7 +147,7 @@ void Topic::setCurrentSecond(const unsigned long &second)
 void Topic::setIcon(const QString &icon)
 {
 
-    m_button->setIcon(KIcon(icon));
+    m_icon = icon;
 
 }
 
@@ -169,7 +155,7 @@ void Topic::setIcon(const QString &icon)
 void Topic::setTitle(const QString &title)
 {
 
-    m_titleLabel->setText(title);
+    m_title = title;
 
 }
 

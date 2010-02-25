@@ -54,10 +54,8 @@ public:
 
 private:
     unsigned long m_currentSecond;
-    QLabel *m_timeLabel;
-    QToolButton *m_button;
-    QLabel *m_titleLabel;
     QTime m_duration;
+    QString m_title;
     QString m_icon;
 
     void updateSize();

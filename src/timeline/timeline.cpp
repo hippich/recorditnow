@@ -44,6 +44,7 @@ Timeline::Timeline(QWidget *parent)
 
     connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
     connect(topicWidget, SIGNAL(durationChanged(ulong)), this, SLOT(durationChanged(ulong)));
+    connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SIGNAL(currentTopicChanged(Topic*)));
 
     m_notifications = false;
     slider->setMaximum(0);

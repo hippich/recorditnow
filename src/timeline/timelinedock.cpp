@@ -22,10 +22,12 @@
 #include "timelinedock.h"
 #include "timeline.h"
 #include <recorditnow.h>
+#include "topic.h"
 
 // KDE
 #include <klocalizedstring.h>
 #include <kconfiggroup.h>
+#include <kicon.h>
 
 
 TimelineDock::TimelineDock(QWidget *parent)
@@ -37,6 +39,16 @@ TimelineDock::TimelineDock(QWidget *parent)
     setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
     Timeline *line = new Timeline(this);
     setWidget(line);
+
+    QWidget *title = new QWidget(this);
+    ui_titleWidget.setupUi(title);
+
+    ui_titleWidget.iconButton->setIcon(KIcon("dialog-information"));
+    ui_titleWidget.currentTopicLabel->setText(i18n("No Topic"));
+
+    setTitleBarWidget(title);
+
+    connect(line, SIGNAL(currentTopicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
 
     KConfigGroup cfg(Settings::self()->config(), "Timeline");
     line->loadTopics(&cfg);
@@ -57,6 +69,15 @@ Timeline *TimelineDock::timeline() const
 {
 
     return static_cast<Timeline*>(widget());
+
+}
+
+
+void TimelineDock::topicChanged(Topic *topic)
+{
+
+    ui_titleWidget.currentTopicLabel->setText(topic->title());
+    ui_titleWidget.iconButton->setIcon(KIcon(topic->icon()));
 
 }
 
