@@ -128,11 +128,7 @@ Qt::Orientations ProxyLayout::expandingDirections() const
 QRect ProxyLayout::geometry() const
 {
 
-    if (m_item) {
-        return m_item->geometry();
-    } else {
-        return QRect();
-    }
+    return QLayout::geometry();
 
 }
 
