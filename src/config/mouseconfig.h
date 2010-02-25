@@ -23,7 +23,7 @@
 
 // own
 #include "config/configpage.h"
-#include "ui_mouse.h"
+#include "ui_mouseconfig.h"
 #include "mousebutton.h"
 
 // Qt
@@ -32,7 +32,7 @@
 
 class QToolButton;
 class KColorButton;
-class MouseConfig : public RecordItNow::ConfigPage, Ui::Mouse
+class MouseConfig : public RecordItNow::ConfigPage, Ui::MouseConfig
 {
     Q_OBJECT
 

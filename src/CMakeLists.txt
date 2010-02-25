@@ -81,7 +81,7 @@ set(gui_SRCS
 kde4_add_ui_files(gui_SRCS 
     ui/toolbarwidget.ui
     ui/settings.ui
-    ui/mouse.ui 
+    ui/mouseconfig.ui 
     ui/zoom.ui 
     ui/timeline.ui 
     ui/timelinetopics.ui 
