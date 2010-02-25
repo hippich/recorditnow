@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
-"POT-Creation-Date: 2010-02-24 11:56+0100\n"
+"POT-Creation-Date: 2010-02-25 02:55+0100\n"
 "PO-Revision-Date: 2009-12-22 18:34+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -51,217 +51,20 @@ msgstr "Časový přehled"
 msgid "Shortcuts"
 msgstr "Klávesové zkratky"
 
-#: config/keyboardconfig.cpp:211
-msgid "There is already a key '%1' in your list!"
-msgstr ""
+#: config/keyboardconfig.cpp:215
+#, fuzzy
+msgid "There is already a key with code '%1' in your list!"
+msgstr "Wenn es bereits eine Datei mit dem gleichen Namen gibt, lösche Sie."
 
-#: config/keyboardkeypage.cpp:76
+#: config/keyboardkeypage.cpp:78
 msgid "Please select a device."
 msgstr ""
 
-#: config/keyboardkeypage.cpp:87 config/keyboardkeypage.cpp:130
+#: config/keyboardkeypage.cpp:89 config/keyboardkeypage.cpp:132
 msgid "An error occurd: %1"
 msgstr ""
 
-#: config/keyboardkeypage.cpp:165
-msgctxt "Keyboard key"
-msgid "Escape"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:166
-msgctxt "Keyboard key"
-msgid "Tab"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:167
-msgctxt "Keyboard key"
-msgid "Shift"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:168
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Alt"
-msgstr "Umění"
-
-#: config/keyboardkeypage.cpp:169
-msgctxt "Keyboard key"
-msgid "AltGr"
-msgstr ""
-
 #: config/keyboardkeypage.cpp:170
-msgctxt "Keyboard key"
-msgid "Backtab"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:171
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Backspace"
-msgstr "Zadní část programu"
-
-#: config/keyboardkeypage.cpp:172
-msgctxt "Keyboard key"
-msgid "Return"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:173
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Enter"
-msgstr "Encoder"
-
-#: config/keyboardkeypage.cpp:174
-msgctxt "Keyboard key"
-msgid "Left"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:175
-msgctxt "Keyboard key"
-msgid "Up"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:176
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Right"
-msgstr "Výška"
-
-#: config/keyboardkeypage.cpp:177
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Down"
-msgstr "Hotovo!"
-
-#: config/keyboardkeypage.cpp:178
-msgctxt "Keyboard key"
-msgid "Page up"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:179
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Page Down"
-msgstr "Posunout dolů"
-
-#: config/keyboardkeypage.cpp:180
-msgctxt "Keyboard key"
-msgid "Control"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:181
-msgctxt "Keyboard key"
-msgid "Meta"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:182
-msgctxt "Keyboard key"
-msgid "Caps lock"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:183
-msgctxt "Keyboard key"
-msgid "Num lock"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:184
-msgctxt "Keyboard key"
-msgid "Space"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:185
-msgctxt "Keyboard key"
-msgid "F1"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:186
-msgctxt "Keyboard key"
-msgid "F2"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:187
-msgctxt "Keyboard key"
-msgid "F3"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:188
-msgctxt "Keyboard key"
-msgid "F4"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:189
-msgctxt "Keyboard key"
-msgid "F5"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:190
-msgctxt "Keyboard key"
-msgid "F6"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:191
-msgctxt "Keyboard key"
-msgid "F7"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:192
-msgctxt "Keyboard key"
-msgid "F8"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:193
-msgctxt "Keyboard key"
-msgid "F9"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:194
-msgctxt "Keyboard key"
-msgid "F10"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:195
-msgctxt "Keyboard key"
-msgid "F11"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:196
-msgctxt "Keyboard key"
-msgid "F12"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:197
-msgctxt "Keyboard key"
-msgid "Print"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:198
-msgctxt "Keyboard key"
-msgid "Insert"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:199
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Delete"
-msgstr "Smazat"
-
-#: config/keyboardkeypage.cpp:200
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "End"
-msgstr "Encoder"
-
-#: config/keyboardkeypage.cpp:201
-#, fuzzy
-msgctxt "Keyboard key"
-msgid "Pause"
-msgstr "Pozastavit"
-
-#: config/keyboardkeypage.cpp:206
-msgid "Special key"
-msgstr ""
-
-#: config/keyboardkeypage.cpp:212
 msgid ""
 "Grab failed!\n"
 "Perhaps you have selected the wrong device."
@@ -338,6 +141,204 @@ msgstr "Nelze nahrát kodér %1"
 #: encodermanager.cpp:133
 msgid "The encoder has crashed!"
 msgstr "Kodér spadl!"
+
+#: keyboard/keyboardkey.cpp:78
+msgctxt "Keyboard key"
+msgid "Escape"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:79
+msgctxt "Keyboard key"
+msgid "Tab"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:80
+msgctxt "Keyboard key"
+msgid "Shift"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:81
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Alt"
+msgstr "Umění"
+
+#: keyboard/keyboardkey.cpp:82
+msgctxt "Keyboard key"
+msgid "AltGr"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:83
+msgctxt "Keyboard key"
+msgid "Backtab"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:84
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Backspace"
+msgstr "Zadní část programu"
+
+#: keyboard/keyboardkey.cpp:85
+msgctxt "Keyboard key"
+msgid "Return"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:86
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Enter"
+msgstr "Encoder"
+
+#: keyboard/keyboardkey.cpp:87
+msgctxt "Keyboard key"
+msgid "Left"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:88
+msgctxt "Keyboard key"
+msgid "Up"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:89
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Right"
+msgstr "Výška"
+
+#: keyboard/keyboardkey.cpp:90
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Down"
+msgstr "Hotovo!"
+
+#: keyboard/keyboardkey.cpp:91
+msgctxt "Keyboard key"
+msgid "Page up"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:92
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Page Down"
+msgstr "Posunout dolů"
+
+#: keyboard/keyboardkey.cpp:93
+msgctxt "Keyboard key"
+msgid "Control"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:94
+msgctxt "Keyboard key"
+msgid "Meta"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:95
+msgctxt "Keyboard key"
+msgid "Caps lock"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:96
+msgctxt "Keyboard key"
+msgid "Num lock"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:97
+msgctxt "Keyboard key"
+msgid "Space"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:98
+msgctxt "Keyboard key"
+msgid "F1"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:99
+msgctxt "Keyboard key"
+msgid "F2"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:100
+msgctxt "Keyboard key"
+msgid "F3"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:101
+msgctxt "Keyboard key"
+msgid "F4"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:102
+msgctxt "Keyboard key"
+msgid "F5"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:103
+msgctxt "Keyboard key"
+msgid "F6"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:104
+msgctxt "Keyboard key"
+msgid "F7"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:105
+msgctxt "Keyboard key"
+msgid "F8"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:106
+msgctxt "Keyboard key"
+msgid "F9"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:107
+msgctxt "Keyboard key"
+msgid "F10"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:108
+msgctxt "Keyboard key"
+msgid "F11"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:109
+msgctxt "Keyboard key"
+msgid "F12"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:110
+msgctxt "Keyboard key"
+msgid "Print"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:111
+msgctxt "Keyboard key"
+msgid "Insert"
+msgstr ""
+
+#: keyboard/keyboardkey.cpp:112
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Delete"
+msgstr "Smazat"
+
+#: keyboard/keyboardkey.cpp:113
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "End"
+msgstr "Encoder"
+
+#: keyboard/keyboardkey.cpp:114
+#, fuzzy
+msgctxt "Keyboard key"
+msgid "Pause"
+msgstr "Pozastavit"
+
+#: keyboard/keyboardkey.cpp:119
+msgid "Special key"
+msgstr ""
 
 #: keymon/devicehelper.cpp:56
 #, fuzzy
@@ -431,7 +432,7 @@ msgstr "Nahrávat celou obrazovku"
 
 #. i18n: file: upload/ui/uploadpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, UploadPage)
-#: mainwindow.cpp:300 rc.cpp:509
+#: mainwindow.cpp:300 rc.cpp:515
 msgid "Upload"
 msgstr "Nahrát"
 
@@ -465,14 +466,14 @@ msgctxt "Encoding finished"
 msgid "Finished!"
 msgstr "Hotovo!"
 
-#: mainwindow.cpp:834 mainwindow.cpp:849
+#: mainwindow.cpp:838 mainwindow.cpp:853
 #: plugins/encoder/ffmpeg/ffmpegencoder.cpp:74
 #: plugins/encoder/mencoder/mencoderencoder.cpp:72
 msgctxt "%1 = file"
 msgid "%1 no such file!"
 msgstr "Soubor %1 nenalezen!"
 
-#: mainwindow.cpp:854 plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
+#: mainwindow.cpp:858 plugins/encoder/ffmpeg/ffmpegencoder.cpp:187
 #: plugins/encoder/mencoder/mencoderencoder.cpp:186
 msgctxt "%1 = file, %2 = error string"
 msgid ""
@@ -567,11 +568,9 @@ msgstr "Upravit %1"
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: file: plugins/encoder/mencoder/ui/mencoder.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:130
-#. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/encoder/ffmpeg/formatdialog.cpp:43
 #: plugins/encoder/mencoder/formatdialog.cpp:43 rc.cpp:12 rc.cpp:18 rc.cpp:39
-#: rc.cpp:45 rc.cpp:189
+#: rc.cpp:45
 msgid "Format"
 msgstr "Formát"
 
@@ -782,7 +781,7 @@ msgstr "Nelze nahrát kodér %1"
 #. i18n: ectx: property (text), widget (QLabel, label)
 #. i18n: file: upload/ui/accountpage.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:3 rc.cpp:478
+#: rc.cpp:3 rc.cpp:484
 msgid "Account"
 msgstr "Účet"
 
@@ -790,7 +789,7 @@ msgstr "Účet"
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: file: upload/ui/accountpage.ui:39
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:6 rc.cpp:481
+#: rc.cpp:6 rc.cpp:487
 msgid "Password"
 msgstr "Heslo"
 
@@ -816,16 +815,16 @@ msgstr "Příkaz"
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
 #. i18n: file: plugins/encoder/mencoder/ui/mencoder.ui:54
 #. i18n: ectx: property (text), widget (QToolButton, addButton)
-#. i18n: file: ui/frameconfig.ui:76
+#. i18n: file: ui/frameconfig.ui:79
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
 #. i18n: file: ui/keyboardconfig.ui:109
 #. i18n: ectx: property (text), widget (QPushButton, addButton)
-#. i18n: file: ui/mouse.ui:81
+#. i18n: file: ui/mouseconfig.ui:230
 #. i18n: ectx: property (text), widget (KPushButton, addButton)
-#. i18n: file: ui/timelinetopics.ui:78
+#. i18n: file: ui/timelinetopics.ui:81
 #. i18n: ectx: property (text), widget (KPushButton, addButton)
-#: rc.cpp:21 rc.cpp:24 rc.cpp:48 rc.cpp:51 rc.cpp:238 rc.cpp:271 rc.cpp:331
-#: rc.cpp:413
+#: rc.cpp:21 rc.cpp:24 rc.cpp:48 rc.cpp:51 rc.cpp:238 rc.cpp:271 rc.cpp:358
+#: rc.cpp:419
 msgid "Add"
 msgstr "Přidat"
 
@@ -849,24 +848,19 @@ msgstr "Upravit"
 #. i18n: ectx: property (toolTip), widget (QToolButton, removeButton)
 #. i18n: file: plugins/encoder/mencoder/ui/mencoder.ui:74
 #. i18n: ectx: property (text), widget (QToolButton, removeButton)
-#. i18n: file: ui/frameconfig.ui:83
+#. i18n: file: ui/frameconfig.ui:86
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #. i18n: file: ui/keyboardconfig.ui:75
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
-#. i18n: file: ui/mouse.ui:140
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: ui/timelinetopics.ui:88
+#. i18n: file: ui/timelinetopics.ui:91
 #. i18n: ectx: property (text), widget (KPushButton, removeButton)
-#: rc.cpp:33 rc.cpp:36 rc.cpp:60 rc.cpp:63 rc.cpp:241 rc.cpp:262 rc.cpp:334
-#: rc.cpp:416
+#: rc.cpp:33 rc.cpp:36 rc.cpp:60 rc.cpp:63 rc.cpp:241 rc.cpp:262 rc.cpp:422
 msgid "Remove"
 msgstr "Odstranit"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:24
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
-#. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:35
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:66 rc.cpp:159
+#: rc.cpp:66
 msgid "Image"
 msgstr "Obrázek"
 
@@ -898,36 +892,36 @@ msgstr "Rychlé podvzorkování"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #. i18n: file: ui/toolbarwidget.ui:134
 #. i18n: ectx: property (toolTip), widget (QCheckBox, soundCheck)
-#: rc.cpp:81 rc.cpp:434
+#: rc.cpp:81 rc.cpp:440
 msgid "Sound"
 msgstr "Zvuk"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:80
 #. i18n: ectx: property (text), widget (QLabel, label_5)
-#. i18n: file: plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:27
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: ui/devicesearchdialog.ui:36
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#. i18n: file: ui/keymondialog.ui:32
-#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:84 rc.cpp:150 rc.cpp:214 rc.cpp:310
-msgid "Device"
+#. i18n: file: ui/keyboardconfig.ui:37
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: ui/mouseconfig.ui:48
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:84 rc.cpp:253 rc.cpp:325
+#, fuzzy
+msgid "Device:"
 msgstr "Zařízení"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:96
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
 #. i18n: file: ui/keyboardconfig.ui:56
 #. i18n: ectx: property (text), widget (QPushButton, searchButton)
-#. i18n: file: ui/mouse.ui:54
+#. i18n: file: ui/mouseconfig.ui:67
 #. i18n: ectx: property (text), widget (KPushButton, keyMonButton)
-#: rc.cpp:88 rc.cpp:256 rc.cpp:322
+#: rc.cpp:88 rc.cpp:256 rc.cpp:328
 msgid "Search"
 msgstr "Hledat"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:105
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:91
-msgid "Channels"
+#, fuzzy
+msgid "Channels:"
 msgstr "Kanály"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:118
@@ -947,25 +941,29 @@ msgstr "Výchozí"
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:125
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:97
-msgid "Frequency"
+#, fuzzy
+msgid "Frequency:"
 msgstr "Kmitočet"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:145
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:103
-msgid "Buffer size (only ALSA or OSS)"
+#, fuzzy
+msgid "Buffer size (only ALSA or OSS):"
 msgstr "Velikost vyrovnávací paměti (pouze ALSA nebo OSS)"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:165
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:109
-msgid "Ring Buffer size (JACK only)"
+#, fuzzy
+msgid "Ring Buffer size (JACK only):"
 msgstr "Velikost vyrovnávací paměti Ring (pouze JACK)"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:185
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:115
-msgid "JACK Ports"
+#, fuzzy
+msgid "JACK Ports:"
 msgstr "Přípojky Jack"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:198
@@ -977,19 +975,22 @@ msgstr "Kódování"
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:231
 #. i18n: ectx: property (text), widget (QLabel, lab_2)
 #: rc.cpp:122
-msgid "Audio Quality"
+#, fuzzy
+msgid "Audio Quality:"
 msgstr "Kvalita zvuku"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:263
 #. i18n: ectx: property (text), widget (QLabel, lab_3)
 #: rc.cpp:126
-msgid "Bitrate"
+#, fuzzy
+msgid "Bitrate:"
 msgstr "Datový tok"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:298
 #. i18n: ectx: property (text), widget (QLabel, lab)
 #: rc.cpp:129
-msgid "Video Quality"
+#, fuzzy
+msgid "Video Quality:"
 msgstr "Kvalita videa"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:308
@@ -1002,7 +1003,7 @@ msgstr "Kódovat zvuková a videodata během nahrávání"
 #. i18n: ectx: attribute (title), widget (QWidget, tab_4)
 #. i18n: file: ui/settings.ui:93
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: rc.cpp:135 rc.cpp:385
+#: rc.cpp:135 rc.cpp:391
 msgid "Miscellaneous"
 msgstr "Různé"
 
@@ -1022,9 +1023,19 @@ msgstr "Komprimovat vyrovnávací paměť"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_followMouse)
 #. i18n: file: ui/zoom.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomFollow)
-#: rc.cpp:144 rc.cpp:452
+#: rc.cpp:144 rc.cpp:458
 msgid "Follow the mouse"
 msgstr "Sledovat myš"
+
+#. i18n: file: plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:27
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#. i18n: file: ui/devicesearchdialog.ui:36
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#. i18n: file: ui/keymondialog.ui:32
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: rc.cpp:150 rc.cpp:214 rc.cpp:313
+msgid "Device"
+msgstr "Zařízení"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/sounddevicedialog.ui:32
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
@@ -1040,18 +1051,27 @@ msgstr "ID"
 msgid "Branding"
 msgstr "Značkování"
 
+#. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:35
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:159
+#, fuzzy
+msgid "Image:"
+msgstr "Obrázek"
+
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:45
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#. i18n: file: ui/mouse.ui:257
+#. i18n: file: ui/mouseconfig.ui:107
 #. i18n: ectx: property (text), widget (QLabel, opacityLabel)
-#: rc.cpp:162 rc.cpp:358
-msgid "Opacity"
+#: rc.cpp:162 rc.cpp:340
+#, fuzzy
+msgid "Opacity:"
 msgstr "Neprůhlednost"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:74
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:165
-msgid "Position"
+#, fuzzy
+msgid "Position:"
 msgstr "Poloha"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:85
@@ -1096,10 +1116,18 @@ msgstr "Dolní střed"
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
+#. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:130
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:189
+#, fuzzy
+msgid "Format:"
+msgstr "Formát"
+
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:198
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:202
-msgid "Quality"
+#, fuzzy
+msgid "Quality:"
 msgstr "Kvalita"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:205
@@ -1141,7 +1169,7 @@ msgctxt "The name of the new item"
 msgid "Name:"
 msgstr "Název"
 
-#. i18n: file: ui/frameconfig.ui:55
+#. i18n: file: ui/frameconfig.ui:58
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:229
 #, fuzzy
@@ -1149,7 +1177,7 @@ msgctxt "The name of the item"
 msgid "Name"
 msgstr "Název"
 
-#. i18n: file: ui/frameconfig.ui:60
+#. i18n: file: ui/frameconfig.ui:63
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:232
 #, fuzzy
@@ -1157,7 +1185,7 @@ msgctxt "the width of the frame"
 msgid "Width"
 msgstr "Šířka"
 
-#. i18n: file: ui/frameconfig.ui:65
+#. i18n: file: ui/frameconfig.ui:68
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:235
 #, fuzzy
@@ -1165,23 +1193,23 @@ msgctxt "the height of the frame"
 msgid "Height"
 msgstr "Výška"
 
-#. i18n: file: ui/frameconfig.ui:90
+#. i18n: file: ui/frameconfig.ui:93
 #. i18n: ectx: property (text), widget (QPushButton, upButton)
 #. i18n: file: ui/keyboardconfig.ui:82
 #. i18n: ectx: property (text), widget (QPushButton, upButton)
-#. i18n: file: ui/timelinetopics.ui:98
+#. i18n: file: ui/timelinetopics.ui:101
 #. i18n: ectx: property (text), widget (KPushButton, upButton)
-#: rc.cpp:244 rc.cpp:265 rc.cpp:419
+#: rc.cpp:244 rc.cpp:265 rc.cpp:425
 msgid "Move Up"
 msgstr "Posunout nahoru"
 
-#. i18n: file: ui/frameconfig.ui:97
+#. i18n: file: ui/frameconfig.ui:100
 #. i18n: ectx: property (text), widget (QPushButton, downButton)
 #. i18n: file: ui/keyboardconfig.ui:89
 #. i18n: ectx: property (text), widget (QPushButton, downButton)
-#. i18n: file: ui/timelinetopics.ui:108
+#. i18n: file: ui/timelinetopics.ui:111
 #. i18n: ectx: property (text), widget (KPushButton, downButton)
-#: rc.cpp:247 rc.cpp:268 rc.cpp:422
+#: rc.cpp:247 rc.cpp:268 rc.cpp:428
 msgid "Move Down"
 msgstr "Posunout dolů"
 
@@ -1190,15 +1218,6 @@ msgstr "Posunout dolů"
 #: rc.cpp:250
 msgid "Enable The Keyboard Monitor"
 msgstr ""
-
-#. i18n: file: ui/keyboardconfig.ui:37
-#. i18n: ectx: property (text), widget (QLabel, label)
-#. i18n: file: ui/mouse.ui:37
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: rc.cpp:253 rc.cpp:319
-#, fuzzy
-msgid "Device:"
-msgstr "Zařízení"
 
 #. i18n: file: ui/keyboardconfig.ui:67
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
@@ -1212,264 +1231,286 @@ msgstr ""
 msgid "Keyboard Monitor"
 msgstr ""
 
+#. i18n: file: ui/keyboarddock.ui:17
+#. i18n: ectx: property (windowTitle), widget (QDockWidget, KeyboardDock)
+#: rc.cpp:277
+msgctxt "@title:window"
+msgid "Keyboard Monitor"
+msgstr ""
+
 #. i18n: file: ui/keyboardkeyiconpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, KeyboardKeyIconPage)
-#: rc.cpp:277
+#: rc.cpp:280
 #, fuzzy
 msgid "Key Icon"
 msgstr "Ikona"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, KeyboardKeyIconPage)
-#: rc.cpp:280
+#: rc.cpp:283
 msgid "Please select an icon"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:283
+#: rc.cpp:286
 #, fuzzy
 msgid "Icon:"
 msgstr "Ikona"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:71
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:286
+#: rc.cpp:289
 #, fuzzy
 msgid "Search:"
 msgstr "Hledat"
 
 #. i18n: file: ui/keyboardkeypage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, KeyboardKeyPage)
-#: rc.cpp:289
+#: rc.cpp:292
 msgid "Key"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, KeyboardKeyPage)
-#: rc.cpp:292
+#: rc.cpp:295
 msgid "Please click on Start and press a key"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:29
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:295
+#: rc.cpp:298
 #, fuzzy
 msgid "Information"
 msgstr "Doba trvání"
 
 #. i18n: file: ui/keyboardkeypage.ui:35
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:298
+#: rc.cpp:301
 msgid "Key:"
 msgstr ""
 
 #. i18n: file: ui/keyboardkeypage.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:301
+#: rc.cpp:304
 #, fuzzy
 msgid "Code:"
 msgstr "Režim"
 
-#. i18n: file: ui/keyboardkeypage.ui:103
+#. i18n: file: ui/keyboardkeypage.ui:113
 #. i18n: ectx: property (text), widget (QPushButton, startButton)
-#: rc.cpp:304
+#: rc.cpp:307
 #, fuzzy
 msgid "Start"
 msgstr "Stav"
 
 #. i18n: file: ui/keymondialog.ui:27
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:307
+#: rc.cpp:310
 msgid "Name"
 msgstr "Název"
 
 #. i18n: file: ui/keymondialog.ui:37
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:313
+#: rc.cpp:316
 msgid "Status"
 msgstr "Stav"
 
-#. i18n: file: ui/mouse.ui:26
+#. i18n: file: ui/mouseconfig.ui:30
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: rc.cpp:319
+msgid "General"
+msgstr ""
+
+#. i18n: file: ui/mouseconfig.ui:36
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showActivity)
-#: rc.cpp:316
-msgid "Show mouse clicks"
+#: rc.cpp:322
+#, fuzzy
+msgid "Show mouse clicks during record"
 msgstr "Ukázat klepnutí myší"
 
-#. i18n: file: ui/mouse.ui:63
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: rc.cpp:325
+#. i18n: file: ui/mouseconfig.ui:76
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:331
+msgid "Appearance:"
+msgstr ""
+
+#. i18n: file: ui/mouseconfig.ui:85
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_led)
+#: rc.cpp:334
+msgid "LED"
+msgstr ""
+
+#. i18n: file: ui/mouseconfig.ui:95
+#. i18n: ectx: property (text), widget (QRadioButton, kcfg_circle)
+#: rc.cpp:337
+#, fuzzy
+msgid "Circle"
+msgstr "Soubor"
+
+#. i18n: file: ui/mouseconfig.ui:133
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:343
+#, fuzzy
+msgid "Size:"
+msgstr "Velikost"
+
+#. i18n: file: ui/mouseconfig.ui:153
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:346
+#, fuzzy
+msgid "Preview"
+msgstr "Zařízení"
+
+#. i18n: file: ui/mouseconfig.ui:198
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mouseWidgetAlwaysVisible)
+#: rc.cpp:349
+msgid "Always visible"
+msgstr ""
+
+#. i18n: file: ui/mouseconfig.ui:212
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: rc.cpp:352
 #, fuzzy
 msgid "Mouse Buttons"
 msgstr "Tlačítko myši"
 
-#. i18n: file: ui/mouse.ui:71
+#. i18n: file: ui/mouseconfig.ui:220
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:328
+#: rc.cpp:355
 msgid "Mouse button"
 msgstr "Tlačítko myši"
 
-#. i18n: file: ui/mouse.ui:145
+#. i18n: file: ui/mouseconfig.ui:292
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:337
+#: rc.cpp:361
+#, fuzzy
+msgid "Remove Button"
+msgstr "Tlačítko myši"
+
+#. i18n: file: ui/mouseconfig.ui:297
+#. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
+#: rc.cpp:364
 msgid "Mouse Button"
 msgstr "Tlačítko myši"
 
-#. i18n: file: ui/mouse.ui:150
+#. i18n: file: ui/mouseconfig.ui:302
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:340
+#: rc.cpp:367
 msgid "Color"
 msgstr "Barva"
 
-#. i18n: file: ui/mouse.ui:161
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:343
-msgid "Appearance"
-msgstr ""
-
-#. i18n: file: ui/mouse.ui:169
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:346
-msgid "Mode"
-msgstr "Režim"
-
-#. i18n: file: ui/mouse.ui:178
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_led)
-#: rc.cpp:349
-msgid "LED next to the mouse cursor"
-msgstr "LED vedle ukazovátka myši"
-
-#. i18n: file: ui/mouse.ui:188
-#. i18n: ectx: property (text), widget (QRadioButton, kcfg_circle)
-#: rc.cpp:352
-msgid "Circle under the mouse cursor"
-msgstr "Kruh pod ukazovátkem myši"
-
-#. i18n: file: ui/mouse.ui:228
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#. i18n: file: ui/zoom.ui:63
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:355 rc.cpp:462
-msgid "Size"
-msgstr "Velikost"
-
-#. i18n: file: ui/mouse.ui:264
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mouseWidgetAlwaysVisible)
-#: rc.cpp:361
-msgid "Always visible"
-msgstr ""
-
 #. i18n: file: ui/settings.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:364
+#: rc.cpp:370
 msgid "Behavior "
 msgstr "Chování"
 
 #. i18n: file: ui/settings.ui:32
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_tray)
-#: rc.cpp:367
+#: rc.cpp:373
 msgid "Enable system tray icon"
 msgstr "Povolit ikonu v oznamovací části panelu"
 
 #. i18n: file: ui/settings.ui:39
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hideOnRecord)
-#: rc.cpp:370
+#: rc.cpp:376
 msgid "Hide RecordItNow during record"
 msgstr "Skrýt RecordItNow během nahrávání"
 
 #. i18n: file: ui/settings.ui:46
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_overwrite)
-#: rc.cpp:373
+#: rc.cpp:379
 msgid "Overwrite existing files"
 msgstr "Přepsat existující soubory"
 
 #. i18n: file: ui/settings.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
-#: rc.cpp:376
+#: rc.cpp:382
 msgid "Show file after record"
 msgstr "Po nahrání ukázat soubor"
 
 #. i18n: file: ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
-#: rc.cpp:379
+#: rc.cpp:385
 msgid "Encode after record"
 msgstr "Po nahrání zakódovat"
 
 #. i18n: file: ui/settings.ui:83
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_stayOnTop)
-#: rc.cpp:382
+#: rc.cpp:388
 msgid "Stay above all other windows during record"
 msgstr "Zůstat během nahrávání nad všemi ostatními okny"
 
 #. i18n: file: ui/settings.ui:102
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:388
+#: rc.cpp:394
 msgid "Directory for temporary files:"
 msgstr "Adresář pro dočasné soubory:"
 
 #. i18n: file: ui/timelineconfig.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
-#: rc.cpp:391
+#: rc.cpp:397
 msgid "Enable the Timeline"
 msgstr "Povolit časový přehled"
 
 #. i18n: file: ui/timelineconfig.ui:41
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timeLineStop)
-#: rc.cpp:394
+#: rc.cpp:400
 msgid "Stop recording when the timeline reaches the end"
 msgstr "Zastavit nahrávání, až časový přehled dosáhne na konec"
 
 #. i18n: file: ui/timelineconfig.ui:48
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timelineNotifications)
-#: rc.cpp:397
+#: rc.cpp:403
 msgid "Enable Notifications"
 msgstr "Povolit upozornění"
 
 #. i18n: file: ui/timelinetopics.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:400
+#: rc.cpp:406
 msgid "Total duration"
 msgstr "Celková doba trvání"
 
-#. i18n: file: ui/timelinetopics.ui:58
+#. i18n: file: ui/timelinetopics.ui:61
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:404
+#: rc.cpp:410
 msgid "Topic"
 msgstr "Námět"
 
-#. i18n: file: ui/timelinetopics.ui:63
+#. i18n: file: ui/timelinetopics.ui:66
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:407
+#: rc.cpp:413
 msgid "Icon"
 msgstr "Ikona"
 
-#. i18n: file: ui/timelinetopics.ui:68
+#. i18n: file: ui/timelinetopics.ui:71
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
-#: rc.cpp:410
+#: rc.cpp:416
 msgid "Duration"
 msgstr "Doba trvání"
 
 #. i18n: file: ui/toolbarwidget.ui:35
 #. i18n: ectx: property (toolTip), widget (QLCDNumber, timerLcd)
-#: rc.cpp:425
+#: rc.cpp:431
 msgid "Timer"
 msgstr "Časovač"
 
 #. i18n: file: ui/toolbarwidget.ui:102
 #. i18n: ectx: property (toolTip), widget (KIntSpinBox, fpsSpinBox)
-#: rc.cpp:428
+#: rc.cpp:434
 msgid "Frames per second"
 msgstr "Snímků za sekundu"
 
 #. i18n: file: ui/toolbarwidget.ui:105
 #. i18n: ectx: property (suffix), widget (KIntSpinBox, fpsSpinBox)
-#: rc.cpp:431
+#: rc.cpp:437
 msgid " FPS"
 msgstr " FPS"
 
 #. i18n: file: ui/toolbarwidget.ui:160
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
-#: rc.cpp:437
+#: rc.cpp:443
 msgid "Backend"
 msgstr "Zadní část programu"
 
@@ -1477,85 +1518,94 @@ msgstr "Zadní část programu"
 #. i18n: ectx: property (toolTip), widget (KUrlRequester, outputRequester)
 #. i18n: file: ui/toolbarwidget.ui:184
 #. i18n: ectx: property (clickMessage), widget (KUrlRequester, outputRequester)
-#: rc.cpp:440 rc.cpp:443
+#: rc.cpp:446 rc.cpp:449
 msgid "Output file"
 msgstr "Výstupní soubor"
 
 #. i18n: file: ui/toolbarwidget.ui:194
 #. i18n: ectx: property (toolTip), widget (QToolButton, playButton)
-#: rc.cpp:446
+#: rc.cpp:452
 msgid "Play/Open"
 msgstr "Přehrát/Otevřít"
 
 #. i18n: file: ui/toolbarwidget.ui:204
 #. i18n: ectx: property (toolTip), widget (QToolButton, deleteButton)
-#: rc.cpp:449
+#: rc.cpp:455
 msgid "Delete"
 msgstr "Smazat"
 
 #. i18n: file: ui/zoom.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomHighQuality)
-#: rc.cpp:455
+#: rc.cpp:461
 msgid "High quality"
 msgstr "Vysoká kvalita"
 
 #. i18n: file: ui/zoom.ui:40
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:458
-msgid "Default zoom factor"
+#: rc.cpp:464
+#, fuzzy
+msgid "Default zoom factor:"
 msgstr "Výchozí činitel přiblížení"
 
-#. i18n: file: ui/zoom.ui:71
+#. i18n: file: ui/zoom.ui:63
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:468
+msgid "Window Size"
+msgstr ""
+
+#. i18n: file: ui/zoom.ui:74
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:465
-msgid "Width"
+#: rc.cpp:471
+#, fuzzy
+msgid "Width:"
 msgstr "Šířka"
 
-#. i18n: file: ui/zoom.ui:88
+#. i18n: file: ui/zoom.ui:101
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:468
-msgid "Height"
+#: rc.cpp:474
+#, fuzzy
+msgid "Height:"
 msgstr "Výška"
 
 #. i18n: file: upload/ui/accountpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, AccountPage)
-#: rc.cpp:471
+#: rc.cpp:477
 msgid "Login"
 msgstr "Přihlášení"
 
 #. i18n: file: upload/ui/accountpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, AccountPage)
-#: rc.cpp:474
+#: rc.cpp:480
 msgid "Please enter your account and password to log in"
 msgstr ""
 
 #. i18n: file: upload/ui/accountpage.ui:53
 #. i18n: ectx: property (text), widget (QCheckBox, wallCheck)
-#: rc.cpp:484
+#: rc.cpp:490
 msgid "Remember me"
 msgstr ""
 
 #. i18n: file: upload/ui/pluginpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, PluginPage)
-#: rc.cpp:487
+#: rc.cpp:493
 msgid "Provider"
 msgstr ""
 
 #. i18n: file: upload/ui/pluginpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, PluginPage)
-#: rc.cpp:490
+#: rc.cpp:496
 msgid "Please select where you want to upload your video"
 msgstr ""
 
 #. i18n: file: upload/ui/pluginpage.ui:60
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:494
+#: rc.cpp:500
 msgid "Plugin Information"
 msgstr ""
 
 #. i18n: file: upload/ui/pluginpage.ui:66
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:497
+#: rc.cpp:503
 #, fuzzy
 msgid "Name:"
 msgstr "Název"
@@ -1564,105 +1614,114 @@ msgstr "Název"
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: file: upload/ui/videopage.ui:56
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:500 rc.cpp:541
+#: rc.cpp:506 rc.cpp:547
 #, fuzzy
 msgid "Description:"
 msgstr "Popis"
 
 #. i18n: file: upload/ui/pluginpage.ui:80
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:503
+#: rc.cpp:509
 #, fuzzy
 msgid "Version:"
 msgstr "Překlad:"
 
 #. i18n: file: upload/ui/termspage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, TermsPage)
-#: rc.cpp:506
+#: rc.cpp:512
 msgid "Terms of Service "
 msgstr ""
 
 #. i18n: file: upload/ui/uploadpage.ui:26
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: rc.cpp:513
+#: rc.cpp:519
 #, fuzzy
 msgid "Log"
 msgstr "Přihlášení"
 
 #. i18n: file: upload/ui/uploadpage.ui:38
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: rc.cpp:516
+#: rc.cpp:522
 #, fuzzy
 msgid "Upload Progress"
 msgstr "Přídavné moduly pro nahrání"
 
 #. i18n: file: upload/ui/uploadpage.ui:44
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:519
+#: rc.cpp:525
 msgid "Total:"
 msgstr ""
 
 #. i18n: file: upload/ui/uploadpage.ui:58
 #. i18n: ectx: property (text), widget (QLabel, label_3)
-#: rc.cpp:522
+#: rc.cpp:528
 msgid "Sent:"
 msgstr ""
 
 #. i18n: file: upload/ui/uploadpage.ui:65
 #. i18n: ectx: property (text), widget (QLabel, label_5)
-#: rc.cpp:525
+#: rc.cpp:531
 msgid "Speed:"
 msgstr ""
 
 #. i18n: file: upload/ui/videopage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, VideoPage)
-#: rc.cpp:528
+#: rc.cpp:534
 msgid "Video"
 msgstr "Video"
 
 #. i18n: file: upload/ui/videopage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, VideoPage)
-#: rc.cpp:531
+#: rc.cpp:537
 msgid "Please select a video and enter the appropriate data"
 msgstr ""
 
 #. i18n: file: upload/ui/videopage.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:535
+#: rc.cpp:541
 #, fuzzy
 msgid "Video:"
 msgstr "Video"
 
 #. i18n: file: upload/ui/videopage.ui:46
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: rc.cpp:538
+#: rc.cpp:544
 #, fuzzy
 msgid "Title:"
 msgstr "Název"
 
 #. i18n: file: upload/ui/videopage.ui:77
 #. i18n: ectx: property (text), widget (QLabel, label_5)
-#: rc.cpp:545
+#: rc.cpp:551
 #, fuzzy
 msgid "Tags:"
 msgstr "Značky"
 
 #. i18n: file: upload/ui/videopage.ui:94
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: rc.cpp:548
+#: rc.cpp:554
 #, fuzzy
 msgid "Category:"
 msgstr "Skupina"
 
-#: rc.cpp:549
+#: rc.cpp:555
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Pavel Fric"
 
-#: rc.cpp:550
+#: rc.cpp:556
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "fripohled.blogspot.com"
+
+#~ msgid "Mode"
+#~ msgstr "Režim"
+
+#~ msgid "LED next to the mouse cursor"
+#~ msgstr "LED vedle ukazovátka myši"
+
+#~ msgid "Circle under the mouse cursor"
+#~ msgstr "Kruh pod ukazovátkem myši"
 
 #, fuzzy
 #~ msgctxt "@title:group"
@@ -2262,6 +2321,3 @@ msgstr "fripohled.blogspot.com"
 
 #~ msgid "Encoding Options"
 #~ msgstr "Kodierungs Optionen"
-
-#~ msgid "If there is already a file with the same name, delete it."
-#~ msgstr "Wenn es bereits eine Datei mit dem gleichen Namen gibt, lösche Sie."
