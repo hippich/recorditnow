@@ -17,45 +17,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FLOWLAYOUT_H
-#define FLOWLAYOUT_H
+#ifndef PROXYLAYOUT_H
+#define PROXYLAYOUT_H
 
 
 // Qt
 #include <QtGui/QLayout>
 
 
-class ProxyLayout;
-class FlowLayout : public QLayout
+class QPropertyAnimation;
+class ProxyLayout : public QLayout
 {
 
 
 public:
-    FlowLayout();
-    ~FlowLayout();
-
-    Qt::Orientations expandingDirections() const;
-    bool hasHeightForWidth() const;
-    int heightForWidth(int) const;
-    int count() const;
-    QLayoutItem *itemAt(int index) const;
-    QSize minimumSize() const;
-    QSize sizeHint() const;
-    QLayoutItem *takeAt(int index);
+    ProxyLayout(QWidget *parent = 0);
+    ~ProxyLayout();
 
     void addItem(QLayoutItem *item);
-    void setGeometry(const QRect &rect);
-    void setItemHeight(const int &height);
-    void clear();
+    void setGeometry(const QRect &newGeometry);
+
+    int	count() const;
+    QLayoutItem *itemAt(int index) const;
+    QLayoutItem *takeAt(int index);
+    Qt::Orientations expandingDirections() const;
+    QRect geometry() const;
+    bool isEmpty() const;
+    QSize maximumSize() const;
+    QSize minimumSize() const;
+    QSize sizeHint() const;
 
 
- private:
-    int doLayout(const QRect &rect, bool testOnly) const;
-    int m_itemHeight;
-    QList<ProxyLayout*> m_proxyList;
+private:
+    QLayoutItem *m_item;
+    QPropertyAnimation *m_animation;
 
 
 };
 
 
-#endif // FLOWLAYOUT_H
+#endif // PROXYLAYOUT_H

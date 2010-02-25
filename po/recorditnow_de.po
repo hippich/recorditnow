@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: just89@gmx.de\n"
 "POT-Creation-Date: 2010-02-25 02:55+0100\n"
-"PO-Revision-Date: 2010-02-25 02:58+0100\n"
+"PO-Revision-Date: 2010-02-25 11:58+0100\n"
 "Last-Translator: Kai Dombrowe <just89@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,7 @@ msgstr "Tab"
 #: keyboard/keyboardkey.cpp:80
 msgctxt "Keyboard key"
 msgid "Shift"
-msgstr "Shift"
+msgstr "Umschalt"
 
 #: keyboard/keyboardkey.cpp:81
 msgctxt "Keyboard key"
@@ -178,7 +178,7 @@ msgstr "Rücktaste"
 #: keyboard/keyboardkey.cpp:85
 msgctxt "Keyboard key"
 msgid "Return"
-msgstr "Return"
+msgstr "Eingabetaste"
 
 #: keyboard/keyboardkey.cpp:86
 msgctxt "Keyboard key"
@@ -218,7 +218,7 @@ msgstr "Bild runter"
 #: keyboard/keyboardkey.cpp:93
 msgctxt "Keyboard key"
 msgid "Control"
-msgstr "Strg"
+msgstr "Steuerung"
 
 #: keyboard/keyboardkey.cpp:94
 msgctxt "Keyboard key"
@@ -238,7 +238,7 @@ msgstr "Num lock"
 #: keyboard/keyboardkey.cpp:97
 msgctxt "Keyboard key"
 msgid "Space"
-msgstr "Space"
+msgstr "Leertaste"
 
 #: keyboard/keyboardkey.cpp:98
 msgctxt "Keyboard key"

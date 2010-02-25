@@ -20,6 +20,10 @@
 
 // own
 #include "flowlayout.h"
+#include "proxylayout.h"
+
+// KDE
+#include <kdebug.h>
 
 // Qt
 #include <QtGui/QWidget>
@@ -46,7 +50,10 @@ FlowLayout::~FlowLayout()
 void FlowLayout::addItem(QLayoutItem *item)
 {
 
-    m_itemList.append(item);
+    ProxyLayout *proxy = new ProxyLayout;
+    proxy->addItem(item);
+
+    m_proxyList.append(proxy);
 
 }
 
@@ -54,7 +61,7 @@ void FlowLayout::addItem(QLayoutItem *item)
 int FlowLayout::count() const
 {
 
-    return m_itemList.size();
+    return m_proxyList.size();
 
 }
 
@@ -62,15 +69,24 @@ int FlowLayout::count() const
 QLayoutItem *FlowLayout::itemAt(int index) const
 {
 
-    return m_itemList.value(index);
+    if (index >= 0 && index < m_proxyList.size()) {
+        return m_proxyList.at(index)->itemAt(0);;
+    } else {
+        return 0;
+    }
 
 }
 
 
 QLayoutItem *FlowLayout::takeAt(int index)
 {
-    if (index >= 0 && index < m_itemList.size()) {
-        return m_itemList.takeAt(index);
+
+    if (index >= 0 && index < m_proxyList.size()) {
+        ProxyLayout *proxy = m_proxyList.takeAt(0);
+        QLayoutItem *item = proxy->takeAt(0);
+
+        delete proxy;
+        return item;
     } else {
         return 0;
     }
@@ -166,8 +182,7 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
     int x = rect.x();
     int y = rect.y();
     int lineHeight = 0;
-
-    foreach (QLayoutItem *item, m_itemList) {
+    foreach (QLayoutItem *item, m_proxyList) {
         int nextX = x + m_itemHeight + spacing();
         if (nextX - spacing() > rect.right() && lineHeight > 0) {
             x = rect.x();
