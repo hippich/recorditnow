@@ -58,12 +58,6 @@ private:
     QString m_title;
     QString m_icon;
 
-    void updateSize();
-
-
-protected:
-    bool event(QEvent *eevent);
-
 
 };
 
