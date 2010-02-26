@@ -22,4 +22,6 @@ X-RecordItNow-Stop=false
 X-RecordItNow-ConfigGroup=ScreenshotRecorder
 X-RecordItNow-DefaultFile=${home}/screenshot.${config:Format:png}
 X-RecordItNow-TimelineEnabled=false
-X-RecordItNow-LEDEnabled=false
+X-RecordItNow-MouseEnabled=false
+X-RecordItNow-KeyboardEnabled=false
+

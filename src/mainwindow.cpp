@@ -1194,7 +1194,7 @@ void MainWindow::initRecordWidgets(const bool &start)
     const QString recorder = backendCombo->currentText();
     // mouse
     if (start) {
-        if (Settings::showActivity() && m_recorderManager->hasFeature("LEDEnabled", recorder)) {
+        if (Settings::showActivity() && m_recorderManager->hasFeature("MouseEnabled", recorder)) {
             if (m_cursor) {
                 return; // timer was paused
             }
@@ -1235,12 +1235,14 @@ void MainWindow::initKeyMon(const bool &start)
 {
 
     QStringList keyMonDevs;
-    const bool feature = m_recorderManager->hasFeature("LEDEnabled", backendCombo->currentText());
-    if (Settings::showActivity() && feature) {
+    const bool mouseFeature = m_recorderManager->hasFeature("MouseEnabled", backendCombo->currentText());
+    const bool keyboardFeature = m_recorderManager->hasFeature("KeyboardEnabled", backendCombo->currentText());
+
+    if (Settings::showActivity() && mouseFeature) {
         keyMonDevs.append(Settings::keyMonDevice());
     }
 
-    if (m_keyboardDock && feature) {
+    if (m_keyboardDock && keyboardFeature) {
         keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
     }
 

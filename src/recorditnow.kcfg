@@ -9,31 +9,23 @@
   <include>kglobal.h</include>
   <group name="Preferences">
     <entry name="hideOnRecord" type="Bool">
-	    <label>Hide RecordItNow while recording</label>
 	    <default>false</default>
     </entry>
     <entry name="tray" type="Bool">
-            <label></label>
             <default>true</default>
     </entry>
     <entry name="showVideo" type="Bool">
-            <label></label>
-            <default>true</default>
+            <default>false</default>
     </entry>
     <entry name="encode" type="Bool">
-            <label></label>
             <default>false</default>
     </entry>
     <entry name="encoderName" type="String">
-            <label></label>
-            <default></default>
     </entry>
     <entry name="overwrite" type="Bool">
-            <label></label>
             <default>false</default>
     </entry>
     <entry name="workDir" type="Url">
-            <label></label>
             <default code="true">KGlobal::dirs()->locateLocal("tmp", "")</default>
     </entry>
   </group>
@@ -45,12 +37,12 @@
             <default>true</default>
     </entry>
     <entry name="currentFps" type="Int">
-            <default>15</default>
+            <default>18</default>
     </entry>
     <entry name="currentFrame" type="Rect">
     </entry>
     <entry name="currentTime" type="Int">
-            <default>5</default>
+            <default>6</default>
     </entry>
     <entry name="stayOnTop" type="Bool">
             <default>false</default>
@@ -63,17 +55,13 @@
     <entry name="cursorWidgetSize" type="Int">
             <default>20</default>
     </entry>
-    <entry name="useKeyMon" type="Bool">
-            <default>false</default>
-    </entry>
     <entry name="keyMonDevice" type="String">
-            <default></default>
     </entry>
     <entry name="led" type="Bool">
-            <default>true</default>
+            <default>false</default>
     </entry>
     <entry name="circle" type="String">
-            <default>false</default>
+            <default>true</default>
     </entry>
     <entry name="cursorOpacity" type="Double">
             <default>0.5</default>
@@ -106,7 +94,7 @@
             <default>true</default>
     </entry>
     <entry name="zoomHighQuality" type="Bool">
-            <default>false</default>
+            <default>true</default>
     </entry>
   </group>
  <group name="TimeLine">
