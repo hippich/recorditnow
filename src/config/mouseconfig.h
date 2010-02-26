@@ -30,6 +30,7 @@
 #include <QtGui/QWidget>
 
 
+class QButtonGroup;
 class QToolButton;
 class KColorButton;
 class MouseConfig : public RecordItNow::ConfigPage, Ui::MouseConfig
@@ -53,6 +54,7 @@ private:
     KColorButton *newButton();
     QToolButton *newRemoveButton();
     MouseButton *newMouseButton();
+    QButtonGroup *m_visibleGroup;
 
     bool contains(const MouseButton::Button &button, QWidget *exclude = 0) const;
 

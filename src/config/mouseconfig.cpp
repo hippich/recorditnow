@@ -32,6 +32,7 @@
 // Qt
 #include <QtGui/QTreeWidget>
 #include <QtGui/QToolButton>
+#include <QtGui/QButtonGroup>
 
 
 MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
@@ -60,13 +61,18 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(this, SIGNAL(configChanged()), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
-    connect(kcfg_cursorOpacity, SIGNAL(valueChanged(double)), this, SLOT(buttonsChanged()));
+    connect(kcfg_cursorOpacity, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_circle, SIGNAL(toggled(bool)), this, SLOT(modeChanged()));
     connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(currentButtonChanged()));
 
+    m_visibleGroup = new QButtonGroup(this);
+    m_visibleGroup->addButton(kcfg_mouseWidgetInvisible);
+    m_visibleGroup->addButton(kcfg_mouseWidgetAlwaysVisible);
+    m_visibleGroup->setExclusive(true);
+
     if (!KWindowSystem::compositingActive()) {
-        kcfg_circle->setText(i18n("Square under the mouse cursor"));
+        kcfg_circle->setText(i18n("Square"));
     }
 
     buttonsChanged();
@@ -78,8 +84,7 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
 MouseConfig::~MouseConfig()
 {
 
-
-
+    delete m_visibleGroup;
 
 }
 
@@ -406,6 +411,8 @@ void MouseConfig::currentButtonChanged()
     }
 
 }
+
+
 
 
 #include "mouseconfig.moc"

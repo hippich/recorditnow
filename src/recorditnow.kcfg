@@ -63,11 +63,14 @@
     <entry name="circle" type="String">
             <default>true</default>
     </entry>
-    <entry name="cursorOpacity" type="Double">
-            <default>0.5</default>
+    <entry name="cursorOpacity" type="Int">
+            <default>50</default>
     </entry>
     <entry name="mouseWidgetAlwaysVisible" type="Bool">
             <default>true</default>
+    </entry>
+    <entry name="mouseWidgetInvisible" type="Bool">
+            <default>false</default>
     </entry>
   </group>
   <group name="Keyboard">

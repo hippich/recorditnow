@@ -147,7 +147,11 @@ void CursorWidget::setOpacity(const qreal &opacity)
         return;
     }
 
-    m_opacity = opacity;
+    const double max = 1.0;
+    const double onePercent = max/100;
+    const double value = opacity*onePercent;
+
+    m_opacity = value;
     update();
 
 }
