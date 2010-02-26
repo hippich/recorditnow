@@ -64,6 +64,7 @@
 #include <ksqueezedtextlabel.h>
 #include <kactioncategory.h>
 #include <knotification.h>
+#include <ktoolbar.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -87,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     timeUpButton->setIcon(KIcon("arrow-up"));
     timeDownButton->setIcon(KIcon("arrow-down"));
-    soundCheck->setIcon(KIcon("preferences-desktop-sound"));
+    soundCheck->setIcon("preferences-desktop-sound");
     deleteButton->setIcon(KIcon("list-remove"));
     playButton->setIcon(KIcon("media-playback-start"));
 
@@ -306,17 +307,15 @@ void MainWindow::setupActions()
     zoomAction->setIcon(KIcon("page-zoom"));
     zoomAction->setText(i18n("Zoom"));
     zoomAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Z));
-    connect(zoomAction, SIGNAL(triggered()), this, SLOT(triggerZoom()));
+    connect(zoomAction, SIGNAL(triggered()), this, SLOT(toggleZoom()));
 
     KAction *zoomInAction = getAction("zoom-in");
-    zoomInAction->setObjectName("RecordItNow_zoom_in");
     zoomInAction->setIcon(KIcon("zoom-in"));
     zoomInAction->setText(i18n("Zoom in"));
     zoomInAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Plus));
     connect(zoomInAction, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
     KAction *zoomOutAction = getAction("zoom-out");
-    zoomOutAction->setObjectName("RecordItNow_zoom_out");
     zoomOutAction->setIcon(KIcon("zoom-out"));
     zoomOutAction->setText(i18n("Zoom out"));
     zoomOutAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Minus));
@@ -744,7 +743,7 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 {
 
     if (m_zoom) {
-        triggerZoom();
+        toggleZoom();
     }
 
     if (!error.isEmpty()) {
@@ -1066,23 +1065,21 @@ void MainWindow::saveNewToolbarConfig()
 }
 
 
-void MainWindow::triggerZoom()
+void MainWindow::toggleZoom()
 {
 
     if (m_zoom) {
         delete m_zoom;
         m_zoom = 0;
     } else {
-        if (state() == Recording) {
-            m_zoom = new ZoomView(this);
-            m_zoom->setSize(QSize(Settings::zoomWidth(), Settings::zoomHeight()));
-            m_zoom->setFactor(Settings::zoomFactor());
-            m_zoom->setFollowMouse(Settings::zoomFollow());
-            if (Settings::zoomHighQuality()) {
-                m_zoom->setQuality(ZoomView::High);
-            }
-            m_zoom->show();
+        m_zoom = new ZoomView(this);
+        m_zoom->setSize(QSize(Settings::zoomWidth(), Settings::zoomHeight()));
+        m_zoom->setFactor(Settings::zoomFactor());
+        m_zoom->setFollowMouse(Settings::zoomFollow());
+        if (Settings::zoomHighQuality()) {
+            m_zoom->setQuality(ZoomView::High);
         }
+        m_zoom->show();
     }
 
 }
@@ -1092,7 +1089,7 @@ void MainWindow::zoomIn()
 {
 
     if (!m_zoom) {
-        triggerZoom();
+        toggleZoom();
     } else {
         m_zoom->setFactor(m_zoom->factor()+1);
     }
@@ -1105,6 +1102,9 @@ void MainWindow::zoomOut()
 
     if (m_zoom) {
         m_zoom->setFactor(m_zoom->factor()-1);
+        if (m_zoom->factor() == 1) {
+            toggleZoom();
+        }
     }
 
 }

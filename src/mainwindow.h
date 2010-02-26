@@ -123,7 +123,7 @@ private slots:
     void recorderStateChanged(const AbstractRecorder::State &newState);
     void uploaderFinished(const QString &error);
     void linkActivated(const QString &link);
-    void triggerZoom();
+    void toggleZoom();
     void zoomIn();
     void zoomOut();
     void setupTimeline();

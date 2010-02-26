@@ -38,6 +38,7 @@ set(gui_SRCS
    zoom/zoomview.cpp
    keymonmanager.cpp
    devicesearchdialog.cpp
+   checkicon.cpp
 
    frame/frame.cpp
    frame/frameinfowidget.cpp
