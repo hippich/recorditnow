@@ -83,10 +83,10 @@ private:
 
     KAction *getAction(const QString &name);
 
-    void setupActions();
-    void initRecorder(AbstractRecorder::Data *d);
-    void initEncoder(AbstractEncoder::Data *d);
-    void setupTray();
+    inline void setupActions();
+    inline void initRecorder(AbstractRecorder::Data *d);
+    inline void initEncoder(AbstractEncoder::Data *d);
+    inline void setupTray();
     void setTrayOverlay(const QString &name);
     void setState(const State &newState);
     inline MainWindow::State state() const;
