@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -591,6 +591,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setChecked(m_frame->isVisible());
             getAction("options_configure")->setEnabled(true);
             getAction("upload")->setEnabled(true);
+            getAction("zoom-in")->setEnabled(true);
+            getAction("zoom-out")->setEnabled(true);
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             centralWidget()->setEnabled(true);
@@ -616,6 +618,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
+            getAction("zoom-in")->setEnabled(true);
+            getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
             initKeyMon(true);
             break;
@@ -631,6 +635,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
+            getAction("zoom-in")->setEnabled(true);
+            getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
             timerLcd->display(0);
             if (Settings::stayOnTop()) {
@@ -655,6 +661,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
+            getAction("zoom-in")->setEnabled(true);
+            getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
             break;
         }
@@ -670,6 +678,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
+            getAction("zoom-in")->setEnabled(true);
+            getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
             break;
         }
@@ -684,23 +694,11 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
+            getAction("zoom-in")->setEnabled(true);
+            getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
             initRecordWidgets(false);
             initKeyMon(false);
-            break;
-        }
-    case Upload: {
-            setTrayOverlay("arrow-up-double");
-            getAction("pause")->setIcon(KIcon("media-playback-pause"));
-            getAction("record")->setEnabled(false);
-            getAction("pause")->setEnabled(false);
-            getAction("stop")->setEnabled(true);
-            getAction("recordWindow")->setEnabled(false);
-            getAction("recordFullScreen")->setEnabled(false);
-            getAction("box")->setEnabled(false);
-            getAction("options_configure")->setEnabled(false);
-            getAction("upload")->setEnabled(false);
-            centralWidget()->setEnabled(false);
             break;
         }
         case Config: {
@@ -714,6 +712,8 @@ void MainWindow::setState(const State &newState)
             getAction("box")->setEnabled(false);
             getAction("options_configure")->setEnabled(false);
             getAction("upload")->setEnabled(false);
+            getAction("zoom-in")->setEnabled(false);
+            getAction("zoom-out")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
