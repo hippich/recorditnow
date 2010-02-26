@@ -99,6 +99,7 @@ void TopicWidget::setCurrentSecond(const unsigned long &second)
 
     if (second == (unsigned long)-1) {
         m_layout->setCurrentWidget(m_noTopic);
+        emit topicChanged(0);
         return;
     }
 

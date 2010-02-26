@@ -211,7 +211,7 @@ void Timeline::configure()
 void Timeline::topicChanged(Topic *topic)
 {
 
-    if (!m_notifications) {
+    if (!m_notifications || !topic) {
         return;
     }
 

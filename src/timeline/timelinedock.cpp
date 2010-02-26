@@ -76,6 +76,11 @@ Timeline *TimelineDock::timeline() const
 void TimelineDock::topicChanged(Topic *topic)
 {
 
+    if (!topic) {
+        ui_titleWidget.currentTopicLabel->setText(i18n("No Topic"));
+        ui_titleWidget.iconButton->setIcon(KIcon("dialog-information"));
+        return;
+    }
     ui_titleWidget.currentTopicLabel->setText(topic->title());
     ui_titleWidget.iconButton->setIcon(KIcon(topic->icon()));
 
