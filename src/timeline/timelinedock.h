@@ -46,6 +46,8 @@ public:
 private:
     Ui::TimelineDockTitleWidget ui_titleWidget;
 
+    void resetTitle();
+
 
 private slots:
     void topicChanged(Topic *topic);

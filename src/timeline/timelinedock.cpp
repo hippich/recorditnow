@@ -43,8 +43,7 @@ TimelineDock::TimelineDock(QWidget *parent)
     QWidget *title = new QWidget(this);
     ui_titleWidget.setupUi(title);
 
-    ui_titleWidget.iconButton->setIcon(KIcon("dialog-information"));
-    ui_titleWidget.currentTopicLabel->setText(i18n("No Topic"));
+    resetTitle();
 
     setTitleBarWidget(title);
 
@@ -73,12 +72,20 @@ Timeline *TimelineDock::timeline() const
 }
 
 
+void TimelineDock::resetTitle()
+{
+
+    ui_titleWidget.currentTopicLabel->setText(i18n("No Topic"));
+    ui_titleWidget.iconButton->setIcon(KIcon("dialog-information"));
+
+}
+
+
 void TimelineDock::topicChanged(Topic *topic)
 {
 
     if (!topic) {
-        ui_titleWidget.currentTopicLabel->setText(i18n("No Topic"));
-        ui_titleWidget.iconButton->setIcon(KIcon("dialog-information"));
+        resetTitle();
         return;
     }
     ui_titleWidget.currentTopicLabel->setText(topic->title());
