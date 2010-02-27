@@ -78,26 +78,6 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 }
 
 
-ActionReply DeviceHelper::inputdevicelist(QVariantMap args)
-{
-
-    Q_UNUSED(args);
-
-    QVariantMap result;
-
-    QVariant var;
-    var.setValue(KeyMon::DeviceInfo::toArray(KeyMon::Manager::getInputDeviceList()));
-
-    result["List"] = var;
-
-    ActionReply reply = ActionReply::SuccessReply;
-    reply.setData(result);
-
-    return reply;
-
-}
-
-
 void DeviceHelper::key(const KeyMon::Event &event)
 {
 

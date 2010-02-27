@@ -1,11 +1,5 @@
 [org.kde.recorditnow.helper.watch]
-Name=Open Device
+Name=Read Keyboard/Mouse events
 Description=Opens a device file
 Policy=auth_self
 Persistence=session
-
-[org.kde.recorditnow.helper.inputdevicelist]
-Name=Input device list
-Description=
-Policy=yes       
-

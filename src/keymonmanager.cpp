@@ -67,15 +67,7 @@ KeyMonManager *KeyMonManager::self()
 QList<KeyMon::DeviceInfo> KeyMonManager::getInputDeviceList()
 {
 
-    KAuth::Action action("org.kde.recorditnow.helper.inputdevicelist");
-    KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
-
-    QByteArray array = reply.data().value("List").toByteArray();
-
-    QList<KeyMon::DeviceInfo> list;
-    list = KeyMon::DeviceInfo::fromArray(array);
-
-    return list;
+    return KeyMon::Manager::getInputDeviceList();
 
 }
 
