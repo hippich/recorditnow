@@ -33,6 +33,11 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+// Solid
+#include <solid/device.h>
+#include <solid/deviceinterface.h>
+#include <solid/genericinterface.h>
+
 
 namespace KeyMon {
 
@@ -58,34 +63,73 @@ Manager::~Manager()
 QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
 {
 
-    const QDir dir("/dev/input/by-id");
     QList<KeyMon::DeviceInfo> list;
+    foreach (const Solid::Device &device, Solid::Device::allDevices()) {
 
-    foreach (const QFileInfo &info, dir.entryInfoList(QStringList(), QDir::Files)) {
-        if (!info.isSymLink()) {
-            continue;
-        }
+        bool found = false;
+        KeyMon::DeviceInfo info;
+        const Solid::GenericInterface *interface = device.as<Solid::GenericInterface>();
 
-        int fd;
-        if ((fd = open(info.symLinkTarget().toLatin1(), O_RDONLY)) == -1) { // krazy:exclude=syscalls
-            kWarning() << info.symLinkTarget() << ": open failed!";
-        } else {
-            char buff[32];
-            ioctl(fd, EVIOCGNAME(sizeof(buff)), buff);
+        if (interface && interface->isValid()) {
+            foreach (const QString &cap, interface->property("info.capabilities").toStringList()) {
+                if (cap == QLatin1String("input.mouse")) {
+                    if (interface->property("input.x11_driver").toString() != QLatin1String("evdev")) {
+                        break;
+                    }
+                    info.file = interface->property("input.device").toString();
+                    info.uuid = device.udi();
+                    info.name = device.product();
+                    info.icon = device.icon();
+                    info.type = KeyMon::DeviceInfo::MouseType;
+                    found = true;
+                    break;
 
-            KeyMon::DeviceInfo device;
-            device.file = info.symLinkTarget();
-            device.name = QString(buff);
-            device.uuid = info.absoluteFilePath();
+                } else if (cap == QLatin1String("input.keyboard")) {
+                    if (interface->property("input.x11_driver").toString() != QLatin1String("evdev")) {
+                        break;
+                    }
+                    info.file = interface->property("input.device").toString();
+                    info.uuid = device.udi();
+                    info.name = device.product();
+                    info.icon = device.icon();
+                    info.type = KeyMon::DeviceInfo::KeyboardType;
+                    found = true;
+                    break;
+                }
+            }
 
-            list.append(device);
+            if (found) {
+                kDebug() << "Found input device:" << info.name;
+                list.append(info);
+            }
+
+
         }
     }
-
     return list;
 
 }
 
+
+QString Manager::fileForDevice(const KeyMon::DeviceInfo &info)
+{
+
+    foreach (const Solid::Device &device, Solid::Device::allDevices()) {
+        if (device.udi() == info.uuid) {
+            const Solid::GenericInterface *interface = device.as<Solid::GenericInterface>();
+            if (interface && interface->isValid()) {
+                return interface->property("input.device").toString();
+            } else {
+                kWarning() << "Invalid interface!";
+                return QString();
+            }
+        }
+    }
+
+    kWarning() << "Device not found...";
+    return QString();
+
+}
 
 
 }; // Namespace KeyMon

@@ -54,6 +54,7 @@ public:
     ~Manager();
 
     static QList<KeyMon::DeviceInfo> getInputDeviceList();
+    static QString fileForDevice(const KeyMon::DeviceInfo &info);
 
 
 };

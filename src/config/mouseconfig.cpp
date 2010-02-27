@@ -361,7 +361,7 @@ void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
 void MouseConfig::showKeyMonDialog()
 {
 
-    DeviceSearchDialog *dialog = new DeviceSearchDialog(true, this);
+    DeviceSearchDialog *dialog = new DeviceSearchDialog(KeyMon::DeviceInfo::MouseType, this);
     connect(dialog, SIGNAL(deviceSelected(QString)), kcfg_keyMonDevice, SLOT(setText(QString)));
 
     dialog->show();

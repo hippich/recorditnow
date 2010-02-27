@@ -30,8 +30,8 @@
 #include <QtGui/QTreeWidgetItem>
 
 
-DeviceSearchDialog::DeviceSearchDialog(const bool &input, QWidget *parent)
-    : KDialog(parent), m_input(input)
+DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
+    : KDialog(parent)
 {
 
     QWidget *main = new QWidget(this);
@@ -41,22 +41,30 @@ DeviceSearchDialog::DeviceSearchDialog(const bool &input, QWidget *parent)
     setAttribute(Qt::WA_DeleteOnClose);
     resize(500, 300);
 
-    if (input) {
-        setWindowTitle(i18n("Input Device"));
-        foreach (const KeyMon::DeviceInfo &info, KeyMonManager::self()->getInputDeviceList()) {
-            QTreeWidgetItem *item = new QTreeWidgetItem;
-            item->setText(0, info.name);
-            item->setText(1, info.file);
-            item->setText(2, info.uuid);
-
-            if (info.name.toLower().contains(QRegExp(".*keyboard.*"))) {
-                item->setIcon(0, KIcon("input-keyboard"));
-            } else if (info.name.toLower().contains(QRegExp(".*mouse.*"))) {
-                item->setIcon(0, KIcon("input-mouse"));
+    switch (type) {
+    case KeyMon::DeviceInfo::MouseType:
+    case KeyMon::DeviceInfo::KeyboardType: {
+            foreach (const KeyMon::DeviceInfo &info, KeyMonManager::self()->getInputDeviceList()) {
+                if (info.type != type) {
+                    continue;
+                }
+                QTreeWidgetItem *item = new QTreeWidgetItem;
+                if (!info.icon.isEmpty()) {
+                    item->setIcon(0, KIcon(info.icon));
+                }
+                item->setText(0, info.name);
+                item->setText(1, info.file);
+                item->setText(2, info.uuid);
+                treeWidget->addTopLevelItem(item);
             }
-
-            treeWidget->addTopLevelItem(item);
         }
+    default: break;
+    }
+
+    switch (type) {
+    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
+    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
+    default: break;
     }
 
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));

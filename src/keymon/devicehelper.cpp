@@ -44,7 +44,10 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 
     QList<KeyMon::Device*> devs;
     foreach (const QString &dev, args.value("Devs").toStringList()) {
-        KeyMon::Device *device = new KeyMon::Device(this, dev);
+        KeyMon::DeviceInfo info;
+        info.uuid = dev;
+
+        KeyMon::Device *device = new KeyMon::Device(this, KeyMon::Manager::fileForDevice(info));
         devs.append(device);
         if (device->error()) {
             kDebug() << "error";

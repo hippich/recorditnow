@@ -38,6 +38,11 @@ class KDE_EXPORT DeviceInfo
 
 
 public:
+    enum DeviceType {
+        MouseType = 0,
+        KeyboardType = 1
+    };
+
     DeviceInfo();
     DeviceInfo(const KeyMon::DeviceInfo &copy);
     ~DeviceInfo();
@@ -45,6 +50,8 @@ public:
     QString name;
     QString file;
     QString uuid;
+    QString icon;
+    KeyMon::DeviceInfo::DeviceType type;
 
     static QByteArray toArray(const QList<KeyMon::DeviceInfo> &list);
     static QList<KeyMon::DeviceInfo> fromArray(QByteArray &array);

@@ -20,6 +20,7 @@
 
 // own
 #include "keymonmanager.h"
+#include "keymon/manager.h"
 
 // KDE
 #include <kglobal.h>
@@ -75,6 +76,14 @@ QList<KeyMon::DeviceInfo> KeyMonManager::getInputDeviceList()
     list = KeyMon::DeviceInfo::fromArray(array);
 
     return list;
+
+}
+
+
+QString KeyMonManager::fileForDevice(const KeyMon::DeviceInfo &info)
+{
+
+    return KeyMon::Manager::fileForDevice(info);
 
 }
 

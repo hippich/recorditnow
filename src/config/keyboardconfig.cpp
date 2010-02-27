@@ -234,7 +234,7 @@ void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const Q
 void KeyboardConfig::showSearchDialog()
 {
 
-    DeviceSearchDialog *dialog = new DeviceSearchDialog(true, this);
+    DeviceSearchDialog *dialog = new DeviceSearchDialog(KeyMon::DeviceInfo::KeyboardType, this);
     connect(dialog, SIGNAL(deviceSelected(QString)), this, SLOT(searchDialogFinished(QString)));
 
     dialog->show();

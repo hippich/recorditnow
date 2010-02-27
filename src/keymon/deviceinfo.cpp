@@ -39,6 +39,8 @@ DeviceInfo::DeviceInfo(const DeviceInfo &copy)
     name = copy.name;
     file = copy.file;
     uuid = copy.uuid;
+    icon = copy.icon;
+    type = copy.type;
 
 }
 
@@ -58,7 +60,7 @@ QByteArray KeyMon::DeviceInfo::toArray(const QList<KeyMon::DeviceInfo> &list)
 
     stream << list.size();
     foreach (const KeyMon::DeviceInfo &info, list) {
-        stream << info.name << info.file << info.uuid;
+        stream << info.name << info.file << info.uuid << (int)info.type << info.icon;
     }
 
     return array;
@@ -77,7 +79,9 @@ QList<KeyMon::DeviceInfo> DeviceInfo::fromArray(QByteArray &array)
 
    for (int i = 0; i < size; i++) {
        DeviceInfo info;
-       stream >> info.name >> info.file >> info.uuid;
+       int type;
+       stream >> info.name >> info.file >> info.uuid >> type >> info.icon;
+       info.type = static_cast<KeyMon::DeviceInfo::DeviceType>(type);
        list.append(info);
    }
     return list;

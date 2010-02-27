@@ -24,6 +24,7 @@
 
 // own
 #include "ui_devicesearchdialog.h"
+#include "keymon/deviceinfo.h"
 
 // KDE
 #include <kdialog.h>
@@ -35,7 +36,7 @@ class DeviceSearchDialog : public KDialog, Ui::DeviceSearchDialog
 
 
 public:
-    explicit DeviceSearchDialog(const bool &input = true, QWidget *parent = 0);
+    explicit DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent = 0);
 
 
 private:
