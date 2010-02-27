@@ -93,7 +93,7 @@ void KeyboardKeyPage::start()
         statusLabel->setText(i18n("An error occurd: %1", KeyMonManager::self()->error()));
         stop();
     } else {
-        statusLabel->setText(i18n("Wait for Authentication!"));
+        statusLabel->setText(i18n("Wait for authentication!"));
     }
 
 }
