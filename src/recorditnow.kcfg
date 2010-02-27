@@ -77,7 +77,7 @@
     <entry name="enableKeyboard" type="Bool">
             <default>false</default>
     </entry>
-    <entry name="keyboardDevice" type="Url">
+    <entry name="keyboardDevice" type="String">
     </entry>
     <entry name="keySize" type="Int">
             <default>50</default>

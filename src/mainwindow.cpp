@@ -1222,7 +1222,7 @@ void MainWindow::initKeyMon(const bool &start)
     }
 
     if (m_keyboardDock && keyboardFeature) {
-        keyMonDevs.append(Settings::keyboardDevice().toLocalFile());
+        keyMonDevs.append(Settings::keyboardDevice());
     }
 
     if (!keyMonDevs.isEmpty() && start) {
