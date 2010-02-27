@@ -202,14 +202,6 @@ void ZoomView::paintEvent(QPaintEvent *event)
         painter.drawPixmap(contentsRect().topLeft(), m_pixmap);
     }
 
-    QPen pen;
-    pen.setWidth(4);
-    pen.setColor(Qt::gray);
-
-    painter.setBrush(QBrush());
-    painter.setPen(pen);
-    painter.drawRect(rect());
-
 }
 
 
