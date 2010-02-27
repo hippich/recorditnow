@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,50 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef ZOOMDOCK_H
+#define ZOOMDOCK_H
 
-#ifndef ZOOMVIEW_H
-#define ZOOMVIEW_H
 
+// own
+#include "ui_zoomdock.h"
+#include "ui_zoomdocktitlewidget.h"
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QDockWidget>
 
 
 class QTimer;
-class ZoomView : public QWidget
+class ZoomDock : public QDockWidget, Ui::ZoomDock
 {
     Q_OBJECT
 
 
 public:
-    enum Quality {
-        Low = 0,
-        High = 1
-    };
+    explicit ZoomDock(QWidget *parent = 0);
+    ~ZoomDock();
 
-    ZoomView(QWidget *parent = 0);
-    ~ZoomView();
-
-    qreal factor() const;
-
-    void start();
-    void stop();
     void setFactor(const qreal &factor);
     void setQuality(const ZoomView::Quality &quality);
 
 
+public slots:
+    void zoomIn();
+    void zoomOut();
+
+
 private:
-    QPixmap m_pixmap;
-    qreal m_factor;
-    QTimer *m_timer;
-    Quality m_quality;
+    bool m_started;
+    Ui::ZoomDockTitleWidget ui_title;
+    QTimer *m_zoomTimer;
 
 
 private slots:
-    void updateView();
-    
-
-protected:
-    void paintEvent(QPaintEvent *event);
-    void wheelEvent(QWheelEvent *event);
-
-
-signals:
+    void startStopZoom();
     void factorChanged(const int &factor);
+    void hideLabel();
 
 
 };
 
 
-#endif // ZOOMVIEW_H
+#endif // ZOOMDOCK_H

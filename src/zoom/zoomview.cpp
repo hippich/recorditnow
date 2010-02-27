@@ -40,19 +40,14 @@
 
 
 ZoomView::ZoomView(QWidget *parent)
-    : QWidget(parent, Qt::X11BypassWindowManagerHint|Qt::FramelessWindowHint|Qt::Tool)
+    : QWidget(parent)
 {
 
     m_factor = 2;
-    m_followMouse = true;
     m_quality = Low;
-    setMinimumSize(350, 300);
-    setMaximumSize(350, 300);
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateView()));
-
-    m_timer->start(1000/18); // 18 FPS
 
 }
 
@@ -74,6 +69,23 @@ qreal ZoomView::factor() const
 }
 
 
+void ZoomView::start()
+{
+
+    m_timer->start(1000/18); // 18 FPS
+
+}
+
+
+void ZoomView::stop()
+{
+
+    m_timer->stop();
+    update();
+
+}
+
+
 void ZoomView::setFactor(const qreal &factor)
 {
 
@@ -82,29 +94,7 @@ void ZoomView::setFactor(const qreal &factor)
     m_factor = qMax((int)m_factor, 1);
     updateView();
 
-}
-
-
-
-void ZoomView::setSize(const QSize &size)
-{
-
-    setMinimumSize(size);
-    setMaximumSize(size);
-    updateView();
-
-}
-
-
-void ZoomView::setFollowMouse(const bool &follow)
-{
-
-    if (follow) {
-        setWindowFlags(Qt::X11BypassWindowManagerHint|Qt::FramelessWindowHint|Qt::Tool);
-    } else {
-        setWindowFlags(Qt::Window);
-    }
-    m_followMouse = follow;
+    emit factorChanged((int)factor);
 
 }
 
@@ -178,12 +168,6 @@ void ZoomView::updateView()
 
     m_pixmap = m_pixmap.scaled(size(), Qt::KeepAspectRatio, mode);
 
-    if (m_followMouse) {
-        QRect geo = geometry();
-        geo.moveTopLeft(QCursor::pos()+(QCursor::pos()-target.topLeft()));
-        setGeometry(geo);
-    }
-
     update();
 
 }
@@ -192,32 +176,37 @@ void ZoomView::updateView()
 void ZoomView::paintEvent(QPaintEvent *event)
 {
 
-    Q_UNUSED(event);
-
     QPainter painter(this);
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::black);
-    painter.setBrush(brush);
-    painter.drawRect(rect());
-    painter.setBrush(QBrush());
+    painter.setClipRegion(event->region());
 
-    switch (m_quality) {
-    case Low: painter.setRenderHints(QPainter::Antialiasing); break;
-    case High: {
-            painter.setRenderHints(QPainter::Antialiasing |
-                                   QPainter::HighQualityAntialiasing |
-                                   QPainter::SmoothPixmapTransform);
-            break;
+    if (!m_timer->isActive()) {
+        painter.fillRect(contentsRect(), Qt::black);
+    } else {
+        QBrush brush;
+        brush.setStyle(Qt::SolidPattern);
+        brush.setColor(Qt::black);
+        painter.setBrush(brush);
+        painter.drawRect(rect());
+        painter.setBrush(QBrush());
+
+        switch (m_quality) {
+        case Low: painter.setRenderHints(QPainter::Antialiasing); break;
+        case High: {
+                painter.setRenderHints(QPainter::Antialiasing |
+                                       QPainter::HighQualityAntialiasing |
+                                       QPainter::SmoothPixmapTransform);
+                break;
+            }
         }
-    }
 
-    painter.drawPixmap(contentsRect().topLeft(), m_pixmap);
+        painter.drawPixmap(contentsRect().topLeft(), m_pixmap);
+    }
 
     QPen pen;
     pen.setWidth(4);
     pen.setColor(Qt::gray);
 
+    painter.setBrush(QBrush());
     painter.setPen(pen);
     painter.drawRect(rect());
 

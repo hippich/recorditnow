@@ -35,10 +35,12 @@ set(gui_SRCS
    encodermanager.cpp
    cursorwidget.cpp
    application.cpp
-   zoom/zoomview.cpp
    keymonmanager.cpp
    devicesearchdialog.cpp
    checkicon.cpp
+
+   zoom/zoomview.cpp
+   zoom/zoomdock.cpp
 
    frame/frame.cpp
    frame/frameinfowidget.cpp
@@ -103,7 +105,9 @@ kde4_add_ui_files(gui_SRCS
     ui/devicesearchdialog.ui
     ui/shortcutsconfig.ui
     ui/pluginconfig.ui
-    ui/timelinedocktitlewidget.ui)
+    ui/timelinedocktitlewidget.ui
+    ui/zoomdock.ui
+    ui/zoomdocktitlewidget.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)

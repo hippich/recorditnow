@@ -33,9 +33,9 @@
 #include <QtCore/QPointer>
 
 
+class ZoomDock;
 class KeyboardDock;
 class TimelineDock;
-class ZoomView;
 class CursorWidget;
 class KSqueezedTextLabel;
 class KAction;
@@ -77,9 +77,9 @@ private:
     EncoderManager *m_encoderManager;
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
-    ZoomView *m_zoom;
     TimelineDock *m_timelineDock;
     KeyboardDock *m_keyboardDock;
+    ZoomDock *m_zoomDock;
 
     KAction *getAction(const QString &name);
 
@@ -122,10 +122,9 @@ private slots:
     void recorderStateChanged(const AbstractRecorder::State &newState);
     void uploaderFinished(const QString &error);
     void linkActivated(const QString &link);
-    void toggleZoom();
     void zoomIn();
     void zoomOut();
-    void setupTimeline();
+    void setupDocks();
     void timeLineFinsihed();
     void resolutionActionTriggered();
     void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);

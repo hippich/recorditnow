@@ -37,6 +37,7 @@
 #include "config/keyboardconfig.h"
 #include "keymonmanager.h"
 #include "config/frameconfig.h"
+#include "zoom/zoomdock.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -103,9 +104,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChanged(QString)));
 
     m_tray = 0;
-    m_zoom = 0;
     m_timelineDock = 0;
     m_keyboardDock = 0;
+    m_zoomDock = 0;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -133,7 +134,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_statusLabel, SIGNAL(linkActivated(QString)), this, SLOT(linkActivated(QString)));
     statusBar()->addPermanentWidget(m_statusLabel, 1);
 
-    setupTimeline();
+    setupDocks();
     setupTray();
     setupGUI();
 
@@ -177,10 +178,6 @@ MainWindow::~MainWindow()
 
     if (m_cursor) {
         delete m_cursor;
-    }
-
-    if (m_zoom) {
-        delete m_zoom;
     }
 
 }
@@ -301,13 +298,6 @@ void MainWindow::setupActions()
     uploadAction->setText(i18n("Upload"));
     uploadAction->setShortcut(Qt::CTRL+Qt::Key_U, KAction::DefaultShortcut);
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(upload()));
-
-    KAction *zoomAction = getAction("zoom");
-    zoomAction->setObjectName("RecordItNow_zoom");
-    zoomAction->setIcon(KIcon("page-zoom"));
-    zoomAction->setText(i18n("Zoom"));
-    zoomAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Z));
-    connect(zoomAction, SIGNAL(triggered()), this, SLOT(toggleZoom()));
 
     KAction *zoomInAction = getAction("zoom-in");
     zoomInAction->setIcon(KIcon("zoom-in"));
@@ -742,10 +732,6 @@ void MainWindow::pluginStatus(const QString &text)
 void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
 {
 
-    if (m_zoom) {
-        toggleZoom();
-    }
-
     if (!error.isEmpty()) {
         pluginStatus(error);
         setState(Idle);
@@ -800,7 +786,7 @@ void MainWindow::configDialogFinished()
 
     setState(Idle);
 
-    setupTimeline();
+    setupDocks();
     setupTray();
     updateRecorderCombo();
     triggerFrame(false); // update KAction
@@ -1065,33 +1051,11 @@ void MainWindow::saveNewToolbarConfig()
 }
 
 
-void MainWindow::toggleZoom()
-{
-
-    if (m_zoom) {
-        delete m_zoom;
-        m_zoom = 0;
-    } else {
-        m_zoom = new ZoomView(this);
-        m_zoom->setSize(QSize(Settings::zoomWidth(), Settings::zoomHeight()));
-        m_zoom->setFactor(Settings::zoomFactor());
-        m_zoom->setFollowMouse(Settings::zoomFollow());
-        if (Settings::zoomHighQuality()) {
-            m_zoom->setQuality(ZoomView::High);
-        }
-        m_zoom->show();
-    }
-
-}
-
-
 void MainWindow::zoomIn()
 {
 
-    if (!m_zoom) {
-        toggleZoom();
-    } else {
-        m_zoom->setFactor(m_zoom->factor()+1);
+    if (m_zoomDock) {
+        m_zoomDock->zoomIn();
     }
 
 }
@@ -1100,17 +1064,14 @@ void MainWindow::zoomIn()
 void MainWindow::zoomOut()
 {
 
-    if (m_zoom) {
-        m_zoom->setFactor(m_zoom->factor()-1);
-        if (m_zoom->factor() == 1) {
-            toggleZoom();
-        }
+    if (m_zoomDock) {
+        m_zoomDock->zoomOut();
     }
 
 }
 
 
-void MainWindow::setupTimeline()
+void MainWindow::setupDocks()
 {
 
     if (Settings::showTimeLine()) {
@@ -1139,6 +1100,25 @@ void MainWindow::setupTimeline()
             removeDockWidget(m_keyboardDock);
             delete m_keyboardDock;
             m_keyboardDock = 0;
+        }
+    }
+
+    if (Settings::zoomDockEnabled()) {
+        if (!m_zoomDock) {
+            m_zoomDock = new ZoomDock(this);
+            addDockWidget(Qt::BottomDockWidgetArea, m_zoomDock);
+        }
+        m_zoomDock->setFactor(Settings::zoomFactor());
+        if (Settings::zoomHighQuality()) {
+            m_zoomDock->setQuality(ZoomView::High);
+        } else {
+            m_zoomDock->setQuality(ZoomView::Low);
+        }
+    }else {
+        if (m_zoomDock) {
+            removeDockWidget(m_zoomDock);
+            delete m_zoomDock;
+            m_zoomDock = false;
         }
     }
 
