@@ -52,6 +52,8 @@ KeyboardKeyPage::KeyboardKeyPage(const QString &device, QWidget *parent)
     registerField("KeyCode*", keyCode);
     registerField("Text*", keyText);
 
+    statusLabel->setText(i18n("Click on \"%1\"", startButton->text()));
+
 }
 
 
@@ -75,9 +77,11 @@ void KeyboardKeyPage::start()
 {
 
     if (m_device.isEmpty()) {
-        KMessageBox::error(this, i18n("Please select a device."));
+        statusLabel->setText(i18n("Please select a device."));
         return;
     }
+
+    statusLabel->setText(i18n("Please wait..."));
 
     startButton->setDisabled(true);
     m_key = -1;
@@ -86,9 +90,10 @@ void KeyboardKeyPage::start()
     keyCodeLabel->clear();
 
     if (!KeyMonManager::self()->start(QStringList() << m_device)) {
-        KMessageBox::error(this, i18n("An error occurd: %1", KeyMonManager::self()->error()));
+        statusLabel->setText(i18n("An error occurd: %1", KeyMonManager::self()->error()));
         stop();
-        return;
+    } else {
+        statusLabel->setText(i18n("Wait for Authentication!"));
     }
 
 }
@@ -97,6 +102,7 @@ void KeyboardKeyPage::start()
 void KeyboardKeyPage::startGrab()
 {
 
+    statusLabel->setText(i18n("Press a key!"));
     grabKeyboard();
     m_grab = true;
 
@@ -129,7 +135,7 @@ void KeyboardKeyPage::keymonStopped()
 
     stop();
     if (!KeyMonManager::self()->error().isEmpty()) {
-        KMessageBox::error(this, i18n("An error occurd: %1", KeyMonManager::self()->error()));
+        statusLabel->setText(i18n("An error occurd: %1", KeyMonManager::self()->error()));
     }
 
 }
@@ -166,9 +172,11 @@ void KeyboardKeyPage::keyReleaseEvent(QKeyEvent *event)
         keyLabel->setText(key.text());
         keyText->setText(key.text());
         keyCodeLabel->setText(QString::number(m_key));
+
+        statusLabel->setText(i18n("Success!"));
     } else {
-        KMessageBox::information(this, i18n("Grab failed!\n"
-                                            "Perhaps you have selected the wrong device."));
+        statusLabel->setText(i18n("Grab failed!\n"
+                                  "Perhaps you have selected the wrong device."));
     }
 
 }
