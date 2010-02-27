@@ -117,7 +117,7 @@ target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
                                   ${KDE4_KIO_LIBS}
                                   recorditnow_recorder
                                   recorditnow_encoder
-                                  recorditnow_snoop
+                                  recorditnow_keymon
                                   ${X11_Xcursor_LIB}
                                   ${JOSCHYCORE_LIBRARIES})
 
