@@ -50,6 +50,7 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
     connect(downButton, SIGNAL(clicked()), this, SLOT(down()));
     connect(listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
     connect(searchButton, SIGNAL(clicked()), this, SLOT(showSearchDialog()));
+    connect(kcfg_keyboardDevice, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
 
     itemSelectionChanged();
 
@@ -249,6 +250,13 @@ void KeyboardConfig::searchDialogFinished(const QString &uuid)
 
 }
 
+
+void KeyboardConfig::textChanged(const QString &text)
+{
+
+    addButton->setDisabled(text.isEmpty());
+
+}
 
 
 #include "keyboardconfig.moc"
