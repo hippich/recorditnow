@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -37,6 +37,7 @@
 #include <solid/device.h>
 #include <solid/deviceinterface.h>
 #include <solid/genericinterface.h>
+#include <solid/predicate.h>
 
 
 namespace KeyMon {
@@ -114,18 +115,16 @@ QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
 QString Manager::fileForDevice(const KeyMon::DeviceInfo &info)
 {
 
-    foreach (const Solid::Device &device, Solid::Device::allDevices()) {
-        if (device.udi() == info.uuid) {
-            const Solid::GenericInterface *interface = device.as<Solid::GenericInterface>();
-            if (interface && interface->isValid()) {
-                return interface->property("input.device").toString();
-            } else {
-                kWarning() << "Invalid interface!";
-                return QString();
-            }
+    Solid::Device device = Solid::Device(info.uuid);
+    if (device.isValid()) {
+        const Solid::GenericInterface *interface = device.as<Solid::GenericInterface>();
+        if (interface && interface->isValid()) {
+            return interface->property("input.device").toString();
+        } else {
+            kWarning() << "Invalid interface!";
+            return QString();
         }
     }
-
     kWarning() << "Device not found...";
     return QString();
 
