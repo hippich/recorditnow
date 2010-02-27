@@ -72,7 +72,7 @@ qreal ZoomView::factor() const
 void ZoomView::start()
 {
 
-    m_timer->start(1000/18); // 18 FPS
+    m_timer->start(1000/15); // 15 FPS
 
 }
 
@@ -118,8 +118,32 @@ void ZoomView::updateView()
     const int screen = x11Info().appScreen();
     const QRect screenGeometry = QApplication::desktop()->screenGeometry(screen);
 
-    target = screenGeometry.intersected(target);
+    // adjust target
+    if (target.width() > screenGeometry.width()) {
+        target.setWidth(screenGeometry.width());
+    }
 
+    if (target.height() > screenGeometry.height()) {
+        target.setHeight(screenGeometry.height());
+    }
+
+    if (target.left() < screenGeometry.left()) {
+        target.moveLeft(screenGeometry.left());
+    }
+
+    if (target.right() > screenGeometry.right()) {
+        target.moveRight(screenGeometry.right());
+    }
+
+    if (target.top() < screenGeometry.top()) {
+        target.moveTop(screenGeometry.top());
+    }
+
+    if (target.bottom() > screenGeometry.bottom()) {
+        target.moveBottom(screenGeometry.bottom());
+    }
+
+    // grab
     m_pixmap = QPixmap::grabWindow(x11Info().appRootWindow(screen),
                                    target.x(),
                                    target.y(),
@@ -159,14 +183,15 @@ void ZoomView::updateView()
     XFree(xcursor);
 #endif
     
-    Qt::TransformationMode mode;
 
+    Qt::TransformationMode mode;
     switch (m_quality) {
     case Low: mode = Qt::FastTransformation; break;
     case High: mode = Qt::SmoothTransformation; break;
+    default: mode = Qt::FastTransformation; break;
     }
 
-    m_pixmap = m_pixmap.scaled(size(), Qt::KeepAspectRatio, mode);
+    m_pixmap = m_pixmap.scaled(contentsRect().size(), Qt::KeepAspectRatio, mode);
 
     update();
 
@@ -182,24 +207,7 @@ void ZoomView::paintEvent(QPaintEvent *event)
     if (!m_timer->isActive()) {
         painter.fillRect(contentsRect(), Qt::black);
     } else {
-        QBrush brush;
-        brush.setStyle(Qt::SolidPattern);
-        brush.setColor(Qt::black);
-        painter.setBrush(brush);
-        painter.drawRect(rect());
-        painter.setBrush(QBrush());
-
-        switch (m_quality) {
-        case Low: painter.setRenderHints(QPainter::Antialiasing); break;
-        case High: {
-                painter.setRenderHints(QPainter::Antialiasing |
-                                       QPainter::HighQualityAntialiasing |
-                                       QPainter::SmoothPixmapTransform);
-                break;
-            }
-        }
-
-        painter.drawPixmap(contentsRect().topLeft(), m_pixmap);
+        painter.drawPixmap(contentsRect(), m_pixmap);
     }
 
 }
