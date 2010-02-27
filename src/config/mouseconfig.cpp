@@ -384,6 +384,7 @@ void MouseConfig::buttonsChanged()
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
     cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
+
     currentButtonChanged();
 
 }
