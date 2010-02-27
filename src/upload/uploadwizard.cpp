@@ -40,6 +40,7 @@ UploadWizard::UploadWizard(QWidget *parent)
 {
 
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowTitle(i18n("Upload Wizard"));
     addPage(new PluginPage(this));
     addPage(new AccountPage(this));
     addPage(new VideoPage(this));
