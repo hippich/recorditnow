@@ -13,9 +13,6 @@
  <Action name="box"/>
  <Action name="recordFullScreen"/>
  <Separator/>
- <Action name="zoom-in"/>
- <Action name="zoom-out"/>
- <Separator/>
  <Action name="upload"/>
  <Separator/>
  <Action name="options_configure"/>
