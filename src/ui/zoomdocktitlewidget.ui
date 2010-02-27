@@ -39,6 +39,9 @@
      <property name="text">
       <string notr="true"/>
      </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -46,12 +49,18 @@
      <property name="text">
       <string notr="true"/>
      </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="QToolButton" name="zoomOutButton">
      <property name="text">
       <string notr="true"/>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
