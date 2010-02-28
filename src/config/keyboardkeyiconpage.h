@@ -40,11 +40,24 @@ public:
 
 
 private:
+    struct Theme {
+        QString name;
+        QString description;
+        QString author;
+        QString license;
+        QString themeDir;
+    };
+
     QString m_iconDir;
+    QList<Theme> m_themes;
+
+    static QStringList themeDirs();
 
 
 private slots:
     void currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void themeChanged(const QString &newTheme);
+    void updateThemeCombo();
 
 
 };

@@ -22,7 +22,6 @@ add_subdirectory(libs)
 add_subdirectory(plugins)
 add_subdirectory(icons)
 add_subdirectory(keymon)
-add_subdirectory(keyboard/images)
 
 macro_display_feature_log()
 
@@ -124,6 +123,8 @@ target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
 
 
 install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+add_subdirectory(keyboard)
 
 ########### install files ###############
 install(FILES recorditnow.kcfg  DESTINATION  ${KCFG_INSTALL_DIR})

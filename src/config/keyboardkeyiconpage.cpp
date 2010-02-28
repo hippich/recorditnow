@@ -24,6 +24,8 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kicon.h>
+#include <kconfig.h>
+#include <kconfiggroup.h>
 
 // Qt
 #include <QtCore/QDir>
@@ -39,22 +41,21 @@ KeyboardKeyIconPage::KeyboardKeyIconPage(QWidget *parent)
 
     registerField("Icon*", iconEdit, "text", SIGNAL(textChanged(QString)));
 
-    const QString iconDirPath = KGlobal::dirs()->locate("data", "recorditnow/icons/");
-    QDir dir(iconDirPath);
-
-    foreach (const QString &file, dir.entryList(QStringList(), QDir::Files)) {
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setIcon(KIcon(dir.absoluteFilePath(file)));
-        item->setText(file);
-
-        iconList->addItem(item);
-    }
-
-    m_iconDir = iconDirPath;
-
-
     connect(iconList, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)),
             this, SLOT(currentItemChanged(QListWidgetItem*,QListWidgetItem*)));
+    connect(themeCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(themeChanged(QString)));
+
+    updateThemeCombo();
+
+}
+
+
+QStringList KeyboardKeyIconPage::themeDirs()
+{
+
+    QStringList dirs;
+    dirs.append(KGlobal::dirs()->findDirs("appdata", "themes/keyboard"));
+    return dirs;
 
 }
 
@@ -67,12 +68,71 @@ void KeyboardKeyIconPage::currentItemChanged(QListWidgetItem *current, QListWidg
     if (!current) {
         iconEdit->clear();
     } else {
-        iconEdit->setText(m_iconDir+current->text());
+        iconEdit->setText(m_iconDir+QDir::separator()+current->text());
     }
 
 }
 
 
+void KeyboardKeyIconPage::themeChanged(const QString &newTheme)
+{
+
+    listGroup->setTitle(newTheme);
+
+    iconList->clear();
+    foreach (const Theme &theme, m_themes) {
+        if (theme.name == newTheme) {
+            descriptionLabel->setText(theme.description);
+            authorLabel->setText(theme.author);
+            licenseLabel->setText(theme.license);
+
+            QDir dir(theme.themeDir);
+            foreach (const QString &file, dir.entryList(QStringList(), QDir::Files)) {
+                if (file.endsWith(QLatin1String(".themerc"))) {
+                    continue;
+                }
+                QListWidgetItem *item = new QListWidgetItem();
+                item->setIcon(KIcon(dir.absoluteFilePath(file)));
+                item->setText(file);
+
+                iconList->addItem(item);
+            }
+            m_iconDir = theme.themeDir;
+        }
+    }
+
+}
+
+
+void KeyboardKeyIconPage::updateThemeCombo()
+{
+
+    themeCombo->clear();
+    m_themes.clear();
+    foreach (const QString &path, themeDirs()) {
+        QDir dir(path);
+        foreach (const QString &themePath, dir.entryList(QStringList(), QDir::Dirs|QDir::NoDotAndDotDot)) {
+            QDir themeDir(dir.absoluteFilePath(themePath));
+            const QStringList files = themeDir.entryList(QStringList() << "*.themerc", QDir::Files);
+            if (files.isEmpty() || files.size() > 1) {
+                continue;
+            }
+            KConfig config(themeDir.absoluteFilePath(files.first()));
+            KConfigGroup group(&config, "RecordItNow::Keyboard::Theme");
+
+            Theme theme;
+            theme.name = group.readEntry("Name", i18n("No name"));
+            theme.description = group.readEntry("Description", QString());
+            theme.author = group.readEntry("Author", i18n("Unknown"));
+            theme.license= group.readEntry("License", i18n("Unknwon"));
+            theme.themeDir = themeDir.absolutePath();
+
+            m_themes.append(theme);
+            themeCombo->addItem(theme.name);
+        }
+    }
+
+}
 
 
 #include "keyboardkeyiconpage.moc"
