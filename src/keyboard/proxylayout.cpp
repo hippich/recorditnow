@@ -53,8 +53,8 @@ void ProxyLayout::addItem(QLayoutItem *item)
     m_item = item;
 
     m_animation->setTargetObject(m_item->widget());
-    m_animation->setDuration(500);
-    m_animation->setEasingCurve(QEasingCurve::OutBounce);
+    m_animation->setDuration(300);
+    m_animation->setEasingCurve(QEasingCurve::Linear);
     m_animation->setPropertyName("geometry");
 
     setGeometry(geometry());
