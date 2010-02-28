@@ -174,8 +174,13 @@ void ZoomView::updateView()
         }
     }
 
-    painter.drawImage(xcursor->x-(target.x()+xcursor->xhot), xcursor->y-(target.y()+xcursor->xhot),
-                      qcursor);
+    float x = xcursor->x;
+    x -= target.x()+xcursor->xhot;
+
+    float y = xcursor->y;
+    y -= target.y()+xcursor->yhot;
+
+    painter.drawImage(x, y, qcursor);
 
     painter.end();
 
