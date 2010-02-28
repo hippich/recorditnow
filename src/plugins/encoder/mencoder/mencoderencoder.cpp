@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -97,7 +97,7 @@ void MencoderEncoder::pause()
         kill(m_mencoder->pid(), SIGSTOP);
         m_paused = true;
     } else {
-        emit status(i18n("Capturing!"));
+        emit status(i18n("Encoding started!"));
         kill(m_mencoder->pid(), SIGCONT);
         m_paused = false;
     }
