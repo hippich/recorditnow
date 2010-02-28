@@ -115,8 +115,10 @@ bool KeyMonManager::start(const QStringList &devs)
     if (reply.errorCode() != KAuth::ActionReply::NoError) {
         if (reply.errorCode() == KAuth::ActionReply::UserCancelled) {
             m_error.clear();
+            action.watcher()->disconnect(this);
             return false;
         } else {
+            action.watcher()->disconnect(this);
             m_error = parseError(reply.errorCode());
             return false;
         }
@@ -206,6 +208,11 @@ void KeyMonManager::actionPerformed(const ActionReply &reply)
             m_error = parseError(reply.errorCode());
         }
     }
+
+    KAuth::Action action("org.kde.recorditnow.helper.watch");
+    action.setHelperID("org.kde.recorditnow.helper");
+    action.watcher()->disconnect(this);
+
     kDebug() << "action performed:" << reply.type() << reply.errorCode() << reply.errorDescription();
 
     m_started = false;
