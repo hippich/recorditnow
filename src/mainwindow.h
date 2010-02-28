@@ -120,7 +120,6 @@ private slots:
     void removeFile();
     void outputFileChanged(const QString &newFile);
     void recorderStateChanged(const AbstractRecorder::State &newState);
-    void uploaderFinished(const QString &error);
     void linkActivated(const QString &link);
     void zoomIn();
     void zoomOut();

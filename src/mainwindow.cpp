@@ -875,18 +875,6 @@ void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
 }
 
 
-void MainWindow::uploaderFinished(const QString &error)
-{
-
-    if (!error.isEmpty()) {
-        KMessageBox::error(this, error);
-        pluginStatus(error);
-    }
-    setState(Idle);
-
-}
-
-
 void MainWindow::startTimer()
 {
 
