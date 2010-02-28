@@ -835,6 +835,7 @@ void MainWindow::removeFile()
     QFile file(outputRequester->text());
     if (!file.exists()) {
         KMessageBox::sorry(this, i18nc("%1 = file", "%1 no such file!", file.fileName()));
+        outputFileChanged(outputRequester->text());
         return;
     }
 
