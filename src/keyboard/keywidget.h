@@ -33,7 +33,7 @@ class QTimer;
 class KeyWidget : public QWidget
 {
     Q_OBJECT
-    Q_PROPERTY(double opacity READ opacity WRITE setOpacity USER true)
+    Q_PROPERTY(double opacity READ opacity WRITE setOpacity)
 
 
 public:
