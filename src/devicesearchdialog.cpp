@@ -25,6 +25,7 @@
 
 // KDE
 #include <klocalizedstring.h>
+#include <kmessagebox.h>
 
 // Qt
 #include <QtGui/QTreeWidgetItem>
@@ -69,6 +70,12 @@ DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &typ
 
     connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
+
+
+    if (treeWidget->topLevelItemCount() == 0) {
+        KMessageBox::information(this, i18n("No devices found."));
+        reject();
+    }
 
 }
 
