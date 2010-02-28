@@ -43,19 +43,35 @@ public:
 
 
 private:
+    enum State {
+        WorkDir = 0,
+        RemoveOutputFile = 1,
+        RemoveTmpFile = 2
+    };
+
     KProcess *m_mencoder;
     QString m_outputFile;
     QString m_tmpFile;
     bool m_paused;
     bool m_stopped;
+    QString m_currentId;
+    State m_state;
+    QString m_command;
+    int m_status;
+    AbstractEncoder::Data m_data;
 
-    bool remove(const QString &file);
-    bool move(const QString &from, const QString &to);
+    void prepare();
+    void startMencoder();
+    void finish();
 
 
 private slots:
     void newMencoderOutput();
     void mencoderFinished(const int &ret);
+
+
+protected:
+    void jobFinished(const QString &id, const QString &errorString);
 
 
 };
