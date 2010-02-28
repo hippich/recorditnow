@@ -30,6 +30,7 @@
 #include <QtGui/QPaintEvent>
 #include <QtCore/QTimer>
 #include <QtGui/QSizePolicy>
+#include <QtCore/QPropertyAnimation>
 
 
 KeyWidget::KeyWidget(const KeyboardKey &key, QWidget *parent)
@@ -42,7 +43,21 @@ KeyWidget::KeyWidget(const KeyboardKey &key, QWidget *parent)
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
+    m_timer->setInterval(150);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timeout()));
+
+    m_animation = new QPropertyAnimation(this);
+    m_animation->setTargetObject(this);
+    m_animation->setPropertyName("opacity");
+    m_animation->setDuration(200);
+    m_animation->setEasingCurve(QEasingCurve::Linear);
+
+    connect(m_animation, SIGNAL(finished()), this, SLOT(animationFinished()));
+
+    m_opacity = 0.0;
+    setOpacity(0.3);
+
+    show();
 
 }
 
@@ -51,6 +66,7 @@ KeyWidget::~KeyWidget()
 {
 
     delete m_timer;
+    delete m_animation;
 
 }
 
@@ -63,19 +79,54 @@ int KeyWidget::keyCode() const
 }
 
 
+double KeyWidget::opacity() const
+{
+
+    return m_opacity;
+
+}
+
+
 void KeyWidget::setPressed(const bool &pressed)
 {
+
+    if (m_pressed == pressed) {
+        return;
+    }
 
     if (m_timer->isActive()) {
         m_timer->stop();
     }
 
-    if (!pressed) {
-        m_timer->start(400);
-    } else {
-        m_pressed = true;
-        update();
+    m_pressed = pressed;
+    if (m_animation->state() == QPropertyAnimation::Running) {
+        if (!pressed) {
+            return;
+        }
+        m_animation->stop();
     }
+
+    m_animation->setStartValue(opacity());
+    if (pressed) {
+        m_animation->setEndValue(1.0);
+        m_animation->start();
+    } else {
+        if (m_animation->state() != QPropertyAnimation::Running) {
+            m_timer->start();
+        }
+    }
+
+}
+
+
+void KeyWidget::setOpacity(const double &opacity)
+{
+
+    if (m_opacity == opacity) {
+        return;
+    }
+    m_opacity = opacity;
+    update();
 
 }
 
@@ -83,8 +134,19 @@ void KeyWidget::setPressed(const bool &pressed)
 void KeyWidget::timeout()
 {
 
-    m_pressed = !m_pressed;
-    update();
+    m_animation->setStartValue(opacity());
+    m_animation->setEndValue(0.3);
+    m_animation->start();
+
+}
+
+
+void KeyWidget::animationFinished()
+{
+
+    if (!m_pressed) {
+        m_timer->start();
+    }
 
 }
 
@@ -96,9 +158,7 @@ void KeyWidget::paintEvent(QPaintEvent *event)
     painter.setClipRegion(event->region());
     painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
 
-    if (!m_pressed) {
-        painter.setOpacity(0.3);
-    }
+    painter.setOpacity(opacity());
 
     QRect rect = contentsRect();
     rect.setWidth(rect.height());

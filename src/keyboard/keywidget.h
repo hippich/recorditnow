@@ -28,10 +28,12 @@
 #include <QtGui/QWidget>
 
 
+class QPropertyAnimation;
 class QTimer;
 class KeyWidget : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(double opacity READ opacity WRITE setOpacity USER true)
 
 
 public:
@@ -39,7 +41,9 @@ public:
     ~KeyWidget();
 
     int keyCode() const;
+    double opacity() const;
     void setPressed(const bool &pressed);
+    void setOpacity(const double &opacity);
 
 
 private:
@@ -47,10 +51,13 @@ private:
     QPixmap m_image;
     bool m_pressed;
     QTimer *m_timer;
+    QPropertyAnimation *m_animation;
+    double m_opacity;
 
 
 private slots:
     void timeout();
+    void animationFinished();
 
 
 protected:
