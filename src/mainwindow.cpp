@@ -1097,6 +1097,7 @@ void MainWindow::setupDocks()
             addDockWidget(Qt::BottomDockWidgetArea, m_zoomDock);
         }
         m_zoomDock->setFactor(Settings::zoomFactor());
+        m_zoomDock->setFPS(Settings::zoomFps());
         if (Settings::zoomHighQuality()) {
             m_zoomDock->setQuality(ZoomView::High);
         } else {

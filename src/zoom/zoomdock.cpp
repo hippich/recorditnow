@@ -81,6 +81,14 @@ void ZoomDock::setQuality(const ZoomView::Quality &quality)
 }
 
 
+void ZoomDock::setFPS(const int &fps)
+{
+
+    zoomView->setFPS(fps);
+
+}
+
+
 void ZoomDock::startStopZoom()
 {
 

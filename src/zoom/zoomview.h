@@ -47,6 +47,7 @@ public:
     void stop();
     void setFactor(const qreal &factor);
     void setQuality(const ZoomView::Quality &quality);
+    void setFPS(const int &fps);
 
 
 private:

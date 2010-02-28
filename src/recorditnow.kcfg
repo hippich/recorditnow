@@ -102,6 +102,9 @@
     <entry name="zoomHighQuality" type="Bool">
             <default>true</default>
     </entry>
+    <entry name="zoomFps" type="Int">
+            <default>18</default>
+    </entry>
   </group>
  <group name="TimeLine">
     <entry name="showTimeLine" type="Bool">

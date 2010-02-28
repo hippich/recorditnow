@@ -47,6 +47,7 @@ ZoomView::ZoomView(QWidget *parent)
     m_quality = Low;
 
     m_timer = new QTimer(this);
+    m_timer->setInterval(1000/18);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateView()));
 
 }
@@ -72,7 +73,7 @@ qreal ZoomView::factor() const
 void ZoomView::start()
 {
 
-    m_timer->start(1000/15); // 15 FPS
+    m_timer->start();
 
 }
 
@@ -104,6 +105,14 @@ void ZoomView::setQuality(const ZoomView::Quality &quality)
 
     m_quality = quality;
     updateView();
+
+}
+
+
+void ZoomView::setFPS(const int &fps)
+{
+
+    m_timer->setInterval(1000/fps);
 
 }
 

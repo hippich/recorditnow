@@ -89,7 +89,6 @@ kde4_add_ui_files(gui_SRCS
     ui/timeline.ui 
     ui/timelinetopics.ui 
     ui/timelineconfig.ui 
-    ui/keymondialog.ui
     ui/frameconfig.ui
     upload/ui/pluginpage.ui
     upload/ui/videopage.ui
