@@ -69,6 +69,8 @@ void FfmpegEncoder::encode(const Data &d)
 
     emit status(i18n("Starting ffmpeg!"));
 
+    m_data = d;
+
     // check input file
     if (!QFile::exists(d.file)) { // should never happen
         emit error(i18nc("%1 = file", "%1 no such file!", d.file));
@@ -83,70 +85,8 @@ void FfmpegEncoder::encode(const Data &d)
 
 
     // move to wokdir
-    if (!move(d.file, m_tmpFile)) {
-        return;
-    }
-
-
-    // remove format
-    if (m_outputFile.length() > 4 && m_outputFile[m_outputFile.length()-4] == '.') {
-        m_outputFile.remove(m_outputFile.length()-4, 4);
-    }
-
-
-    // set output file + args
-    QString command = Settings::command();
-    if (!command.contains("%1") || !command.contains("%1")) {
-        emit error(i18n("Input/output file is missing."));
-        return;
-    }
-
-    QString format = command.mid(command.indexOf("%2"));
-    format.remove("%2");
-    format.remove(QRegExp(" .*"));
-
-    m_outputFile += format;
-    if (!d.overwrite) {
-        m_outputFile = unique(m_outputFile);
-    } else {
-        QFile file(m_outputFile);
-        if (file.exists()) {
-            if (!remove(m_outputFile)) {
-                return;
-            }
-        }
-    }
-
-    emit outputFileChanged(m_outputFile); // update gui
-    m_outputFile.remove(format);
-
-    // args
-    command = command.arg(m_tmpFile).arg(m_outputFile);
-    const QStringList args = command.split(' ');
-
-
-    // exe
-    const QString exe = KGlobal::dirs()->findExe("ffmpeg");
-    if (exe.isEmpty()) {
-        emit error(i18n("Cannot find ffmpeg!\n"
-                        "Please install ffmpeg or use another plugin."));
-        return;
-    }
-
-    // process
-    if (m_ffmpeg) { // should never happen
-        m_ffmpeg->disconnect(this);
-        m_ffmpeg->deleteLater();
-    }
-
-    m_ffmpeg = new KProcess(this);
-    m_ffmpeg->setOutputChannelMode(KProcess::MergedChannels);
-    m_ffmpeg->setProgram(exe, args);
-
-    connect(m_ffmpeg, SIGNAL(finished(int)), this, SLOT(ffmpegFinished(int)));
-    connect(m_ffmpeg, SIGNAL(readyReadStandardOutput()), this, SLOT(newFfmpegOutput()));
-
-    m_ffmpeg->start();
+    m_state = WorkDir;
+    m_currentId = move(d.file, m_tmpFile);
 
 }
 
@@ -159,7 +99,7 @@ void FfmpegEncoder::pause()
         kill(m_ffmpeg->pid(), SIGSTOP);
         m_paused = true;
     } else {
-        emit status(i18n("Capturing!"));
+        emit status(i18n("Encoding started!"));
         kill(m_ffmpeg->pid(), SIGCONT);
         m_paused = false;
     }
@@ -179,31 +119,86 @@ void FfmpegEncoder::stop()
 }
 
 
-bool FfmpegEncoder::remove(const QString &file)
+void FfmpegEncoder::prepare()
 {
 
-    QFile f(file);
-    if (!f.remove()) {
-        emit error(i18nc("%1 = file, %2 = error string", "Remove failed: %1.\n"
-                         "Reason: %2", file, f.errorString()));
-        return false;
+    // remove format
+    if (m_outputFile.length() > 4 && m_outputFile[m_outputFile.length()-4] == '.') {
+        m_outputFile.remove(m_outputFile.length()-4, 4);
     }
-    return true;
+
+
+    // set output file + args
+    m_command = Settings::command();
+    if (!m_command.contains("%1") || !m_command.contains("%2")) {
+        emit error(i18n("Input/output file is missing."));
+        return;
+    }
+
+    QString format = m_command.mid(m_command.indexOf("%2"));
+    format.remove("%2");
+    format.remove(QRegExp(" .*"));
+
+    bool start = true;
+    m_outputFile += format;
+    if (!m_data.overwrite) {
+        m_outputFile = unique(m_outputFile);
+    } else {
+        if (QFile::exists(m_outputFile)) {
+            m_state = RemoveOutputFile;
+            m_currentId = remove(m_outputFile);
+            start = false;
+        }
+    }
+
+    emit outputFileChanged(m_outputFile); // update gui
+    m_outputFile.remove(format);
+
+    if (start) {
+        startFfmpeg();
+    }
 
 }
 
 
-bool FfmpegEncoder::move(const QString &from, const QString &to)
+void FfmpegEncoder::startFfmpeg()
 {
 
-    QFile file;
-    if (!file.rename(from, to)) {
-        emit error(i18nc("%1 = source, %1 = destination, %3 = error string",
-                         "Move failed: \"%1\" to \"%2\".\n"
-                         "Reason: %3", from, to, file.errorString()));
-        return false;
+    // args
+    m_command = m_command.arg(m_tmpFile).arg(m_outputFile);
+    const QStringList args = m_command.split(' ');
+
+
+    // exe
+    const QString exe = KGlobal::dirs()->findExe("ffmpeg");
+    if (exe.isEmpty()) {
+        emit error(i18n("Cannot find ffmpeg!\n"
+                        "Please install ffmpeg or use another plugin."));
+        return;
     }
-    return true;
+
+    Q_ASSERT(!m_ffmpeg);
+
+    m_ffmpeg = new KProcess(this);
+    m_ffmpeg->setOutputChannelMode(KProcess::MergedChannels);
+    m_ffmpeg->setProgram(exe, args);
+
+    connect(m_ffmpeg, SIGNAL(finished(int)), this, SLOT(ffmpegFinished(int)));
+    connect(m_ffmpeg, SIGNAL(readyReadStandardOutput()), this, SLOT(newFfmpegOutput()));
+
+    m_ffmpeg->start();
+
+}
+
+
+void FfmpegEncoder::finish()
+{
+
+    m_ffmpeg->disconnect(this);
+    m_ffmpeg->deleteLater();
+    m_ffmpeg = 0;
+
+    emit finished(m_status == 0 || m_stopped ? Normal: Crash);
 
 }
 
@@ -249,16 +244,33 @@ void FfmpegEncoder::newFfmpegOutput()
 void FfmpegEncoder::ffmpegFinished(const int &ret)
 {
 
-    QFile file(m_tmpFile);
-    if (file.exists()) {
-        remove(m_tmpFile);
+    m_status = ret;
+
+    if (QFile::exists(m_tmpFile)) {
+        m_state = RemoveTmpFile;
+        m_currentId = remove(m_tmpFile);
+    } else {
+        finish();
     }
 
-    m_ffmpeg->disconnect(this);
-    m_ffmpeg->deleteLater();
-    m_ffmpeg = 0;
+}
 
-    emit finished(ret == 0 || m_stopped ? Normal: Crash);
+
+void FfmpegEncoder::jobFinished(const QString &id, const QString &errorString)
+{
+
+    if (!errorString.isEmpty()) {
+        emit error(errorString);
+        return;
+    }
+
+    if (m_currentId == id) {
+        switch (m_state) {
+        case WorkDir: prepare(); break;
+        case RemoveOutputFile: startFfmpeg(); break;
+        case RemoveTmpFile: finish(); break;
+        }
+    }
 
 }
 

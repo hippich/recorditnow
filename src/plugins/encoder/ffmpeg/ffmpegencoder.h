@@ -43,20 +43,36 @@ public:
 
 
 private:
+    enum State {
+        WorkDir = 0,
+        RemoveOutputFile = 1,
+        RemoveTmpFile = 2
+    };
+
     KProcess *m_ffmpeg;
     QString m_outputFile;
     QString m_tmpFile;
     bool m_paused;
     int m_duration;
     bool m_stopped;
-
-    bool remove(const QString &file);
-    bool move(const QString &from, const QString &to);
+    QString m_currentId;
+    State m_state;
+    AbstractEncoder::Data m_data;
+    QString m_command;
+    int m_status;
     
+    void prepare();
+    void startFfmpeg();
+    void finish();
+
 
 private slots:
     void newFfmpegOutput();
     void ffmpegFinished(const int &ret);
+
+
+protected:
+    void jobFinished(const QString &id, const QString &errorString);
 
 
 };
