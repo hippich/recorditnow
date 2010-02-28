@@ -164,34 +164,22 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
         painter.drawImage(pos, branding);
     }
 
+    m_shot = cheese;
+    m_outputFile = d.outputFile;
+
     QFile outFile(d.outputFile);
     if (outFile.exists()) {
         if (d.overwrite) {
-            if (!outFile.remove()) {
-                emit error(i18nc("%1 = file, %2 = error string", "screenshot: Remove failed: %1.\n"
-                                 "Reason: %2", outFile.fileName(), outFile.errorString()));
-                return;
-            }
+            m_outputFile = d.outputFile;
+            m_removeId = remove(d.outputFile);
+            return;
         } else {
             outFile.setFileName(unique(outFile.fileName()));
             emit outputFileChanged(outFile.fileName());
+            m_outputFile = outFile.fileName();
         }
     }
-
-    if (!outFile.open(QIODevice::WriteOnly)) {
-        emit error(i18nc("%1 = error string", "Cannot open output file: %1", outFile.errorString()));
-        return;
-    }
-
-    kDebug() << "format:" << Settings::format() << "quality:" << Settings::quality();
-    if (!cheese.save(&outFile, Settings::format().toUpper().toLatin1(), Settings::quality())) {
-        outFile.close();
-        outFile.remove();
-        emit error(i18n("Cannot save image."));
-        return;
-    }
-    outFile.close();
-    emit finished(AbstractRecorder::Normal);
+    save();
 
 }
 
@@ -210,6 +198,43 @@ void ScreenshotRecorder::stop()
 
 
 }
+
+
+void ScreenshotRecorder::save()
+{
+
+    QFile file(m_outputFile);
+    if (!file.open(QIODevice::WriteOnly)) {
+        emit error(i18nc("%1 = error string", "Cannot open output file: %1", file.errorString()));
+        return;
+    }
+
+    kDebug() << "format:" << Settings::format() << "quality:" << Settings::quality();
+    if (!m_shot.save(&file, Settings::format().toUpper().toLatin1(), Settings::quality())) {
+        file.close();
+        emit error(i18n("Cannot save image."));
+    } else {
+        file.close();
+        emit finished(AbstractRecorder::Normal);
+    }
+
+}
+
+
+void ScreenshotRecorder::jobFinished(const QString &id, const QString &errorString)
+{
+
+    if (!errorString.isEmpty()) {
+        emit error(errorString);
+        return;
+    }
+
+    if (id == m_removeId) {
+        save();
+    }
+
+}
+
 
 
 #include "screenshotrecorder.moc"

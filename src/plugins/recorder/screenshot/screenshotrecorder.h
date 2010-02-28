@@ -25,6 +25,7 @@
 
 // Qt
 #include <QtCore/QVariantList>
+#include <QtGui/QPixmap>
 
 
 class ScreenshotRecorder : public AbstractRecorder
@@ -40,6 +41,18 @@ public:
     void record(const AbstractRecorder::Data &d);
     void pause();
     void stop();
+
+
+private:
+    QString m_outputFile;
+    QString m_removeId;
+    QPixmap m_shot;
+
+    void save();
+
+
+protected:
+    void jobFinished(const QString &id, const QString &errorString);
 
 
 };
