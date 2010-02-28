@@ -284,35 +284,6 @@ void RecordMyDesktopRecorder::newRecorderOutput()
 }
 
 
-bool RecordMyDesktopRecorder::remove(const QString &file)
-{
-
-    QFile f(file);
-    if (!f.remove()) {
-        emit error(i18nc("%1 = file, %2 = error string", "recordmydesktop: Remove failed: %1.\n"
-                         "Reason: %2", file, f.errorString()));
-        return false;
-    }
-    return true;
-
-}
-
-
-bool RecordMyDesktopRecorder::move(const QString &from, const QString &to)
-{
-
-    QFile file;
-    if (!file.rename(from, to)) {
-        emit error(i18nc("%1 = source, %1 = destination, %3 = error string",
-                         "Move failed: \"%1\" to \"%2\".\n"
-                         "Reason: %3", from, to, file.errorString()));
-        return false;
-    }
-    return true;
-
-}
-
-
 void RecordMyDesktopRecorder::clean()
 {
 
@@ -344,27 +315,41 @@ void RecordMyDesktopRecorder::recorderFinished(const int &ret)
     QFile outputFile(m_data.outputFile);
     if (outputFile.exists()) {
         if (m_data.overwrite) {
-            if (!remove(m_data.outputFile)) {
-                clean();
-                return;
-            }
+            m_removeId = remove(m_data.outputFile);
+            return;
         } else {
             m_data.outputFile = unique(m_data.outputFile);
             emit outputFileChanged(m_data.outputFile);
         }
     }
+    moveToDestination();
 
-    if (!move(m_data.tmpFile, m_data.outputFile)) {
-        clean();
+}
+
+
+void RecordMyDesktopRecorder::moveToDestination()
+{
+
+    m_moveId = move(m_data.tmpFile, m_data.outputFile);
+    if (m_moveId.isEmpty()) {
+        emit error(i18n("Internal error!"));
+    }
+
+}
+
+
+void RecordMyDesktopRecorder::jobFinished(const QString &id, const QString &errorString)
+{
+
+    if (!errorString.isEmpty()) {
+        emit error(errorString);
         return;
     }
 
-    clean();
-
-    if (status == KProcess::CrashExit) {
-        emit finished(Crash);
-    } else {
+    if (id == m_moveId) {
         emit finished(Normal);
+    } else if (id == m_removeId) {
+        moveToDestination();
     }
 
 }

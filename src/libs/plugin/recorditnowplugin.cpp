@@ -23,11 +23,16 @@
 
 // KDE
 #include <kstandarddirs.h>
+#include <kio/jobclasses.h>
+#include <kio/job.h>
+#include <kdebug.h>
+#include <klocalizedstring.h>
 
 // Qt
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
+#include <QtCore/QUuid>
 
 
 RecordItNowPlugin::RecordItNowPlugin(QObject *parent)
@@ -43,6 +48,83 @@ RecordItNowPlugin::~RecordItNowPlugin()
 {
 
 
+
+}
+
+
+QString RecordItNowPlugin::getUniqueId()
+{
+
+    QString id = QUuid::createUuid().toString();
+    while (m_uniqueIds.contains(id)) {
+        id = QUuid::createUuid().toString();
+    }
+
+    m_uniqueIds.append(id);
+    return id;
+
+}
+
+
+void RecordItNowPlugin::removeUniqueId(const QString &id)
+{
+
+    m_uniqueIds.removeAll(id);
+
+}
+
+
+void RecordItNowPlugin::jobFinishedInternal(KJob *job)
+{
+
+    QString id = m_jobs.value(job);
+
+    m_jobs.remove(job);
+
+    QString errorString;
+    if (job->error()) {
+        errorString = job->errorString();
+        if (errorString.isEmpty()) {
+            errorString = i18n("Unkown error!");
+        }
+    }
+
+    removeUniqueId(id);
+    jobFinished(id, errorString);
+
+}
+
+
+QString RecordItNowPlugin::move(const QString &from ,const QString &to)
+{
+
+    if (!QFile::exists(from)) {
+        return QString();
+    }
+
+    KIO::FileCopyJob *job = KIO::file_move(KUrl(from), KUrl(to), -1, KIO::HideProgressInfo);
+    connect(job, SIGNAL(finished(KJob*)), this, SLOT(jobFinishedInternal(KJob*)));
+
+    job->setAutoDelete(true);
+
+    m_jobs[job] = getUniqueId();
+
+    return m_jobs.value(job);
+
+}
+
+
+QString RecordItNowPlugin::remove(const QString &file)
+{
+
+    KIO::SimpleJob *job = KIO::file_delete(KUrl(file), KIO::HideProgressInfo);
+    connect(job, SIGNAL(finished(KJob*)), this, SLOT(jobFinishedInternal(KJob*)));
+
+    job->setAutoDelete(true);
+
+    m_jobs[job] = getUniqueId();
+
+    return m_jobs.value(job);
 
 }
 
@@ -97,6 +179,15 @@ QString RecordItNowPlugin::unique(const QString &file) const
     result += format;
 
     return result;
+
+}
+
+
+void RecordItNowPlugin::jobFinished(const QString &id, const QString &errorString)
+{
+
+    Q_UNUSED(id);
+    Q_UNUSED(errorString);
 
 }
 
