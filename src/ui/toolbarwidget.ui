@@ -339,6 +339,15 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>fpsSpinBox</tabstop>
+  <tabstop>backendCombo</tabstop>
+  <tabstop>timeUpButton</tabstop>
+  <tabstop>outputRequester</tabstop>
+  <tabstop>timeDownButton</tabstop>
+  <tabstop>playButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

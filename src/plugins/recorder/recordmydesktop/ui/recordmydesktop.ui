@@ -79,6 +79,9 @@
            <property name="text">
             <string>Device:</string>
            </property>
+           <property name="buddy">
+            <cstring>kcfg___device</cstring>
+           </property>
           </widget>
          </item>
          <item row="1" column="1">
@@ -104,6 +107,9 @@
            <property name="text">
             <string>Channels:</string>
            </property>
+           <property name="buddy">
+            <cstring>kcfg___channels</cstring>
+           </property>
           </widget>
          </item>
          <item row="2" column="1">
@@ -123,6 +129,9 @@
           <widget class="QLabel" name="label_2">
            <property name="text">
             <string>Frequency:</string>
+           </property>
+           <property name="buddy">
+            <cstring>kcfg___freq</cstring>
            </property>
           </widget>
          </item>
@@ -144,6 +153,9 @@
            <property name="text">
             <string>Buffer size (only ALSA or OSS):</string>
            </property>
+           <property name="buddy">
+            <cstring>kcfg___buffer_size</cstring>
+           </property>
           </widget>
          </item>
          <item row="4" column="1">
@@ -164,6 +176,9 @@
            <property name="text">
             <string>Ring Buffer size (JACK only):</string>
            </property>
+           <property name="buddy">
+            <cstring>kcfg___ring_buffer_size</cstring>
+           </property>
           </widget>
          </item>
          <item row="5" column="1">
@@ -183,6 +198,9 @@
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>JACK Ports:</string>
+           </property>
+           <property name="buddy">
+            <cstring>kcfg___use_jack</cstring>
            </property>
           </widget>
          </item>
@@ -233,6 +251,9 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="buddy">
+            <cstring>kcfg___s_quality</cstring>
+           </property>
           </widget>
          </item>
          <item row="2" column="1">
@@ -264,6 +285,9 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>kcfg___v_bitrate</cstring>
            </property>
           </widget>
          </item>
@@ -299,6 +323,9 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>kcfg___v_quality</cstring>
            </property>
           </widget>
          </item>
@@ -382,6 +409,28 @@
    <header>knuminput.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>ktabwidget</tabstop>
+  <tabstop>kcfg___no_cursor</tabstop>
+  <tabstop>kcfg___no_shared</tabstop>
+  <tabstop>kcfg___full_shots</tabstop>
+  <tabstop>kcfg___subsampling</tabstop>
+  <tabstop>kcfg___device</tabstop>
+  <tabstop>deviceButton</tabstop>
+  <tabstop>kcfg___channels</tabstop>
+  <tabstop>kcfg___freq</tabstop>
+  <tabstop>kcfg___buffer_size</tabstop>
+  <tabstop>kcfg___ring_buffer_size</tabstop>
+  <tabstop>kcfg___use_jack</tabstop>
+  <tabstop>kcfg___on_the_fly_encoding</tabstop>
+  <tabstop>kcfg___v_quality</tabstop>
+  <tabstop>kcfg___s_quality</tabstop>
+  <tabstop>kcfg___v_bitrate</tabstop>
+  <tabstop>kcfg___no_wm_check</tabstop>
+  <tabstop>kcfg___compress_cache</tabstop>
+  <tabstop>kcfg_followMouse</tabstop>
+  <tabstop>kcfg_frame</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

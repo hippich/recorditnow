@@ -30,6 +30,9 @@
           <property name="text">
            <string comment="The name of the new item">Name:</string>
           </property>
+          <property name="buddy">
+           <cstring>sizeEdit</cstring>
+          </property>
          </widget>
         </item>
         <item row="0" column="1">

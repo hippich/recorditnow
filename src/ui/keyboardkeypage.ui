@@ -157,6 +157,12 @@ p, li { white-space: pre-wrap; }
    <header>ktextbrowser.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>statusLabel</tabstop>
+  <tabstop>startButton</tabstop>
+  <tabstop>keyCode</tabstop>
+  <tabstop>keyText</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

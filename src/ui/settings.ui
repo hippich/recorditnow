@@ -104,6 +104,9 @@
         <property name="wordWrap">
          <bool>true</bool>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_workDir</cstring>
+        </property>
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
@@ -130,6 +133,16 @@
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_tray</tabstop>
+  <tabstop>kcfg_hideOnRecord</tabstop>
+  <tabstop>kcfg_stayOnTop</tabstop>
+  <tabstop>kcfg_overwrite</tabstop>
+  <tabstop>kcfg_showVideo</tabstop>
+  <tabstop>kcfg_encode</tabstop>
+  <tabstop>encoderCombo</tabstop>
+  <tabstop>kcfg_workDir</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
