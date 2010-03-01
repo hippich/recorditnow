@@ -8,5 +8,8 @@
     <entry name="format" type="String">
             <default>mp4</default>
     </entry>
+    <entry name="videoQuality" type="Int">
+            <default>90</default>
+    </entry>
   </group>
 </kcfg>

@@ -52,6 +52,7 @@ FfmpegRecorderConfig::~FfmpegRecorderConfig()
 void FfmpegRecorderConfig::defaults()
 {
 
+    KCModule::defaults();
     formatCombo->setCurrentItem("mp4");
 
 }
@@ -60,6 +61,7 @@ void FfmpegRecorderConfig::defaults()
 void FfmpegRecorderConfig::load()
 {
 
+    KCModule::load();
     Settings::self()->readConfig();
     formatCombo->setCurrentItem(Settings::format());
 
@@ -69,6 +71,7 @@ void FfmpegRecorderConfig::load()
 void FfmpegRecorderConfig::save()
 {
 
+    KCModule::save();
     Settings::self()->setFormat(formatCombo->currentText());
     Settings::self()->writeConfig();
 

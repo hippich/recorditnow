@@ -88,8 +88,35 @@ void FfmpegRecorder::record(const AbstractRecorder::Data &d)
 
     m_tmpFile = unique(m_tmpFile.append(QString(".%1").arg(Settings::format())));
 
+    // qscale must be > 0.0 and <= 255
+    double videoQuality;
+
+    if (Settings::videoQuality() <= 10) {
+        videoQuality = 20;
+    } else if (Settings::videoQuality() <= 20) {
+        videoQuality = 15;
+    } else if (Settings::videoQuality() <= 30) {
+        videoQuality = 10;
+    } else if (Settings::videoQuality() <= 40) {
+        videoQuality = 5;
+    } else if (Settings::videoQuality() <= 50) {
+        videoQuality = 4;
+    } else if (Settings::videoQuality() <= 60) {
+        videoQuality = 3;
+    } else if (Settings::videoQuality() <= 70) {
+        videoQuality = 2;
+    } else if (Settings::videoQuality() <= 80) {
+        videoQuality = 1;
+    } else if (Settings::videoQuality() <= 90) {
+        videoQuality = 0.5;
+    } else if (Settings::videoQuality() <= 100) {
+        videoQuality = 0.1;
+    } else {
+        videoQuality = 2;
+    }
+
     QStringList args;
-    args << "-f" << "x11grab" << "-qscale" << "2" << "-r" << QString::number(d.fps);
+    args << "-f" << "x11grab" << "-qscale" << QString::number(videoQuality) << "-r" << QString::number(d.fps);
     args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
     args << "-i" << DisplayString(QX11Info::display())+QString("+%1,%2").arg(geometry.x()).arg(geometry.y());
     args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());

@@ -19,6 +19,9 @@
      <property name="text">
       <string>Format:</string>
      </property>
+     <property name="buddy">
+      <cstring>formatCombo</cstring>
+     </property>
     </widget>
    </item>
    <item row="0" column="1">
@@ -46,6 +49,38 @@
      </item>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Video Quality:</string>
+     </property>
+     <property name="buddy">
+      <cstring>kcfg_videoQuality</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="KIntNumInput" name="kcfg_videoQuality">
+     <property name="value">
+      <number>90</number>
+     </property>
+     <property name="minimum">
+      <number>10</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="singleStep">
+      <number>10</number>
+     </property>
+     <property name="suffix">
+      <string notr="true">%</string>
+     </property>
+     <property name="sliderEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -54,7 +89,16 @@
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
   </customwidget>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>formatCombo</tabstop>
+  <tabstop>kcfg_videoQuality</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
