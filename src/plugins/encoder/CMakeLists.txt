@@ -9,15 +9,6 @@ macro_log_feature(MENCODER_FOUND "mencoder"
     ""
     "")
 
-macro_optional_find_package(ffmpeg)
-macro_log_feature(FFMPEG_FOUND "ffmpeg"                                                                      
-    "Complete solution to record, convert and stream audio and video. Includes libavcodec."
-    "http://ffmpeg.org/"                                                                                       
-    FALSE                     
-    ""                                                                                                      
-    "")                                                                                                        
-
-
 if(MENCODER_FOUND)
    add_subdirectory(mencoder)
 endif()
