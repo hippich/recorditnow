@@ -77,14 +77,22 @@ void FfmpegRecorder::record(const AbstractRecorder::Data &d)
     m_data = d;
     m_tmpFile = getTemporaryFile(d.workDir);
 
+    QRect geometry = d.geometry;
+    if (d.winId != -1) {
+        XWindowAttributes attributes;
+        XGetWindowAttributes(QX11Info::display(), d.winId, &attributes);
+
+        geometry = QRect(attributes.x, attributes.y, attributes.width, attributes.height);
+    }
+
 
     m_tmpFile = unique(m_tmpFile.append(QString(".%1").arg(Settings::format())));
 
     QStringList args;
     args << "-f" << "x11grab" << "-qscale" << "2" << "-r" << QString::number(d.fps);
-    args << "-s" << QString("%1x%2").arg(d.geometry.width()).arg(d.geometry.height());
-    args << "-i" << DisplayString(QX11Info::display())+QString("+%1,%2").arg(d.geometry.x()).arg(d.geometry.y());
-    args << "-s" << QString("%1x%2").arg(d.geometry.width()).arg(d.geometry.height());
+    args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
+    args << "-i" << DisplayString(QX11Info::display())+QString("+%1,%2").arg(geometry.x()).arg(geometry.y());
+    args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
     args << m_tmpFile;
     //ffmpeg -f x11grab -qscale 2 -r 20 -s 1440x900 -i :0.0 -s 1440x900 x11grab.avi
 
