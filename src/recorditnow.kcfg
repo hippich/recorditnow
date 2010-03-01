@@ -7,6 +7,7 @@
   <include>QtCore/QDir</include>
   <include>kstandarddirs.h</include>
   <include>kglobal.h</include>
+  <include>kglobalsettings.h</include>
   <group name="Preferences">
     <entry name="hideOnRecord" type="Bool">
 	    <default>false</default>
@@ -27,6 +28,9 @@
     </entry>
     <entry name="workDir" type="Url">
             <default code="true">KGlobal::dirs()->locateLocal("tmp", "")</default>
+    </entry>
+    <entry name="videoDir" type="Url">
+            <default code="true">KGlobalSettings::videosPath()</default>
     </entry>
   </group>
   <group name="GUI">

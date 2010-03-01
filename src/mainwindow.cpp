@@ -47,6 +47,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QStackedLayout>
 #include <QtGui/QDockWidget>
+#include <QtCore/QDir>
 
 // KDE
 #include <kicon.h>
@@ -949,7 +950,13 @@ void MainWindow::backendChanged(const QString &newBackend)
 {
 
     outputRequester->clear(); // call textChanged()
-    outputRequester->setText(m_recorderManager->getDefaultFile(newBackend));
+
+    QString file = Settings::videoDir().path();
+    if (!file.endsWith(QDir::separator())) {
+        file.append(QDir::separator());
+    }
+    file.append(m_recorderManager->getDefaultFile(newBackend));
+    outputRequester->setText(file);
     setState(Idle); // update actions/widgets
 
 }
