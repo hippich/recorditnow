@@ -403,11 +403,11 @@ void MainWindow::recordCurrentWindow()
     int rootX, rootY, winX, winY;
 
     XGrabServer(QX11Info::display());
-    XQueryPointer(QX11Info::display(), QX11Info::appRootWindow(), &root, &child,
+    XQueryPointer(QX11Info::display(), QX11Info::appRootWindow(x11Info().appScreen()), &root, &child,
                   &rootX, &rootY, &winX, &winY, &mask);
 
     if (child == None) {
-        child = QX11Info::appRootWindow();
+        child = QX11Info::appRootWindow(x11Info().appScreen());
     }
 
     XUngrabServer(QX11Info::display());
