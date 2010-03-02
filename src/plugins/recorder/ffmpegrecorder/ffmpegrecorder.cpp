@@ -88,40 +88,60 @@ void FfmpegRecorder::record(const AbstractRecorder::Data &d)
 
     m_tmpFile = unique(m_tmpFile.append(QString(".%1").arg(Settings::format())));
 
-    // qscale must be > 0.0 and <= 255
-    double videoQuality;
-
-    if (Settings::videoQuality() <= 10) {
-        videoQuality = 20;
-    } else if (Settings::videoQuality() <= 20) {
-        videoQuality = 15;
-    } else if (Settings::videoQuality() <= 30) {
-        videoQuality = 10;
-    } else if (Settings::videoQuality() <= 40) {
-        videoQuality = 5;
-    } else if (Settings::videoQuality() <= 50) {
-        videoQuality = 4;
-    } else if (Settings::videoQuality() <= 60) {
-        videoQuality = 3;
-    } else if (Settings::videoQuality() <= 70) {
-        videoQuality = 2;
-    } else if (Settings::videoQuality() <= 80) {
-        videoQuality = 1;
-    } else if (Settings::videoQuality() <= 90) {
-        videoQuality = 0.5;
-    } else if (Settings::videoQuality() <= 100) {
-        videoQuality = 0.1;
-    } else {
-        videoQuality = 2;
-    }
-
     QStringList args;
-    args << "-f" << "x11grab" << "-qscale" << QString::number(videoQuality) << "-r" << QString::number(d.fps);
-    args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
-    args << "-i" << DisplayString(QX11Info::display())+QString("+%1,%2").arg(geometry.x()).arg(geometry.y());
-    args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
-    args << m_tmpFile;
-    //ffmpeg -f x11grab -qscale 2 -r 20 -s 1440x900 -i :0.0 -s 1440x900 x11grab.avi
+    if (!Settings::useCustomCommand()) {
+        // qscale must be > 0.0 and <= 255
+        double videoQuality;
+
+        if (Settings::videoQuality() <= 10) {
+            videoQuality = 20;
+        } else if (Settings::videoQuality() <= 20) {
+            videoQuality = 15;
+        } else if (Settings::videoQuality() <= 30) {
+            videoQuality = 10;
+        } else if (Settings::videoQuality() <= 40) {
+            videoQuality = 5;
+        } else if (Settings::videoQuality() <= 50) {
+            videoQuality = 4;
+        } else if (Settings::videoQuality() <= 60) {
+            videoQuality = 3;
+        } else if (Settings::videoQuality() <= 70) {
+            videoQuality = 2;
+        } else if (Settings::videoQuality() <= 80) {
+            videoQuality = 1;
+        } else if (Settings::videoQuality() <= 90) {
+            videoQuality = 0.5;
+        } else if (Settings::videoQuality() <= 100) {
+            videoQuality = 0.1;
+        } else {
+            videoQuality = 2;
+        }
+
+        args << "-f" << "x11grab" << "-qscale" << QString::number(videoQuality) << "-r" << QString::number(d.fps);
+        args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
+        args << "-i" << DisplayString(QX11Info::display())+QString("+%1,%2").arg(geometry.x()).arg(geometry.y());
+        args << "-s" << QString("%1x%2").arg(geometry.width()).arg(geometry.height());
+        args << m_tmpFile;
+        //ffmpeg -f x11grab -qscale 2 -r 20 -s 1440x900 -i :0.0 -s 1440x900 x11grab.avi
+    } else {
+
+        QString command = Settings::customCommand();
+        if (!command.contains("%{output}")) {
+            emit error(i18n("Invalid command!"));
+            return;
+        }
+
+        command.prepend("-f x11Grab ");
+        command.replace("%{output}", m_tmpFile);
+        command.replace("%{x}", QString::number(geometry.x()));
+        command.replace("%{y}", QString::number(geometry.y()));
+        command.replace("%{width}", QString::number(geometry.width()));
+        command.replace("%{height}", QString::number(geometry.height()));
+        command.replace("%{fps}", QString::number(d.fps));
+        command.replace("%{XServer}", DisplayString(QX11Info::display()));
+
+        args = command.split(' ');
+    }
 
     // create/start
     m_recorder = new KProcess(this);
