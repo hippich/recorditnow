@@ -80,8 +80,11 @@ void FfmpegRecorder::record(const AbstractRecorder::Data &d)
     QRect geometry = d.geometry;
     if (d.winId != -1) {
         XWindowAttributes attributes;
-        XGetWindowAttributes(QX11Info::display(), d.winId, &attributes);
+        if (!XGetWindowAttributes(QX11Info::display(), d.winId, &attributes)) {
+            emit error(i18n("Invalid window!"));
+            return;
 
+        }
         geometry = QRect(attributes.x, attributes.y, attributes.width, attributes.height);
     }
 
