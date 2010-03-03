@@ -49,6 +49,7 @@ Topic::Topic(QWidget *parent, const QTime duration, const QString &title, const 
     setMaximum(durationToSeconds());
     setValue(0);
 
+
 }
 
 
