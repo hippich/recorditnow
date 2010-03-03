@@ -384,6 +384,8 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>ktabwidget</tabstop>
+  <tabstop>kcfg_showActivity</tabstop>
   <tabstop>kcfg_keyMonDevice</tabstop>
   <tabstop>keyMonButton</tabstop>
   <tabstop>kcfg_led</tabstop>
@@ -392,6 +394,7 @@
   <tabstop>kcfg_mouseWidgetInvisible</tabstop>
   <tabstop>kcfg_cursorOpacity</tabstop>
   <tabstop>kcfg_cursorWidgetSize</tabstop>
+  <tabstop>treeWidget</tabstop>
   <tabstop>buttonCombo</tabstop>
   <tabstop>addButton</tabstop>
  </tabstops>
