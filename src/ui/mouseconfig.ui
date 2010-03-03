@@ -21,15 +21,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="KTabWidget" name="ktabwidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>General</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QGroupBox" name="kcfg_showActivity">
          <property name="title">
@@ -246,11 +246,11 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_4">
       <attribute name="title">
        <string>Mouse Buttons</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
@@ -371,6 +371,12 @@
    <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
+   <class>KTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ktabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>CursorWidget</class>
    <extends>QWidget</extends>
    <header>cursorwidget.h</header>
@@ -378,8 +384,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>kcfg_showActivity</tabstop>
   <tabstop>kcfg_keyMonDevice</tabstop>
   <tabstop>keyMonButton</tabstop>
   <tabstop>kcfg_led</tabstop>
@@ -390,7 +394,6 @@
   <tabstop>kcfg_cursorWidgetSize</tabstop>
   <tabstop>buttonCombo</tabstop>
   <tabstop>addButton</tabstop>
-  <tabstop>treeWidget</tabstop>
  </tabstops>
  <resources/>
  <connections>
