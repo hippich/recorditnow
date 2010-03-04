@@ -16,7 +16,7 @@ install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
 
 
 find_package(JoschyCore REQUIRED)
-
+find_package(RecordMyDesktop REQUIRED)
 
 add_subdirectory(src)
 
