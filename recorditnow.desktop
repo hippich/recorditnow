@@ -9,4 +9,4 @@ Name[de]=RecordItNow
 Exec=recorditnow
 Icon=recorditnow
 Type=Application
-Categories=Qt;KDE;AudioVideo;
+Categories=Qt;KDE;AudioVideo;Video;Recorder;
