@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -35,10 +35,10 @@ int main(int argc, char *argv[])
     KAboutData about("recorditnow",
                      0,
                      ki18n("RecordItNow"),
-                     "0.8",
+                     "0.9",
                      ki18n("Plugin based desktop recorder"),
                      KAboutData::License_GPL,
-                     ki18n("(C) 2009 Kai Dombrowe"),
+                     ki18n("(C) 2009-2010 Kai Dombrowe"),
                      KLocalizedString(),
                      0,
                      "just89@gmx.de");
