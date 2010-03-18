@@ -42,13 +42,16 @@ public:
     void pause();
     void stop();
 
+    void saveDone(const QString &errorString);
+
 
 private:
     QString m_outputFile;
     QString m_removeId;
     QPixmap m_shot;
 
-    void save();
+    static void save(ScreenshotRecorder *recorder, QImage image, const QString outputFile,
+                     const QString &format, const int &quality);
 
 
 protected:

@@ -32,6 +32,7 @@
 #include <QtCore/QFile>
 #include <QtGui/QPainter>
 #include <QtCore/QDir>
+#include <QtCore/QtConcurrentRun>
 
 // X
 #ifdef XFIXES_FOUND
@@ -179,7 +180,9 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
             m_outputFile = outFile.fileName();
         }
     }
-    save();
+    emit status(i18n("Saving image..."));
+    QtConcurrent::run(save, this, m_shot.toImage(), m_outputFile, Settings::format(),
+                      Settings::quality());
 
 }
 
@@ -200,23 +203,41 @@ void ScreenshotRecorder::stop()
 }
 
 
-void ScreenshotRecorder::save()
+void ScreenshotRecorder::saveDone(const QString &errorString)
 {
 
-    QFile file(m_outputFile);
+    qRegisterMetaType<AbstractRecorder::ExitStatus>("AbstractRecorder::ExitStatus");
+
+    if (!errorString.isEmpty()) {
+        emit error(errorString);
+    } else {
+        emit finished(AbstractRecorder::Normal);
+    }
+
+}
+
+
+void ScreenshotRecorder::save(ScreenshotRecorder *recorder, QImage image, const QString outputFile,
+                              const QString &format, const int &quality)
+{
+
+    kDebug() << "save:" << outputFile << format << quality;
+
+    QString error;
+    QFile file(outputFile);
     if (!file.open(QIODevice::WriteOnly)) {
-        emit error(i18nc("%1 = error string", "Cannot open output file: %1", file.errorString()));
+        error = i18nc("%1 = error string", "Cannot open output file: %1", file.errorString());
+        recorder->saveDone(error);
         return;
     }
 
-    kDebug() << "format:" << Settings::format() << "quality:" << Settings::quality();
-    if (!m_shot.save(&file, Settings::format().toUpper().toLatin1(), Settings::quality())) {
+    if (!image.save(&file, format.toUpper().toLatin1(), quality)) {
         file.close();
-        emit error(i18n("Cannot save image."));
+        error = i18n("Cannot save image.");
     } else {
         file.close();
-        emit finished(AbstractRecorder::Normal);
     }
+    recorder->saveDone(error);
 
 }
 
@@ -230,7 +251,9 @@ void ScreenshotRecorder::jobFinished(const QString &id, const QString &errorStri
     }
 
     if (id == m_removeId) {
-        save();
+        emit status(i18n("Saving image..."));
+        QtConcurrent::run(save, this, m_shot.toImage(), m_outputFile, Settings::format(),
+                          Settings::quality());
     }
 
 }
