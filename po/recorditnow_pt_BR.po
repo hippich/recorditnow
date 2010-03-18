@@ -26,10 +26,9 @@ msgid "Plugins"
 msgstr "Plug-ins"
 
 #: config/configdialog.cpp:98
-#, fuzzy
 msgctxt "Widget to select a screen area"
 msgid "Frame"
-msgstr "Mostrar quadro"
+msgstr "Quadro"
 
 #: config/configdialog.cpp:99 devicesearchdialog.cpp:66
 msgid "Mouse"
@@ -37,7 +36,7 @@ msgstr "Mouse"
 
 #: config/configdialog.cpp:100 devicesearchdialog.cpp:67
 msgid "Keyboard"
-msgstr ""
+msgstr "Teclado"
 
 #. i18n: file: ui/zoomdocktitlewidget.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -59,56 +58,55 @@ msgstr "Atalhos"
 
 #: config/keyboardconfig.cpp:216
 msgid "There is already a key with code '%1' in your list!"
-msgstr ""
+msgstr "Já existe uma tecla com o código '%1' na sua lista!"
 
 #: config/keyboardkeyiconpage.cpp:124
-#, fuzzy
 msgid "No name"
-msgstr "Nome"
+msgstr "Sem nome"
 
 #: config/keyboardkeyiconpage.cpp:126
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #: config/keyboardkeyiconpage.cpp:127
-#, fuzzy
 msgid "Unknwon"
 msgstr "Desconhecido"
 
 #: config/keyboardkeypage.cpp:55
 msgid "Click on \"%1\""
-msgstr ""
+msgstr "Clique em \"%1\""
 
 #: config/keyboardkeypage.cpp:80
 msgid "Please select a device."
-msgstr ""
+msgstr "Por favor, selecione um dispositivo."
 
 #: config/keyboardkeypage.cpp:84
 msgid "Please wait..."
-msgstr ""
+msgstr "Por favor, aguarde..."
 
 #: config/keyboardkeypage.cpp:93 config/keyboardkeypage.cpp:138
 msgid "An error occurd: %1"
-msgstr ""
+msgstr "Ocorreu um erro: %1"
 
 #: config/keyboardkeypage.cpp:96
-#, fuzzy
 msgid "Wait for authentication!"
-msgstr "Falha na autenticação!"
+msgstr "Aguarde pela autenticação!"
 
 #: config/keyboardkeypage.cpp:105
 msgid "Press a key!"
-msgstr ""
+msgstr "Pressione uma tecla!"
 
 #: config/keyboardkeypage.cpp:176
 msgid "Success!"
-msgstr ""
+msgstr "Com sucesso!"
 
 #: config/keyboardkeypage.cpp:178
 msgid ""
 "Grab failed!\n"
 "Perhaps you have selected the wrong device."
 msgstr ""
+"Falha ao associar!\n"
+"Talvez , você tenha selecionado o dispositivo errado."
 
 #: config/mousebutton.cpp:86 config/mousebutton.cpp:103 keymon/event.cpp:66
 #: keymon/event.cpp:83
@@ -138,12 +136,12 @@ msgstr "Botão especial 2"
 #: config/mousebutton.cpp:91 config/mousebutton.cpp:123 keymon/event.cpp:71
 #: keymon/event.cpp:103
 msgid "Wheel up"
-msgstr "Roda para cima"
+msgstr "Rolar para cima"
 
 #: config/mousebutton.cpp:92 config/mousebutton.cpp:127 keymon/event.cpp:72
 #: keymon/event.cpp:107
 msgid "Wheel down"
-msgstr "Roda para baixo"
+msgstr "Rolar para baixo"
 
 #: config/mousebutton.cpp:93 keymon/event.cpp:73
 msgid "No-Button"
@@ -154,7 +152,6 @@ msgid "Press a mouse button..."
 msgstr "Pressione um botão do mouse..."
 
 #: config/mouseconfig.cpp:75
-#, fuzzy
 msgid "Square"
 msgstr "Origem"
 
@@ -172,7 +169,7 @@ msgstr "Plug-ins do Codificador"
 
 #: devicesearchdialog.cpp:76
 msgid "No devices found."
-msgstr ""
+msgstr "Nenhum dispositivo encontrado."
 
 #: encodermanager.cpp:73
 msgid "Cannot load Encoder %1."
@@ -185,229 +182,220 @@ msgstr "O codificador deixou de funcionar!"
 #: keyboard/keyboardkey.cpp:78
 msgctxt "Keyboard key"
 msgid "Escape"
-msgstr ""
+msgstr "Espaço"
 
 #: keyboard/keyboardkey.cpp:79
 msgctxt "Keyboard key"
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: keyboard/keyboardkey.cpp:80
 msgctxt "Keyboard key"
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: keyboard/keyboardkey.cpp:81
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Alt"
-msgstr "Arte"
+msgstr "Alt"
 
 #: keyboard/keyboardkey.cpp:82
 msgctxt "Keyboard key"
 msgid "AltGr"
-msgstr ""
+msgstr "AltGr"
 
 #: keyboard/keyboardkey.cpp:83
 msgctxt "Keyboard key"
 msgid "Backtab"
-msgstr ""
+msgstr "Backtab"
 
 #: keyboard/keyboardkey.cpp:84
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Backspace"
-msgstr "Mecanismo"
+msgstr "Backspace"
 
 #: keyboard/keyboardkey.cpp:85
 msgctxt "Keyboard key"
 msgid "Return"
-msgstr ""
+msgstr "Enter"
 
 #: keyboard/keyboardkey.cpp:86
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Enter"
-msgstr "Codificação"
+msgstr "Enter"
 
 #: keyboard/keyboardkey.cpp:87
 msgctxt "Keyboard key"
 msgid "Left"
-msgstr ""
+msgstr "Seta para esquerda"
 
 #: keyboard/keyboardkey.cpp:88
 msgctxt "Keyboard key"
 msgid "Up"
-msgstr ""
+msgstr "Seta para cima"
 
 #: keyboard/keyboardkey.cpp:89
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Right"
-msgstr "Altura"
+msgstr "Seta para direita"
 
 #: keyboard/keyboardkey.cpp:90
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Down"
-msgstr "Feito!"
+msgstr "Seta para baixo"
 
 #: keyboard/keyboardkey.cpp:91
 msgctxt "Keyboard key"
 msgid "Page up"
-msgstr ""
+msgstr "Page up"
 
 #: keyboard/keyboardkey.cpp:92
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Page Down"
-msgstr "Mover para baixo"
+msgstr "Page Down"
 
 #: keyboard/keyboardkey.cpp:93
 msgctxt "Keyboard key"
 msgid "Control"
-msgstr ""
+msgstr "Control"
 
 #: keyboard/keyboardkey.cpp:94
 msgctxt "Keyboard key"
 msgid "Meta"
-msgstr ""
+msgstr "Meta"
 
 #: keyboard/keyboardkey.cpp:95
 msgctxt "Keyboard key"
 msgid "Caps lock"
-msgstr ""
+msgstr "Caps lock"
 
 #: keyboard/keyboardkey.cpp:96
 msgctxt "Keyboard key"
 msgid "Num lock"
-msgstr ""
+msgstr "Num lock"
 
 #: keyboard/keyboardkey.cpp:97
 msgctxt "Keyboard key"
 msgid "Space"
-msgstr ""
+msgstr "Space"
 
 #: keyboard/keyboardkey.cpp:98
 msgctxt "Keyboard key"
 msgid "F1"
-msgstr ""
+msgstr "F1"
 
 #: keyboard/keyboardkey.cpp:99
 msgctxt "Keyboard key"
 msgid "F2"
-msgstr ""
+msgstr "F2"
 
 #: keyboard/keyboardkey.cpp:100
 msgctxt "Keyboard key"
 msgid "F3"
-msgstr ""
+msgstr "F3"
 
 #: keyboard/keyboardkey.cpp:101
 msgctxt "Keyboard key"
 msgid "F4"
-msgstr ""
+msgstr "F4"
 
 #: keyboard/keyboardkey.cpp:102
 msgctxt "Keyboard key"
 msgid "F5"
-msgstr ""
+msgstr "F5"
 
 #: keyboard/keyboardkey.cpp:103
 msgctxt "Keyboard key"
 msgid "F6"
-msgstr ""
+msgstr "F6"
 
 #: keyboard/keyboardkey.cpp:104
 msgctxt "Keyboard key"
 msgid "F7"
-msgstr ""
+msgstr "F7"
 
 #: keyboard/keyboardkey.cpp:105
 msgctxt "Keyboard key"
 msgid "F8"
-msgstr ""
+msgstr "F8"
 
 #: keyboard/keyboardkey.cpp:106
 msgctxt "Keyboard key"
 msgid "F9"
-msgstr ""
+msgstr "F9"
 
 #: keyboard/keyboardkey.cpp:107
 msgctxt "Keyboard key"
 msgid "F10"
-msgstr ""
+msgstr "F10"
 
 #: keyboard/keyboardkey.cpp:108
 msgctxt "Keyboard key"
 msgid "F11"
-msgstr ""
+msgstr "F11"
 
 #: keyboard/keyboardkey.cpp:109
 msgctxt "Keyboard key"
 msgid "F12"
-msgstr ""
+msgstr "F12"
 
 #: keyboard/keyboardkey.cpp:110
 msgctxt "Keyboard key"
 msgid "Print"
-msgstr ""
+msgstr "Print"
 
 #: keyboard/keyboardkey.cpp:111
 msgctxt "Keyboard key"
 msgid "Insert"
-msgstr ""
+msgstr "Insert"
 
 #: keyboard/keyboardkey.cpp:112
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Delete"
-msgstr "Excluir"
+msgstr "Delete"
 
 #: keyboard/keyboardkey.cpp:113
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "End"
-msgstr "Codificação"
+msgstr "End"
 
 #: keyboard/keyboardkey.cpp:114
-#, fuzzy
 msgctxt "Keyboard key"
 msgid "Pause"
-msgstr "Pausar"
+msgstr "Pause"
 
 #: keyboard/keyboardkey.cpp:119
 msgid "Special key"
-msgstr ""
+msgstr "Tecla especial"
 
 #: keymon/devicehelper.cpp:59
-#, fuzzy
 msgid "Could not open device file %1"
-msgstr "Não foi possível abrir arquivo: %1"
+msgstr "Não foi possível abrir arquivo %1"
 
 #: keymonmanager.cpp:170
 msgid ""
 "An internal error has occurred.\n"
 "Error code: %1\n"
 msgstr ""
+"Ocorreu um erro interno.\n"
+"Código de erro: %1\n"
 
 #: keymonmanager.cpp:172
 msgid "You don't have the authorization to use this feature."
-msgstr ""
+msgstr "Você não tem autorização para usar este recurso."
 
 #: libs/plugin/recorditnowplugin.cpp:88
-#, fuzzy
 msgid "Unkown error!"
-msgstr "Erro desconhecido: %1."
+msgstr "Erro desconhecido!"
 
 #: libs/upload/addaccountdialog.cpp:50
 msgctxt "%1 = account name"
 msgid "Edit %1"
-msgstr "Editar: %1"
+msgstr "Editar %1"
 
 #: libs/upload/addaccountdialog.cpp:60
 msgid "Add a new Account"
-msgstr "Adicionar um nova conta"
+msgstr "Adicionar uma nova conta"
 
 #: main.cpp:39
 msgid "Plugin based desktop recorder"
@@ -495,7 +483,7 @@ msgstr "Nenhuma área da tela selecionada."
 
 #: mainwindow.cpp:452
 msgid "An internal error occurred!"
-msgstr ""
+msgstr "Ocorreu um erro interno!"
 
 #: mainwindow.cpp:644 mainwindow.cpp:661
 msgid "Continue"
@@ -592,7 +580,7 @@ msgstr "Codificação: %1"
 #: plugins/encoder/mencoder/formatdialog.cpp:39
 msgctxt "%1 = format"
 msgid "Edit %1"
-msgstr "Editar: %1"
+msgstr "Editar %1"
 
 #: plugins/encoder/ffmpeg/formatdialog.cpp:43
 #: plugins/encoder/mencoder/formatdialog.cpp:43
@@ -612,14 +600,12 @@ msgstr ""
 "Por favor, instale mencoder ou use outro plug-in."
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:84
-#, fuzzy
 msgid "Invalid window!"
-msgstr "Licença inválida."
+msgstr "Janela inválida!"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:133
-#, fuzzy
 msgid "Invalid command!"
-msgstr "Licença inválida."
+msgstr "Comando inválido!"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:161
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:180
@@ -629,32 +615,29 @@ msgid "Capturing!"
 msgstr "Capturando!"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:224
-#, fuzzy
 msgctxt "Video frames"
 msgid "Frames=%1"
-msgstr "Quadros: %1"
+msgstr "Quadros=%1"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:239
-#, fuzzy
 msgctxt "Video size"
 msgid "Size=%1"
-msgstr "Tamanho"
+msgstr "Tamanho=%1"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:258
-#, fuzzy
 msgctxt "Video duration"
 msgid "Duration=%1"
-msgstr "Duração"
+msgstr "Duração=%1"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:271
 msgctxt "Video bitrate"
 msgid "Bitrate=%1 kbits/s"
-msgstr ""
+msgstr "Taxa de bits=%1 kbits/s"
 
 #: plugins/recorder/ffmpegrecorder/ffmpegrecorder.cpp:303
 #: plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:335
 msgid "Internal error!"
-msgstr ""
+msgstr "Erro interno!"
 
 #: plugins/recorder/recordmydesktop/recordmydesktoprecorder.cpp:67
 msgid ""
@@ -760,79 +743,71 @@ msgid "Cannot load upload plugin \"%1\"."
 msgstr "Não foi possível carregar plug-in \"%1\"."
 
 #: upload/termspage.cpp:42
-#, fuzzy
 msgid ""
 "By clicking &apos;%1&apos;, you certify that you own all rights to the "
 "content or that you are authorized by the owner to make the content publicly "
 "available on %2, and that it otherwise complies with the %2 Terms of Service."
 msgstr ""
-"Ao clicar em \"Continuar\", você está certificando que você possui todos os "
+"Ao clicar em &apos;%1&apos;, você está certificando que possui todos os "
 "direitos sobre o conteúdo ou que está autorizado pelo proprietário a tornar "
-"o conteúdo acessível ao público no YouTube, e que obedece aos Termos do "
-"Serviço do YouTube localizado em <a href = 'http://www.youtube.com/t/"
-"terms'>http://www.youtube.com/t/terms</a>."
+"o conteúdo disponível ao público em %2, e que obedece aos Termos do Serviço "
+"de %2."
 
 #: upload/uploadpage.cpp:68
 msgid "Error: Plugin load failed!"
-msgstr ""
+msgstr "Erro: Falha ao carregar plug-in!"
 
 #: upload/uploadpage.cpp:86
-#, fuzzy
 msgid "Authentication started..."
-msgstr "Autenticação concluída..."
+msgstr "Autenticação iniciada..."
 
 #: upload/uploadpage.cpp:89
-#, fuzzy
 msgctxt "1 = error code"
 msgid "Error %1: Authentication failed!"
-msgstr "Falha na autenticação!"
+msgstr "Erro %1: Falha na autenticação!"
 
-#: upload/uploadpage.cpp:91 upload/uploadpage.cpp:134
-#: upload/uploadpage.cpp:152
+#: upload/uploadpage.cpp:91 upload/uploadpage.cpp:134 upload/uploadpage.cpp:152
 msgid "Error message: %1"
-msgstr ""
+msgstr "Mensagem de erro: %1"
 
 #: upload/uploadpage.cpp:119
 msgid "Authentication finished..."
 msgstr "Autenticação concluída..."
 
 #: upload/uploadpage.cpp:129
-#, fuzzy
 msgid "Upload started..."
-msgstr "Carregamento cancelado."
+msgstr "Envio iniciado..."
 
 #: upload/uploadpage.cpp:132
 msgctxt "1 = error code"
 msgid "Error %1: Upload failed!"
-msgstr ""
+msgstr "Erro %1: Falha no envio!"
 
 #: upload/uploadpage.cpp:150
 msgctxt "1 = error code, %2 = error message"
 msgid "Error %1: %2"
-msgstr ""
+msgstr "Erro %1: %2"
 
 #: upload/uploadpage.cpp:164
 msgctxt "%1 = video url"
 msgid "Upload finished: <a href='%1'>%1</a>"
-msgstr ""
+msgstr "Envio concluído: <a href='%1'>%1</a>"
 
 #: upload/uploadwizard.cpp:43
-#, fuzzy
 msgid "Upload Wizard"
-msgstr "Carregamento cancelado."
+msgstr "Assistente de envio"
 
 #: upload/uploadwizard.cpp:62
 msgid "Do you want to cancel the upload?"
-msgstr ""
+msgstr "Você deseja cancelar o envio?"
 
 #: upload/videopage.cpp:78
-#, fuzzy
 msgid "Cannot load: %1"
-msgstr "Não foi possível carregar Codificador %1."
+msgstr "Não foi possível carregar: %1"
 
 #: zoom/zoomdock.cpp:128
 msgid "Zoom Factor: 1:%1"
-msgstr ""
+msgstr "Zomm: 1:%1"
 
 #. i18n: file: libs/upload/ui/addaccount.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -861,9 +836,8 @@ msgstr "Salvar senha com KWallet"
 #. i18n: file: plugins/encoder/mencoder/ui/addformat.ui:36
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:12 rc.cpp:43
-#, fuzzy
 msgid "Command:"
-msgstr "Comando"
+msgstr "Comando:"
 
 #. i18n: file: plugins/encoder/ffmpeg/ui/addformat.ui:39
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -878,9 +852,8 @@ msgstr "Comando"
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:139
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:15 rc.cpp:37 rc.cpp:40 rc.cpp:46 rc.cpp:67 rc.cpp:226
-#, fuzzy
 msgid "Format:"
-msgstr "Formato"
+msgstr "Formato:"
 
 #. i18n: file: plugins/encoder/ffmpeg/ui/ffmpeg.ui:44
 #. i18n: ectx: property (toolTip), widget (QToolButton, addButton)
@@ -941,75 +914,129 @@ msgstr "Remover"
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:322
 #. i18n: ectx: property (text), widget (QLabel, lab)
 #: rc.cpp:73 rc.cpp:166
-#, fuzzy
 msgid "Video Quality:"
-msgstr "Qualidade do vídeo"
+msgstr "Qualidade do vídeo:"
 
 #. i18n: file: plugins/recorder/ffmpegrecorder/ui/ffmpegrecorderconfig.ui:90
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_useCustomCommand)
 #: rc.cpp:77
-#, fuzzy
 msgid "Custom Command"
-msgstr "Comando"
+msgstr "Personalizar comando"
 
 #. i18n: file: plugins/recorder/ffmpegrecorder/ui/ffmpegrecorderconfig.ui:124
 #. i18n: ectx: property (html), widget (KTextBrowser, ktextbrowser)
 #: rc.cpp:81
 #, no-c-format
 msgid ""
-"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-"REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
-"\">\n"
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+"\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style "
+"type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Tahoma'; font-size:9pt; font-"
-"weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"size:11pt; text-decoration: underline; color:#ff0000; background-color:"
-"#ffffff;\">Please use only if you know what you are doing!</span></p>\n"
+"</style></head><body style=\" font-family:'Tahoma'; font-size:9pt; "
+"font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:11pt; text-decoration: underline; color:#ff0000; "
+"background-color:#ffffff;\">Please use only if you know what you are "
+"doing!</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-"
-"size:11pt; text-decoration: underline; color:#ff0000;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"size:10pt; text-decoration: underline; color:#000000; background-color:"
-"#ffffff;\">Available Variables:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{output}</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{XServer}</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{x}</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{y}</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{width}</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{height}</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">%{fps}</p>\n"
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "
+"font-size:11pt; text-decoration: underline; color:#ff0000;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:10pt; text-decoration: underline; color:#000000; "
+"background-color:#ffffff;\">Available Variables:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{output}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{XServer}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{x}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{y}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{width}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{height}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{fps}</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
-"p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"size:10pt; text-decoration: underline;\">Example:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">-qscale 2 -r %{fps} -s %"
-"{width}x%{height} -i %{XServer}+%{x},%{y} -s %{width}x%{height} -f mp4 %"
-"{output}</p>\n"
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; "
+"text-indent:0px;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:10pt; text-decoration: underline;\">Example:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-qscale 2 -r %{fps} "
+"-s %{width}x%{height} -i %{XServer}+%{x},%{y} -s %{width}x%{height} -f mp4 "
+"%{output}</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></"
-"p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"size:10pt; text-decoration: underline; color:#ff0000;\">Note:</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:"
-"#000000;\">Don`t use %{output}.format because it would lead to an internel "
-"error.</span></p></body></html>"
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; "
+"text-indent:0px;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:10pt; text-decoration: underline; "
+"color:#ff0000;\">Note:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"color:#000000;\">Don`t use %{output}.format because it would lead to an "
+"internel error.</span></p></body></html>"
 msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+"\"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style "
+"type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Tahoma'; font-size:9pt; "
+"font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:11pt; text-decoration: underline; color:#ff0000; "
+"background-color:#ffffff;\">Por favor, utilize apenas se souber o que está "
+"fazendo!</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; "
+"font-size:11pt; text-decoration: underline; color:#ff0000;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:10pt; text-decoration: underline; color:#000000; "
+"background-color:#ffffff;\">Variáveis disponíveis:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{output}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{XServer}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{x}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{y}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{width}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{height}</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">%{fps}</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; "
+"text-indent:0px;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:10pt; text-decoration: underline;\">Exemplo:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\">-qscale 2 -r %{fps} "
+"-s %{width}x%{height} -i %{XServer}+%{x},%{y} -s %{width}x%{height} -f mp4 "
+"%{output}</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; "
+"margin-left:0px; margin-right:0px; -qt-block-indent:0; "
+"text-indent:0px;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"font-size:10pt; text-decoration: underline; "
+"color:#ff0000;\">Nota:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+"color:#000000;\">Não utilize %{output}.format porque isso levaria a um erro "
+"interno.</span></p></body></html>"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:24
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
@@ -1055,9 +1082,8 @@ msgstr "Som"
 #. i18n: file: ui/mouseconfig.ui:51
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:121 rc.cpp:287 rc.cpp:363
-#, fuzzy
 msgid "Device:"
-msgstr "Dispositivo"
+msgstr "Dispositivo:"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:99
 #. i18n: ectx: property (text), widget (KPushButton, deviceButton)
@@ -1072,9 +1098,8 @@ msgstr "Pesquisar"
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:108
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:128
-#, fuzzy
 msgid "Channels:"
-msgstr "Canais"
+msgstr "Canais:"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:124
 #. i18n: ectx: property (specialValueText), widget (KIntNumInput, kcfg___channels)
@@ -1093,30 +1118,26 @@ msgstr "Padrão"
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:131
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:134
-#, fuzzy
 msgid "Frequency:"
-msgstr "Frequência"
+msgstr "Frequência:"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:154
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:140
-#, fuzzy
 msgid "Buffer size (only ALSA or OSS):"
-msgstr "Tamanho do cache de memória (somente ALSA ou OSS)"
+msgstr "Tamanho do cache de memória (somente ALSA ou OSS):"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:177
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:146
-#, fuzzy
 msgid "Ring Buffer size (JACK only):"
-msgstr "Tamanho do cache de memória Ring (somente JACK)"
+msgstr "Tamanho do cache de memória Ring (somente JACK):"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:200
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:152
-#, fuzzy
 msgid "JACK Ports:"
-msgstr "Portas JACK"
+msgstr "Portas JACK:"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:216
 #. i18n: ectx: attribute (title), widget (QWidget, tab_3)
@@ -1127,16 +1148,14 @@ msgstr "Codificação"
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:249
 #. i18n: ectx: property (text), widget (QLabel, lab_2)
 #: rc.cpp:159
-#, fuzzy
 msgid "Audio Quality:"
-msgstr "Qualidade do áudio"
+msgstr "Qualidade do áudio:"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:284
 #. i18n: ectx: property (text), widget (QLabel, lab_3)
 #: rc.cpp:163
-#, fuzzy
 msgid "Bitrate:"
-msgstr "Taxa de bits"
+msgstr "Taxa de bits:"
 
 #. i18n: file: plugins/recorder/recordmydesktop/ui/recordmydesktop.ui:335
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg___on_the_fly_encoding)
@@ -1182,7 +1201,7 @@ msgstr "Dispositivo"
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
 #: rc.cpp:190 rc.cpp:254
 msgid "Id"
-msgstr "Id"
+msgstr "Identificação"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_branding)
@@ -1193,25 +1212,22 @@ msgstr "Marcando"
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:35
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:196
-#, fuzzy
 msgid "Image:"
-msgstr "Imagem"
+msgstr "Imagem:"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:48
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #. i18n: file: ui/mouseconfig.ui:147
 #. i18n: ectx: property (text), widget (QLabel, opacityLabel)
 #: rc.cpp:199 rc.cpp:387
-#, fuzzy
 msgid "Opacity:"
-msgstr "Opacidade"
+msgstr "Opacidade:"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:80
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:202
-#, fuzzy
 msgid "Position:"
-msgstr "Posição"
+msgstr "Posição:"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:94
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_position)
@@ -1252,16 +1268,14 @@ msgstr "Inferior centro"
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:133
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:223
-#, fuzzy
 msgid "Screenshot"
 msgstr "Captura de Tela"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:210
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:239
-#, fuzzy
 msgid "Quality:"
-msgstr "Qualidade"
+msgstr "Qualidade:"
 
 #. i18n: file: plugins/recorder/screenshot/ui/screenshot.ui:220
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_drawCursor)
@@ -1284,22 +1298,19 @@ msgstr "Arquivo"
 #. i18n: file: ui/frameconfig.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:257
-#, fuzzy
 msgid "Frame Sizes"
-msgstr "Mostrar quadro"
+msgstr "Tamanho do quadro"
 
 #. i18n: file: ui/frameconfig.ui:31
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:260
-#, fuzzy
 msgctxt "The name of the new item"
 msgid "Name:"
-msgstr "Nome"
+msgstr "Nome:"
 
 #. i18n: file: ui/frameconfig.ui:61
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:263
-#, fuzzy
 msgctxt "The name of the item"
 msgid "Name"
 msgstr "Nome"
@@ -1307,7 +1318,6 @@ msgstr "Nome"
 #. i18n: file: ui/frameconfig.ui:66
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:266
-#, fuzzy
 msgctxt "the width of the frame"
 msgid "Width"
 msgstr "Largura"
@@ -1315,7 +1325,6 @@ msgstr "Largura"
 #. i18n: file: ui/frameconfig.ui:71
 #. i18n: ectx: property (text), widget (QTreeWidget, sizeTree)
 #: rc.cpp:269
-#, fuzzy
 msgctxt "the height of the frame"
 msgid "Height"
 msgstr "Altura"
@@ -1344,52 +1353,50 @@ msgstr "Mover para baixo"
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_enableKeyboard)
 #: rc.cpp:284
 msgid "Enable The Keyboard Monitor"
-msgstr ""
+msgstr "Habilitar o monitoramento do teclado"
 
 #. i18n: file: ui/keyboardconfig.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:293
 msgid "Keys"
-msgstr ""
+msgstr "Teclas"
 
 #. i18n: file: ui/keyboarddocktitlewidget.ui:26
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:308
 msgid "Keyboard Monitor"
-msgstr ""
+msgstr "Monitorar teclado"
 
 #. i18n: file: ui/keyboarddock.ui:20
 #. i18n: ectx: property (windowTitle), widget (QDockWidget, KeyboardDock)
 #: rc.cpp:311
 msgctxt "@title:window"
 msgid "Keyboard Monitor"
-msgstr ""
+msgstr "Monitorar teclado"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, KeyboardKeyIconPage)
 #: rc.cpp:314
-#, fuzzy
 msgid "Key Icon"
-msgstr "Ícone"
+msgstr "Ícone da tecla"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, KeyboardKeyIconPage)
 #: rc.cpp:317
 msgid "Please select an icon"
-msgstr ""
+msgstr "Por favor, selecione um ícone"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:44
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:320
-#, fuzzy
 msgid "Search:"
-msgstr "Pesquisar"
+msgstr "Pesquisar:"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:83
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:323
 msgid "Theme:"
-msgstr ""
+msgstr "Tema:"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:103
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -1398,139 +1405,128 @@ msgstr ""
 #. i18n: file: upload/ui/videopage.ui:62
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:326 rc.cpp:554 rc.cpp:598
-#, fuzzy
 msgid "Description:"
-msgstr "Descrição"
+msgstr "Descrição:"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:117
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:329
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:124
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:332
-#, fuzzy
 msgid "License:"
-msgstr "Licença"
+msgstr "Licença:"
 
 #. i18n: file: ui/keyboardkeyiconpage.ui:148
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:335
 msgid "Selected Icon:"
-msgstr ""
+msgstr "Ícone selecionado:"
 
 #. i18n: file: ui/keyboardkeypage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, KeyboardKeyPage)
 #: rc.cpp:338
 msgid "Key"
-msgstr ""
+msgstr "Tecla"
 
 #. i18n: file: ui/keyboardkeypage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, KeyboardKeyPage)
 #: rc.cpp:341
 msgid "Please click on Start and press a key"
-msgstr ""
+msgstr "Por favor, clique em Iniciar e pressione uma tecla"
 
 #. i18n: file: ui/keyboardkeypage.ui:29
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:344
-#, fuzzy
 msgid "Information"
-msgstr "Duração"
+msgstr "Informação"
 
 #. i18n: file: ui/keyboardkeypage.ui:35
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:347
 msgid "Key:"
-msgstr ""
+msgstr "Tecla:"
 
 #. i18n: file: ui/keyboardkeypage.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:350
-#, fuzzy
 msgid "Code:"
-msgstr "Modo"
+msgstr "Código:"
 
 #. i18n: file: ui/keyboardkeypage.ui:127
 #. i18n: ectx: property (text), widget (QPushButton, startButton)
 #: rc.cpp:354
-#, fuzzy
 msgid "Start"
-msgstr "Status"
+msgstr "Iniciar"
 
 #. i18n: file: ui/mouseconfig.ui:30
 #. i18n: ectx: attribute (title), widget (QWidget, tab)
 #: rc.cpp:357
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #. i18n: file: ui/mouseconfig.ui:36
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showActivity)
 #: rc.cpp:360
-#, fuzzy
 msgid "Show mouse clicks during record"
-msgstr "Mostrar cliques do mouse"
+msgstr "Mostrar cliques do mouse durante a gravação"
 
 #. i18n: file: ui/mouseconfig.ui:82
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:369
 msgid "Appearance:"
-msgstr ""
+msgstr "Aparência:"
 
 #. i18n: file: ui/mouseconfig.ui:91
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_led)
 #: rc.cpp:372
 msgid "LED"
-msgstr ""
+msgstr "LED"
 
 #. i18n: file: ui/mouseconfig.ui:101
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_circle)
 #: rc.cpp:375
-#, fuzzy
 msgid "Circle"
-msgstr "Arquivo"
+msgstr "Círculo"
 
 #. i18n: file: ui/mouseconfig.ui:110
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:378
 msgid "Visible:"
-msgstr ""
+msgstr "Visível:"
 
 #. i18n: file: ui/mouseconfig.ui:119
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_mouseWidgetAlwaysVisible)
 #: rc.cpp:381
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #. i18n: file: ui/mouseconfig.ui:132
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_mouseWidgetInvisible)
 #: rc.cpp:384
-#, fuzzy
 msgid "Only during mouse clicks"
-msgstr "Mostrar cliques do mouse"
+msgstr "Somente durante cliques do mouse"
 
 #. i18n: file: ui/mouseconfig.ui:157
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:390
-#, fuzzy
 msgid "Size:"
-msgstr "Tamanho"
+msgstr "Tamanho:"
 
 #. i18n: file: ui/mouseconfig.ui:183
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:393
-#, fuzzy
 msgid "Preview"
-msgstr "Dispositivo"
+msgstr "Visualizar"
 
 #. i18n: file: ui/mouseconfig.ui:251
 #. i18n: ectx: attribute (title), widget (QWidget, tab_2)
 #: rc.cpp:397
-#, fuzzy
 msgid "Mouse Buttons"
-msgstr "Botão do Mouse"
+msgstr "Botões do Mouse"
 
 #. i18n: file: ui/mouseconfig.ui:259
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -1578,13 +1574,13 @@ msgstr "Substituir arquivos existentes"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_showVideo)
 #: rc.cpp:427
 msgid "Show file after record"
-msgstr "Mostrar arquivo depois de gravado"
+msgstr "Mostrar arquivo depois de gravar"
 
 #. i18n: file: ui/settings.ui:60
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_encode)
 #: rc.cpp:430
 msgid "Encode after record"
-msgstr "Codificar depois de gravado"
+msgstr "Codificar depois de gravar"
 
 #. i18n: file: ui/settings.ui:83
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_stayOnTop)
@@ -1596,26 +1592,23 @@ msgstr "Manter acima das outras janelas durante a gravação"
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:436
 msgid "Directories"
-msgstr ""
+msgstr "Diretórios"
 
 #. i18n: file: ui/settings.ui:102
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:439
-#, fuzzy
 msgid "Videos:"
-msgstr "Vídeo"
+msgstr "Vídeos:"
 
 #. i18n: file: ui/settings.ui:119
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:442
-#, fuzzy
 msgid "Temporary files:"
-msgstr "Diretório para arquivos temporários:"
+msgstr "Arquivos temporários:"
 
 #. i18n: file: ui/timelineconfig.ui:23
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_showTimeLine)
 #: rc.cpp:445
-#, fuzzy
 msgid "Enable The Timeline"
 msgstr "Habilitar a Linha do Tempo"
 
@@ -1628,16 +1621,14 @@ msgstr "Parar a gravação quando a linha do tempo chegar ao fim"
 #. i18n: file: ui/timelineconfig.ui:48
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_timelineNotifications)
 #: rc.cpp:451
-#, fuzzy
 msgid "Enable notifications"
 msgstr "Habilitar notificações"
 
 #. i18n: file: ui/timelinetopics.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:457
-#, fuzzy
 msgid "Total duration:"
-msgstr "Duração total"
+msgstr "Duração total:"
 
 #. i18n: file: ui/timelinetopics.ui:61
 #. i18n: ectx: property (text), widget (QTreeWidget, treeWidget)
@@ -1698,9 +1689,8 @@ msgstr " FPS"
 #. i18n: file: ui/toolbarwidget.ui:251
 #. i18n: ectx: property (toolTip), widget (CheckIcon, soundCheck)
 #: rc.cpp:503
-#, fuzzy
 msgid "Record sound"
-msgstr "Plug-ins do Gravador"
+msgstr "Gravar som"
 
 #. i18n: file: ui/toolbarwidget.ui:283
 #. i18n: ectx: property (toolTip), widget (KComboBox, backendCombo)
@@ -1712,7 +1702,7 @@ msgstr "Mecanismo"
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_zoomDockEnabled)
 #: rc.cpp:515
 msgid "Enable Zoom"
-msgstr ""
+msgstr "Habilitar zoom"
 
 #. i18n: file: ui/zoom.ui:32
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_zoomHighQuality)
@@ -1723,104 +1713,98 @@ msgstr "Alta qualidade"
 #. i18n: file: ui/zoom.ui:39
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:521
-#, fuzzy
 msgid "Default zoom factor:"
-msgstr "Zoom padrão"
+msgstr "Zoom padrão:"
 
 #. i18n: file: ui/zoom.ui:65
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:525
-#, fuzzy
 msgid "Frames per second:"
-msgstr "Quadros por segundo"
+msgstr "Quadros por segundo:"
 
 #. i18n: file: upload/ui/accountpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, AccountPage)
 #: rc.cpp:528
 msgid "Login"
-msgstr "Usuário"
+msgstr "Logar"
 
 #. i18n: file: upload/ui/accountpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, AccountPage)
 #: rc.cpp:531
 msgid "Please enter your account and password to log in"
-msgstr ""
+msgstr "Por favor, digite sua conta e senha para logar"
 
 #. i18n: file: upload/ui/accountpage.ui:59
 #. i18n: ectx: property (text), widget (QCheckBox, wallCheck)
 #: rc.cpp:541
 msgid "Remember me"
-msgstr ""
+msgstr "Lembre-se de mim"
 
 #. i18n: file: upload/ui/pluginpage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, PluginPage)
 #: rc.cpp:544
 msgid "Provider"
-msgstr ""
+msgstr "Provedor"
 
 #. i18n: file: upload/ui/pluginpage.ui:20
 #. i18n: ectx: property (subTitle), widget (QWizardPage, PluginPage)
 #: rc.cpp:547
 msgid "Please select where you want to upload your video"
-msgstr ""
+msgstr "Por favor, selecione onde você deseja enviar seu vídeo"
 
 #. i18n: file: upload/ui/pluginpage.ui:60
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:551
 msgid "Plugin Information"
-msgstr ""
+msgstr "Informação do plug-in"
 
 #. i18n: file: upload/ui/pluginpage.ui:93
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:557
-#, fuzzy
 msgid "Version:"
-msgstr "Tradução:"
+msgstr "Versão:"
 
 #. i18n: file: upload/ui/pluginpage.ui:110
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:560
-#, fuzzy
 msgid "Name:"
-msgstr "Nome"
+msgstr "Nome:"
 
 #. i18n: file: upload/ui/termspage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, TermsPage)
 #: rc.cpp:563
 msgid "Terms of Service "
-msgstr ""
+msgstr "Termos do serviço"
 
 #. i18n: file: upload/ui/uploadpage.ui:26
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:570
-#, fuzzy
 msgid "Log"
-msgstr "Usuário"
+msgstr "Registro"
 
 #. i18n: file: upload/ui/uploadpage.ui:38
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:573
-#, fuzzy
 msgid "Upload Progress"
-msgstr "Carregar Plug-ins"
+msgstr "Progresso da transferência"
 
 #. i18n: file: upload/ui/uploadpage.ui:44
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:576
 msgid "Total:"
-msgstr ""
+msgstr "Total:"
 
 #. i18n: file: upload/ui/uploadpage.ui:58
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:579
 msgid "Sent:"
-msgstr ""
+msgstr "Enviado:"
 
 #. i18n: file: upload/ui/uploadpage.ui:65
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:582
 msgid "Speed:"
-msgstr ""
+msgstr "Velocidade:"
 
 #. i18n: file: upload/ui/videopage.ui:17
 #. i18n: ectx: property (title), widget (QWizardPage, VideoPage)
@@ -1832,35 +1816,31 @@ msgstr "Vídeo"
 #. i18n: ectx: property (subTitle), widget (QWizardPage, VideoPage)
 #: rc.cpp:588
 msgid "Please select a video and enter the appropriate data"
-msgstr ""
+msgstr "Por favor, selecione um vídeo e digite uma data apropriada"
 
 #. i18n: file: upload/ui/videopage.ui:32
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:592
-#, fuzzy
 msgid "Video:"
-msgstr "Vídeo"
+msgstr "Vídeo:"
 
 #. i18n: file: upload/ui/videopage.ui:49
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:595
-#, fuzzy
 msgid "Title:"
-msgstr "Título"
+msgstr "Título:"
 
 #. i18n: file: upload/ui/videopage.ui:86
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:602
-#, fuzzy
 msgid "Tags:"
-msgstr "Marcadores"
+msgstr "Marcadores:"
 
 #. i18n: file: upload/ui/videopage.ui:103
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:605
-#, fuzzy
 msgid "Category:"
-msgstr "Categoria"
+msgstr "Categoria:"
 
 #: rc.cpp:606
 msgctxt "NAME OF TRANSLATORS"
@@ -1875,7 +1855,6 @@ msgstr "marciopanto@gmail.com"
 #~ msgid "Form"
 #~ msgstr "Formato"
 
-#, fuzzy
 #~ msgid "Input Device"
 #~ msgstr "Dispositivo"
 
@@ -1903,18 +1882,15 @@ msgstr "marciopanto@gmail.com"
 #~ "captura de tela: Falha ao remover: %1.\n"
 #~ "Motivo: %2"
 
-#, fuzzy
 #~ msgid "Icon:"
 #~ msgstr "Ícone"
 
 #~ msgid "Status"
 #~ msgstr "Status"
 
-#, fuzzy
 #~ msgid "Width:"
 #~ msgstr "Largura"
 
-#, fuzzy
 #~ msgid "Height:"
 #~ msgstr "Altura"
 
@@ -1924,7 +1900,6 @@ msgstr "marciopanto@gmail.com"
 #~ msgid "Hide RecordItNow while recording"
 #~ msgstr "Ocultar RecordItNow durante a gravação"
 
-#, fuzzy
 #~ msgid "Remove Button"
 #~ msgstr "Botão do Mouse"
 
@@ -1937,217 +1912,174 @@ msgstr "marciopanto@gmail.com"
 #~ msgid "Circle under the mouse cursor"
 #~ msgstr "Círculo sob o cursor do mouse"
 
-#, fuzzy
 #~ msgctxt "@title:group"
 #~ msgid "Information"
 #~ msgstr "Duração"
 
-#, fuzzy
 #~ msgctxt "@action:button"
 #~ msgid "Add"
 #~ msgstr "Adicionar"
 
-#, fuzzy
 #~ msgctxt "@action:button"
 #~ msgid "Remove"
 #~ msgstr "Remover"
 
-#, fuzzy
 #~ msgctxt "@action:button"
 #~ msgid "Move Up"
 #~ msgstr "Mover para cima"
 
-#, fuzzy
 #~ msgctxt "@action:button"
 #~ msgid "Move Down"
 #~ msgstr "Mover para baixo"
 
-#, fuzzy
 #~ msgctxt "@label:textbox"
 #~ msgid "Device:"
 #~ msgstr "Dispositivo"
 
-#, fuzzy
 #~ msgctxt "@action:button"
 #~ msgid "Search"
 #~ msgstr "Pesquisar"
 
-#, fuzzy
 #~ msgctxt "@title"
 #~ msgid "Key Icon"
 #~ msgstr "Ícone"
 
-#, fuzzy
 #~ msgctxt "@label:textbox"
 #~ msgid "Icon:"
 #~ msgstr "Ícone"
 
-#, fuzzy
 #~ msgctxt "@label:textbox"
 #~ msgid "Search:"
 #~ msgstr "Pesquisar"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Code:"
 #~ msgstr "Modo"
 
-#, fuzzy
 #~ msgctxt "@action:button"
 #~ msgid "Start"
 #~ msgstr "Status"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Device:"
 #~ msgstr "Dispositivo"
 
-#, fuzzy
 #~ msgctxt "@title:group"
 #~ msgid "Mouse Buttons"
 #~ msgstr "Botão do Mouse"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Mouse button"
 #~ msgstr "Botão do mouse"
 
-#, fuzzy
 #~ msgctxt "@title:column"
 #~ msgid "Remove"
 #~ msgstr "Remover"
 
-#, fuzzy
 #~ msgctxt "@title:column"
 #~ msgid "Mouse Button"
 #~ msgstr "Botão do Mouse"
 
-#, fuzzy
 #~ msgctxt "@title:column"
 #~ msgid "Color"
 #~ msgstr "Cor"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Mode"
 #~ msgstr "Modo"
 
-#, fuzzy
 #~ msgctxt "@option:radio"
 #~ msgid "LED next to the mouse cursor"
 #~ msgstr "LED ao lado do cursor do mouse"
 
-#, fuzzy
 #~ msgctxt "@option:radio"
 #~ msgid "Circle under the mouse cursor"
 #~ msgstr "Círculo sob o cursor do mouse"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Opacity"
 #~ msgstr "Opacidade"
 
-#, fuzzy
 #~ msgctxt "@title:group"
 #~ msgid "Behavior "
 #~ msgstr "Comportamento "
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Hide RecordItNow during record"
 #~ msgstr "Ocultar RecordItNow durante a gravação"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Overwrite existing files"
 #~ msgstr "Substituir arquivos existentes"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Show file after record"
 #~ msgstr "Mostrar arquivo depois de gravado"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Encode after record"
 #~ msgstr "Codificar depois de gravado"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Stay above all other windows during record"
 #~ msgstr "Manter acima das outras janelas durante a gravação"
 
-#, fuzzy
 #~ msgctxt "@title:group"
 #~ msgid "Miscellaneous"
 #~ msgstr "Diversos"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Directory for temporary files:"
 #~ msgstr "Diretório para arquivos temporários:"
 
-#, fuzzy
 #~ msgctxt "@title:group"
 #~ msgid "Enable the Timeline"
 #~ msgstr "Habilitar a Linha do Tempo"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Stop recording when the timeline reaches the end"
 #~ msgstr "Parar a gravação quando a linha do tempo chegar ao fim"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Enable Notifications"
 #~ msgstr "Habilitar notificações"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Total duration"
 #~ msgstr "Duração total"
 
-#, fuzzy
 #~ msgctxt "@title:column"
 #~ msgid "Topic"
 #~ msgstr "Tópico"
 
-#, fuzzy
 #~ msgctxt "@title:column"
 #~ msgid "Icon"
 #~ msgstr "Ícone"
 
-#, fuzzy
 #~ msgctxt "@title:column"
 #~ msgid "Duration"
 #~ msgstr "Duração"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "Follow the mouse"
 #~ msgstr "Seguir o mouse"
 
-#, fuzzy
 #~ msgctxt "@option:check"
 #~ msgid "High quality"
 #~ msgstr "Alta qualidade"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Default zoom factor"
 #~ msgstr "Zoom padrão"
 
-#, fuzzy
 #~ msgctxt "@title:group"
 #~ msgid "Size"
 #~ msgstr "Tamanho"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Width"
 #~ msgstr "Largura"
 
-#, fuzzy
 #~ msgctxt "@label"
 #~ msgid "Height"
 #~ msgstr "Altura"
@@ -2366,7 +2298,6 @@ msgstr "marciopanto@gmail.com"
 #~ msgid "Cannot open video!"
 #~ msgstr "Não foi possível abrir arquivo de vídeo!"
 
-#, fuzzy
 #~ msgctxt "%1 = error"
 #~ msgid ""
 #~ "Upload failed!\n"
