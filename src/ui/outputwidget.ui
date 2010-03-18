@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OutputWidget</class>
+ <widget class="QFrame" name="OutputWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>41</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="KUrlRequester" name="outputRequester">
+     <property name="toolTip">
+      <string>Output file</string>
+     </property>
+     <property name="mode">
+      <set>KFile::File|KFile::LocalOnly</set>
+     </property>
+     <property name="clickMessage">
+      <string>Output file</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
+     <item>
+      <widget class="QToolButton" name="playButton">
+       <property name="toolTip">
+        <string>Play/Open</string>
+       </property>
+       <property name="text">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="deleteButton">
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
