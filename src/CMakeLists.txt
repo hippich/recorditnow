@@ -77,7 +77,9 @@ set(gui_SRCS
    config/shortcutsconfig.cpp
    config/zoomconfig.cpp
    config/timelineconfig.cpp
-   config/pluginconfig.cpp)
+   config/pluginconfig.cpp
+
+   outputwidget.cpp)
 
 
 # GUI
@@ -105,7 +107,8 @@ kde4_add_ui_files(gui_SRCS
     ui/pluginconfig.ui
     ui/timelinedocktitlewidget.ui
     ui/zoomdock.ui
-    ui/zoomdocktitlewidget.ui)
+    ui/zoomdocktitlewidget.ui
+    ui/outputwidget.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)

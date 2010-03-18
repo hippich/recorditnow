@@ -90,18 +90,14 @@ MainWindow::MainWindow(QWidget *parent)
     timeUpButton->setIcon(KIcon("arrow-up"));
     timeDownButton->setIcon(KIcon("arrow-down"));
     soundCheck->setIcon("preferences-desktop-sound");
-    deleteButton->setIcon(KIcon("list-remove"));
-    playButton->setIcon(KIcon("media-playback-start"));
 
     connect(timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
     connect(timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(backendChanged(QString)));
     connect(kapp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
-    connect(playButton, SIGNAL(clicked()), this, SLOT(playFile()));
-    connect(deleteButton, SIGNAL(clicked()), this, SLOT(removeFile()));
 
-    connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChanged(QString)));
+    connect(outputWidget, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
 
     m_tray = 0;
     m_timelineDock = 0;
@@ -117,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_recorderManager = new RecorderManager(this, m_pluginManager);
     connect(m_recorderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
-    connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputRequester, SLOT(setText(QString)));
+    connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_recorderManager, SIGNAL(finished(QString,bool)), this,
             SLOT(recorderFinished(QString,bool)));
     connect(m_recorderManager, SIGNAL(stateChanged(AbstractRecorder::State)), this,
@@ -125,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_encoderManager = new EncoderManager(this, m_pluginManager);
     connect(m_encoderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
-    connect(m_encoderManager, SIGNAL(fileChanged(QString)), outputRequester, SLOT(setText(QString)));
+    connect(m_encoderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_encoderManager, SIGNAL(finished(QString)), this,
             SLOT(encoderFinished(QString)));
 
@@ -194,7 +190,7 @@ void MainWindow::startWithArgs(const QString &backend, const QString &file, cons
     }
 
     if (!file.isEmpty()) {
-        outputRequester->setText(file);
+        outputWidget->setOutputFile(file);
     }
 
     initRecorder(&m_recordData);
@@ -494,7 +490,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
 
     d->fps = fpsSpinBox->value();
     d->sound = soundCheck->isChecked();
-    d->outputFile = outputRequester->text();
+    d->outputFile = outputWidget->outputFile();
     d->overwrite = Settings::overwrite();
     d->workDir = Settings::workDir().path();
 
@@ -515,7 +511,7 @@ void MainWindow::initEncoder(AbstractEncoder::Data *d)
 {
 
     d->overwrite = Settings::overwrite();
-    d->file = outputRequester->text();
+    d->file = outputWidget->outputFile();
     d->workDir = Settings::workDir().path();
 
 }
@@ -737,7 +733,9 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         setState(Idle);
     } else if (Settings::encoderName().isEmpty() || !Settings::encode() || !isVideo) {
         setState(Idle);
-        playFile(false);
+        if (Settings::showVideo()) {
+            outputWidget->playOutputFile();
+        }
         pluginStatus(i18nc("Recording finished", "Finished!"));
     } else {
         AbstractEncoder::Data d;
@@ -745,7 +743,6 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         setState(Encode);
         m_encoderManager->startEncode(Settings::encoderName() ,d);
     }
-    outputFileChanged(outputRequester->text());
 
 }
 
@@ -756,11 +753,12 @@ void MainWindow::encoderFinished(const QString &error)
     if (!error.isEmpty()) {
         pluginStatus(error);
     } else {
-        playFile(false);
+        if (Settings::showVideo()) {
+            outputWidget->playOutputFile();
+        }
         pluginStatus(i18nc("Encoding finished", "Finished!"));
     }
     setState(Idle);
-    outputFileChanged(outputRequester->text());
 
 }
 
@@ -809,56 +807,6 @@ void MainWindow::updateRecorderCombo()
 
     if (backendCombo->contains(oldBackend)) {
         backendCombo->setCurrentItem(oldBackend, false);
-    }
-
-}
-
-
-void MainWindow::playFile(const bool &force)
-{
-
-    if (Settings::showVideo() || force) {
-        const KUrl url(outputRequester->text());
-        if (!QFile(url.path()).exists()) {
-            KMessageBox::sorry(this, i18nc("%1 = file", "%1 no such file!", url.path()));
-        } else {
-            KMimeType::Ptr type = KMimeType::findByUrl(url);
-            KRun::runUrl(url, type->name(), this);
-        }
-    }
-
-}
-
-
-void MainWindow::removeFile()
-{
-
-    QFile file(outputRequester->text());
-    if (!file.exists()) {
-        KMessageBox::sorry(this, i18nc("%1 = file", "%1 no such file!", file.fileName()));
-        outputFileChanged(outputRequester->text());
-        return;
-    }
-
-    if (!file.remove()) {
-        KMessageBox::error(this, i18nc("%1 = file, %2 = error string", "Remove failed: %1.\n"
-                                       "Reason: %2", file.fileName(), file.errorString()));
-    } else {
-        backendChanged(backendCombo->currentText()); // reset output file name
-    }
-
-}
-
-
-void MainWindow::outputFileChanged(const QString &newFile)
-{
-
-    if (QFile::exists(newFile)) {
-        playButton->setEnabled(true);
-        deleteButton->setEnabled(true);
-    } else {
-        playButton->setEnabled(false);
-        deleteButton->setEnabled(false);
     }
 
 }
@@ -949,14 +897,15 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 void MainWindow::backendChanged(const QString &newBackend)
 {
 
-    outputRequester->clear(); // call textChanged()
+    //outputRequester->clear(); // call textChanged()
+    outputWidget->setOutputFile(QString());
 
     QString file = Settings::videoDir().path();
     if (!file.endsWith(QDir::separator())) {
         file.append(QDir::separator());
     }
     file.append(m_recorderManager->getDefaultFile(newBackend));
-    outputRequester->setText(file);
+    outputWidget->setOutputFile(file);
     setState(Idle); // update actions/widgets
 
 }

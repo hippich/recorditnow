@@ -116,9 +116,6 @@ private slots:
     void aboutToQuit();
     void pluginsChanged();
     void upload();
-    void playFile(const bool &force = true);
-    void removeFile();
-    void outputFileChanged(const QString &newFile);
     void recorderStateChanged(const AbstractRecorder::State &newState);
     void linkActivated(const QString &link);
     void zoomIn();
