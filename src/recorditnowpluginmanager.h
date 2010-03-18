@@ -30,7 +30,6 @@
 
 class AbstractRecorder;
 class AbstractEncoder;
-class AbstractUploader;
 class RecordItNowPlugin;
 class RecordItNowPluginManager : public QObject
 {

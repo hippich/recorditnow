@@ -22,7 +22,6 @@
 #include "recorditnowpluginmanager.h"
 #include "libs/recorder/abstractrecorder.h"
 #include "libs/encoder/abstractencoder.h"
-#include "libs/upload/abstractuploader.h"
 
 // KDE
 #include <kservice.h>

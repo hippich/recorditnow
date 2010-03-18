@@ -23,7 +23,6 @@
 #include <recorditnow.h>
 #include "recorditnowpluginmanager.h"
 #include "config/configdialog.h"
-#include "libs/upload/abstractuploader.h"
 #include "recordermanager.h"
 #include "encodermanager.h"
 #include "cursorwidget.h"
