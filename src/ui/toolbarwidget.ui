@@ -27,7 +27,7 @@
     <number>-1</number>
    </property>
    <item row="1" column="0" rowspan="2">
-    <widget class="QFrame" name="timerFrame">
+    <widget class="RecordItNow::TimerWidget" name="timerWidget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -46,81 +46,6 @@
      <property name="midLineWidth">
       <number>0</number>
      </property>
-     <layout class="QGridLayout" name="timerLayout">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="1" column="0" rowspan="2">
-       <widget class="QLCDNumber" name="timerLcd">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Timer</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <property name="smallDecimalPoint">
-         <bool>true</bool>
-        </property>
-        <property name="numDigits">
-         <number>2</number>
-        </property>
-        <property name="mode">
-         <enum>QLCDNumber::Dec</enum>
-        </property>
-        <property name="segmentStyle">
-         <enum>QLCDNumber::Flat</enum>
-        </property>
-        <property name="value" stdset="0">
-         <double>1.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QToolButton" name="timeUpButton">
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="autoRepeat">
-         <bool>true</bool>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QToolButton" name="timeDownButton">
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="autoRepeat">
-         <bool>true</bool>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" rowspan="2">
-       <widget class="KSeparator" name="timerSeparator">
-        <property name="frameShape">
-         <enum>QFrame::VLine</enum>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
    <item row="1" column="1" rowspan="2" colspan="2">
@@ -131,14 +56,6 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="lineLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
-      </property>
-      <property name="margin">
-       <number>0</number>
-      </property>
-     </layout>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
@@ -280,11 +197,6 @@
    <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>KSeparator</class>
-   <extends>QFrame</extends>
-   <header>kseparator.h</header>
-  </customwidget>
-  <customwidget>
    <class>CheckIcon</class>
    <extends>QWidget</extends>
    <header>checkicon.h</header>
@@ -296,12 +208,16 @@
    <header>outputwidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>RecordItNow::TimerWidget</class>
+   <extends>QFrame</extends>
+   <header>timerwidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>fpsSpinBox</tabstop>
   <tabstop>backendCombo</tabstop>
-  <tabstop>timeUpButton</tabstop>
-  <tabstop>timeDownButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

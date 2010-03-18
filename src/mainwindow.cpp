@@ -87,25 +87,19 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(toolWidget);
     setCentralWidget(toolWidget);
 
-    timeUpButton->setIcon(KIcon("arrow-up"));
-    timeDownButton->setIcon(KIcon("arrow-down"));
     soundCheck->setIcon("preferences-desktop-sound");
 
-    connect(timeUpButton, SIGNAL(clicked()), this, SLOT(lcdUp()));
-    connect(timeDownButton, SIGNAL(clicked()), this, SLOT(lcdDown()));
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(backendChanged(QString)));
     connect(kapp, SIGNAL(aboutToQuit()), this, SLOT(aboutToQuit()));
 
     connect(outputWidget, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
+    connect(timerWidget, SIGNAL(timeout()), this, SLOT(startRecord()));
 
     m_tray = 0;
     m_timelineDock = 0;
     m_keyboardDock = 0;
     m_zoomDock = 0;
-
-    m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
 
 
     m_pluginManager = new RecordItNowPluginManager(this);
@@ -142,8 +136,7 @@ MainWindow::MainWindow(QWidget *parent)
     backendCombo->setCurrentItem(Settings::currentBackend(), false);
     soundCheck->setChecked(Settings::soundEnabled());
     fpsSpinBox->setValue(Settings::currentFps());
-    timerLcd->display(Settings::currentTime());
-    m_timer->setProperty("Time", timerLcd->value());
+    timerWidget->setValue(Settings::currentTime());
 
 }
 
@@ -155,7 +148,7 @@ MainWindow::~MainWindow()
     Settings::self()->setSoundEnabled(soundCheck->isChecked());
     Settings::self()->setCurrentFps(fpsSpinBox->value());
     Settings::self()->setCurrentFrame(m_frame->getFrameGeometry());
-    Settings::self()->setCurrentTime(timerLcd->value());
+    Settings::self()->setCurrentTime(timerWidget->value());
     Settings::self()->writeConfig();
 
     if (m_grabber) {
@@ -167,7 +160,6 @@ MainWindow::~MainWindow()
     if (m_tray) {
         delete m_tray;
     }
-    delete m_timer;
     delete m_recorderManager;
     delete m_encoderManager;
     delete m_pluginManager;
@@ -196,7 +188,7 @@ void MainWindow::startWithArgs(const QString &backend, const QString &file, cons
     initRecorder(&m_recordData);
     m_recordData.geometry = geometry;
 
-    timerLcd->display(time);
+    timerWidget->setValue(time);
 
     startTimer();
 
@@ -326,7 +318,7 @@ void MainWindow::pauseRecord()
 {
 
     if (state() == Timer) {
-        m_timer->stop();
+        timerWidget->pause();
         setState(TimerPaused);
         return;
     } else if (state() == TimerPaused) {
@@ -351,7 +343,8 @@ void MainWindow::stopRecord()
 {
 
     if (state() == Timer || state() == TimerPaused) {
-        m_timer->stop();
+        timerWidget->pause();
+        timerWidget->reset();
         setState(Idle);
     } else {
         m_recorderManager->stop();
@@ -582,7 +575,7 @@ void MainWindow::setState(const State &newState)
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             centralWidget()->setEnabled(true);
-            timerLcd->display(m_timer->property("Time").toInt());
+            timerWidget->reset();
             if (Settings::stayOnTop()) {
                 const QPoint p = pos();
                 setWindowFlags(windowFlags()&~Qt::WindowStaysOnTopHint);
@@ -624,7 +617,6 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
-            timerLcd->display(0);
             if (Settings::stayOnTop()) {
                 getAction("box")->setChecked(false);
                 const QPoint p = pos();
@@ -827,60 +819,11 @@ void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
 void MainWindow::startTimer()
 {
 
-    if (state() == Idle) {
-        m_timer->setProperty("Time", timerLcd->value());
-    }
-
     setState(Timer);
-    if (timerLcd->value() == 0) {
-        m_timer->start(0);
-    } else {
-        m_timer->start(1000);
-    }
+    timerWidget->start();
 
 }
 
-
-void MainWindow::tick()
-{
-
-    lcdDown();
-    if (timerLcd->value() < 1) {
-        m_timer->stop();
-        startRecord();
-    }
-
-}
-
-
-void MainWindow::lcdUp()
-{
-
-    if (timerLcd->value() == 60) {
-        return;
-    }
-    timerLcd->display(timerLcd->value()+1);
-
-    if (sender() == timeUpButton) {
-        m_timer->setProperty("Time", timerLcd->value());
-    }
-
-}
-
-
-void MainWindow::lcdDown()
-{
-
-    if (timerLcd->value() == 0) {
-        return;
-    }
-    timerLcd->display(timerLcd->value()-1);
-
-    if (sender() == timeDownButton) {
-        m_timer->setProperty("Time", timerLcd->value());
-    }
-
-}
 
 void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 {

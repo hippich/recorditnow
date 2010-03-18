@@ -69,7 +69,6 @@ private:
     QWidget *m_grabber;
     Frame *m_frame;
     KStatusNotifierItem *m_tray;
-    QTimer *m_timer;
     AbstractRecorder::Data m_recordData;
     State m_state;
     RecordItNowPluginManager *m_pluginManager;
@@ -108,9 +107,6 @@ private slots:
     void configure();
     void configDialogFinished();
     void startTimer();
-    void tick();
-    void lcdUp();
-    void lcdDown();
     void trayActivated(const bool &active, const QPoint &pos);
     void backendChanged(const QString &newBackend);
     void aboutToQuit();
