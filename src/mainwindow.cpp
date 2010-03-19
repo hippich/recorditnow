@@ -452,14 +452,6 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
 
     pluginStatus(""); // clear the status bar
 
-    if (Settings::hideOnRecord()) {
-        if (Settings::tray()) {
-            close();
-        } else {
-            hide();
-        }
-    }
-
 }
 
 
@@ -558,6 +550,14 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
             initKeyMon(true);
+
+            if (Settings::hideOnRecord()) {
+                if (Settings::tray()) {
+                    close();
+                } else {
+                    hide();
+                }
+            }
             break;
         }
     case Recording: {
