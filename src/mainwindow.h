@@ -90,6 +90,7 @@ private:
     void setState(const State &newState);
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
+    inline void updateWindowFlags();
 
 
 private slots:

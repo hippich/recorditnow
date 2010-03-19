@@ -126,6 +126,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupDocks();
     setupTray();
     setupGUI();
+    updateWindowFlags();
 
     menuBar()->clear();
 
@@ -575,12 +576,6 @@ void MainWindow::setState(const State &newState)
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             centralWidget()->setEnabled(true);
             timerWidget->reset();
-            if (Settings::stayOnTop()) {
-                const QPoint p = pos();
-                setWindowFlags(windowFlags()&~Qt::WindowStaysOnTopHint);
-                show(); // necessary to apply window flags
-                move(p);
-            }
             initRecordWidgets(false);
             initKeyMon(false);
             break;
@@ -616,13 +611,6 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             centralWidget()->setEnabled(false);
-            if (Settings::stayOnTop()) {
-                getAction("box")->setChecked(false);
-                const QPoint p = pos();
-                setWindowFlags(windowFlags()|Qt::WindowStaysOnTopHint);
-                show(); // necessary to apply window flags
-                move(p);
-            }
             initRecordWidgets(true);
             break;
         }
@@ -783,6 +771,9 @@ void MainWindow::configDialogFinished()
     // update frame menu
     frameSizesChanged(FrameConfig::readSizes(Settings::self()->config()));
 
+    // update window flags
+    updateWindowFlags();
+
 }
 
 
@@ -798,6 +789,27 @@ void MainWindow::updateRecorderCombo()
 
     if (backendCombo->contains(oldBackend)) {
         backendCombo->setCurrentItem(oldBackend, false);
+    }
+
+}
+
+
+void MainWindow::updateWindowFlags()
+{
+
+    const QPoint p = pos();
+    bool apply = false;
+    if (Settings::stayOnTop()) {
+        setWindowFlags(windowFlags()|Qt::WindowStaysOnTopHint);
+        apply = true;
+    } else if (windowFlags() & Qt::WindowStaysOnTopHint) {
+        setWindowFlags(windowFlags()&~Qt::WindowStaysOnTopHint);
+        apply = true;
+    }
+
+    if (apply) {
+        show(); // necessary to apply window flags
+        move(p);
     }
 
 }
