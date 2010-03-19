@@ -80,7 +80,8 @@ set(gui_SRCS
    config/pluginconfig.cpp
 
    outputwidget.cpp
-   timerwidget.cpp)
+   timerwidget.cpp
+   windowgrabber.cpp)
 
 
 # GUI

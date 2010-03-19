@@ -37,6 +37,7 @@
 #include "keymonmanager.h"
 #include "config/frameconfig.h"
 #include "zoom/zoomdock.h"
+#include "windowgrabber.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -73,8 +74,7 @@
 
 typedef QPair<QString, QSize> Size;
 MainWindow::MainWindow(QWidget *parent)
-    : KXmlGuiWindow(parent),
-    m_grabber(0)
+    : KXmlGuiWindow(parent)
 {
 
     m_frame = new Frame(this);
@@ -150,10 +150,6 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentFrame(m_frame->getFrameGeometry());
     Settings::self()->setCurrentTime(timerWidget->value());
     Settings::self()->writeConfig();
-
-    if (m_grabber) {
-        delete m_grabber;
-    }
 
     delete m_frame;
 
@@ -375,43 +371,29 @@ void MainWindow::recordTriggered()
 void MainWindow::recordWindow()
 {
 
-    m_grabber = new QWidget(0, Qt::X11BypassWindowManagerHint);
-    m_grabber->move(-1000, -1000);
-    m_grabber->installEventFilter(this);
-    m_grabber->show();
-    m_grabber->grabMouse(Qt::CrossCursor);
+    RecordItNow::WindowGrabber *grabber = new RecordItNow::WindowGrabber;
+    connect(grabber, SIGNAL(grabCanceled()), this, SLOT(windowGrabberCanceled()));
+    connect(grabber, SIGNAL(windowGrabbed(WId)), this, SLOT(recordCurrentWindow(WId)));
+
+    grabber->startGrab();
 
 }
 
 
-void MainWindow::recordCurrentWindow()
+void MainWindow::recordCurrentWindow(const WId &id)
 {
 
-    Window root;
-    Window child;
-    uint mask;
-    int rootX, rootY, winX, winY;
-
-    XGrabServer(QX11Info::display());
-    XQueryPointer(QX11Info::display(), QX11Info::appRootWindow(x11Info().appScreen()), &root, &child,
-                  &rootX, &rootY, &winX, &winY, &mask);
-
-    if (child == None) {
-        child = QX11Info::appRootWindow(x11Info().appScreen());
-    }
-
-    XUngrabServer(QX11Info::display());
-
-    m_grabber->deleteLater();
-    m_grabber = 0;
-
-    if (child == None) {
-        return;
-    }
-
     initRecorder(&m_recordData);
-    m_recordData.winId = child;
+    m_recordData.winId = id;
     startTimer();
+
+}
+
+
+void MainWindow::windowGrabberCanceled()
+{
+
+    setState(Idle);
 
 }
 
@@ -443,30 +425,6 @@ void MainWindow::recordFullScreen()
     }
 
     startTimer();
-
-}
-
-
-bool MainWindow::eventFilter(QObject *watched, QEvent *event)
-{
-
-    if (m_grabber
-        && watched == m_grabber
-        && QWidget::mouseGrabber() == m_grabber
-        && event->type() == QEvent::MouseButtonPress)
-    {
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-        m_grabber->releaseMouse();
-        m_grabber->hide();
-        if (mouseEvent->button() == Qt::LeftButton) {
-            recordCurrentWindow();
-        } else {
-            m_grabber->deleteLater();
-            m_grabber = 0;
-            setState(Idle);
-        }
-    }
-    return KXmlGuiWindow::eventFilter(watched, event);
 
 }
 

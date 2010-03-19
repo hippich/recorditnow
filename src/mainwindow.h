@@ -66,7 +66,6 @@ public:
 
 
 private:
-    QWidget *m_grabber;
     Frame *m_frame;
     KStatusNotifierItem *m_tray;
     AbstractRecorder::Data m_recordData;
@@ -99,7 +98,8 @@ private slots:
     void stopRecord();
     void recordTriggered();
     void recordWindow();
-    void recordCurrentWindow();
+    void recordCurrentWindow(const WId &id);
+    void windowGrabberCanceled();
     void triggerFrame(const bool &checked);
     void recordFullScreen();
     void pluginStatus(const QString &text);
@@ -127,7 +127,6 @@ private slots:
 
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event);
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
