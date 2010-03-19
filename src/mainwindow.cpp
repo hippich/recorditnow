@@ -48,6 +48,7 @@
 #include <QtGui/QStackedLayout>
 #include <QtGui/QDockWidget>
 #include <QtCore/QDir>
+#include <QtGui/QPainter>
 
 // KDE
 #include <kicon.h>
@@ -94,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(outputWidget, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
     connect(timerWidget, SIGNAL(timeout()), this, SLOT(startRecord()));
+    connect(timerWidget, SIGNAL(tick(int)), this, SLOT(timerTick(int)));
 
     m_tray = 0;
     m_timelineDock = 0;
@@ -502,6 +504,7 @@ void MainWindow::setTrayOverlay(const QString &name)
 {
 
     if (m_tray) {
+        m_tray->setIconByName("recorditnow");
         m_tray->setOverlayIconByName(name);
     }
 
@@ -536,7 +539,7 @@ void MainWindow::setState(const State &newState)
             break;
         }
     case Timer: {
-            setTrayOverlay("recorditnow-timeline");
+            setTrayOverlay("");
             getAction("pause")->setIcon(KIcon("media-playback-pause"));
             getAction("record")->setEnabled(false);
             getAction("pause")->setEnabled(true);
@@ -1106,6 +1109,38 @@ void MainWindow::errorNotification(const QString &error)
     notification->setText(error);
     notification->setPixmap(KIcon("dialog-error").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
     notification->sendEvent();
+
+}
+
+
+void MainWindow::timerTick(const int &value)
+{
+
+    if (!m_tray) {
+        return;
+    }
+
+    QPixmap pixmap = KIcon("recorditnow").pixmap(32, 32);
+
+    QPainter painter(&pixmap);
+    painter.setRenderHints(QPainter::TextAntialiasing|QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
+    painter.setPen(palette().color(QPalette::WindowText));
+    painter.setFont(font());
+
+    QTextOption options;
+    options.setAlignment(Qt::AlignCenter);
+    options.setWrapMode(QTextOption::NoWrap);
+
+    const QString text = QString::number(value);
+
+    QRadialGradient grad(pixmap.rect().center(), pixmap.rect().height()/2);
+    grad.setColorAt(0, palette().color(QPalette::Window));
+    grad.setColorAt(1, Qt::transparent);
+
+    painter.fillRect(pixmap.rect(), QBrush(grad));
+    painter.drawText(pixmap.rect(), text, options);
+
+    m_tray->setIconByPixmap(pixmap);
 
 }
 

@@ -128,6 +128,8 @@ void TimerWidget::tick()
 
     if (value() > 0) {
         lcd->display(value()-1);
+
+        emit tick(value());
     } else {
         m_timer->stop();
 

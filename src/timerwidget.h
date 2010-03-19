@@ -63,6 +63,7 @@ private slots:
 
 
 signals:
+    void tick(const int &value);
     void timeout();
 
 
