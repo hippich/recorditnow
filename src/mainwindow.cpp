@@ -181,8 +181,13 @@ void MainWindow::startWithArgs(const QString &backend, const QString &file, cons
         outputWidget->setOutputFile(file);
     }
 
+    QRect rect = geometry;
+    if (rect == QRect(-1, -1, -1, -1)) {
+        rect = QApplication::desktop()->screenGeometry(x11Info().appScreen());
+    }
+
     initRecorder(&m_recordData);
-    m_recordData.geometry = geometry;
+    m_recordData.geometry = rect;
 
     timerWidget->setValue(time);
 

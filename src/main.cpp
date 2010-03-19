@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         KCmdLineArgs *parsed = KCmdLineArgs::parsedArgs();
 
         bool hasArgs = false;
-        QRect geometry = QRect(0, 0, 100, 100);
+        QRect geometry = QRect(-1, -1, -1, -1);
         QString backend;
         QString file;
         int time = 0;
