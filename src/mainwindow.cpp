@@ -68,6 +68,7 @@
 #include <kactioncategory.h>
 #include <knotification.h>
 #include <ktoolbar.h>
+#include <kcolorscheme.h>
 
 // X11
 #include <X11/Xlib.h>
@@ -1120,25 +1121,44 @@ void MainWindow::timerTick(const int &value)
         return;
     }
 
-    QPixmap pixmap = KIcon("recorditnow").pixmap(32, 32);
+    QPixmap pixmap = KIcon("recorditnow").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
 
     QPainter painter(&pixmap);
     painter.setRenderHints(QPainter::TextAntialiasing|QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
-    painter.setPen(palette().color(QPalette::WindowText));
-    painter.setFont(font());
 
-    QTextOption options;
-    options.setAlignment(Qt::AlignCenter);
-    options.setWrapMode(QTextOption::NoWrap);
+    // adapted from KMSystemTray::updateCount()
+    int oldWidth = 32;
 
     const QString text = QString::number(value);
+    QFont font = KGlobalSettings::generalFont();
+    font.setBold(true);
 
-    QRadialGradient grad(pixmap.rect().center(), pixmap.rect().height()/2);
-    grad.setColorAt(0, palette().color(QPalette::Window));
-    grad.setColorAt(1, Qt::transparent);
+    float pointSize = font.pointSizeF();
+    QFontMetrics fm(font);
+    int width = fm.width(text);
+    if (width > (oldWidth-2)) {
+        pointSize *= float(oldWidth-2)/float(width);
+        font.setPointSizeF(pointSize);
+    }
 
-    painter.fillRect(pixmap.rect(), QBrush(grad));
-    painter.drawText(pixmap.rect(), text, options);
+    painter.setFont(font);
+    KColorScheme scheme(QPalette::Active, KColorScheme::View);
+
+    fm = QFontMetrics(font);
+    QRect boundingRect = fm.tightBoundingRect(text);
+    boundingRect.adjust(0, 0, 0, 2);
+    boundingRect.setHeight(qMin(boundingRect.height(), oldWidth));
+    boundingRect.moveTo((oldWidth - boundingRect.width()) / 2,
+                        ((oldWidth - boundingRect.height()) / 2) - 1);
+    painter.setOpacity(0.7);
+    painter.setBrush(scheme.background(KColorScheme::LinkBackground));
+    painter.setPen(scheme.background(KColorScheme::LinkBackground).color());
+    painter.drawRoundedRect(boundingRect, 2.0, 2.0);
+
+    painter.setBrush(Qt::NoBrush);
+    painter.setPen(scheme.foreground(KColorScheme::LinkText).color());
+    painter.setOpacity(1.0);
+    painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
 
     m_tray->setIconByPixmap(pixmap);
 
