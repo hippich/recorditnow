@@ -124,7 +124,6 @@ private slots:
     void initRecordWidgets(const bool &start);
     void initKeyMon(const bool &start);
     void errorNotification(const QString &error);
-    void timerTick(const int &value);
 
 
 protected:

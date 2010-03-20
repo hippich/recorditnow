@@ -26,8 +26,10 @@
 
 // Qt
 #include <QtGui/QFrame>
+#include <QtCore/QWeakPointer>
 
 
+class KNotification;
 class QTimer;
 namespace RecordItNow {
 
@@ -54,6 +56,9 @@ public slots:
 private:
     QTimer *m_timer;
     int m_time;
+    QWeakPointer<KNotification> m_tickNotification;
+
+    void stopTimerInternal(const bool &closeNotification = true);
 
 
 private slots:
@@ -63,7 +68,6 @@ private slots:
 
 
 signals:
-    void tick(const int &value);
     void timeout();
 
 

@@ -13,3 +13,7 @@ Name=Error
 Comment=An error occurred
 Action=Popup
 
+[Event/timerTick]
+Name=Timer Tick
+Comment=Displays the remaining seconds
+Action=Popup

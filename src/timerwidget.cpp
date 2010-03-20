@@ -23,6 +23,8 @@
 
 // KDE
 #include <kicon.h>
+#include <knotification.h>
+#include <kdebug.h>
 
 // Qt
 #include <QtCore/QTimer>
@@ -47,6 +49,7 @@ TimerWidget::TimerWidget(QWidget *parent)
     connect(upButton, SIGNAL(clicked()), this, SLOT(upClicked()));
     connect(downButton, SIGNAL(clicked()), this, SLOT(downClicked()));
 
+
 }
 
 
@@ -54,6 +57,9 @@ TimerWidget::~TimerWidget()
 {
 
     delete m_timer;
+    if (m_tickNotification) {
+        m_tickNotification.data()->close();
+    }
 
 }
 
@@ -90,7 +96,7 @@ void TimerWidget::start()
 void TimerWidget::pause()
 {
 
-    m_timer->stop();
+    stopTimerInternal(false);
 
 }
 
@@ -99,6 +105,21 @@ void TimerWidget::reset()
 {
 
     setValue(m_time);
+    stopTimerInternal();
+
+}
+
+
+void TimerWidget::stopTimerInternal(const bool &closeNotification)
+{
+
+    if (m_timer->isActive()) {
+        m_timer->stop();
+    }
+
+    if (m_tickNotification && closeNotification) {
+        m_tickNotification.data()->close();
+    }
 
 }
 
@@ -129,9 +150,16 @@ void TimerWidget::tick()
     if (value() > 0) {
         lcd->display(value()-1);
 
-        emit tick(value());
+        const QString text = i18n("Recording will start in %1 seconds...", value());
+        if (!m_tickNotification) {
+            m_tickNotification = new KNotification("timerTick", this, KNotification::Persistant);
+            m_tickNotification.data()->setText(text);
+            m_tickNotification.data()->sendEvent();
+        } else {
+            m_tickNotification.data()->setText(text);
+        }
     } else {
-        m_timer->stop();
+        stopTimerInternal();
 
         emit timeout();
     }
