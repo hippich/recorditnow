@@ -159,7 +159,7 @@ void TimerWidget::tick()
                          value());
         }
         if (!m_tickNotification) {
-            m_tickNotification = new KNotification("timerTick", this, KNotification::Persistant);
+            m_tickNotification = new KNotification("timerTick", this, KNotification::Persistent);
             m_tickNotification.data()->setText(text);
             m_tickNotification.data()->sendEvent();
         } else {
