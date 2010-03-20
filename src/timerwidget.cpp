@@ -150,7 +150,14 @@ void TimerWidget::tick()
     if (value() > 0) {
         lcd->display(value()-1);
 
-        const QString text = i18n("Recording will start in %1 seconds...", value());
+        QString text;
+        if (value() == 0) {
+            text = i18n("The recording starts now!");
+        } else {
+            text = i18np("Recording will start in %1 second...",
+                         "Recording will start in %1 seconds...",
+                         value());
+        }
         if (!m_tickNotification) {
             m_tickNotification = new KNotification("timerTick", this, KNotification::Persistant);
             m_tickNotification.data()->setText(text);
