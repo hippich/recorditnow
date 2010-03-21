@@ -944,7 +944,6 @@ void MainWindow::setupDocks()
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
             connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
         }
-        m_timelineDock->timeline()->enableNotifications(Settings::timelineNotifications());
     } else {
         if (m_timelineDock) {
             removeDockWidget(m_timelineDock);

@@ -45,7 +45,6 @@ public:
 
     void loadTopics(KConfigGroup *cfg);
     void saveTopics(KConfigGroup *cfg);
-    void enableNotifications(const bool &enable);
 
 
 public slots:
@@ -63,7 +62,6 @@ private:
 
     QTimer *m_timer;
     State m_state;
-    bool m_notifications;
 
     inline State state() const;
     void setState(const State &state);

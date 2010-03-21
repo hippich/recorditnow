@@ -46,7 +46,6 @@ Timeline::Timeline(QWidget *parent)
     connect(topicWidget, SIGNAL(durationChanged(ulong)), this, SLOT(durationChanged(ulong)));
     connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SIGNAL(currentTopicChanged(Topic*)));
 
-    m_notifications = false;
     slider->setMaximum(0);
     resetSlider();
     setState(Idle);
@@ -104,14 +103,6 @@ void Timeline::saveTopics(KConfigGroup *cfg)
         count++;
     }
     cfg->writeEntry("Topics", count);
-
-}
-
-
-void Timeline::enableNotifications(const bool &enable)
-{
-
-    m_notifications = enable;
 
 }
 
@@ -211,7 +202,7 @@ void Timeline::configure()
 void Timeline::topicChanged(Topic *topic)
 {
 
-    if (!m_notifications || !topic) {
+    if (!topic) {
         return;
     }
 
