@@ -135,8 +135,13 @@ void OutputWidget::fileDirty(const QString &path, const bool &deleted)
         return;
     }
 
-    playButton->setEnabled(!deleted);
-    deleteButton->setEnabled(!deleted);
+    bool enabled = !deleted;
+    if (QFileInfo(m_file).isDir()) {
+        enabled = false;
+    }
+
+    playButton->setEnabled(enabled);
+    deleteButton->setEnabled(enabled);
 
 }
 
