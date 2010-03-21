@@ -78,7 +78,8 @@ set(gui_SRCS
    config/zoomconfig.cpp
    config/timelineconfig.cpp
    config/pluginconfig.cpp
-
+   config/notificationconfig.cpp
+	
    outputwidget.cpp
    timerwidget.cpp
    windowgrabber.cpp)
@@ -111,7 +112,8 @@ kde4_add_ui_files(gui_SRCS
     ui/zoomdock.ui
     ui/zoomdocktitlewidget.ui
     ui/outputwidget.ui
-    ui/timerwidget.ui)
+    ui/timerwidget.ui
+    ui/notificationconfig.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
@@ -119,6 +121,7 @@ kde4_add_executable(recorditnow ${gui_SRCS})
 target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
                                   ${KDE4_KUTILS_LIBS}
                                   ${KDE4_KIO_LIBS}
+                                  ${KDE4_KNOTIFYCONFIG_LIBS}
                                   recorditnow_recorder
                                   recorditnow_encoder
                                   recorditnow_keymon

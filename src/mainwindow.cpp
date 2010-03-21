@@ -304,7 +304,7 @@ void MainWindow::setupActions()
 
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
-
+    
 }
 
 

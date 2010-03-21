@@ -29,6 +29,7 @@
 #include "config/zoomconfig.h"
 #include "config/timelineconfig.h"
 #include "config/pluginconfig.h"
+#include "config/notificationconfig.h"
 
 // KDE
 #include <kdebug.h>
@@ -84,6 +85,7 @@ void ConfigDialog::init()
     RecordItNow::ConfigPage *shortcutsPage = new ShortcutsConfig(m_collection, cfg, this);
     RecordItNow::ConfigPage *framePage = new FrameConfig(cfg, this);
     RecordItNow::ConfigPage *keyboardPage = new KeyboardConfig(cfg, this);
+    RecordItNow::ConfigPage *notificationPage = new NotificationConfig(cfg, this);
 
     m_pageList.append(pluginPage);
     m_pageList.append(mousePage);
@@ -92,6 +94,7 @@ void ConfigDialog::init()
     m_pageList.append(shortcutsPage);
     m_pageList.append(framePage);
     m_pageList.append(keyboardPage);
+    m_pageList.append(notificationPage);
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(pluginPage, i18n("Plugins"), "preferences-plugin");
@@ -101,6 +104,7 @@ void ConfigDialog::init()
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
     addPage(shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
+    addPage(notificationPage, i18n("Notifications"), "preferences-desktop-notification");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
 
