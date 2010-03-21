@@ -682,6 +682,10 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
             outputWidget->playOutputFile();
         }
         pluginStatus(i18nc("Recording finished", "Finished!"));
+        if (!isVisible()) {
+            show();
+        }
+        raise();
     } else {
         AbstractEncoder::Data d;
         initEncoder(&d);
@@ -703,6 +707,10 @@ void MainWindow::encoderFinished(const QString &error)
         }
         pluginStatus(i18nc("Encoding finished", "Finished!"));
     }
+    if (!isVisible()) {
+        show();
+    }
+    raise();
     setState(Idle);
 
 }
