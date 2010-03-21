@@ -1,0 +1,11 @@
+[Desktop Entry]
+GenericName=Create a screenshot with RecordItNow
+GenericName[de]=Erstelle ein Bildschirmfoto mit RecordItNow
+
+Name=RecordItNow-Snapshot
+Name[de]=RecordItNow-Schnappschuss
+
+Exec=recorditnow --hide --backend Screenshot
+Icon=recorditnow
+Type=Application
+Categories=Qt;KDE;AudioVideo;Video;Recorder;
