@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
     options.add("backend <backend>", ki18n("The Backend to use. (Example: RecordMyDesktop/Screenshot)"));
     options.add("timer <time>", ki18n("Wait \"time\" seconds."));
     options.add("o filename", ki18n("Name of recorded video/image."));
+    options.add("hide", ki18n("Start hidden."));
     KCmdLineArgs::addCmdLineOptions(options);
 
     Application app;
@@ -69,7 +70,7 @@ int main(int argc, char *argv[])
         QString backend;
         QString file;
         int time = 0;
-
+        bool hide = false;
 
         if (parsed->isSet("x")) {
             hasArgs = true;
@@ -99,9 +100,13 @@ int main(int argc, char *argv[])
             hasArgs = true;
             file = parsed->getOption("o");
         }
-
+        if (parsed->isSet("hide")) {
+            hide = true;
+        }
         MainWindow *window = new MainWindow;
-        window->show();
+        if (!hide) {
+            window->show();
+        }
         parsed->clear();
 
         if (hasArgs) {
