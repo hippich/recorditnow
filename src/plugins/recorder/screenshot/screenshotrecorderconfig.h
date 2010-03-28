@@ -30,6 +30,7 @@
 
 class ScreenshotRecorderConfig : public KCModule, public Ui::Screenshot
 {
+    Q_OBJECT
 
 
 public:

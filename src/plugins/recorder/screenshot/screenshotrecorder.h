@@ -30,6 +30,7 @@
 
 class ScreenshotRecorder : public AbstractRecorder
 {
+    Q_OBJECT
 
 
 public:
