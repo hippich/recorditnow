@@ -22,14 +22,22 @@
 #include "keyboardconfig.h"
 #include "keyboardwizard.h"
 #include "devicesearchdialog.h"
+#include "keyboardkeyiconpage.h"
 
 // KDE
 #include <kicon.h>
 #include <kmessagebox.h>
 #include <kconfiggroup.h>
+#include <kstandarddirs.h>
+#include <kdebug.h>
 
 // Qt
 #include <QtGui/QListWidget>
+#include <QtCore/QDir>
+#include <QtGui/QKeyEvent>
+
+// C
+#include <linux/input.h>
 
 
 KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
@@ -77,6 +85,67 @@ QList<KeyboardKey> KeyboardConfig::readConfig(KConfig *cfg)
 }
 
 
+void KeyboardConfig::saveConfig(const QList<KeyboardKey> &keys, KConfig *cfg)
+{
+
+    KConfigGroup group(cfg, "Keyboard");
+
+    for (int i = 0; i < keys.size(); i++) {
+        group.writeEntry(QString("Key %1 Code").arg(i), keys.at(i).code());
+        group.writeEntry(QString("Key %1 Icon").arg(i), keys.at(i).icon());
+        group.writeEntry(QString("Key %1 Text").arg(i), keys.at(i).text());
+    }
+
+    group.writeEntry("Keys", keys.size());
+
+}
+
+
+QList<KeyboardKey> KeyboardConfig::defaultKeys()
+{
+
+    QList<KeyboardKey> keys;
+    QString themeDir;
+
+    foreach (const QString dir, KeyboardKeyIconPage::themeDirs()) {
+        if (QDir(dir+QDir::separator()+"default").exists()) {
+            themeDir = dir+QDir::separator()+"default/";
+            break;
+        }
+    }
+
+    kDebug() << "theme dir:" << themeDir;
+
+    if (themeDir.isEmpty()) {
+        return keys;
+    }
+
+    QKeyEvent event(QEvent::KeyPress, Qt::Key_Control, 0, QString(), false, 1);
+    KeyboardKey key = KeyboardKey::eventToKey(&event);
+    key.setIcon(themeDir+"ctrl.png");
+    key.setCode(KEY_LEFTCTRL);
+
+    keys.append(key);
+
+    event = QKeyEvent(QEvent::KeyPress, Qt::Key_Shift, 0, QString(), false, 1);
+    key = KeyboardKey::eventToKey(&event);
+    key.setIcon(themeDir+"shift.png");
+    key.setCode(KEY_LEFTSHIFT);
+
+    keys.append(key);
+
+    event = QKeyEvent(QEvent::KeyPress, Qt::Key_Meta, 0, QString(), false, 1);
+    key = KeyboardKey::eventToKey(&event);
+    key.setIcon(themeDir+"symbol-7.png");
+    key.setCode(KEY_LEFTMETA);
+
+    keys.append(key);
+
+    return keys;
+
+}
+
+
 void KeyboardConfig::loadConfig()
 {
 
@@ -97,16 +166,26 @@ void KeyboardConfig::loadConfig()
 void KeyboardConfig::saveConfig()
 {
 
-    KConfigGroup group(config(), "Keyboard");
-    int count = 0;
+   // KConfigGroup group(config(), "Keyboard");
+
+    QList<KeyboardKey> keys;
+   // int count = 0;
     for (int i = 0; i < listWidget->count(); i++) {
         QListWidgetItem *item = listWidget->item(i);
-        group.writeEntry(QString("Key %1 Code").arg(i), item->data(Qt::UserRole+1).toInt());
+
+        KeyboardKey key(item->data(Qt::UserRole+1).toInt(),
+                        item->data(Qt::UserRole+2).toString(),
+                        item->text());
+        keys.append(key);
+     /*   group.writeEntry(QString("Key %1 Code").arg(i), item->data(Qt::UserRole+1).toInt());
         group.writeEntry(QString("Key %1 Icon").arg(i), item->data(Qt::UserRole+2).toString());
         group.writeEntry(QString("Key %1 Text").arg(i), item->text());
         count++;
+        */
     }
-    group.writeEntry("Keys", count);
+
+    saveConfig(keys, config());
+   // group.writeEntry("Keys", count);
 
 }
 

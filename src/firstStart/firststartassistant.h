@@ -17,62 +17,35 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef FIRSTSTARTASSISTANT_H
+#define FIRSTSTARTASSISTANT_H
 
-
-// own
-#include "devicesearchdialog.h"
-#include "keymonmanager.h"
-#include "devicesearchwidget.h"
-
-// KDE
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
 
 // Qt
-#include <QtGui/QTreeWidgetItem>
+#include <QtGui/QWizard>
 
 
-DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
-    : KDialog(parent)
+namespace RecordItNow {
+
+
+class FirstStartAssistant : public QWizard
 {
-
-    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
-    setMainWidget(main);
-
-    setAttribute(Qt::WA_DeleteOnClose);
-    resize(500, 300);
-
-    main->search(type);
-
-    switch (type) {
-    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
-    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
-    default: break;
-    }
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+    Q_OBJECT
 
 
-    if (main->deviceCount() == 0) {
-        KMessageBox::information(this, i18n("No devices found."));
-        reject();
-    }
-
-}
+public:
+    explicit FirstStartAssistant(QWidget *parent = 0);
+    ~FirstStartAssistant();
 
 
-void DeviceSearchDialog::dialogFinished(const int &ret)
-{
-
-    if (ret == KDialog::Accepted) {
-        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
-        if (device.isEmpty()) {
-            return;
-        }
-        emit deviceSelected(device);
-    }
-
-}
+private slots:
+    void assistantFinished(const int &ret);
 
 
-#include "devicesearchdialog.moc"
+};
+
+
+} // namespace RecordItNow
+
+
+#endif // FIRSTSTARTASSISTANT_H

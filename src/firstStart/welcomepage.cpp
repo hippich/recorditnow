@@ -18,61 +18,29 @@
  ***************************************************************************/
 
 
-
 // own
-#include "devicesearchdialog.h"
-#include "keymonmanager.h"
-#include "devicesearchwidget.h"
+#include "welcomepage.h"
 
 // KDE
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-
-// Qt
-#include <QtGui/QTreeWidgetItem>
+#include <kiconloader.h>
 
 
-DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
-    : KDialog(parent)
+WelcomePage::WelcomePage(QWidget *parent)
+    : QWizardPage(parent)
 {
 
-    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
-    setMainWidget(main);
-
-    setAttribute(Qt::WA_DeleteOnClose);
-    resize(500, 300);
-
-    main->search(type);
-
-    switch (type) {
-    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
-    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
-    default: break;
-    }
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
-
-
-    if (main->deviceCount() == 0) {
-        KMessageBox::information(this, i18n("No devices found."));
-        reject();
-    }
+    setupUi(this);
+    QPixmap logo = KIcon("recorditnow").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
+    setPixmap(QWizard::LogoPixmap, logo);
 
 }
 
 
-void DeviceSearchDialog::dialogFinished(const int &ret)
+WelcomePage::~WelcomePage()
 {
 
-    if (ret == KDialog::Accepted) {
-        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
-        if (device.isEmpty()) {
-            return;
-        }
-        emit deviceSelected(device);
-    }
 
 }
 
 
-#include "devicesearchdialog.moc"
+#include "welcomepage.moc"

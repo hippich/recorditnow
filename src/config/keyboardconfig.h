@@ -41,6 +41,8 @@ public:
     explicit KeyboardConfig(KConfig *cfg, QWidget *parent = 0);
 
     static QList<KeyboardKey> readConfig(KConfig *cfg);
+    static void saveConfig(const QList<KeyboardKey> &keys, KConfig *cfg);
+    static QList<KeyboardKey> defaultKeys();
 
     void saveConfig();
     void loadConfig();

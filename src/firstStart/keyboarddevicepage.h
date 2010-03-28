@@ -17,62 +17,34 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef KEYBOARDDEVICEPAGE_H
+#define KEYBOARDDEVICEPAGE_H
 
 
 // own
-#include "devicesearchdialog.h"
-#include "keymonmanager.h"
-#include "devicesearchwidget.h"
-
-// KDE
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
+#include "ui_keyboarddevicepage.h"
 
 // Qt
-#include <QtGui/QTreeWidgetItem>
+#include <QtGui/QWizardPage>
 
 
-DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
-    : KDialog(parent)
+class KeyboardDevicePage : public QWizardPage, Ui::KeyboardDevicePage
 {
-
-    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
-    setMainWidget(main);
-
-    setAttribute(Qt::WA_DeleteOnClose);
-    resize(500, 300);
-
-    main->search(type);
-
-    switch (type) {
-    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
-    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
-    default: break;
-    }
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+    Q_OBJECT
 
 
-    if (main->deviceCount() == 0) {
-        KMessageBox::information(this, i18n("No devices found."));
-        reject();
-    }
+public:
+    explicit KeyboardDevicePage(QWidget *parent = 0);
+    ~KeyboardDevicePage();
 
-}
-
-
-void DeviceSearchDialog::dialogFinished(const int &ret)
-{
-
-    if (ret == KDialog::Accepted) {
-        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
-        if (device.isEmpty()) {
-            return;
-        }
-        emit deviceSelected(device);
-    }
-
-}
+    void initializePage();
 
 
-#include "devicesearchdialog.moc"
+private slots:
+    void deviceChanged(const QString &device);
+
+
+};
+
+
+#endif // KEYBOARDDEVICEPAGE_H

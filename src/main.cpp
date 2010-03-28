@@ -20,7 +20,8 @@
 // own
 #include "application.h"
 #include "mainwindow.h"
-
+#include <recorditnow.h>
+#include "firstStart/firststartassistant.h"
 
 // KDE
 #include <kaboutdata.h>
@@ -28,50 +29,46 @@
 #include <kdebug.h>
 
 
-
-int main(int argc, char *argv[])
+#define RECORDITNOW_VERSION 0.9
+static void checkVersion()
 {
 
-    KAboutData about("recorditnow",
-                     0,
-                     ki18n("RecordItNow"),
-                     "0.9",
-                     ki18n("Plugin based desktop recorder"),
-                     KAboutData::License_GPL,
-                     ki18n("(C) 2009-2010 Kai Dombrowe"),
-                     KLocalizedString(),
-                     0,
-                     "just89@gmx.de");
-    about.setProgramIconName("recorditnow");
-    about.setHomepage("http://recorditnow.sourceforge.net/index.html");
+    if (RECORDITNOW_VERSION != Settings::version()) {
+        printf("RecordItNow update:\nOld version: %f.\nNew version: %f.\n\n",
+               Settings::version(), RECORDITNOW_VERSION);
 
-    KCmdLineArgs::init(argc, argv, &about);
 
-    KCmdLineOptions options;
-    options.add("x <offset>", ki18n("Offset in x direction."));
-    options.add("y <offset>", ki18n("Offset in y direction."));
-    options.add("width <width>", ki18n("Width of recorded window."));
-    options.add("height <height>", ki18n("Height of recorded window."));
-    options.add("backend <backend>", ki18n("The Backend to use. (Example: RecordMyDesktop/Screenshot)"));
-    options.add("timer <time>", ki18n("Wait \"time\" seconds."));
-    options.add("o filename", ki18n("Name of recorded video/image."));
-    options.add("hide", ki18n("Start hidden."));
-    KCmdLineArgs::addCmdLineOptions(options);
+        if (Settings::version() < 0.9) {
+            printf("Settings::keyMonDevice() >> Settings::mouseDevice()\n");
 
-    Application app;
+            KConfigGroup cfg(Settings::self()->config(), "Mouse");
+            Settings::setMouseDevice(cfg.readEntry("keyMonDevice", QString()));
+            cfg.deleteEntry("keyMonDevice");
+        }
 
-    if (app.isSessionRestored()) { // see if we are starting with session management
-        RESTORE(MainWindow);
-    } else { // no session.. just start up normally        
-        KCmdLineArgs *parsed = KCmdLineArgs::parsedArgs();
+        printf("\n");
+        printf("Update done...\n\n");
 
-        bool hasArgs = false;
-        QRect geometry = QRect(-1, -1, -1, -1);
-        QString backend;
-        QString file;
-        int time = 0;
-        bool hide = false;
+        Settings::setVersion(RECORDITNOW_VERSION);
+        Settings::self()->writeConfig();
+    }
 
+}
+
+
+void startRecordItNow(KCmdLineArgs *parsed = 0)
+{
+
+    checkVersion();
+
+    bool hasArgs = false;
+    QRect geometry = QRect(-1, -1, -1, -1);
+    QString backend;
+    QString file;
+    int time = 0;
+    bool hide = false;
+
+    if (parsed) {
         if (parsed->isSet("x")) {
             hasArgs = true;
             geometry.setX(parsed->getOption("x").toInt());
@@ -103,15 +100,61 @@ int main(int argc, char *argv[])
         if (parsed->isSet("hide")) {
             hide = true;
         }
+        parsed->clear();
+    }
+
+    if (!hasArgs && Settings::showFirstStartAssistant()) {
+        RecordItNow::FirstStartAssistant *assistant = new RecordItNow::FirstStartAssistant;
+        assistant->show();
+    } else {
         MainWindow *window = new MainWindow;
         if (!hide) {
             window->show();
         }
-        parsed->clear();
 
         if (hasArgs) {
             window->startWithArgs(backend, file, time, geometry);
         }
+    }
+
+}
+
+
+int main(int argc, char *argv[])
+{
+
+    KAboutData about("recorditnow",
+                     0,
+                     ki18n("RecordItNow"),
+                     QString::number(RECORDITNOW_VERSION).toLatin1(),
+                     ki18n("Plugin based desktop recorder"),
+                     KAboutData::License_GPL,
+                     ki18n("(C) 2009-2010 Kai Dombrowe"),
+                     KLocalizedString(),
+                     0,
+                     "just89@gmx.de");
+    about.setProgramIconName("recorditnow");
+    about.setHomepage("http://recorditnow.sourceforge.net/index.html");
+
+    KCmdLineArgs::init(argc, argv, &about);
+
+    KCmdLineOptions options;
+    options.add("x <offset>", ki18n("Offset in x direction."));
+    options.add("y <offset>", ki18n("Offset in y direction."));
+    options.add("width <width>", ki18n("Width of recorded window."));
+    options.add("height <height>", ki18n("Height of recorded window."));
+    options.add("backend <backend>", ki18n("The Backend to use. (Example: RecordMyDesktop/Screenshot)"));
+    options.add("timer <time>", ki18n("Wait \"time\" seconds."));
+    options.add("o filename", ki18n("Name of recorded video/image."));
+    options.add("hide", ki18n("Start hidden."));
+    KCmdLineArgs::addCmdLineOptions(options);
+
+    Application app;
+
+    if (app.isSessionRestored()) { // see if we are starting with session management
+        RESTORE(MainWindow);
+    } else { // no session.. just start up normally        
+        startRecordItNow(KCmdLineArgs::parsedArgs());
     }
 
     return app.exec();

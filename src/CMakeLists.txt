@@ -82,7 +82,13 @@ set(gui_SRCS
 	
    outputwidget.cpp
    timerwidget.cpp
-   windowgrabber.cpp)
+   windowgrabber.cpp
+   devicesearchwidget.cpp
+
+   firstStart/firststartassistant.cpp
+   firstStart/welcomepage.cpp
+   firstStart/mousedevicepage.cpp
+   firstStart/keyboarddevicepage.cpp)
 
 
 # GUI
@@ -105,7 +111,7 @@ kde4_add_ui_files(gui_SRCS
     ui/keyboardkeypage.ui
     ui/keyboardkeyiconpage.ui
     ui/keyboarddocktitlewidget.ui
-    ui/devicesearchdialog.ui
+    ui/devicesearchwidget.ui
     ui/shortcutsconfig.ui
     ui/pluginconfig.ui
     ui/timelinedocktitlewidget.ui
@@ -113,7 +119,10 @@ kde4_add_ui_files(gui_SRCS
     ui/zoomdocktitlewidget.ui
     ui/outputwidget.ui
     ui/timerwidget.ui
-    ui/notificationconfig.ui)
+    ui/notificationconfig.ui
+    firstStart/ui/welcomepage.ui
+    firstStart/ui/mousedevicepage.ui
+    firstStart/ui/keyboarddevicepage.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)

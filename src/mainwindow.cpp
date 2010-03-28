@@ -1055,7 +1055,7 @@ void MainWindow::initRecordWidgets(const bool &start)
 
             m_cursor->setButtons(MouseConfig::getButtons(Settings::self()->config()));
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
-            m_cursor->setDevice(Settings::keyMonDevice());
+            m_cursor->setDevice(Settings::mouseDevice());
             m_cursor->setMode(Settings::led() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
             m_cursor->setOpacity(Settings::cursorOpacity());
             m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
@@ -1091,7 +1091,7 @@ void MainWindow::initKeyMon(const bool &start)
     const bool keyboardFeature = m_recorderManager->hasFeature("KeyboardEnabled", backendCombo->currentText());
 
     if (Settings::showActivity() && mouseFeature) {
-        keyMonDevs.append(Settings::keyMonDevice());
+        keyMonDevs.append(Settings::mouseDevice());
     }
 
     if (m_keyboardDock && keyboardFeature) {

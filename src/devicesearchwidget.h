@@ -17,62 +17,45 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef DEVICESEARCHWIDGET_H
+#define DEVICESEARCHWIDGET_H
 
 
 // own
-#include "devicesearchdialog.h"
-#include "keymonmanager.h"
-#include "devicesearchwidget.h"
-
-// KDE
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-
-// Qt
-#include <QtGui/QTreeWidgetItem>
+#include "ui_devicesearchwidget.h"
+#include "keymon/deviceinfo.h"
 
 
-DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
-    : KDialog(parent)
+namespace RecordItNow {
+
+
+class DeviceSearchWidget : public QWidget, Ui::DeviceSearchWidget
 {
-
-    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
-    setMainWidget(main);
-
-    setAttribute(Qt::WA_DeleteOnClose);
-    resize(500, 300);
-
-    main->search(type);
-
-    switch (type) {
-    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
-    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
-    default: break;
-    }
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+    Q_OBJECT
 
 
-    if (main->deviceCount() == 0) {
-        KMessageBox::information(this, i18n("No devices found."));
-        reject();
-    }
+public:
+    explicit DeviceSearchWidget(QWidget *parent = 0);
+    ~DeviceSearchWidget();
 
-}
+    int deviceCount() const;
+    QString selectedDevice() const;
 
-
-void DeviceSearchDialog::dialogFinished(const int &ret)
-{
-
-    if (ret == KDialog::Accepted) {
-        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
-        if (device.isEmpty()) {
-            return;
-        }
-        emit deviceSelected(device);
-    }
-
-}
+    void search(const KeyMon::DeviceInfo::DeviceType &type);
 
 
-#include "devicesearchdialog.moc"
+private slots:
+    void itemSelectionChanged();
+
+
+signals:
+    void deviceSelectionChanged(const QString &device);
+
+
+};
+
+
+} // namespace RecordItNow
+
+
+#endif // DEVICESEARCHWIDGET_H

@@ -38,6 +38,8 @@ class KeyboardKeyIconPage: public QWizardPage, Ui::KeyboardKeyIconPage
 public:
     explicit KeyboardKeyIconPage(QWidget *parent = 0);
 
+    static QStringList themeDirs();
+
 
 private:
     struct Theme {
@@ -50,8 +52,6 @@ private:
 
     QString m_iconDir;
     QList<Theme> m_themes;
-
-    static QStringList themeDirs();
 
 
 private slots:

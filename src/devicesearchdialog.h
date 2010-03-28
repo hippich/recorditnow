@@ -23,14 +23,13 @@
 
 
 // own
-#include "ui_devicesearchdialog.h"
 #include "keymon/deviceinfo.h"
 
 // KDE
 #include <kdialog.h>
 
 
-class DeviceSearchDialog : public KDialog, Ui::DeviceSearchDialog
+class DeviceSearchDialog : public KDialog
 {
     Q_OBJECT
 

@@ -18,61 +18,62 @@
  ***************************************************************************/
 
 
-
 // own
-#include "devicesearchdialog.h"
-#include "keymonmanager.h"
-#include "devicesearchwidget.h"
+#include "keyboarddevicepage.h"
+#include "keymon/deviceinfo.h"
+#include <recorditnow.h>
 
 // KDE
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
-
-// Qt
-#include <QtGui/QTreeWidgetItem>
+#include <kiconloader.h>
 
 
-DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
-    : KDialog(parent)
+KeyboardDevicePage::KeyboardDevicePage(QWidget *parent)
+    : QWizardPage(parent)
 {
 
-    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
-    setMainWidget(main);
+    setupUi(this);
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    resize(500, 300);
+    QPixmap logo = KIcon("input-keyboard").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
+    setPixmap(QWizard::LogoPixmap, logo);
 
-    main->search(type);
+    registerField("KeyboardDevice", deviceLine);
 
-    switch (type) {
-    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
-    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
-    default: break;
-    }
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
-
-
-    if (main->deviceCount() == 0) {
-        KMessageBox::information(this, i18n("No devices found."));
-        reject();
-    }
+    connect(searchWidget, SIGNAL(deviceSelectionChanged(QString)), this, SLOT(deviceChanged(QString)));
 
 }
 
 
-void DeviceSearchDialog::dialogFinished(const int &ret)
+KeyboardDevicePage::~KeyboardDevicePage()
 {
 
-    if (ret == KDialog::Accepted) {
-        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
-        if (device.isEmpty()) {
-            return;
-        }
-        emit deviceSelected(device);
-    }
 
 }
 
 
-#include "devicesearchdialog.moc"
+void KeyboardDevicePage::initializePage()
+{
+
+    searchWidget->search(KeyMon::DeviceInfo::KeyboardType);
+    deviceLine->setText(Settings::keyboardDevice());
+
+    QString text;
+    if (searchWidget->deviceCount() == 0) {
+        text = i18n("Failed to find a suitable device, please skip this step.");
+    } else {
+        text = i18n("Please select a device.");
+
+    }
+    setSubTitle(text);
+
+}
+
+
+void KeyboardDevicePage::deviceChanged(const QString &device)
+{
+
+    deviceLine->setText(device);
+
+}
+
+
+#include "keyboarddevicepage.moc"
