@@ -24,7 +24,7 @@
 // own
 #include "config/configpage.h"
 #include "ui_mouseconfig.h"
-#include "mousebutton.h"
+#include "mousebuttonwidget.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -53,17 +53,17 @@ public:
 private:
     KColorButton *newButton();
     QToolButton *newRemoveButton();
-    MouseButton *newMouseButton();
+    MouseButtonWidget *newMouseButtonWidget();
     QButtonGroup *m_visibleGroup;
 
-    bool contains(const MouseButton::Button &button, QWidget *exclude = 0) const;
+    bool contains(const MouseButtonWidget::Button &button, QWidget *exclude = 0) const;
 
 
 private slots:
     void addClicked();
     void removeClicked();
     void updateColumnSize();
-    void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
+    void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
     void showKeyMonDialog();
     void buttonsChanged();
     void modeChanged();

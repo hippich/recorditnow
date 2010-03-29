@@ -17,15 +17,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSEBUTTON_H
-#define MOUSEBUTTON_H
+#ifndef MouseButtonWidget_H
+#define MouseButtonWidget_H
 
 
 // KDE
 #include <kpushbutton.h>
 
 
-class MouseButton : public KPushButton
+class MouseButtonWidget : public KPushButton
 {
     Q_OBJECT
 
@@ -42,14 +42,14 @@ public:
         WheelDown = 6
     };
 
-    MouseButton(QWidget *parent = 0);
-    ~MouseButton();
+    MouseButtonWidget(QWidget *parent = 0);
+    ~MouseButtonWidget();
 
     int getXButton() const;
-    MouseButton::Button getMouseButton() const;
-    static QString getName(const MouseButton::Button &button);
-    static MouseButton::Button getButtonFromName(const QString &name);
-    static MouseButton::Button getButtonFromXButton(const int &button);
+    MouseButtonWidget::Button getMouseButtonWidget() const;
+    static QString getName(const MouseButtonWidget::Button &button);
+    static MouseButtonWidget::Button getButtonFromName(const QString &name);
+    static MouseButtonWidget::Button getButtonFromXButton(const int &button);
 
     void setXButton(const int &button);
     void setButton(const Button &button);
@@ -73,11 +73,11 @@ protected:
 
 
 signals:
-    void buttonChanged(const MouseButton::Button &oldButton, const MouseButton::Button &newButton);
+    void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
     void sizeChanged();
 
 
 };
 
 
-#endif // MOUSEBUTTON_H
+#endif // MouseButtonWidget_H

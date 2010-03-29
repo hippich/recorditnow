@@ -69,20 +69,6 @@ QList<KeyboardKey> KeyboardConfig::readConfig(KConfig *cfg)
 {
 
     KConfigGroup group(cfg, "Keyboard");
-/*    const int count = group.readEntry("Keys", 0);
-    QList<KeyboardKey> keyMap;
-
-    for (int i = 0; i < count; i++) {
-        const int key = group.readEntry(QString("Key %1 Code").arg(i), -1);
-        const QString icon = group.readEntry(QString("Key %1 Icon").arg(i), QString());
-        const QString text = group.readEntry(QString("Key %1 Text").arg(i), QString());
-
-        keyMap.append(KeyboardKey(key, icon, text));
-    }
-
-    return keyMap;
-*/
-
     return KeyboardKey::arrayToList(group.readEntry("Keys", QByteArray()));
 
 }

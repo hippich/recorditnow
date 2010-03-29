@@ -20,7 +20,6 @@
 
 // own
 #include "mouseconfig.h"
-#include "mousebutton.h"
 #include "devicesearchdialog.h"
 
 // KDE
@@ -47,13 +46,13 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
     connect(keyMonButton, SIGNAL(clicked()), this, SLOT(showKeyMonDialog()));
 
-    buttonCombo->addItem(MouseButton::getName(MouseButton::LeftButton));
-    buttonCombo->addItem(MouseButton::getName(MouseButton::RightButton));
-    buttonCombo->addItem(MouseButton::getName(MouseButton::MiddleButton));
-    buttonCombo->addItem(MouseButton::getName(MouseButton::WheelUp));
-    buttonCombo->addItem(MouseButton::getName(MouseButton::WheelDown));
-    buttonCombo->addItem(MouseButton::getName(MouseButton::SpecialButton1));
-    buttonCombo->addItem(MouseButton::getName(MouseButton::SpecialButton2));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::LeftButton));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::RightButton));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::MiddleButton));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::WheelUp));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::WheelDown));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::SpecialButton1));
+    buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::SpecialButton2));
 
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
     cursorWidget->switchToPreviewMode();
@@ -97,7 +96,7 @@ void MouseConfig::saveConfig()
     int buttons = 0;
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const int button =  static_cast<MouseButton*>(treeWidget->itemWidget(item, 1))->getXButton();
+        const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
         const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
 
         cfgGroup.writeEntry(QString("Button %1 key").arg(QString::number(buttons)), button);
@@ -123,12 +122,12 @@ void MouseConfig::loadConfig()
 
         button->setColor(it.value());
 
-        MouseButton *mouseButton = newMouseButton();
-        mouseButton->setXButton(it.key());
+        MouseButtonWidget *MouseButtonWidget = newMouseButtonWidget();
+        MouseButtonWidget->setXButton(it.key());
 
         treeWidget->addTopLevelItem(item);
         treeWidget->setItemWidget(item, 0, newRemoveButton());
-        treeWidget->setItemWidget(item, 1, mouseButton);
+        treeWidget->setItemWidget(item, 1, MouseButtonWidget);
         treeWidget->setItemWidget(item, 2, button);
 
     }
@@ -146,19 +145,19 @@ void MouseConfig::setDefaults()
 
     treeWidget->clear();
 
-    MouseButton *mouseButton1 = newMouseButton();
-    MouseButton *mouseButton3 = newMouseButton();
-    MouseButton *mouseButton4 = newMouseButton();
-    MouseButton *mouseButton5 = newMouseButton();
-    MouseButton *mouseButton8 = newMouseButton();
-    MouseButton *mouseButton9 = newMouseButton();
+    MouseButtonWidget *MouseButtonWidget1 = newMouseButtonWidget();
+    MouseButtonWidget *MouseButtonWidget3 = newMouseButtonWidget();
+    MouseButtonWidget *MouseButtonWidget4 = newMouseButtonWidget();
+    MouseButtonWidget *MouseButtonWidget5 = newMouseButtonWidget();
+    MouseButtonWidget *MouseButtonWidget8 = newMouseButtonWidget();
+    MouseButtonWidget *MouseButtonWidget9 = newMouseButtonWidget();
 
-    mouseButton1->setButton(MouseButton::LeftButton);
-    mouseButton3->setButton(MouseButton::RightButton);
-    mouseButton4->setButton(MouseButton::WheelUp);
-    mouseButton5->setButton(MouseButton::WheelDown);
-    mouseButton8->setButton(MouseButton::SpecialButton1);
-    mouseButton9->setButton(MouseButton::SpecialButton2);
+    MouseButtonWidget1->setButton(MouseButtonWidget::LeftButton);
+    MouseButtonWidget3->setButton(MouseButtonWidget::RightButton);
+    MouseButtonWidget4->setButton(MouseButtonWidget::WheelUp);
+    MouseButtonWidget5->setButton(MouseButtonWidget::WheelDown);
+    MouseButtonWidget8->setButton(MouseButtonWidget::SpecialButton1);
+    MouseButtonWidget9->setButton(MouseButtonWidget::SpecialButton2);
 
     KColorButton *button1 = newButton();
     KColorButton *button3 = newButton();
@@ -184,35 +183,35 @@ void MouseConfig::setDefaults()
     // left click
     treeWidget->addTopLevelItem(item1);
     treeWidget->setItemWidget(item1, 0, newRemoveButton());
-    treeWidget->setItemWidget(item1, 1, mouseButton1);
+    treeWidget->setItemWidget(item1, 1, MouseButtonWidget1);
     treeWidget->setItemWidget(item1, 2, button1);
 
     // right click
     treeWidget->addTopLevelItem(item3);
     treeWidget->setItemWidget(item3, 0, newRemoveButton());
-    treeWidget->setItemWidget(item3, 1, mouseButton3);
+    treeWidget->setItemWidget(item3, 1, MouseButtonWidget3);
     treeWidget->setItemWidget(item3, 2, button3);
 
     // mouse wheel
     treeWidget->addTopLevelItem(item4);
     treeWidget->setItemWidget(item4, 0, newRemoveButton());
-    treeWidget->setItemWidget(item4, 1, mouseButton4);
+    treeWidget->setItemWidget(item4, 1, MouseButtonWidget4);
     treeWidget->setItemWidget(item4, 2, button4);
     treeWidget->addTopLevelItem(item5);
     treeWidget->setItemWidget(item5, 0, newRemoveButton());
-    treeWidget->setItemWidget(item5, 1, mouseButton5);
+    treeWidget->setItemWidget(item5, 1, MouseButtonWidget5);
     treeWidget->setItemWidget(item5, 2, button5);
 
     // special 1
     treeWidget->addTopLevelItem(item8);
     treeWidget->setItemWidget(item8, 0, newRemoveButton());
-    treeWidget->setItemWidget(item8, 1, mouseButton8);
+    treeWidget->setItemWidget(item8, 1, MouseButtonWidget8);
     treeWidget->setItemWidget(item8, 2, button8);
 
     // special 2
     treeWidget->addTopLevelItem(item9);
     treeWidget->setItemWidget(item9, 0, newRemoveButton());
-    treeWidget->setItemWidget(item9, 1, mouseButton9);
+    treeWidget->setItemWidget(item9, 1, MouseButtonWidget9);
     treeWidget->setItemWidget(item9, 2, button9);
 
 }
@@ -261,30 +260,30 @@ QToolButton *MouseConfig::newRemoveButton()
 }
 
 
-MouseButton *MouseConfig::newMouseButton()
+MouseButtonWidget *MouseConfig::newMouseButtonWidget()
 {
 
-    MouseButton *button = new MouseButton(this);
+    MouseButtonWidget *button = new MouseButtonWidget(this);
     connect(button, SIGNAL(sizeChanged()), this, SLOT(updateColumnSize()));
-    connect(button, SIGNAL(buttonChanged(MouseButton::Button,MouseButton::Button)), this,
-            SLOT(buttonChanged(MouseButton::Button,MouseButton::Button)));
+    connect(button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)), this,
+            SLOT(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
     return button;
 
 }
 
 
-bool MouseConfig::contains(const MouseButton::Button &button, QWidget *exclude) const
+bool MouseConfig::contains(const MouseButtonWidget::Button &button, QWidget *exclude) const
 {
 
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const MouseButton *widget = static_cast<MouseButton*>(treeWidget->itemWidget(item, 1));
+        const MouseButtonWidget *widget = static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1));
 
         if (exclude && exclude == widget) {
             continue;
         }
 
-        if (widget->getMouseButton() == button) {
+        if (widget->getMouseButtonWidget() == button) {
             return true;
         }
     }
@@ -296,8 +295,8 @@ bool MouseConfig::contains(const MouseButton::Button &button, QWidget *exclude) 
 void MouseConfig::addClicked()
 {
 
-    MouseButton::Button mButton = MouseButton::getButtonFromName(buttonCombo->currentText());
-    if (mButton == MouseButton::NoButton) {
+    MouseButtonWidget::Button mButton = MouseButtonWidget::getButtonFromName(buttonCombo->currentText());
+    if (mButton == MouseButtonWidget::NoButton) {
         return;
     }
 
@@ -305,7 +304,7 @@ void MouseConfig::addClicked()
         return;
     }
 
-    MouseButton *button = newMouseButton();
+    MouseButtonWidget *button = newMouseButtonWidget();
     button->setButton(mButton);
 
     QTreeWidgetItem *item = new QTreeWidgetItem();
@@ -343,14 +342,14 @@ void MouseConfig::updateColumnSize()
 }
 
 
-void MouseConfig::buttonChanged(const MouseButton::Button &oldButton,
-                                const MouseButton::Button &newButton)
+void MouseConfig::buttonChanged(const MouseButtonWidget::Button &oldButton,
+                                const MouseButtonWidget::Button &newButton)
 {
 
-    MouseButton *changed = static_cast<MouseButton*>(sender());
+    MouseButtonWidget *changed = static_cast<MouseButtonWidget*>(sender());
     if (contains(newButton, changed)) {
         KMessageBox::information(this, i18n("The button '%1' has already been defined",
-                                            MouseButton::getName(newButton)));
+                                            MouseButtonWidget::getName(newButton)));
         changed->setButton(oldButton);
     }
     emit configChanged();
@@ -375,7 +374,7 @@ void MouseConfig::buttonsChanged()
     QHash<int, QColor> buttons;
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const int button =  static_cast<MouseButton*>(treeWidget->itemWidget(item, 1))->getXButton();
+        const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
         const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
 
         buttons[button] = color;
@@ -404,8 +403,8 @@ void MouseConfig::modeChanged()
 void MouseConfig::currentButtonChanged()
 {
 
-    const MouseButton::Button button = MouseButton::getButtonFromName(buttonCombo->currentText());
-    if (button == MouseButton::NoButton || contains(button)) {
+    const MouseButtonWidget::Button button = MouseButtonWidget::getButtonFromName(buttonCombo->currentText());
+    if (button == MouseButtonWidget::NoButton || contains(button)) {
         addButton->setEnabled(false);
     } else {
         addButton->setEnabled(true);

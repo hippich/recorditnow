@@ -72,7 +72,7 @@ set(gui_SRCS
    config/keyboardkeypage.cpp
    config/keyboardkeyiconpage.cpp
    config/mouseconfig.cpp
-   config/mousebutton.cpp
+   config/mousebuttonwidget.cpp
    config/configpage.cpp
    config/shortcutsconfig.cpp
    config/zoomconfig.cpp

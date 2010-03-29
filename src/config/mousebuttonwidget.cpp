@@ -19,7 +19,7 @@
 
 
 // own
-#include "mousebutton.h"
+#include "mousebuttonwidget.h"
 
 // KDE
 #include <kdebug.h>
@@ -33,7 +33,7 @@
 #include <X11/Xlib.h>
 
 
-MouseButton::MouseButton(QWidget *parent)
+MouseButtonWidget::MouseButtonWidget(QWidget *parent)
     : KPushButton(parent)
 {
 
@@ -46,7 +46,7 @@ MouseButton::MouseButton(QWidget *parent)
 }
 
 
-MouseButton::~MouseButton()
+MouseButtonWidget::~MouseButtonWidget()
 {
 
 
@@ -54,7 +54,7 @@ MouseButton::~MouseButton()
 }
 
 
-int MouseButton::getXButton() const
+int MouseButtonWidget::getXButton() const
 {
 
     switch (m_button) {
@@ -71,7 +71,7 @@ int MouseButton::getXButton() const
 }
 
 
-MouseButton::Button MouseButton::getMouseButton() const
+MouseButtonWidget::Button MouseButtonWidget::getMouseButtonWidget() const
 {
 
     return m_button;
@@ -79,7 +79,7 @@ MouseButton::Button MouseButton::getMouseButton() const
 }
 
 
-QString MouseButton::getName(const MouseButton::Button &button)
+QString MouseButtonWidget::getName(const MouseButtonWidget::Button &button)
 {
 
     switch (button) {
@@ -96,7 +96,7 @@ QString MouseButton::getName(const MouseButton::Button &button)
 }
 
 
-MouseButton::Button MouseButton::getButtonFromName(const QString &name)
+MouseButtonWidget::Button MouseButtonWidget::getButtonFromName(const QString &name)
 {
 
 
@@ -133,7 +133,7 @@ MouseButton::Button MouseButton::getButtonFromName(const QString &name)
 }
 
 
-MouseButton::Button MouseButton::getButtonFromXButton(const int &button)
+MouseButtonWidget::Button MouseButtonWidget::getButtonFromXButton(const int &button)
 {
 
     switch (button) {
@@ -150,7 +150,7 @@ MouseButton::Button MouseButton::getButtonFromXButton(const int &button)
 }
 
 
-void MouseButton::setXButton(const int &button)
+void MouseButtonWidget::setXButton(const int &button)
 {
 
     switch (button) {
@@ -167,7 +167,7 @@ void MouseButton::setXButton(const int &button)
 }
 
 
-void MouseButton::setButton(const Button &button)
+void MouseButtonWidget::setButton(const Button &button)
 {
 
     m_button = button;
@@ -176,7 +176,7 @@ void MouseButton::setButton(const Button &button)
 }
 
 
-void MouseButton::setText(const QString &text)
+void MouseButtonWidget::setText(const QString &text)
 {
 
     KPushButton::setText(text);
@@ -189,7 +189,7 @@ void MouseButton::setText(const QString &text)
 }
 
 
-void MouseButton::getButton()
+void MouseButtonWidget::getButton()
 {
 
     grabMouse();
@@ -197,7 +197,7 @@ void MouseButton::getButton()
 }
 
 
-void MouseButton::mousePressEvent(QMouseEvent *event)
+void MouseButtonWidget::mousePressEvent(QMouseEvent *event)
 {
 
     if (!mouseGrabber()) {
@@ -208,7 +208,7 @@ void MouseButton::mousePressEvent(QMouseEvent *event)
 }
 
 
-void MouseButton::mouseReleaseEvent(QMouseEvent *event)
+void MouseButtonWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 
     if (!mouseGrabber()) {
@@ -232,7 +232,7 @@ void MouseButton::mouseReleaseEvent(QMouseEvent *event)
 }
 
 
-void MouseButton::wheelEvent(QWheelEvent *event)
+void MouseButtonWidget::wheelEvent(QWheelEvent *event)
 {
 
     if (!mouseGrabber()) {
@@ -252,7 +252,7 @@ void MouseButton::wheelEvent(QWheelEvent *event)
 }
 
 
-void MouseButton::resizeEvent(QResizeEvent *event)
+void MouseButtonWidget::resizeEvent(QResizeEvent *event)
 {
 
     KPushButton::resizeEvent(event);
@@ -261,4 +261,4 @@ void MouseButton::resizeEvent(QResizeEvent *event)
 }
 
 
-#include "mousebutton.moc"
+#include "mousebuttonwidget.moc"
