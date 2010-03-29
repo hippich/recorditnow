@@ -379,7 +379,7 @@
   <customwidget>
    <class>CursorWidget</class>
    <extends>QWidget</extends>
-   <header>cursorwidget.h</header>
+   <header>mouse/cursorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

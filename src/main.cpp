@@ -24,6 +24,7 @@
 #include "firstStart/firststartassistant.h"
 #include "keyboard/keyboardkey.h"
 #include "config/keyboardconfig.h"
+#include "config/mouseconfig.h"
 
 // KDE
 #include <kaboutdata.h>
@@ -82,6 +83,34 @@ static void checkVersion()
                 key = QString("Key %1 Code").arg(index);
             }
 
+
+            printf("Convert old mouse configuration...\n");
+
+            QList<MouseButton> buttons;
+            KConfigGroup mouseGroup(Settings::self()->config(), "Mouse");
+
+            int keys = mouseGroup.readEntry("Buttons", 0);
+            for (int i = 0; i < keys; i++) {
+                const int key = mouseGroup.readEntry(QString("Button %1 key").arg(i), 0);
+                const QColor color = mouseGroup.readEntry(QString("Button %1 color").arg(i), QColor());
+
+                printf("Save Button: %d\n", key);
+
+                buttons.append(MouseButton(key, color));
+            }
+            MouseConfig::saveConfig(Settings::self()->config(), buttons);
+
+            printf("Delete old mouse entrys...\n");
+
+            index = 0;
+            key = QString("Button %1 key").arg(index);
+            while (keyGroup.hasKey(key)) {
+                keyGroup.deleteEntry(key);
+                keyGroup.deleteEntry(QString("Button %1 color").arg(index));
+
+                index++;
+                key = QString("Button %1 key").arg(index);
+            }
         }
 
         printf("\n");

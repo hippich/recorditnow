@@ -25,7 +25,7 @@
 #include "config/configdialog.h"
 #include "recordermanager.h"
 #include "encodermanager.h"
-#include "cursorwidget.h"
+#include "mouse/cursorwidget.h"
 #include "application.h"
 #include "config/mouseconfig.h"
 #include "zoom/zoomview.h"

@@ -91,20 +91,17 @@ MouseConfig::~MouseConfig()
 void MouseConfig::saveConfig()
 {
 
-    KConfigGroup cfgGroup(config(), "Mouse");
+    QList<MouseButton> list;
 
-    int buttons = 0;
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
         const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
         const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
 
-        cfgGroup.writeEntry(QString("Button %1 key").arg(QString::number(buttons)), button);
-        cfgGroup.writeEntry(QString("Button %1 color").arg(QString::number(buttons)), color);
-
-        buttons++;
+        list.append(MouseButton(button, color));
     }
-    cfgGroup.writeEntry("Buttons", buttons);
+
+    saveConfig(config(), list);
 
 }
 
@@ -112,29 +109,28 @@ void MouseConfig::saveConfig()
 void MouseConfig::loadConfig()
 {
 
-    QHash<int, QColor> buttons = getButtons(config());
-    QHashIterator<int, QColor> it(buttons);
-    while (it.hasNext()) {
-        it.next();
+    QList<MouseButton> buttons = getButtons(config());
+    foreach (const MouseButton &button, buttons) {
 
         QTreeWidgetItem *item = new QTreeWidgetItem();
-        KColorButton *button = newButton();
+        KColorButton *colorButton = newButton();
 
-        button->setColor(it.value());
+        colorButton->setColor(button.color());
 
         MouseButtonWidget *MouseButtonWidget = newMouseButtonWidget();
-        MouseButtonWidget->setXButton(it.key());
+        MouseButtonWidget->setXButton(button.code());
 
         treeWidget->addTopLevelItem(item);
         treeWidget->setItemWidget(item, 0, newRemoveButton());
         treeWidget->setItemWidget(item, 1, MouseButtonWidget);
-        treeWidget->setItemWidget(item, 2, button);
+        treeWidget->setItemWidget(item, 2, colorButton);
 
     }
 
     if (buttons.isEmpty()) {
         setDefaults();
     }
+    buttonsChanged();
     currentButtonChanged();
 
 }
@@ -217,23 +213,20 @@ void MouseConfig::setDefaults()
 }
 
 
-QHash<int, QColor> MouseConfig::getButtons(KConfig *cfg)
+QList<MouseButton> MouseConfig::getButtons(KConfig *cfg)
 {
 
-    QHash<int, QColor> buttons;
+    KConfigGroup cfgGroup(cfg, "Mouse");
+    return MouseButton::listFromArray(cfgGroup.readEntry("Buttons", QByteArray()));
+
+}
+
+
+void MouseConfig::saveConfig(KConfig *cfg, const QList<MouseButton> &list)
+{
 
     KConfigGroup cfgGroup(cfg, "Mouse");
-
-    int keys = cfgGroup.readEntry("Buttons", 0);
-    for (int i = 0; i < keys; i++) {
-        const QString button = QString::number(i);
-        const int key = cfgGroup.readEntry(QString("Button %1 key").arg(button), 0);
-        const QColor color = cfgGroup.readEntry(QString("Button %1 color").arg(button), QColor());
-
-        buttons[key] = color;
-    }
-
-    return buttons;
+    cfgGroup.writeEntry("Buttons", MouseButton::listToArray(list));
 
 }
 
@@ -371,14 +364,15 @@ void MouseConfig::showKeyMonDialog()
 void MouseConfig::buttonsChanged()
 {
 
-    QHash<int, QColor> buttons;
+    QList<MouseButton> buttons;
     for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = treeWidget->topLevelItem(i);
         const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
         const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
 
-        buttons[button] = color;
+        buttons.append(MouseButton(button, color));
     }
+
     cursorWidget->setButtons(buttons);
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
     cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);

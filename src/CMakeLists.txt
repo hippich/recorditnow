@@ -32,7 +32,6 @@ set(gui_SRCS
    recorditnowpluginmanager.cpp
    recordermanager.cpp
    encodermanager.cpp
-   cursorwidget.cpp
    application.cpp
    keymonmanager.cpp
    devicesearchdialog.cpp
@@ -58,6 +57,9 @@ set(gui_SRCS
    upload/accountpage.cpp
    upload/termspage.cpp
    upload/uploadpage.cpp
+
+   mouse/mousebutton.cpp
+   mouse/cursorwidget.cpp
 
    keyboard/keyboarddock.cpp
    keyboard/keywidget.cpp

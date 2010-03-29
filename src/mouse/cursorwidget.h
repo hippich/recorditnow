@@ -23,6 +23,7 @@
 
 // own
 #include "keymon/event.h"
+#include "mousebutton.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -52,7 +53,7 @@ public:
     ~CursorWidget();
 
     void setSize(const QSize &size);
-    void setButtons(const QHash<int, QColor> &buttons);
+    void setButtons(const QList<MouseButton> &buttons);
     void setDevice(const QString &deviceName);
     void setMode(const CursorWidget::WidgetMode &mode);
     void setOpacity(const qreal &opacity);
@@ -66,14 +67,16 @@ public:
 private:
     QTimer *m_timer;
     QTimer *m_resetTimer;
-    QColor m_normalColor;
-    QColor m_currentColor;
-    QHash<int, QColor> m_buttons;
+    QList<MouseButton> m_buttons;
     QString m_deviceName;
     bool m_grab;
     WidgetMode m_mode;
     qreal m_opacity;
     bool m_show;
+    MouseButton m_currentButton;
+    MouseButton m_defaultButton;
+
+    MouseButton getButton(const int &code) const;
 
 
 private slots:

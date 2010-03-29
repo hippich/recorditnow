@@ -20,7 +20,7 @@
 
 // own
 #include "cursorwidget.h"
-#include "config/mousebutton.h"
+#include "config/mousebuttonwidget.h"
 #include "keymonmanager.h"
 
 // KDE
@@ -73,8 +73,8 @@ CursorWidget::CursorWidget(QWidget *parent)
 
     setSize(QSize(40, 40));
 
-    m_normalColor = Qt::black;
-    m_currentColor = m_normalColor;
+    m_defaultButton = MouseButton(-1, Qt::black);
+    m_currentButton = m_defaultButton;
 
     connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
             SLOT(buttonPressed(KeyMon::Event)));
@@ -100,7 +100,7 @@ void CursorWidget::setSize(const QSize &size)
 }
 
 
-void CursorWidget::setButtons(const QHash<int, QColor> &buttons)
+void CursorWidget::setButtons(const QList<MouseButton> &buttons)
 {
 
     m_buttons = buttons;
@@ -235,13 +235,26 @@ void CursorWidget::updatePos()
 void CursorWidget::resetColor()
 {
 
-    m_currentColor = m_normalColor;
+    m_currentButton = m_defaultButton;
 
     if (m_show) {
         update();
     } else {
         hide();
     }
+
+}
+
+
+MouseButton CursorWidget::getButton(const int &code) const
+{
+
+    foreach (const MouseButton &button, m_buttons) {
+        if (button.code() == code) {
+            return button;
+        }
+    }
+    return MouseButton();
 
 }
 
@@ -264,13 +277,13 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
     switch (event.key) {
     case KeyMon::Event::WheelUp:
     case KeyMon::Event::WheelDown: {
-            m_currentColor = m_buttons[event.keyToXButton(event.key)];
+            m_currentButton = getButton(event.keyToXButton(event.key));
             m_resetTimer->start(RESET_TIME);
             break;
         }
     default: {
             if (event.pressed) {
-                m_currentColor = m_buttons[event.keyToXButton(event.key)];
+                m_currentButton = getButton(event.keyToXButton(event.key));
             } else {
                 m_resetTimer->start(RESET_TIME);
             }
@@ -286,15 +299,24 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
 void CursorWidget::previewColors()
 {
 
-    QHash<int, QColor>::const_iterator it = m_buttons.find(m_buttons.key(m_currentColor));
-    if (it == m_buttons.constEnd()) {
-        it = m_buttons.constBegin();
+    int index = m_buttons.indexOf(m_currentButton);
+    if (index == -1) {
+        if (!m_buttons.isEmpty()) {
+            m_currentButton = m_buttons.at(0);
+        } else {
+            m_currentButton = m_defaultButton;
+        }
     } else {
-        it++;
-    }
-    m_currentColor = it.value();
-    if (!m_currentColor.isValid()) {
-        m_currentColor = m_normalColor;
+        index++;
+        if (index >= m_buttons.size()) {
+            if (!m_buttons.isEmpty()) {
+                m_currentButton = m_buttons.first();
+            } else {
+                m_currentButton = m_defaultButton;
+            }
+        } else {
+            m_currentButton = m_buttons.at(index);
+        }
     }
     update();
 
@@ -333,7 +355,7 @@ void CursorWidget::paintLED(QPainter *painter)
     // base
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
-    brush.setColor(m_currentColor);
+    brush.setColor(m_currentButton.color());
     painter->setBrush(brush);
     painter->drawEllipse(contentsRect());
 
@@ -364,13 +386,13 @@ void CursorWidget::paintCircle(QPainter *painter)
 
     if (KWindowSystem::compositingActive()) {
         QRadialGradient grad(contentsRect().center(), size().height());
-        grad.setColorAt(0, m_currentColor);
+        grad.setColorAt(0, m_currentButton.color());
         grad.setColorAt(1, Qt::transparent);
         painter->setBrush(QBrush(grad));
         painter->setOpacity(m_opacity);
         painter->drawEllipse(contentsRect());
     } else {
-        painter->fillRect(rect(), m_currentColor);
+        painter->fillRect(rect(), m_currentButton.color());
     }
 
 }
