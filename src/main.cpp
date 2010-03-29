@@ -22,6 +22,8 @@
 #include "mainwindow.h"
 #include <recorditnow.h>
 #include "firstStart/firststartassistant.h"
+#include "keyboard/keyboardkey.h"
+#include "config/keyboardconfig.h"
 
 // KDE
 #include <kaboutdata.h>
@@ -44,6 +46,42 @@ static void checkVersion()
             KConfigGroup cfg(Settings::self()->config(), "Mouse");
             Settings::setMouseDevice(cfg.readEntry("keyMonDevice", QString()));
             cfg.deleteEntry("keyMonDevice");
+
+
+            printf("Convert old keyboard configuration...\n");
+
+            KConfigGroup keyGroup(Settings::self()->config(), "Keyboard");
+            const int count = keyGroup.readEntry("Keys", 0);
+            QList<KeyboardKey> keyMap;
+
+            for (int i = 0; i < count; i++) {
+                const QString codeKey(QString("Key %1 Code").arg(i));
+                const QString iconKey(QString("Key %1 Icon").arg(i));
+                const QString textKey(QString("Key %1 Text").arg(i));
+
+                const int key = keyGroup.readEntry(codeKey, -1);
+                const QString icon = keyGroup.readEntry(iconKey, QString());
+                const QString text = keyGroup.readEntry(textKey, QString());
+
+                printf("Save Key: %d\n", key);
+
+                keyMap.append(KeyboardKey(key, icon, text));
+            }
+            KeyboardConfig::saveConfig(keyMap, Settings::self()->config());
+
+            printf("Delete old keyboard entrys...\n");
+
+            int index = 0;
+            QString key = QString("Key %1 Code").arg(index);
+            while (keyGroup.hasKey(key)) {
+                keyGroup.deleteEntry(key);
+                keyGroup.deleteEntry(QString("Key %1 Icon").arg(index));
+                keyGroup.deleteEntry(QString("Key %1 Text").arg(index));
+
+                index++;
+                key = QString("Key %1 Code").arg(index);
+            }
+
         }
 
         printf("\n");

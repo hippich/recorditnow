@@ -38,8 +38,12 @@ public:
     int code() const;
     QString icon() const;
     QString text() const;
+    QByteArray toArray() const;
 
     static KeyboardKey eventToKey(const QKeyEvent *event);
+    static KeyboardKey fromArray(const QByteArray &data);
+    static QByteArray listToArray(const QList<KeyboardKey> &list);
+    static QList<KeyboardKey> arrayToList(const QByteArray &data);
 
     void setCode(const int &code);
     void setIcon(const QString &icon);

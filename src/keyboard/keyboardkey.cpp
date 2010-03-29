@@ -69,6 +69,21 @@ QString KeyboardKey::text() const
 }
 
 
+QByteArray KeyboardKey::toArray() const
+{
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    stream << text();
+    stream << icon();
+    stream << code();
+
+    return data;
+
+}
+
+
 KeyboardKey KeyboardKey::eventToKey(const QKeyEvent *event)
 {
 
@@ -120,6 +135,60 @@ KeyboardKey KeyboardKey::eventToKey(const QKeyEvent *event)
     }
 
     return KeyboardKey(-1, QString(), text);
+
+}
+
+
+KeyboardKey KeyboardKey::fromArray(const QByteArray &data)
+{
+
+    QDataStream stream(data);
+
+    QString text;
+    QString icon;
+    int code;
+
+    stream >> text;
+    stream >> icon;
+    stream >> code;
+
+    return KeyboardKey(code, icon, text);
+
+}
+
+
+QByteArray KeyboardKey::listToArray(const QList<KeyboardKey> &list)
+{
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+
+    stream << list.size();
+    foreach (const KeyboardKey &key, list) {
+        stream << key.toArray();
+    }
+
+    return data;
+
+}
+
+
+QList<KeyboardKey> KeyboardKey::arrayToList(const QByteArray &data)
+{
+
+    QList<KeyboardKey> list;
+    QDataStream stream(data);
+    int size;
+
+    stream >> size;
+    for (int i = 0; i < size; i++) {
+        QByteArray array;
+        stream >> array;
+
+        list.append(KeyboardKey::fromArray(array));
+    }
+
+    return list;
 
 }
 
