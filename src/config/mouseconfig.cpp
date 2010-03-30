@@ -21,6 +21,7 @@
 // own
 #include "mouseconfig.h"
 #include "devicesearchdialog.h"
+#include "helper.h"
 
 // KDE
 #include <kicon.h>
@@ -217,7 +218,7 @@ QList<MouseButton> MouseConfig::getButtons(KConfig *cfg)
 {
 
     KConfigGroup cfgGroup(cfg, "Mouse");
-    return MouseButton::listFromArray(cfgGroup.readEntry("Buttons", QByteArray()));
+    return RecordItNow::Helper::listFromArray<MouseButton>(cfgGroup.readEntry("Buttons", QByteArray()));
 
 }
 
@@ -226,7 +227,7 @@ void MouseConfig::saveConfig(KConfig *cfg, const QList<MouseButton> &list)
 {
 
     KConfigGroup cfgGroup(cfg, "Mouse");
-    cfgGroup.writeEntry("Buttons", MouseButton::listToArray(list));
+    cfgGroup.writeEntry("Buttons", RecordItNow::Helper::listToArray(list));
 
 }
 

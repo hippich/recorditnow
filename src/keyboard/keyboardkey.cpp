@@ -20,6 +20,7 @@
 
 // own
 #include "keyboardkey.h"
+#include "helper.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -65,21 +66,6 @@ QString KeyboardKey::text() const
 {
 
     return m_text;
-
-}
-
-
-QByteArray KeyboardKey::toArray() const
-{
-
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    stream << text();
-    stream << icon();
-    stream << code();
-
-    return data;
 
 }
 
@@ -139,60 +125,6 @@ KeyboardKey KeyboardKey::eventToKey(const QKeyEvent *event)
 }
 
 
-KeyboardKey KeyboardKey::fromArray(const QByteArray &data)
-{
-
-    QDataStream stream(data);
-
-    QString text;
-    QString icon;
-    int code;
-
-    stream >> text;
-    stream >> icon;
-    stream >> code;
-
-    return KeyboardKey(code, icon, text);
-
-}
-
-
-QByteArray KeyboardKey::listToArray(const QList<KeyboardKey> &list)
-{
-
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    stream << list.size();
-    foreach (const KeyboardKey &key, list) {
-        stream << key.toArray();
-    }
-
-    return data;
-
-}
-
-
-QList<KeyboardKey> KeyboardKey::arrayToList(const QByteArray &data)
-{
-
-    QList<KeyboardKey> list;
-    QDataStream stream(data);
-    int size;
-
-    stream >> size;
-    for (int i = 0; i < size; i++) {
-        QByteArray array;
-        stream >> array;
-
-        list.append(KeyboardKey::fromArray(array));
-    }
-
-    return list;
-
-}
-
-
 void KeyboardKey::setCode(const int &code)
 {
 
@@ -217,3 +149,38 @@ void KeyboardKey::setText(const QString &text)
 }
 
 
+bool KeyboardKey::operator==(const KeyboardKey &other) const
+{
+
+    return (code() == other.code() && icon() == other.icon() && text() == other.text());
+
+}
+
+
+QDataStream &operator<<(QDataStream &stream, const KeyboardKey &data)
+{
+
+    stream << data.text() << data.icon() << data.code();
+    return stream;
+
+}
+
+
+QDataStream &operator>>(QDataStream &stream, KeyboardKey &data)
+{
+
+    QString text;
+    QString icon;
+    int code;
+
+    stream >> text;
+    stream >> icon;
+    stream >> code;
+
+    data.setText(text);
+    data.setIcon(icon);
+    data.setCode(code);
+
+    return stream;
+
+}

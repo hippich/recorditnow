@@ -54,20 +54,6 @@ QColor MouseButton::color() const
 }
 
 
-QByteArray MouseButton::toArray() const
-{
-
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    stream << code();
-    stream << color();
-
-    return data;
-
-}
-
-
 void MouseButton::setCode(const int &code)
 {
 
@@ -84,10 +70,25 @@ void MouseButton::setColor(const QColor &color)
 }
 
 
-MouseButton MouseButton::fromArray(const QByteArray &array)
+bool MouseButton::operator==(const MouseButton &other) const
 {
 
-    QDataStream stream(array);
+    return (other.code() == code() && other.color() == color());
+
+}
+
+
+QDataStream &operator<<(QDataStream &stream, const MouseButton &data)
+{
+
+    stream << data.code() << data.color();
+    return stream;
+
+}
+
+
+QDataStream &operator>>(QDataStream &stream, MouseButton &data)
+{
 
     int code;
     QColor color;
@@ -95,52 +96,10 @@ MouseButton MouseButton::fromArray(const QByteArray &array)
     stream >> code;
     stream >> color;
 
-    return MouseButton(code, color);
+    data.setCode(code);
+    data.setColor(color);
+
+    return stream;
 
 }
 
-
-QList<MouseButton> MouseButton::listFromArray(const QByteArray &array)
-{
-
-    QList<MouseButton> list;
-    QDataStream stream(array);
-
-    int size;
-    stream >> size;
-
-    for (int i = 0; i < size; i++) {
-
-        QByteArray data;
-        stream >> data;
-
-        list.append(MouseButton::fromArray(data));
-    }
-
-    return list;
-
-}
-
-
-QByteArray MouseButton::listToArray(const QList<MouseButton> &list)
-{
-
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-
-    stream << list.size();
-    foreach (const MouseButton &button, list) {
-        stream << button.toArray();
-    }
-
-    return data;
-
-}
-
-
-bool MouseButton::operator==(const MouseButton &other) const
-{
-
-    return (other.code() == code() && other.color() == color());
-
-}

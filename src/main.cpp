@@ -42,7 +42,7 @@ static void checkVersion()
 
 
         if (Settings::version() < 0.9) {
-            printf("Settings::keyMonDevice() >> Settings::mouseDevice()\n");
+            printf("keyMonDevice >> mouseDevice\n");
 
             KConfigGroup cfg(Settings::self()->config(), "Mouse");
             Settings::setMouseDevice(cfg.readEntry("keyMonDevice", QString()));

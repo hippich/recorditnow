@@ -23,6 +23,7 @@
 #include "keyboardwizard.h"
 #include "devicesearchdialog.h"
 #include "keyboardkeyiconpage.h"
+#include "helper.h"
 
 // KDE
 #include <kicon.h>
@@ -69,7 +70,7 @@ QList<KeyboardKey> KeyboardConfig::readConfig(KConfig *cfg)
 {
 
     KConfigGroup group(cfg, "Keyboard");
-    return KeyboardKey::arrayToList(group.readEntry("Keys", QByteArray()));
+    return RecordItNow::Helper::listFromArray<KeyboardKey>(group.readEntry("Keys", QByteArray()));
 
 }
 
@@ -78,7 +79,7 @@ void KeyboardConfig::saveConfig(const QList<KeyboardKey> &keys, KConfig *cfg)
 {
 
     KConfigGroup group(cfg, "Keyboard");
-    group.writeEntry("Keys", KeyboardKey::listToArray(keys));
+    group.writeEntry("Keys", RecordItNow::Helper::listToArray(keys));
 
 }
 

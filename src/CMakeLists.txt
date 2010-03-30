@@ -36,6 +36,7 @@ set(gui_SRCS
    keymonmanager.cpp
    devicesearchdialog.cpp
    checkicon.cpp
+   helper.cpp
 
    zoom/zoomview.cpp
    zoom/zoomdock.cpp
@@ -43,6 +44,7 @@ set(gui_SRCS
    frame/frame.cpp
    frame/frameinfowidget.cpp
    frame/movewidget.cpp
+   frame/framesize.cpp
 
    timeline/timelinedock.cpp
    timeline/timeline.cpp

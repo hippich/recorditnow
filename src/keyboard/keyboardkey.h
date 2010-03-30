@@ -32,22 +32,20 @@ class KeyboardKey
 
 
 public:
-    explicit KeyboardKey(const int &code, const QString &icon, const QString &text);
+    explicit KeyboardKey(const int &code = -1, const QString &icon = QString(), const QString &text = QString());
     ~KeyboardKey();
 
     int code() const;
     QString icon() const;
     QString text() const;
-    QByteArray toArray() const;
 
     static KeyboardKey eventToKey(const QKeyEvent *event);
-    static KeyboardKey fromArray(const QByteArray &data);
-    static QByteArray listToArray(const QList<KeyboardKey> &list);
-    static QList<KeyboardKey> arrayToList(const QByteArray &data);
 
     void setCode(const int &code);
     void setIcon(const QString &icon);
     void setText(const QString &text);
+
+    bool operator==(const KeyboardKey &other) const;
 
 
 private:
@@ -57,5 +55,10 @@ private:
 
 
 };
+
+
+QDataStream &operator<<(QDataStream &stream, const KeyboardKey &data);
+QDataStream &operator>>(QDataStream &stream, KeyboardKey &data);
+
 
 #endif // KEYBOARDKEY_H

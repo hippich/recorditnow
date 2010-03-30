@@ -36,15 +36,9 @@ public:
     bool isValid() const;
     int code() const;
     QColor color() const;
-    QByteArray toArray() const;
 
     void setCode(const int &code);
     void setColor(const QColor &color);
-
-    static MouseButton fromArray(const QByteArray &array);
-    static QList<MouseButton> listFromArray(const QByteArray &array);
-    static QByteArray listToArray(const QList<MouseButton> &list);
-
 
     bool operator==(const MouseButton &other) const;
 
@@ -55,6 +49,10 @@ private:
 
 
 };
+
+
+QDataStream &operator<<(QDataStream &stream, const MouseButton &data);
+QDataStream &operator>>(QDataStream &stream, MouseButton &data);
 
 
 #endif // MOUSEBUTTON_H
