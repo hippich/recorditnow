@@ -24,6 +24,7 @@
 // own
 #include "ui_frameconfig.h"
 #include "config/configpage.h"
+#include "frame/framesize.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -40,11 +41,11 @@ class FrameConfig : public RecordItNow::ConfigPage, Ui::FrameConfig
 public:
     explicit FrameConfig(KConfig *cfg, QWidget *parent = 0);
 
-    QList< QPair<QString, QSize> > sizes() const;
+    QList<FrameSize> sizes() const;
 
-    static QList< QPair<QString, QSize> > defaultSizes();
-    static QList< QPair<QString, QSize> > readSizes(KConfig *config);
-    static void writeSizes(const QList< QPair<QString, QSize> > &sizes, KConfig *config);
+    static QList<FrameSize> defaultSizes();
+    static QList<FrameSize> readSizes(KConfig *config);
+    static void writeSizes(const QList<FrameSize> &sizes, KConfig *config);
 
 
 public slots:

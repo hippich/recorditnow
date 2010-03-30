@@ -20,6 +20,7 @@
 
 // own
 #include "frameconfig.h"
+#include "helper.h"
 
 // KDE
 #include <kdebug.h>
@@ -30,7 +31,6 @@
 #include <QtGui/QTreeWidgetItem>
 
 
-typedef QPair<QString, QSize> Size;
 FrameConfig::FrameConfig(KConfig *cfg, QWidget *parent)
     : RecordItNow::ConfigPage(cfg, parent)
 {
@@ -58,69 +58,60 @@ FrameConfig::FrameConfig(KConfig *cfg, QWidget *parent)
 }
 
 
-QList<Size> FrameConfig::sizes() const
+QList<FrameSize> FrameConfig::sizes() const
 {
 
-    QList<Size> sizes;
+    QList<FrameSize> sizes;
     for (int i = 0; i < sizeTree->topLevelItemCount(); i++) {
         QTreeWidgetItem *item = sizeTree->topLevelItem(i);
 
         const KIntNumInput *width = static_cast<KIntNumInput*>(sizeTree->itemWidget(item, 1));
         const KIntNumInput *height = static_cast<KIntNumInput*>(sizeTree->itemWidget(item, 2));
 
-        sizes.append(qMakePair(item->text(0), QSize(width->value(), height->value())));
+        sizes.append(FrameSize(QSize(width->value(), height->value()), item->text(0)));
     }
     return sizes;
 
 }
 
 
-QList< QPair<QString, QSize> > FrameConfig::defaultSizes()
+QList<FrameSize> FrameConfig::defaultSizes()
 {
 
-    QList< QPair<QString, QSize> > defaults;
+    QList<FrameSize> defaults;
 
-    defaults.append(qMakePair(QString("640 x 480 (4:3 SD)"), QSize(640, 480)));
-    defaults.append(qMakePair(QString("800 x 600"), QSize(800, 600)));
-    defaults.append(qMakePair(QString("1024 x 768"), QSize(1024, 768)));
-    defaults.append(qMakePair(QString("1280 x 720 (16x9 HD)"), QSize(1280, 720)));
+    defaults.append(FrameSize(QSize(640, 480), QString("640 x 480 (4:3 SD)")));
+    defaults.append(FrameSize(QSize(800, 600), QString("800 x 600")));
+    defaults.append(FrameSize(QSize(1024, 768), QString("1024 x 768")));
+    defaults.append(FrameSize(QSize(1280, 720), QString("1280 x 720 (16x9 HD)")));
 
     return defaults;
 
 }
 
 
-QList< QPair<QString, QSize> > FrameConfig::readSizes(KConfig *config)
+QList<FrameSize> FrameConfig::readSizes(KConfig *config)
 {
 
-    QList< QPair<QString, QSize> > list;
-
     KConfigGroup cfg(config, "Frame");
-    foreach (const QString &name, cfg.readEntry("Names", QStringList())) {
-        QPair<QString, QSize> s;
-
-        s.first = name;
-        s.second = cfg.readEntry(QString("Size %1").arg(name), QSize());
-
-        list.append(s);
-    }
-
-    return list;
+    return RecordItNow::Helper::listFromArray<FrameSize>(cfg.readEntry("Frames", QByteArray()));
 
 }
 
 
-void FrameConfig::writeSizes(const QList< QPair<QString, QSize> > &sizes, KConfig *config)
+void FrameConfig::writeSizes(const QList<FrameSize> &sizes, KConfig *config)
 {
 
     QStringList list;
 
     KConfigGroup cfg(config, "Frame");
-    foreach (const Size &s, sizes) {
+    /*foreach (const Size &s, sizes) {
         cfg.writeEntry(QString("Size %1").arg(s.first), s.second);
         list.append(s.first);
     }
     cfg.writeEntry("Names", list);
+    */
+    cfg.writeEntry("Frames", RecordItNow::Helper::listToArray(sizes));
     cfg.sync();
 
 }
@@ -139,8 +130,8 @@ void FrameConfig::setDefaults()
 
     sizeTree->clear();
 
-    foreach (const Size &s, defaultSizes()) {
-        newTreeWidgetItem(s.first, s.second, sizeTree->topLevelItemCount());
+    foreach (const FrameSize &size, defaultSizes()) {
+        newTreeWidgetItem(size.text(), size.size(), sizeTree->topLevelItemCount());
     }
 
 }
@@ -149,8 +140,8 @@ void FrameConfig::setDefaults()
 void FrameConfig::loadConfig()
 {
 
-    foreach (const Size &s, readSizes(config())) {
-        newTreeWidgetItem(s.first, s.second, sizeTree->topLevelItemCount());
+    foreach (const FrameSize &size, readSizes(config())) {
+        newTreeWidgetItem(size.text(), size.size(), sizeTree->topLevelItemCount());
     }
 
 }

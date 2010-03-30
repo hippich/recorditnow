@@ -24,6 +24,7 @@
 #include "ui_toolbarwidget.h"
 #include "libs/recorder/abstractrecorder.h"
 #include "libs/encoder/abstractencoder.h"
+#include "frame/framesize.h"
 
 // KDE
 #include <kxmlguiwindow.h>
@@ -120,7 +121,7 @@ private slots:
     void setupDocks();
     void timeLineFinsihed();
     void resolutionActionTriggered();
-    void frameSizesChanged(const QList< QPair<QString, QSize> > &sizes);
+    void frameSizesChanged(const QList<FrameSize> &sizes);
     void initRecordWidgets(const bool &start);
     void initKeyMon(const bool &start);
     void errorNotification(const QString &error);

@@ -267,7 +267,7 @@ void MainWindow::setupActions()
     boxAction->addAction(frameMoveAction);
     boxAction->addSeparator();
 
-    QList<Size> sizes;
+    QList<FrameSize> sizes;
     if (Settings::firstStart()) {
         sizes = FrameConfig::defaultSizes();
         Settings::self()->setFirstStart(false);
@@ -1016,7 +1016,7 @@ void MainWindow::resolutionActionTriggered()
 }
 
 
-void MainWindow::frameSizesChanged(const QList< QPair<QString, QSize> > &sizes)
+void MainWindow::frameSizesChanged(const QList<FrameSize> &sizes)
 {
 
     KActionMenu *boxAction = static_cast<KActionMenu*>(getAction("box"));
@@ -1027,11 +1027,11 @@ void MainWindow::frameSizesChanged(const QList< QPair<QString, QSize> > &sizes)
         boxAction->removeAction(act);
     }
 
-    foreach (const Size &s, sizes) {
+    foreach (const FrameSize &size, sizes) {
         KAction *frameResAction = new KAction(this);
-        frameResAction->setData(s.second);
-        frameResAction->setText(s.first);
-        frameResAction->setProperty("CleanText", s.first);
+        frameResAction->setData(size.size());
+        frameResAction->setText(size.text());
+        frameResAction->setProperty("CleanText", size.text());
         connect(frameResAction, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
 
         boxAction->addAction(frameResAction);

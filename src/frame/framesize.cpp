@@ -85,6 +85,9 @@ QDataStream &operator>>(QDataStream &stream, FrameSize &data)
     QSize size;
     QString text;
 
+    stream >> size;
+    stream >> text;
+
     data.setSize(size);
     data.setText(text);
 

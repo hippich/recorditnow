@@ -25,6 +25,7 @@
 #include "keyboard/keyboardkey.h"
 #include "config/keyboardconfig.h"
 #include "config/mouseconfig.h"
+#include "config/frameconfig.h"
 
 // KDE
 #include <kaboutdata.h>
@@ -111,6 +112,29 @@ static void checkVersion()
                 index++;
                 key = QString("Button %1 key").arg(index);
             }
+
+            printf("Convert old frame configuration...\n");
+
+            KConfigGroup frameCfg(Settings::self()->config(), "Frame");
+
+            QList<FrameSize> frames;
+            foreach (const QString &name, frameCfg.readEntry("Names", QStringList())) {
+                FrameSize size;
+
+                size.setText(name);
+                size.setSize(frameCfg.readEntry(QString("Size %1").arg(name), QSize()));
+
+                printf("Save Frame: %s\n", size.text().toLatin1().constData());
+
+                frames.append(size);
+            }
+            FrameConfig::writeSizes(frames, Settings::self()->config());
+
+            printf("Delete old frame entrys...\n");
+            foreach (const QString &name, frameCfg.readEntry("Names", QStringList())) {
+                frameCfg.deleteEntry(QString("Size %1").arg(name));
+            }
+            frameCfg.deleteEntry("Names");
         }
 
         printf("\n");
