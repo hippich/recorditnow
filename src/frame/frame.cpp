@@ -81,10 +81,10 @@ QRect Frame::getFrameGeometry() const
 }
 
 
-void Frame::setFrameSize(const QSize &size)
+void Frame::setFrameSize(const FrameSize &size)
 {
 
-    resize(size.width()+(getLineSize()*2), size.height()+(getLineSize()*2));
+    resize(size.size().width()+(getLineSize()*2), size.size().height()+(getLineSize()*2));
     moveToParent();
 
 }

@@ -24,6 +24,7 @@
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QSize>
+#include <QtCore/QMetaType>
 
 
 class FrameSize
@@ -31,7 +32,10 @@ class FrameSize
 
 
 public:
-    FrameSize(const QSize &size = QSize(), const QString &text = QString());
+    FrameSize(const QSize &size, const QString &text);
+    FrameSize(const FrameSize &other);
+    FrameSize();
+    ~FrameSize();
 
     QSize size() const;
     QString text() const;
@@ -49,9 +53,12 @@ private:
 
 };
 
+Q_DECLARE_METATYPE(FrameSize)
+
 
 QDataStream &operator<<(QDataStream &stream, const FrameSize &data);
 QDataStream &operator>>(QDataStream &stream, FrameSize &data);
+
 
 
 #endif // FRAMESIZE_H

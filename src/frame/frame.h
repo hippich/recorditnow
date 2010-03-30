@@ -21,6 +21,9 @@
 #define FRAME_H
 
 
+// own
+#include "framesize.h"
+
 // Qt
 #include <QtGui/QWidget>
 #include <QtCore/QHash>
@@ -38,7 +41,7 @@ public:
     ~Frame();
 
     QRect getFrameGeometry() const;
-    void setFrameSize(const QSize &size);
+    void setFrameSize(const FrameSize &size);
     void setVisible(bool visible);
 
 

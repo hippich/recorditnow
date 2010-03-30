@@ -30,6 +30,30 @@ FrameSize::FrameSize(const QSize &size, const QString &text)
 }
 
 
+FrameSize::FrameSize(const FrameSize &other)
+    : m_size(other.size()), m_text(other.text())
+{
+
+
+}
+
+
+FrameSize::FrameSize()
+    : m_size(QSize()), m_text(QString())
+{
+
+
+
+}
+
+
+FrameSize::~FrameSize()
+{
+
+
+}
+
+
 QSize FrameSize::size() const
 {
 

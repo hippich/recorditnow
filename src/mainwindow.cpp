@@ -80,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     m_frame = new Frame(this);
-    m_frame->setFrameSize(Settings::currentFrame().size());
+    m_frame->setFrameSize(FrameSize(Settings::currentFrame().size(), QString()));
 
     setupActions();
 
@@ -1011,7 +1011,7 @@ void MainWindow::resolutionActionTriggered()
 {
 
     KAction *action = static_cast<KAction*>(sender());
-    m_frame->setFrameSize(action->data().toSize());
+    m_frame->setFrameSize(action->data().value<FrameSize>());
 
 }
 
@@ -1029,7 +1029,7 @@ void MainWindow::frameSizesChanged(const QList<FrameSize> &sizes)
 
     foreach (const FrameSize &size, sizes) {
         KAction *frameResAction = new KAction(this);
-        frameResAction->setData(size.size());
+        frameResAction->setData(QVariant::fromValue(size));
         frameResAction->setText(size.text());
         frameResAction->setProperty("CleanText", size.text());
         connect(frameResAction, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
