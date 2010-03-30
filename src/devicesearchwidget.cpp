@@ -95,6 +95,8 @@ void DeviceSearchWidget::search(const KeyMon::DeviceInfo::DeviceType &type)
 
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
+    setDisabled(deviceCount() == 0);
+
 }
 
 
