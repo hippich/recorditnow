@@ -17,20 +17,25 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef TopicProgressBar_H
+#define TopicProgressBar_H
 
-#ifndef TOPICWIDGET_H
-#define TOPICWIDGET_H
 
 // own
 #include "topic.h"
 
-// KDE
+//KDE
 #include <kicon.h>
 
 // Qt
 #include <QtGui/QProgressBar>
-#include <QtCore/QHash>
-#include <QtGui/QStackedLayout>
+#include <QtCore/QTime>
+
+
+
+
+class QToolButton;
+class QLabel;
 
 
 namespace RecordItNow {
@@ -39,35 +44,21 @@ namespace RecordItNow {
 namespace Timeline {
 
 
-class TopicProgressBar;
-class TopicWidget : public QWidget
+class TopicProgressBar: public QProgressBar
 {
     Q_OBJECT
 
 
 public:
-    TopicWidget(QWidget *parent = 0);
-    ~TopicWidget();
+    TopicProgressBar(QWidget *parent);
+    ~TopicProgressBar();
 
-    RecordItNow::Timeline::Topic addTopic(const QTime &duration, const QString title, const QString &icon);
-    RecordItNow::Timeline::Topic addTopic(const RecordItNow::Timeline::Topic &topic);
-
-    QList<RecordItNow::Timeline::Topic> topics() const;
-
-    void setTime(const unsigned long &seconds);
-    void setCurrentSecond(const unsigned long &second);
-    void clear();
+    Topic topic() const;
+    void setTopic(const Topic &topic);
 
 
 private:
-    unsigned long m_seconds;
-    QStackedLayout *m_layout;
-    TopicProgressBar *m_noTopic;
-
-
-signals:
-    void topicChanged(const RecordItNow::Timeline::Topic &newTopic);
-    void durationChanged(const unsigned long &newDuration);
+    Topic m_topic;
 
 
 };
@@ -79,4 +70,4 @@ signals:
 } // namespace RecordItNow
 
 
-#endif // TOPICWIDGET_H
+#endif // TopicProgressBar_H

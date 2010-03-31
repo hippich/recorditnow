@@ -25,19 +25,23 @@
 #include <kicon.h>
 
 // Qt
-#include <QtGui/QProgressBar>
 #include <QtCore/QTime>
+#include <QtCore/QObject>
 
 
-class QToolButton;
-class QLabel;
-class Topic: public QProgressBar
+namespace RecordItNow {
+
+
+namespace Timeline {
+
+
+class TopicProgressBar;
+class Topic
 {
-    Q_OBJECT
 
 
 public:
-    Topic(QWidget *parent, const QTime duration, const QString &title, const QString &icon);
+    Topic();
     ~Topic();
 
     unsigned long currentSecond() const;
@@ -46,10 +50,15 @@ public:
     QTime duration() const;
     unsigned long durationToSeconds() const;
     static QTime secondsToTime(const unsigned long seconds);
+    bool isValid() const;
 
     void setCurrentSecond(const unsigned long &second);
     void setIcon(const QString &icon);
     void setTitle(const QString &title);
+    void setDuration(const QTime &duration);
+    void setProgressBar(TopicProgressBar *bar);
+
+    bool operator!=(const Topic &other) const;
 
 
 private:
@@ -57,9 +66,20 @@ private:
     QTime m_duration;
     QString m_title;
     QString m_icon;
+    TopicProgressBar *m_progressBar;
 
 
 };
+
+
+} // namespace Timeline
+
+
+} // namespace RecordItNow
+
+
+QDataStream &operator<<(QDataStream &stream, const RecordItNow::Timeline::Topic &data);
+QDataStream &operator>>(QDataStream &stream, RecordItNow::Timeline::Topic &data);
 
 
 #endif // TOPIC_H

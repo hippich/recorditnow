@@ -20,6 +20,8 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+// KDE
+#include <kglobal.h>
 
 // Qt
 #include <QtCore/QList>
@@ -59,8 +61,16 @@ public:
 
     }
 
+    static Helper *self();
+
+    bool firstStart() const;
+
+
 private:
+    friend class HelperSingleton;
     Helper();
+
+    bool m_firstStart;
 
 
 };

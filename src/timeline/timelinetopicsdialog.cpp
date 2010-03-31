@@ -21,7 +21,7 @@
 // own
 #include "timelinetopicsdialog.h"
 #include "topicwidget.h"
-#include "topic.h"
+#include "topicprogressbar.h"
 #include "topictreeitem.h"
 
 // KDE
@@ -32,6 +32,13 @@
 
 // Qt
 #include <QtGui/QTimeEdit>
+
+
+
+namespace RecordItNow {
+
+
+namespace Timeline {
 
 
 TimelineTopicsDialog::TimelineTopicsDialog(QWidget *parent, TopicWidget *topicWidget)
@@ -60,7 +67,7 @@ TimelineTopicsDialog::TimelineTopicsDialog(QWidget *parent, TopicWidget *topicWi
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
     // load
-    QList<Topic*> topics = m_topicWidget->topics();
+    QList<RecordItNow::Timeline::Topic> topics = m_topicWidget->topics();
     for (int i = 0; i < topics.size(); i++) {
         addTopic(); // create widgets
     }
@@ -196,9 +203,15 @@ void TimelineTopicsDialog::updateTotalDuration()
         TopicTreeItem *item = static_cast<TopicTreeItem*>(treeWidget->invisibleRootItem()->child(i));
         duration += item->duration();
     }
-    totalDurationEdit->setTime(Topic::secondsToTime(duration));
+    totalDurationEdit->setTime(RecordItNow::Timeline::Topic::secondsToTime(duration));
 
 }
+
+
+} // namespace Timeline
+
+
+} // namespace RecordItNow
 
 
 #include "timelinetopicsdialog.moc"

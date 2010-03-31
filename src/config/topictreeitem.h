@@ -21,12 +21,14 @@
 #define TOPICTREEITEM_H
 
 
+// own
+#include "timeline/topic.h"
+
 // Qt
 #include <QtGui/QTreeWidgetItem>
 
 
 class QTimeEdit;
-class Topic;
 class TopicTreeItem : public QObject, public QTreeWidgetItem
 {
     Q_OBJECT
@@ -37,14 +39,14 @@ public:
     TopicTreeItem(QTreeWidget *parent, TopicTreeItem *other, const int &index);
     ~TopicTreeItem();
 
-    Topic *topic() const;
+    RecordItNow::Timeline::Topic topic() const;
     unsigned long duration();
-    void setTopic(Topic *topic);
+    void setTopic(const RecordItNow::Timeline::Topic &topic);
 
 
 private:
     QTreeWidget *m_parent;
-    Topic *m_topic;
+    RecordItNow::Timeline::Topic m_topic;
 
 
 signals:
@@ -52,6 +54,7 @@ signals:
 
 
 };
+
 
 
 #endif // TOPICTREEITEM_H

@@ -39,6 +39,7 @@
 #include <QtCore/QThread>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QPaintEvent>
+#include <QtGui/QBitmap>
 
 // X11
 #include <X11/Xlib.h>
@@ -121,7 +122,7 @@ void CursorWidget::setMode(const CursorWidget::WidgetMode &mode)
 
     m_mode = mode;
 
-    if (m_mode == CircleMode) {
+    if (m_mode == CircleMode || m_mode == TargetMode) {
         // click-through
         int junk;
         if (XQueryExtension(x11Info().display(), "SHAPE", &junk, &junk, &junk)) {
@@ -223,7 +224,8 @@ void CursorWidget::updatePos()
             }
             break;
         }
-    case CircleMode: geo.moveCenter(QCursor::pos()); break;
+    case CircleMode:
+    case TargetMode: geo.moveCenter(QCursor::pos()); break;
     }
 
     setGeometry(geo);
@@ -332,6 +334,7 @@ void CursorWidget::paintEvent(QPaintEvent *event)
     switch (m_mode) {
     case LEDMode: paintLED(&painter); break;
     case CircleMode: paintCircle(&painter); break;
+    case TargetMode: paintTarget(&painter); break;
     }
 
 }
@@ -398,6 +401,53 @@ void CursorWidget::paintCircle(QPainter *painter)
 }
 
 
+void CursorWidget::paintTarget(QPainter *painter)
+{
+
+    if (!KWindowSystem::compositingActive()) {
+        paintCircle(painter);
+        return;
+    }
+
+    painter->setRenderHints(QPainter::Antialiasing|QPainter::HighQualityAntialiasing);
+
+    QPen pen;
+    pen.setWidth(2);
+    pen.setColor(m_currentButton.color());
+    painter->setPen(pen);
+    QRect rect = contentsRect();
+
+    QRect ellipse = rect;
+    ellipse.setWidth(ellipse.width()/1.5);
+    ellipse.setHeight(ellipse.height()/1.5);
+    ellipse.moveCenter(rect.center());
+
+    QLine hLine1;
+    hLine1.setP1(QPoint(rect.left(), rect.center().y()));
+    hLine1.setP2(QPoint(rect.width()/3, rect.center().y()));
+
+    QLine hLine2;
+    hLine2.setP1(QPoint(rect.right()-(rect.width()/3), rect.center().y()));
+    hLine2.setP2(QPoint(rect.right(), rect.center().y()));
+
+    QLine vLine1;
+    vLine1.setP1(QPoint(rect.center().x(), rect.top()));
+    vLine1.setP2(QPoint(rect.center().x(), rect.height()/3));
+
+    QLine vLine2;
+    vLine2.setP1(QPoint(rect.center().x(), rect.bottom()));
+    vLine2.setP2(QPoint(rect.center().x(), rect.bottom()-(rect.height()/3)));
+
+    painter->drawLine(hLine1);
+    painter->drawLine(hLine2);
+    painter->drawLine(vLine1);
+    painter->drawLine(vLine2);
+
+    painter->drawEllipse(ellipse);
+
+}
+
+
 void CursorWidget::resizeEvent(QResizeEvent *event)
 {
 
@@ -411,6 +461,7 @@ void CursorWidget::updateMask()
 {
 
     switch (m_mode) {
+    case TargetMode: setMask(QRegion()); break;
     case CircleMode: {
             if (!KWindowSystem::compositingActive()) {
                 QRect maskRect = rect();

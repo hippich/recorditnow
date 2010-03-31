@@ -748,6 +748,11 @@ void MainWindow::configDialogFinished()
     // update window flags
     updateWindowFlags();
 
+    // update timeline
+    if (m_timelineDock) {
+        m_timelineDock->timeline()->reload();
+    }
+
 }
 
 
@@ -952,6 +957,7 @@ void MainWindow::setupDocks()
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
             connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
         }
+        m_timelineDock->timeline()->reload();
     } else {
         if (m_timelineDock) {
             removeDockWidget(m_timelineDock);
@@ -1056,7 +1062,15 @@ void MainWindow::initRecordWidgets(const bool &start)
             m_cursor->setButtons(MouseConfig::getButtons(Settings::self()->config()));
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
             m_cursor->setDevice(Settings::mouseDevice());
-            m_cursor->setMode(Settings::led() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
+
+            if (Settings::led()) {
+                m_cursor->setMode(CursorWidget::LEDMode);
+            } else if (Settings::circle()) {
+                m_cursor->setMode(CursorWidget::CircleMode);
+            } else {
+                m_cursor->setMode(CursorWidget::TargetMode);
+            }
+
             m_cursor->setOpacity(Settings::cursorOpacity());
             m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
 

@@ -29,6 +29,12 @@
 #include <kdialog.h>
 
 
+namespace RecordItNow {
+
+
+namespace Timeline {
+
+
 class TopicWidget;
 class TimelineTopicsDialog : public KDialog, public Ui::TimelineTopics
 {
@@ -55,6 +61,12 @@ private slots:
 
 
 };
+
+
+} // namespace Timeline
+
+
+} // namespace RecordItNow
 
 
 #endif // TIMELINETOPICSDIALOG_H

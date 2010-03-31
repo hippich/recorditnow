@@ -63,6 +63,7 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_circle, SIGNAL(toggled(bool)), this, SLOT(modeChanged()));
+    connect(kcfg_target, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(currentButtonChanged()));
 
@@ -376,7 +377,15 @@ void MouseConfig::buttonsChanged()
 
     cursorWidget->setButtons(buttons);
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
-    cursorWidget->setMode(kcfg_led->isChecked() ? CursorWidget::LEDMode : CursorWidget::CircleMode);
+
+    if (kcfg_led->isChecked()) {
+        cursorWidget->setMode(CursorWidget::LEDMode);
+    } else if (kcfg_circle->isChecked()) {
+        cursorWidget->setMode(CursorWidget::CircleMode);
+    } else {
+        cursorWidget->setMode(CursorWidget::TargetMode);
+    }
+
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
 
     currentButtonChanged();
@@ -390,6 +399,9 @@ void MouseConfig::modeChanged()
     if (!KWindowSystem::compositingActive()) {
         kcfg_cursorOpacity->setDisabled(true);
         opacityLabel->setDisabled(true);
+        kcfg_target->setDisabled(true);
+    } else {
+        kcfg_target->setDisabled(false);
     }
 
 }

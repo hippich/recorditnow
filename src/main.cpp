@@ -26,6 +26,8 @@
 #include "config/keyboardconfig.h"
 #include "config/mouseconfig.h"
 #include "config/frameconfig.h"
+#include "timeline/topic.h"
+#include "config/timelineconfig.h"
 
 // KDE
 #include <kaboutdata.h>
@@ -53,7 +55,7 @@ static void checkVersion()
             printf("Convert old keyboard configuration...\n");
 
             KConfigGroup keyGroup(Settings::self()->config(), "Keyboard");
-            const int count = keyGroup.readEntry("Keys", 0);
+            int count = keyGroup.readEntry("Keys", 0);
             QList<KeyboardKey> keyMap;
 
             for (int i = 0; i < count; i++) {
@@ -135,6 +137,40 @@ static void checkVersion()
                 frameCfg.deleteEntry(QString("Size %1").arg(name));
             }
             frameCfg.deleteEntry("Names");
+
+            printf("Convert old timeline configuration...\n");
+
+            QList<RecordItNow::Timeline::Topic> topics;
+            KConfigGroup timelineCfg(Settings::self()->config(), "Timeline");
+            count = timelineCfg.readEntry("Topics", 0);
+            for (int i = 0; i < count; i++) {
+                const QString title = timelineCfg.readEntry(QString("Topic %1 Title").arg(i), i18n("Untitled"));
+                const QString icon = timelineCfg.readEntry(QString("Topic %1 Icon").arg(i), "dialog-information");
+                const unsigned long duration = timelineCfg.readEntry(QString("Topic %1 Duration").arg(i), 10);
+
+                printf("Save Topic: %s\n", title.toLatin1().constData());
+
+                RecordItNow::Timeline::Topic topic;
+                topic.setDuration(RecordItNow::Timeline::Topic::secondsToTime(duration));
+                topic.setIcon(icon);
+                topic.setTitle(title);
+
+                topics.append(topic);
+            }
+
+            TimelineConfig::saveTopics(topics, Settings::self()->config());
+
+            printf("Delete old timeline entrys...\n");
+            index = 0;
+            key = QString("Topic %1 Title").arg(index);
+            while (timelineCfg.hasKey(key)) {
+                timelineCfg.deleteEntry(key);
+                timelineCfg.deleteEntry(QString("Topic %1 Icon").arg(index));
+                timelineCfg.deleteEntry(QString("Topic %1 Duration").arg(index));
+
+                index++;
+                key = QString("Topic %1 Title").arg(index);
+            }
         }
 
         printf("\n");

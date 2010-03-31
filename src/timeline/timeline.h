@@ -24,12 +24,13 @@
 
 // own
 #include "ui_timeline.h"
+#include "topic.h"
 
 // Qt
 #include <QtGui/QWidget>
 
 
-class Topic;
+
 class KConfigGroup;
 class QTimer;
 class Timeline : public QWidget, public Ui::Timeline
@@ -43,8 +44,7 @@ public:
 
     unsigned long duration() const;
 
-    void loadTopics(KConfigGroup *cfg);
-    void saveTopics(KConfigGroup *cfg);
+    void reload();
 
 
 public slots:
@@ -69,15 +69,14 @@ private:
 
 private slots:
     void updateTime();
-    void configure();
-    void topicChanged(Topic *topic);
+    void topicChanged(const RecordItNow::Timeline::Topic &topic);
     void resetSlider();
     void durationChanged(const unsigned long newDuration);
 
 
 signals:
     void finished();
-    void currentTopicChanged(Topic *current);
+    void currentTopicChanged(const RecordItNow::Timeline::Topic &current);
 
 
 };

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,19 +18,11 @@
  ***************************************************************************/
 
 
-#ifndef TOPICWIDGET_H
-#define TOPICWIDGET_H
-
 // own
-#include "topic.h"
+#include "topicprogressbar.h"
 
 // KDE
-#include <kicon.h>
-
-// Qt
-#include <QtGui/QProgressBar>
-#include <QtCore/QHash>
-#include <QtGui/QStackedLayout>
+#include <kdebug.h>
 
 
 namespace RecordItNow {
@@ -39,38 +31,38 @@ namespace RecordItNow {
 namespace Timeline {
 
 
-class TopicProgressBar;
-class TopicWidget : public QWidget
+TopicProgressBar::TopicProgressBar(QWidget *parent)
+    : QProgressBar(parent)
 {
-    Q_OBJECT
+
+    setValue(0);
+
+}
 
 
-public:
-    TopicWidget(QWidget *parent = 0);
-    ~TopicWidget();
-
-    RecordItNow::Timeline::Topic addTopic(const QTime &duration, const QString title, const QString &icon);
-    RecordItNow::Timeline::Topic addTopic(const RecordItNow::Timeline::Topic &topic);
-
-    QList<RecordItNow::Timeline::Topic> topics() const;
-
-    void setTime(const unsigned long &seconds);
-    void setCurrentSecond(const unsigned long &second);
-    void clear();
+TopicProgressBar::~TopicProgressBar()
+{
 
 
-private:
-    unsigned long m_seconds;
-    QStackedLayout *m_layout;
-    TopicProgressBar *m_noTopic;
+
+}
 
 
-signals:
-    void topicChanged(const RecordItNow::Timeline::Topic &newTopic);
-    void durationChanged(const unsigned long &newDuration);
+Topic TopicProgressBar::topic() const
+{
+
+    return m_topic;
+
+}
 
 
-};
+void TopicProgressBar::setTopic(const Topic &topic)
+{
+
+    m_topic = topic;
+    m_topic.setProgressBar(this);
+
+}
 
 
 } // namespace Timeline
@@ -79,4 +71,5 @@ signals:
 } // namespace RecordItNow
 
 
-#endif // TOPICWIDGET_H
+#include "topicprogressbar.moc"
+

@@ -46,7 +46,8 @@ class CursorWidget : public QWidget
 public:
     enum WidgetMode {
         LEDMode = 0,
-        CircleMode = 1
+        CircleMode = 1,
+        TargetMode = 2
     };
 
     CursorWidget(QWidget *parent);
@@ -90,6 +91,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     void paintLED(QPainter *painter);
     void paintCircle(QPainter *painter);
+    void paintTarget(QPainter *painter);
     void resizeEvent(QResizeEvent *event);
     void updateMask();
 

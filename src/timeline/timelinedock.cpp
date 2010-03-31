@@ -22,7 +22,7 @@
 #include "timelinedock.h"
 #include "timeline.h"
 #include <recorditnow.h>
-#include "topic.h"
+#include "topicprogressbar.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -47,10 +47,8 @@ TimelineDock::TimelineDock(QWidget *parent)
 
     setTitleBarWidget(title);
 
-    connect(line, SIGNAL(currentTopicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
-
-    KConfigGroup cfg(Settings::self()->config(), "Timeline");
-    line->loadTopics(&cfg);
+    connect(line, SIGNAL(currentTopicChanged(RecordItNow::Timeline::Topic)), this,
+            SLOT(topicChanged(RecordItNow::Timeline::Topic)));
 
 }
 
@@ -58,8 +56,7 @@ TimelineDock::TimelineDock(QWidget *parent)
 TimelineDock::~TimelineDock()
 {
 
-    KConfigGroup cfg(Settings::self()->config(), "Timeline");
-    timeline()->saveTopics(&cfg);
+
 
 }
 
@@ -81,15 +78,15 @@ void TimelineDock::resetTitle()
 }
 
 
-void TimelineDock::topicChanged(Topic *topic)
+void TimelineDock::topicChanged(const RecordItNow::Timeline::Topic &topic)
 {
 
-    if (!topic) {
+    if (!topic.isValid()) {
         resetTitle();
         return;
     }
-    ui_titleWidget.currentTopicLabel->setText(topic->title());
-    ui_titleWidget.iconButton->setIcon(KIcon(topic->icon()));
+    ui_titleWidget.currentTopicLabel->setText(topic.title());
+    ui_titleWidget.iconButton->setIcon(KIcon(topic.icon()));
 
 }
 

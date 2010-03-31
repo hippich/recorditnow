@@ -19,8 +19,10 @@
 
 // own
 #include "timeline.h"
-#include "timelinetopicsdialog.h"
-#include "topic.h"
+#include "topicprogressbar.h"
+#include "helper.h"
+#include "config/timelineconfig.h"
+#include <recorditnow.h>
 
 // KDE
 #include <kdebug.h>
@@ -39,12 +41,11 @@ Timeline::Timeline(QWidget *parent)
 
     setupUi(this);
 
-    editButton->setIcon(KIcon("document-edit"));
-    connect(editButton, SIGNAL(clicked()), this, SLOT(configure()));
-
-    connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SLOT(topicChanged(Topic*)));
+    connect(topicWidget, SIGNAL(topicChanged(RecordItNow::Timeline::Topic)), this,
+            SLOT(topicChanged(RecordItNow::Timeline::Topic)));
     connect(topicWidget, SIGNAL(durationChanged(ulong)), this, SLOT(durationChanged(ulong)));
-    connect(topicWidget, SIGNAL(topicChanged(Topic*)), this, SIGNAL(currentTopicChanged(Topic*)));
+    connect(topicWidget, SIGNAL(topicChanged(RecordItNow::Timeline::Topic)), this,
+            SIGNAL(currentTopicChanged(RecordItNow::Timeline::Topic)));
 
     slider->setMaximum(0);
     resetSlider();
@@ -69,40 +70,16 @@ unsigned long Timeline::duration() const
 }
 
 
-void Timeline::loadTopics(KConfigGroup *cfg)
+void Timeline::reload()
 {
 
     topicWidget->clear();
-    const int count = cfg->readEntry("Topics", 0);
-    for (int i = 0; i < count; i++) {
-        const QString title = cfg->readEntry(QString("Topic %1 Title").arg(i), i18n("Untitled"));
-        const QString icon = cfg->readEntry(QString("Topic %1 Icon").arg(i), "dialog-information");
-        const unsigned long duration = cfg->readEntry(QString("Topic %1 Duration").arg(i), 10);
 
-        topicWidget->addTopic(Topic::secondsToTime(duration), title, icon);
-    }
-
-    if (count == 0) {
-        topicWidget->addTopic(Topic::secondsToTime(60), "Linux!", "computer");
-        topicWidget->addTopic(Topic::secondsToTime(30), "RecordItNow", "recorditnow");
-        topicWidget->addTopic(Topic::secondsToTime(300), "KDE SC", "kde-start-here");
+    QList<RecordItNow::Timeline::Topic> topics = TimelineConfig::loadTopics(Settings::self()->config());
+    foreach (const RecordItNow::Timeline::Topic &topic, topics) {
+        topicWidget->addTopic(topic);
     }
     resetSlider();
-
-}
-
-
-void Timeline::saveTopics(KConfigGroup *cfg)
-{
-
-    int count = 0;
-    foreach (Topic *topic, topicWidget->topics()) {
-        cfg->writeEntry(QString("Topic %1 Title").arg(count), topic->title());
-        cfg->writeEntry(QString("Topic %1 Icon").arg(count), topic->icon());
-        cfg->writeEntry(QString("Topic %1 Duration").arg(count), (int)topic->durationToSeconds());
-        count++;
-    }
-    cfg->writeEntry("Topics", count);
 
 }
 
@@ -161,11 +138,6 @@ void Timeline::setState(const State &state)
 {
 
     m_state = state;
-    switch (m_state) {
-    case Idle: editButton->setEnabled(true); break;
-    case Running: editButton->setEnabled(false); break;
-    default: break;
-    }
 
 }
 
@@ -176,9 +148,9 @@ void Timeline::updateTime()
     slider->setValue(slider->value()+1);
     topicWidget->setCurrentSecond(slider->value());
 
-    const QString total = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->maximum()),
+    const QString total = KGlobal::locale()->formatTime(RecordItNow::Timeline::Topic::secondsToTime(slider->maximum()),
                                                         true, true);
-    const QString passed = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->value()),
+    const QString passed = KGlobal::locale()->formatTime(RecordItNow::Timeline::Topic::secondsToTime(slider->value()),
                                                          true, true);
     timeLabel->setText(passed+'/'+total);
 
@@ -190,25 +162,16 @@ void Timeline::updateTime()
 }
 
 
-void Timeline::configure()
+void Timeline::topicChanged(const RecordItNow::Timeline::Topic &topic)
 {
 
-    TimelineTopicsDialog *dialog = new TimelineTopicsDialog(this, topicWidget);
-    dialog->show();
-
-}
-
-
-void Timeline::topicChanged(Topic *topic)
-{
-
-    if (!topic) {
+    if (!topic.isValid()) {
         return;
     }
 
     KNotification *notification = new KNotification("newTopic", this, KNotification::CloseOnTimeout);
-    notification->setText(i18n("New Topic: <i>%1</i>", topic->title()));
-    notification->setPixmap(KIcon(topic->icon()).pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
+    notification->setText(i18n("New Topic: <i>%1</i>", topic.title()));
+    notification->setPixmap(KIcon(topic.icon()).pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium));
     notification->sendEvent();
 
 }
@@ -219,7 +182,7 @@ void Timeline::resetSlider()
 
     slider->setValue(0);
     topicWidget->setCurrentSecond(-1);
-    const QString total = KGlobal::locale()->formatTime(Topic::secondsToTime(slider->maximum()),
+    const QString total = KGlobal::locale()->formatTime(RecordItNow::Timeline::Topic::secondsToTime(slider->maximum()),
                                                         true, true);
     const QString passed = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
     timeLabel->setText(passed+'/'+total);

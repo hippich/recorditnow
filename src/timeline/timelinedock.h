@@ -23,12 +23,12 @@
 
 // own
 #include <ui_timelinedocktitlewidget.h>
+#include "topic.h"
 
 // Qt
 #include <QtGui/QDockWidget>
 
 
-class Topic;
 class Timeline;
 class TimelineDock : public QDockWidget
 {
@@ -50,7 +50,7 @@ private:
 
 
 private slots:
-    void topicChanged(Topic *topic);
+    void topicChanged(const RecordItNow::Timeline::Topic &topic);
 
 
 };

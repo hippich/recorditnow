@@ -20,7 +20,6 @@
 
 // own
 #include "topictreeitem.h"
-#include "topic.h"
 
 // KDE
 #include <klocalizedstring.h>
@@ -91,7 +90,7 @@ TopicTreeItem::~TopicTreeItem()
 }
 
 
-Topic *TopicTreeItem::topic() const
+RecordItNow::Timeline::Topic TopicTreeItem::topic() const
 {
 
     return m_topic;
@@ -111,7 +110,7 @@ unsigned long TopicTreeItem::duration()
 }
 
 
-void TopicTreeItem::setTopic(Topic *topic)
+void TopicTreeItem::setTopic(const RecordItNow::Timeline::Topic &topic)
 {
 
     m_topic = topic;
@@ -119,11 +118,12 @@ void TopicTreeItem::setTopic(Topic *topic)
     QTimeEdit *duration = static_cast<QTimeEdit*>(m_parent->itemWidget(this, 2));
     KIconButton *button = static_cast<KIconButton*>(m_parent->itemWidget(this, 1));
 
-    setText(0, topic->title());
-    button->setIcon(topic->icon());
-    duration->setTime(topic->duration());
+    setText(0, topic.title());
+    button->setIcon(topic.icon());
+    duration->setTime(topic.duration());
 
 }
+
 
 
 #include "topictreeitem.moc"

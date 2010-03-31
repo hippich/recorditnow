@@ -48,10 +48,9 @@ set(gui_SRCS
 
    timeline/timelinedock.cpp
    timeline/timeline.cpp
-   timeline/timelinetopicsdialog.cpp
    timeline/topicwidget.cpp
+   timeline/topicprogressbar.cpp
    timeline/topic.cpp
-   timeline/topictreeitem.cpp
 
    upload/pluginpage.cpp
    upload/uploadwizard.cpp
@@ -81,6 +80,7 @@ set(gui_SRCS
    config/shortcutsconfig.cpp
    config/zoomconfig.cpp
    config/timelineconfig.cpp
+   config/topictreeitem.cpp
    config/pluginconfig.cpp
    config/notificationconfig.cpp
 	

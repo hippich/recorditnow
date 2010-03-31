@@ -24,6 +24,7 @@
 // own
 #include "configpage.h"
 #include "ui_timelineconfig.h"
+#include "timeline/topic.h"
 
 
 class TimelineConfig : public RecordItNow::ConfigPage, Ui::TimelineConfig
@@ -33,7 +34,24 @@ class TimelineConfig : public RecordItNow::ConfigPage, Ui::TimelineConfig
 
 public:
     explicit TimelineConfig(KConfig *cfg, QWidget *parent = 0);
+    ~TimelineConfig();
 
+    void saveConfig();
+    void setDefaults();
+    void loadConfig();
+
+    static void saveTopics(const QList<RecordItNow::Timeline::Topic> &topics, KConfig *cfg);
+    static QList<RecordItNow::Timeline::Topic> loadTopics(KConfig *cfg);
+    static QList<RecordItNow::Timeline::Topic> defaultTopics();
+
+
+private slots:
+    void addTopic();
+    void removeTopic();
+    void upClicked();
+    void downClicked();
+    void itemSelectionChanged();
+    void updateTotalDuration();
 
 
 };

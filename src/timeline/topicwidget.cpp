@@ -20,6 +20,7 @@
 
 // own
 #include "topicwidget.h"
+#include "topicprogressbar.h"
 #include "topic.h"
 
 // KDE
@@ -30,6 +31,14 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QLabel>
+
+
+
+namespace RecordItNow {
+
+
+namespace Timeline {
+
 
 
 TopicWidget::TopicWidget(QWidget *parent)
@@ -59,17 +68,25 @@ void TopicWidget::setTime(const unsigned long &seconds)
 }
 
 
-Topic *TopicWidget::addTopic(const QTime &duration, const QString title, const QString &icon)
+RecordItNow::Timeline::Topic TopicWidget::addTopic(const QTime &duration, const QString title, const QString &icon)
 {
 
-    Topic *newTopic = new Topic(this, duration, title, icon);
-    m_layout->addWidget(newTopic);
+    TopicProgressBar *bar = new TopicProgressBar(this);
+
+    RecordItNow::Timeline::Topic newTopic;
+    newTopic.setTitle(title);
+    newTopic.setIcon(icon);
+    newTopic.setDuration(duration);
+
+    bar->setTopic(newTopic);
+
+    m_layout->addWidget(bar);
 
     unsigned long total = 0;
     for (int i = 0; i < m_layout->count(); i++) {
-        Topic *topic = static_cast<Topic*>(m_layout->widget(i));
-        if (topic != m_noTopic) {
-            total += topic->durationToSeconds();
+        TopicProgressBar *topicBar = static_cast<TopicProgressBar*>(m_layout->widget(i));
+        if (topicBar != m_noTopic) {
+            total += topicBar->topic().durationToSeconds();
         }
     }
     emit durationChanged(total);
@@ -79,14 +96,37 @@ Topic *TopicWidget::addTopic(const QTime &duration, const QString title, const Q
 }
 
 
-QList<Topic*> TopicWidget::topics() const
+RecordItNow::Timeline::Topic TopicWidget::addTopic(const RecordItNow::Timeline::Topic &topic)
 {
 
-    QList<Topic*> list;
+    TopicProgressBar *bar = new TopicProgressBar(this);
+
+    bar->setTopic(topic);
+
+    m_layout->addWidget(bar);
+
+    unsigned long total = 0;
     for (int i = 0; i < m_layout->count(); i++) {
-        Topic *topic = static_cast<Topic*>(m_layout->widget(i));
-        if (topic != m_noTopic) {
-            list.append(topic);
+        TopicProgressBar *topicBar = static_cast<TopicProgressBar*>(m_layout->widget(i));
+        if (topicBar != m_noTopic) {
+            total += topicBar->topic().durationToSeconds();
+        }
+    }
+    emit durationChanged(total);
+
+    return topic;
+
+}
+
+
+QList<RecordItNow::Timeline::Topic> TopicWidget::topics() const
+{
+
+    QList<RecordItNow::Timeline::Topic> list;
+    for (int i = 0; i < m_layout->count(); i++) {
+        TopicProgressBar *topicBar = static_cast<TopicProgressBar*>(m_layout->widget(i));
+        if (topicBar != m_noTopic) {
+            list.append(topicBar->topic());
         }
     }
     return list;
@@ -99,21 +139,21 @@ void TopicWidget::setCurrentSecond(const unsigned long &second)
 
     if (second == (unsigned long)-1) {
         m_layout->setCurrentWidget(m_noTopic);
-        emit topicChanged(0);
+        emit topicChanged(Topic());
         return;
     }
 
 
-    Topic *oldTopic = static_cast<Topic*>(m_layout->currentWidget());
+    RecordItNow::Timeline::Topic oldTopic = static_cast<TopicProgressBar*>(m_layout->currentWidget())->topic();
 
     bool found = false;
     unsigned long duration = 0;
     for (int i = 1; i < m_layout->count(); i++) {
-        Topic *topic = static_cast<Topic*>(m_layout->widget(i));
-        duration += topic->durationToSeconds();
+        TopicProgressBar *topicBar = static_cast<TopicProgressBar*>(m_layout->widget(i));
+        duration += topicBar->topic().durationToSeconds();
 
         if (duration > second) {
-            m_layout->setCurrentWidget(topic);
+            m_layout->setCurrentWidget(topicBar);
             found = true;
             break;
         }
@@ -124,11 +164,11 @@ void TopicWidget::setCurrentSecond(const unsigned long &second)
         m_layout->setCurrentWidget(m_noTopic);
     }
 
-    Topic *topic = static_cast<Topic*>(m_layout->currentWidget());
-    if (topic) {
-        topic->setCurrentSecond((duration-second));
-        if (!oldTopic || topic != oldTopic) {
-            emit topicChanged(topic);
+    TopicProgressBar *topicBar = static_cast<TopicProgressBar*>(m_layout->currentWidget());
+    if (topicBar) {
+        topicBar->topic().setCurrentSecond((duration-second));
+        if (!oldTopic.isValid() || topicBar->topic() != oldTopic) {
+            emit topicChanged(topicBar->topic());
         }
     }
 
@@ -141,12 +181,26 @@ void TopicWidget::clear()
     while (!m_layout->isEmpty()) {
         delete m_layout->takeAt(0);
     }
-    m_noTopic = new Topic(this, QTime(0, 0, 10, 0), i18n("No Topic"), "dialog-information");
+    m_noTopic = new TopicProgressBar(this);
+
+    RecordItNow::Timeline::Topic topic;
+    topic.setDuration(QTime(0, 0, 10, 0));
+    topic.setTitle(i18n("No Topic"));
+    topic.setIcon("dialog-information");
+
+    m_noTopic->setTopic(topic);
+
     m_layout->addWidget(m_noTopic);
 
     emit durationChanged(0);
 
 }
+
+
+} // namespace Timeline
+
+
+} // namespace RecordItNow
 
 
 #include "topicwidget.moc"

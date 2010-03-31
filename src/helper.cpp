@@ -20,6 +20,7 @@
 
 // own
 #include "helper.h"
+#include <recorditnow.h>
 
 
 namespace RecordItNow {
@@ -28,7 +29,33 @@ namespace RecordItNow {
 Helper::Helper()
 {
 
+    m_firstStart = Settings::firstStart();
 
+}
+
+
+class HelperSingleton
+{
+    public:
+        Helper self;
+};
+
+
+K_GLOBAL_STATIC(HelperSingleton, privateSelf)
+
+
+Helper *Helper::self()
+{
+
+    return &privateSelf->self;
+
+}
+
+
+bool Helper::firstStart() const
+{
+
+    return m_firstStart;
 
 }
 

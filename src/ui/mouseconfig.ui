@@ -102,6 +102,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QRadioButton" name="kcfg_target">
+              <property name="text">
+               <string>Target</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item row="4" column="0">

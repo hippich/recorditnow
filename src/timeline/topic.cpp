@@ -20,6 +20,7 @@
 
 // own
 #include "topic.h"
+#include "topicprogressbar.h"
 
 // KDE
 #include <kdebug.h>
@@ -27,28 +28,18 @@
 #include <klocale.h>
 
 // Qt
-#include <QtGui/QPainter>
-#include <QtGui/QPaintEvent>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QToolButton>
-#include <QtGui/QStyle>
-#include <QtGui/QStyleOptionProgressBarV2>
+
+namespace RecordItNow {
 
 
-Topic::Topic(QWidget *parent, const QTime duration, const QString &title, const QString &icon)
-    : QProgressBar(parent)
+namespace Timeline {
+
+
+Topic::Topic()
 {
 
     m_currentSecond = 0;
-
-    setTitle(title);
-    setIcon(icon);
-    m_duration = duration;
-
-    setMaximum(durationToSeconds());
-    setValue(0);
-
+    m_progressBar = 0;
 
 }
 
@@ -129,15 +120,27 @@ QTime Topic::secondsToTime(const unsigned long seconds)
 }
 
 
+bool Topic::isValid() const
+{
+
+    return m_progressBar ? true : false;
+
+}
+
+
 void Topic::setCurrentSecond(const unsigned long &second)
 {
 
     m_currentSecond = second;
 
     if (m_duration != QTime()) {
-        setValue(second);
+        if (m_progressBar) {
+            m_progressBar->setValue(second);
+        }
     } else {
-        setValue(0);
+        if (m_progressBar) {
+            m_progressBar->setValue(0);
+        }
     }
 
 }
@@ -159,6 +162,70 @@ void Topic::setTitle(const QString &title)
 }
 
 
+void Topic::setDuration(const QTime &duration)
+{
 
-#include "topic.moc"
+    m_duration = duration;
+    if (m_progressBar) {
+        m_progressBar->setMaximum(durationToSeconds());
+    }
+
+}
+
+
+void Topic::setProgressBar(TopicProgressBar *bar)
+{
+
+    m_progressBar = bar;
+    m_progressBar->setMaximum(durationToSeconds());
+
+}
+
+
+bool Topic::operator!=(const Topic &other) const
+{
+
+    return (other.title() != title() && other.duration() != duration() && other.icon() != icon());
+
+}
+
+
+} // namespace Timeline
+
+
+} // namespace RecordItNow
+
+
+QDataStream &operator<<(QDataStream &stream, const RecordItNow::Timeline::Topic &data)
+{
+
+    stream << data.duration();
+    stream << data.title();
+    stream << data.icon();
+
+    return stream;
+
+}
+
+
+QDataStream &operator>>(QDataStream &stream, RecordItNow::Timeline::Topic &data)
+{
+
+    QTime duration;
+    QString title;
+    QString icon;
+
+    stream >> duration;
+    stream >> title;
+    stream >> icon;
+
+    data.setDuration(duration);
+    data.setTitle(title);
+    data.setIcon(icon);
+
+    return stream;
+
+}
+
+
 
