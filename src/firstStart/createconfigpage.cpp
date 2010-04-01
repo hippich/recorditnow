@@ -111,11 +111,11 @@ void CreateConfigPage::createConfig(QListWidgetItem *frameItem, QListWidgetItem 
         }
     }
 
-    if (!mouseInfos.isEmpty()) {
+    if (!mouseInfos.isEmpty() && Settings::mouseDevice().isEmpty()) {
         Settings::self()->setMouseDevice(mouseInfos.first().uuid);
     }
 
-    if (!keyboardInfos.isEmpty()) {
+    if (!keyboardInfos.isEmpty() && Settings::keyboardDevice().isEmpty()) {
         Settings::self()->setKeyboardDevice(keyboardInfos.first().uuid);
     }
 
