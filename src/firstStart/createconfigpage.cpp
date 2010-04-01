@@ -25,7 +25,8 @@
 #include "config/mouseconfig.h"
 #include "config/keyboardconfig.h"
 #include <recorditnow.h>
-
+#include "keymon/deviceinfo.h"
+#include "keymonmanager.h"
 
 // Qt
 #include <QtGui/QListWidgetItem>
@@ -97,6 +98,26 @@ void CreateConfigPage::createConfig(QListWidgetItem *frameItem, QListWidgetItem 
 
     TimelineConfig::saveTopics(TimelineConfig::defaultTopics(), Settings::self()->config());
     timelineItem->setIcon(KIcon("task-complete"));
+
+
+    QList<KeyMon::DeviceInfo> mouseInfos;
+    QList<KeyMon::DeviceInfo> keyboardInfos;
+
+    foreach (const KeyMon::DeviceInfo &info, KeyMonManager::self()->getInputDeviceList()) {
+        if (info.type == KeyMon::DeviceInfo::KeyboardType) {
+            keyboardInfos.append(info);
+        } else  if (info.type == KeyMon::DeviceInfo::MouseType) {
+            mouseInfos.append(info);
+        }
+    }
+
+    if (!mouseInfos.isEmpty()) {
+        Settings::self()->setMouseDevice(mouseInfos.first().uuid);
+    }
+
+    if (!keyboardInfos.isEmpty()) {
+        Settings::self()->setKeyboardDevice(keyboardInfos.first().uuid);
+    }
 
     MouseConfig::saveConfig(Settings::self()->config(), MouseConfig::defaultButtons());
     mouseItem->setIcon(KIcon("task-complete"));
