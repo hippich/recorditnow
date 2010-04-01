@@ -23,9 +23,11 @@
 
 
 MouseButton::MouseButton(const int &code, const QColor &color)
-    : m_code(code), m_color(color)
+    : RecordItNow::ConfigItem()
 {
 
+    setCode(code);
+    setColor(color);
 
 }
 
@@ -41,7 +43,7 @@ bool MouseButton::isValid() const
 int MouseButton::code() const
 {
 
-    return m_code;
+    return data<int>("Code");
 
 }
 
@@ -49,7 +51,7 @@ int MouseButton::code() const
 QColor MouseButton::color() const
 {
 
-    return m_color;
+    return data<QColor>("Color");
 
 }
 
@@ -57,7 +59,7 @@ QColor MouseButton::color() const
 void MouseButton::setCode(const int &code)
 {
 
-    m_code = code;
+    setData("Code", code);
 
 }
 
@@ -65,41 +67,7 @@ void MouseButton::setCode(const int &code)
 void MouseButton::setColor(const QColor &color)
 {
 
-    m_color = color;
-
-}
-
-
-bool MouseButton::operator==(const MouseButton &other) const
-{
-
-    return (other.code() == code() && other.color() == color());
-
-}
-
-
-QDataStream &operator<<(QDataStream &stream, const MouseButton &data)
-{
-
-    stream << data.code() << data.color();
-    return stream;
-
-}
-
-
-QDataStream &operator>>(QDataStream &stream, MouseButton &data)
-{
-
-    int code;
-    QColor color;
-
-    stream >> code;
-    stream >> color;
-
-    data.setCode(code);
-    data.setColor(color);
-
-    return stream;
+    setData("Color", color);
 
 }
 

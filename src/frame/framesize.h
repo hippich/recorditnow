@@ -20,6 +20,8 @@
 #ifndef FRAMESIZE_H
 #define FRAMESIZE_H
 
+// own
+#include "configitem.h"
 
 // Qt
 #include <QtCore/QString>
@@ -27,13 +29,12 @@
 #include <QtCore/QMetaType>
 
 
-class FrameSize
+class FrameSize : public RecordItNow::ConfigItem
 {
 
 
 public:
     FrameSize(const QSize &size, const QString &text);
-    FrameSize(const FrameSize &other);
     FrameSize();
     ~FrameSize();
 
@@ -43,22 +44,11 @@ public:
     void setSize(const QSize &size);
     void setText(const QString &text);
 
-    bool operator==(const FrameSize &other) const;
-
-
-private:
-    QSize m_size;
-    QString m_text;
-
 
 };
 
+
 Q_DECLARE_METATYPE(FrameSize)
-
-
-QDataStream &operator<<(QDataStream &stream, const FrameSize &data);
-QDataStream &operator>>(QDataStream &stream, FrameSize &data);
-
 
 
 #endif // FRAMESIZE_H

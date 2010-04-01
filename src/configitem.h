@@ -17,33 +17,75 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSEBUTTON_H
-#define MOUSEBUTTON_H
+#ifndef CONFIGITEM_H
+#define CONFIGITEM_H
 
-
-// own
-#include "configitem.h"
 
 // Qt
-#include <QtGui/QColor>
+#include <QtCore/QDataStream>
+#include <QtCore/QExplicitlySharedDataPointer>
+#include <QtCore/QHash>
+#include <QtCore/QVariant>
+#include <QtCore/QMetaType>
 
 
-class MouseButton : public RecordItNow::ConfigItem
+namespace RecordItNow {
+
+
+class ConfigItemPrivate;
+class ConfigItem
 {
 
 
 public:
-    MouseButton(const int &code = -1, const QColor &color = Qt::black);
+    explicit ConfigItem();
+    ConfigItem(const ConfigItem &copy);
+    ~ConfigItem();
 
-    bool isValid() const;
-    int code() const;
-    QColor color() const;
+    ConfigItem &operator=(const ConfigItem &rhs);
+    bool operator==(const ConfigItem &rhs) const;
+    bool operator!=(const ConfigItem &rhs) const;
+    bool operator<(const ConfigItem &rhs) const;
+    bool operator>(const ConfigItem &rhs) const;
+    QDataStream &operator>>(QDataStream &stream);
+    QDataStream &operator<<(QDataStream &stream) const;
 
-    void setCode(const int &code);
-    void setColor(const QColor &color);
+
+private:
+     QExplicitlySharedDataPointer<ConfigItemPrivate> d;
+
+    QVariant data(const QString &key) const;
+    void setData(const QString &key, const QVariant &value);
+
+
+protected:
+    template <typename T>
+    T data(const QString &key) const
+    {
+
+        return data(key).value<T>();
+
+    }
+    template <typename T>
+    void setData(const QString &key, const T &value)
+    {
+
+        setData(key, QVariant::fromValue<T>(value));
+
+    }
 
 
 };
 
 
-#endif // MOUSEBUTTON_H
+} // namespace RecordItNow
+
+
+Q_DECLARE_METATYPE(RecordItNow::ConfigItem)
+
+
+QDataStream &operator<<(QDataStream &stream, const RecordItNow::ConfigItem &data);
+QDataStream &operator>>(QDataStream &stream, RecordItNow::ConfigItem &data);
+
+
+#endif // CONFIGITEM_H

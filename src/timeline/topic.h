@@ -20,6 +20,8 @@
 #ifndef TOPIC_H
 #define TOPIC_H
 
+// own
+#include "configitem.h"
 
 //KDE
 #include <kicon.h>
@@ -27,6 +29,7 @@
 // Qt
 #include <QtCore/QTime>
 #include <QtCore/QObject>
+#include <QtCore/QWeakPointer>
 
 
 namespace RecordItNow {
@@ -36,12 +39,12 @@ namespace Timeline {
 
 
 class TopicProgressBar;
-class Topic
+class Topic : public RecordItNow::ConfigItem
 {
 
 
 public:
-    Topic();
+    explicit Topic();
     ~Topic();
 
     unsigned long currentSecond() const;
@@ -62,11 +65,7 @@ public:
 
 
 private:
-    unsigned long m_currentSecond;
-    QTime m_duration;
-    QString m_title;
-    QString m_icon;
-    TopicProgressBar *m_progressBar;
+    QWeakPointer<TopicProgressBar> m_progressBar;
 
 
 };
@@ -76,10 +75,6 @@ private:
 
 
 } // namespace RecordItNow
-
-
-QDataStream &operator<<(QDataStream &stream, const RecordItNow::Timeline::Topic &data);
-QDataStream &operator>>(QDataStream &stream, RecordItNow::Timeline::Topic &data);
 
 
 #endif // TOPIC_H

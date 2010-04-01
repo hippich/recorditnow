@@ -23,26 +23,21 @@
 
 
 FrameSize::FrameSize(const QSize &size, const QString &text)
-    : m_size(size), m_text(text)
+    : RecordItNow::ConfigItem()
 {
 
-
-}
-
-
-FrameSize::FrameSize(const FrameSize &other)
-    : m_size(other.size()), m_text(other.text())
-{
-
+    setSize(size);
+    setText(text);
 
 }
 
 
 FrameSize::FrameSize()
-    : m_size(QSize()), m_text(QString())
+    : RecordItNow::ConfigItem()
 {
 
-
+    setSize(QSize());
+    setText(QString());
 
 }
 
@@ -57,7 +52,7 @@ FrameSize::~FrameSize()
 QSize FrameSize::size() const
 {
 
-    return m_size;
+    return data<QSize>("Size");
 
 }
 
@@ -65,7 +60,7 @@ QSize FrameSize::size() const
 QString FrameSize::text() const
 {
 
-    return m_text;
+    return data<QString>("Text");
 
 }
 
@@ -73,7 +68,7 @@ QString FrameSize::text() const
 void FrameSize::setSize(const QSize &size)
 {
 
-    m_size = size;
+    setData("Size", size);
 
 }
 
@@ -81,41 +76,7 @@ void FrameSize::setSize(const QSize &size)
 void FrameSize::setText(const QString &text)
 {
 
-    m_text = text;
-
-}
-
-
-bool FrameSize::operator==(const FrameSize &other) const
-{
-
-    return (other.size() == size() && other.text() == text());
-
-}
-
-
-QDataStream &operator<<(QDataStream &stream, const FrameSize &data)
-{
-
-    stream << data.size() << data.text();
-    return stream;
-
-}
-
-
-QDataStream &operator>>(QDataStream &stream, FrameSize &data)
-{
-
-    QSize size;
-    QString text;
-
-    stream >> size;
-    stream >> text;
-
-    data.setSize(size);
-    data.setText(text);
-
-    return stream;
+    setData("Text", text);
 
 }
 

@@ -36,10 +36,10 @@ namespace Timeline {
 
 
 Topic::Topic()
+    : RecordItNow::ConfigItem()
 {
 
-    m_currentSecond = 0;
-    m_progressBar = 0;
+    setCurrentSecond(0);
 
 }
 
@@ -54,7 +54,7 @@ Topic::~Topic()
 unsigned long Topic::currentSecond() const
 {
 
-    return m_currentSecond;
+    return data<unsigned long>("CurrentSecond");
 
 }
 
@@ -62,7 +62,7 @@ unsigned long Topic::currentSecond() const
 QString Topic::icon() const
 {
 
-    return m_icon;
+    return data<QString>("Icon");
 
 }
 
@@ -70,7 +70,7 @@ QString Topic::icon() const
 QString Topic::title() const
 {
 
-    return m_title;
+    return data<QString>("Title");
 
 }
 
@@ -78,7 +78,7 @@ QString Topic::title() const
 QTime Topic::duration() const
 {
 
-    return m_duration;
+    return data<QTime>("Duration");
 
 }
 
@@ -87,10 +87,11 @@ unsigned long Topic::durationToSeconds() const
 {
 
     unsigned long seconds = 0;
+    const QTime durationTime = duration();
 
-    seconds += m_duration.second();
-    seconds += m_duration.minute()*60;
-    seconds += (m_duration.hour()*60)*60;
+    seconds += durationTime.second();
+    seconds += durationTime.minute()*60;
+    seconds += (durationTime.hour()*60)*60;
 
     return seconds;
 
@@ -123,7 +124,7 @@ QTime Topic::secondsToTime(const unsigned long seconds)
 bool Topic::isValid() const
 {
 
-    return m_progressBar ? true : false;
+    return m_progressBar.data() ? true : false;
 
 }
 
@@ -131,15 +132,15 @@ bool Topic::isValid() const
 void Topic::setCurrentSecond(const unsigned long &second)
 {
 
-    m_currentSecond = second;
+    setData("CurrentSecond", second);
 
-    if (m_duration != QTime()) {
-        if (m_progressBar) {
-            m_progressBar->setValue(second);
+    if (duration() != QTime()) {
+        if (m_progressBar.data()) {
+            m_progressBar.data()->setValue(second);
         }
     } else {
-        if (m_progressBar) {
-            m_progressBar->setValue(0);
+        if (m_progressBar.data()) {
+            m_progressBar.data()->setValue(0);
         }
     }
 
@@ -149,7 +150,7 @@ void Topic::setCurrentSecond(const unsigned long &second)
 void Topic::setIcon(const QString &icon)
 {
 
-    m_icon = icon;
+    setData("Icon", icon);
 
 }
 
@@ -157,7 +158,7 @@ void Topic::setIcon(const QString &icon)
 void Topic::setTitle(const QString &title)
 {
 
-    m_title = title;
+    setData("Title", title);
 
 }
 
@@ -165,9 +166,9 @@ void Topic::setTitle(const QString &title)
 void Topic::setDuration(const QTime &duration)
 {
 
-    m_duration = duration;
-    if (m_progressBar) {
-        m_progressBar->setMaximum(durationToSeconds());
+    setData("Duration", duration);
+    if (m_progressBar.data()) {
+        m_progressBar.data()->setMaximum(durationToSeconds());
     }
 
 }
@@ -177,7 +178,7 @@ void Topic::setProgressBar(TopicProgressBar *bar)
 {
 
     m_progressBar = bar;
-    m_progressBar->setMaximum(durationToSeconds());
+    m_progressBar.data()->setMaximum(durationToSeconds());
 
 }
 
@@ -194,38 +195,6 @@ bool Topic::operator!=(const Topic &other) const
 
 
 } // namespace RecordItNow
-
-
-QDataStream &operator<<(QDataStream &stream, const RecordItNow::Timeline::Topic &data)
-{
-
-    stream << data.duration();
-    stream << data.title();
-    stream << data.icon();
-
-    return stream;
-
-}
-
-
-QDataStream &operator>>(QDataStream &stream, RecordItNow::Timeline::Topic &data)
-{
-
-    QTime duration;
-    QString title;
-    QString icon;
-
-    stream >> duration;
-    stream >> title;
-    stream >> icon;
-
-    data.setDuration(duration);
-    data.setTitle(title);
-    data.setIcon(icon);
-
-    return stream;
-
-}
 
 
 

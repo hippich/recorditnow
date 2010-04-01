@@ -37,6 +37,7 @@ set(gui_SRCS
    devicesearchdialog.cpp
    checkicon.cpp
    helper.cpp
+   configitem.cpp
 
    zoom/zoomview.cpp
    zoom/zoomdock.cpp
