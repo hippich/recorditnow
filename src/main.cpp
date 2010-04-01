@@ -107,9 +107,9 @@ static void checkVersion()
 
             index = 0;
             key = QString("Button %1 key").arg(index);
-            while (keyGroup.hasKey(key)) {
-                keyGroup.deleteEntry(key);
-                keyGroup.deleteEntry(QString("Button %1 color").arg(index));
+            while (mouseGroup.hasKey(key)) {
+                mouseGroup.deleteEntry(key);
+                mouseGroup.deleteEntry(QString("Button %1 color").arg(index));
 
                 index++;
                 key = QString("Button %1 key").arg(index);
