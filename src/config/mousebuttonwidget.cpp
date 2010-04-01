@@ -150,6 +150,23 @@ MouseButtonWidget::Button MouseButtonWidget::getButtonFromXButton(const int &but
 }
 
 
+int MouseButtonWidget::getXButtonFromMouseButton(const MouseButtonWidget::Button &button)
+{
+
+    switch (button) {
+    case LeftButton: return Button1;
+    case RightButton: return Button3;
+    case MiddleButton: return Button2;
+    case SpecialButton1: return 8;
+    case SpecialButton2: return 9;
+    case WheelUp: return Button4;
+    case WheelDown: return Button5;
+    default: return -1;
+    }
+
+}
+
+
 void MouseButtonWidget::setXButton(const int &button)
 {
 

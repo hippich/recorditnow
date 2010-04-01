@@ -129,9 +129,6 @@ void MouseConfig::loadConfig()
 
     }
 
-    if (buttons.isEmpty()) {
-        setDefaults();
-    }
     buttonsChanged();
     currentButtonChanged();
 
@@ -143,74 +140,57 @@ void MouseConfig::setDefaults()
 
     treeWidget->clear();
 
-    MouseButtonWidget *MouseButtonWidget1 = newMouseButtonWidget();
-    MouseButtonWidget *MouseButtonWidget3 = newMouseButtonWidget();
-    MouseButtonWidget *MouseButtonWidget4 = newMouseButtonWidget();
-    MouseButtonWidget *MouseButtonWidget5 = newMouseButtonWidget();
-    MouseButtonWidget *MouseButtonWidget8 = newMouseButtonWidget();
-    MouseButtonWidget *MouseButtonWidget9 = newMouseButtonWidget();
+    foreach (const MouseButton &button, defaultButtons()) {
+        MouseButtonWidget *buttonWidget = newMouseButtonWidget();
+        buttonWidget->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
 
-    MouseButtonWidget1->setButton(MouseButtonWidget::LeftButton);
-    MouseButtonWidget3->setButton(MouseButtonWidget::RightButton);
-    MouseButtonWidget4->setButton(MouseButtonWidget::WheelUp);
-    MouseButtonWidget5->setButton(MouseButtonWidget::WheelDown);
-    MouseButtonWidget8->setButton(MouseButtonWidget::SpecialButton1);
-    MouseButtonWidget9->setButton(MouseButtonWidget::SpecialButton2);
+        KColorButton *colorButton = newButton();
+        colorButton->setColor(button.color());
 
-    KColorButton *button1 = newButton();
-    KColorButton *button3 = newButton();
-    KColorButton *button4 = newButton();
-    KColorButton *button5 = newButton();
-    KColorButton *button8 = newButton();
-    KColorButton *button9 = newButton();
+        QTreeWidgetItem *item = new QTreeWidgetItem();
 
-    button1->setColor(Qt::red);
-    button3->setColor(Qt::yellow);
-    button4->setColor(Qt::darkBlue);
-    button5->setColor(Qt::blue);
-    button8->setColor(Qt::magenta);
-    button9->setColor(Qt::darkMagenta);
+        treeWidget->addTopLevelItem(item);
+        treeWidget->setItemWidget(item, 0, newRemoveButton());
+        treeWidget->setItemWidget(item, 1, buttonWidget);
+        treeWidget->setItemWidget(item, 2, colorButton);
+    }
 
-    QTreeWidgetItem *item1 = new QTreeWidgetItem();
-    QTreeWidgetItem *item3 = new QTreeWidgetItem();
-    QTreeWidgetItem *item4 = new QTreeWidgetItem();
-    QTreeWidgetItem *item5 = new QTreeWidgetItem();
-    QTreeWidgetItem *item8 = new QTreeWidgetItem();
-    QTreeWidgetItem *item9 = new QTreeWidgetItem();
+}
 
-    // left click
-    treeWidget->addTopLevelItem(item1);
-    treeWidget->setItemWidget(item1, 0, newRemoveButton());
-    treeWidget->setItemWidget(item1, 1, MouseButtonWidget1);
-    treeWidget->setItemWidget(item1, 2, button1);
 
-    // right click
-    treeWidget->addTopLevelItem(item3);
-    treeWidget->setItemWidget(item3, 0, newRemoveButton());
-    treeWidget->setItemWidget(item3, 1, MouseButtonWidget3);
-    treeWidget->setItemWidget(item3, 2, button3);
+QList<MouseButton> MouseConfig::defaultButtons()
+{
 
-    // mouse wheel
-    treeWidget->addTopLevelItem(item4);
-    treeWidget->setItemWidget(item4, 0, newRemoveButton());
-    treeWidget->setItemWidget(item4, 1, MouseButtonWidget4);
-    treeWidget->setItemWidget(item4, 2, button4);
-    treeWidget->addTopLevelItem(item5);
-    treeWidget->setItemWidget(item5, 0, newRemoveButton());
-    treeWidget->setItemWidget(item5, 1, MouseButtonWidget5);
-    treeWidget->setItemWidget(item5, 2, button5);
+    MouseButton button1;
+    MouseButton button3;
+    MouseButton button4;
+    MouseButton button5;
+    MouseButton button8;
+    MouseButton button9;
 
-    // special 1
-    treeWidget->addTopLevelItem(item8);
-    treeWidget->setItemWidget(item8, 0, newRemoveButton());
-    treeWidget->setItemWidget(item8, 1, MouseButtonWidget8);
-    treeWidget->setItemWidget(item8, 2, button8);
+    button1.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::LeftButton));
+    button3.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::RightButton));
+    button4.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::SpecialButton1));
+    button5.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::SpecialButton2));
+    button8.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::WheelDown));
+    button9.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::WheelUp));
 
-    // special 2
-    treeWidget->addTopLevelItem(item9);
-    treeWidget->setItemWidget(item9, 0, newRemoveButton());
-    treeWidget->setItemWidget(item9, 1, MouseButtonWidget9);
-    treeWidget->setItemWidget(item9, 2, button9);
+    button1.setColor(Qt::red);
+    button3.setColor(Qt::yellow);
+    button4.setColor(Qt::darkBlue);
+    button5.setColor(Qt::blue);
+    button8.setColor(Qt::magenta);
+    button9.setColor(Qt::darkMagenta);
+
+    QList<MouseButton> buttons;
+    buttons.append(button1);
+    buttons.append(button3);
+    buttons.append(button4);
+    buttons.append(button5);
+    buttons.append(button8);
+    buttons.append(button9);
+
+    return buttons;
 
 }
 

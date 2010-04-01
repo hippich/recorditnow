@@ -74,7 +74,6 @@
 #include <X11/Xlib.h>
 
 
-typedef QPair<QString, QSize> Size;
 MainWindow::MainWindow(QWidget *parent)
     : KXmlGuiWindow(parent)
 {
@@ -267,14 +266,7 @@ void MainWindow::setupActions()
     boxAction->addAction(frameMoveAction);
     boxAction->addSeparator();
 
-    QList<FrameSize> sizes;
-    if (Settings::firstStart()) {
-        sizes = FrameConfig::defaultSizes();
-        Settings::self()->setFirstStart(false);
-        FrameConfig::writeSizes(sizes, Settings::self()->config());
-    } else {
-        sizes = FrameConfig::readSizes(Settings::self()->config());
-    }
+    const QList<FrameSize> sizes = FrameConfig::readSizes(Settings::self()->config());
     frameSizesChanged(sizes);
 
     KAction *fullAction = getAction("recordFullScreen");

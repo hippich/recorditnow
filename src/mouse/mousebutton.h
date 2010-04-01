@@ -33,7 +33,8 @@ class MouseButton : public RecordItNow::ConfigItem
 
 
 public:
-    MouseButton(const int &code = -1, const QColor &color = Qt::black);
+    MouseButton(const int &code, const QColor &color);
+    MouseButton();
 
     bool isValid() const;
     int code() const;

@@ -32,6 +32,16 @@ MouseButton::MouseButton(const int &code, const QColor &color)
 }
 
 
+MouseButton::MouseButton()
+    : RecordItNow::ConfigItem()
+{
+
+    setCode(-1);
+    setColor(Qt::black);
+
+}
+
+
 bool MouseButton::isValid() const
 {
 

@@ -30,6 +30,9 @@ Helper::Helper()
 {
 
     m_firstStart = Settings::firstStart();
+    if (firstStart()) {
+        Settings::self()->setFirstStart(false);
+    }
 
 }
 

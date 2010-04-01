@@ -21,6 +21,7 @@
 // own
 #include "firststartassistant.h"
 #include "welcomepage.h"
+#include "createconfigpage.h"
 #include "mousedevicepage.h"
 #include "keyboarddevicepage.h"
 #include "../config/keyboardconfig.h"
@@ -49,6 +50,7 @@ FirstStartAssistant::FirstStartAssistant(QWidget *parent)
 {
 
     addPage(new WelcomePage(this));
+    addPage(new CreateConfigPage(this));
     addPage(new MouseDevicePage(this));
     addPage(new KeyboardDevicePage(this));
 

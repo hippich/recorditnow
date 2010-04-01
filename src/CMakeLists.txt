@@ -92,6 +92,7 @@ set(gui_SRCS
 
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp
+   firstStart/createconfigpage.cpp
    firstStart/mousedevicepage.cpp
    firstStart/keyboarddevicepage.cpp)
 
@@ -126,6 +127,7 @@ kde4_add_ui_files(gui_SRCS
     ui/timerwidget.ui
     ui/notificationconfig.ui
     firstStart/ui/welcomepage.ui
+    firstStart/ui/createconfigpage.ui
     firstStart/ui/mousedevicepage.ui
     firstStart/ui/keyboarddevicepage.ui)
 

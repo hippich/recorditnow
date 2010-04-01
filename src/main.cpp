@@ -28,6 +28,7 @@
 #include "config/frameconfig.h"
 #include "timeline/topic.h"
 #include "config/timelineconfig.h"
+#include "helper.h"
 
 // KDE
 #include <kaboutdata.h>
