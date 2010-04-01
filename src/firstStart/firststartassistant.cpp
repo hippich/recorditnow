@@ -83,10 +83,6 @@ void FirstStartAssistant::assistantFinished(const int &ret)
         if (!keyboardDevice.isEmpty()) {
             Settings::setKeyboardDevice(keyboardDevice);
             Settings::setEnableKeyboard(true);
-
-            if (KeyboardConfig::readConfig(Settings::self()->config()).isEmpty()) {
-                KeyboardConfig::saveConfig(KeyboardConfig::defaultKeys(), Settings::self()->config());
-            }
         }
 
         Settings::self()->writeConfig();
