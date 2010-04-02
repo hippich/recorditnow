@@ -153,7 +153,7 @@ QList<RecordItNow::Timeline::Topic> TimelineConfig::defaultTopics()
 
     kdeTopic.setDuration(RecordItNow::Timeline::Topic::secondsToTime(300));
     kdeTopic.setTitle("KDE SC");
-    kdeTopic.setIcon("computer");
+    kdeTopic.setIcon("start-here-kde");
 
     QList<RecordItNow::Timeline::Topic> topics;
     topics.append(linuxTopic);
