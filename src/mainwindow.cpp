@@ -719,6 +719,7 @@ void MainWindow::configure()
 
     ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(configDialogFinished()));
+    connect(dialog, SIGNAL(settingsSaved()), this, SLOT(applyConfig()));
     dialog->show();
 
 }
@@ -728,6 +729,12 @@ void MainWindow::configDialogFinished()
 {
 
     setState(Idle);
+
+}
+
+
+void MainWindow::applyConfig()
+{
 
     setupDocks();
     setupTray();
@@ -831,7 +838,7 @@ void MainWindow::backendChanged(const QString &newBackend)
     }
     file.append(m_recorderManager->getDefaultFile(newBackend));
     outputWidget->setOutputFile(file);
-    setState(Idle); // update actions/widgets
+    setState(state()); // update actions/widgets
 
 }
 

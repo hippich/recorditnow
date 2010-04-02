@@ -108,6 +108,7 @@ private slots:
     void encoderFinished(const QString &error);
     void configure();
     void configDialogFinished();
+    void applyConfig();
     void startTimer();
     void trayActivated(const bool &active, const QPoint &pos);
     void backendChanged(const QString &newBackend);

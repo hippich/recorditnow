@@ -52,6 +52,7 @@ private:
     KActionCollection *m_collection;
     QList<RecordItNow::ConfigPage*> m_pageList;
 
+
     void init();
 
 
@@ -60,6 +61,7 @@ private slots:
     void configFinished(const int &code);
     void encoderChanged();
     void pageConfigChanged();
+    void saveSettings();
 
 
 protected slots:
@@ -69,6 +71,7 @@ protected slots:
 
 signals:
     void dialogFinished();
+    void settingsSaved();
 
 
 };

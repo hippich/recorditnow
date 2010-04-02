@@ -107,6 +107,7 @@ void ConfigDialog::init()
     addPage(notificationPage, i18n("Notifications"), "preferences-desktop-notification");
 
     connect(this, SIGNAL(finished(int)), this, SLOT(configFinished(int)));
+    connect(this, SIGNAL(settingsChanged(QString)), this, SLOT(saveSettings()));
 
     foreach (RecordItNow::ConfigPage *page, m_pageList) {
         connect(page, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
@@ -134,13 +135,7 @@ void ConfigDialog::updateEncoderCombo()
 void ConfigDialog::configFinished(const int &code)
 {
 
-    if (code == KConfigDialog::Accepted) {
-        Settings::setEncoderName(ui_settings.encoderCombo->currentText());
-
-        foreach (RecordItNow::ConfigPage *page, m_pageList) {
-            page->saveConfig();
-        }
-    }
+    Q_UNUSED(code);
     emit dialogFinished();
 
 }
@@ -159,6 +154,19 @@ void ConfigDialog::pageConfigChanged()
 
     enableButtonApply(true);
     updateEncoderCombo();
+
+}
+
+
+void ConfigDialog::saveSettings()
+{
+
+    Settings::setEncoderName(ui_settings.encoderCombo->currentText());
+    foreach (RecordItNow::ConfigPage *page, m_pageList) {
+        page->saveConfig();
+    }
+
+    emit settingsSaved();
 
 }
 
