@@ -64,7 +64,7 @@ protected:
     virtual void setDefaults() {};
     virtual void loadConfig() {};
 
-    Q_SIGNAL void configChanged(const bool &changed = true);
+    Q_SIGNAL void configChanged(const bool &changed);
 
 
 signals:

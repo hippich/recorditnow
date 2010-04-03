@@ -58,7 +58,7 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
     cursorWidget->switchToPreviewMode();
 
-    connect(this, SIGNAL(configChanged()), this, SLOT(buttonsChanged()));
+   // connect(this, SIGNAL(configChanged(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
@@ -207,7 +207,7 @@ KColorButton *MouseConfig::newButton()
 {
 
     KColorButton *button = new KColorButton(this);
-    connect(button, SIGNAL(changed(QColor)), this, SIGNAL(configChanged()));
+    connect(button, SIGNAL(changed(QColor)), this, SLOT(buttonsChanged()));
     return button;
 
 }
@@ -296,7 +296,7 @@ void MouseConfig::addClicked()
     treeWidget->setItemWidget(item, 1, button);
     treeWidget->setItemWidget(item, 2, newButton());
 
-    emit configChanged(getButtons(config()) != currentButtons());
+    buttonsChanged();
 
 }
 
@@ -310,7 +310,7 @@ void MouseConfig::removeClicked()
             treeWidget->invisibleRootItem()->removeChild(item);
         }
     }
-    emit configChanged(getButtons(config()) != currentButtons());
+    buttonsChanged();
 
 }
 
@@ -334,7 +334,7 @@ void MouseConfig::buttonChanged(const MouseButtonWidget::Button &oldButton,
                                             MouseButtonWidget::getName(newButton)));
         changed->setButton(oldButton);
     }
-    emit configChanged(getButtons(config()) != currentButtons());
+    buttonsChanged();
 
 }
 
@@ -353,14 +353,7 @@ void MouseConfig::showKeyMonDialog()
 void MouseConfig::buttonsChanged()
 {
 
-    QList<MouseButton> buttons;
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
-        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
-
-        buttons.append(MouseButton(button, color));
-    }
+    const QList<MouseButton> buttons = currentButtons();
 
     cursorWidget->setButtons(buttons);
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
@@ -374,8 +367,9 @@ void MouseConfig::buttonsChanged()
     }
 
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
-
     currentButtonChanged();
+
+    emit configChanged(getButtons(config()) != buttons);
 
 }
 

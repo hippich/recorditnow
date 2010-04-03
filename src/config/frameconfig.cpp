@@ -48,8 +48,7 @@ FrameConfig::FrameConfig(KConfig *cfg, QWidget *parent)
     connect(downButton, SIGNAL(clicked()), this, SLOT(down()));
     connect(sizeTree, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
     connect(sizeEdit, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
-    connect(sizeTree, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this,
-            SLOT(itemChanged(QTreeWidgetItem*,int)));
+    connect(sizeTree, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(itemChanged()));
 
     sizeTree->header()->setResizeMode(QHeaderView::ResizeToContents);
     itemSelectionChanged();
@@ -269,11 +268,8 @@ void FrameConfig::textChanged(const QString &text)
 }
 
 
-void FrameConfig::itemChanged(QTreeWidgetItem *item, int column)
+void FrameConfig::itemChanged()
 {
-
-    Q_UNUSED(item);
-    Q_UNUSED(column);
 
     emit configChanged(readSizes(config()) != sizes());
 
@@ -287,7 +283,7 @@ KIntNumInput *FrameConfig::newSizeWidget()
     widget->setMaximum(4000);
     widget->setMinimum(100);
 
-    connect(widget, SIGNAL(valueChanged(int)), this, SIGNAL(configChanged()));
+    connect(widget, SIGNAL(valueChanged(int)), this, SLOT(itemChanged()));
 
     return widget;
 
@@ -303,13 +299,14 @@ QTreeWidgetItem *FrameConfig::newTreeWidgetItem(const QString &text, const QSize
 
     sizeTree->insertTopLevelItem(index, item);
 
-    KIntNumInput *widget = newSizeWidget();
-    widget->setValue(size.width());
-    sizeTree->setItemWidget(item, 1, widget);
+    KIntNumInput *widget1 = newSizeWidget();
+    sizeTree->setItemWidget(item, 1, widget1);
 
-    widget = newSizeWidget();
-    widget->setValue(size.height());
-    sizeTree->setItemWidget(item, 2, widget);
+    KIntNumInput *widget2 = newSizeWidget();
+    sizeTree->setItemWidget(item, 2, widget2);
+
+    widget1->setValue(size.width());
+    widget2->setValue(size.height());
 
     return item;
 

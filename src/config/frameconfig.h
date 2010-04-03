@@ -62,7 +62,7 @@ private slots:
     void down();
     void itemSelectionChanged();
     void textChanged(const QString &text);
-    void itemChanged(QTreeWidgetItem *item, int column);
+    void itemChanged();
 
 
 private:
