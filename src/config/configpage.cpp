@@ -60,8 +60,10 @@ bool ConfigPage::hasChanged()
 void ConfigPage::save()
 {
 
-    saveConfig();
-    m_settingsChanged = false;
+    if (hasChanged()) {
+        saveConfig();
+        m_settingsChanged = false;
+    }
 
 }
 
