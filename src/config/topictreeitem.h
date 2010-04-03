@@ -50,7 +50,7 @@ private:
 
 
 signals:
-    void durationChanged();
+    void changed();
 
 
 };

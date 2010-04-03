@@ -183,7 +183,7 @@ void TimelineConfig::addTopic()
 {
 
     TopicTreeItem *item = new TopicTreeItem(treeWidget);
-    connect(item, SIGNAL(durationChanged()), this, SLOT(updateTotalDuration()));
+    connect(item, SIGNAL(changed()), this, SLOT(updateTotalDuration()));
 
     setConfigChanged(loadTopics(config()) != currentTopics());
 }

@@ -37,8 +37,10 @@ TopicTreeItem::TopicTreeItem(QTreeWidget *parent)
     setFlags(Qt::ItemIsEditable|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 
     KIconButton *button = new KIconButton;
+    connect(button, SIGNAL(iconChanged(QString)), this, SIGNAL(changed()));
+
     QTimeEdit *duration = new QTimeEdit;
-    connect(duration, SIGNAL(timeChanged(QTime)), this, SIGNAL(durationChanged()));
+    connect(duration, SIGNAL(timeChanged(QTime)), this, SIGNAL(changed()));
 
     duration->setDisplayFormat("hh:mm:ss");
 
@@ -62,8 +64,10 @@ TopicTreeItem::TopicTreeItem(QTreeWidget *parent, TopicTreeItem *other, const in
     setFlags(other->flags());
 
     KIconButton *button = new KIconButton;
+    connect(button, SIGNAL(iconChanged(QString)), this, SIGNAL(changed()));
+
     QTimeEdit *duration = new QTimeEdit;
-    connect(duration, SIGNAL(timeChanged(QTime)), this, SIGNAL(durationChanged()));
+    connect(duration, SIGNAL(timeChanged(QTime)), this, SIGNAL(changed()));
 
     duration->setDisplayFormat("hh:mm:ss");
 
