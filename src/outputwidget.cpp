@@ -97,11 +97,14 @@ void OutputWidget::setOutputFile(const QString &file)
 void OutputWidget::outputFileChangedInternal(const QString &newFile)
 {
 
-    if (!m_file.isEmpty()) {
+    const bool wasDir = QFileInfo(m_file).isDir();
+    const bool isDir = QFileInfo(newFile).isDir();
+
+    if (!m_file.isEmpty() && !wasDir) {
         KDirWatch::self()->removeFile(m_file);
     }
     m_file = newFile;
-    if (!m_file.isEmpty()) {
+    if (!m_file.isEmpty() && !isDir) {
         KDirWatch::self()->addFile(m_file);
     }
     fileDirty(m_file, !exists());
