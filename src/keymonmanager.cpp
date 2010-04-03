@@ -22,6 +22,9 @@
 #include "keymonmanager.h"
 #include "keymon/manager.h"
 
+// Qt
+#include <QtCore/QEventLoop>
+
 // KDE
 #include <kglobal.h>
 #include <kdebug.h>
@@ -152,6 +155,21 @@ void KeyMonManager::stop()
     action.stop();
 
     m_started = false;
+
+}
+
+
+void KeyMonManager::waitForStarted()
+{
+
+    if (!m_started) {
+        return;
+    }
+
+    QEventLoop loop;
+    connect(this, SIGNAL(started()), &loop, SLOT(quit()));
+    connect(this, SIGNAL(stopped()), &loop, SLOT(quit()));
+    loop.exec();
 
 }
 

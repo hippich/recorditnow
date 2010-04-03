@@ -50,6 +50,7 @@ public:
     QString error() const;
     bool start(const QStringList &devs);
     void stop();
+    void waitForStarted();
 
 
 private:

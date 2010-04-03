@@ -1114,6 +1114,8 @@ void MainWindow::initKeyMon(const bool &start)
     if (!keyMonDevs.isEmpty() && start) {
         if (!KeyMonManager::self()->start(keyMonDevs) && !KeyMonManager::self()->error().isEmpty()) {
             errorNotification(KeyMonManager::self()->error());
+        } else {
+            KeyMonManager::self()->waitForStarted();
         }
     } else if (!start) {
         KeyMonManager::self()->stop();
