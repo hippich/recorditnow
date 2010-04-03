@@ -33,7 +33,7 @@ ConfigPage::ConfigPage(KConfig *cfg, QWidget *parent)
     : QWidget(parent), m_config(cfg)
 {
 
-    m_settingsChanged = false;
+    setConfigChanged(false);
     Q_ASSERT(m_config);
 
 }
@@ -60,7 +60,7 @@ void ConfigPage::save()
 
     if (hasChanged()) {
         saveConfig();
-        m_settingsChanged = false;
+        setConfigChanged(false);
     }
 
 }
@@ -70,7 +70,7 @@ void ConfigPage::defaults()
 {
 
     setDefaults();
-    m_settingsChanged = true;
+    setConfigChanged(true);
 
 }
 
@@ -79,7 +79,7 @@ void ConfigPage::load()
 {
 
     loadConfig();
-    m_settingsChanged = false;
+    setConfigChanged(false);
 
 }
 
