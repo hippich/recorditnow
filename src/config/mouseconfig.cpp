@@ -27,7 +27,6 @@
 #include <kicon.h>
 #include <kcolorbutton.h>
 #include <kmessagebox.h>
-#include <kwindowsystem.h>
 
 // Qt
 #include <QtGui/QTreeWidget>
@@ -58,7 +57,6 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
     cursorWidget->switchToPreviewMode();
 
-   // connect(this, SIGNAL(configChanged(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
@@ -66,15 +64,15 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(kcfg_target, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(currentButtonChanged()));
+    connect(RecordItNow::Helper::self(), SIGNAL(compositingChanged(bool)), this,
+            SLOT(compositingChanged(bool)));
 
     m_visibleGroup = new QButtonGroup(this);
     m_visibleGroup->addButton(kcfg_mouseWidgetInvisible);
     m_visibleGroup->addButton(kcfg_mouseWidgetAlwaysVisible);
     m_visibleGroup->setExclusive(true);
 
-    if (!KWindowSystem::compositingActive()) {
-        kcfg_circle->setText(i18n("Square"));
-    }
+    compositingChanged(RecordItNow::Helper::self()->compositingActive());
 
     buttonsChanged();
     currentButtonChanged();
@@ -377,13 +375,7 @@ void MouseConfig::buttonsChanged()
 void MouseConfig::modeChanged()
 {
 
-    if (!KWindowSystem::compositingActive()) {
-        kcfg_cursorOpacity->setDisabled(true);
-        opacityLabel->setDisabled(true);
-        kcfg_target->setDisabled(true);
-    } else {
-        kcfg_target->setDisabled(false);
-    }
+    compositingChanged(RecordItNow::Helper::self()->compositingActive());
 
 }
 
@@ -401,6 +393,23 @@ void MouseConfig::currentButtonChanged()
 }
 
 
+void MouseConfig::compositingChanged(const bool &active)
+{
+
+    if (!active) {
+        kcfg_circle->setText(i18n("Square"));
+        kcfg_cursorOpacity->setEnabled(false);
+        opacityLabel->setEnabled(false);
+    } else {
+        kcfg_circle->setText(i18n("Circle"));
+        if (kcfg_circle->isChecked()) {
+            kcfg_cursorOpacity->setEnabled(true);
+            opacityLabel->setEnabled(true);
+        }
+    }
+    kcfg_target->setEnabled(active);
+
+}
 
 
 #include "mouseconfig.moc"

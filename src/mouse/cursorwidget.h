@@ -85,6 +85,7 @@ private slots:
     void resetColor();
     void buttonPressed(const KeyMon::Event &event);
     void previewColors();
+    void updateMask();
 
 
 protected:
@@ -93,7 +94,6 @@ protected:
     void paintCircle(QPainter *painter);
     void paintTarget(QPainter *painter);
     void resizeEvent(QResizeEvent *event);
-    void updateMask();
 
 
 signals:

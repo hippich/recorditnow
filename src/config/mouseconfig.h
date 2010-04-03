@@ -71,6 +71,7 @@ private slots:
     void buttonsChanged();
     void modeChanged();
     void currentButtonChanged();
+    void compositingChanged(const bool &active);
 
 
 };

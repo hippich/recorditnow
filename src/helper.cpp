@@ -22,17 +22,44 @@
 #include "helper.h"
 #include <recorditnow.h>
 
+// KDE
+#include <kmanagerselection.h>
+#include <kwindowsystem.h>
+
+// Qt
+#include <QtGui/QX11Info>
+
 
 namespace RecordItNow {
 
 
 Helper::Helper()
+    : QObject(0)
 {
 
     m_firstStart = Settings::firstStart();
     if (firstStart()) {
         Settings::self()->setFirstStart(false);
     }
+
+    Display *dpy = QX11Info::display();
+    int screen = DefaultScreen(dpy);
+    char net_wm_cm_name[100];
+    sprintf(net_wm_cm_name, "_NET_WM_CM_S%d", screen);
+
+    m_compositeWatcher = new KSelectionWatcher(net_wm_cm_name, -1, this);
+    connect(m_compositeWatcher, SIGNAL(newOwner(Window)), this, SLOT(compositingChanged()));
+    connect(m_compositeWatcher, SIGNAL(lostOwner()), this, SLOT(compositingChanged()));
+
+    m_compositingActive = KWindowSystem::compositingActive();
+
+}
+
+
+Helper::~Helper()
+{
+
+    delete m_compositeWatcher;
 
 }
 
@@ -63,5 +90,24 @@ bool Helper::firstStart() const
 }
 
 
+bool Helper::compositingActive() const
+{
+
+    return m_compositingActive;
+
+}
+
+
+void Helper::compositingChanged()
+{
+
+    m_compositingActive = KWindowSystem::compositingActive();
+    emit compositingChanged(m_compositingActive);
+
+}
+
+
 } // namespace RecordItNow
 
+
+#include "helper.moc"

@@ -22,11 +22,11 @@
 #include "cursorwidget.h"
 #include "config/mousebuttonwidget.h"
 #include "keymonmanager.h"
+#include "helper.h"
 
 // KDE
 #include <kdebug.h>
 #include <kapplication.h>
-#include <kwindowsystem.h>
 #include <kxerrorhandler.h>
 #include <klocalizedstring.h>
 
@@ -79,6 +79,7 @@ CursorWidget::CursorWidget(QWidget *parent)
 
     connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
             SLOT(buttonPressed(KeyMon::Event)));
+    connect(RecordItNow::Helper::self(), SIGNAL(compositingChanged(bool)), this, SLOT(updateMask()));
 
 }
 
@@ -344,7 +345,7 @@ void CursorWidget::paintLED(QPainter *painter)
 {
 
     painter->setRenderHint(QPainter::Antialiasing);
-    const bool compositing = KWindowSystem::compositingActive();
+    const bool compositing = RecordItNow::Helper::self()->compositingActive();
 
 
     if (!compositing) {
@@ -387,7 +388,7 @@ void CursorWidget::paintCircle(QPainter *painter)
 
     painter->setRenderHints(QPainter::Antialiasing|QPainter::HighQualityAntialiasing);
 
-    if (KWindowSystem::compositingActive()) {
+    if (RecordItNow::Helper::self()->compositingActive()) {
         QRadialGradient grad(contentsRect().center(), size().height());
         grad.setColorAt(0, m_currentButton.color());
         grad.setColorAt(1, Qt::transparent);
@@ -404,7 +405,7 @@ void CursorWidget::paintCircle(QPainter *painter)
 void CursorWidget::paintTarget(QPainter *painter)
 {
 
-    if (!KWindowSystem::compositingActive()) {
+    if (!RecordItNow::Helper::self()->compositingActive()) {
         paintCircle(painter);
         return;
     }
@@ -461,20 +462,20 @@ void CursorWidget::updateMask()
 {
 
     switch (m_mode) {
-    case TargetMode: setMask(QRegion()); break;
+    case TargetMode: clearMask(); break;
     case CircleMode: {
-            if (!KWindowSystem::compositingActive()) {
+            if (!RecordItNow::Helper::self()->compositingActive()) {
                 QRect maskRect = rect();
                 maskRect.setHeight(maskRect.height()-10);
                 maskRect.setWidth(maskRect.width()-10);
                 maskRect.moveCenter(rect().center());
                 setMask(QRegion(maskRect).xored(QRegion(rect())));
             } else {
-                setMask(QRegion());
+                clearMask();
             }
             break;
         }
-    case LEDMode: setMask(QRegion()); break;
+    case LEDMode: clearMask(); break;
     }
 
 }

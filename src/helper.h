@@ -28,11 +28,13 @@
 #include <QtCore/QDataStream>
 
 
+class KSelectionWatcher;
 namespace RecordItNow {
 
 
-class Helper
+    class Helper : public QObject
 {
+    Q_OBJECT
 
 
 public:
@@ -64,13 +66,25 @@ public:
     static Helper *self();
 
     bool firstStart() const;
+    bool compositingActive() const;
 
 
 private:
     friend class HelperSingleton;
     Helper();
+    ~Helper();
 
     bool m_firstStart;
+    KSelectionWatcher *m_compositeWatcher;
+    bool m_compositingActive;
+
+
+private slots:
+    void compositingChanged();
+
+
+signals:
+    void compositingChanged(const bool &active);
 
 
 };
