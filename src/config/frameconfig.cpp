@@ -105,12 +105,6 @@ void FrameConfig::writeSizes(const QList<FrameSize> &sizes, KConfig *config)
     QStringList list;
 
     KConfigGroup cfg(config, "Frame");
-    /*foreach (const Size &s, sizes) {
-        cfg.writeEntry(QString("Size %1").arg(s.first), s.second);
-        list.append(s.first);
-    }
-    cfg.writeEntry("Names", list);
-    */
     cfg.writeEntry("Frames", RecordItNow::Helper::listToArray(sizes));
     cfg.sync();
 
@@ -157,7 +151,7 @@ void FrameConfig::add()
     newTreeWidgetItem(sizeEdit->text(), QSize(100, 100), sizeTree->topLevelItemCount());
     sizeEdit->clear();
 
-    emit configChanged();
+    emit configChanged(readSizes(config()) != sizes());
 
 }
 
@@ -175,7 +169,7 @@ void FrameConfig::remove()
     sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(item));
     delete item;
 
-    emit configChanged();
+    emit configChanged(readSizes(config()) != sizes());
 
 }
 
@@ -232,7 +226,7 @@ void FrameConfig::move(const int &from, const int &to)
 
     sizeTree->setCurrentItem(item);
 
-    emit configChanged();
+    emit configChanged(readSizes(config()) != sizes());
 
 }
 
@@ -281,7 +275,7 @@ void FrameConfig::itemChanged(QTreeWidgetItem *item, int column)
     Q_UNUSED(item);
     Q_UNUSED(column);
 
-    emit configChanged();
+    emit configChanged(readSizes(config()) != sizes());
 
 }
 

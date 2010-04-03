@@ -33,7 +33,10 @@ ConfigPage::ConfigPage(KConfig *cfg, QWidget *parent)
     : QWidget(parent), m_config(cfg)
 {
 
+    m_settingsChanged = false;
     Q_ASSERT(m_config);
+
+    connect(this, SIGNAL(configChanged(bool)), this, SLOT(configChangedInternal(bool)));
 
 }
 
@@ -42,6 +45,50 @@ ConfigPage::~ConfigPage()
 {
 
 
+
+}
+
+
+bool ConfigPage::hasChanged()
+{
+
+    return m_settingsChanged;
+
+}
+
+
+void ConfigPage::save()
+{
+
+    saveConfig();
+    m_settingsChanged = false;
+
+}
+
+
+void ConfigPage::defaults()
+{
+
+    setDefaults();
+    m_settingsChanged = true;
+
+}
+
+
+void ConfigPage::load()
+{
+
+    loadConfig();
+    m_settingsChanged = false;
+
+}
+
+
+void ConfigPage::configChangedInternal(const bool &changed)
+{
+
+    m_settingsChanged = changed;
+    emit settingsChanged();
 
 }
 

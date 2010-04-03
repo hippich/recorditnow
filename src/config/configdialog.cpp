@@ -110,8 +110,8 @@ void ConfigDialog::init()
     connect(this, SIGNAL(settingsChanged(QString)), this, SLOT(saveSettings()));
 
     foreach (RecordItNow::ConfigPage *page, m_pageList) {
-        connect(page, SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
-        page->loadConfig();
+        page->load();
+        connect(page, SIGNAL(settingsChanged()), this, SLOT(pageConfigChanged()));
     }
 
 }
@@ -152,8 +152,8 @@ void ConfigDialog::encoderChanged()
 void ConfigDialog::pageConfigChanged()
 {
 
-    enableButtonApply(true);
     updateEncoderCombo();
+    updateButtons();
 
 }
 
@@ -163,10 +163,24 @@ void ConfigDialog::saveSettings()
 
     Settings::setEncoderName(ui_settings.encoderCombo->currentText());
     foreach (RecordItNow::ConfigPage *page, m_pageList) {
-        page->saveConfig();
+        page->save();
     }
+    updateButtons();
 
     emit settingsSaved();
+
+}
+
+
+bool ConfigDialog::hasChanged()
+{
+
+    foreach (RecordItNow::ConfigPage *page, m_pageList) {
+        if (page->hasChanged()) {
+            return true;
+        }
+    }
+    return false;
 
 }
 
@@ -177,7 +191,7 @@ void ConfigDialog::updateWidgetsDefault()
     KConfigDialog::updateWidgetsDefault();
 
     foreach (RecordItNow::ConfigPage *page, m_pageList) {
-        page->setDefaults();
+        page->defaults();
     }
     enableButtonApply(true);
 
@@ -187,8 +201,7 @@ void ConfigDialog::updateWidgetsDefault()
 void ConfigDialog::updateSettings()
 {
 
-    KConfigDialog::updateSettings();
-    enableButtonApply(false);
+    saveSettings();
 
 }
 

@@ -47,7 +47,8 @@ TimelineConfig::TimelineConfig(KConfig *cfg, QWidget *parent)
     connect(upButton, SIGNAL(clicked()), this, SLOT(upClicked()));
     connect(downButton, SIGNAL(clicked()), this, SLOT(downClicked()));
     connect(treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
-    connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SIGNAL(configChanged()));
+    connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this,
+            SLOT(itemChanged(QTreeWidgetItem*,int)));
 
     treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
 
@@ -65,24 +66,7 @@ TimelineConfig::~TimelineConfig()
 void TimelineConfig::saveConfig()
 {
 
-    QList<RecordItNow::Timeline::Topic> topics;
-
-    for (int i = 0; i < treeWidget->invisibleRootItem()->childCount(); i++) {
-        QTreeWidgetItem *item = treeWidget->invisibleRootItem()->child(i);
-
-        QString title = item->text(0);
-        QString icon = static_cast<KIconButton*>(treeWidget->itemWidget(item, 1))->icon();
-        QTime dTime = static_cast<QTimeEdit*>(treeWidget->itemWidget(item, 2))->time();
-
-        RecordItNow::Timeline::Topic topic;
-        topic.setDuration(dTime);
-        topic.setIcon(icon);
-        topic.setTitle(title);
-
-        topics.append(topic);
-    }
-
-    saveTopics(topics, Settings::self()->config());
+    saveTopics(currentTopics(), Settings::self()->config());
 
 }
 
@@ -90,9 +74,7 @@ void TimelineConfig::saveConfig()
 void TimelineConfig::setDefaults()
 {
 
-
-    saveTopics(defaultTopics(), Settings::self()->config());
-    loadConfig();
+    setTopics(defaultTopics());
 
 }
 
@@ -100,18 +82,7 @@ void TimelineConfig::setDefaults()
 void TimelineConfig::loadConfig()
 {
 
-    treeWidget->clear();
-    QList<RecordItNow::Timeline::Topic> topics = loadTopics(Settings::self()->config());
-
-    for (int i = 0; i < topics.size(); i++) {
-        addTopic(); // create widgets
-    }
-
-
-    for (int i = 0; i < topics.size(); i++) {
-        TopicTreeItem *item = static_cast<TopicTreeItem*>(treeWidget->invisibleRootItem()->child(i));
-        item->setTopic(topics.at(i));
-    }
+    setTopics(loadTopics(config()));
 
 }
 
@@ -165,12 +136,56 @@ QList<RecordItNow::Timeline::Topic> TimelineConfig::defaultTopics()
 }
 
 
+QList<RecordItNow::Timeline::Topic> TimelineConfig::currentTopics() const
+{
+
+    QList<RecordItNow::Timeline::Topic> topics;
+
+    for (int i = 0; i < treeWidget->invisibleRootItem()->childCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->invisibleRootItem()->child(i);
+
+        QString title = item->text(0);
+        QString icon = static_cast<KIconButton*>(treeWidget->itemWidget(item, 1))->icon();
+        QTime dTime = static_cast<QTimeEdit*>(treeWidget->itemWidget(item, 2))->time();
+
+        RecordItNow::Timeline::Topic topic;
+        topic.setDuration(dTime);
+        topic.setIcon(icon);
+        topic.setTitle(title);
+
+        topics.append(topic);
+    }
+
+    return topics;
+
+}
+
+
+void TimelineConfig::setTopics(const QList<RecordItNow::Timeline::Topic> &topics)
+{
+
+    treeWidget->clear();
+
+    for (int i = 0; i < topics.size(); i++) {
+        addTopic(); // create widgets
+    }
+
+
+    for (int i = 0; i < topics.size(); i++) {
+        TopicTreeItem *item = static_cast<TopicTreeItem*>(treeWidget->invisibleRootItem()->child(i));
+        item->setTopic(topics.at(i));
+    }
+
+}
+
+
 void TimelineConfig::addTopic()
 {
 
     TopicTreeItem *item = new TopicTreeItem(treeWidget);
     connect(item, SIGNAL(durationChanged()), this, SLOT(updateTotalDuration()));
 
+    emit configChanged(loadTopics(config()) != currentTopics());
 }
 
 
@@ -182,6 +197,7 @@ void TimelineConfig::removeTopic()
         treeWidget->invisibleRootItem()->removeChild(child);
     }
     updateTotalDuration();
+    emit configChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -207,7 +223,7 @@ void TimelineConfig::upClicked()
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
 
-    emit configChanged();
+    emit configChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -233,7 +249,7 @@ void TimelineConfig::downClicked()
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
 
-    emit configChanged();
+    emit configChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -264,6 +280,19 @@ void TimelineConfig::updateTotalDuration()
         duration += item->duration();
     }
     totalDurationEdit->setTime(RecordItNow::Timeline::Topic::secondsToTime(duration));
+
+    emit configChanged(loadTopics(config()) != currentTopics());
+
+}
+
+
+void TimelineConfig::itemChanged(QTreeWidgetItem *item, int column)
+{
+
+    Q_UNUSED(item);
+    Q_UNUSED(column);
+
+    emit configChanged(loadTopics(config()) != currentTopics());
 
 }
 

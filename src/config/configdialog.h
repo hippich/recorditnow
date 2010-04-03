@@ -64,6 +64,10 @@ private slots:
     void saveSettings();
 
 
+protected:
+    bool hasChanged();
+
+
 protected slots:
     void updateWidgetsDefault();
     void updateSettings();

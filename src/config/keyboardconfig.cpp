@@ -97,8 +97,6 @@ QList<KeyboardKey> KeyboardConfig::defaultKeys()
         }
     }
 
-    kDebug() << "theme dir:" << themeDir;
-
     if (themeDir.isEmpty()) {
         return keys;
     }
@@ -132,8 +130,49 @@ QList<KeyboardKey> KeyboardConfig::defaultKeys()
 void KeyboardConfig::loadConfig()
 {
 
-    QList<KeyboardKey> list(readConfig(config()));
-    foreach (const KeyboardKey &key, list) {
+    setKeys(readConfig(config()));
+
+}
+
+
+void KeyboardConfig::saveConfig()
+{
+
+    saveConfig(currentKeys(), config());
+
+}
+
+
+void KeyboardConfig::setDefaults()
+{
+
+    setKeys(defaultKeys());
+
+}
+
+
+QList<KeyboardKey> KeyboardConfig::currentKeys() const
+{
+
+    QList<KeyboardKey> keys;
+    for (int i = 0; i < listWidget->count(); i++) {
+        QListWidgetItem *item = listWidget->item(i);
+
+        KeyboardKey key(item->data(Qt::UserRole+1).toInt(),
+                        item->data(Qt::UserRole+2).toString(),
+                        item->text());
+        keys.append(key);
+    }
+    return keys;
+
+}
+
+
+void KeyboardConfig::setKeys(const QList<KeyboardKey> &keys)
+{
+
+    listWidget->clear();
+    foreach (const KeyboardKey &key, keys) {
         QListWidgetItem *item = new QListWidgetItem();
         item->setText(key.text());
         item->setIcon(KIcon(key.icon()));
@@ -143,40 +182,7 @@ void KeyboardConfig::loadConfig()
         listWidget->addItem(item);
     }
 
-}
-
-
-void KeyboardConfig::saveConfig()
-{
-
-   // KConfigGroup group(config(), "Keyboard");
-
-    QList<KeyboardKey> keys;
-   // int count = 0;
-    for (int i = 0; i < listWidget->count(); i++) {
-        QListWidgetItem *item = listWidget->item(i);
-
-        KeyboardKey key(item->data(Qt::UserRole+1).toInt(),
-                        item->data(Qt::UserRole+2).toString(),
-                        item->text());
-        keys.append(key);
-     /*   group.writeEntry(QString("Key %1 Code").arg(i), item->data(Qt::UserRole+1).toInt());
-        group.writeEntry(QString("Key %1 Icon").arg(i), item->data(Qt::UserRole+2).toString());
-        group.writeEntry(QString("Key %1 Text").arg(i), item->text());
-        count++;
-        */
-    }
-
-    saveConfig(keys, config());
-   // group.writeEntry("Keys", count);
-
-}
-
-
-void KeyboardConfig::setDefaults()
-{
-
-    listWidget->clear();
+    emit configChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -206,7 +212,7 @@ void KeyboardConfig::remove()
     listWidget->takeItem(listWidget->row(item));
     delete item;
 
-    emit configChanged();
+    emit configChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -227,7 +233,7 @@ void KeyboardConfig::up()
 
     listWidget->setCurrentItem(item);
 
-    emit configChanged();
+    emit configChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -248,7 +254,7 @@ void KeyboardConfig::down()
 
     listWidget->setCurrentItem(item);
 
-    emit configChanged();
+    emit configChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -289,7 +295,7 @@ void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const Q
 
     listWidget->addItem(item);
 
-    emit configChanged();
+    emit configChanged(readConfig(config()) != currentKeys());
 
 }
 

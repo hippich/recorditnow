@@ -39,23 +39,36 @@ public:
     explicit ConfigPage(KConfig *cfg, QWidget *parent = 0);
     ~ConfigPage();
 
+    bool hasChanged();
+
 
 public slots:
-    virtual void saveConfig() {};
-    virtual void setDefaults() {};
-    virtual void loadConfig() {};
+    void save();
+    void defaults();
+    void load();
 
 
 private:
     KConfig *m_config;
+    bool m_settingsChanged;
+
+
+private slots:
+    void configChangedInternal(const bool &changed);
 
 
 protected:
     KConfig *config() const;
 
+    virtual void saveConfig() {};
+    virtual void setDefaults() {};
+    virtual void loadConfig() {};
+
+    Q_SIGNAL void configChanged(const bool &changed = true);
+
 
 signals:
-    void configChanged();
+    void settingsChanged();
 
 
 };

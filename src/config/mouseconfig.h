@@ -59,6 +59,7 @@ private:
     QButtonGroup *m_visibleGroup;
 
     bool contains(const MouseButtonWidget::Button &button, QWidget *exclude = 0) const;
+    QList<MouseButton> currentButtons() const;
 
 
 private slots:

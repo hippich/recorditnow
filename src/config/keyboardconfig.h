@@ -49,6 +49,12 @@ public:
     void setDefaults();
 
 
+private:
+    QList<KeyboardKey> currentKeys() const;
+
+    void setKeys(const QList<KeyboardKey> &keys);
+
+
 private slots:
     void add();
     void remove();

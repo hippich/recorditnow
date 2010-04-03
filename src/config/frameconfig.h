@@ -43,6 +43,7 @@ public:
 
     QList<FrameSize> sizes() const;
 
+
     static QList<FrameSize> defaultSizes();
     static QList<FrameSize> readSizes(KConfig *config);
     static void writeSizes(const QList<FrameSize> &sizes, KConfig *config);

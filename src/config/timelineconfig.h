@@ -45,6 +45,12 @@ public:
     static QList<RecordItNow::Timeline::Topic> defaultTopics();
 
 
+private:
+    QList<RecordItNow::Timeline::Topic> currentTopics() const;
+
+    void setTopics(const QList<RecordItNow::Timeline::Topic> &topics);
+
+
 private slots:
     void addTopic();
     void removeTopic();
@@ -52,6 +58,7 @@ private slots:
     void downClicked();
     void itemSelectionChanged();
     void updateTotalDuration();
+    void itemChanged(QTreeWidgetItem *item, int column);
 
 
 };

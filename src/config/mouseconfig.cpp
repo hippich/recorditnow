@@ -93,17 +93,7 @@ MouseConfig::~MouseConfig()
 void MouseConfig::saveConfig()
 {
 
-    QList<MouseButton> list;
-
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
-        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
-
-        list.append(MouseButton(button, color));
-    }
-
-    saveConfig(config(), list);
+    saveConfig(config(), currentButtons());
 
 }
 
@@ -267,6 +257,23 @@ bool MouseConfig::contains(const MouseButtonWidget::Button &button, QWidget *exc
 }
 
 
+QList<MouseButton> MouseConfig::currentButtons() const
+{
+
+    QList<MouseButton> list;
+    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
+        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
+        const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
+        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
+
+        list.append(MouseButton(button, color));
+    }
+
+    return list;
+
+}
+
+
 void MouseConfig::addClicked()
 {
 
@@ -289,7 +296,7 @@ void MouseConfig::addClicked()
     treeWidget->setItemWidget(item, 1, button);
     treeWidget->setItemWidget(item, 2, newButton());
 
-    emit configChanged();
+    emit configChanged(getButtons(config()) != currentButtons());
 
 }
 
@@ -303,7 +310,7 @@ void MouseConfig::removeClicked()
             treeWidget->invisibleRootItem()->removeChild(item);
         }
     }
-    emit configChanged();
+    emit configChanged(getButtons(config()) != currentButtons());
 
 }
 
@@ -327,7 +334,7 @@ void MouseConfig::buttonChanged(const MouseButtonWidget::Button &oldButton,
                                             MouseButtonWidget::getName(newButton)));
         changed->setButton(oldButton);
     }
-    emit configChanged();
+    emit configChanged(getButtons(config()) != currentButtons());
 
 }
 

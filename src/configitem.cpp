@@ -79,7 +79,7 @@ ConfigItem &ConfigItem::operator=(const ConfigItem &rhs)
 bool ConfigItem::operator==(const ConfigItem &rhs) const
 {
 
-    return d == rhs.d;
+    return d.data()->data == rhs.d.data()->data;
 
 }
 
@@ -87,7 +87,7 @@ bool ConfigItem::operator==(const ConfigItem &rhs) const
 bool ConfigItem::operator!=(const ConfigItem &rhs) const
 {
 
-    return d != rhs.d;
+    return d.data()->data != rhs.d.data()->data;
 
 }
 
