@@ -101,7 +101,7 @@ bool Helper::compositingActive() const
 void Helper::compositingChanged()
 {
 
-    m_compositingActive = KWindowSystem::compositingActive();
+    m_compositingActive = m_compositeWatcher->owner() != None;
     emit compositingChanged(m_compositingActive);
 
 }
