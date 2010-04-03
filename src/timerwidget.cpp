@@ -127,7 +127,7 @@ void TimerWidget::stopTimerInternal(const bool &closeNotification)
 void TimerWidget::upClicked()
 {
 
-    if (value() < 61) {
+    if (value() < 60) {
         setValue(value()+1);
     }
 

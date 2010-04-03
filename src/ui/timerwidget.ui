@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <property name="verticalSpacing">
-    <number>-1</number>
+    <number>1</number>
    </property>
    <property name="margin">
     <number>1</number>
@@ -38,7 +38,7 @@
    <item row="0" column="0" rowspan="2">
     <widget class="QLCDNumber" name="lcd">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -53,9 +53,12 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="smallDecimalPoint">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="numDigits">
+      <number>2</number>
+     </property>
+     <property name="digitCount">
       <number>2</number>
      </property>
      <property name="mode">
@@ -76,8 +79,14 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QToolButton" name="upButton">
+   <item row="1" column="2">
+    <widget class="QToolButton" name="downButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>
@@ -89,8 +98,14 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QToolButton" name="downButton">
+   <item row="0" column="2">
+    <widget class="QToolButton" name="upButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>

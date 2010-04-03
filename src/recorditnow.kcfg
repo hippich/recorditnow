@@ -92,7 +92,7 @@
   </group>
   <group name="Zoom">
     <entry name="zoomDockEnabled" type="Bool">
-            <default>false</default>
+            <default>true</default>
     </entry>
     <entry name="zoomFactor" type="Int">
             <default>2</default>
