@@ -36,8 +36,6 @@ ConfigPage::ConfigPage(KConfig *cfg, QWidget *parent)
     m_settingsChanged = false;
     Q_ASSERT(m_config);
 
-    connect(this, SIGNAL(configChanged(bool)), this, SLOT(configChangedInternal(bool)));
-
 }
 
 
@@ -86,19 +84,19 @@ void ConfigPage::load()
 }
 
 
-void ConfigPage::configChangedInternal(const bool &changed)
-{
-
-    m_settingsChanged = changed;
-    emit settingsChanged();
-
-}
-
-
 KConfig *ConfigPage::config() const
 {
 
     return m_config;
+
+}
+
+
+void ConfigPage::setConfigChanged(const bool &changed)
+{
+
+    m_settingsChanged = changed;
+    emit settingsChanged();
 
 }
 

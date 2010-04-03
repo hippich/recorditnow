@@ -150,7 +150,7 @@ void FrameConfig::add()
     newTreeWidgetItem(sizeEdit->text(), QSize(100, 100), sizeTree->topLevelItemCount());
     sizeEdit->clear();
 
-    emit configChanged(readSizes(config()) != sizes());
+    setConfigChanged(readSizes(config()) != sizes());
 
 }
 
@@ -168,7 +168,7 @@ void FrameConfig::remove()
     sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(item));
     delete item;
 
-    emit configChanged(readSizes(config()) != sizes());
+    setConfigChanged(readSizes(config()) != sizes());
 
 }
 
@@ -225,7 +225,7 @@ void FrameConfig::move(const int &from, const int &to)
 
     sizeTree->setCurrentItem(item);
 
-    emit configChanged(readSizes(config()) != sizes());
+    setConfigChanged(readSizes(config()) != sizes());
 
 }
 
@@ -271,7 +271,7 @@ void FrameConfig::textChanged(const QString &text)
 void FrameConfig::itemChanged()
 {
 
-    emit configChanged(readSizes(config()) != sizes());
+    setConfigChanged(readSizes(config()) != sizes());
 
 }
 

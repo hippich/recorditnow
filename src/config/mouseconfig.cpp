@@ -369,7 +369,7 @@ void MouseConfig::buttonsChanged()
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
     currentButtonChanged();
 
-    emit configChanged(getButtons(config()) != buttons);
+    setConfigChanged(getButtons(config()) != buttons);
 
 }
 

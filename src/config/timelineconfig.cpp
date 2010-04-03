@@ -185,7 +185,7 @@ void TimelineConfig::addTopic()
     TopicTreeItem *item = new TopicTreeItem(treeWidget);
     connect(item, SIGNAL(durationChanged()), this, SLOT(updateTotalDuration()));
 
-    emit configChanged(loadTopics(config()) != currentTopics());
+    setConfigChanged(loadTopics(config()) != currentTopics());
 }
 
 
@@ -197,7 +197,7 @@ void TimelineConfig::removeTopic()
         treeWidget->invisibleRootItem()->removeChild(child);
     }
     updateTotalDuration();
-    emit configChanged(loadTopics(config()) != currentTopics());
+    setConfigChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -223,7 +223,7 @@ void TimelineConfig::upClicked()
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
 
-    emit configChanged(loadTopics(config()) != currentTopics());
+    setConfigChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -249,7 +249,7 @@ void TimelineConfig::downClicked()
     treeWidget->invisibleRootItem()->removeChild(item);
     treeWidget->setCurrentItem(copy);
 
-    emit configChanged(loadTopics(config()) != currentTopics());
+     setConfigChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -281,7 +281,7 @@ void TimelineConfig::updateTotalDuration()
     }
     totalDurationEdit->setTime(RecordItNow::Timeline::Topic::secondsToTime(duration));
 
-    emit configChanged(loadTopics(config()) != currentTopics());
+    setConfigChanged(loadTopics(config()) != currentTopics());
 
 }
 
@@ -292,7 +292,7 @@ void TimelineConfig::itemChanged(QTreeWidgetItem *item, int column)
     Q_UNUSED(item);
     Q_UNUSED(column);
 
-    emit configChanged(loadTopics(config()) != currentTopics());
+    setConfigChanged(loadTopics(config()) != currentTopics());
 
 }
 

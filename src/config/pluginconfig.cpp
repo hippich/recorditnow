@@ -69,7 +69,7 @@ void PluginConfig::loadConfig()
 void PluginConfig::pluginSettingsChanged(const bool &changed)
 {
 
-    emit configChanged(changed);
+    setConfigChanged(changed);
     if (!changed) {
         return;
     }

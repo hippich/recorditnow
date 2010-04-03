@@ -26,7 +26,7 @@ NotificationConfig::NotificationConfig(KConfig *cfg, QWidget *parent)
 {
 
     setupUi(this);
-    connect(notifyWidget, SIGNAL(changed(bool)), this, SIGNAL(configChanged(bool)));
+    connect(notifyWidget, SIGNAL(changed(bool)), this, SLOT(setConfigChanged(bool)));
 
 }
 

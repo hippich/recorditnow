@@ -52,9 +52,7 @@ private:
     KConfig *m_config;
     bool m_settingsChanged;
 
-
-private slots:
-    void configChangedInternal(const bool &changed);
+    Q_SIGNAL void settingsChanged();
 
 
 protected:
@@ -64,11 +62,9 @@ protected:
     virtual void setDefaults() {};
     virtual void loadConfig() {};
 
-    Q_SIGNAL void configChanged(const bool &changed);
 
-
-signals:
-    void settingsChanged();
+protected slots:
+    void setConfigChanged(const bool &changed);
 
 
 };

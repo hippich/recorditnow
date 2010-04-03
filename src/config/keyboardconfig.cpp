@@ -182,7 +182,7 @@ void KeyboardConfig::setKeys(const QList<KeyboardKey> &keys)
         listWidget->addItem(item);
     }
 
-    emit configChanged(readConfig(config()) != currentKeys());
+    setConfigChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -212,7 +212,7 @@ void KeyboardConfig::remove()
     listWidget->takeItem(listWidget->row(item));
     delete item;
 
-    emit configChanged(readConfig(config()) != currentKeys());
+    setConfigChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -233,7 +233,7 @@ void KeyboardConfig::up()
 
     listWidget->setCurrentItem(item);
 
-    emit configChanged(readConfig(config()) != currentKeys());
+    setConfigChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -254,7 +254,7 @@ void KeyboardConfig::down()
 
     listWidget->setCurrentItem(item);
 
-    emit configChanged(readConfig(config()) != currentKeys());
+    setConfigChanged(readConfig(config()) != currentKeys());
 
 }
 
@@ -295,7 +295,7 @@ void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const Q
 
     listWidget->addItem(item);
 
-    emit configChanged(readConfig(config()) != currentKeys());
+    setConfigChanged(readConfig(config()) != currentKeys());
 
 }
 
