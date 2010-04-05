@@ -12,7 +12,10 @@ target_link_libraries(recorditnow_keymon ${KDE4_KDECORE_LIBS} ${KDE4_SOLID_LIBS}
 install(TARGETS recorditnow_keymon ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 
-set(KAUTH_HELPER_BACKEND_NAME "DBUS")
+if (${KDE_VERSION} VERSION_LESS "4.4.2")
+    set(KAUTH_HELPER_BACKEND_NAME "DBUS")
+endif(${KDE_VERSION} VERSION_LESS "4.4.2")
+
 # helper
 set(HELPER_SRCS
     devicehelper.cpp)
