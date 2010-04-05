@@ -1033,11 +1033,32 @@ void MainWindow::frameSizesChanged(const QList<FrameSize> &sizes)
         boxAction->removeAction(act);
     }
 
-    foreach (const FrameSize &size, sizes) {
+    for (int i = 0; i < sizes.size(); i++) {
+        const FrameSize size = sizes.at(i);
+
         KAction *frameResAction = new KAction(this);
         frameResAction->setData(QVariant::fromValue(size));
         frameResAction->setText(size.text());
         frameResAction->setProperty("CleanText", size.text());
+
+        if (i < 10) {
+            Qt::Key key;
+
+            switch (i) {
+            case 0: key = Qt::Key_0; break;
+            case 1: key = Qt::Key_1; break;
+            case 2: key = Qt::Key_2; break;
+            case 3: key = Qt::Key_3; break;
+            case 4: key = Qt::Key_4; break;
+            case 5: key = Qt::Key_5; break;
+            case 6: key = Qt::Key_6; break;
+            case 7: key = Qt::Key_7; break;
+            case 8: key = Qt::Key_8; break;
+            default: key = Qt::Key_9; break;
+            }
+
+            frameResAction->setShortcut(Qt::CTRL+key);
+        }
         connect(frameResAction, SIGNAL(triggered()), this, SLOT(resolutionActionTriggered()));
 
         boxAction->addAction(frameResAction);
