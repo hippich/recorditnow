@@ -32,7 +32,7 @@ Q_OBJECT
 
 
 public:
-    explicit UploadWizard(QWidget *parent = 0);
+    explicit UploadWizard(const QString &video, QWidget *parent = 0);
 
 
 protected:

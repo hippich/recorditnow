@@ -867,7 +867,8 @@ void MainWindow::pluginsChanged()
 void MainWindow::upload()
 {
 
-    UploadWizard *wizard = new UploadWizard(this);
+    const QString video = outputWidget->exists() ? outputWidget->outputFile() : QString();
+    UploadWizard *wizard = new UploadWizard(video, this);
     wizard->show();
 
 }

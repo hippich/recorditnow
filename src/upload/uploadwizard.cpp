@@ -35,15 +35,20 @@
 #include <QtGui/QCloseEvent>
 
 
-UploadWizard::UploadWizard(QWidget *parent)
+UploadWizard::UploadWizard(const QString &video, QWidget *parent)
     : QWizard(parent)
 {
 
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(i18n("Upload Wizard"));
+
     addPage(new PluginPage(this));
     addPage(new AccountPage(this));
-    addPage(new VideoPage(this));
+
+    VideoPage *videoPage = new VideoPage(this);
+    videoPage->setVideo(video);
+
+    addPage(videoPage);
     addPage(new TermsPage(this));
     addPage(new UploadPage(this));
 

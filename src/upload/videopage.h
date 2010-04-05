@@ -42,10 +42,12 @@ public:
     ~VideoPage();
 
     void initializePage();
+    void setVideo(const QString &video);
 
 
 private:
     Joschy::AbstractProvider *m_provider;
+    QString m_video;
 
 
 private slots:

@@ -85,6 +85,16 @@ void VideoPage::initializePage()
     connect(m_provider, SIGNAL(categorysChanged(QStringList)), this,
             SLOT(categorysChanged(QStringList)));
 
+    videoRequester->setText(m_video);
+
+}
+
+
+void VideoPage::setVideo(const QString &video)
+{
+
+    m_video = video;
+
 }
 
 
