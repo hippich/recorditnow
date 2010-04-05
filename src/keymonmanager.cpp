@@ -95,10 +95,8 @@ bool KeyMonManager::start(const QStringList &devs)
 {
 
     if (m_started) {
-        kDebug() << "already running...";
         return true;
     }
-    kDebug() << "start..." << devs;
 
     KAuth::Action action("org.kde.recorditnow.helper.watch");
     connect(action.watcher(), SIGNAL(progressStep(QVariantMap)), this,
@@ -111,8 +109,6 @@ bool KeyMonManager::start(const QStringList &devs)
 
     action.setArguments(args);
     action.setExecutesAsync(true);
-
-    kDebug() << "valid action:" << action.isValid();
 
     KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
     if (reply.errorCode() != KAuth::ActionReply::NoError) {
@@ -128,14 +124,6 @@ bool KeyMonManager::start(const QStringList &devs)
     }
     m_started = true;
 
-    kDebug() << "started: type:" << reply.type() << "Failed?" << reply.failed() << "Error code:" <<
-            reply.errorCode() << "error Description:" << reply.errorDescription();
-
-    kDebug() << "Invalid:" << bool(ActionReply::InvalidActionReply == reply);
-    kDebug() << "Denied:" << bool(ActionReply::AuthorizationDeniedReply == reply);
-    kDebug() << "Canceled:" << bool(ActionReply::UserCancelledReply == reply);
-    kDebug() << "success:" << bool(ActionReply::SuccessReply == reply);
-
     return true;
 
 }
@@ -147,7 +135,6 @@ void KeyMonManager::stop()
     if (!m_started) {
         return;
     }
-    kDebug() << "stopping...";
 
     KAuth::Action action("org.kde.recorditnow.helper.watch");
     action.setHelperID("org.kde.recorditnow.helper");
@@ -231,8 +218,6 @@ void KeyMonManager::actionPerformed(const ActionReply &reply)
     action.setHelperID("org.kde.recorditnow.helper");
     action.watcher()->disconnect(this);
 
-    kDebug() << "action performed:" << reply.type() << reply.errorCode() << reply.errorDescription();
-
     m_started = false;
     emit stopped();
 
@@ -245,5 +230,6 @@ void KeyMonManager::actionStarted()
     emit started();
 
 }
+
 
 #include "keymonmanager.moc"
