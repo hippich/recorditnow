@@ -21,6 +21,9 @@
 #define EVENT_H
 
 
+// own
+#include "deviceinfo.h"
+
 // KDE
 #include <kdemacros.h>
 
@@ -54,6 +57,7 @@ public:
     int keyCode;
     bool pressed;
     bool mouseEvent;
+    KeyMon::DeviceInfo device;
 
     static QString name(const KeyMon::Event::Key &key);
     static KeyMon::Event::Key keyFromName(const QString &name);

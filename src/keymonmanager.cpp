@@ -164,7 +164,7 @@ void KeyMonManager::waitForStarted()
     QEventLoop loop;
     connect(this, SIGNAL(started()), &loop, SLOT(quit()));
     connect(this, SIGNAL(stopped()), &loop, SLOT(quit()));
-    loop.exec();
+    loop.exec();  // krazy:exclude=crashy
 
 }
 

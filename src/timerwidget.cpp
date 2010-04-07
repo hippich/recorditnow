@@ -49,7 +49,6 @@ TimerWidget::TimerWidget(QWidget *parent)
     connect(upButton, SIGNAL(clicked()), this, SLOT(upClicked()));
     connect(downButton, SIGNAL(clicked()), this, SLOT(downClicked()));
 
-
 }
 
 
