@@ -48,16 +48,16 @@ OutputWidget::OutputWidget(QWidget *parent)
     deleteButton->setIcon(KIcon("list-remove"));
     playButton->setIcon(KIcon("media-playback-start"));
 
-    KAction *openAction = new KAction(this);
-    openAction->setText(i18n("Open with..."));
-    playButton->addAction(openAction);
+    m_openWithActions = new KFileItemActions(this);
+    m_openWithActions->setParentWidget(this);
+
+    m_isDir = false;
 
     connect(KDirWatch::self(), SIGNAL(created(QString)), this, SLOT(fileCreated(QString)));
     connect(KDirWatch::self(), SIGNAL(deleted(QString)), this, SLOT(fileDeleted(QString)));    
     connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChangedInternal(QString)));
     connect(playButton, SIGNAL(clicked()), this, SLOT(playOutputFile()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteOutputFile()));
-    connect(openAction, SIGNAL(triggered()), this, SLOT(openWith()));
 
 }
 
@@ -65,7 +65,7 @@ OutputWidget::OutputWidget(QWidget *parent)
 OutputWidget::~OutputWidget()
 {
 
-
+    delete m_openWithActions;
 
 }
 
@@ -86,6 +86,14 @@ bool OutputWidget::exists() const
 }
 
 
+bool OutputWidget::isDir() const
+{
+
+    return m_isDir;
+
+}
+
+
 void OutputWidget::setOutputFile(const QString &file)
 {
 
@@ -98,13 +106,13 @@ void OutputWidget::outputFileChangedInternal(const QString &newFile)
 {
 
     const bool wasDir = QFileInfo(m_file).isDir();
-    const bool isDir = QFileInfo(newFile).isDir();
+    m_isDir = QFileInfo(newFile).isDir();
 
     if (!m_file.isEmpty() && !wasDir) {
         KDirWatch::self()->removeFile(m_file);
     }
     m_file = newFile;
-    if (!m_file.isEmpty() && !isDir) {
+    if (!m_file.isEmpty() && !isDir()) {
         KDirWatch::self()->addFile(m_file);
     }
     fileDirty(m_file, !exists());
@@ -139,12 +147,40 @@ void OutputWidget::fileDirty(const QString &path, const bool &deleted)
     }
 
     bool enabled = !deleted;
-    if (QFileInfo(m_file).isDir()) {
+    if (isDir()) {
         enabled = false;
     }
 
     playButton->setEnabled(enabled);
     deleteButton->setEnabled(enabled);
+
+    QMenu *menu = playButton->menu();
+    if (!menu) {
+        menu = new QMenu(this);
+    }
+    menu->clear();
+
+    if (!exists() || isDir()) {
+        return;
+    }
+
+    const KUrl url = outputFile();
+    const KMimeType::Ptr typePtr = KMimeType::findByUrl(url, 0, true, true);
+    const QString mimeType = typePtr->name();
+
+    KFileItem item(url, mimeType, 0);
+
+    // Very inconvenient!
+    QList<KFileItem> list;
+    list.append(item);
+    KFileItemList itemList(list);
+    KFileItemListProperties propertieList(itemList);
+
+
+    m_openWithActions->setItemListProperties(propertieList);
+    m_openWithActions->addOpenWithActionsTo(menu);
+
+    playButton->setMenu(menu);
 
 }
 
@@ -152,7 +188,7 @@ void OutputWidget::fileDirty(const QString &path, const bool &deleted)
 void OutputWidget::deleteOutputFile()
 {
 
-    if (!exists()) {
+    if (!exists() || isDir()) {
         return;
     }
 
@@ -168,7 +204,7 @@ void OutputWidget::deleteOutputFile()
 void OutputWidget::playOutputFile()
 {
 
-    if (!exists()) {
+    if (!exists() || isDir()) {
         return;
     }
 
@@ -185,15 +221,6 @@ void OutputWidget::deleteFinished(KJob *job)
     }
 
 }
-
-
-void OutputWidget::openWith()
-{
-
-    KRun::displayOpenWithDialog(KUrl::List() << KUrl(outputFile()), this, false);
-
-}
-
 
 
 } // namespace RecordItNow

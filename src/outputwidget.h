@@ -28,6 +28,7 @@
 #include <QtGui/QFrame>
 
 
+class KFileItemActions;
 class KJob;
 namespace RecordItNow {
 
@@ -43,6 +44,7 @@ public:
 
     QString outputFile() const;
     bool exists() const;
+    bool isDir() const;
 
 
 public slots:
@@ -53,6 +55,8 @@ public slots:
 
 private:
     QString m_file;
+    bool m_isDir;
+    KFileItemActions *m_openWithActions;
 
 
 private slots:
@@ -61,7 +65,6 @@ private slots:
     void fileDeleted(const QString &path);
     void fileDirty(const QString &path, const bool &deleted);
     void deleteFinished(KJob *job);
-    void openWith();
 
 
 signals:
