@@ -47,6 +47,7 @@ public:
     static QString fileForDevice(const KeyMon::DeviceInfo &info);
 
 
+    bool isRunning() const;
     QString error() const;
     bool start(const QStringList &devs);
     void stop();

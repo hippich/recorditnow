@@ -1072,7 +1072,7 @@ void MainWindow::initRecordWidgets(const bool &start)
 
     const QString recorder = backendCombo->currentText();
     // mouse
-    if (start) {
+    if (start && KeyMonManager::self()->isRunning()) {
         if (Settings::showActivity() && m_recorderManager->hasFeature("MouseEnabled", recorder)) {
             if (m_cursor) {
                 return; // timer was paused

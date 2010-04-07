@@ -83,6 +83,14 @@ QString KeyMonManager::fileForDevice(const KeyMon::DeviceInfo &info)
 }
 
 
+bool KeyMonManager::isRunning() const
+{
+
+    return m_started;
+
+}
+
+
 QString KeyMonManager::error() const
 {
 
