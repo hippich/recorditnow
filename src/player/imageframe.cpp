@@ -21,12 +21,21 @@
 // own
 #include "imageframe.h"
 
+// KDE
+#include <kdebug.h>
+#include <kurl.h>
+
 // Qt
 #include <QtGui/QPainter>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QDrag>
 #include <QtGui/QApplication>
+#include <QtGui/QDragEnterEvent>
+#include <QtGui/QDragMoveEvent>
+#include <QtGui/QDropEvent>
+#include <QtCore/QUrl>
+#include <QtCore/QFile>
 
 
 namespace RecordItNow {
@@ -38,6 +47,7 @@ ImageFrame::ImageFrame(QWidget *parent)
 
     setFrameStyle(QFrame::Panel);
     setFrameShadow(QFrame::Sunken);
+    setAcceptDrops(true);
 
 }
 
@@ -120,6 +130,75 @@ void ImageFrame::mouseReleaseEvent(QMouseEvent *event)
 
     event->accept();
     m_lastPos = QPoint();
+
+}
+
+
+void ImageFrame::dragEnterEvent(QDragEnterEvent *event)
+{
+
+    const QMimeData *data = event->mimeData();
+    if (!data) {
+        event->setAccepted(false);
+        return;
+    }
+
+    if (data->hasImage()) {
+        event->setAccepted(true);
+        return;
+    }
+
+    if (data->hasUrls()) {
+        foreach (const QUrl &url, data->urls()) {
+            KUrl kurl = url;
+            if (kurl.isLocalFile() && QFile::exists(kurl.toLocalFile())) {
+                event->setAccepted(true);
+                return;
+            }
+        }
+    }
+    event->setAccepted(false);
+
+}
+
+
+void ImageFrame::dragMoveEvent(QDragMoveEvent *event)
+{
+
+    event->accept();
+
+}
+
+
+void ImageFrame::dropEvent(QDropEvent *event)
+{
+
+    const QMimeData *data = event->mimeData();
+    if (!data) {
+        event->setAccepted(false);
+        return;
+    }
+
+    if (data->hasImage()) {
+
+        QImage image = qvariant_cast<QImage>(data->imageData());
+        m_pixmap = QPixmap::fromImage(image);
+        update();
+
+        event->accept();
+    } else if (data->hasUrls()) {
+        foreach (const QUrl &url, data->urls()) {
+            KUrl kurl = url;
+            if (kurl.isLocalFile() && QFile::exists(kurl.toLocalFile())) {
+
+                m_pixmap = QPixmap(kurl.toLocalFile());
+                update();
+
+                event->accept();
+                break;
+            }
+        }
+    }
 
 }
 
