@@ -17,60 +17,37 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef OUTPUTWIDGET_H
-#define OUTPUTWIDGET_H
-
+#ifndef VIDEOPLAYER_H
+#define VIDEOPLAYER_H
 
 // own
-#include "ui_outputwidget.h"
+#include "abstractplayer.h"
+#include "ui_videoplayer.h"
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QWidget>
 
 
-class KFileItemActions;
-class KJob;
 namespace RecordItNow {
 
 
-class OutputWidget : public QFrame, Ui::OutputWidget
+class VideoPlayer : public RecordItNow::AbstractPlayer, Ui::VideoPlayer
 {
     Q_OBJECT
 
 
 public:
-    explicit OutputWidget(QWidget *parent = 0);
-    ~OutputWidget();
+    explicit VideoPlayer(QWidget *parent = 0);
+    ~VideoPlayer();
 
-    QString outputFile() const;
-    bool exists() const;
-    bool isDir() const;
-
-
-public slots:
-    void setOutputFile(const QString &file);
-    void deleteOutputFile();
-    void playOutputFile();
-
-
-private:
-    QString m_file;
-    bool m_isDir;
-    KFileItemActions *m_openWithActions;
+    bool canPlay(const QString &mime);
+    void play(const QString &file);
+    void stop();
 
 
 private slots:
-    void outputFileChangedInternal(const QString &newFile);
-    void fileCreated(const QString &path);
-    void fileDeleted(const QString &path);
-    void fileDirty(const QString &path, const bool &deleted);
-    void deleteFinished(KJob *job);
-
-
-signals:
-    void outputFileChanged(const QString &newFile);
-    void error(const QString &error);
-    void playRequested();
+    void playPauseClicked();
+    void stateChanged(const Phonon::State &newState, const Phonon::State &oldState);
 
 
 };
@@ -79,4 +56,4 @@ signals:
 } // namespace RecordItNow
 
 
-#endif // OUTPUTWIDGET_H
+#endif // VIDEOPLAYER_H

@@ -17,66 +17,72 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef OUTPUTWIDGET_H
-#define OUTPUTWIDGET_H
-
 
 // own
-#include "ui_outputwidget.h"
+#include "imageframe.h"
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QPainter>
+#include <QtGui/QPaintEvent>
 
 
-class KFileItemActions;
-class KJob;
 namespace RecordItNow {
 
 
-class OutputWidget : public QFrame, Ui::OutputWidget
+ImageFrame::ImageFrame(QWidget *parent)
+    : QFrame(parent)
 {
-    Q_OBJECT
+
+    setFrameStyle(QFrame::Panel);
+    setFrameShadow(QFrame::Sunken);
+
+}
 
 
-public:
-    explicit OutputWidget(QWidget *parent = 0);
-    ~OutputWidget();
-
-    QString outputFile() const;
-    bool exists() const;
-    bool isDir() const;
+ImageFrame::~ImageFrame()
+{
 
 
-public slots:
-    void setOutputFile(const QString &file);
-    void deleteOutputFile();
-    void playOutputFile();
+
+}
 
 
-private:
-    QString m_file;
-    bool m_isDir;
-    KFileItemActions *m_openWithActions;
+void ImageFrame::setPixmap(const QPixmap &pixmap)
+{
+
+    m_pixmap = pixmap;
+    update();
+
+}
 
 
-private slots:
-    void outputFileChangedInternal(const QString &newFile);
-    void fileCreated(const QString &path);
-    void fileDeleted(const QString &path);
-    void fileDirty(const QString &path, const bool &deleted);
-    void deleteFinished(KJob *job);
+void ImageFrame::paintEvent(QPaintEvent *event)
+{
+
+    QFrame::paintEvent(event);
 
 
-signals:
-    void outputFileChanged(const QString &newFile);
-    void error(const QString &error);
-    void playRequested();
+    QPainter painter(this);
+    painter.setClipRegion(event->region());
+    painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
 
+    painter.fillRect(contentsRect(), Qt::black);
 
-};
+    if (!m_pixmap.isNull()) {
+        const QPixmap pix = m_pixmap.scaled(contentsRect().size(),
+                                            Qt::KeepAspectRatio,
+                                            Qt::SmoothTransformation);
+
+        QRect rect = pix.rect();
+        rect.moveCenter(contentsRect().center());
+
+        painter.drawPixmap(rect, pix);
+    }
+
+}
 
 
 } // namespace RecordItNow
 
 
-#endif // OUTPUTWIDGET_H
+#include "imageframe.moc"

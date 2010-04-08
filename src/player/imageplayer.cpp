@@ -17,66 +17,61 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef OUTPUTWIDGET_H
-#define OUTPUTWIDGET_H
-
 
 // own
-#include "ui_outputwidget.h"
+#include "imageplayer.h"
+#include "imageframe.h"
+
+// KDE
+#include <kdebug.h>
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QHBoxLayout>
 
 
-class KFileItemActions;
-class KJob;
 namespace RecordItNow {
 
 
-class OutputWidget : public QFrame, Ui::OutputWidget
+ImagePlayer::ImagePlayer(QWidget *parent)
+    : RecordItNow::AbstractPlayer(parent)
 {
-    Q_OBJECT
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    m_frame = new ImageFrame(this);
+    layout->addWidget(m_frame);
+
+    setLayout(layout);
+
+}
 
 
-public:
-    explicit OutputWidget(QWidget *parent = 0);
-    ~OutputWidget();
-
-    QString outputFile() const;
-    bool exists() const;
-    bool isDir() const;
+ImagePlayer::~ImagePlayer()
+{
 
 
-public slots:
-    void setOutputFile(const QString &file);
-    void deleteOutputFile();
-    void playOutputFile();
+
+}
 
 
-private:
-    QString m_file;
-    bool m_isDir;
-    KFileItemActions *m_openWithActions;
+bool ImagePlayer::canPlay(const QString &mime)
+{
+
+    return mime.startsWith(QLatin1String("image/"));
+
+}
 
 
-private slots:
-    void outputFileChangedInternal(const QString &newFile);
-    void fileCreated(const QString &path);
-    void fileDeleted(const QString &path);
-    void fileDirty(const QString &path, const bool &deleted);
-    void deleteFinished(KJob *job);
+void ImagePlayer::play(const QString &file)
+{
 
+    m_frame->setPixmap(QPixmap(file));
 
-signals:
-    void outputFileChanged(const QString &newFile);
-    void error(const QString &error);
-    void playRequested();
-
-
-};
+}
 
 
 } // namespace RecordItNow
 
 
-#endif // OUTPUTWIDGET_H
+#include "imageplayer.moc"

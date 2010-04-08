@@ -56,7 +56,7 @@ OutputWidget::OutputWidget(QWidget *parent)
     connect(KDirWatch::self(), SIGNAL(created(QString)), this, SLOT(fileCreated(QString)));
     connect(KDirWatch::self(), SIGNAL(deleted(QString)), this, SLOT(fileDeleted(QString)));    
     connect(outputRequester, SIGNAL(textChanged(QString)), this, SLOT(outputFileChangedInternal(QString)));
-    connect(playButton, SIGNAL(clicked()), this, SLOT(playOutputFile()));
+    connect(playButton, SIGNAL(clicked()), this, SIGNAL(playRequested()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteOutputFile()));
 
 }

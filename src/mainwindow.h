@@ -33,6 +33,9 @@
 // Qt
 #include <QtCore/QPointer>
 
+namespace RecordItNow {
+    class PlayerDock;
+};
 
 class ZoomDock;
 class KeyboardDock;
@@ -79,6 +82,7 @@ private:
     TimelineDock *m_timelineDock;
     KeyboardDock *m_keyboardDock;
     ZoomDock *m_zoomDock;
+    RecordItNow::PlayerDock *m_playerDock;
 
     KAction *getAction(const QString &name);
 
@@ -126,6 +130,7 @@ private slots:
     void initRecordWidgets(const bool &start);
     void initKeyMon(const bool &start);
     void errorNotification(const QString &error);
+    void playRequested();
 
 
 protected:

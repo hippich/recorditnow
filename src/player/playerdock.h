@@ -17,60 +17,35 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef OUTPUTWIDGET_H
-#define OUTPUTWIDGET_H
+#ifndef PLAYERDOCK_H
+#define PLAYERDOCK_H
 
 
 // own
-#include "ui_outputwidget.h"
+#include "ui_playerdock.h"
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QDockWidget>
 
 
-class KFileItemActions;
-class KJob;
 namespace RecordItNow {
 
 
-class OutputWidget : public QFrame, Ui::OutputWidget
+class AbstractPlayer;
+class PlayerDock : public QDockWidget, Ui::PlayerDock
 {
     Q_OBJECT
 
 
 public:
-    explicit OutputWidget(QWidget *parent = 0);
-    ~OutputWidget();
+    explicit PlayerDock(QWidget *parent = 0);
+    ~PlayerDock();
 
-    QString outputFile() const;
-    bool exists() const;
-    bool isDir() const;
-
-
-public slots:
-    void setOutputFile(const QString &file);
-    void deleteOutputFile();
-    void playOutputFile();
+    bool play(const QString &file);
 
 
 private:
-    QString m_file;
-    bool m_isDir;
-    KFileItemActions *m_openWithActions;
-
-
-private slots:
-    void outputFileChangedInternal(const QString &newFile);
-    void fileCreated(const QString &path);
-    void fileDeleted(const QString &path);
-    void fileDirty(const QString &path, const bool &deleted);
-    void deleteFinished(KJob *job);
-
-
-signals:
-    void outputFileChanged(const QString &newFile);
-    void error(const QString &error);
-    void playRequested();
+    QList<AbstractPlayer*> m_playerWidgets;
 
 
 };
@@ -79,4 +54,4 @@ signals:
 } // namespace RecordItNow
 
 
-#endif // OUTPUTWIDGET_H
+#endif // PLAYERDOCK_H

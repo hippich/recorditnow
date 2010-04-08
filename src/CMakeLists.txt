@@ -69,6 +69,12 @@ set(gui_SRCS
    keyboard/keyboardkey.cpp
    keyboard/proxylayout.cpp
 
+   player/playerdock.cpp
+   player/videoplayer.cpp
+   player/imageplayer.cpp
+   player/abstractplayer.cpp
+   player/imageframe.cpp
+
    config/configdialog.cpp
    config/frameconfig.cpp
    config/keyboardconfig.cpp
@@ -84,6 +90,7 @@ set(gui_SRCS
    config/topictreeitem.cpp
    config/pluginconfig.cpp
    config/notificationconfig.cpp
+   config/playerconfig.cpp
 	
    outputwidget.cpp
    timerwidget.cpp
@@ -129,7 +136,10 @@ kde4_add_ui_files(gui_SRCS
     firstStart/ui/welcomepage.ui
     firstStart/ui/createconfigpage.ui
     firstStart/ui/mousedevicepage.ui
-    firstStart/ui/keyboarddevicepage.ui)
+    firstStart/ui/keyboarddevicepage.ui
+    ui/playerdock.ui
+    ui/videoplayer.ui
+    ui/playerconfig.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)

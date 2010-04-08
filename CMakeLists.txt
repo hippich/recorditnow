@@ -20,7 +20,6 @@ find_package(RecordMyDesktop REQUIRED)
 
 add_subdirectory(src)
 
-
 # translation
  MACRO(LIST_CONTAINS var value)
   SET(${var})

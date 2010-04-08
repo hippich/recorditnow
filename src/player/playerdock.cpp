@@ -17,66 +17,82 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef OUTPUTWIDGET_H
-#define OUTPUTWIDGET_H
-
 
 // own
-#include "ui_outputwidget.h"
+#include "playerdock.h"
+#include "imageplayer.h"
+#include "videoplayer.h"
+
+// KDE
+#include <kmimetype.h>
+#include <kdebug.h>
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QStackedLayout>
 
 
-class KFileItemActions;
-class KJob;
 namespace RecordItNow {
 
 
-class OutputWidget : public QFrame, Ui::OutputWidget
+PlayerDock::PlayerDock(QWidget *parent)
+    : QDockWidget(parent)
 {
-    Q_OBJECT
+
+    setupUi(this);
+
+    QStackedLayout *layout = new QStackedLayout;
+
+    AbstractPlayer *imagePlayer = new ImagePlayer(this);
+    AbstractPlayer *videoPlayer = new VideoPlayer(this);
+
+    layout->addWidget(imagePlayer);
+    layout->addWidget(videoPlayer);
+
+    contentWidget->setLayout(layout);
+
+    m_playerWidgets.append(imagePlayer);
+    m_playerWidgets.append(videoPlayer);
+
+}
 
 
-public:
-    explicit OutputWidget(QWidget *parent = 0);
-    ~OutputWidget();
-
-    QString outputFile() const;
-    bool exists() const;
-    bool isDir() const;
+PlayerDock::~PlayerDock()
+{
 
 
-public slots:
-    void setOutputFile(const QString &file);
-    void deleteOutputFile();
-    void playOutputFile();
+
+}
 
 
-private:
-    QString m_file;
-    bool m_isDir;
-    KFileItemActions *m_openWithActions;
+bool PlayerDock::play(const QString &file)
+{
 
+    AbstractPlayer *playerWidget = 0;
 
-private slots:
-    void outputFileChangedInternal(const QString &newFile);
-    void fileCreated(const QString &path);
-    void fileDeleted(const QString &path);
-    void fileDirty(const QString &path, const bool &deleted);
-    void deleteFinished(KJob *job);
+    KMimeType::Ptr mimePtr = KMimeType::findByPath(file, 0, true);
+    const QString mimeType = mimePtr->name();
 
+    foreach (AbstractPlayer *player, m_playerWidgets) {
+        player->stop();
+        if (player->canPlay(mimeType)) {
+            playerWidget = player;
+        }
+    }
 
-signals:
-    void outputFileChanged(const QString &newFile);
-    void error(const QString &error);
-    void playRequested();
+    if (!playerWidget) {
+        return false;
+    } else {
+        playerWidget->play(file);
+        QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
+        layout->setCurrentWidget(playerWidget);
+    }
 
+    return true;
 
-};
+}
 
 
 } // namespace RecordItNow
 
 
-#endif // OUTPUTWIDGET_H
+#include "playerdock.moc"

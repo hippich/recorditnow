@@ -17,66 +17,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef OUTPUTWIDGET_H
-#define OUTPUTWIDGET_H
-
 
 // own
-#include "ui_outputwidget.h"
-
-// Qt
-#include <QtGui/QFrame>
+#include "playerconfig.h"
 
 
-class KFileItemActions;
-class KJob;
-namespace RecordItNow {
-
-
-class OutputWidget : public QFrame, Ui::OutputWidget
+PlayerConfig::PlayerConfig(KConfig *cfg, QWidget *parent)
+    : RecordItNow::ConfigPage(cfg, parent)
 {
-    Q_OBJECT
+
+    setupUi(this);
+
+}
 
 
-public:
-    explicit OutputWidget(QWidget *parent = 0);
-    ~OutputWidget();
-
-    QString outputFile() const;
-    bool exists() const;
-    bool isDir() const;
-
-
-public slots:
-    void setOutputFile(const QString &file);
-    void deleteOutputFile();
-    void playOutputFile();
-
-
-private:
-    QString m_file;
-    bool m_isDir;
-    KFileItemActions *m_openWithActions;
-
-
-private slots:
-    void outputFileChangedInternal(const QString &newFile);
-    void fileCreated(const QString &path);
-    void fileDeleted(const QString &path);
-    void fileDirty(const QString &path, const bool &deleted);
-    void deleteFinished(KJob *job);
-
-
-signals:
-    void outputFileChanged(const QString &newFile);
-    void error(const QString &error);
-    void playRequested();
-
-
-};
-
-
-} // namespace RecordItNow
-
-
-#endif // OUTPUTWIDGET_H
+#include "playerconfig.moc"

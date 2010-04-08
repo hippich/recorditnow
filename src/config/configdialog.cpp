@@ -30,6 +30,7 @@
 #include "config/timelineconfig.h"
 #include "config/pluginconfig.h"
 #include "config/notificationconfig.h"
+#include "config/playerconfig.h"
 
 // KDE
 #include <kdebug.h>
@@ -86,6 +87,7 @@ void ConfigDialog::init()
     RecordItNow::ConfigPage *framePage = new FrameConfig(cfg, this);
     RecordItNow::ConfigPage *keyboardPage = new KeyboardConfig(cfg, this);
     RecordItNow::ConfigPage *notificationPage = new NotificationConfig(cfg, this);
+    RecordItNow::ConfigPage *playerPage = new PlayerConfig(cfg, this);
 
     m_pageList.append(pluginPage);
     m_pageList.append(mousePage);
@@ -95,6 +97,7 @@ void ConfigDialog::init()
     m_pageList.append(framePage);
     m_pageList.append(keyboardPage);
     m_pageList.append(notificationPage);
+    m_pageList.append(playerPage);
 
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(pluginPage, i18n("Plugins"), "preferences-plugin");
@@ -103,6 +106,7 @@ void ConfigDialog::init()
     addPage(keyboardPage, i18n("Keyboard"), "input-keyboard");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
+    addPage(playerPage, i18n("Player"), "media-playback-start");
     addPage(shortcutsPage, i18n("Shortcuts"), "configure-shortcuts");
     addPage(notificationPage, i18n("Notifications"), "preferences-desktop-notification");
 

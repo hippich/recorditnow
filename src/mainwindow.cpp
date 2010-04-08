@@ -38,6 +38,7 @@
 #include "config/frameconfig.h"
 #include "zoom/zoomdock.h"
 #include "windowgrabber.h"
+#include "player/playerdock.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -95,12 +96,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(outputWidget, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
     connect(timerWidget, SIGNAL(timeout()), this, SLOT(startRecord()));
+    connect(outputWidget, SIGNAL(playRequested()), this, SLOT(playRequested()));
 
     m_tray = 0;
     m_timelineDock = 0;
     m_keyboardDock = 0;
     m_zoomDock = 0;
-
+    m_playerDock = 0;
 
     m_pluginManager = new RecordItNowPluginManager(this);
     connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
@@ -671,7 +673,7 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
     } else if (Settings::encoderName().isEmpty() || !Settings::encode() || !isVideo) {
         setState(Idle);
         if (Settings::showVideo()) {
-            outputWidget->playOutputFile();
+            playRequested();
         }
         pluginStatus(i18nc("Recording finished", "Finished!"));
         if (!isVisible()) {
@@ -695,7 +697,7 @@ void MainWindow::encoderFinished(const QString &error)
         pluginStatus(error);
     } else {
         if (Settings::showVideo()) {
-            outputWidget->playOutputFile();
+            playRequested();
         }
         pluginStatus(i18nc("Encoding finished", "Finished!"));
     }
@@ -996,7 +998,20 @@ void MainWindow::setupDocks()
         if (m_zoomDock) {
             removeDockWidget(m_zoomDock);
             delete m_zoomDock;
-            m_zoomDock = false;
+            m_zoomDock = 0;
+        }
+    }
+
+    if (Settings::playerDock()) {
+        if (!m_playerDock) {
+            m_playerDock = new RecordItNow::PlayerDock(this);
+            addDockWidget(Qt::BottomDockWidgetArea, m_playerDock);
+        }
+    } else {
+        if (m_playerDock) {
+            removeDockWidget(m_playerDock);
+            delete m_playerDock;
+            m_playerDock = 0;
         }
     }
 
@@ -1155,6 +1170,17 @@ void MainWindow::errorNotification(const QString &error)
     notification->sendEvent();
 
 }
+
+
+void MainWindow::playRequested()
+{
+
+    if (!(m_playerDock && m_playerDock->play(outputWidget->outputFile()))) {
+        outputWidget->playOutputFile();
+    }
+
+}
+
 
 
 #include "mainwindow.moc"
