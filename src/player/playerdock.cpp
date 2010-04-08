@@ -126,6 +126,8 @@ void PlayerDock::changePlayer()
 void PlayerDock::currentChanged(const int &index)
 {
 
+    Q_UNUSED(index);
+
     QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
     if (layout->currentWidget()) {
         AbstractPlayer *player = static_cast<AbstractPlayer*>(layout->currentWidget());
