@@ -42,10 +42,14 @@ public:
 
 private:
     QPixmap m_pixmap;
+    QPoint m_lastPos;
 
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 
 };

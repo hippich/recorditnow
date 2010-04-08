@@ -24,6 +24,9 @@
 // Qt
 #include <QtGui/QPainter>
 #include <QtGui/QPaintEvent>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QDrag>
+#include <QtGui/QApplication>
 
 
 namespace RecordItNow {
@@ -78,6 +81,45 @@ void ImageFrame::paintEvent(QPaintEvent *event)
 
         painter.drawPixmap(rect, pix);
     }
+
+}
+
+
+void ImageFrame::mousePressEvent(QMouseEvent *event)
+{
+
+    event->accept();
+    m_lastPos = event->pos();
+
+}
+
+
+void ImageFrame::mouseMoveEvent(QMouseEvent *event)
+{
+
+    event->accept();
+    const QPoint point = event->pos() - m_lastPos;
+    if (point.manhattanLength() > QApplication::startDragDistance() && !m_pixmap.isNull()) {
+        QDrag *drag = new QDrag(this);
+
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setImageData(m_pixmap);
+        drag->setMimeData(mimeData);
+
+        QPixmap pixmap = m_pixmap.scaled(128, 128, Qt::KeepAspectRatio, Qt::FastTransformation);
+        drag->setPixmap(pixmap);
+
+        drag->exec();
+    }
+
+}
+
+
+void ImageFrame::mouseReleaseEvent(QMouseEvent *event)
+{
+
+    event->accept();
+    m_lastPos = QPoint();
 
 }
 
