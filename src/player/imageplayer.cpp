@@ -24,6 +24,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <klocalizedstring.h>
 
 // Qt
 #include <QtGui/QHBoxLayout>
@@ -51,6 +52,14 @@ ImagePlayer::~ImagePlayer()
 {
 
 
+
+}
+
+
+QString ImagePlayer::name()
+{
+
+    return i18n("Image Viewer");
 
 }
 

@@ -48,6 +48,11 @@ private:
     QList<AbstractPlayer*> m_playerWidgets;
 
 
+private slots:
+    void changePlayer();
+    void currentChanged(const int &index);
+
+
 };
 
 

@@ -22,6 +22,7 @@
 #include "playerdock.h"
 #include "imageplayer.h"
 #include "videoplayer.h"
+#include "playerdocktitle.h"
 
 // KDE
 #include <kmimetype.h>
@@ -29,6 +30,7 @@
 
 // Qt
 #include <QtGui/QStackedLayout>
+#include <QtGui/QToolBar>
 
 
 namespace RecordItNow {
@@ -40,7 +42,14 @@ PlayerDock::PlayerDock(QWidget *parent)
 
     setupUi(this);
 
+    PlayerDockTitle *titleWidget = new PlayerDockTitle(this);
+    setTitleBarWidget(titleWidget);
+
+    connect(titleWidget, SIGNAL(playerChangedRequested()), this, SLOT(changePlayer()));
+
     QStackedLayout *layout = new QStackedLayout;
+    contentWidget->setLayout(layout);
+    connect(layout, SIGNAL(currentChanged(int)), this, SLOT(currentChanged(int)));
 
     AbstractPlayer *imagePlayer = new ImagePlayer(this);
     AbstractPlayer *videoPlayer = new VideoPlayer(this);
@@ -48,7 +57,6 @@ PlayerDock::PlayerDock(QWidget *parent)
     layout->addWidget(imagePlayer);
     layout->addWidget(videoPlayer);
 
-    contentWidget->setLayout(layout);
 
     m_playerWidgets.append(imagePlayer);
     m_playerWidgets.append(videoPlayer);
@@ -88,6 +96,43 @@ bool PlayerDock::play(const QString &file)
     }
 
     return true;
+
+}
+
+
+void PlayerDock::changePlayer()
+{
+
+    QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
+    if (!layout->currentWidget()) {
+        return;
+    }
+
+    AbstractPlayer *playerWidget = 0;
+    foreach (AbstractPlayer *player, m_playerWidgets) {
+        player->stop();
+        if (player != layout->currentWidget()) {
+            playerWidget = player;
+        }
+    }
+
+    if (playerWidget) {
+        layout->setCurrentWidget(playerWidget);
+    }
+
+}
+
+
+void PlayerDock::currentChanged(const int &index)
+{
+
+    QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
+    if (layout->currentWidget()) {
+        AbstractPlayer *player = static_cast<AbstractPlayer*>(layout->currentWidget());
+
+        PlayerDockTitle *titleWidget = static_cast<PlayerDockTitle*>(titleBarWidget());
+        titleWidget->setTitle(player->name());
+    }
 
 }
 

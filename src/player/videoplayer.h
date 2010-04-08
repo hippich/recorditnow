@@ -40,6 +40,7 @@ public:
     explicit VideoPlayer(QWidget *parent = 0);
     ~VideoPlayer();
 
+    QString name();
     bool canPlay(const QString &mime);
     void play(const QString &file);
     void stop();

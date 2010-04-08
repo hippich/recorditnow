@@ -74,6 +74,7 @@ set(gui_SRCS
    player/imageplayer.cpp
    player/abstractplayer.cpp
    player/imageframe.cpp
+   player/playerdocktitle.cpp
 
    config/configdialog.cpp
    config/frameconfig.cpp
@@ -139,7 +140,8 @@ kde4_add_ui_files(gui_SRCS
     firstStart/ui/keyboarddevicepage.ui
     ui/playerdock.ui
     ui/videoplayer.ui
-    ui/playerconfig.ui)
+    ui/playerconfig.ui
+    ui/playerdocktitle.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)

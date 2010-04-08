@@ -23,6 +23,7 @@
 
 // KDE
 #include <kdebug.h>
+#include <klocalizedstring.h>
 
 // Phonon
 #include <Phonon/MediaSource>
@@ -54,6 +55,14 @@ VideoPlayer::~VideoPlayer()
 {
 
 
+
+}
+
+
+QString VideoPlayer::name()
+{
+
+    return i18n("Video Player");
 
 }
 

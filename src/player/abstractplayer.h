@@ -37,6 +37,7 @@ public:
     explicit AbstractPlayer(QWidget *parent = 0);
     virtual ~AbstractPlayer();
 
+    virtual QString name() = 0;
     virtual bool canPlay(const QString &mime) = 0;
     virtual void play(const QString &file) = 0;
     virtual void stop() {};

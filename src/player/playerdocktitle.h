@@ -17,11 +17,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef IMAGEPLAYER_H
-#define IMAGEPLAYER_H
+#ifndef PLAYERDOCKTITLE_H
+#define PLAYERDOCKTITLE_H
 
 // own
-#include "abstractplayer.h"
+#include "ui_playerdocktitle.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -30,23 +30,20 @@
 namespace RecordItNow {
 
 
-class ImageFrame;
-class ImagePlayer : public RecordItNow::AbstractPlayer
+class PlayerDockTitle : public QWidget, Ui::PlayerDockTitle
 {
     Q_OBJECT
 
 
 public:
-    explicit ImagePlayer(QWidget *parent = 0);
-    ~ImagePlayer();
+    explicit PlayerDockTitle(QWidget *parent = 0);
+    ~PlayerDockTitle();
 
-    QString name();
-    bool canPlay(const QString &mime);
-    void play(const QString &file);
+    void setTitle(const QString &title);
 
 
-private:
-    ImageFrame *m_frame;
+signals:
+    void playerChangedRequested();
 
 
 };
@@ -55,4 +52,4 @@ private:
 } // namespace RecordItNow
 
 
-#endif // IMAGEPLAYER_H
+#endif // PLAYERDOCKTITLE_H
