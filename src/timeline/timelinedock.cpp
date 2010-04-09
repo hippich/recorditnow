@@ -36,7 +36,7 @@ TimelineDock::TimelineDock(QWidget *parent)
 
     setObjectName("Timeline");
     setAllowedAreas(Qt::AllDockWidgetAreas);
-    setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
+    setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetClosable);
     Timeline *line = new Timeline(this);
     setWidget(line);
 
