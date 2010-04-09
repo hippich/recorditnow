@@ -141,6 +141,8 @@ MainWindow::MainWindow(QWidget *parent)
     fpsSpinBox->setValue(Settings::currentFps());
     timerWidget->setValue(Settings::currentTime());
 
+    reloadPopAction();
+
 }
 
 
@@ -204,9 +206,9 @@ KAction *MainWindow::getAction(const QString &name)
 
     KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
-        if (name == "box") {
+        if (name == "box" || name == "popupAction") {
             action = new KActionMenu(this);
-            if (name == "upload") {
+            if (name == "popupAction") {
                 static_cast<KActionMenu*>(action)->setDelayed(false);
             }
         } else {
@@ -295,6 +297,12 @@ void MainWindow::setupActions()
     zoomOutAction->setText(i18n("Zoom out"));
     zoomOutAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Minus));
     connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
+
+
+    KAction *popAction = getAction("popupAction");
+    popAction->setIcon(KIcon("configure-toolbars"));
+    popAction->setText(i18n("Configure toolbars"));
+    popAction->setShortcut(Qt::CTRL+Qt::Key_T, KAction::DefaultShortcut);
 
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
@@ -754,6 +762,8 @@ void MainWindow::applyConfig()
         m_timelineDock->timeline()->reload();
     }
 
+    reloadPopAction();
+
 }
 
 
@@ -791,6 +801,22 @@ void MainWindow::updateWindowFlags()
         show(); // necessary to apply window flags
         move(p);
     }
+
+}
+
+
+void MainWindow::reloadPopAction()
+{
+
+    KAction *action = static_cast<KAction*>(getAction("popupAction"));
+    action->setMenu(0);
+
+    QMenu *menu = createPopupMenu();
+    if (!menu) {
+        return;
+    }
+
+    action->setMenu(menu);
 
 }
 

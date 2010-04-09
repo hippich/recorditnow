@@ -95,6 +95,7 @@ private:
     inline MainWindow::State state() const;
     inline void updateRecorderCombo();
     inline void updateWindowFlags();
+    void reloadPopAction();
 
 
 private slots:

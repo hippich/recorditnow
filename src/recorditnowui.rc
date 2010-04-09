@@ -16,6 +16,7 @@
  <Action name="upload"/>
  <Separator/>
  <Action name="options_configure"/>
+ <Action_name="popAction"/>
  <Separator/>
  <Action name="help_about_app"/>
  <Action name="help_about_kde"/>
