@@ -532,6 +532,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(true);
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
+            getAction("popupAction")->setEnabled(true);
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             centralWidget()->setEnabled(true);
@@ -553,6 +554,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
+            getAction("popupAction")->setEnabled(false);
             centralWidget()->setEnabled(false);
             initKeyMon(true);
 
@@ -578,6 +580,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
+            getAction("popupAction")->setEnabled(false);
             centralWidget()->setEnabled(false);
             initRecordWidgets(true);
             break;
@@ -596,6 +599,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
+            getAction("popupAction")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
@@ -613,6 +617,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
+            getAction("popupAction")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
@@ -629,6 +634,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
+            getAction("popupAction")->setEnabled(false);
             centralWidget()->setEnabled(false);
             initRecordWidgets(false);
             initKeyMon(false);
@@ -647,6 +653,7 @@ void MainWindow::setState(const State &newState)
             getAction("upload")->setEnabled(false);
             getAction("zoom-in")->setEnabled(false);
             getAction("zoom-out")->setEnabled(false);
+            getAction("popupAction")->setEnabled(false);
             centralWidget()->setEnabled(false);
             break;
         }
