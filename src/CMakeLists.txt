@@ -109,41 +109,49 @@ set(gui_SRCS
 # GUI
 kde4_add_ui_files(gui_SRCS 
     ui/toolbarwidget.ui
-    ui/settings.ui
-    ui/mouseconfig.ui 
-    ui/zoom.ui 
-    ui/timeline.ui 
-    ui/timelinetopics.ui 
-    ui/timelineconfig.ui 
-    ui/frameconfig.ui
+    ui/outputwidget.ui
+    ui/timerwidget.ui
+
+    config/ui/settings.ui
+    config/ui/mouseconfig.ui 
+    config/ui/timelineconfig.ui
+    config/ui/frameconfig.ui
+    config/ui/keyboardconfig.ui
+    config/ui/shortcutsconfig.ui
+    config/ui/pluginconfig.ui
+    config/ui/playerconfig.ui
+    config/ui/notificationconfig.ui
+    config/ui/keyboardkeypage.ui
+    config/ui/keyboardkeyiconpage.ui
+    config/ui/zoom.ui 
+    config/ui/timelinetopics.ui
+    
+    timeline/ui/timeline.ui 
+    timeline/ui/timelinedocktitlewidget.ui
+    
     upload/ui/pluginpage.ui
     upload/ui/videopage.ui
     upload/ui/uploadpage.ui
     upload/ui/termspage.ui
     upload/ui/accountpage.ui
-    ui/keyboarddock.ui
-    ui/keyboardconfig.ui
-    ui/keyboardkeypage.ui
-    ui/keyboardkeyiconpage.ui
-    ui/keyboarddocktitlewidget.ui
+
+    keyboard/ui/keyboarddock.ui
+    keyboard/ui/keyboarddocktitlewidget.ui
+    
     ui/devicesearchwidget.ui
-    ui/shortcutsconfig.ui
-    ui/pluginconfig.ui
-    ui/timelinedocktitlewidget.ui
-    ui/zoomdock.ui
-    ui/zoomdocktitlewidget.ui
-    ui/outputwidget.ui
-    ui/timerwidget.ui
-    ui/notificationconfig.ui
+    
+    zoom/ui/zoomdock.ui
+    zoom/ui/zoomdocktitlewidget.ui
+    
     firstStart/ui/welcomepage.ui
     firstStart/ui/createconfigpage.ui
     firstStart/ui/mousedevicepage.ui
     firstStart/ui/keyboarddevicepage.ui
-    ui/playerdock.ui
-    ui/videoplayer.ui
-    ui/playerconfig.ui
-    ui/playerdocktitle.ui
-    ui/volumeslider.ui)
+    
+    player/ui/playerdock.ui
+    player/ui/videoplayer.ui
+    player/ui/playerdocktitle.ui
+    player/ui/volumeslider.ui)
 
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
