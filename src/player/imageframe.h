@@ -37,8 +37,7 @@ public:
     explicit ImageFrame(QWidget *parent = 0);
     ~ImageFrame();
 
-    void setPixmap(const QPixmap &pixmap);
-    void setScaledImage(const QImage &image);
+    void setImage(const QImage &image);
 
 
 private:

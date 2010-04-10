@@ -68,20 +68,11 @@ ImageFrame::~ImageFrame()
 }
 
 
-void ImageFrame::setPixmap(const QPixmap &pixmap)
+void ImageFrame::setImage(const QImage &image)
 {
 
-    m_image = pixmap.toImage();
+    m_image = image;
     scheduleUpdate();
-
-}
-
-
-void ImageFrame::setScaledImage(const QImage &image)
-{
-
-    m_scaledImage = image;
-    update();
 
 }
 

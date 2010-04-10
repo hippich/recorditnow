@@ -75,7 +75,7 @@ bool ImagePlayer::canPlay(const QString &mime)
 void ImagePlayer::play(const QString &file)
 {
 
-    m_frame->setPixmap(QPixmap(file));
+    m_frame->setImage(QImage(file));
 
 }
 
