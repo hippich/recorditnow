@@ -47,6 +47,7 @@ VideoPlayer::VideoPlayer(QWidget *parent)
 
     player->mediaObject()->setTickInterval(1000);
     seekSlider->setMediaObject(player->mediaObject());
+    volumeSlider->setAudioOutput(player->audioOutput());
 
 }
 

@@ -43,6 +43,16 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="KSeparator" name="kseparator_2">
+       <property name="frameShape">
+        <enum>QFrame::VLine</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="RecordItNow::VolumeSlider" name="volumeSlider" native="true"/>
+     </item>
     </layout>
    </item>
    <item row="0" column="0">
@@ -91,6 +101,12 @@
    <class>Phonon::SeekSlider</class>
    <extends>QSlider</extends>
    <header location="global">Phonon/SeekSlider</header>
+  </customwidget>
+  <customwidget>
+   <class>RecordItNow::VolumeSlider</class>
+   <extends>QWidget</extends>
+   <header>player/volumeslider.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
