@@ -42,7 +42,10 @@ public:
 
 private:
     QPixmap m_pixmap;
+    QPixmap m_cachedPixmap;
     QPoint m_lastPos;
+
+    void updatePixmap();
 
 
 protected:
@@ -53,6 +56,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 
 };

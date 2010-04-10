@@ -64,6 +64,29 @@ void ImageFrame::setPixmap(const QPixmap &pixmap)
 {
 
     m_pixmap = pixmap;
+    updatePixmap();
+
+}
+
+
+void ImageFrame::updatePixmap()
+{
+
+    if (!m_pixmap.isNull()) {
+        QSize size = contentsRect().size();
+
+        if (size.height() > m_pixmap.height()) {
+            size.setHeight(m_pixmap.height());
+        }
+
+        if (size.width() > m_pixmap.width()) {
+            size.setWidth(m_pixmap.width());
+        }
+
+        m_cachedPixmap = m_pixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    } else {
+        m_cachedPixmap = m_pixmap;
+    }
     update();
 
 }
@@ -81,23 +104,11 @@ void ImageFrame::paintEvent(QPaintEvent *event)
 
     painter.fillRect(contentsRect(), Qt::black);
 
-    if (!m_pixmap.isNull()) {
-        QSize size = contentsRect().size();
-
-        if (size.height() > m_pixmap.height()) {
-            size.setHeight(m_pixmap.height());
-        }
-
-        if (size.width() > m_pixmap.width()) {
-            size.setWidth(m_pixmap.width());
-        }
-
-        const QPixmap pix = m_pixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        QRect rect = pix.rect();
+    if (!m_cachedPixmap.isNull()) {
+        QRect rect = m_cachedPixmap.rect();
         rect.moveCenter(contentsRect().center());
 
-        painter.drawPixmap(rect, pix);
+        painter.drawPixmap(rect, m_cachedPixmap);
     }
 
 }
@@ -207,6 +218,15 @@ void ImageFrame::dropEvent(QDropEvent *event)
             }
         }
     }
+
+}
+
+
+void ImageFrame::resizeEvent(QResizeEvent *event)
+{
+
+    QFrame::resizeEvent(event);
+    updatePixmap();
 
 }
 

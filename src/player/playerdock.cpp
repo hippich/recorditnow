@@ -47,16 +47,15 @@ PlayerDock::PlayerDock(QWidget *parent)
 
     connect(titleWidget, SIGNAL(playerChangedRequested()), this, SLOT(changePlayer()));
 
-    QStackedLayout *layout = new QStackedLayout;
-    contentWidget->setLayout(layout);
-    connect(layout, SIGNAL(currentChanged(int)), this, SLOT(currentChanged(int)));
+    m_layout = new QStackedLayout;
+    contentWidget->setLayout(m_layout);
+    connect(m_layout, SIGNAL(currentChanged(int)), this, SLOT(currentChanged()));
 
     AbstractPlayer *imagePlayer = new ImagePlayer(this);
     AbstractPlayer *videoPlayer = new VideoPlayer(this);
 
-    layout->addWidget(imagePlayer);
-    layout->addWidget(videoPlayer);
-
+    m_layout->addWidget(imagePlayer);
+    m_layout->addWidget(videoPlayer);
 
     m_playerWidgets.append(imagePlayer);
     m_playerWidgets.append(videoPlayer);
@@ -91,8 +90,7 @@ bool PlayerDock::play(const QString &file)
         return false;
     } else {
         playerWidget->play(file);
-        QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
-        layout->setCurrentWidget(playerWidget);
+        m_layout->setCurrentWidget(playerWidget);
     }
 
     return true;
@@ -103,34 +101,30 @@ bool PlayerDock::play(const QString &file)
 void PlayerDock::changePlayer()
 {
 
-    QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
-    if (!layout->currentWidget()) {
+    if (!m_layout->currentWidget()) {
         return;
     }
 
     AbstractPlayer *playerWidget = 0;
     foreach (AbstractPlayer *player, m_playerWidgets) {
         player->stop();
-        if (player != layout->currentWidget()) {
+        if (player != m_layout->currentWidget()) {
             playerWidget = player;
         }
     }
 
     if (playerWidget) {
-        layout->setCurrentWidget(playerWidget);
+        m_layout->setCurrentWidget(playerWidget);
     }
 
 }
 
 
-void PlayerDock::currentChanged(const int &index)
+void PlayerDock::currentChanged()
 {
 
-    Q_UNUSED(index);
-
-    QStackedLayout *layout = static_cast<QStackedLayout*>(contentWidget->layout());
-    if (layout->currentWidget()) {
-        AbstractPlayer *player = static_cast<AbstractPlayer*>(layout->currentWidget());
+    if (m_layout->currentWidget()) {
+        AbstractPlayer *player = static_cast<AbstractPlayer*>(m_layout->currentWidget());
 
         PlayerDockTitle *titleWidget = static_cast<PlayerDockTitle*>(titleBarWidget());
         titleWidget->setTitle(player->name());

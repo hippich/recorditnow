@@ -28,6 +28,7 @@
 #include <QtGui/QDockWidget>
 
 
+class QStackedLayout;
 namespace RecordItNow {
 
 
@@ -46,11 +47,12 @@ public:
 
 private:
     QList<AbstractPlayer*> m_playerWidgets;
+    QStackedLayout *m_layout;
 
 
 private slots:
     void changePlayer();
-    void currentChanged(const int &index);
+    void currentChanged();
 
 
 };
