@@ -36,6 +36,9 @@
 #include <QtGui/QDropEvent>
 #include <QtCore/QUrl>
 #include <QtCore/QFile>
+#include <QtCore/QtConcurrentRun>
+#include <QtCore/QFutureWatcher>
+#include <QtCore/QTimer>
 
 
 namespace RecordItNow {
@@ -49,13 +52,18 @@ ImageFrame::ImageFrame(QWidget *parent)
     setFrameShadow(QFrame::Sunken);
     setAcceptDrops(true);
 
+    m_updateTimer = new QTimer(this);
+    m_updateTimer->setInterval(50);
+    m_updateTimer->setSingleShot(true);
+    connect(m_updateTimer, SIGNAL(timeout()), this, SLOT(updateImage()));
+
 }
 
 
 ImageFrame::~ImageFrame()
 {
 
-
+    delete m_updateTimer;
 
 }
 
@@ -63,30 +71,73 @@ ImageFrame::~ImageFrame()
 void ImageFrame::setPixmap(const QPixmap &pixmap)
 {
 
-    m_pixmap = pixmap;
-    updatePixmap();
+    m_image = pixmap.toImage();
+    scheduleUpdate();
 
 }
 
 
-void ImageFrame::updatePixmap()
+void ImageFrame::setScaledImage(const QImage &image)
 {
 
-    if (!m_pixmap.isNull()) {
-        QSize size = contentsRect().size();
+    m_scaledImage = image;
+    update();
 
-        if (size.height() > m_pixmap.height()) {
-            size.setHeight(m_pixmap.height());
-        }
+}
 
-        if (size.width() > m_pixmap.width()) {
-            size.setWidth(m_pixmap.width());
-        }
 
-        m_cachedPixmap = m_pixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    } else {
-        m_cachedPixmap = m_pixmap;
+void ImageFrame::scheduleUpdate()
+{
+
+    if (m_updateTimer->isActive()) {
+        m_updateTimer->stop();
     }
+    m_updateTimer->start();
+
+}
+
+
+void ImageFrame::updateImage()
+{
+
+    QFuture<QImage> future = QtConcurrent::run(scaleImage, m_image, contentsRect().size());
+    QFutureWatcher<QImage> *watcher = new QFutureWatcher<QImage>();
+    watcher->setFuture(future);
+
+    connect(watcher, SIGNAL(finished()), this, SLOT(imageUpdateDone()));
+    connect(watcher, SIGNAL(finished()), watcher, SLOT(deleteLater()));
+
+}
+
+
+QImage ImageFrame::scaleImage(const QImage &image, const QSize &parentSize)
+{
+
+    QImage scaled = image;
+    if (!image.isNull()) {
+        QSize size = parentSize;
+
+        if (size.height() > image.height()) {
+            size.setHeight(image.height());
+        }
+
+        if (size.width() > image.width()) {
+            size.setWidth(image.width());
+        }
+
+        scaled = image.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
+    return scaled;
+
+}
+
+
+void ImageFrame::imageUpdateDone()
+{
+
+    QFutureWatcher<QImage> *watcher = static_cast< QFutureWatcher<QImage>* >(sender());
+    m_scaledImage = watcher->future().result();
+
     update();
 
 }
@@ -103,12 +154,11 @@ void ImageFrame::paintEvent(QPaintEvent *event)
     painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
 
     painter.fillRect(contentsRect(), Qt::black);
-
-    if (!m_cachedPixmap.isNull()) {
-        QRect rect = m_cachedPixmap.rect();
+    if (!m_scaledImage.isNull()) {
+        QRect rect = m_scaledImage.rect();
         rect.moveCenter(contentsRect().center());
 
-        painter.drawPixmap(rect, m_cachedPixmap);
+        painter.drawImage(rect, m_scaledImage);
     }
 
 }
@@ -128,15 +178,15 @@ void ImageFrame::mouseMoveEvent(QMouseEvent *event)
 
     event->accept();
     const QPoint point = event->pos() - m_lastPos;
-    if (point.manhattanLength() > QApplication::startDragDistance() && !m_pixmap.isNull()) {
+    if (point.manhattanLength() > QApplication::startDragDistance() && !m_image.isNull()) {
         QDrag *drag = new QDrag(this);
 
         QMimeData *mimeData = new QMimeData;
-        mimeData->setImageData(m_pixmap);
+        mimeData->setImageData(m_image);
         drag->setMimeData(mimeData);
 
-        QPixmap pixmap = m_pixmap.scaled(128, 128, Qt::KeepAspectRatio, Qt::FastTransformation);
-        drag->setPixmap(pixmap);
+        QImage image = m_image.scaled(128, 128, Qt::KeepAspectRatio, Qt::FastTransformation);
+        drag->setPixmap(QPixmap::fromImage(image));
 
         drag->exec();
     }
@@ -200,9 +250,8 @@ void ImageFrame::dropEvent(QDropEvent *event)
 
     if (data->hasImage()) {
 
-        QImage image = qvariant_cast<QImage>(data->imageData());
-        m_pixmap = QPixmap::fromImage(image);
-        update();
+        m_image = qvariant_cast<QImage>(data->imageData());
+        scheduleUpdate();
 
         event->accept();
     } else if (data->hasUrls()) {
@@ -210,8 +259,8 @@ void ImageFrame::dropEvent(QDropEvent *event)
             KUrl kurl = url;
             if (kurl.isLocalFile() && QFile::exists(kurl.toLocalFile())) {
 
-                m_pixmap = QPixmap(kurl.toLocalFile());
-                update();
+                m_image = QImage(kurl.toLocalFile());
+                scheduleUpdate();
 
                 event->accept();
                 break;
@@ -226,7 +275,7 @@ void ImageFrame::resizeEvent(QResizeEvent *event)
 {
 
     QFrame::resizeEvent(event);
-    updatePixmap();
+    scheduleUpdate();
 
 }
 

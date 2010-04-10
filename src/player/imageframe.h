@@ -38,14 +38,22 @@ public:
     ~ImageFrame();
 
     void setPixmap(const QPixmap &pixmap);
+    void setScaledImage(const QImage &image);
 
 
 private:
-    QPixmap m_pixmap;
-    QPixmap m_cachedPixmap;
+    QImage m_image;
+    QImage m_scaledImage;
     QPoint m_lastPos;
+    QTimer *m_updateTimer;
 
-    void updatePixmap();
+    static QImage scaleImage(const QImage &image, const QSize &parentSize);
+
+
+private slots:
+    void scheduleUpdate();
+    void updateImage();
+    void imageUpdateDone();
 
 
 protected:
