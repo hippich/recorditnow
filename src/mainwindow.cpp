@@ -84,9 +84,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupActions();
 
+    setCentralWidget(new QWidget(this)); // just a placeholder
+
     QWidget *toolWidget = new QWidget(this);
     setupUi(toolWidget);
-    setCentralWidget(toolWidget);
+
+    m_mainDock = new QDockWidget(i18n("RecordItNow"), this);
+    m_mainDock->setObjectName("_RecordItNow_Main_Dock_");
+    m_mainDock->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
+    m_mainDock->setWidget(toolWidget);
+    addDockWidget(Qt::TopDockWidgetArea, m_mainDock);
 
     soundCheck->setIcon("preferences-desktop-sound");
 
@@ -535,7 +542,7 @@ void MainWindow::setState(const State &newState)
             getAction("popupAction")->setEnabled(true);
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
-            centralWidget()->setEnabled(true);
+            m_mainDock->setEnabled(true);
             timerWidget->reset();
             initRecordWidgets(false);
             initKeyMon(false);
@@ -555,7 +562,7 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            centralWidget()->setEnabled(false);
+            m_mainDock->setEnabled(false);
             initKeyMon(true);
 
             if (Settings::hideOnRecord()) {
@@ -581,7 +588,7 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            centralWidget()->setEnabled(false);
+            m_mainDock->setEnabled(false);
             initRecordWidgets(true);
             break;
         }
@@ -600,7 +607,7 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            centralWidget()->setEnabled(false);
+            m_mainDock->setEnabled(false);
             break;
         }
     case Paused: {
@@ -618,7 +625,7 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            centralWidget()->setEnabled(false);
+            m_mainDock->setEnabled(false);
             break;
         }
     case Encode: {
@@ -635,7 +642,7 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            centralWidget()->setEnabled(false);
+            m_mainDock->setEnabled(false);
             initRecordWidgets(false);
             initKeyMon(false);
             break;
@@ -654,7 +661,7 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(false);
             getAction("zoom-out")->setEnabled(false);
             getAction("popupAction")->setEnabled(false);
-            centralWidget()->setEnabled(false);
+            m_mainDock->setEnabled(false);
             break;
         }
     }
@@ -986,10 +993,14 @@ void MainWindow::zoomOut()
 void MainWindow::setupDocks()
 {
 
+    // tabifyDockWidget:
+    //     The window size would go crazy if a small size is restored
+
     if (Settings::showTimeLine()) {
         if (!m_timelineDock) {
             m_timelineDock = new TimelineDock(this);
             addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+            tabifyDockWidget(m_mainDock, m_timelineDock);
             connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
         }
         m_timelineDock->timeline()->reload();
@@ -1005,6 +1016,7 @@ void MainWindow::setupDocks()
         if (!m_keyboardDock) {
             m_keyboardDock = new KeyboardDock(this);
             addDockWidget(Qt::BottomDockWidgetArea, m_keyboardDock);
+            tabifyDockWidget(m_mainDock, m_keyboardDock);
         }
         m_keyboardDock->init(KeyboardConfig::readConfig(Settings::self()->config()));
     } else {
@@ -1019,6 +1031,7 @@ void MainWindow::setupDocks()
         if (!m_zoomDock) {
             m_zoomDock = new ZoomDock(this);
             addDockWidget(Qt::BottomDockWidgetArea, m_zoomDock);
+            tabifyDockWidget(m_mainDock, m_zoomDock);
         }
         m_zoomDock->setFactor(Settings::zoomFactor());
         m_zoomDock->setFPS(Settings::zoomFps());
@@ -1039,6 +1052,7 @@ void MainWindow::setupDocks()
         if (!m_playerDock) {
             m_playerDock = new RecordItNow::PlayerDock(this);
             addDockWidget(Qt::BottomDockWidgetArea, m_playerDock);
+            tabifyDockWidget(m_mainDock, m_playerDock);
         }
     } else {
         if (m_playerDock) {

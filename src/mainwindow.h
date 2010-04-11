@@ -83,6 +83,7 @@ private:
     KeyboardDock *m_keyboardDock;
     ZoomDock *m_zoomDock;
     RecordItNow::PlayerDock *m_playerDock;
+    QDockWidget *m_mainDock;
 
     KAction *getAction(const QString &name);
 
