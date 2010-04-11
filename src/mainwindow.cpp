@@ -142,6 +142,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     KToolBar *mainBar = toolBar("mainToolBar");
     Q_ASSERT(mainBar);
+    if (!mainBar->toggleViewAction()->isChecked()) { // Make sure that the toolbar is visible
+        mainBar->toggleViewAction()->setChecked(true);
+    }
     mainBar->toggleViewAction()->setDisabled(true); // That would be stupid :-)
 
     setState(Idle);
