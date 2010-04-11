@@ -34,6 +34,9 @@
     </entry>
   </group>
   <group name="GUI">
+    <entry name="lockLayout" type="Bool">
+            <default>false</default>
+    </entry>
     <entry name="currentBackend" type="String">
             <default>RecordMyDesktop</default>
     </entry>

@@ -168,6 +168,8 @@ MainWindow::MainWindow(QWidget *parent)
     timerWidget->setValue(Settings::currentTime());
 
     reloadPopAction();
+    lockLayout(Settings::lockLayout());
+
 
 }
 
@@ -180,6 +182,7 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentFps(fpsSpinBox->value());
     Settings::self()->setCurrentFrame(m_frame->getFrameGeometry());
     Settings::self()->setCurrentTime(timerWidget->value());
+    Settings::self()->setLockLayout(getAction("lockLayout")->isChecked());
     Settings::self()->writeConfig();
 
     delete m_frame;
@@ -194,6 +197,28 @@ MainWindow::~MainWindow()
     if (m_cursor) {
         delete m_cursor;
     }
+
+}
+
+
+QMenu *MainWindow::createPopupMenu()
+{
+
+    QMenu *menu = KXmlGuiWindow::createPopupMenu();
+    if (!menu) {
+        menu = new QMenu(this);
+    }
+
+    KAction *lockAction = getAction("lockLayout");
+    if (menu->actions().isEmpty()) {
+        menu->addAction(lockAction);
+        menu->addSeparator();
+    } else {
+        menu->insertAction(menu->actions().first(), lockAction);
+        menu->insertSeparator(menu->actions().at(1));
+    }
+
+    return menu;
 
 }
 
@@ -337,6 +362,14 @@ void MainWindow::setupActions()
     popAction->setIcon(KIcon("configure-toolbars"));
     popAction->setText(i18n("Configure toolbars"));
     popAction->setShortcut(Qt::CTRL+Qt::Key_T, KAction::DefaultShortcut);
+
+
+    KAction *lockLayoutAction = getAction("lockLayout");
+    lockLayoutAction->setText(i18n("Lock layout"));
+    lockLayoutAction->setIcon(KIcon("object-locked"));
+    lockLayoutAction->setCheckable(true);
+    lockLayoutAction->setShortcut(Qt::CTRL+Qt::Key_L, KAction::DefaultShortcut);
+    connect(lockLayoutAction, SIGNAL(triggered(bool)), this, SLOT(lockLayout(bool)));
 
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
@@ -1227,6 +1260,34 @@ void MainWindow::playRequested()
 
 }
 
+
+void MainWindow::lockLayout(const bool &lock)
+{
+
+    QFlags<QDockWidget::DockWidgetFeature> features;
+    QFlags<QDockWidget::DockWidgetFeature> mainFeatures;
+    if (lock) {
+        features = QDockWidget::NoDockWidgetFeatures;
+        mainFeatures = features;
+    } else {
+        features = QDockWidget::DockWidgetClosable|
+                   QDockWidget::DockWidgetFloatable|
+                   QDockWidget::DockWidgetMovable;
+        mainFeatures = features &~ QDockWidget::DockWidgetClosable;
+    }
+
+    m_mainDock->setFeatures(mainFeatures);
+    m_timelineDock->setFeatures(features);
+    m_keyboardDock->setFeatures(features);
+    m_zoomDock->setFeatures(features);
+    m_playerDock->setFeatures(features);
+
+    KAction *action = getAction("lockLayout");
+    if (action->isChecked() != lock) {
+        action->setChecked(lock);
+    }
+
+}
 
 
 #include "mainwindow.moc"

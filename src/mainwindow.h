@@ -65,6 +65,8 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QMenu *createPopupMenu();
+
     void startWithArgs(const QString &backend, const QString &file, const int &time,
                        const QRect &geometry);
 
@@ -134,6 +136,7 @@ private slots:
     void initKeyMon(const bool &start);
     void errorNotification(const QString &error);
     void playRequested();
+    void lockLayout(const bool &lock);
 
 
 protected:
