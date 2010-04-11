@@ -140,6 +140,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     menuBar()->clear();
 
+    KToolBar *mainBar = toolBar("mainToolBar");
+    Q_ASSERT(mainBar);
+    mainBar->toggleViewAction()->setDisabled(true); // That would be stupid :-)
+
     setState(Idle);
     m_pluginManager->init();
 
