@@ -39,6 +39,7 @@
 #include "zoom/zoomdock.h"
 #include "windowgrabber.h"
 #include "player/playerdock.h"
+#include "helper.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -136,6 +137,16 @@ MainWindow::MainWindow(QWidget *parent)
     setupDocks();
     setupTray();
     setupGUI();
+
+    // default dock cfg, must be called after setupGUI()
+    if (RecordItNow::Helper::self()->firstStart()) {
+        m_timelineDock->close();
+        if (Settings::keyboardDevice().isEmpty()) {
+            m_keyboardDock->close();
+        }
+        m_mainDock->raise(); // the main dock should be activated
+    }
+
     updateWindowFlags();
 
     menuBar()->clear();
@@ -1010,15 +1021,17 @@ void MainWindow::setupDocks()
     // Timeline
     if (!m_timelineDock) {
         m_timelineDock = new TimelineDock(this);
+        connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
+
         addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
         tabifyDockWidget(m_mainDock, m_timelineDock);
-        connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
     }
     m_timelineDock->timeline()->reload();
 
     // Keyboard
     if (!m_keyboardDock) {
         m_keyboardDock = new KeyboardDock(this);
+
         addDockWidget(Qt::BottomDockWidgetArea, m_keyboardDock);
         tabifyDockWidget(m_mainDock, m_keyboardDock);
     }
@@ -1045,73 +1058,6 @@ void MainWindow::setupDocks()
         tabifyDockWidget(m_mainDock, m_playerDock);
     }
 
-  /*
-    if (Settings::showTimeLine()) {
-        if (!m_timelineDock) {
-            m_timelineDock = new TimelineDock(this);
-            addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
-            tabifyDockWidget(m_mainDock, m_timelineDock);
-            connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
-        }
-        m_timelineDock->timeline()->reload();
-    } else {
-        if (m_timelineDock) {
-            removeDockWidget(m_timelineDock);
-            delete m_timelineDock;
-            m_timelineDock = 0;
-        }
-    }
-
-    if (Settings::enableKeyboard()) {
-        if (!m_keyboardDock) {
-            m_keyboardDock = new KeyboardDock(this);
-            addDockWidget(Qt::BottomDockWidgetArea, m_keyboardDock);
-            tabifyDockWidget(m_mainDock, m_keyboardDock);
-        }
-        m_keyboardDock->init(KeyboardConfig::readConfig(Settings::self()->config()));
-    } else {
-        if (m_keyboardDock) {
-            removeDockWidget(m_keyboardDock);
-            delete m_keyboardDock;
-            m_keyboardDock = 0;
-        }
-    }
-
-    if (Settings::zoomDockEnabled()) {
-        if (!m_zoomDock) {
-            m_zoomDock = new ZoomDock(this);
-            addDockWidget(Qt::BottomDockWidgetArea, m_zoomDock);
-            tabifyDockWidget(m_mainDock, m_zoomDock);
-        }
-        m_zoomDock->setFactor(Settings::zoomFactor());
-        m_zoomDock->setFPS(Settings::zoomFps());
-        if (Settings::zoomHighQuality()) {
-            m_zoomDock->setQuality(ZoomView::High);
-        } else {
-            m_zoomDock->setQuality(ZoomView::Low);
-        }
-    }else {
-        if (m_zoomDock) {
-            removeDockWidget(m_zoomDock);
-            delete m_zoomDock;
-            m_zoomDock = 0;
-        }
-    }
-
-    if (Settings::playerDock()) {
-        if (!m_playerDock) {
-            m_playerDock = new RecordItNow::PlayerDock(this);
-            addDockWidget(Qt::BottomDockWidgetArea, m_playerDock);
-            tabifyDockWidget(m_mainDock, m_playerDock);
-        }
-    } else {
-        if (m_playerDock) {
-            removeDockWidget(m_playerDock);
-            delete m_playerDock;
-            m_playerDock = 0;
-        }
-    }
-*/
 }
 
 
