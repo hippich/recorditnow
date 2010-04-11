@@ -236,6 +236,14 @@ KAction *MainWindow::getAction(const QString &name)
 }
 
 
+bool MainWindow::isDockEnabled(QDockWidget *dock) const
+{
+
+    return dock->toggleViewAction()->isChecked();
+
+}
+
+
 void MainWindow::setupActions()
 {
 
@@ -350,7 +358,7 @@ void MainWindow::pauseRecord()
         }
         m_recorderManager->pauseOrContinue();
         m_encoderManager->pauseOrContinue();
-        if (m_timelineDock) {
+        if (isDockEnabled(m_timelineDock)) {
             m_timelineDock->timeline()->pauseOrContinue();
         }
     }
@@ -778,11 +786,6 @@ void MainWindow::applyConfig()
     // update window flags
     updateWindowFlags();
 
-    // update timeline
-    if (m_timelineDock) {
-        m_timelineDock->timeline()->reload();
-    }
-
     reloadPopAction();
 
 }
@@ -980,7 +983,7 @@ void MainWindow::saveNewToolbarConfig()
 void MainWindow::zoomIn()
 {
 
-    if (m_zoomDock) {
+    if (isDockEnabled(m_zoomDock)) {
         m_zoomDock->zoomIn();
     }
 
@@ -990,7 +993,7 @@ void MainWindow::zoomIn()
 void MainWindow::zoomOut()
 {
 
-    if (m_zoomDock) {
+    if (isDockEnabled(m_zoomDock)) {
         m_zoomDock->zoomOut();
     }
 
@@ -1003,6 +1006,46 @@ void MainWindow::setupDocks()
     // tabifyDockWidget:
     //     The window size would go crazy if a small size is restored
 
+
+    // Timeline
+    if (!m_timelineDock) {
+        m_timelineDock = new TimelineDock(this);
+        addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+        tabifyDockWidget(m_mainDock, m_timelineDock);
+        connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
+    }
+    m_timelineDock->timeline()->reload();
+
+    // Keyboard
+    if (!m_keyboardDock) {
+        m_keyboardDock = new KeyboardDock(this);
+        addDockWidget(Qt::BottomDockWidgetArea, m_keyboardDock);
+        tabifyDockWidget(m_mainDock, m_keyboardDock);
+    }
+    m_keyboardDock->init(KeyboardConfig::readConfig(Settings::self()->config()));
+
+    // Zoom
+    if (!m_zoomDock) {
+        m_zoomDock = new ZoomDock(this);
+        addDockWidget(Qt::BottomDockWidgetArea, m_zoomDock);
+        tabifyDockWidget(m_mainDock, m_zoomDock);
+    }
+    m_zoomDock->setFactor(Settings::zoomFactor());
+    m_zoomDock->setFPS(Settings::zoomFps());
+    if (Settings::zoomHighQuality()) {
+        m_zoomDock->setQuality(ZoomView::High);
+    } else {
+        m_zoomDock->setQuality(ZoomView::Low);
+    }
+
+    // Player
+    if (!m_playerDock) {
+        m_playerDock = new RecordItNow::PlayerDock(this);
+        addDockWidget(Qt::BottomDockWidgetArea, m_playerDock);
+        tabifyDockWidget(m_mainDock, m_playerDock);
+    }
+
+  /*
     if (Settings::showTimeLine()) {
         if (!m_timelineDock) {
             m_timelineDock = new TimelineDock(this);
@@ -1068,7 +1111,7 @@ void MainWindow::setupDocks()
             m_playerDock = 0;
         }
     }
-
+*/
 }
 
 
@@ -1174,7 +1217,7 @@ void MainWindow::initRecordWidgets(const bool &start)
     }
 
     // timeline
-    if (m_timelineDock) {
+    if (isDockEnabled(m_timelineDock)) {
         if (start) {
             if (m_recorderManager->hasFeature("TimelineEnabled", recorder)) {
                 m_timelineDock->timeline()->start();
@@ -1229,7 +1272,7 @@ void MainWindow::errorNotification(const QString &error)
 void MainWindow::playRequested()
 {
 
-    if (!(m_playerDock && m_playerDock->play(outputWidget->outputFile()))) {
+    if (!(isDockEnabled(m_playerDock) && m_playerDock->play(outputWidget->outputFile()))) {
         outputWidget->playOutputFile();
     }
 

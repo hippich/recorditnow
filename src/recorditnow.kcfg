@@ -81,9 +81,6 @@
     </entry>
   </group>
   <group name="Keyboard">
-    <entry name="enableKeyboard" type="Bool">
-            <default>false</default>
-    </entry>
     <entry name="keyboardDevice" type="String">
     </entry>
     <entry name="keySize" type="Int">
@@ -91,9 +88,6 @@
     </entry>
   </group>
   <group name="Zoom">
-    <entry name="zoomDockEnabled" type="Bool">
-            <default>true</default>
-    </entry>
     <entry name="zoomFactor" type="Int">
             <default>2</default>
     </entry>
@@ -114,9 +108,6 @@
     </entry>
   </group>
  <group name="TimeLine">
-    <entry name="showTimeLine" type="Bool">
-            <default>false</default>
-    </entry>
     <entry name="timeLineStop" type="Bool">
             <default>true</default>
     </entry>
@@ -138,8 +129,5 @@
     </entry>
   </group>  
  <group name="Player">
-    <entry name="playerDock" type="Bool">
-            <default>false</default>
-    </entry>
   </group>
 </kcfg>

@@ -86,6 +86,7 @@ private:
     QDockWidget *m_mainDock;
 
     KAction *getAction(const QString &name);
+    bool isDockEnabled(QDockWidget *dock) const;
 
     inline void setupActions();
     inline void initRecorder(AbstractRecorder::Data *d);

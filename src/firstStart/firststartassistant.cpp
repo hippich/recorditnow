@@ -82,7 +82,6 @@ void FirstStartAssistant::assistantFinished(const int &ret)
         const QString keyboardDevice = field("KeyboardDevice").toString();
         if (!keyboardDevice.isEmpty()) {
             Settings::setKeyboardDevice(keyboardDevice);
-            Settings::setEnableKeyboard(true);
         }
 
         Settings::self()->writeConfig();
