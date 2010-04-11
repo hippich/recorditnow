@@ -1218,7 +1218,7 @@ void MainWindow::errorNotification(const QString &error)
 void MainWindow::playRequested()
 {
 
-    if (!isDockEnabled(m_playerDock) || !m_playerDock->play(outputWidget->outputFile())) {
+    if (!(isDockEnabled(m_playerDock) && m_playerDock->play(outputWidget->outputFile()))) {
         outputWidget->playOutputFile();
     } else {
         m_playerDock->raise();
