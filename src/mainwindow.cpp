@@ -86,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupActions();
 
     setCentralWidget(new QWidget(this)); // just a placeholder
+    centralWidget()->setMaximumSize(1, 1);
 
     QWidget *toolWidget = new QWidget(this);
     setupUi(toolWidget);
