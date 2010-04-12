@@ -120,6 +120,10 @@ void ZoomView::setFPS(const int &fps)
 void ZoomView::updateView()
 {
 
+    if (!m_timer->isActive()) {
+        return;
+    }
+
     QRect target(0, 0, size().width()/m_factor, size().height()/m_factor);
     target.moveCenter(QCursor::pos());
 
