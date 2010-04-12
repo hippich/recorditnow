@@ -189,6 +189,15 @@ bool ConfigDialog::hasChanged()
 }
 
 
+void ConfigDialog::closeEvent(QCloseEvent *event)
+{
+
+    configFinished(0);
+    KConfigDialog::closeEvent(event);
+
+}
+
+
 void ConfigDialog::updateWidgetsDefault()
 {
 

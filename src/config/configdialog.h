@@ -66,6 +66,7 @@ private slots:
 
 protected:
     bool hasChanged();
+    void closeEvent(QCloseEvent *event);
 
 
 protected slots:
