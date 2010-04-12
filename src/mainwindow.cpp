@@ -212,10 +212,12 @@ QMenu *MainWindow::createPopupMenu()
     KAction *lockAction = getAction("lockLayout");
     if (menu->actions().isEmpty()) {
         menu->addAction(lockAction);
+        menu->addAction(getAction("options_configure_toolbars"));
         menu->addSeparator();
     } else {
         menu->insertAction(menu->actions().first(), lockAction);
-        menu->insertSeparator(menu->actions().at(1));
+        menu->insertAction(lockAction, getAction("options_configure_toolbars"));
+        menu->insertSeparator(menu->actions().at(2));
     }
 
     return menu;
@@ -373,7 +375,8 @@ void MainWindow::setupActions()
 
 
     KStandardAction::preferences(this, SLOT(configure()), actionCollection());
-    
+    KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
+
 }
 
 
