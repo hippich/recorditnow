@@ -163,6 +163,10 @@ void ZoomView::updateView()
                                    target.width(),
                                    target.height());
 
+    if (m_pixmap.isNull()) {
+        return;
+    }
+
 #ifdef XFIXES_FOUND
     // cursor
     XFixesCursorImage *xcursor = XFixesGetCursorImage(QX11Info::display());
@@ -222,7 +226,7 @@ void ZoomView::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setClipRegion(event->region());
 
-    if (!m_timer->isActive()) {
+    if (!m_timer->isActive() || m_pixmap.isNull()) {
         painter.fillRect(contentsRect(), Qt::black);
     } else {
         painter.drawPixmap(contentsRect(), m_pixmap);
