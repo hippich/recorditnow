@@ -98,9 +98,11 @@ void ZoomDock::startStopZoom()
     if (m_started) {
         m_started = false;
         zoomView->stop();
+        ui_title.startButton->setIcon(KIcon("system-run"));
     } else {
         m_started = true;
         zoomView->start();
+        ui_title.startButton->setIcon(KIcon("process-stop"));
     }
 
 }
