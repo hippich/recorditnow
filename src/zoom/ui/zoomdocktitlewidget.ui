@@ -36,6 +36,9 @@
    </item>
    <item>
     <widget class="QToolButton" name="startButton">
+     <property name="toolTip">
+      <string>Start</string>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>
@@ -46,6 +49,9 @@
    </item>
    <item>
     <widget class="QToolButton" name="zoomInButton">
+     <property name="toolTip">
+      <string>Zoom in</string>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>
@@ -56,6 +62,9 @@
    </item>
    <item>
     <widget class="QToolButton" name="zoomOutButton">
+     <property name="toolTip">
+      <string>Zoom out</string>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>
@@ -66,6 +75,9 @@
    </item>
    <item>
     <widget class="QToolButton" name="defaultButton">
+     <property name="toolTip">
+      <string>Original zoom factor</string>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>
