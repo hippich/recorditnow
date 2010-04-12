@@ -128,6 +128,7 @@ private slots:
     void linkActivated(const QString &link);
     void zoomIn();
     void zoomOut();
+    void resetZoomFactor();
     void setupDocks();
     void timeLineFinsihed();
     void resolutionActionTriggered();

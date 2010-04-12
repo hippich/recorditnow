@@ -47,6 +47,7 @@ public:
 public slots:
     void zoomIn();
     void zoomOut();
+    void resetZoomFactor();
 
 
 private:

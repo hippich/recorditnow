@@ -20,6 +20,7 @@
 
 // own
 #include "zoomdock.h"
+#include <recorditnow.h>
 
 // QT
 #include <QtCore/QTimer>
@@ -41,11 +42,13 @@ ZoomDock::ZoomDock(QWidget *parent)
     connect(ui_title.startButton, SIGNAL(clicked()), this, SLOT(startStopZoom()));
     connect(ui_title.zoomInButton, SIGNAL(clicked()), this, SLOT(zoomIn()));
     connect(ui_title.zoomOutButton, SIGNAL(clicked()), this, SLOT(zoomOut()));
+    connect(ui_title.defaultButton, SIGNAL(clicked()), this, SLOT(resetZoomFactor()));
     connect(zoomView, SIGNAL(factorChanged(int)), this, SLOT(factorChanged(int)));
 
     ui_title.startButton->setIcon(KIcon("system-run"));
     ui_title.zoomInButton->setIcon(KIcon("zoom-in"));
     ui_title.zoomOutButton->setIcon(KIcon("zoom-out"));
+    ui_title.defaultButton->setIcon(KIcon("zoom-original"));
 
     setTitleBarWidget(title);
     hideLabel();
@@ -115,6 +118,14 @@ void ZoomDock::zoomOut()
 {
 
     zoomView->setFactor(zoomView->factor()-1);
+
+}
+
+
+void ZoomDock::resetZoomFactor()
+{
+
+    zoomView->setFactor(Settings::zoomFactor());
 
 }
 

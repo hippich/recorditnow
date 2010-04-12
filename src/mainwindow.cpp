@@ -359,6 +359,11 @@ void MainWindow::setupActions()
     zoomOutAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_Minus));
     connect(zoomOutAction, SIGNAL(triggered()), this, SLOT(zoomOut()));
 
+    KAction *zoomDefaultAction = getAction("zoom-default");
+    zoomDefaultAction->setIcon(KIcon("zoom-original"));
+    zoomDefaultAction->setText(i18n("Default Zoom Factor"));
+    zoomDefaultAction->setGlobalShortcut(KShortcut(Qt::META+Qt::CTRL+Qt::Key_O));
+    connect(zoomDefaultAction, SIGNAL(triggered()), this, SLOT(resetZoomFactor()));
 
     KAction *popAction = getAction("popupAction");
     popAction->setIcon(KIcon("configure-toolbars"));
@@ -1043,6 +1048,16 @@ void MainWindow::zoomOut()
 
     if (isDockEnabled(m_zoomDock)) {
         m_zoomDock->zoomOut();
+    }
+
+}
+
+
+void MainWindow::resetZoomFactor()
+{
+
+    if (isDockEnabled(m_zoomDock)) {
+        m_zoomDock->resetZoomFactor();
     }
 
 }
