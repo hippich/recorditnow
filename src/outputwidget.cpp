@@ -45,7 +45,7 @@ OutputWidget::OutputWidget(QWidget *parent)
 
     setupUi(this);
 
-    deleteButton->setIcon(KIcon("list-remove"));
+    deleteButton->setIcon(KIcon("edit-delete"));
     playButton->setIcon(KIcon("media-playback-start"));
 
     m_openWithActions = new KFileItemActions(this);
