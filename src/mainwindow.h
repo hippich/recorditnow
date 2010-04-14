@@ -135,6 +135,7 @@ private slots:
     void frameSizesChanged(const QList<FrameSize> &sizes);
     void initRecordWidgets(const bool &start);
     void initKeyMon(const bool &start);
+    void keyMonStopped();
     void errorNotification(const QString &error);
     void playRequested();
     void lockLayout(const bool &lock);

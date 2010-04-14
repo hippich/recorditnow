@@ -106,6 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(outputWidget, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
     connect(timerWidget, SIGNAL(timeout()), this, SLOT(startRecord()));
     connect(outputWidget, SIGNAL(playRequested()), this, SLOT(playRequested()));
+    connect(KeyMonManager::self(), SIGNAL(stopped()), this, SLOT(keyMonStopped()));
 
     m_tray = 0;
     m_timelineDock = 0;
@@ -591,6 +592,8 @@ void MainWindow::setTrayOverlay(const QString &name)
 void MainWindow::setState(const State &newState)
 {
 
+    m_state = newState;
+
     const QString recorder = backendCombo->currentText();
     switch (newState) {
     case Idle: {
@@ -733,7 +736,6 @@ void MainWindow::setState(const State &newState)
             break;
         }
     }
-    m_state = newState;
 
 }
 
@@ -1252,6 +1254,19 @@ void MainWindow::initKeyMon(const bool &start)
     } else if (!start) {
         KeyMonManager::self()->stop();
     }
+
+}
+
+
+void MainWindow::keyMonStopped()
+{
+
+    if (KeyMonManager::self()->error().isEmpty() || state() == Idle) {
+        kDebug() << state();
+        return;
+    }
+
+    errorNotification(KeyMonManager::self()->error());
 
 }
 

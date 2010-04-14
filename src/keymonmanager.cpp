@@ -187,6 +187,12 @@ QString KeyMonManager::parseError(const int &errorCode)
     default: break;
     }
 
+    if (!error.isEmpty()) {
+        error.prepend(i18n("RecordItNow`s Key-Monitor could not be started.\n"
+                           "For this reason, some features may not be used!\n"
+                           "The error message was:\n\n"));
+    }
+
     return error;
 
 }
