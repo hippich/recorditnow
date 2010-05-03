@@ -24,6 +24,7 @@
 
 // Qt
 #include <QtCore/QEventLoop>
+#include <QtCore/QTimer>
 
 // KDE
 #include <kglobal.h>
@@ -43,7 +44,7 @@ K_GLOBAL_STATIC(KeyMonManagerSingleton, privateSelf)
 
 
 KeyMonManager::KeyMonManager(QObject *parent)
-    : QObject(parent), m_started(false)
+    : QObject(parent), m_started(false), m_gotStarted(false)
 {
 
 
@@ -161,10 +162,28 @@ void KeyMonManager::waitForStarted()
         return;
     }
 
+    mutex.lock();
+
+    if (m_gotStarted) {
+        unlock();
+        return;
+    }
+
     QEventLoop loop;
     connect(this, SIGNAL(started()), &loop, SLOT(quit()));
     connect(this, SIGNAL(stopped()), &loop, SLOT(quit()));
+
+    QTimer::singleShot(100, this, SLOT(unlock())); // FIXME
+
     loop.exec();  // krazy:exclude=crashy
+
+}
+
+
+void KeyMonManager::unlock()
+{
+
+    mutex.unlock();
 
 }
 
@@ -202,6 +221,10 @@ void KeyMonManager::progressStep(const QVariantMap &data)
 {
 
     if (data.contains("Started")) {
+        mutex.lock();
+        m_gotStarted = true;
+        unlock();
+
         emit started();
         return;
     }
@@ -233,6 +256,11 @@ void KeyMonManager::actionPerformed(const ActionReply &reply)
     action.watcher()->disconnect(this);
 
     m_started = false;
+
+    mutex.lock();
+    m_gotStarted = false;
+    unlock();
+
     emit stopped();
 
 }
