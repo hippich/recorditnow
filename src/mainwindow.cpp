@@ -916,8 +916,10 @@ void MainWindow::startTimer()
 {
 
     setState(Timer);
-    timerWidget->start();
-
+    if (state() == Timer) {
+        timerWidget->start();
+    }
+        
 }
 
 
@@ -1249,7 +1251,11 @@ void MainWindow::initKeyMon(const bool &start)
         if (!KeyMonManager::self()->start(keyMonDevs) && !KeyMonManager::self()->error().isEmpty()) {
             errorNotification(KeyMonManager::self()->error());
         } else {
-            KeyMonManager::self()->waitForStarted();
+            if (!KeyMonManager::self()->waitForStarted()) {
+                if (state() == Recording) {
+                    errorNotification(KeyMonManager::self()->error());
+                }
+            }
         }
     } else if (!start) {
         KeyMonManager::self()->stop();

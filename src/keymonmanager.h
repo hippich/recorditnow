@@ -30,7 +30,6 @@
 
 // Qt
 #include <QtCore/QObject>
-#include <QtCore/QMutex>
 
 
 using namespace KAuth;
@@ -51,14 +50,13 @@ public:
     QString error() const;
     bool start(const QStringList &devs);
     void stop();
-    void waitForStarted();
+    bool waitForStarted();
 
 
 private:
     static KeyMonManager *m_self;
     bool m_started;
-    bool m_gotStarted;
-    QMutex mutex;
+    bool m_watching;
     QString m_error;
 
     explicit KeyMonManager(QObject *parent = 0);
@@ -70,7 +68,6 @@ private slots:
     void progressStep(const QVariantMap &data);
     void actionPerformed(const ActionReply &reply);
     void actionStarted();
-    void unlock();
 
 
 signals:

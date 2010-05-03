@@ -90,7 +90,7 @@ void KeyboardKeyPage::start()
     keyCodeLabel->clear();
 
     if (!KeyMonManager::self()->start(QStringList() << m_device)) {
-        statusLabel->setText(i18n("An error has occurred: %1", KeyMonManager::self()->error()));
+        statusLabel->setText(KeyMonManager::self()->error());
         stop();
     } else {
         statusLabel->setText(i18n("Wait for authentication!"));

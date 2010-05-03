@@ -24,13 +24,14 @@
 
 // Qt
 #include <QtCore/QEventLoop>
-#include <QtCore/QTimer>
+#include <QtCore/QTime>
 
 // KDE
 #include <kglobal.h>
 #include <kdebug.h>
 #include <kauth.h>
 #include <klocalizedstring.h>
+#include <kapplication.h>
 
 
 class KeyMonManagerSingleton
@@ -43,8 +44,11 @@ class KeyMonManagerSingleton
 K_GLOBAL_STATIC(KeyMonManagerSingleton, privateSelf)
 
 
+#define NOT_STARTED_ERROR_STRING "RecordItNow`s Key-Monitor could not be started.\n" \
+                                 "For this reason, some features may not be used!\n" \
+                                 "The error message was:\n\n"
 KeyMonManager::KeyMonManager(QObject *parent)
-    : QObject(parent), m_started(false), m_gotStarted(false)
+    : QObject(parent), m_started(false), m_watching(false)
 {
 
 
@@ -155,35 +159,33 @@ void KeyMonManager::stop()
 }
 
 
-void KeyMonManager::waitForStarted()
+bool KeyMonManager::waitForStarted()
 {
 
     if (!m_started) {
-        return;
+        return false;
     }
 
-    mutex.lock();
+    QTime time;
+    bool timeout = false;
+    
+    time.start();
+    while (!m_watching) {
+        kapp->processEvents(QEventLoop::WaitForMoreEvents|QEventLoop::AllEvents, 1000);
 
-    if (m_gotStarted) {
-        unlock();
-        return;
+        // timeout (broken kauth etc)
+        if (time.elapsed() > (1000*5)) { // 1 min
+            timeout = true;
+            
+            m_error = i18n(NOT_STARTED_ERROR_STRING);
+            m_error.append(i18n("Timeout"));
+            break;
+        } else if (!m_started) { // cancelled
+            return false;
+        }
     }
 
-    QEventLoop loop;
-    connect(this, SIGNAL(started()), &loop, SLOT(quit()));
-    connect(this, SIGNAL(stopped()), &loop, SLOT(quit()));
-
-    QTimer::singleShot(100, this, SLOT(unlock())); // FIXME
-
-    loop.exec();  // krazy:exclude=crashy
-
-}
-
-
-void KeyMonManager::unlock()
-{
-
-    mutex.unlock();
+    return !timeout;
 
 }
 
@@ -207,9 +209,7 @@ QString KeyMonManager::parseError(const int &errorCode)
     }
 
     if (!error.isEmpty()) {
-        error.prepend(i18n("RecordItNow`s Key-Monitor could not be started.\n"
-                           "For this reason, some features may not be used!\n"
-                           "The error message was:\n\n"));
+        error.prepend(i18n(NOT_STARTED_ERROR_STRING));
     }
 
     return error;
@@ -221,10 +221,9 @@ void KeyMonManager::progressStep(const QVariantMap &data)
 {
 
     if (data.contains("Started")) {
-        mutex.lock();
-        m_gotStarted = true;
-        unlock();
-
+        m_watching = true;
+        kapp->postEvent(this, new QEvent(QEvent::User), Qt::HighEventPriority); // see waitForStarted
+        
         emit started();
         return;
     }
@@ -255,11 +254,7 @@ void KeyMonManager::actionPerformed(const ActionReply &reply)
     action.setHelperID("org.kde.recorditnow.helper");
     action.watcher()->disconnect(this);
 
-    m_started = false;
-
-    mutex.lock();
-    m_gotStarted = false;
-    unlock();
+    m_started = m_watching = false;
 
     emit stopped();
 
