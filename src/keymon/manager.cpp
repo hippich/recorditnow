@@ -74,8 +74,9 @@ QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
         if (interface && interface->isValid()) {
             foreach (const QString &cap, interface->property("info.capabilities").toStringList()) {
                 if (cap == QLatin1String("input.mouse")) {
+                    // is sometimes not set (vbox)
                     if (interface->property("input.x11_driver").toString() != QLatin1String("evdev")) {
-                        break;
+                        kWarning() << "device found but input.x11_driver != evdev...";
                     }
                     info.file = interface->property("input.device").toString();
                     info.uuid = device.udi();
@@ -86,8 +87,9 @@ QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
                     break;
 
                 } else if (cap == QLatin1String("input.keyboard")) {
+                    // is sometimes not set (vbox)
                     if (interface->property("input.x11_driver").toString() != QLatin1String("evdev")) {
-                        break;
+                        kWarning() << "device found but input.x11_driver != evdev...";
                     }
                     info.file = interface->property("input.device").toString();
                     info.uuid = device.udi();
