@@ -178,7 +178,7 @@ void OutputWidget::fileDirty(const QString &path, const bool &deleted)
 
 
     m_openWithActions->setItemListProperties(propertieList);
-    m_openWithActions->addOpenWithActionsTo(menu);
+    m_openWithActions->addOpenWithActionsTo(menu, QString());
 
     playButton->setMenu(menu);
 
