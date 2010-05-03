@@ -174,7 +174,7 @@ bool KeyMonManager::waitForStarted()
         kapp->processEvents(QEventLoop::WaitForMoreEvents|QEventLoop::AllEvents, 1000);
 
         // timeout (broken kauth etc)
-        if (time.elapsed() > (1000*5)) { // 1 min
+        if (time.elapsed() > (1000*60)) { // 1 min
             timeout = true;
             
             m_error = i18n(NOT_STARTED_ERROR_STRING);
