@@ -37,14 +37,17 @@
 
 
 KeyboardDock::KeyboardDock(QWidget *parent)
-    : QDockWidget(parent)
+    : RecordItNow::DockWidget(parent)
 {
 
     setObjectName("Keyboard");
+    setDockTitle(i18n("Keyboard-Monitor"));
+    setWindowIcon(KIcon("input-keyboard"));
     setAllowedAreas(Qt::AllDockWidgetAreas);
     setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
 
-    setupUi(this);
+    QWidget *content = new QWidget;
+    setupUi(content);
 
     connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
             SLOT(keyPressed(KeyMon::Event)));
@@ -63,12 +66,16 @@ KeyboardDock::KeyboardDock(QWidget *parent)
     sizeChanged(Settings::keySize());
 
 
+    setWidget(content);
+
 }
 
 
 KeyboardDock::~KeyboardDock()
 {
 
+
+    
 }
 
 

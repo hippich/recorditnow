@@ -35,6 +35,7 @@
 
 namespace RecordItNow {
     class PlayerDock;
+    class DockWidget;
 };
 
 class ZoomDock;
@@ -85,7 +86,7 @@ private:
     KeyboardDock *m_keyboardDock;
     ZoomDock *m_zoomDock;
     RecordItNow::PlayerDock *m_playerDock;
-    QDockWidget *m_mainDock;
+    RecordItNow::DockWidget *m_mainDock;
 
     KAction *getAction(const QString &name);
     bool isDockEnabled(QDockWidget *dock) const;

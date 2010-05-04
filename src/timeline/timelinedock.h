@@ -24,13 +24,14 @@
 // own
 #include <ui_timelinedocktitlewidget.h>
 #include "topic.h"
+#include "../dockwidget.h"
 
 // Qt
 #include <QtGui/QDockWidget>
 
 
 class Timeline;
-class TimelineDock : public QDockWidget
+class TimelineDock : public RecordItNow::DockWidget
 {
     Q_OBJECT
 

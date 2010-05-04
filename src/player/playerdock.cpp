@@ -37,11 +37,17 @@ namespace RecordItNow {
 
 
 PlayerDock::PlayerDock(QWidget *parent)
-    : QDockWidget(parent)
+    : RecordItNow::DockWidget(parent)
 {
 
-    setupUi(this);
-
+    setDockTitle(i18n("Player Dock"));
+    setWindowIcon(KIcon("media-playback-start"));
+    setObjectName("playerDock");
+    
+    QWidget *widget = new QWidget(this);
+    setupUi(widget);
+    setWidget(widget);
+    
     PlayerDockTitle *titleWidget = new PlayerDockTitle(this);
     setTitleBarWidget(titleWidget);
 

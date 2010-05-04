@@ -31,11 +31,17 @@
 
 
 ZoomDock::ZoomDock(QWidget *parent)
-    : QDockWidget(parent), m_started(false)
+    : RecordItNow::DockWidget(parent), m_started(false)
 {
 
-    setupUi(this);
-
+    QWidget *widget = new QWidget(this);
+    setupUi(widget);
+    setWidget(widget);
+    
+    setDockTitle(i18n("Zoom"));
+    setWindowIcon(KIcon("zoom-in"));
+    setObjectName("ZoomDock");
+    
     QWidget *title = new QWidget(this);
     ui_title.setupUi(title);
 

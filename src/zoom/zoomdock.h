@@ -24,13 +24,14 @@
 // own
 #include "ui_zoomdock.h"
 #include "ui_zoomdocktitlewidget.h"
+#include "../dockwidget.h"
 
 // Qt
 #include <QtGui/QDockWidget>
 
 
 class QTimer;
-class ZoomDock : public QDockWidget, Ui::ZoomDock
+class ZoomDock : public RecordItNow::DockWidget, Ui::ZoomDock
 {
     Q_OBJECT
 

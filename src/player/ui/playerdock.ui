@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PlayerDock</class>
- <widget class="QDockWidget" name="PlayerDock">
+ <widget class="QWidget" name="PlayerDock">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,13 +10,20 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="features">
-   <set>QDockWidget::AllDockWidgetFeatures</set>
-  </property>
   <property name="windowTitle">
-   <string>Player</string>
+   <string/>
   </property>
-  <widget class="QWidget" name="contentWidget"/>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="contentWidget" native="true"/>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

@@ -31,10 +31,12 @@
 
 
 TimelineDock::TimelineDock(QWidget *parent)
-    : QDockWidget(i18n("Timeline"), parent)
+    : RecordItNow::DockWidget(parent)
 {
 
     setObjectName("Timeline");
+    setDockTitle(i18n("Timeline"));
+    setWindowIcon(KIcon("recorditnow-timeline"));
     setAllowedAreas(Qt::AllDockWidgetAreas);
     setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetClosable);
     Timeline *line = new Timeline(this);

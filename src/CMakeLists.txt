@@ -98,6 +98,7 @@ set(gui_SRCS
    timerwidget.cpp
    windowgrabber.cpp
    devicesearchwidget.cpp
+   dockwidget.cpp
 
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp

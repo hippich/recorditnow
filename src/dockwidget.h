@@ -17,50 +17,56 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYBOARDDOCK_H
-#define KEYBOARDDOCK_H
+#ifndef RECORDITNOW_DOCKWIDGET_H
+#define RECORDITNOW_DOCKWIDGET_H
 
-
-// own
-#include "ui_keyboarddock.h"
-#include "ui_keyboarddocktitlewidget.h"
-#include "../keymon/event.h"
-#include "../config/keyboardconfig.h"
-#include "../dockwidget.h"
 
 // Qt
 #include <QtGui/QDockWidget>
-#include <QtCore/QVariantMap>
 
 
-class FlowLayout;
-class KeyWidget;
-class KConfig;
-class KConfigGroup;
-class KeyboardDock: public RecordItNow::DockWidget, Ui::KeyboardDock
+class QToolButton;
+namespace RecordItNow {
+
+    
+class DockWidget : public QDockWidget
 {
     Q_OBJECT
-
-
+  
+  
 public:
-    explicit KeyboardDock(QWidget *parent = 0);
-    ~KeyboardDock();
+    DockWidget(QWidget *parent);
+    ~DockWidget();
 
-    void init(const QList<KeyboardKey> &map);
+    void setTitleBarWidget(QWidget *widget);
+    void setWidget(QWidget *widget);
+  
+    QWidget *widget() const;
+    QWidget *titleBarWidget() const;
+  
+    void setDockTitle(const QString &title);
     
-    
+  
+public slots:
+    void embed();
+
+
 private:
-    Ui::KeyboardDockTitleWidget ui_title;
-    QList<KeyWidget*> m_keyList;
-    FlowLayout *m_layout;
+    QWidget *m_widget;
+    QWidget *m_title;
+    QWidget *m_window;
+    QToolButton *m_embedButton;
+    QString m_dockTitle;
     
-
-private slots:
-    void keyPressed(const KeyMon::Event &event);
-    void sizeChanged(const int &value);
-
-
+    
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+    
+    
 };
 
 
-#endif // KEYBOARDDOCK_H
+}
+
+
+#endif // RECORDITNOW_DOCKWIDGET_H

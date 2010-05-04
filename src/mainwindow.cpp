@@ -40,6 +40,7 @@
 #include "windowgrabber.h"
 #include "player/playerdock.h"
 #include "helper.h"
+#include "dockwidget.h"
 
 // Qt
 #include <QtGui/QX11Info>
@@ -91,12 +92,25 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget *toolWidget = new QWidget(this);
     setupUi(toolWidget);
 
-    m_mainDock = new QDockWidget(i18n("RecordItNow"), this);
+    m_mainDock = new RecordItNow::DockWidget(this);
+    m_mainDock->setDockTitle(i18n("RecordItNow"));
     m_mainDock->setObjectName("_RecordItNow_Main_Dock_");
     m_mainDock->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
     m_mainDock->setWidget(toolWidget);
+    
+    QWidget *dockTitle = new QWidget(m_mainDock);
+    QHBoxLayout *titleLayout = new QHBoxLayout;
+    titleLayout->setContentsMargins(0, 0, 0, 0);
+    
+    QLabel *titleLabel = new QLabel(dockTitle);
+    titleLabel->setText(i18n("RecordItNow"));
+    
+    titleLayout->addWidget(titleLabel);
+    m_mainDock->setTitleBarWidget(dockTitle);
+    
     addDockWidget(Qt::TopDockWidgetArea, m_mainDock);
 
+    
     soundCheck->setIcon("preferences-desktop-sound");
 
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
@@ -170,7 +184,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     reloadPopAction();
     lockLayout(Settings::lockLayout());
-
 
 }
 

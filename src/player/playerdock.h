@@ -23,6 +23,7 @@
 
 // own
 #include "ui_playerdock.h"
+#include "../dockwidget.h"
 
 // Qt
 #include <QtGui/QDockWidget>
@@ -33,7 +34,7 @@ namespace RecordItNow {
 
 
 class AbstractPlayer;
-class PlayerDock : public QDockWidget, Ui::PlayerDock
+class PlayerDock : public RecordItNow::DockWidget, Ui::PlayerDock
 {
     Q_OBJECT
 
