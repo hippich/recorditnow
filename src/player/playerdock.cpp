@@ -40,7 +40,7 @@ PlayerDock::PlayerDock(QWidget *parent)
     : RecordItNow::DockWidget(parent)
 {
 
-    setDockTitle(i18n("Player Dock"));
+    setDockTitle(i18n("Player"));
     setWindowIcon(KIcon("media-playback-start"));
     setObjectName("playerDock");
     
