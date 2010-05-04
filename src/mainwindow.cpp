@@ -166,14 +166,6 @@ MainWindow::MainWindow(QWidget *parent)
     updateWindowFlags();
 
     menuBar()->clear();
-
-    KToolBar *mainBar = toolBar("mainToolBar");
-    Q_ASSERT(mainBar);
-    if (!mainBar->toggleViewAction()->isChecked()) { // Make sure that the toolbar is visible
-        mainBar->toggleViewAction()->setChecked(true);
-    }
-    mainBar->toggleViewAction()->setDisabled(true); // That would be stupid :-)
-
     setState(Idle);
     m_pluginManager->init();
 
@@ -184,6 +176,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     reloadPopAction();
     lockLayout(Settings::lockLayout());
+
+    // don't show the toggleviewaction from our mainToolBar
+    if (toolBarMenuAction()) {
+        foreach (QWidget *widget, toolBarMenuAction()->associatedWidgets()) {
+            widget->removeAction(toolBarMenuAction());
+        }
+    }
 
 }
 
@@ -222,6 +221,8 @@ QMenu *MainWindow::createPopupMenu()
     if (!menu) {
         menu = new QMenu(this);
     }
+
+    menu->removeAction(toolBar()->toggleViewAction());
 
     KAction *lockAction = getAction("lockLayout");
     if (menu->actions().isEmpty()) {
