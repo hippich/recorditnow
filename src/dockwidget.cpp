@@ -23,6 +23,7 @@
 // KDE
 #include <kicon.h>
 #include <kdebug.h>
+#include <klocalizedstring.h>
 
 // Qt
 #include <QtGui/QHBoxLayout>
@@ -40,7 +41,6 @@ DockWidget::DockWidget(QWidget* parent)
     m_window = 0;
     m_title = 0;
     m_widget = 0;
-    
 
     // title
     QWidget *titleBarWidget = new QWidget(this);
@@ -55,17 +55,11 @@ DockWidget::DockWidget(QWidget* parent)
     titleButtonLayout->setContentsMargins(0, 0, 0, 0);
     titleBarWidgetLayout->setContentsMargins(0, 0, 0, 0);
     
-    m_embedButton = new QToolButton(m_title);
-    m_embedButton->setAutoRaise(true);
-    m_embedButton->setIcon(KIcon("window-new"));
-    connect(m_embedButton, SIGNAL(clicked(bool)), this, SLOT(embed()));
-    
-    titleButtonLayout->addWidget(m_embedButton);
-    
     titleMainLayout->addLayout(titleBarWidgetLayout);
     titleMainLayout->addLayout(titleButtonLayout);
     
     m_title->setLayout(titleMainLayout);
+    m_buttonLayout = titleButtonLayout;
     
     titleBarLayout->addWidget(m_title);
 
@@ -85,6 +79,11 @@ DockWidget::DockWidget(QWidget* parent)
 
     widget->setLayout(widgetLayout);
     QDockWidget::setWidget(widget);
+
+    connect(this, SIGNAL(featuresChanged(QDockWidget::DockWidgetFeatures)), 
+           this, SLOT(updateButtons(QDockWidget::DockWidgetFeatures)));
+
+    updateButtons(features());
 
 }
 
@@ -161,8 +160,6 @@ void DockWidget::embed()
 {
 
     if (m_window) {
-        m_embedButton->setIcon(KIcon("window-new"));
-            
         m_window->layout()->takeAt(0); // m_widget
         m_window->layout()->takeAt(0); // m_title
         
@@ -172,8 +169,6 @@ void DockWidget::embed()
         m_window->deleteLater();
         m_window = 0;
     } else {
-        m_embedButton->setIcon(KIcon("window-close"));
-        
         m_window = new QWidget(0, Qt::Window|Qt::WindowStaysOnTopHint|Qt::WindowCloseButtonHint);
         m_window->setWindowTitle(m_dockTitle);
         m_window->setWindowIcon(windowIcon());
@@ -191,6 +186,45 @@ void DockWidget::embed()
         windowLayout->addWidget(m_widget);
         
         m_window->show();
+    }
+    updateButtons(features());
+
+}
+
+
+void DockWidget::updateButtons(const QDockWidget::DockWidgetFeatures &features)
+{
+
+    for (int i = m_buttonLayout->count(); i > 0; i--) {
+        QLayoutItem *item = m_buttonLayout->takeAt(0);
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
+    
+    if (m_window) {
+        return;
+    }
+    
+    if (features & QDockWidget::DockWidgetFloatable) {
+        QToolButton *embedButton = new QToolButton(m_title);
+        embedButton->setAutoRaise(true);
+        embedButton->setIcon(KIcon("window-new"));
+        embedButton->setText(i18n("Embed in window"));
+        connect(embedButton, SIGNAL(clicked(bool)), this, SLOT(embed()));
+
+        m_buttonLayout->addWidget(embedButton);
+    }
+    
+    if (features & QDockWidget::DockWidgetClosable) {
+        QToolButton *closeButton = new QToolButton(m_title);
+        closeButton->setAutoRaise(true);
+        closeButton->setIcon(KIcon("window-close"));
+        closeButton->setText(i18n("Remove the Dock"));
+        connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+        
+        m_buttonLayout->addWidget(closeButton);
     }
     
 }

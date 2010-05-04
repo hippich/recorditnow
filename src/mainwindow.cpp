@@ -1320,7 +1320,7 @@ void MainWindow::lockLayout(const bool &lock)
     QFlags<QDockWidget::DockWidgetFeature> features;
     QFlags<QDockWidget::DockWidgetFeature> mainFeatures;
     if (lock) {
-        features = QDockWidget::NoDockWidgetFeatures;
+        features = QDockWidget::DockWidgetFloatable;
         mainFeatures = features;
     } else {
         features = QDockWidget::DockWidgetClosable|

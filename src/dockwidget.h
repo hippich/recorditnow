@@ -25,6 +25,7 @@
 #include <QtGui/QDockWidget>
 
 
+class QHBoxLayout;
 class QToolButton;
 namespace RecordItNow {
 
@@ -55,13 +56,17 @@ private:
     QWidget *m_widget;
     QWidget *m_title;
     QWidget *m_window;
-    QToolButton *m_embedButton;
     QString m_dockTitle;
+    QHBoxLayout *m_buttonLayout;
+    
+    
+private slots:
+    void updateButtons(const QDockWidget::DockWidgetFeatures &features);
     
     
 protected:
-    bool eventFilter(QObject *watched, QEvent *event);
-    void closeEvent(QCloseEvent *event);
+    virtual bool eventFilter(QObject *watched, QEvent *event);
+    virtual void closeEvent(QCloseEvent *event);
     
     
 };
