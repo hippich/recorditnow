@@ -174,6 +174,7 @@ void DockWidget::embed()
         m_window->setWindowIcon(windowIcon());
         m_window->installEventFilter(this);
         m_window->setAttribute(Qt::WA_DeleteOnClose, false);
+        m_window->resize(m_widget->size());
         
         QVBoxLayout *windowLayout = new QVBoxLayout;
         windowLayout->setContentsMargins(0, 0, 0, 0);
