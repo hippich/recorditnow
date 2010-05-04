@@ -777,14 +777,15 @@ void MainWindow::recorderFinished(const QString &error, const bool &isVideo)
         setState(Idle);
     } else if (Settings::encoderName().isEmpty() || !Settings::encode() || !isVideo) {
         setState(Idle);
-        if (Settings::showVideo()) {
-            playRequested();
-        }
         pluginStatus(i18nc("Recording finished", "Finished!"));
         if (!isVisible()) {
             show();
         }
         raise();
+        
+        if (Settings::showVideo()) {
+            playRequested();
+        }
     } else {
         AbstractEncoder::Data d;
         initEncoder(&d);

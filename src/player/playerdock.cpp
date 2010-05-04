@@ -84,7 +84,7 @@ bool PlayerDock::play(const QString &file)
 
     KMimeType::Ptr mimePtr = KMimeType::findByPath(file, 0, true);
     const QString mimeType = mimePtr->name();
-
+    
     foreach (AbstractPlayer *player, m_playerWidgets) {
         player->stop();
         if (player->canPlay(mimeType)) {
