@@ -140,7 +140,6 @@ QWidget *DockWidget::titleBarWidget() const
     if (m_title->layout()->count() > 0) {
         return m_title->layout()->itemAt(0)->layout()->itemAt(0)->widget();
     } else {
-        Q_ASSERT(false);
         return 0;
     }
     
