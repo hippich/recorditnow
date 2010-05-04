@@ -61,6 +61,7 @@ private:
     
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
+    void closeEvent(QCloseEvent *event);
     
     
 };

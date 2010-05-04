@@ -212,6 +212,17 @@ bool DockWidget::eventFilter(QObject *watched, QEvent *event)
 }
 
 
+void DockWidget::closeEvent(QCloseEvent *event)
+{
+    
+    if (m_window) {
+        embed();
+    }
+    QDockWidget::closeEvent(event);
+    
+}
+
+
 } // namespace RecordItNow
 
 
