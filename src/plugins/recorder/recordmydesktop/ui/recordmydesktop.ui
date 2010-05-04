@@ -17,7 +17,7 @@
    <item>
     <widget class="KTabWidget" name="ktabwidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -299,11 +299,17 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="value">
+            <number>2000000</number>
+           </property>
            <property name="minimum">
             <number>45000</number>
            </property>
            <property name="maximum">
             <number>2000000</number>
+           </property>
+           <property name="specialValueText">
+            <string/>
            </property>
            <property name="sliderEnabled">
             <bool>true</bool>
