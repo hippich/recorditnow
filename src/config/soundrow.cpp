@@ -31,10 +31,16 @@
 
 
 SoundRow::SoundRow(QWidget *parent)
-    : QWidget(parent)
+    : QFrame(parent)
 {
 
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    
+    setMidLineWidth(0);
+    setLineWidth(1);
+    setFrameStyle(QFrame::Box);
+    setFrameShadow(QFrame::Sunken);
+    
     
     QHBoxLayout *layout = new QHBoxLayout;
 

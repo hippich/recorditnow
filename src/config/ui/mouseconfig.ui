@@ -294,6 +294,12 @@
        </item>
        <item>
         <widget class="QScrollArea" name="scrollArea_2">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -302,8 +308,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>356</width>
-            <height>215</height>
+            <width>362</width>
+            <height>221</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="colorWidgetListLayout"/>
@@ -354,7 +360,7 @@
        <item>
         <widget class="QScrollArea" name="scrollArea">
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::NoFrame</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -364,8 +370,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>356</width>
-            <height>196</height>
+            <width>362</width>
+            <height>202</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="soundWidgetListLayout"/>

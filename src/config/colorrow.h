@@ -25,11 +25,11 @@
 #include "mousebuttonwidget.h"
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QFrame>
 
 
 class KColorButton;
-class ColorRow: public QWidget
+class ColorRow: public QFrame
 {
     Q_OBJECT
     
