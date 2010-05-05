@@ -71,12 +71,17 @@ QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
         KeyMon::DeviceInfo info;
         const Solid::GenericInterface *interface = device.as<Solid::GenericInterface>();
 
+        QRegExp eventRX(".*event[0-9]+");
         if (interface && interface->isValid()) {
             foreach (const QString &cap, interface->property("info.capabilities").toStringList()) {
                 if (cap == QLatin1String("input.mouse")) {
                     // is sometimes not set (vbox)
                     if (interface->property("input.x11_driver").toString() != QLatin1String("evdev")) {
-                        kWarning() << "device found but input.x11_driver != evdev...";
+                        if (eventRX.exactMatch(interface->property("input.device").toString())) {
+                            kWarning() << "device found but input.x11_driver != evdev...";
+                        } else {
+                            break;
+                        }
                     }
                     info.file = interface->property("input.device").toString();
                     info.uuid = device.udi();
@@ -89,7 +94,11 @@ QList<KeyMon::DeviceInfo> Manager::getInputDeviceList()
                 } else if (cap == QLatin1String("input.keyboard")) {
                     // is sometimes not set (vbox)
                     if (interface->property("input.x11_driver").toString() != QLatin1String("evdev")) {
-                        kWarning() << "device found but input.x11_driver != evdev...";
+                        if (eventRX.exactMatch(interface->property("input.device").toString())) {
+                            kWarning() << "device found but input.x11_driver != evdev...";
+                        } else {
+                            break;
+                        }
                     }
                     info.file = interface->property("input.device").toString();
                     info.uuid = device.udi();
