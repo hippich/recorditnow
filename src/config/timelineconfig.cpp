@@ -21,7 +21,6 @@
 // own
 #include "timelineconfig.h"
 #include "timeline/topic.h"
-#include "topictreeitem.h"
 #include "helper.h"
 #include <recorditnow.h>
 #include "listlayout.h"
