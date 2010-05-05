@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 210 by Kai Dombrowe <just89@gmx.de>                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,74 +17,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSECONFIG_H
-#define MOUSECONFIG_H
+#ifndef COLORROW_H
+#define COLORROW_H
 
 
 // own
-#include "config/configpage.h"
-#include "ui_mouseconfig.h"
 #include "mousebuttonwidget.h"
-#include "mouse/mousebutton.h"
 
 // Qt
 #include <QtGui/QWidget>
 
 
-class ColorRow;
-class SoundRow;
-class KUrlRequester;
-class QButtonGroup;
-class QToolButton;
 class KColorButton;
-class MouseConfig : public RecordItNow::ConfigPage, Ui::MouseConfig
+class ColorRow: public QWidget
 {
     Q_OBJECT
-
-
+    
+    
 public:
-    explicit MouseConfig(KConfig *cfg, QWidget *parent = 0);
-    ~MouseConfig();
+    ColorRow(QWidget *parent = 0);
 
-    void saveConfig();
-    void loadConfig();
-    void setDefaults();
+    QColor color() const;
+    int code() const;
+    MouseButtonWidget::Button button() const;
+    
 
-    static QList<MouseButton> defaultButtons();
-    static QList<MouseButton> getButtons(KConfig *cfg);
-    static void saveConfig(KConfig *cfg, const QList<MouseButton> &list);
+    void setColor(const QColor &color);
+    void setButton(const MouseButtonWidget::Button &button);
 
-
+    
 private:
-    ColorRow *newColorRow();
-    SoundRow *newSoundRow();
-    QButtonGroup *m_visibleGroup;
-    QWidget *m_colorSpacer;
-    QWidget *m_soundSpacer;
+    KColorButton *m_colorButton;
+    MouseButtonWidget *m_button;
     
-
-    bool contains(const MouseButtonWidget::Button &button, QLayout *layout, QWidget *exclude = 0) const;
-    QList<MouseButton> currentButtons() const;
-    
-    void addRow(QWidget *widget, QLayout *layout);
-    void removeRow(QWidget *widget, QLayout *layout);
-    
-
-private slots:
-    void addClicked();
-    void addSoundClicked();
-    void removeClicked();
-    void removeSoundRow();
+        
+signals:
+    void removeRequested();
+    void changed();
     void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
-    void soundButtonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
-    void showKeyMonDialog();
-    void buttonsChanged();
-    void modeChanged();
-    void currentButtonChanged();
-    void compositingChanged(const bool &active);
-    
+
 
 };
 
 
-#endif // MOUSECONFIG_H
+#endif // COLORROW_H

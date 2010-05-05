@@ -92,7 +92,9 @@ set(gui_SRCS
    config/pluginconfig.cpp
    config/notificationconfig.cpp
    config/playerconfig.cpp
-	
+   config/soundrow.cpp
+   config/colorrow.cpp
+   
    outputwidget.cpp
    timerwidget.cpp
    windowgrabber.cpp

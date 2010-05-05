@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2009-210 by Kai Dombrowe <just89@gmx.de>                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,6 +22,8 @@
 #include "mouseconfig.h"
 #include "devicesearchdialog.h"
 #include "helper.h"
+#include "colorrow.h"
+#include "soundrow.h"
 
 // KDE
 #include <kicon.h>
@@ -41,9 +43,17 @@
 MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     : RecordItNow::ConfigPage(cfg, parent)
 {
-
+    
     setupUi(this);
 
+    m_colorSpacer = new QWidget(this);
+    m_colorSpacer->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    colorWidgetListLayout->addWidget(m_colorSpacer);
+    
+    m_soundSpacer = new QWidget(this);
+    m_soundSpacer->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    soundWidgetListLayout->addWidget(m_soundSpacer);
+    
     addButton->setIcon(KIcon("list-add"));
     soundAddButton->setIcon(KIcon("list-add"));
     keyMonButton->setIcon(KIcon("system-search"));
@@ -69,8 +79,6 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     soundButtonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::SpecialButton1));
     soundButtonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::SpecialButton2));
     
-    treeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
-    soundTreeWidget->header()->setResizeMode(QHeaderView::ResizeToContents);
     cursorWidget->switchToPreviewMode();
 
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
@@ -80,8 +88,6 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(kcfg_target, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(soundButtonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
-    connect(treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(currentButtonChanged()));
-    connect(soundTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(currentButtonChanged()));
     connect(RecordItNow::Helper::self(), SIGNAL(compositingChanged(bool)), this,
             SLOT(compositingChanged(bool)));
 
@@ -120,36 +126,22 @@ void MouseConfig::loadConfig()
     QList<MouseButton> buttons = getButtons(config());
     foreach (const MouseButton &button, buttons) {
 
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        KColorButton *colorButton = newButton();
+        ColorRow *cRow = newColorRow();
+        cRow->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
+        cRow->setColor(button.color());
 
-        colorButton->setColor(button.color());
+        addRow(cRow, colorWidgetListLayout);
 
-        MouseButtonWidget *buttonWidget = newMouseButtonWidget(treeWidget);
-        buttonWidget->setXButton(button.code());
-
-        treeWidget->addTopLevelItem(item);
-        treeWidget->setItemWidget(item, 0, newRemoveButton());
-        treeWidget->setItemWidget(item, 1, buttonWidget);
-        treeWidget->setItemWidget(item, 2, colorButton);
-    
         if (button.sound().isEmpty()) {
             continue;
         }
             
-        MouseButtonWidget *soundButton = newMouseButtonWidget(soundTreeWidget);
-        soundButton->setXButton(button.code());
-
-        KUrlRequester *requester = newRequester();
-        requester->setText(button.sound());
-        
-        QTreeWidgetItem *soundItem = new QTreeWidgetItem();
-        soundTreeWidget->addTopLevelItem(soundItem);
-        soundTreeWidget->setItemWidget(soundItem, 0, newRemoveButton(true));
-        soundTreeWidget->setItemWidget(soundItem, 1, soundButton);
-        soundTreeWidget->setItemWidget(soundItem, 2, requester);
-        soundTreeWidget->setItemWidget(soundItem, 3, newPlayButton());
-        
+        SoundRow *sRow = newSoundRow();
+        sRow->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
+        sRow->setSound(button.sound());
+    
+        addRow(sRow, soundWidgetListLayout);
+      
     }
 
     buttonsChanged();
@@ -161,21 +153,23 @@ void MouseConfig::loadConfig()
 void MouseConfig::setDefaults()
 {
 
-    treeWidget->clear();
-
+    // clear
+    while (colorWidgetListLayout->count() != 1) {
+        QWidget *widget = colorWidgetListLayout->itemAt(0)->widget();
+        removeRow(widget, colorWidgetListLayout);
+    }
+    while (soundWidgetListLayout->count() != 1) {
+        QWidget *widget = soundWidgetListLayout->itemAt(0)->widget();
+        removeRow(widget, soundWidgetListLayout);
+    }    
+    
+    // defaults
     foreach (const MouseButton &button, defaultButtons()) {
-        MouseButtonWidget *buttonWidget = newMouseButtonWidget(treeWidget);
-        buttonWidget->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
+        ColorRow *cRow = newColorRow();
+        cRow->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
+        cRow->setColor(button.color());
 
-        KColorButton *colorButton = newButton();
-        colorButton->setColor(button.color());
-
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-
-        treeWidget->addTopLevelItem(item);
-        treeWidget->setItemWidget(item, 0, newRemoveButton());
-        treeWidget->setItemWidget(item, 1, buttonWidget);
-        treeWidget->setItemWidget(item, 2, colorButton);
+        addRow(cRow, colorWidgetListLayout);
     }
 
 }
@@ -236,87 +230,55 @@ void MouseConfig::saveConfig(KConfig *cfg, const QList<MouseButton> &list)
 }
 
 
-KColorButton *MouseConfig::newButton()
+ColorRow *MouseConfig::newColorRow()
 {
 
-    KColorButton *button = new KColorButton(this);
-    connect(button, SIGNAL(changed(QColor)), this, SLOT(buttonsChanged()));
-    return button;
+    ColorRow *row = new ColorRow(this);
+    connect(row, SIGNAL(removeRequested()), this, SLOT(removeSoundRow()));
+    connect(row, SIGNAL(changed()), this, SLOT(currentButtonChanged()));
+    connect(row, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
+                        this, SLOT(soundButtonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
+
+    return row;
 
 }
 
 
-QToolButton *MouseConfig::newRemoveButton(const bool &sound)
+SoundRow *MouseConfig::newSoundRow()
 {
 
-    QToolButton *remove = new QToolButton(this);
-    remove->setMaximumWidth(KIconLoader::SizeMedium);
-    remove->setIcon(KIcon("list-remove"));
-    if (sound) {
-        connect(remove, SIGNAL(clicked()), this, SLOT(removeSoundClicked()));
-    } else {
-        connect(remove, SIGNAL(clicked()), this, SLOT(removeClicked()));
-    }
-    return remove;
+    SoundRow *row = new SoundRow(this);
+    connect(row, SIGNAL(removeRequested()), this, SLOT(removeSoundRow()));
+    connect(row, SIGNAL(changed()), this, SLOT(currentButtonChanged()));
+    connect(row, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
+                        this, SLOT(soundButtonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
+
+    return row;
 
 }
 
 
-MouseButtonWidget *MouseConfig::newMouseButtonWidget(QWidget *parent)
+bool MouseConfig::contains(const MouseButtonWidget::Button &button, QLayout *layout, QWidget *exclude) const
 {
 
-    MouseButtonWidget *button = new MouseButtonWidget(parent);
-    connect(button, SIGNAL(sizeChanged()), this, SLOT(updateColumnSize()));
-    connect(button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)), this,
-            SLOT(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
-    return button;
-
-}
-
-
-KUrlRequester *MouseConfig::newRequester()
-{
-
-    KUrlRequester *requester = new KUrlRequester(soundTreeWidget);
-    requester->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    requester->setMinimumWidth(200);
-    requester->setMode(KFile::File|KFile::LocalOnly);
-    const QStringList dirs = KGlobal::dirs()->resourceDirs("sound");
-    if (!dirs.isEmpty()) { // FIXME
-        requester->setStartDir(dirs.last());
-    }
-    
-    return requester;
-    
-}
-
-
-QToolButton *MouseConfig::newPlayButton()
-{
-
-    QToolButton *button = new QToolButton(soundTreeWidget);
-    button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-    button->setMaximumWidth(KIconLoader::SizeMedium);
-    button->setIcon(KIcon("media-playback-start"));
-    connect(button, SIGNAL(clicked()), this, SLOT(playClicked()));
-
-    return button;
-
-}
-
-
-bool MouseConfig::contains(const MouseButtonWidget::Button &button, QTreeWidget *tree, QWidget *exclude) const
-{
-
-    for (int i = 0; i < tree->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = tree->topLevelItem(i);
-        const MouseButtonWidget *widget = static_cast<MouseButtonWidget*>(tree->itemWidget(item, 1));
-
+    for (int i = 0; i < layout->count(); i++) {
+        QWidget *widget = layout->itemAt(i)->widget();
+        if (widget == m_colorSpacer || widget == m_soundSpacer) {
+            continue;
+        }
+            
+        MouseButtonWidget::Button rButton;
+        if (layout == colorWidgetListLayout) {
+            rButton = static_cast<ColorRow*>(widget)->button();
+        } else {
+            rButton = static_cast<SoundRow*>(widget)->button();
+        }
+        
         if (exclude && exclude == widget) {
             continue;
         }
-
-        if (widget->getMouseButtonWidget() == button) {
+        
+        if (rButton == button) {
             return true;
         }
     }
@@ -330,32 +292,60 @@ QList<MouseButton> MouseConfig::currentButtons() const
 
     QList<MouseButton> list;
     // color
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        const int button =  static_cast<MouseButtonWidget*>(treeWidget->itemWidget(item, 1))->getXButton();
-        const QColor color = static_cast<KColorButton*>(treeWidget->itemWidget(item, 2))->color();
+        for (int i = 0; i < colorWidgetListLayout->count(); i++) {
+        if (colorWidgetListLayout->itemAt(i)->widget() == m_colorSpacer) {
+            continue;
+        }
+        ColorRow *row = static_cast<ColorRow*>(colorWidgetListLayout->itemAt(i)->widget());
 
-        list.append(MouseButton(button, color));
+        list.append(MouseButton(row->code(), row->color()));
+
     }
-
+    
     // sound
-    for (int i = 0; i < soundTreeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = soundTreeWidget->topLevelItem(i);
-        const int code =  static_cast<MouseButtonWidget*>(soundTreeWidget->itemWidget(item, 1))->getXButton();
-        const QString file = static_cast<KUrlRequester*>(soundTreeWidget->itemWidget(item, 2))->text();
+    for (int i = 0; i < soundWidgetListLayout->count(); i++) {
+        if (soundWidgetListLayout->itemAt(i)->widget() == m_soundSpacer) {
+            continue;
+        }
+        SoundRow *row = static_cast<SoundRow*>(soundWidgetListLayout->itemAt(i)->widget());
 
         MouseButton button;
         for (int b = 0; b < list.size(); b++) {
-            if (code == list.at(b).code()) {
+            if (row->code() == list.at(b).code()) {
                 button = list.takeAt(b);
                 break;
             }
         }
-        button.setSound(file);
+        button.setSound(row->sound());
         list.append(button);
     }
-
+ 
     return list;
+
+}
+
+
+void MouseConfig::addRow(QWidget *widget, QLayout *layout)
+{
+
+    if (layout == colorWidgetListLayout) {
+        colorWidgetListLayout->removeWidget(m_colorSpacer);
+        colorWidgetListLayout->addWidget(widget);
+        colorWidgetListLayout->addWidget(m_colorSpacer);
+    } else {
+        soundWidgetListLayout->removeWidget(m_soundSpacer);
+        soundWidgetListLayout->addWidget(widget);
+        soundWidgetListLayout->addWidget(m_soundSpacer);
+    }
+    
+}
+    
+    
+void MouseConfig::removeRow(QWidget *widget, QLayout *layout)
+{
+
+    layout->removeWidget(widget);
+    delete widget;
 
 }
 
@@ -368,20 +358,14 @@ void MouseConfig::addClicked()
         return;
     }
 
-    if (contains(mButton, treeWidget)) {
+    if (contains(mButton, colorWidgetListLayout)) {
         return;
     }
 
-    MouseButtonWidget *button = newMouseButtonWidget(treeWidget);
-    button->setButton(mButton);
-
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-
-    treeWidget->addTopLevelItem(item);
-    treeWidget->setItemWidget(item, 0, newRemoveButton());
-    treeWidget->setItemWidget(item, 1, button);
-    treeWidget->setItemWidget(item, 2, newButton());
-
+    ColorRow *row = newColorRow();
+    row->setButton(mButton);
+    addRow(row, colorWidgetListLayout);
+    
     buttonsChanged();
 
 }
@@ -395,41 +379,15 @@ void MouseConfig::addSoundClicked()
         return;
     }
 
-    if (contains(mButton, soundTreeWidget)) {
+    if (contains(mButton, soundWidgetListLayout)) {
         return;
     }
-
-    MouseButtonWidget *button = newMouseButtonWidget(soundTreeWidget);
-    button->setButton(mButton);
-
-    QTreeWidgetItem *item = new QTreeWidgetItem();
-
-    soundTreeWidget->addTopLevelItem(item);
-    soundTreeWidget->setItemWidget(item, 0, newRemoveButton(true));
-    soundTreeWidget->setItemWidget(item, 1, button);
-    soundTreeWidget->setItemWidget(item, 2, newRequester());
-    soundTreeWidget->setItemWidget(item, 3, newPlayButton());
     
+    SoundRow *row = newSoundRow();
+    row->setButton(mButton);
+    addRow(row, soundWidgetListLayout);
+
     buttonsChanged();
-
-}
-
-
-void MouseConfig::playClicked()
-{
-
-    QString file;
-    for (int i = 0; i < soundTreeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = soundTreeWidget->topLevelItem(i);
-        if (sender() == soundTreeWidget->itemWidget(item, 3)) {
-            file = static_cast<KUrlRequester*>(soundTreeWidget->itemWidget(item, 2))->text();
-            break;
-        }
-    }
-    
-    if (!file.isEmpty()) {
-        RecordItNow::Helper::self()->playSound(file);
-    }
 
 }
 
@@ -437,38 +395,21 @@ void MouseConfig::playClicked()
 void MouseConfig::removeClicked()
 {
 
-    for (int i = 0; i < treeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = treeWidget->topLevelItem(i);
-        if (sender() == treeWidget->itemWidget(item, 0)) {
-            treeWidget->invisibleRootItem()->removeChild(item);
-        }
-    }
+    ColorRow *row = static_cast<ColorRow*>(sender());
+
+    removeRow(row, colorWidgetListLayout);
     buttonsChanged();
 
 }
 
 
-void MouseConfig::removeSoundClicked()
+void MouseConfig::removeSoundRow()
 {
+    
+    SoundRow *row = static_cast<SoundRow*>(sender());
 
-    for (int i = 0; i < soundTreeWidget->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = soundTreeWidget->topLevelItem(i);
-        if (sender() == soundTreeWidget->itemWidget(item, 0)) {
-            soundTreeWidget->invisibleRootItem()->removeChild(item);
-        }
-    }
+    removeRow(row, soundWidgetListLayout);
     buttonsChanged();
-
-}
-
-
-void MouseConfig::updateColumnSize()
-{
-
-    treeWidget->header()->resizeSections(QHeaderView::ResizeToContents);
-    treeWidget->header()->setStretchLastSection(true);
-    soundTreeWidget->header()->resizeSections(QHeaderView::ResizeToContents);
-    soundTreeWidget->header()->setStretchLastSection(true);
 
 }
 
@@ -477,13 +418,23 @@ void MouseConfig::buttonChanged(const MouseButtonWidget::Button &oldButton,
                                 const MouseButtonWidget::Button &newButton)
 {
 
-    MouseButtonWidget *changed = static_cast<MouseButtonWidget*>(sender());
-    QTreeWidget *tree = treeWidget;
-    if (changed->parent() == soundTreeWidget->viewport()) {
-        tree = soundTreeWidget;
+    ColorRow *changed = static_cast<ColorRow*>(sender());
+
+    if (contains(newButton, colorWidgetListLayout, changed)) {
+        KMessageBox::information(this, i18n("The button '%1' has already been defined",
+                                            MouseButtonWidget::getName(newButton)));
+        changed->setButton(oldButton);
     }
-    
-    if (contains(newButton, tree, changed)) {
+    buttonsChanged();
+
+}
+
+
+void MouseConfig::soundButtonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton)
+{
+
+    SoundRow *changed = static_cast<SoundRow*>(sender());
+    if (contains(newButton, soundWidgetListLayout, changed)) {
         KMessageBox::information(this, i18n("The button '%1' has already been defined",
                                             MouseButtonWidget::getName(newButton)));
         changed->setButton(oldButton);
@@ -541,7 +492,7 @@ void MouseConfig::currentButtonChanged()
 
     // color
     const MouseButtonWidget::Button button = MouseButtonWidget::getButtonFromName(buttonCombo->currentText());
-    if (button == MouseButtonWidget::NoButton || contains(button, treeWidget)) {
+    if (button == MouseButtonWidget::NoButton || contains(button, colorWidgetListLayout)) {
         addButton->setEnabled(false);
     } else {
         addButton->setEnabled(true);
@@ -549,12 +500,13 @@ void MouseConfig::currentButtonChanged()
 
     // sound
     const MouseButtonWidget::Button button2 = MouseButtonWidget::getButtonFromName(soundButtonCombo->currentText());
-    if (button2 == MouseButtonWidget::NoButton || contains(button2, soundTreeWidget)) {
+    if (button2 == MouseButtonWidget::NoButton || contains(button2, soundWidgetListLayout)) {
         soundAddButton->setEnabled(false);
     } else {
         soundAddButton->setEnabled(true);
     }
 
+    
 }
 
 
