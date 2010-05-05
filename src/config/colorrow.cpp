@@ -60,6 +60,7 @@ ColorRow::ColorRow(QWidget *parent)
     connect(removeButton, SIGNAL(clicked()), this, SIGNAL(removeRequested()));
     connect(m_button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
             this, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
+    connect(m_colorButton, SIGNAL(changed(QColor)), this, SIGNAL(changed()));
 
 }
 

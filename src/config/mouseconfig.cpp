@@ -235,7 +235,7 @@ ColorRow *MouseConfig::newColorRow()
 
     ColorRow *row = new ColorRow(this);
     connect(row, SIGNAL(removeRequested()), this, SLOT(removeSoundRow()));
-    connect(row, SIGNAL(changed()), this, SLOT(currentButtonChanged()));
+    connect(row, SIGNAL(changed()), this, SLOT(buttonsChanged()));
     connect(row, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
                         this, SLOT(soundButtonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
 
@@ -249,7 +249,7 @@ SoundRow *MouseConfig::newSoundRow()
 
     SoundRow *row = new SoundRow(this);
     connect(row, SIGNAL(removeRequested()), this, SLOT(removeSoundRow()));
-    connect(row, SIGNAL(changed()), this, SLOT(currentButtonChanged()));
+    connect(row, SIGNAL(changed()), this, SLOT(buttonsChanged()));
     connect(row, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
                         this, SLOT(soundButtonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
 
