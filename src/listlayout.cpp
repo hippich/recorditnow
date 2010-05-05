@@ -23,21 +23,27 @@
 #include "listlayout.h"
 #include "listlayoutrow.h"
 
+// KDE
+#include <kdebug.h>
+
 // Qt
 #include <QtGui/QWidget>
+#include <QtGui/QLayoutItem>
 
 
 namespace RecordItNow {
     
     
-ListLayout::ListLayout(QWidget *parent)
+ListLayout::ListLayout(QWidget *parent, const bool &moveEnabled)
     : QVBoxLayout(parent)
 {
     
     m_spacer = new QWidget;
     m_spacer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     addWidget(m_spacer);
-    
+   
+    m_moveEnabled = moveEnabled;
+
 }
 
 
@@ -64,17 +70,56 @@ QList<QWidget*> ListLayout::rows() const
 }
 
 
+QWidget *ListLayout::take(QWidget *widget)
+{
+
+    for (int i = 0; i < count(); i++) {
+        if (itemAt(i)->widget() && itemAt(i)->widget() != m_spacer) {
+            ListLayoutRow *row = static_cast<ListLayoutRow*>(itemAt(i)->widget());
+            if (row->widget() == widget) {
+                removeWidget(row);
+                
+                row->removeWidget();
+                delete row;
+                
+                return widget;
+            }
+        }
+    }
+    updateButtons();
+    return 0;
+    
+}
+
+
 void ListLayout::addRow(QWidget *widget)
 {
     
+    insertRow(widget, count());
+    updateButtons();
+
+}
+
+
+void ListLayout::insertRow(QWidget *widget, const int &index)
+{
+
     removeWidget(m_spacer);
+
+    ListLayoutRow *row = new ListLayoutRow(widget, parentWidget(), m_moveEnabled);
     
-    ListLayoutRow *row = new ListLayoutRow(widget);
     connect(row, SIGNAL(removeRequested(RecordItNow::ListLayoutRow*)), this, 
             SLOT(removeClicked(RecordItNow::ListLayoutRow*)));
-    addWidget(row);
+    connect(row, SIGNAL(upRequested(RecordItNow::ListLayoutRow*)), this, 
+            SLOT(upRequested(RecordItNow::ListLayoutRow*)));
+    connect(row, SIGNAL(downRequested(RecordItNow::ListLayoutRow*)), this, 
+            SLOT(downRequested(RecordItNow::ListLayoutRow*)));
+    
+    insertWidget(index, row);
     
     addWidget(m_spacer);
+
+    updateButtons();
 
 }
 
@@ -82,19 +127,8 @@ void ListLayout::addRow(QWidget *widget)
 void ListLayout::removeRow(QWidget *widget)
 {
     
-    bool found = false;
-    for (int i = 0; i < count(); i++) {
-        if (itemAt(i)->widget() && itemAt(i)->widget() != m_spacer) {
-            ListLayoutRow *row = static_cast<ListLayoutRow*>(itemAt(i)->widget());
-            if (row->widget() == widget) {
-                found = true;
-                removeWidget(row);
-                delete row;
-            }
-        }
-    }
-    Q_ASSERT(found);
-    
+    delete take(widget);
+
 }
     
     
@@ -107,7 +141,45 @@ void ListLayout::clear()
     
 }
 
+
+void ListLayout::move(const int &from, const int &to)
+{
+
+    QLayoutItem *item = itemAt(from);
+    removeItem(item);
+    insertItem(to, item);
     
+    updateButtons();
+    
+    emit layoutChanged();
+
+}
+
+
+void ListLayout::updateButtons()
+{
+
+    // update up/down buttons
+    for (int i = 0; i < count(); i++) {
+        if (itemAt(i)->widget() && itemAt(i)->widget() != m_spacer) {
+            ListLayoutRow *widget = static_cast<ListLayoutRow*>(itemAt(i)->widget());
+            
+            if (i+3 > count()) {
+                widget->setDownEnabled(false);
+                widget->setUpEnabled(count() > 2);
+            } else if (i == 0) {
+                widget->setUpEnabled(false);
+                widget->setDownEnabled(count() > 2);
+            } else {
+                widget->setUpEnabled(true);
+                widget->setDownEnabled(true);
+            }
+        }
+    }
+
+}
+
+
 void ListLayout::removeClicked(RecordItNow::ListLayoutRow *row)
 {
 
@@ -115,7 +187,31 @@ void ListLayout::removeClicked(RecordItNow::ListLayoutRow *row)
     
 }
 
+    
+void ListLayout::upRequested(RecordItNow::ListLayoutRow *row)
+{
+    
+    const int currentIndex = indexOf(row);
+    if (currentIndex-1 < 0) {
+        return;
+    }
+    move(currentIndex, currentIndex-1); 
+    
+}
 
+
+void ListLayout::downRequested(RecordItNow::ListLayoutRow *row)
+{
+    
+    const int currentIndex = indexOf(row);
+    if (currentIndex+3 > count()) {
+        return;
+    }
+    move(currentIndex, currentIndex+1);  
+            
+}
+    
+    
 } // namespace RecordItNow
 
 

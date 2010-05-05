@@ -27,6 +27,11 @@
 #include "timeline/topic.h"
 
 
+namespace RecordItNow {
+    class ListLayout;
+};
+
+
 class TimelineConfig : public RecordItNow::ConfigPage, Ui::TimelineConfig
 {
     Q_OBJECT
@@ -46,6 +51,8 @@ public:
 
 
 private:
+    RecordItNow::ListLayout *m_layout;
+    
     QList<RecordItNow::Timeline::Topic> currentTopics() const;
 
     void setTopics(const QList<RecordItNow::Timeline::Topic> &topics);
@@ -53,12 +60,8 @@ private:
 
 private slots:
     void addTopic();
-    void removeTopic();
-    void upClicked();
-    void downClicked();
-    void itemSelectionChanged();
+    void removeTopic(QWidget *widget);
     void updateTotalDuration();
-    void itemChanged(QTreeWidgetItem *item, int column);
 
 
 };

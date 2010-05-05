@@ -34,11 +34,12 @@
 namespace RecordItNow {
 
     
-ListLayoutRow::ListLayoutRow(QWidget *widget, QWidget *parent)
+ListLayoutRow::ListLayoutRow(QWidget *widget, QWidget *parent, const bool &moveEnabled)
     : QFrame(parent)
 {
 
     m_widget = widget;
+    m_upButton = m_downButton = 0;
 
     setMidLineWidth(0);
     setLineWidth(1);
@@ -47,7 +48,7 @@ ListLayoutRow::ListLayoutRow(QWidget *widget, QWidget *parent)
 
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
-    QToolButton *removeButton = new QToolButton;
+    QToolButton *removeButton = new QToolButton(this);
     removeButton->setIcon(KIcon("list-remove"));
     removeButton->setText(i18n("Remove"));
     removeButton->setToolTip(i18n("Remove"));
@@ -56,6 +57,28 @@ ListLayoutRow::ListLayoutRow(QWidget *widget, QWidget *parent)
     KSeparator *separator = new KSeparator(Qt::Vertical);
     
     QHBoxLayout *layout = new QHBoxLayout;
+    
+    if (moveEnabled) {
+        QToolButton *upButton = new QToolButton(this);
+        upButton->setIcon(KIcon("go-up"));
+        upButton->setText(i18n("Move up"));
+        upButton->setToolTip(i18n("Move up"));
+    
+        QToolButton *downButton = new QToolButton(this);
+        downButton->setIcon(KIcon("go-down"));
+        downButton->setText(i18n("Move down"));
+        downButton->setToolTip(i18n("Move down"));
+    
+        connect(upButton, SIGNAL(clicked()), this, SLOT(upClicked()));
+        connect(downButton, SIGNAL(clicked()), this, SLOT(downClicked()));
+        
+        layout->addWidget(upButton);
+        layout->addWidget(downButton);
+    
+        m_upButton = upButton;
+        m_downButton = downButton;
+    }
+    
     layout->addWidget(removeButton);
     layout->addWidget(separator);
     layout->addWidget(m_widget);
@@ -72,18 +95,37 @@ QWidget *ListLayoutRow::widget() const
 }
 
 
-void ListLayoutRow::setWidget(QWidget *widget)
+void ListLayoutRow::removeWidget()
 {
 
     if (m_widget) {
+        if (m_widget->parentWidget() == this) {
+            m_widget->setParent(parentWidget());
+        }
         layout()->removeWidget(m_widget);
     }
-    m_widget = widget;
+    m_widget = 0;
     
-    if (widget) {
-        layout()->addWidget(widget);
+}
+
+
+void ListLayoutRow::setUpEnabled(const bool &enabled)
+{
+
+    if (m_upButton) {
+        m_upButton->setEnabled(enabled);
     }
+
+}
+
     
+void ListLayoutRow::setDownEnabled(const bool &enabled)
+{
+
+    if (m_downButton) {
+        m_downButton->setEnabled(enabled);
+    }
+
 }
 
 
@@ -95,6 +137,21 @@ void ListLayoutRow::removeClicked()
 }
 
     
+void ListLayoutRow::upClicked()
+{
+
+    emit upRequested(this);
+    
+}
+
+
+void ListLayoutRow::downClicked()
+{
+
+    emit downRequested(this);
+    
+}
+
     
 } // namespace RecordItNow
 

@@ -88,12 +88,12 @@ set(gui_SRCS
    config/shortcutsconfig.cpp
    config/zoomconfig.cpp
    config/timelineconfig.cpp
-   config/topictreeitem.cpp
    config/pluginconfig.cpp
    config/notificationconfig.cpp
    config/playerconfig.cpp
    config/soundrow.cpp
    config/colorrow.cpp
+   config/topicrow.cpp
    
    outputwidget.cpp
    timerwidget.cpp
@@ -129,7 +129,6 @@ kde4_add_ui_files(gui_SRCS
     config/ui/keyboardkeypage.ui
     config/ui/keyboardkeyiconpage.ui
     config/ui/zoom.ui 
-    config/ui/timelinetopics.ui
     
     timeline/ui/timeline.ui 
     timeline/ui/timelinedocktitlewidget.ui

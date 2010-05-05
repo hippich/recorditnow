@@ -35,28 +35,37 @@ class ListLayout: public QVBoxLayout
     
     
 public:
-    ListLayout(QWidget *parent = 0);
+    ListLayout(QWidget *parent = 0, const bool &moveEnabled = false);
     ~ListLayout();    
     
     QList<QWidget*> rows() const;
+    QWidget *take(QWidget *widget);    
     
     void addRow(QWidget *widget);
+    void insertRow(QWidget *widget, const int &index);
     void removeRow(QWidget *widget);
     void clear();
     
     
 private:
     QWidget *m_spacer;
+    bool m_moveEnabled;
+    
+    void updateButtons();
+    void move(const int &from, const int &to);
     
     
 private slots:
     void removeClicked(RecordItNow::ListLayoutRow *row);
+    void upRequested(RecordItNow::ListLayoutRow *row);
+    void downRequested(RecordItNow::ListLayoutRow *row);
     
     
 signals:
     void removeRequested(QWidget *row);
+    void layoutChanged();
     
-    
+
 };
 
 

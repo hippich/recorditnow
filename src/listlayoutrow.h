@@ -25,6 +25,7 @@
 #include <QtGui/QFrame>
 
 
+class QToolButton;
 namespace RecordItNow {
 
     
@@ -33,22 +34,30 @@ class ListLayoutRow: public QFrame
     Q_OBJECT
     
 public:
-    ListLayoutRow(QWidget *widget, QWidget *parent = 0);
+    ListLayoutRow(QWidget *widget, QWidget *parent = 0, const bool &moveEnabled = false);
     
     QWidget *widget() const;
-    void setWidget(QWidget *widget);
+    void removeWidget();
+    void setUpEnabled(const bool &enabled);
+    void setDownEnabled(const bool &enabled);
     
     
 private:
     QWidget *m_widget;
+    QToolButton *m_upButton;
+    QToolButton *m_downButton;
     
     
 private slots:
     void removeClicked();
-    
+    void upClicked();
+    void downClicked();
+
     
 signals:
     void removeRequested(RecordItNow::ListLayoutRow *self);
+    void upRequested(RecordItNow::ListLayoutRow *self);
+    void downRequested(RecordItNow::ListLayoutRow *self);
     
     
 };

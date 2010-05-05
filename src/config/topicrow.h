@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,44 +17,46 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef TOPICTREEITEM_H
-#define TOPICTREEITEM_H
 
+#ifndef TOPICROW_H
+#define TOPICROW_H
 
-// own
-#include "timeline/topic.h"
 
 // Qt
-#include <QtGui/QTreeWidgetItem>
+#include <QtGui/QWidget>
 
 
+class KLineEdit;
+class KIconButton;
 class QTimeEdit;
-class TopicTreeItem : public QObject, public QTreeWidgetItem
+class TopicRow: public QWidget
 {
     Q_OBJECT
-
-
+    
+    
 public:
-    TopicTreeItem(QTreeWidget *parent);
-    TopicTreeItem(QTreeWidget *parent, TopicTreeItem *other, const int &index);
-    ~TopicTreeItem();
-
-    RecordItNow::Timeline::Topic topic() const;
-    unsigned long duration();
-    void setTopic(const RecordItNow::Timeline::Topic &topic);
-
-
+    explicit TopicRow(QWidget *parent = 0);
+    
+    QString title() const;
+    QTime duration() const;
+    QString icon() const;
+    
+    void setTitle(const QString &title);
+    void setDuration(const QTime &time);
+    void setIcon(const QString &icon);
+    
+    
 private:
-    QTreeWidget *m_parent;
-    RecordItNow::Timeline::Topic m_topic;
-
+    KLineEdit *m_titleEdit;
+    KIconButton *m_iconButton;
+    QTimeEdit *m_durationEdit;
+    
 
 signals:
     void changed();
-
-
+    
+    
 };
 
 
-
-#endif // TOPICTREEITEM_H
+#endif // TOPICROW_H
