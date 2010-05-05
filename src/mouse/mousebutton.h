@@ -33,15 +33,17 @@ class MouseButton : public RecordItNow::ConfigItem
 
 
 public:
-    MouseButton(const int &code, const QColor &color);
+    MouseButton(const int &code, const QColor &color, const QString &sound = QString());
     MouseButton();
 
     bool isValid() const;
     int code() const;
     QColor color() const;
+    QString sound() const;
 
     void setCode(const int &code);
     void setColor(const QColor &color);
+    void setSound(const QString &sound);
 
 
 };

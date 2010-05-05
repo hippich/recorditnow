@@ -277,16 +277,25 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
         show();
     }
 
+    const MouseButton button = getButton(event.keyToXButton(event.key));
+    if (!button.sound().isEmpty() && event.pressed) {
+        RecordItNow::Helper::self()->playSound(button.sound());
+    }
+    
+    if (!button.isValid()) {
+        return;
+    }
+    
     switch (event.key) {
     case KeyMon::Event::WheelUp:
     case KeyMon::Event::WheelDown: {
-            m_currentButton = getButton(event.keyToXButton(event.key));
+            m_currentButton = button;
             m_resetTimer->start(RESET_TIME);
             break;
         }
     default: {
             if (event.pressed) {
-                m_currentButton = getButton(event.keyToXButton(event.key));
+                m_currentButton = button;
             } else {
                 m_resetTimer->start(RESET_TIME);
             }

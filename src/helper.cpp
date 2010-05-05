@@ -29,6 +29,10 @@
 // Qt
 #include <QtGui/QX11Info>
 
+// Phonon
+#include <Phonon/MediaObject>
+#include <Phonon/AudioOutput>
+
 
 namespace RecordItNow {
 
@@ -37,6 +41,9 @@ Helper::Helper()
     : QObject(0)
 {
 
+    m_audioPlayer = 0;
+    m_audioOutput = 0;
+    
     m_firstStart = Settings::firstStart();
     if (firstStart()) {
         Settings::self()->setFirstStart(false);
@@ -60,7 +67,14 @@ Helper::~Helper()
 {
 
     delete m_compositeWatcher;
-
+    if (m_audioPlayer) {
+        m_audioPlayer->stop();
+        delete m_audioPlayer;
+    }
+    if (m_audioOutput) {
+        delete m_audioOutput;
+    }
+    
 }
 
 
@@ -94,6 +108,25 @@ bool Helper::compositingActive() const
 {
 
     return m_compositingActive;
+
+}
+
+
+void Helper::playSound(const QString &file)
+{
+
+    if (!QFile::exists(file)) {
+        return;
+    }
+    
+    if (!m_audioPlayer) {
+        m_audioPlayer = new Phonon::MediaObject(this);
+        m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+        Phonon::createPath(m_audioPlayer, m_audioOutput);
+    }
+    
+    m_audioPlayer->setCurrentSource(Phonon::MediaSource(file));
+    m_audioPlayer->play();
 
 }
 

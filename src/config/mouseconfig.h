@@ -31,6 +31,7 @@
 #include <QtGui/QWidget>
 
 
+class KUrlRequester;
 class QButtonGroup;
 class QToolButton;
 class KColorButton;
@@ -54,17 +55,22 @@ public:
 
 private:
     KColorButton *newButton();
-    QToolButton *newRemoveButton();
-    MouseButtonWidget *newMouseButtonWidget();
+    QToolButton *newRemoveButton(const bool &sound = false);
+    MouseButtonWidget *newMouseButtonWidget(QWidget *parent);
+    KUrlRequester *newRequester();
+    QToolButton *newPlayButton();
     QButtonGroup *m_visibleGroup;
 
-    bool contains(const MouseButtonWidget::Button &button, QWidget *exclude = 0) const;
+    bool contains(const MouseButtonWidget::Button &button, QTreeWidget *tree, QWidget *exclude = 0) const;
     QList<MouseButton> currentButtons() const;
 
 
 private slots:
     void addClicked();
+    void addSoundClicked();
+    void playClicked();
     void removeClicked();
+    void removeSoundClicked();
     void updateColumnSize();
     void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
     void showKeyMonDialog();
@@ -72,7 +78,7 @@ private slots:
     void modeChanged();
     void currentButtonChanged();
     void compositingChanged(const bool &active);
-
+    
 
 };
 

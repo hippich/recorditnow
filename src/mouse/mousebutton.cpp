@@ -22,12 +22,13 @@
 #include "mousebutton.h"
 
 
-MouseButton::MouseButton(const int &code, const QColor &color)
+MouseButton::MouseButton(const int &code, const QColor &color, const QString &sound)
     : RecordItNow::ConfigItem()
 {
 
     setCode(code);
     setColor(color);
+    setSound(sound);
 
 }
 
@@ -37,7 +38,8 @@ MouseButton::MouseButton()
 {
 
     setCode(-1);
-    setColor(Qt::black);
+    setColor(Qt::color0);
+    setSound(QString());
 
 }
 
@@ -45,7 +47,7 @@ MouseButton::MouseButton()
 bool MouseButton::isValid() const
 {
 
-    return code() != -1;
+    return code() != -1 && color() != Qt::color0;
 
 }
 
@@ -66,6 +68,14 @@ QColor MouseButton::color() const
 }
 
 
+QString MouseButton::sound() const
+{
+
+    return data<QString>("Sound");    
+    
+}
+
+
 void MouseButton::setCode(const int &code)
 {
 
@@ -79,5 +89,13 @@ void MouseButton::setColor(const QColor &color)
 
     setData("Color", color);
 
+}
+
+
+void MouseButton::setSound(const QString& sound)
+{
+
+    setData("Sound", sound);    
+    
 }
 

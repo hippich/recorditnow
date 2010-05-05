@@ -28,6 +28,11 @@
 #include <QtCore/QDataStream>
 
 
+namespace Phonon {
+    class MediaObject;
+    class AudioOutput;
+};
+
 class KSelectionWatcher;
 namespace RecordItNow {
 
@@ -68,7 +73,9 @@ public:
     bool firstStart() const;
     bool compositingActive() const;
 
+    void playSound(const QString &file);
 
+    
 private:
     friend class HelperSingleton;
     Helper();
@@ -77,6 +84,8 @@ private:
     bool m_firstStart;
     KSelectionWatcher *m_compositeWatcher;
     bool m_compositingActive;
+    Phonon::MediaObject *m_audioPlayer;
+    Phonon::AudioOutput *m_audioOutput;
 
 
 private slots:
