@@ -40,9 +40,6 @@ namespace RecordItNow {
 Helper::Helper()
     : QObject(0)
 {
-
-    m_audioPlayer = 0;
-    m_audioOutput = 0;
     
     m_firstStart = Settings::firstStart();
     if (firstStart()) {
@@ -60,20 +57,26 @@ Helper::Helper()
 
     m_compositingActive = KWindowSystem::compositingActive();
 
+    m_audioPlayer = new Phonon::MediaObject(this);
+    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+    Phonon::createPath(m_audioPlayer, m_audioOutput);
+
+    if (Settings::mouseSoundVolume() != -1) {
+        m_audioOutput->setVolume(Settings::mouseSoundVolume());
+    }
+
 }
 
 
 Helper::~Helper()
 {
 
+    Settings::setMouseSoundVolume(m_audioOutput->volume());
+    
     delete m_compositeWatcher;
-    if (m_audioPlayer) {
-        m_audioPlayer->stop();
-        delete m_audioPlayer;
-    }
-    if (m_audioOutput) {
-        delete m_audioOutput;
-    }
+    m_audioPlayer->stop();
+    delete m_audioPlayer;
+    delete m_audioOutput;
     
 }
 
@@ -112,17 +115,19 @@ bool Helper::compositingActive() const
 }
 
 
+Phonon::AudioOutput *Helper::audioOutput() const
+{
+
+    return m_audioOutput;
+
+}
+
+
 void Helper::playSound(const QString &file)
 {
 
     if (!QFile::exists(file)) {
         return;
-    }
-    
-    if (!m_audioPlayer) {
-        m_audioPlayer = new Phonon::MediaObject(this);
-        m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-        Phonon::createPath(m_audioPlayer, m_audioOutput);
     }
     
     m_audioPlayer->setCurrentSource(Phonon::MediaSource(file));

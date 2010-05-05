@@ -75,7 +75,6 @@ set(gui_SRCS
    player/abstractplayer.cpp
    player/imageframe.cpp
    player/playerdocktitle.cpp
-   player/volumeslider.cpp
 
    config/configdialog.cpp
    config/frameconfig.cpp
@@ -99,6 +98,7 @@ set(gui_SRCS
    windowgrabber.cpp
    devicesearchwidget.cpp
    dockwidget.cpp
+   volumeslider.cpp
 
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp

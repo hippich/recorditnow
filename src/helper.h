@@ -72,6 +72,7 @@ public:
 
     bool firstStart() const;
     bool compositingActive() const;
+    Phonon::AudioOutput *audioOutput() const;
 
     void playSound(const QString &file);
 

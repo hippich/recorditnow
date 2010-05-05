@@ -263,7 +263,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Mouse button</string>
+            <string>Mouse button:</string>
            </property>
           </widget>
          </item>
@@ -362,7 +362,7 @@
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Mouse button</string>
+            <string>Mouse button:</string>
            </property>
           </widget>
          </item>
@@ -454,6 +454,27 @@
          </column>
         </widget>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Volume:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="RecordItNow::VolumeSlider" name="volumeSlider" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -491,6 +512,12 @@
    <class>CursorWidget</class>
    <extends>QWidget</extends>
    <header>mouse/cursorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RecordItNow::VolumeSlider</class>
+   <extends>QWidget</extends>
+   <header>volumeslider.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

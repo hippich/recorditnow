@@ -47,7 +47,8 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     addButton->setIcon(KIcon("list-add"));
     soundAddButton->setIcon(KIcon("list-add"));
     keyMonButton->setIcon(KIcon("system-search"));
-
+    volumeSlider->setAudioOutput(RecordItNow::Helper::self()->audioOutput());
+    
     connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
     connect(soundAddButton, SIGNAL(clicked()), this, SLOT(addSoundClicked()));
     connect(keyMonButton, SIGNAL(clicked()), this, SLOT(showKeyMonDialog()));
@@ -88,7 +89,7 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     m_visibleGroup->addButton(kcfg_mouseWidgetInvisible);
     m_visibleGroup->addButton(kcfg_mouseWidgetAlwaysVisible);
     m_visibleGroup->setExclusive(true);
-
+    
     compositingChanged(RecordItNow::Helper::self()->compositingActive());
 
     buttonsChanged();
