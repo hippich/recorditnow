@@ -25,11 +25,11 @@
 #include "mousebuttonwidget.h"
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QWidget>
 
 
 class KUrlRequester;
-class SoundRow: public QFrame
+class SoundRow: public QWidget
 {
     Q_OBJECT
     

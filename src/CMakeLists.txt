@@ -101,6 +101,8 @@ set(gui_SRCS
    devicesearchwidget.cpp
    dockwidget.cpp
    volumeslider.cpp
+   listlayout.cpp
+   listlayoutrow.cpp
 
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp

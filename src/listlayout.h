@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 210 by Kai Dombrowe <just89@gmx.de>                     *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,77 +17,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-// own
-#include "colorrow.h"
+#ifndef RECORDITNOW_LISTLAYOUT_H
+#define RECORDITNOW_LISTLAYOUT_H
 
-// KDE
-#include <kcolorbutton.h>
 
 // Qt
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QToolButton>
+#include <QtGui/QVBoxLayout>
 
 
-ColorRow::ColorRow(QWidget *parent)
-    : QWidget(parent)
-{
+namespace RecordItNow {
+
     
-    QHBoxLayout *layout = new QHBoxLayout;
-
-    m_button = new MouseButtonWidget;
-    m_colorButton = new KColorButton;
-    layout->addWidget(m_button);
-    layout->addWidget(m_colorButton);
-
-    setLayout(layout);
-
-
-    connect(m_button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
-            this, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
-    connect(m_colorButton, SIGNAL(changed(QColor)), this, SIGNAL(changed()));
-
-}
-
-
-QColor ColorRow::color() const
+class ListLayoutRow;
+class ListLayout: public QVBoxLayout
 {
-
-    return m_colorButton->color();
-
-}
-
-
-int ColorRow::code() const
-{
-
-    return m_button->getXButton();
-
-}
-
-
-MouseButtonWidget::Button ColorRow::button() const
-{
-
-    return m_button->getMouseButtonWidget();
-
-}
-
-
-void ColorRow::setColor(const QColor &color)
-{
-
-    m_colorButton->setColor(color);
-
-}
-
-
-void ColorRow::setButton(const MouseButtonWidget::Button &button)
-{
-
-    m_button->setButton(button);
+    Q_OBJECT
     
+    
+public:
+    ListLayout(QWidget *parent = 0);
+    ~ListLayout();    
+    
+    QList<QWidget*> rows() const;
+    
+    void addRow(QWidget *widget);
+    void removeRow(QWidget *widget);
+    void clear();
+    
+    
+private:
+    QWidget *m_spacer;
+    
+    
+private slots:
+    void removeClicked(RecordItNow::ListLayoutRow *row);
+    
+    
+signals:
+    void removeRequested(QWidget *row);
+    
+    
+};
+
+
 }
 
-
-#include "colorrow.moc"
-
+#endif // RECORDITNOW_LISTLAYOUT_H

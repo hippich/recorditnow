@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 210 by Kai Dombrowe <just89@gmx.de>                     *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,77 +17,86 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+
 // own
-#include "colorrow.h"
+#include "listlayoutrow.h"
 
 // KDE
-#include <kcolorbutton.h>
+#include <kicon.h>
+#include <klocalizedstring.h>
+#include <kseparator.h>
 
 // Qt
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QToolButton>
 
 
-ColorRow::ColorRow(QWidget *parent)
-    : QWidget(parent)
+namespace RecordItNow {
+
+    
+ListLayoutRow::ListLayoutRow(QWidget *widget, QWidget *parent)
+    : QFrame(parent)
 {
+
+    m_widget = widget;
+
+    setMidLineWidth(0);
+    setLineWidth(1);
+    setFrameStyle(QFrame::Box);
+    setFrameShadow(QFrame::Sunken);    
+
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+    QToolButton *removeButton = new QToolButton;
+    removeButton->setIcon(KIcon("list-remove"));
+    removeButton->setText(i18n("Remove"));
+    removeButton->setToolTip(i18n("Remove"));
+    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeClicked()));
+
+    KSeparator *separator = new KSeparator(Qt::Vertical);
     
     QHBoxLayout *layout = new QHBoxLayout;
-
-    m_button = new MouseButtonWidget;
-    m_colorButton = new KColorButton;
-    layout->addWidget(m_button);
-    layout->addWidget(m_colorButton);
-
+    layout->addWidget(removeButton);
+    layout->addWidget(separator);
+    layout->addWidget(m_widget);
     setLayout(layout);
-
-
-    connect(m_button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
-            this, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
-    connect(m_colorButton, SIGNAL(changed(QColor)), this, SIGNAL(changed()));
-
+    
 }
+    
 
-
-QColor ColorRow::color() const
+QWidget *ListLayoutRow::widget() const
 {
-
-    return m_colorButton->color();
-
-}
-
-
-int ColorRow::code() const
-{
-
-    return m_button->getXButton();
-
-}
-
-
-MouseButtonWidget::Button ColorRow::button() const
-{
-
-    return m_button->getMouseButtonWidget();
-
-}
-
-
-void ColorRow::setColor(const QColor &color)
-{
-
-    m_colorButton->setColor(color);
-
-}
-
-
-void ColorRow::setButton(const MouseButtonWidget::Button &button)
-{
-
-    m_button->setButton(button);
+    
+    return m_widget;
     
 }
 
 
-#include "colorrow.moc"
+void ListLayoutRow::setWidget(QWidget *widget)
+{
 
+    if (m_widget) {
+        layout()->removeWidget(m_widget);
+    }
+    m_widget = widget;
+    
+    if (widget) {
+        layout()->addWidget(widget);
+    }
+    
+}
+
+
+void ListLayoutRow::removeClicked()
+{
+
+    emit removeRequested(this);
+    
+}
+
+    
+    
+} // namespace RecordItNow
+
+
+#include "listlayoutrow.moc"

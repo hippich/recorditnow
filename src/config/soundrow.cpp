@@ -31,22 +31,10 @@
 
 
 SoundRow::SoundRow(QWidget *parent)
-    : QFrame(parent)
+    : QWidget(parent)
 {
-
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    
-    setMidLineWidth(0);
-    setLineWidth(1);
-    setFrameStyle(QFrame::Box);
-    setFrameShadow(QFrame::Sunken);
-    
     
     QHBoxLayout *layout = new QHBoxLayout;
-
-
-    QToolButton *removeButton = new QToolButton;
-    removeButton->setIcon(KIcon("list-remove"));
 
     m_button = new MouseButtonWidget;
     m_requester = new KUrlRequester;
@@ -61,17 +49,13 @@ SoundRow::SoundRow(QWidget *parent)
     QToolButton *playButton = new QToolButton;
     playButton->setIcon(KIcon("media-playback-start"));
 
-
-    layout->addWidget(removeButton);
     layout->addWidget(m_button);
     layout->addWidget(m_requester);
     layout->addWidget(playButton);
 
-
     setLayout(layout);
 
 
-    connect(removeButton, SIGNAL(clicked()), this, SIGNAL(removeRequested()));
     connect(m_button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
             this, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
     connect(playButton, SIGNAL(clicked()), this, SLOT(playClicked()));

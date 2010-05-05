@@ -31,6 +31,11 @@
 #include <QtGui/QWidget>
 
 
+namespace RecordItNow {
+    class ListLayout;
+};
+
+
 class ColorRow;
 class SoundRow;
 class KUrlRequester;
@@ -59,11 +64,10 @@ private:
     ColorRow *newColorRow();
     SoundRow *newSoundRow();
     QButtonGroup *m_visibleGroup;
-    QWidget *m_colorSpacer;
-    QWidget *m_soundSpacer;
-    
+    RecordItNow::ListLayout *m_colorLayout;
+    RecordItNow::ListLayout *m_soundLayout;
 
-    bool contains(const MouseButtonWidget::Button &button, QLayout *layout, QWidget *exclude = 0) const;
+    bool contains(const MouseButtonWidget::Button &button, RecordItNow::ListLayout *layout, QWidget *exclude = 0) const;
     QList<MouseButton> currentButtons() const;
     
     void addRow(QWidget *widget, QLayout *layout);
@@ -73,8 +77,8 @@ private:
 private slots:
     void addClicked();
     void addSoundClicked();
-    void removeClicked();
-    void removeSoundRow();
+    void removeColorRow(QWidget *widget);
+    void removeSoundRow(QWidget *widget);
     void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
     void soundButtonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
     void showKeyMonDialog();

@@ -25,11 +25,11 @@
 #include "mousebuttonwidget.h"
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QWidget>
 
 
 class KColorButton;
-class ColorRow: public QFrame
+class ColorRow: public QWidget
 {
     Q_OBJECT
     
@@ -52,7 +52,6 @@ private:
     
         
 signals:
-    void removeRequested();
     void changed();
     void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
 

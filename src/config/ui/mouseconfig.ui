@@ -303,7 +303,7 @@
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <widget class="QWidget" name="colorListWidget">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -312,7 +312,6 @@
             <height>221</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="colorWidgetListLayout"/>
          </widget>
         </widget>
        </item>
@@ -365,7 +364,7 @@
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <widget class="QWidget" name="soundListWidget">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -374,7 +373,6 @@
             <height>202</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="soundWidgetListLayout"/>
          </widget>
         </widget>
        </item>
