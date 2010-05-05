@@ -81,12 +81,13 @@ QWidget *ListLayout::take(QWidget *widget)
                 
                 row->removeWidget();
                 delete row;
-                
+
+                updateButtons();
+               
                 return widget;
             }
         }
     }
-    updateButtons();
     return 0;
     
 }
