@@ -24,6 +24,8 @@
 #include "devicesearchdialog.h"
 #include "keyboardkeyiconpage.h"
 #include "helper.h"
+#include "keyboardrow.h"
+#include "listlayout.h"
 
 // KDE
 #include <kicon.h>
@@ -47,21 +49,17 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
 
     setupUi(this);
 
+    m_layout = new RecordItNow::ListLayout(0, true);
+    keyboardWidgetList->setLayout(m_layout);
+    
     addButton->setIcon(KIcon("list-add"));
-    removeButton->setIcon(KIcon("list-remove"));
-    upButton->setIcon(KIcon("go-up"));
-    downButton->setIcon(KIcon("go-down"));
     searchButton->setIcon(KIcon("system-search"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
-    connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
-    connect(upButton, SIGNAL(clicked()), this, SLOT(up()));
-    connect(downButton, SIGNAL(clicked()), this, SLOT(down()));
-    connect(listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
     connect(searchButton, SIGNAL(clicked()), this, SLOT(showSearchDialog()));
     connect(kcfg_keyboardDevice, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
-
-    itemSelectionChanged();
+    connect(m_layout, SIGNAL(layoutChanged()), this, SLOT(changed()));
+    connect(m_layout, SIGNAL(removeRequested(QWidget*)), this, SLOT(remove(QWidget*)));
 
 }
 
@@ -155,13 +153,10 @@ QList<KeyboardKey> KeyboardConfig::currentKeys() const
 {
 
     QList<KeyboardKey> keys;
-    for (int i = 0; i < listWidget->count(); i++) {
-        QListWidgetItem *item = listWidget->item(i);
-
-        KeyboardKey key(item->data(Qt::UserRole+1).toInt(),
-                        item->data(Qt::UserRole+2).toString(),
-                        item->text());
-        keys.append(key);
+    foreach (QWidget *widget, m_layout->rows()) {
+        KeyboardRow *row = static_cast<KeyboardRow*>(widget);
+  
+        keys.append(KeyboardKey(row->code(), row->icon(), row->text()));
     }
     return keys;
 
@@ -171,15 +166,16 @@ QList<KeyboardKey> KeyboardConfig::currentKeys() const
 void KeyboardConfig::setKeys(const QList<KeyboardKey> &keys)
 {
 
-    listWidget->clear();
+    m_layout->clear();
     foreach (const KeyboardKey &key, keys) {
-        QListWidgetItem *item = new QListWidgetItem();
-        item->setText(key.text());
-        item->setIcon(KIcon(key.icon()));
-        item->setData(Qt::UserRole+1, key.code());
-        item->setData(Qt::UserRole+2, key.icon());
-
-        listWidget->addItem(item);
+        KeyboardRow *row = new KeyboardRow(this);
+        connect(row, SIGNAL(changed()), this, SLOT(changed()));
+        
+        row->setIcon(key.icon());
+        row->setText(key.text());
+        row->setCode(key.code());
+    
+        m_layout->addRow(row);
     }
 
     setConfigChanged(readConfig(config()) != currentKeys());
@@ -199,79 +195,12 @@ void KeyboardConfig::add()
 }
 
 
-void KeyboardConfig::remove()
+void KeyboardConfig::remove(QWidget *widget)
 {
 
-    QList<QListWidgetItem*> items = listWidget->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    QListWidgetItem *item = items.first();
-
-    listWidget->takeItem(listWidget->row(item));
-    delete item;
+    m_layout->removeRow(widget);
 
     setConfigChanged(readConfig(config()) != currentKeys());
-
-}
-
-
-void KeyboardConfig::up()
-{
-
-    QList<QListWidgetItem*> items = listWidget->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    QListWidgetItem *item = items.first();
-    const int index = listWidget->row(item);
-
-    listWidget->takeItem(index);
-    listWidget->insertItem(index-1, item);
-
-    listWidget->setCurrentItem(item);
-
-    setConfigChanged(readConfig(config()) != currentKeys());
-
-}
-
-
-void KeyboardConfig::down()
-{
-
-    QList<QListWidgetItem*> items = listWidget->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    QListWidgetItem *item = items.first();
-    const int index = listWidget->row(item);
-
-    listWidget->takeItem(index);
-    listWidget->insertItem(index+1, item);
-
-    listWidget->setCurrentItem(item);
-
-    setConfigChanged(readConfig(config()) != currentKeys());
-
-}
-
-
-void KeyboardConfig::itemSelectionChanged()
-{
-
-    if(listWidget->selectedItems().isEmpty()) {
-        upButton->setEnabled(false);
-        downButton->setEnabled(false);
-        removeButton->setEnabled(false);
-    } else {
-        const int index = listWidget->row(listWidget->selectedItems().first());
-        upButton->setEnabled(index != 0);
-        downButton->setEnabled(index != listWidget->count()-1);
-        removeButton->setEnabled(true);
-    }
 
 }
 
@@ -279,22 +208,24 @@ void KeyboardConfig::itemSelectionChanged()
 void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const QString &text)
 {
 
-    for (int i = 0; i < listWidget->count(); i++) {
-        if (listWidget->item(i)->data(Qt::UserRole+1).toInt() == key) {
+    foreach (QWidget *widget, m_layout->rows()) {
+        KeyboardRow *row = static_cast<KeyboardRow*>(widget);
+        
+        if (row->code() == key) {
             KMessageBox::error(this, i18n("There is already a key with code '%1' in your list!", key));
             return;
         }
-
     }
 
-    QListWidgetItem *item = new QListWidgetItem();
-    item->setText(text);
-    item->setIcon(KIcon(icon));
-    item->setData(Qt::UserRole+1, key);
-    item->setData(Qt::UserRole+2, icon);
+    KeyboardRow *row = new KeyboardRow(this);
+    connect(row, SIGNAL(changed()), this, SLOT(changed()));
 
-    listWidget->addItem(item);
+    row->setIcon(icon);
+    row->setText(text);
+    row->setCode(key);
 
+    m_layout->addRow(row);
+    
     setConfigChanged(readConfig(config()) != currentKeys());
 
 }
@@ -324,6 +255,14 @@ void KeyboardConfig::textChanged(const QString &text)
 
     addButton->setDisabled(text.isEmpty());
 
+}
+
+
+void KeyboardConfig::changed()
+{
+    
+    setConfigChanged(readConfig(config()) != currentKeys());
+    
 }
 
 

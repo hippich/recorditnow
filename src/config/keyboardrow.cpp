@@ -17,61 +17,87 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef KEYBOARDCONFIG_H
-#define KEYBOARDCONFIG_H
-
-
 // own
-#include "config/configpage.h"
-#include "ui_keyboardconfig.h"
-#include "../keyboard/keyboardkey.h"
+#include "keyboardrow.h"
+
+// KDE
+#include <kicondialog.h>
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QLabel>
 
 
-namespace RecordItNow {
-    class ListLayout;
-};
-
-
-class KConfig;
-class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
+KeyboardRow::KeyboardRow(QWidget *parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
 
-
-public:
-    explicit KeyboardConfig(KConfig *cfg, QWidget *parent = 0);
-
-    static QList<KeyboardKey> readConfig(KConfig *cfg);
-    static void saveConfig(const QList<KeyboardKey> &keys, KConfig *cfg);
-    static QList<KeyboardKey> defaultKeys();
-
-    void saveConfig();
-    void loadConfig();
-    void setDefaults();
-
-
-private:
-    RecordItNow::ListLayout *m_layout;
+    QHBoxLayout *layout = new QHBoxLayout;
     
-    QList<KeyboardKey> currentKeys() const;
-    void setKeys(const QList<KeyboardKey> &keys);
+    m_iconButton = new KIconButton(this);
+    m_textLabel = new QLabel(this);
+    
+    m_code = -1;
+    m_iconButton->setIconSize(KIconLoader::SizeMedium);
+    m_iconButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_textLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    
+    layout->addWidget(m_iconButton);
+    layout->addWidget(m_textLabel);
+    
+    setLayout(layout);
+    
+    connect(m_iconButton, SIGNAL(iconChanged(QString)), this, SIGNAL(changed()));
+
+}
 
 
-private slots:
-    void add();
-    void remove(QWidget *widget);
-    void wizardFinished(const int &key, const QString &icon, const QString &text);
-    void showSearchDialog();
-    void searchDialogFinished(const QString &uuid);
-    void textChanged(const QString &text);
-    void changed();
+QString KeyboardRow::icon() const
+{
+
+    return m_iconButton->icon();
+    
+}
 
 
-};
+QString KeyboardRow::text() const
+{
+
+    return m_textLabel->text();
+    
+}
 
 
-#endif // KEYBOARDCONFIG_H
+int KeyboardRow::code() const
+{
+
+    return m_code;
+    
+}
+
+
+void KeyboardRow::setIcon(const QString &icon)
+{
+
+    m_iconButton->setIcon(icon);
+    
+}
+
+
+void KeyboardRow::setText(const QString &text)
+{
+
+    m_textLabel->setText(text);
+    
+}
+
+
+void KeyboardRow::setCode(const int &code)
+{
+
+    m_code = code;
+    
+}
+
+
+#include "keyboardrow.moc"
