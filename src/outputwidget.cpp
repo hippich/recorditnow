@@ -59,6 +59,8 @@ OutputWidget::OutputWidget(QWidget *parent)
     connect(playButton, SIGNAL(clicked()), this, SIGNAL(playRequested()));
     connect(deleteButton, SIGNAL(clicked()), this, SLOT(deleteOutputFile()));
 
+    outputFileChangedInternal(QString()); // disable buttons
+
 }
 
 
