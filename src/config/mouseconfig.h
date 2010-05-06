@@ -63,15 +63,17 @@ public:
 private:
     ColorRow *newColorRow();
     SoundRow *newSoundRow();
-    QButtonGroup *m_visibleGroup;
     RecordItNow::ListLayout *m_colorLayout;
     RecordItNow::ListLayout *m_soundLayout;
 
     bool contains(const MouseButtonWidget::Button &button, RecordItNow::ListLayout *layout, QWidget *exclude = 0) const;
     QList<MouseButton> currentButtons() const;
+    CursorWidget::WidgetMode currentMode() const;
     
     void addRow(QWidget *widget, QLayout *layout);
     void removeRow(QWidget *widget, QLayout *layout);
+    void setMode(const CursorWidget::WidgetMode &mode);
+    void updateModeCombo();
     
 
 private slots:
@@ -86,6 +88,8 @@ private slots:
     void modeChanged();
     void currentButtonChanged();
     void compositingChanged(const bool &active);
+    void modeActivated();
+    void loadMode(const int &value);
     
 
 };

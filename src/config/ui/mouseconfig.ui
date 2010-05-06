@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>386</width>
-    <height>295</height>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -159,7 +159,7 @@
                <bool>true</bool>
               </property>
               <property name="autoExclusive">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -169,7 +169,7 @@
                <string>Only during mouse clicks</string>
               </property>
               <property name="autoExclusive">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -181,34 +181,6 @@
              <string>Visible:</string>
             </property>
            </widget>
-          </item>
-          <item row="2" column="1">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QRadioButton" name="kcfg_led">
-              <property name="text">
-               <string>LED</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="kcfg_circle">
-              <property name="text">
-               <string>Circle</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="kcfg_target">
-              <property name="text">
-               <string>Target</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_2">
@@ -248,7 +220,27 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="KComboBox" name="appearanceCombo">
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="KIntSpinBox" name="kcfg_cursorMode">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
@@ -309,7 +301,7 @@
             <x>0</x>
             <y>0</y>
             <width>362</width>
-            <height>221</height>
+            <height>222</height>
            </rect>
           </property>
          </widget>
@@ -370,7 +362,7 @@
             <x>0</x>
             <y>0</y>
             <width>362</width>
-            <height>202</height>
+            <height>203</height>
            </rect>
           </property>
          </widget>
@@ -448,8 +440,6 @@
   <tabstop>kcfg_showActivity</tabstop>
   <tabstop>kcfg_mouseDevice</tabstop>
   <tabstop>keyMonButton</tabstop>
-  <tabstop>kcfg_led</tabstop>
-  <tabstop>kcfg_circle</tabstop>
   <tabstop>kcfg_mouseWidgetAlwaysVisible</tabstop>
   <tabstop>kcfg_mouseWidgetInvisible</tabstop>
   <tabstop>kcfg_cursorOpacity</tabstop>
@@ -458,38 +448,5 @@
   <tabstop>addButton</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>kcfg_circle</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>opacityLabel</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>185</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>82</x>
-     <y>180</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_circle</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_cursorOpacity</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>167</x>
-     <y>119</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>134</x>
-     <y>158</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

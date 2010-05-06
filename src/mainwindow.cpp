@@ -1212,15 +1212,7 @@ void MainWindow::initRecordWidgets(const bool &start)
             m_cursor->setButtons(MouseConfig::getButtons(Settings::self()->config()));
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
             m_cursor->setDevice(Settings::mouseDevice());
-
-            if (Settings::led()) {
-                m_cursor->setMode(CursorWidget::LEDMode);
-            } else if (Settings::circle()) {
-                m_cursor->setMode(CursorWidget::CircleMode);
-            } else {
-                m_cursor->setMode(CursorWidget::TargetMode);
-            }
-
+            m_cursor->setMode((CursorWidget::WidgetMode)Settings::cursorMode());
             m_cursor->setOpacity(Settings::cursorOpacity());
             m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
 

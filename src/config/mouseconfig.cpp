@@ -83,24 +83,18 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(m_colorLayout, SIGNAL(removeRequested(QWidget*)), this, SLOT(removeColorRow(QWidget*)));
     connect(m_soundLayout, SIGNAL(removeRequested(QWidget*)), this, SLOT(removeSoundRow(QWidget*)));
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
-    connect(kcfg_led, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
-    connect(kcfg_circle, SIGNAL(toggled(bool)), this, SLOT(modeChanged()));
-    connect(kcfg_target, SIGNAL(toggled(bool)), this, SLOT(buttonsChanged()));
+    connect(appearanceCombo, SIGNAL(activated(int)), this, SLOT(modeActivated()));
     connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(soundButtonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(RecordItNow::Helper::self(), SIGNAL(compositingChanged(bool)), this,
             SLOT(compositingChanged(bool)));
-    
-    m_visibleGroup = new QButtonGroup(this);
-    m_visibleGroup->addButton(kcfg_mouseWidgetInvisible);
-    m_visibleGroup->addButton(kcfg_mouseWidgetAlwaysVisible);
-    m_visibleGroup->setExclusive(true);
+    connect(kcfg_cursorMode, SIGNAL(valueChanged(int)), this, SLOT(loadMode(int)));
     
     compositingChanged(RecordItNow::Helper::self()->compositingActive());
 
-    buttonsChanged();
     currentButtonChanged();
+    modeActivated();
 
 }
 
@@ -108,7 +102,6 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
 MouseConfig::~MouseConfig()
 {
 
-    delete m_visibleGroup;
 
 }
 
@@ -412,18 +405,10 @@ void MouseConfig::buttonsChanged()
 
     cursorWidget->setButtons(buttons);
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
-
-    if (kcfg_led->isChecked()) {
-        cursorWidget->setMode(CursorWidget::LEDMode);
-    } else if (kcfg_circle->isChecked()) {
-        cursorWidget->setMode(CursorWidget::CircleMode);
-    } else {
-        cursorWidget->setMode(CursorWidget::TargetMode);
-    }
-
+    cursorWidget->setMode(currentMode());
     cursorWidget->setOpacity(kcfg_cursorOpacity->value());
+    
     currentButtonChanged();
-
     setConfigChanged(getButtons(config()) != buttons);
 
 }
@@ -455,27 +440,105 @@ void MouseConfig::currentButtonChanged()
     } else {
         soundAddButton->setEnabled(true);
     }
+    
+}
 
+
+CursorWidget::WidgetMode MouseConfig::currentMode() const
+{
+
+    CursorWidget::WidgetMode mode;
+    if (appearanceCombo->currentText() == i18n("LED")) {
+        mode = CursorWidget::LEDMode;
+    } else if (appearanceCombo->currentText() == i18n("Circle") || 
+               appearanceCombo->currentText() == i18n("Square")) {
+        mode = CursorWidget::CircleMode;
+    } else {
+        mode = CursorWidget::TargetMode;
+    }
+
+    return mode;
+
+}
+
+
+void MouseConfig::setMode(const CursorWidget::WidgetMode &mode)
+{
+
+    switch (mode) {
+    case CursorWidget::LEDMode: 
+        appearanceCombo->setCurrentItem(i18n("LED")); 
+        break;
+    case CursorWidget::CircleMode:
+        if (RecordItNow::Helper::self()->compositingActive()) {
+            appearanceCombo->setCurrentItem(i18n("Circle")); 
+        } else {
+            appearanceCombo->setCurrentItem(i18n("Square"));
+        }
+        break;
+    case CursorWidget::TargetMode:
+        appearanceCombo->setCurrentItem(i18n("Target"));
+        break;
+    };
+    kcfg_cursorMode->setValue((int)mode);
+
+}
+
+
+void MouseConfig::updateModeCombo()
+{
+
+    appearanceCombo->clear();
+    
+    appearanceCombo->addItem(i18n("LED"));
+    if (RecordItNow::Helper::self()->compositingActive()) {
+        appearanceCombo->addItem(i18n("Circle"));
+        appearanceCombo->addItem(i18n("Target"));
+    } else {
+        appearanceCombo->addItem(i18n("Square"));
+    }
     
 }
 
 
 void MouseConfig::compositingChanged(const bool &active)
 {
-
-    if (!active) {
-        kcfg_circle->setText(i18n("Square"));
-        kcfg_cursorOpacity->setEnabled(false);
-        opacityLabel->setEnabled(false);
-    } else {
-        kcfg_circle->setText(i18n("Circle"));
-        if (kcfg_circle->isChecked()) {
-            kcfg_cursorOpacity->setEnabled(true);
-            opacityLabel->setEnabled(true);
-        }
+    
+    CursorWidget::WidgetMode cMode = currentMode();
+    updateModeCombo();
+    
+    if (!active && cMode == CursorWidget::TargetMode) {
+        cMode = CursorWidget::LEDMode;
     }
-    kcfg_target->setEnabled(active);
+    setMode(cMode);
+    
+    opacityLabel->setEnabled(active && cMode == CursorWidget::CircleMode);
+    kcfg_cursorOpacity->setEnabled(opacityLabel->isEnabled());
+      
+}
 
+
+void MouseConfig::modeActivated()
+{
+    
+    buttonsChanged();
+    opacityLabel->setEnabled(RecordItNow::Helper::self()->compositingActive() && 
+                             currentMode() == CursorWidget::CircleMode);
+    kcfg_cursorOpacity->setEnabled(opacityLabel->isEnabled());
+ 
+    kcfg_cursorMode->setValue((int)currentMode());
+ 
+}
+
+
+void MouseConfig::loadMode(const int &value)
+{
+    
+    CursorWidget::WidgetMode mode = (CursorWidget::WidgetMode) value;
+    if (mode != currentMode()) {
+        setMode(mode);
+    }
+        
 }
 
 
