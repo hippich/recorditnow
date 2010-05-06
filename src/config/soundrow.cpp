@@ -59,6 +59,7 @@ SoundRow::SoundRow(QWidget *parent)
     connect(m_button, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)),
             this, SIGNAL(buttonChanged(MouseButtonWidget::Button,MouseButtonWidget::Button)));
     connect(playButton, SIGNAL(clicked()), this, SLOT(playClicked()));
+    connect(m_requester, SIGNAL(textChanged(QString)), this, SIGNAL(changed()));
 
 }
 
