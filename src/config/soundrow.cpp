@@ -24,6 +24,7 @@
 // KDE
 #include <kurlrequester.h>
 #include <kstandarddirs.h>
+#include <kdebug.h>
 
 // Qt
 #include <QtGui/QHBoxLayout>
@@ -40,9 +41,9 @@ SoundRow::SoundRow(QWidget *parent)
     m_requester = new KUrlRequester;
 
     m_requester->setMode(KFile::File|KFile::LocalOnly);
-    const QStringList dirs = KGlobal::dirs()->resourceDirs("sound");
-    if (!dirs.isEmpty()) { // FIXME
-        m_requester->setStartDir(dirs.last());
+    const QString dir = KGlobal::dirs()->findResourceDir("sound", "RecordItNow/");
+    if (!dir.isEmpty()) {
+        m_requester->setStartDir(dir+"/RecordItNow");
     }
     
 

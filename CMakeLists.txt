@@ -19,6 +19,7 @@ find_package(JoschyCore REQUIRED)
 find_package(RecordMyDesktop REQUIRED)
 
 add_subdirectory(src)
+add_subdirectory(sounds)
 
 # translation
  MACRO(LIST_CONTAINS var value)

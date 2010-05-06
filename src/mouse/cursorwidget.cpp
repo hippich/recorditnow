@@ -278,7 +278,10 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
     }
 
     const MouseButton button = getButton(event.keyToXButton(event.key));
-    if (!button.sound().isEmpty() && event.pressed) {
+    if (!button.sound().isEmpty() && 
+        (event.pressed || 
+        (event.key == KeyMon::Event::WheelUp || 
+        event.key == KeyMon::Event::WheelDown))) {
         RecordItNow::Helper::self()->playSound(button.sound());
     }
     
