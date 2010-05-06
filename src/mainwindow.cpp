@@ -863,7 +863,7 @@ void MainWindow::applyConfig()
 
 void MainWindow::updateRecorderCombo()
 {
-
+    
     const QString oldBackend = backendCombo->currentText();
     backendCombo->clear();
 

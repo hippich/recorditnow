@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef FRAMECONFIG_H
-#define FRAMECONFIG_H
 
+#ifndef FRAMEROW_H
+#define FRAMEROW_H
 
-// own
-#include "ui_frameconfig.h"
-#include "config/configpage.h"
-#include "frame/framesize.h"
 
 // Qt
 #include <QtGui/QWidget>
 
 
-namespace RecordItNow {
-    class ListLayout;
-};
-
-
+class KLineEdit;
 class KIntNumInput;
-class QTreeWidgetItem;
-class SizeWidget;
-class FrameConfig : public RecordItNow::ConfigPage, Ui::FrameConfig
+class FrameRow : public QWidget
 {
     Q_OBJECT
-
-
-public:
-    explicit FrameConfig(KConfig *cfg, QWidget *parent = 0);
-
-    QList<FrameSize> sizes() const;
-    static QList<FrameSize> defaultSizes();
-    static QList<FrameSize> readSizes(KConfig *config);
-    static void writeSizes(const QList<FrameSize> &sizes, KConfig *config);
-
-
-public slots:
-    void saveConfig();
-    void setDefaults();
-    void loadConfig();
-
-
-private slots:
-    void add();
-    void remove(QWidget *widget);
-    void textChanged(const QString &text);
-    void itemChanged();
-
-
-private:
-    RecordItNow::ListLayout *m_layout;
     
-
+    
+public:
+    explicit FrameRow(QWidget *parent = 0);
+    
+    QString name() const;
+    QSize size() const;
+    
+    void setName(const QString &name);
+    void setSize(const QSize &size);
+    
+    
+private:
+    KLineEdit *m_nameEdit;
+    KIntNumInput *m_widthInput; 
+    KIntNumInput *m_heightInput;
+    
+    
+signals:
+    void changed();
+    
+    
 };
 
 
-#endif // FRAMECONFIG_H
+#endif // FRAMEROW_H

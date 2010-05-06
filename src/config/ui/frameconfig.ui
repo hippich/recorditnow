@@ -20,11 +20,14 @@
    <item row="0" column="1">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Frame Sizes</string>
+      <string>Frames</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QFormLayout" name="formLayout_3">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::ExpandingFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
@@ -36,7 +39,18 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="KLineEdit" name="sizeEdit"/>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="KLineEdit" name="sizeEdit"/>
+          </item>
+          <item>
+           <widget class="KPushButton" name="addButton">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
@@ -45,77 +59,28 @@
         <property name="spacing">
          <number>-1</number>
         </property>
-        <item row="0" column="0" rowspan="5">
-         <widget class="QTreeWidget" name="sizeTree">
-          <property name="alternatingRowColors">
+        <item row="0" column="0" colspan="2">
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-          <property name="rootIsDecorated">
-           <bool>false</bool>
-          </property>
-          <column>
-           <property name="text">
-            <string comment="The name of the item">Name</string>
+          <widget class="QWidget" name="frameWidgetList">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>440</width>
+             <height>187</height>
+            </rect>
            </property>
-          </column>
-          <column>
-           <property name="text">
-            <string comment="the width of the frame">Width</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string comment="the height of the frame">Height</string>
-           </property>
-          </column>
+          </widget>
          </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="addButton">
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="text">
-           <string>Add</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="removeButton">
-          <property name="text">
-           <string>Remove</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="upButton">
-          <property name="text">
-           <string>Move Up</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QPushButton" name="downButton">
-          <property name="text">
-           <string>Move Down</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </item>
@@ -125,6 +90,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

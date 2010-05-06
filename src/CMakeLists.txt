@@ -94,6 +94,7 @@ set(gui_SRCS
    config/soundrow.cpp
    config/colorrow.cpp
    config/topicrow.cpp
+   config/framerow.cpp
    
    outputwidget.cpp
    timerwidget.cpp

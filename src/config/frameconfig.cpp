@@ -21,6 +21,8 @@
 // own
 #include "frameconfig.h"
 #include "helper.h"
+#include "listlayout.h"
+#include "framerow.h"
 
 // KDE
 #include <kdebug.h>
@@ -37,21 +39,16 @@ FrameConfig::FrameConfig(KConfig *cfg, QWidget *parent)
 
     setupUi(this);
 
+    m_layout = new RecordItNow::ListLayout(0, true);
+    frameWidgetList->setLayout(m_layout);
+    
     addButton->setIcon(KIcon("list-add"));
-    removeButton->setIcon(KIcon("list-remove"));
-    upButton->setIcon(KIcon("go-up"));
-    downButton->setIcon(KIcon("go-down"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
-    connect(removeButton, SIGNAL(clicked()), this, SLOT(remove()));
-    connect(upButton, SIGNAL(clicked()), this, SLOT(up()));
-    connect(downButton, SIGNAL(clicked()), this, SLOT(down()));
-    connect(sizeTree, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
     connect(sizeEdit, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
-    connect(sizeTree, SIGNAL(itemChanged(QTreeWidgetItem*, int)), this, SLOT(itemChanged()));
-
-    sizeTree->header()->setResizeMode(QHeaderView::ResizeToContents);
-    itemSelectionChanged();
+    connect(m_layout, SIGNAL(removeRequested(QWidget*)), this, SLOT(remove(QWidget*)));
+    connect(m_layout, SIGNAL(layoutChanged()), this, SLOT(itemChanged()));
+    
     textChanged(QString());
 
 }
@@ -61,13 +58,10 @@ QList<FrameSize> FrameConfig::sizes() const
 {
 
     QList<FrameSize> sizes;
-    for (int i = 0; i < sizeTree->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = sizeTree->topLevelItem(i);
+    foreach (QWidget *widget, m_layout->rows()) {
+        FrameRow *row = static_cast<FrameRow*>(widget);
 
-        const KIntNumInput *width = static_cast<KIntNumInput*>(sizeTree->itemWidget(item, 1));
-        const KIntNumInput *height = static_cast<KIntNumInput*>(sizeTree->itemWidget(item, 2));
-
-        sizes.append(FrameSize(QSize(width->value(), height->value()), item->text(0)));
+        sizes.append(FrameSize(row->size(), row->name()));
     }
     return sizes;
 
@@ -101,8 +95,6 @@ QList<FrameSize> FrameConfig::readSizes(KConfig *config)
 void FrameConfig::writeSizes(const QList<FrameSize> &sizes, KConfig *config)
 {
 
-    QStringList list;
-
     KConfigGroup cfg(config, "Frame");
     cfg.writeEntry("Frames", RecordItNow::Helper::listToArray(sizes));
     cfg.sync();
@@ -121,10 +113,15 @@ void FrameConfig::saveConfig()
 void FrameConfig::setDefaults()
 {
 
-    sizeTree->clear();
-
+    m_layout->clear();
     foreach (const FrameSize &size, defaultSizes()) {
-        newTreeWidgetItem(size.text(), size.size(), sizeTree->topLevelItemCount());
+        FrameRow *row = new FrameRow(this);
+        connect(row, SIGNAL(changed()), this, SLOT(itemChanged()));
+        
+        row->setName(size.text());
+        row->setSize(size.size());
+
+        m_layout->addRow(row);
     }
 
 }
@@ -134,7 +131,13 @@ void FrameConfig::loadConfig()
 {
 
     foreach (const FrameSize &size, readSizes(config())) {
-        newTreeWidgetItem(size.text(), size.size(), sizeTree->topLevelItemCount());
+        FrameRow *row = new FrameRow(this);
+        connect(row, SIGNAL(changed()), this, SLOT(itemChanged()));
+            
+        row->setName(size.text());
+        row->setSize(size.size());
+
+        m_layout->addRow(row);
     }
 
 }
@@ -146,8 +149,14 @@ void FrameConfig::add()
     if (sizeEdit->text().isEmpty()) {
         return;
     }
+    
+    FrameRow *row = new FrameRow(this);
+    connect(row, SIGNAL(changed()), this, SLOT(itemChanged()));
 
-    newTreeWidgetItem(sizeEdit->text(), QSize(100, 100), sizeTree->topLevelItemCount());
+    row->setName(sizeEdit->text());
+    row->setSize(QSize(100, 100));
+
+    m_layout->addRow(row);
     sizeEdit->clear();
 
     setConfigChanged(readSizes(config()) != sizes());
@@ -155,95 +164,11 @@ void FrameConfig::add()
 }
 
 
-void FrameConfig::remove()
+void FrameConfig::remove(QWidget *widget)
 {
 
-    QList<QTreeWidgetItem*> items = sizeTree->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    QTreeWidgetItem *item = items.first();
-
-    sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(item));
-    delete item;
-
+    m_layout->removeRow(widget);
     setConfigChanged(readSizes(config()) != sizes());
-
-}
-
-
-void FrameConfig::up()
-{
-
-    QList<QTreeWidgetItem*> items = sizeTree->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    const int from = sizeTree->indexOfTopLevelItem(items.first());
-    const int to = from-1;
-
-    move(from, to);
-
-
-}
-
-
-void FrameConfig::down()
-{
-
-    QList<QTreeWidgetItem*> items = sizeTree->selectedItems();
-    if (items.isEmpty()) {
-        return;
-    }
-
-    const int from = sizeTree->indexOfTopLevelItem(items.first());
-    const int to = from+1;
-
-    move(from, to);
-
-}
-
-
-void FrameConfig::move(const int &from, const int &to)
-{
-
-    if (to > sizeTree->topLevelItemCount() || to < 0) {
-        return;
-    }
-
-    QTreeWidgetItem *oldItem = sizeTree->topLevelItem(from);
-
-    const int width = static_cast<KIntNumInput*>(sizeTree->itemWidget(oldItem, 1))->value();
-    const int height = static_cast<KIntNumInput*>(sizeTree->itemWidget(oldItem, 2))->value();
-
-    QTreeWidgetItem *item = newTreeWidgetItem(oldItem->text(0), QSize(width, height), to < from ? to : to+1);
-
-    sizeTree->takeTopLevelItem(sizeTree->indexOfTopLevelItem(oldItem));
-    delete oldItem;
-
-    sizeTree->setCurrentItem(item);
-
-    setConfigChanged(readSizes(config()) != sizes());
-
-}
-
-
-
-void FrameConfig::itemSelectionChanged()
-{
-
-    if(sizeTree->selectedItems().isEmpty()) {
-        upButton->setEnabled(false);
-        downButton->setEnabled(false);
-        removeButton->setEnabled(false);
-    } else {
-        const int index = sizeTree->indexOfTopLevelItem(sizeTree->selectedItems().first());
-        upButton->setEnabled(index != 0);
-        downButton->setEnabled(index != sizeTree->topLevelItemCount()-1);
-        removeButton->setEnabled(true);
-    }
 
 }
 
@@ -256,9 +181,10 @@ void FrameConfig::textChanged(const QString &text)
         return;
     }
 
-    for (int i = 0; i < sizeTree->topLevelItemCount(); i++) {
-        QTreeWidgetItem *item = sizeTree->topLevelItem(i);
-        if (item->text(0) == text) {
+    foreach (QWidget *widget, m_layout->rows()) {
+        FrameRow *row = static_cast<FrameRow*>(widget);
+    
+        if (row->name() == text) {
             addButton->setDisabled(true);
             return;
         }
@@ -272,43 +198,6 @@ void FrameConfig::itemChanged()
 {
 
     setConfigChanged(readSizes(config()) != sizes());
-
-}
-
-
-KIntNumInput *FrameConfig::newSizeWidget()
-{
-
-    KIntNumInput *widget = new KIntNumInput(this);
-    widget->setMaximum(4000);
-    widget->setMinimum(100);
-
-    connect(widget, SIGNAL(valueChanged(int)), this, SLOT(itemChanged()));
-
-    return widget;
-
-}
-
-
-QTreeWidgetItem *FrameConfig::newTreeWidgetItem(const QString &text, const QSize &size, const int &index)
-{
-
-    QTreeWidgetItem *item = new QTreeWidgetItem;
-    item->setText(0, text);
-    item->setFlags(Qt::ItemIsEditable|Qt::ItemIsEnabled|Qt::ItemIsSelectable);
-
-    sizeTree->insertTopLevelItem(index, item);
-
-    KIntNumInput *widget1 = newSizeWidget();
-    sizeTree->setItemWidget(item, 1, widget1);
-
-    KIntNumInput *widget2 = newSizeWidget();
-    sizeTree->setItemWidget(item, 2, widget2);
-
-    widget1->setValue(size.width());
-    widget2->setValue(size.height());
-
-    return item;
 
 }
 
