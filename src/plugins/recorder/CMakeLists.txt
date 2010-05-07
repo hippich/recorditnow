@@ -11,6 +11,6 @@ macro_log_feature(AV_FOUND "ffmpeg libav*"
     "Free software/open source LGPL-licensed library of codecs for encoding and decoding video and audio data."
     "http://ffmpeg.org/")
 
-if (AV_FOUND)
+if (AV_FOUND AND XFIXES_FOUND)
     add_subdirectory(kasti)
-endif(AV_FOUND)
+endif(AV_FOUND AND XFIXES_FOUND)
