@@ -1,7 +1,8 @@
 include_directories(${CMAKE_SOURCE_DIR}/src/)
 
 
-set(SRCS kastirecorder.cpp)
+set(SRCS kastirecorder.cpp
+    kastiencoder.cpp)
 set(LIBS ${KDE4_KDECORE_LIBS} 
     ${KDE4_KDEUI_LIBS}
     ${KDE4_KIO_LIBS} 

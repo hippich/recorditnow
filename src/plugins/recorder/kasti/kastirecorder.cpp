@@ -21,6 +21,7 @@
 // own
 #include "kastirecorder.h"
 #include "frame/frame.h"
+#include "kastiencoder.h"
 
 // KDE
 #include <kplugininfo.h>
@@ -73,6 +74,7 @@ extern "C" {
  *  fix clicks
  *  encode in another thread
  *  error handling
+ *  encode stop
  *  .....
  * 
  * 
@@ -158,7 +160,9 @@ KastiRecorder::KastiRecorder(QObject *parent, const QVariantList &args)
     m_context->zoomFactor = 1;
     m_context->workMem = 0;
     m_context->frame = 0;
-    
+ 
+    m_encoder = 0;
+ 
 }
 
 
@@ -172,6 +176,10 @@ KastiRecorder::~KastiRecorder()
         delete m_context->frame;
     }
     delete m_context;
+
+    if (m_encoder) {
+        delete m_encoder;
+    }
 
 }
 
@@ -276,8 +284,15 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
     m_context->followMouse = true; 
 
 #warning "TODO: cache"
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 1; i++) {
         QFile *file = new QFile(getTemporaryFile(d.workDir));
+        
+        if (file->exists()) {
+            if (!file->remove()) {
+                kFatal() << "remove failed:" << file->fileName();
+            }
+        }
+        
         if (!file->open(QIODevice::WriteOnly)) {
             kFatal() << "open failed:" << file->fileName();
             return;
@@ -338,6 +353,8 @@ void KastiRecorder::setZoomFactor(const int &factor)
 void KastiRecorder::cheese()
 {
         
+    Q_ASSERT(m_context->running);
+    
 #ifdef S_DEBUG
     QTime time;
     time.start();
@@ -452,7 +469,8 @@ void KastiRecorder::cheese()
 #endif
 
     if (m_context->time.elapsed() >= 1000) {
-        emit status(i18n("FPS: %1", m_context->frames));
+        emit status(i18n("FPS: %1, Duration: %2", m_context->frames, 
+                         KGlobal::locale()->formatDuration(m_context->duration.elapsed())));
         m_context->frames = 0;
         m_context->time.restart();
     }
@@ -475,6 +493,10 @@ void KastiRecorder::scheduleNextShot(QTime *lastShot)
     if (m_context->stop) {
         qDebug() << "stopped!";
 
+        if (!m_context->running) {
+            return;
+        }
+        m_context->running = false;
 
         long duration = m_context->duration.elapsed();
         m_context->averageFPS = m_context->frames_total/(duration/1000);
@@ -483,12 +505,13 @@ void KastiRecorder::scheduleNextShot(QTime *lastShot)
                 "Duration" << duration << "ms";
         qDebug() << "Average FPS:" << m_context->averageFPS;
 
-        QTimer::singleShot(0, this, SLOT(encode()));
-    } else if (nextShot < 0) {
-        nextShot = 0;
+        encode();
+    } else if (nextShot <= 0) {
+        cheese();
+    } else {
+        QTimer::singleShot(nextShot, this, SLOT(cheese()));
     }
-    QTimer::singleShot(nextShot, this, SLOT(cheese()));
-
+    
 }
 
 
@@ -546,6 +569,8 @@ void KastiRecorder::adjustFrame(QRect *frame, const QRect *geometry)
 bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByteArray &data, const bool &shm)
 {
 
+    Q_ASSERT(m_context->running);
+
     if (m_context->currentCache < 0) {
         m_context->currentCache = 0;
     } else if (m_context->currentCache >= m_context->cache.size()) {
@@ -556,10 +581,12 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
     
     // compress
     unsigned char *cData = (unsigned char*)malloc(bytes);
+    if (!cData) {
+        kFatal() << "malloc() failed!";
+    }
+    
     lzo_uint compressedSize;
-    
     lzo1x_1_11_compress(buff, (lzo_uint)bytes, cData, &compressedSize, m_context->workMem);
-    
     QByteArray compressedArray = QByteArray::fromRawData((const char*)cData, compressedSize);
 
     // write
@@ -567,8 +594,8 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
     *stream << bytes;
     *stream << data;
     
-    static_cast<QFile*>(stream->device())->flush(); // FIXME
-
+    stream->device()->waitForBytesWritten(-1);
+    
     free(cData);
 
 
@@ -579,44 +606,6 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
 
 }
 
-
-bool KastiRecorder::readCache(QByteArray *frame, QByteArray *data)
-{
-
-    if (m_context->currentCache < 0) {
-        m_context->currentCache = 0;
-    } else if (m_context->currentCache >= m_context->cache.size()) {
-        m_context->currentCache = 0;
-    }
-    
-    QDataStream *stream = m_context->cache.at(m_context->currentCache);
-    QByteArray compressedFrame;
-    int size;
-    
-    *stream >> compressedFrame;
-    *stream >> size;
-    *stream >> *data;
-
-    if (compressedFrame.isEmpty()) { // EOF
-        return false;
-    }
-    
-    // uncompress
-    lzo_uint compressedSize = compressedFrame.size();
-    lzo_uint uncompressedSize;
-
-    unsigned char *uncompressed = (unsigned char*) malloc(size);
-    lzo1x_decompress((unsigned char*)compressedFrame.data(), compressedSize, uncompressed, &uncompressedSize, NULL);
-
-    frame->resize(uncompressedSize);
-    memcpy(frame->data(), uncompressed, uncompressedSize);
-    free(uncompressed);
-
-    //kDebug() << "uncompressed:" << size << "compressed:" << compressedSize;
-
-    return true;
-
-}
 
 
 QByteArray KastiRecorder::createData(void *image)
@@ -643,464 +632,47 @@ QByteArray KastiRecorder::createData(void *image)
 }
 
 
-void KastiRecorder::getData(const QByteArray *data, int *zoom, QPoint *mousePos, QByteArray *pixels,
-                    int *cursorWidth, int *cursorHeight, bool *click, QColor *clickColor)
-{
-
-    QDataStream stream(*data);
-    stream >> *zoom;
-    stream >> *mousePos;
-    stream >> *pixels;
-    stream >> *cursorWidth;
-    stream >> *cursorHeight;
-    stream >> *click;
-    stream >> *clickColor;
-
-}
-
-
-AVFrame *picture, *tmp_picture = 0;
-uint8_t *video_outbuf = 0;
-int frame_count, video_outbuf_size = 0;
 void KastiRecorder::encode()
 {
+    
+    if (m_context->frame) {
+        delete m_context->frame;
+        m_context->frame = 0;
+    }
     
     foreach (QDataStream *stream, m_context->cache) {
         QFile *file = static_cast<QFile*>(stream->device());
         
         file->flush();
+        file->waitForBytesWritten(-1);
         file->close();
-        
-        if (!file->open(QIODevice::ReadOnly)) {
-            kFatal() << "open failed:" << file->fileName();
-        }
     }
     
+    KastiEncoder::KastiEncoderContext *ctx = new KastiEncoder::KastiEncoderContext;
+    ctx->cache = m_context->cache;
+    ctx->width = m_context->width;
+    ctx->height = m_context->height;
+    ctx->codecID = m_context->codecID;
+    ctx->outputFile = m_context->outputFile;
+    ctx->fps = m_context->fps;
+    ctx->frames_total = m_context->frames_total;
+    ctx->currentCache = m_context->currentCache;
     
-    kDebug() << "encode!";
+    m_encoder = new KastiEncoder(ctx, this);
+    connect(m_encoder, SIGNAL(finished()), this, SLOT(encoderFinished()));
+    connect(m_encoder, SIGNAL(status(QString)), this, SIGNAL(status(QString)));
+    m_encoder->start();
 
-    
-    QString filename = m_context->outputFile;
-
-    AVOutputFormat *fmt;
-    AVFormatContext *oc;
-    AVStream *video_st;
-
-    // initialize libavcodec, and register all codecs and formats
-    avcodec_init();
-    avcodec_register_all();
-    av_register_all();
+}
 
 
-    // auto detect the output format from the name. default is mpeg.
-    fmt = av_guess_format(NULL, filename.toLatin1(), NULL);
-    if (!fmt) {
-        kDebug() << "Could not deduce output format from file extension: using MPEG";
-        fmt = av_guess_format("mpeg", NULL, NULL);
-    }
+void KastiRecorder::encoderFinished()
+{
 
-    if (!fmt) {
-        kFatal() << "Could not find suitable output format";
-    }
+    m_encoder->deleteLater();
+    m_encoder = 0;
 
-
-    // allocate the output media context
-    oc = avformat_alloc_context();
-    if (!oc) {
-        kFatal() << "Memory error";
-    }
-
-    oc->oformat = fmt;
-    snprintf(oc->filename, sizeof(oc->filename), "%s", filename.toLatin1().constData());
-    // add the video stream using the default format codec and initialize the codec
-    video_st = NULL;
-    if (fmt->video_codec != CODEC_ID_NONE || m_context->codecID != CODEC_ID_NONE) {
-        int id = fmt->video_codec;
-        if (m_context->codecID != CODEC_ID_NONE) {
-            if (!av_codec_get_tag(fmt->codec_tag, (CodecID)m_context->codecID)) {
-                kWarning() << "could not find tag, codec not currently supported in container";
-                kWarning() << "Use default codec:" << fmt->video_codec;
-            } else {
-                id = m_context->codecID;
-            }
-        }
-        video_st = add_video_stream(oc, id, fmt);
-    }
-
-
-    // set the output parameters (must be done even if no parameters).
-    if (av_set_parameters(oc, NULL) < 0) {
-        fprintf(stderr, "Invalid output format parameters\n");
-        exit(1);
-    }
-
-    dump_format(oc, 0, filename.toLatin1().constData(), 1);
-
-
-    open_video(oc, video_st);
-
-    // open the output file, if needed
-    if (!(fmt->flags & AVFMT_NOFILE)) {
-        if (url_fopen(&oc->pb, filename.toLatin1().constData(), URL_WRONLY) < 0) {
-            kFatal() << "Could not open" << filename;
-        }
-    }
-
-    // write the stream header, if any
-    av_write_header(oc);
-
-
-    double video_pts;
-
-
-    video_st->quality = video_st->codec->global_quality;
-
-    QByteArray frame;
-    QByteArray data;
-    int count = 0;
-    while (readCache(&frame, &data)) {
-        count++;
-        
-        kDebug() << count << "/" << m_context->frames_total;
-
-       // FIXME: encode in another thread....
-        //emit status(i18n("Encode frame %1/%2", count, m_context->frames_total));
-        
-        video_pts = (double)video_st->pts.val * video_st->time_base.num / video_st->time_base.den;
-        write_video_frame(oc, video_st, frame, data);
-    
-        frame.clear();
-        data.clear();
-    }
-
-    // close each codec
-    close_video(oc, video_st);
-
-    // write the trailer, if any
-    av_write_trailer(oc);
-
-    // free the streams
-    for (int i = 0; i < (int)oc->nb_streams; i++) {
-        av_freep(&oc->streams[i]->codec);
-        av_freep(&oc->streams[i]);
-    }
-
-    if (!(fmt->flags & AVFMT_NOFILE)) {
-        //close the output file
-        url_fclose(oc->pb);
-    }
-
-    // free the stream
-    av_free(oc);
-
-
-    // Done
     emit finished(AbstractRecorder::Normal);
-
-}
-
-
-// add a video output stream
-AVStream *KastiRecorder::add_video_stream(AVFormatContext *oc, int codec_id, AVOutputFormat *fmt)
-{
-
-    AVCodecContext *c;
-    AVStream *st;
-
-    st = av_new_stream(oc, 0);
-    if (!st) {
-        kFatal() << "Could not alloc stream";
-    }
-
-    c = st->codec;
-    c->codec_id = (CodecID) codec_id;
-    c->codec_type = CODEC_TYPE_VIDEO;
-    // put sample parameters
-    c->bit_rate = 4500000; // FIXME
-    // resolution must be a multiple of two
-    c->width = m_context->width;
-    c->height = m_context->height;
-
-    // time base: this is the fundamental unit of time (in seconds) in terms
-    // of which frame timestamps are represented. for fixed-fps content,
-    // timebase should be 1/framerate and timestamp increments should be
-    // identically 1.
-    c->time_base.den = m_context->fps;
-    c->time_base.num = 1;
-    c->gop_size = 25; // emit one intra frame every twelve frames at most
-
-//    c->pix_fmt = choosePixelFormat(m_context->codecID);
-    c->pix_fmt = PIX_FMT_YUV420P; // FIXME
-    if (c->codec_id == CODEC_ID_MPEG1VIDEO) {
-        // needed to avoid using macroblocks in which some coeffs overflow
-        // this doesnt happen with normal video, it just happens here as the
-        // motion of the chroma plane doesnt match the luma plane
-        c->mb_decision = 2;
-    }
-
-    // flags
-    c->flags |= CODEC_FLAG2_FAST;
-    c->flags &= ~CODEC_FLAG_OBMC;
-
-    if (fmt->flags & AVFMT_GLOBALHEADER) {
-        c->flags |= CODEC_FLAG_GLOBAL_HEADER;
-    }
-
-    return st;
-
-}
-
-
-
-void KastiRecorder::open_video(AVFormatContext *oc, AVStream *st)
-{
-
-    AVCodec *codec;
-    AVCodecContext *c;
-
-    c = st->codec;
-
-    // find the video encoder
-    codec = avcodec_find_encoder(c->codec_id);
-    if (!codec) {
-        kFatal() << "codec not found";
-    }
-
-    // open the codec
-    if (avcodec_open(c, codec) < 0) {
-        kFatal() << "could not open codec";
-    }
-
-    video_outbuf = NULL;
-    if (!(oc->oformat->flags & AVFMT_RAWPICTURE)) {
-        // allocate output buffer
-        // XXX: API change will be done
-        // buffers passed into lav* can be allocated any way you prefer,
-        // as long as they're aligned enough for the architecture, and
-        // they're freed appropriately (such as using av_free for buffers
-        // allocated with av_malloc)
-        video_outbuf_size = 1835008;
-        video_outbuf = (uint8_t*) av_malloc(video_outbuf_size);
-    }
-
-    // allocate the encoded raw picture
-    picture = alloc_picture(c->pix_fmt, c->width, c->height);
-    if (!picture) {
-        kFatal() << "Could not allocate picture";
-    }
-
-    // if the output format is not YUV420P, then a temporary YUV420P
-    // picture is needed too. It is then converted to the required
-    // output format
-    
-    tmp_picture = NULL;
-    tmp_picture = alloc_picture(PIX_FMT_RGB32, c->width, c->height);
-    if (!tmp_picture) {
-        kFatal() << "Could not allocate temporary picture";
-    }
-
-}
-
-
-AVFrame *KastiRecorder::alloc_picture(int pix_fmt, int width, int height)
-{
-
-    AVFrame *picture;
-    uint8_t *picture_buf;
-    int size;
-
-    picture = avcodec_alloc_frame();
-    if (!picture) {
-        return NULL;
-    }
-
-    picture->quality = 10;
-
-    size = avpicture_get_size((PixelFormat) pix_fmt, width, height);
-    picture_buf = (uint8_t*) av_malloc(size);
-
-    if (!picture_buf) {
-        av_free(picture);
-        return NULL;
-    }
-
-    avpicture_fill((AVPicture *)picture, picture_buf,
-                   (PixelFormat) pix_fmt, width, height);
-
-    return picture;
-
-}
-
-
-void KastiRecorder::close_video(AVFormatContext *oc, AVStream *st)
-{
-
-    Q_UNUSED(oc);
-
-    avcodec_close(st->codec);
-    av_free(picture);
-    if (tmp_picture) {
-        av_free(tmp_picture->data[0]);
-        av_free(tmp_picture);
-    }
-    av_free(video_outbuf);
-
-}
-
-
-void KastiRecorder::write_video_frame(AVFormatContext *oc, AVStream *st, const QByteArray &frame, const QByteArray &data)
-{
-
-    int ret;
-    AVCodecContext *c = st->codec;
-
-    // zoom factor + mouse pos
-    int zoom;
-    QPoint mousePos;
-    QByteArray cursorPixels;
-    int cursorWidth;
-    int cursorHeight;
-    bool click;
-    QColor clickColor;
-    getData(&data, &zoom, &mousePos, &cursorPixels, &cursorWidth, &cursorHeight, &click, &clickColor);
-
-    if (c->pix_fmt != PIX_FMT_YUV420P/*DESTINATION_PIX_FMT*/) {
-        kFatal() << "pix_fmt != PIX_FMT_YUV420P";
-    } else {
-        QImage pImage((uchar*)frame.data(), c->width, c->height, QImage::Format_RGB32); // frame
-        // paint on frame
-        QPainter imagePainter(&pImage);
-        imagePainter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
-
-        if (click) { // mouse click
-            drawMouseClick(&imagePainter, mousePos.x(), mousePos.y(), clickColor);
-        }
-
-        // cursor
-        int size = cursorPixels.size();
-        unsigned long *xpixels = (unsigned long*) cursorPixels.data();
-        unsigned char *pixels = (unsigned char*) malloc(size);
-            for (int i = 0; i < cursorWidth*cursorHeight; i++) {
-                unsigned long pix = xpixels[i];
-                pixels[i * 4] = pix & 0xff;
-                pixels[(i * 4) + 1] = (pix >> 8) & 0xff;
-                pixels[(i * 4) + 2] = (pix >> 16) & 0xff;
-                pixels[(i * 4) + 3] = (pix >> 24) & 0xff;
-            }
-
-        QImage qcursor((uchar*)pixels, cursorWidth, cursorHeight, QImage::Format_ARGB32);
-        imagePainter.drawImage(mousePos, qcursor);
-        free(pixels);
-
-
-        imagePainter.end(); // frame ready
-
-        int iWidth  = pImage.width();
-        int iHeight = pImage.height();
-
-        // TODO cache
-        struct SwsContext *ctx = sws_getContext(iWidth,
-                                                iHeight,
-                                                PIX_FMT_RGB32,
-                                                c->width,
-                                                c->height,
-                                                PIX_FMT_YUV420P,//DESTINATION_PIX_FMT,
-                                                SWS_FAST_BILINEAR,
-                                                NULL,
-                                                NULL,
-                                                NULL);
-
-        QImage im(tmp_picture->data[0], iWidth, iHeight, QImage::Format_RGB32);
-        QPainter p(&im);
-        p.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
-
-        
-        // FIXME: zoom in/out animation
-        if (zoom != 1) { // zoom
-            kDebug() << "zoom:" << zoom;
-            QImage scaled = pImage.scaled(iWidth*zoom,
-                                          iHeight*zoom,
-                                          Qt::KeepAspectRatio,
-                                          Qt::SmoothTransformation);
-
-            QRect target = pImage.rect();
-            QPoint pos = mousePos*zoom;
-
-            target.moveCenter(pos);
-
-            QRect geometry = scaled.rect();
-            adjustFrame(&target, &geometry);
-
-            p.drawImage(im.rect(), scaled, target);
-        } else {
-            p.drawImage(0, 0, pImage);
-        }
-
-        sws_scale(ctx, tmp_picture->data, tmp_picture->linesize, 0, c->height, picture->data, picture->linesize);
-        sws_freeContext(ctx);
-    }
-
-
-    if (oc->oformat->flags & AVFMT_RAWPICTURE) {
-
-        kFatal() << "oc->oformat->flags & AVFMT_RAWPICTURE";
-        /*
-        AVPacket pkt;
-        av_init_packet(&pkt);
-
-        pkt.flags |= PKT_FLAG_KEY;
-        pkt.stream_index= st->index;
-        pkt.data= (uint8_t *)picture;
-        pkt.size= sizeof(AVPicture);
-
-
-        ret = av_write_frame(oc, &pkt);
-        */
-    } else {
-        // encode the image
-        const int out_size = avcodec_encode_video(c, video_outbuf, video_outbuf_size, picture);
-        // if zero size, it means the image was buffered
-        if (out_size > 0) {
-            AVPacket pkt;
-            av_init_packet(&pkt);
-
-            pkt.pts = av_rescale_q(c->coded_frame->pts, c->time_base, st->time_base);
-            if (c->coded_frame->key_frame)
-                pkt.flags |= PKT_FLAG_KEY;
-            pkt.stream_index= st->index;
-            pkt.data= video_outbuf;
-            pkt.size= out_size;
-
-            // write the compressed frame in the media file
-            ret = av_write_frame(oc, &pkt);
-        } else {
-            ret = 0;
-        }
-    }
-
-    if (ret != 0) {
-        kFatal() << "Error while writing video frame";
-        exit(1);
-    }
-
-    frame_count++;
-
-}
-
-
-void KastiRecorder::drawMouseClick(QPainter *painter, const int &x, const int &y, const QColor &color)
-{
-
-    painter->save();
-
-    QRadialGradient grad(x, y, 50);
-    grad.setColorAt(0, color);
-    grad.setColorAt(1, Qt::transparent);
-    painter->setBrush(QBrush(grad));
-    painter->setOpacity(0.5);
-    painter->drawEllipse(QPoint(x, y), 50, 50);
-
-    painter->restore();
 
 }
 

@@ -17,70 +17,69 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KASTIRECORDER_H
-#define KASTIRECORDER_H
+#ifndef KASTIENCODER_H
+#define KASTIENCODER_H
 
-
-// own
-#include "abstractrecorder.h"
 
 // Qt
-#include <QtCore/QVariantList>
-#include <QtCore/QPointer>
+#include <QtCore/QThread>
+#include <QtGui/QColor>
+#include <QtCore/QPoint>
 
 
-class KastiEncoder;
-class QPainter;
-struct AVFrame;
-struct AVOutputFormat;
-struct AVFormatContext;
 struct AVStream;
-class KastiContext;
-class KastiRecorder : public AbstractRecorder
+struct AVFrame;
+struct AVFormatContext;
+class QPainter;
+struct AVOutputFormat;
+class QDataStream;
+class KastiEncoder : public QThread
 {
     Q_OBJECT
-
-
+    
+    
 public:
-    explicit KastiRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
-    ~KastiRecorder();
-
-    int zoomFactor() const;
+    struct KastiEncoderContext {
+        QList<QDataStream*> cache;
+        QString outputFile;
+        int width;
+        int height;
+        int fps;
+        int codecID;
+        int frames_total;
+        int currentCache;
+    };
     
-    void record(const AbstractRecorder::Data &d);
-    void pause();
-    void stop();
-
-    void mouseClick(const QColor &color, const bool &pressed, const int &mode);
-    void setZoomFactor(const int &factor);
     
-    static void adjustFrame(QRect *frame, const QRect *geometry);
-
+    KastiEncoder(KastiEncoderContext *ctx, QObject *parent);
+    ~KastiEncoder();
+    
     
 private:
-    KastiContext *m_context;
-    KastiEncoder *m_encoder;
+    KastiEncoderContext *m_context;
     
-    void initContext(KastiContext *ctx, const QRect &frame, const bool &shm, const bool &showFrame);
-    inline void scheduleNextShot(QTime *lastShot);
-    inline void updateFrameGeometry();
-    inline bool cacheData(unsigned char *buff, const int &bytes, const QByteArray &data, const bool &shm);
-    bool readCache(QByteArray *frame, QByteArray *data);
-    
-    
-    inline QByteArray createData(void *image);
+    inline void getData(const QByteArray *data, int *zoom, QPoint *mousePos, QByteArray *pixels,
+                        int *cursorWidth, int *cursorHeight, bool *click, QColor *clickColor);
 
+    inline AVStream *add_video_stream(AVFormatContext *oc, int codec_id, AVOutputFormat *fmt);
+    inline void open_video(AVFormatContext *oc, AVStream *st);
+    inline AVFrame *alloc_picture(int pix_fmt, int width, int height);
+    inline void close_video(AVFormatContext *oc, AVStream *st);
+    inline void write_video_frame(AVFormatContext *oc, AVStream *st, const QByteArray &data, const QByteArray &cfg);
+    inline void drawMouseClick(QPainter *painter, const int &x, const int &y, const QColor &color);
+    inline bool readCache(QByteArray *frame, QByteArray *data);
     
-private slots:
-    void cheese();
-    void encode();
-    void encoderFinished();
     
-
-protected slots:
-
-
+protected:
+    void run();
+    
+    
+signals:
+    void status(const QString &text);
+    
+    
 };
 
 
-#endif // KASTIRECORDER_H
+
+#endif // KASTIENCODER_H
