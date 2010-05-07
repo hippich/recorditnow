@@ -179,6 +179,18 @@ void CursorWidget::switchToPreviewMode()
 }
 
 
+void CursorWidget::setRecorder(AbstractRecorder *recorder)
+{
+
+    m_recorder = recorder;
+    if (m_recorder) { // FIXME
+         m_timer->stop();
+        setVisible(false);
+    }
+    
+}
+
+
 void CursorWidget::start()
 {
 
@@ -273,10 +285,6 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
         m_resetTimer->stop();
     }
 
-    if (!isVisible()) {
-        show();
-    }
-
     const MouseButton button = getButton(event.keyToXButton(event.key));
     if (!button.sound().isEmpty() && 
         (event.pressed || 
@@ -287,6 +295,11 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
     
     if (!button.isValid()) {
         return;
+    }
+    
+    
+    if (m_recorder) {
+        m_recorder->mouseClick(button.color(), event.pressed, m_mode);
     }
     
     switch (event.key) {
@@ -305,8 +318,14 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
             break;
         }
     }
-    update();
-
+    
+    if (!m_recorder) {
+        if (!isVisible()) {
+            show();
+        }
+        update();
+    }
+        
 }
 
 

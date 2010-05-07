@@ -21,6 +21,7 @@
 // own
 #include "recordermanager.h"
 #include "recorditnowpluginmanager.h"
+#include "mouse/cursorwidget.h"
 
 // KDE
 #include <kdebug.h>
@@ -123,7 +124,7 @@ QString RecorderManager::getDefaultFile(const QString &name) const
 }
 
 
-void RecorderManager::startRecord(const QString &recorder, const AbstractRecorder::Data &data)
+void RecorderManager::startRecord(const QString &recorder, const AbstractRecorder::Data &data, CursorWidget *cursor)
 {
 
     if (m_recorder) {
@@ -148,6 +149,10 @@ void RecorderManager::startRecord(const QString &recorder, const AbstractRecorde
     connect(m_recorder, SIGNAL(stateChanged(AbstractRecorder::State)), this,
             SIGNAL(stateChanged(AbstractRecorder::State)));
 
+    if (recorder == "Kasti") { // FIXME
+        cursor->setRecorder(m_recorder);
+    }
+    
     m_recorder->record(data);
 
 }
@@ -168,6 +173,34 @@ void RecorderManager::stop()
 
     if (m_recorder) {
         m_recorder->stop();
+    }
+
+}
+
+
+void RecorderManager::zoom(const bool &in)
+{
+
+    if (m_recorder) {
+        int factor = m_recorder->zoomFactor();
+        
+        if (in) {
+            factor++;
+        } else {
+            factor--;
+        }
+        
+        m_recorder->setZoomFactor(factor);
+    }
+        
+}
+
+
+void RecorderManager::resetZoom()
+{
+
+    if (m_recorder) {
+        m_recorder->setZoomFactor(1);
     }
 
 }

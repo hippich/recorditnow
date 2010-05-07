@@ -404,7 +404,7 @@ void MainWindow::startRecord()
 {
 
     setState(Recording);   
-    m_recorderManager->startRecord(backendCombo->currentText(), m_recordData);
+    m_recorderManager->startRecord(backendCombo->currentText(), m_recordData, m_cursor);
 
 }
 
@@ -1055,6 +1055,7 @@ void MainWindow::saveNewToolbarConfig()
 void MainWindow::zoomIn()
 {
 
+    m_recorderManager->zoom(true);
     if (isDockEnabled(m_zoomDock)) {
         m_zoomDock->zoomIn();
     }
@@ -1065,6 +1066,7 @@ void MainWindow::zoomIn()
 void MainWindow::zoomOut()
 {
 
+    m_recorderManager->zoom(false);
     if (isDockEnabled(m_zoomDock)) {
         m_zoomDock->zoomOut();
     }
@@ -1075,6 +1077,7 @@ void MainWindow::zoomOut()
 void MainWindow::resetZoomFactor()
 {
 
+    m_recorderManager->resetZoom();
     if (isDockEnabled(m_zoomDock)) {
         m_zoomDock->resetZoomFactor();
     }

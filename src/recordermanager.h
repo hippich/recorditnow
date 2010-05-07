@@ -32,7 +32,7 @@
 #include <QtCore/QPair>
 #include <QtCore/QPointer>
 
-
+class CursorWidget;
 typedef QPair<QString, KIcon> RecorderData;
 class RecordItNowPluginManager;
 class RecorderManager : public QObject
@@ -49,10 +49,12 @@ public:
     bool hasFeature(const QString &feature, const QString &recorder) const;
     QString getDefaultFile(const QString &name) const;
 
-    void startRecord(const QString &recorder, const AbstractRecorder::Data &data);
+    void startRecord(const QString &recorder, const AbstractRecorder::Data &data, CursorWidget *cursor);
     void pauseOrContinue();
     void stop();
-
+    void zoom(const bool &in);
+    void resetZoom();
+    
 
 private:
     RecordItNowPluginManager *m_manager;

@@ -24,6 +24,7 @@
 // own
 #include "keymon/event.h"
 #include "mousebutton.h"
+#include "abstractrecorder.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -31,6 +32,7 @@
 #include <QtGui/QColor>
 #include <QtCore/QHash>
 #include <QtCore/QVariantMap>
+#include <QtCore/QPointer>
 
 
 namespace KeyMon {
@@ -60,7 +62,8 @@ public:
     void setOpacity(const qreal &opacity);
     void setShowAlways(const bool &show);
     void switchToPreviewMode();
-
+    void setRecorder(AbstractRecorder *recorder);
+    
     void start();
     void stop();
 
@@ -76,6 +79,7 @@ private:
     bool m_show;
     MouseButton m_currentButton;
     MouseButton m_defaultButton;
+    QPointer<AbstractRecorder> m_recorder;
 
     MouseButton getButton(const int &code) const;
 

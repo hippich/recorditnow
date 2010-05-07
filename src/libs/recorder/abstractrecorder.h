@@ -66,12 +66,16 @@ public:
     ~AbstractRecorder();
 
     AbstractRecorder::State state() const;
+    virtual int zoomFactor() const { return 1; };
 
     virtual bool isVideoRecorder() const { return true; };
 
     virtual void record(const AbstractRecorder::Data &) = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
+
+    virtual void mouseClick(const QColor &/*color*/, const bool &/*pressed*/, const int &/*mode*/) {};
+    virtual void setZoomFactor(const int &/*factor*/) {};
 
 
 private:
