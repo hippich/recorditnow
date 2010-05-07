@@ -57,7 +57,7 @@ public:
 private:
     KastiContext *m_context;
     
-    void initContext(KastiContext *ctx, const QRect &frame, const bool &shm);
+    void initContext(KastiContext *ctx, const QRect &frame, const bool &shm, const bool &showFrame);
     inline void scheduleNextShot(QTime *lastShot);
     inline void updateFrameGeometry();
     inline void adjustFrame(QRect *frame, const QRect *geometry);

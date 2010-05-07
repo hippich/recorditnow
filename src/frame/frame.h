@@ -24,6 +24,9 @@
 // own
 #include "framesize.h"
 
+// KDE
+#include <kdemacros.h>
+
 // Qt
 #include <QtGui/QWidget>
 #include <QtCore/QHash>
@@ -31,7 +34,7 @@
 
 class MoveWidget;
 class FrameInfoWidget;
-class Frame : public QWidget
+class KDE_EXPORT Frame : public QWidget
 {
     Q_OBJECT
 

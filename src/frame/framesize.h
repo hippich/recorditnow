@@ -23,13 +23,16 @@
 // own
 #include "configitem.h"
 
+// KDE
+#include <kdemacros.h>
+
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QSize>
 #include <QtCore/QMetaType>
 
 
-class FrameSize : public RecordItNow::ConfigItem
+class KDE_EXPORT FrameSize : public RecordItNow::ConfigItem
 {
 
 

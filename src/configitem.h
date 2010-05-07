@@ -21,6 +21,9 @@
 #define CONFIGITEM_H
 
 
+// KDE
+#include <kdemacros.h>
+
 // Qt
 #include <QtCore/QDataStream>
 #include <QtCore/QExplicitlySharedDataPointer>
@@ -33,7 +36,7 @@ namespace RecordItNow {
 
 
 class ConfigItemPrivate;
-class ConfigItem
+class KDE_EXPORT ConfigItem
 {
 
 
@@ -84,8 +87,8 @@ protected:
 Q_DECLARE_METATYPE(RecordItNow::ConfigItem)
 
 
-QDataStream &operator<<(QDataStream &stream, const RecordItNow::ConfigItem &data);
-QDataStream &operator>>(QDataStream &stream, RecordItNow::ConfigItem &data);
+KDE_EXPORT QDataStream &operator<<(QDataStream &stream, const RecordItNow::ConfigItem &data);
+KDE_EXPORT QDataStream &operator>>(QDataStream &stream, RecordItNow::ConfigItem &data);
 
 
 #endif // CONFIGITEM_H

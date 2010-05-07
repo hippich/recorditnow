@@ -149,7 +149,7 @@ void RecorderManager::startRecord(const QString &recorder, const AbstractRecorde
     connect(m_recorder, SIGNAL(stateChanged(AbstractRecorder::State)), this,
             SIGNAL(stateChanged(AbstractRecorder::State)));
 
-    if (recorder == "Kasti") { // FIXME
+    if (cursor && recorder == "Kasti") { // FIXME
         cursor->setRecorder(m_recorder);
     }
     

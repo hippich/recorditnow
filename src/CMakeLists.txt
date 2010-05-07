@@ -26,6 +26,15 @@ add_subdirectory(keymon)
 macro_display_feature_log()
 
 
+set (COMMON_SRCS configitem.cpp)
+
+
+set (FRAME_SRCS frame/frame.cpp 
+    frame/framesize.cpp
+    frame/frameinfowidget.cpp 
+    frame/movewidget.cpp)
+
+
 set(gui_SRCS
    main.cpp
    mainwindow.cpp
@@ -37,15 +46,9 @@ set(gui_SRCS
    devicesearchdialog.cpp
    checkicon.cpp
    helper.cpp
-   configitem.cpp
 
    zoom/zoomview.cpp
    zoom/zoomdock.cpp
-
-   frame/frame.cpp
-   frame/frameinfowidget.cpp
-   frame/movewidget.cpp
-   frame/framesize.cpp
 
    timeline/timelinedock.cpp
    timeline/timeline.cpp
@@ -160,6 +163,17 @@ kde4_add_ui_files(gui_SRCS
     player/ui/volumeslider.ui)
 
 
+# Common
+kde4_add_library(recorditnow_common SHARED ${COMMON_SRCS})
+target_link_libraries(recorditnow_common ${KDE4_KDEUI_LIBS})
+install(TARGETS recorditnow_common ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+
+# Frame
+kde4_add_library(recorditnow_frame SHARED ${FRAME_SRCS})
+target_link_libraries(recorditnow_frame ${KDE4_KDEUI_LIBS} recorditnow_common)
+install(TARGETS recorditnow_frame ${INSTALL_TARGETS_DEFAULT_ARGS})
+
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})
 target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
@@ -169,6 +183,8 @@ target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
                                   recorditnow_recorder
                                   recorditnow_encoder
                                   recorditnow_keymon
+                                  recorditnow_frame
+                                  recorditnow_common
                                   ${X11_Xcursor_LIB}
                                   ${JOSCHYCORE_LIBRARIES})
 

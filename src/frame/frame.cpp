@@ -40,14 +40,15 @@ Frame::Frame(QWidget *parent)
     : QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint)
 {
 
-    Q_ASSERT(parentWidget());
     m_moveWidget = 0;
 
     resize(FRAME_MIN_SIZE, FRAME_MIN_SIZE);
     setContentsMargins(8, 8, 8, 8);
     setMinimumSize(FRAME_MIN_SIZE-(8*2), FRAME_MIN_SIZE-(8*2));
 
-    parent->installEventFilter(this);
+    if (parent) {
+        parent->installEventFilter(this);
+    }
     setMouseTracking(true);
     m_side = NoSide;
     m_active = false;
@@ -149,7 +150,7 @@ int Frame::getLineSize() const
 void Frame::moveToParent(const bool &force)
 {
 
-    if (m_moveWidget && !force) {
+    if (!parentWidget() || (m_moveWidget && !force)) {
         return;
     }
 

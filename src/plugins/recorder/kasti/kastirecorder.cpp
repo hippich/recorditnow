@@ -20,6 +20,7 @@
 
 // own
 #include "kastirecorder.h"
+#include "frame/frame.h"
 
 // KDE
 #include <kplugininfo.h>
@@ -89,6 +90,7 @@ extern "C" {
          
          
 struct KastiContext {
+    Frame *frame;
     bool running;
     
     // FPS time
@@ -154,6 +156,8 @@ KastiRecorder::KastiRecorder(QObject *parent, const QVariantList &args)
     m_context->codecID = CODEC_ID_NONE;
     m_context->running = false;
     m_context->zoomFactor = 1;
+    m_context->workMem = 0;
+    m_context->frame = 0;
     
 }
 
@@ -161,6 +165,12 @@ KastiRecorder::KastiRecorder(QObject *parent, const QVariantList &args)
 KastiRecorder::~KastiRecorder()
 {
 
+    if (m_context->workMem) {
+        free(m_context->workMem);
+    }
+    if (m_context->frame) {
+        delete m_context->frame;
+    }
     delete m_context;
 
 }
@@ -174,7 +184,7 @@ int KastiRecorder::zoomFactor() const
 }
 
 
-void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const bool &shm)
+void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const bool &shm, const bool &showFrame)
 {
 
     ctx->running = false;
@@ -240,6 +250,12 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
 
     ctx->workMem = (unsigned char*)malloc(LZO1X_1_11_MEM_COMPRESS);
 
+
+    if (showFrame) {
+        m_context->frame = new Frame(0);
+        m_context->frame->setVisible(true);
+    }
+
 }
 
 #warning "TODO: errors!"
@@ -251,7 +267,7 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
         return;
     }
     
-    initContext(m_context, d.geometry, true);
+    initContext(m_context, d.geometry, true, true);
     Q_ASSERT(m_context->useShm); // TODO
     
     m_context->outputFile = d.outputFile;
@@ -337,6 +353,10 @@ void KastiRecorder::cheese()
 
     if (m_context->followMouse) {
         updateFrameGeometry();
+    }
+    
+    if (m_context->frame) {
+        m_context->frame->setGeometry(QRect(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height));
     }
 
 #ifdef S_DEBUG
