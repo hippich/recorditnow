@@ -51,8 +51,10 @@ KastiEncoder::KastiEncoder(KastiEncoderContext *ctx, QObject *parent)
     : QThread(parent), m_context(ctx)
 {
         
-        
-
+    m_context->zoomAnimationFactor = -1;
+    m_context->lastZoomOut = false;
+    m_context->targetZoomFactor = 1;
+    
 }
 
 
@@ -370,6 +372,27 @@ void KastiEncoder::close_video(AVFormatContext *oc, AVStream *st)
 }
 
 
+void KastiEncoder::zoomImage(const float &factor, const QPoint &mousePos, QImage &image, QRect &target)
+{
+
+    QImage scaled = image.scaled(image.width()*factor, 
+                                 image.height()*factor,
+                                 Qt::KeepAspectRatio,
+                                 Qt::SmoothTransformation);
+
+    target = image.rect();
+    QPoint pos = mousePos*factor;
+
+    target.moveCenter(pos);
+
+    QRect geometry = scaled.rect();
+    KastiRecorder::adjustFrame(&target, &geometry);
+
+    image = scaled;
+
+}
+
+
 void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QByteArray &frame, const QByteArray &data)
 {
 
@@ -437,25 +460,45 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
         p.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
 
         
-        // FIXME: zoom in/out animation
-        if (zoom != 1) { // zoom
-            kDebug() << "zoom:" << zoom;
-            QImage scaled = pImage.scaled(iWidth*zoom,
-                                          iHeight*zoom,
-                                          Qt::KeepAspectRatio,
-                                          Qt::SmoothTransformation);
+        if ((zoom != 1 && !m_context->lastZoomOut) || 
+            (m_context->zoomAnimationFactor != -1 && zoom == 1)) { 
+           // kDebug() << "zoom:" << zoom;
+            
+            if (m_context->zoomAnimationFactor != -1 && zoom == 1) { // last zoom out animation
+                m_context->lastZoomOut = true;
+            }
+        
+            float currentZoom;
+            if (m_context->zoomAnimationFactor == -1) { // zoom in animation start
+                m_context->zoomAnimationFactor = 1.0;
+            }
+            
+            if (m_context->targetZoomFactor != zoom) {
+                m_context->targetZoomFactor = zoom;
+            }
+ 
+            int zoomFactor = zoom*100;
+            int lastFactor = m_context->zoomAnimationFactor*100;
+            if (lastFactor != zoomFactor) { // zoom factor changed
+                if (lastFactor < zoomFactor) {
+                    m_context->zoomAnimationFactor = m_context->zoomAnimationFactor+0.1; // zoom in
+                } else {
+                    m_context->zoomAnimationFactor = m_context->zoomAnimationFactor-0.1; // zoom out
+                }
+            } else if (m_context->lastZoomOut) { // last zoom out Done
+                m_context->lastZoomOut = false;
+                m_context->zoomAnimationFactor = -1;
+            }
+                
+            currentZoom = m_context->zoomAnimationFactor;
 
-            QRect target = pImage.rect();
-            QPoint pos = mousePos*zoom;
+            QRect target;
+            zoomImage(currentZoom, mousePos, pImage, target);
 
-            target.moveCenter(pos);
 
-            QRect geometry = scaled.rect();
-            KastiRecorder::adjustFrame(&target, &geometry);
-
-            p.drawImage(im.rect(), scaled, target);
+            p.drawImage(im.rect(), pImage, target);
         } else {
-            p.drawImage(0, 0, pImage);
+            p.drawImage(0, 0, pImage); // no zoom
         }
 
         sws_scale(ctx, tmp_picture->data, tmp_picture->linesize, 0, c->height, picture->data, picture->linesize);

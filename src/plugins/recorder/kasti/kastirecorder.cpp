@@ -373,7 +373,7 @@ void KastiRecorder::cheese()
     }
     
     if (m_context->frame) {
-        m_context->frame->setGeometry(QRect(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height));
+        m_context->frame->setView(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height);
     }
 
 #ifdef S_DEBUG

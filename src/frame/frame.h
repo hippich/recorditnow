@@ -46,7 +46,8 @@ public:
     QRect getFrameGeometry() const;
     void setFrameSize(const FrameSize &size);
     void setVisible(bool visible);
-
+    void setView(int x, int y, int width, int height);
+    
 
 public slots:
     void setMoveEnabled(const bool &enabled);

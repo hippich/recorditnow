@@ -100,6 +100,21 @@ void Frame::setVisible(bool visible)
 }
 
 
+void Frame::setView(int x, int y, int width, int height)
+{
+
+    const int lineSize = getLineSize();
+
+    x -= lineSize;
+    y -= lineSize;
+    width += (lineSize*2);
+    height += (lineSize*2);
+    
+    setGeometry(QRect(x, y, width, height));
+
+}
+
+
 void Frame::setMoveEnabled(const bool &enabled)
 {
 

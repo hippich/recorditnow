@@ -25,6 +25,7 @@
 #include <QtCore/QThread>
 #include <QtGui/QColor>
 #include <QtCore/QPoint>
+#include <QtGui/QImage>
 
 
 struct AVStream;
@@ -48,6 +49,10 @@ public:
         int codecID;
         int frames_total;
         int currentCache;
+        
+        double zoomAnimationFactor;
+        int targetZoomFactor;
+        bool lastZoomOut;
     };
     
     
@@ -68,6 +73,7 @@ private:
     inline void write_video_frame(AVFormatContext *oc, AVStream *st, const QByteArray &data, const QByteArray &cfg);
     inline void drawMouseClick(QPainter *painter, const int &x, const int &y, const QColor &color);
     inline bool readCache(QByteArray *frame, QByteArray *data);
+    inline void zoomImage(const float &factor, const QPoint &mousePos, QImage &image, QRect &target);
     
     
 protected:
