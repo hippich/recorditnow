@@ -260,9 +260,11 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
 
     ctx->workMem = (unsigned char*)malloc(LZO1X_1_11_MEM_COMPRESS);
 
-
-    if (showFrame) {
+    const QRect screenGeometry = KApplication::desktop()->screenGeometry(QX11Info::appScreen());
+    if (showFrame && screenGeometry != frame) {
         m_context->frame = new Frame(0);
+        
+        m_context->frame->setView(frame.x(), frame.y(), frame.width(), frame.height());
         m_context->frame->setVisible(true);
     }
 
@@ -374,10 +376,6 @@ void KastiRecorder::cheese()
 
     if (m_context->followMouse) {
         updateFrameGeometry();
-    }
-    
-    if (m_context->frame) {
-        m_context->frame->setView(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height);
     }
 
 #ifdef S_DEBUG
@@ -531,6 +529,20 @@ void KastiRecorder::updateFrameGeometry()
 
     m_context->xOffset = frame.x();
     m_context->yOffset = frame.y();
+
+    if (m_context->frame) {
+        QRect rect(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height);
+        QPoint center = QCursor::pos();
+        
+        rect.setWidth(rect.width()/m_context->zoomFactor);
+        rect.setHeight(rect.height()/m_context->zoomFactor);
+        
+        rect.moveCenter(center);
+        adjustFrame(&rect, &screenGeometry);
+        
+        m_context->frame->setView(rect.x(), rect.y(), rect.width(), rect.height());
+    }
+
 
 }
 
