@@ -277,7 +277,10 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
         m_context->frame->setVisible(true);
     }
 
+    m_context->workMem = (unsigned char*) malloc(LZO1X_1_11_MEM_COMPRESS);
+
 }
+
 
 #warning "TODO: errors!"
 void KastiRecorder::record(const AbstractRecorder::Data &d)
