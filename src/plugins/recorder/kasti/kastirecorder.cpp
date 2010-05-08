@@ -39,6 +39,8 @@
 #include <QtCore/QTimer>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QPainter>
+#include <QtCore/QtConcurrentRun>
+#include <QtCore/QFutureWatcher>
 
 // C
 #include <sys/shm.h>
@@ -109,6 +111,8 @@ struct KastiContext {
     QString outputFile;
     QFile *currentCacheFile;
     QDataStream *currentCacheStream;
+    QFile *nextCacheFile;
+    QFutureWatcher<void> *watcher;
     QStringList cacheFiles;
     QString cacheDir;
     unsigned char *workMem;
@@ -220,11 +224,13 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
     ctx->mouseColor = Qt::black;
     ctx->uncompressedBytes = 0;
     ctx->compressedBytes = 0;
-    ctx->maxCacheSize = 1048576*100; // 100 MB
+    ctx->maxCacheSize = 1048576*300; // 100 MB
     ctx->currentCacheSize = 0;
     ctx->currentCacheFile = 0;
     ctx->currentCacheStream = 0;
     ctx->cacheFiles = QStringList();
+    ctx->nextCacheFile = 0;
+    ctx->watcher = new QFutureWatcher<void>();
     
     // SHM
     bool canUseShm = shm;
@@ -333,6 +339,23 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
 }
 
 
+static void prepareCache(QFile *cache)
+{
+
+    QTime time;
+    time.start();
+    
+    if (!cache->open(QIODevice::WriteOnly)) {        
+        kWarning() << "open failed:" << cache->fileName();
+        delete cache;
+        cache = 0;
+    }
+    
+    kDebug() << "open:" << time.elapsed();
+    
+}
+
+
 bool KastiRecorder::nextCacheFile()
 {
 
@@ -348,12 +371,26 @@ bool KastiRecorder::nextCacheFile()
         m_context->currentCacheFile = 0;
     }
     
-    QFile *file = new QFile(getTemporaryFile(m_context->cacheDir));
-    if (!file->open(QIODevice::WriteOnly)) {        
-        kWarning() << "open failed:" << file->fileName();
-        delete file;
-        return false;
+    QFile *file = 0;
+    if (!m_context->nextCacheFile) { // first file
+        file = new QFile(getTemporaryFile(m_context->cacheDir));
+        if (!file->open(QIODevice::WriteOnly)) {
+            kWarning() << "open failed:" << file->fileName();
+            delete file;
+            return false;
+        }
+    
+    } else {
+        if (m_context->watcher->isFinished()) {
+            file = m_context->nextCacheFile;
+        } else {
+            kFatal() << "FIXME";
+        }
     }
+
+    m_context->nextCacheFile = new QFile(getTemporaryFile(m_context->cacheDir));
+    QFuture<void> future = QtConcurrent::run(prepareCache, m_context->nextCacheFile);
+    m_context->watcher->setFuture(future);
     
     QDataStream *stream = new QDataStream(file);
 
@@ -737,6 +774,14 @@ void KastiRecorder::encode()
     if (m_context->frame) {
         delete m_context->frame;
         m_context->frame = 0;
+    }
+    
+    delete m_context->watcher;
+    m_context->watcher = 0;
+    
+    if (m_context->nextCacheFile) {
+        delete m_context->nextCacheFile;
+        m_context->nextCacheFile = 0;
     }
     
     // close
