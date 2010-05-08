@@ -7,8 +7,8 @@ endif()
 
 
 macro_optional_find_package(AV)
-macro_log_feature(AV_FOUND "ffmpeg libav*"
-    "Free software/open source LGPL-licensed library of codecs for encoding and decoding video and audio data."
+macro_log_feature(AV_FOUND "libavcodec libavformat libavutil libavformat libswscale"
+    "Free software/open source LGPL-licensed librarys for encoding and decoding video and audio data."
     "http://ffmpeg.org/")
 
 macro_optional_find_package(LZO)
