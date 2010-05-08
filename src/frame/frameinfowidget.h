@@ -37,10 +37,15 @@ public:
     explicit FrameInfoWidget(Frame *parent);
     ~FrameInfoWidget();
 
+    void setZoomMode(const bool &enabled);
+    void setZoomFactor(const int &factor);
+    
 
 private:
     QTimer *m_timer;
     Frame *m_frame;
+    bool m_zoomMode;
+    int m_zoomFactor;
 
     void moveToFrame();
 

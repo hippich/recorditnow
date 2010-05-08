@@ -115,6 +115,22 @@ void Frame::setView(int x, int y, int width, int height)
 }
 
 
+void Frame::setZoomMode(const bool &enabled)
+{
+
+    m_infoWidget->setZoomMode(enabled);
+
+}
+
+
+void Frame::setZoomFactor(const int &factor)
+{
+
+    m_infoWidget->setZoomFactor(factor);
+
+}
+
+
 void Frame::setMoveEnabled(const bool &enabled)
 {
 
@@ -187,7 +203,7 @@ void Frame::moveToParent(const bool &force)
 void Frame::moveParentToFrame()
 {
 
-    if (m_moveWidget) {
+    if (!parentWidget() || m_moveWidget) {
         return;
     }
 

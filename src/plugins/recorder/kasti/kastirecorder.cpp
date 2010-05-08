@@ -272,6 +272,7 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
     if (showFrame && screenGeometry != frame) {
         m_context->frame = new Frame(0);
         
+        m_context->frame->setZoomMode(true);
         m_context->frame->setView(frame.x(), frame.y(), frame.width(), frame.height());
         m_context->frame->setVisible(true);
     }
@@ -590,6 +591,7 @@ void KastiRecorder::updateFrameGeometry()
         rect.moveCenter(center);
         adjustFrame(&rect, &screenGeometry);
         
+        m_context->frame->setZoomFactor(m_context->zoomFactor);
         m_context->frame->setView(rect.x(), rect.y(), rect.width(), rect.height());
     }
 

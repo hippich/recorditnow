@@ -41,6 +41,9 @@ FrameInfoWidget::FrameInfoWidget(Frame *parent)
     setAlignment(Qt::AlignCenter);
     setFrameStyle(QFrame::Panel|QFrame::Raised);
 
+    m_zoomFactor = 1;
+    m_zoomMode = false;
+
 }
 
 
@@ -52,11 +55,35 @@ FrameInfoWidget::~FrameInfoWidget()
 }
 
 
+void FrameInfoWidget::setZoomMode(const bool &enabled)
+{
+
+    m_zoomMode = enabled;
+
+}
+
+
+void FrameInfoWidget::setZoomFactor(const int &factor)
+{
+
+    m_zoomFactor = factor;
+
+}
+
+
 void FrameInfoWidget::moveToFrame()
 {
 
+    
     QRect geometry = this->geometry();
-    geometry.moveCenter(m_frame->geometry().center());
+
+    
+    if (!m_zoomMode) {
+        geometry.moveCenter(m_frame->geometry().center());
+    } else {
+        geometry.moveTopLeft(m_frame->geometry().topLeft()+QPoint(30, 30));
+    }
+    
     move(geometry.topLeft());
     resize(sizeHint().width()+10, sizeHint().height()+10);
     raise();
@@ -85,9 +112,13 @@ bool FrameInfoWidget::eventFilter(QObject *watched, QEvent *event)
                     }
                     QRect geometry = m_frame->getFrameGeometry();
                     QString text;
-                    text = QString::number(geometry.width());
-                    text += " x ";
-                    text += QString::number(geometry.height());
+                    if (!m_zoomMode) {
+                        text = QString::number(geometry.width());
+                        text += " x ";
+                        text += QString::number(geometry.height());
+                    } else {
+                        text = QString("1:%1").arg(m_zoomFactor);
+                    }
                     setText(text);
                     if (!isVisible() && parentWidget()->isVisible()) {
                         show();

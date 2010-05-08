@@ -47,6 +47,8 @@ public:
     void setFrameSize(const FrameSize &size);
     void setVisible(bool visible);
     void setView(int x, int y, int width, int height);
+    void setZoomMode(const bool &enabled);
+    void setZoomFactor(const int &factor);
     
 
 public slots:
@@ -70,7 +72,7 @@ private:
     MoveWidget *m_moveWidget;
     bool m_active;
     QHash<QString, QSize> m_sizes;
-
+    
     inline QRect getRect(const Side &side) const;
     inline int getLineSize() const;
 
