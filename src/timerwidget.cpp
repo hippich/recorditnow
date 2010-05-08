@@ -38,7 +38,7 @@ TimerWidget::TimerWidget(QWidget *parent)
 {
 
     setupUi(this);
-
+    
     m_timer = new QTimer(this);
     m_timer->setInterval(1000);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -82,10 +82,20 @@ void TimerWidget::setValue(const int &value)
 
 void TimerWidget::start()
 {
+    
+    if (m_timer->isActive()) {
+        kWarning() << "timer already active";
+        return;
+    }
 
     if (value() == 0) {
         emit timeout();
     } else {
+        if (!m_tickNotification) {
+            m_tickNotification = new KNotification("timerTick", this, KNotification::Persistent);
+            m_tickNotification.data()->setText(getText());
+            m_tickNotification.data()->sendEvent();
+        }
         m_timer->start();
     }
 
@@ -106,6 +116,22 @@ void TimerWidget::reset()
     setValue(m_time);
     stopTimerInternal();
 
+}
+
+
+QString TimerWidget::getText() const
+{
+
+    QString text;
+    if (value() == 0) {
+        text = i18n("The recording starts now!");
+    } else {
+        text = i18np("Recording will start in %1 second...",
+                     "Recording will start in %1 seconds...",
+                     value());
+    }
+    return text;
+    
 }
 
 
@@ -149,20 +175,8 @@ void TimerWidget::tick()
     if (value() > 0) {
         lcd->display(value()-1);
 
-        QString text;
-        if (value() == 0) {
-            text = i18n("The recording starts now!");
-        } else {
-            text = i18np("Recording will start in %1 second...",
-                         "Recording will start in %1 seconds...",
-                         value());
-        }
-        if (!m_tickNotification) {
-            m_tickNotification = new KNotification("timerTick", this, KNotification::Persistent);
-            m_tickNotification.data()->setText(text);
-            m_tickNotification.data()->sendEvent();
-        } else {
-            m_tickNotification.data()->setText(text);
+        if (m_tickNotification) {
+            m_tickNotification.data()->setText(getText());
         }
     } else {
         stopTimerInternal();

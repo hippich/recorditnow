@@ -58,6 +58,7 @@ private:
     int m_time;
     QWeakPointer<KNotification> m_tickNotification;
 
+    QString getText() const;
     void stopTimerInternal(const bool &closeNotification = true);
 
 
