@@ -219,7 +219,7 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
     ctx->mouseColor = Qt::black;
     ctx->uncompressedBytes = 0;
     ctx->compressedBytes = 0;
-    ctx->maxCacheSize = 1048576*500; // 500 MB
+    ctx->maxCacheSize = 1048576*100; // 100 MB
     ctx->currentCacheSize = 0;
     ctx->currentCacheFile = 0;
     ctx->currentCacheStream = 0;
@@ -647,6 +647,7 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
     if (m_context->currentCacheSize > m_context->maxCacheSize) {
         kWarning() << "New cache file...";
         nextCacheFile();
+        m_context->currentCacheSize = 0;
     }
 
     //kDebug() << "uncompressed:" << bytes << "compressed:" << compressedSize;
