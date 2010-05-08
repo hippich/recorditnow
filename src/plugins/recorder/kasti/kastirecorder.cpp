@@ -287,8 +287,22 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
         return;
     }
     
-    initContext(m_context, d.geometry, true, true);
-    Q_ASSERT(m_context->useShm); // TODO
+    QRect geometry = d.geometry;
+    if (d.winId != -1) {
+        XWindowAttributes attributes;
+        if (!XGetWindowAttributes(QX11Info::display(), d.winId, &attributes)) {
+            emit error(i18n("Invalid window!"));
+            return;
+
+        }
+        geometry = QRect(attributes.x, attributes.y, attributes.width, attributes.height);
+    }
+
+    
+    initContext(m_context, geometry, true, true);
+    if (!m_context->useShm) {
+        kWarning() << "SHM disabled!";
+    }
     
     m_context->outputFile = d.outputFile;
     m_context->fps = d.fps;
@@ -306,6 +320,8 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
     m_context->time.start();
     m_context->duration.start();
 
+    kDebug() << m_context->xOffset << m_context->yOffset <<  m_context->width << m_context->height;
+    
     // first frame
     QTimer::singleShot(0, this, SLOT(cheese()));
 
@@ -440,6 +456,7 @@ void KastiRecorder::cheese()
         if (!_XReply(m_context->dpy, (xReply *)&rep, 0, xFalse) || !rep.length) {
             kWarning() << "_XReply() failed!";
             KastiUnlock();
+            scheduleNextShot(&startTime);
             return;
         }
 
@@ -648,6 +665,10 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
         kWarning() << "New cache file...";
         nextCacheFile();
         m_context->currentCacheSize = 0;
+    }
+
+    if (!shm) {
+        free(buff);
     }
 
     //kDebug() << "uncompressed:" << bytes << "compressed:" << compressedSize;
