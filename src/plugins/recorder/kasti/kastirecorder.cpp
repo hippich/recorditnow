@@ -22,6 +22,7 @@
 #include "kastirecorder.h"
 #include "frame/frame.h"
 #include "kastiencoder.h"
+#include <recorditnow_kasti.h>
 
 // KDE
 #include <kplugininfo.h>
@@ -291,6 +292,8 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
         return;
     }
     
+    Settings::self()->readConfig();
+    
     QRect geometry = d.geometry;
     if (d.winId != -1) {
         XWindowAttributes attributes;
@@ -303,15 +306,14 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
     }
 
     
-    initContext(m_context, geometry, true, true);
+    initContext(m_context, geometry, true, Settings::showFrame());
     if (!m_context->useShm) {
         kWarning() << "SHM disabled!";
     }
     
     m_context->outputFile = d.outputFile;
     m_context->fps = d.fps;
-#warning "TODO: follow mouse cfg"
-    m_context->followMouse = true; 
+    m_context->followMouse = Settings::followMouse(); 
 
 
     m_context->cacheDir = d.workDir;
@@ -426,9 +428,7 @@ void KastiRecorder::cheese()
         return;
     }
 
-    if (m_context->followMouse) {
-        updateFrameGeometry();
-    }
+    updateFrameGeometry();
 
 #ifdef S_DEBUG
     int frameTime = time.elapsed();
@@ -574,25 +574,37 @@ void KastiRecorder::scheduleNextShot(QTime *lastShot)
 void KastiRecorder::updateFrameGeometry()
 {
 
-    const QPoint pos = QCursor::pos();
-    QRect frame(0, 0, m_context->width, m_context->height);
-    frame.moveCenter(pos);
     const QRect screenGeometry = KApplication::desktop()->screenGeometry(QX11Info::appScreen()); // FIXME
+    if (m_context->followMouse) {
+        const QPoint pos = QCursor::pos();
+        QRect frame(0, 0, m_context->width, m_context->height);
+        frame.moveCenter(pos);
 
-    adjustFrame(&frame, &screenGeometry);
+        adjustFrame(&frame, &screenGeometry);
 
-    m_context->xOffset = frame.x();
-    m_context->yOffset = frame.y();
-
+        m_context->xOffset = frame.x();
+        m_context->yOffset = frame.y();
+    }
+        
     if (m_context->frame) {
         QRect rect(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height);
-        QPoint center = QCursor::pos();
+        QPoint center;
+        if (m_context->followMouse || m_context->zoomFactor != 1) {
+            center = QCursor::pos();
+        } else {
+            center = rect.center();
+        }
         
         rect.setWidth(rect.width()/m_context->zoomFactor);
         rect.setHeight(rect.height()/m_context->zoomFactor);
         
         rect.moveCenter(center);
-        adjustFrame(&rect, &screenGeometry);
+        
+        if (!m_context->followMouse && m_context->zoomFactor != 1) {
+            adjustFrame(&rect, &QRect(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height));
+        } else {
+            adjustFrame(&rect, &screenGeometry);
+        }
         
         m_context->frame->setZoomFactor(m_context->zoomFactor);
         m_context->frame->setView(rect.x(), rect.y(), rect.width(), rect.height());
@@ -635,7 +647,7 @@ void KastiRecorder::adjustFrame(QRect *frame, const QRect *geometry)
 
 }
 
-#warning "TODO: cache2/shm"
+
 bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByteArray &data, const bool &shm)
 {
 

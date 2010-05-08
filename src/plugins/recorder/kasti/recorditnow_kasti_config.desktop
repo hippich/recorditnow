@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-Library=recorditnow_kasti_config
+X-KDE-ParentComponents=KastiRecorder
+
+Name=Kasti Config
