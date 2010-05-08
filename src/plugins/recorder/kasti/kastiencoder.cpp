@@ -56,7 +56,9 @@ KastiEncoder::KastiEncoder(KastiEncoderContext *ctx, QObject *parent)
     m_context->targetZoomFactor = 1;
     m_context->currentClickFrame = 0;
     m_context->stop = false;
-
+    m_context->currentCacheFile = 0;
+    m_context->currentCacheStream = 0;
+    
 }
 
 
@@ -75,24 +77,42 @@ void KastiEncoder::stop()
 }
 
 
+void KastiEncoder::nextCacheFile(const QString &cache)
+{
+    if (m_context->currentCacheStream) {
+        delete m_context->currentCacheStream;
+        m_context->currentCacheStream = 0;
+    }
+    
+    if (m_context->currentCacheFile) {
+        m_context->currentCacheFile->close();
+        m_context->currentCacheFile->remove();
+    
+        delete m_context->currentCacheFile;
+        m_context->currentCacheFile = 0;
+    }
+    
+    if (cache.isEmpty()) {
+        return;
+    }
+    
+    QFile *file = new QFile(cache);
+    if (!file->open(QIODevice::ReadOnly)) {
+        kFatal() << "open failed!";
+    }
+    QDataStream *stream = new QDataStream(file);
+
+    m_context->currentCacheFile = file;
+    m_context->currentCacheStream = stream;
+
+}
+
+
 void KastiEncoder::run()
 {
     
-    QList<QDataStream*> cache;
-    foreach (QDataStream *stream, m_context->cache) {
-        QFile *file = static_cast<QFile*>(stream->device());
-        
-        QFile *nFile = new QFile(file->fileName());
-        
-        if (!nFile->open(QIODevice::ReadOnly)) {
-            kFatal() << "open failed:" << file->fileName();
-        }
-        cache.append(new QDataStream(nFile));
+    nextCacheFile(m_context->cacheFiles.takeFirst());
     
-        delete stream;
-        delete file;
-    }
-    m_context->cache = cache;
     
     kDebug() << "encode!";
 
@@ -193,14 +213,11 @@ void KastiEncoder::run()
     
     }
 
-    foreach (QDataStream *stream, m_context->cache) {
-        QFile *file = static_cast<QFile*>(stream->device());
-        file->close();
-        file->remove();
-    
-        delete stream;
-        delete file;
+    foreach (const QString &file, m_context->cacheFiles) {
+        nextCacheFile(file); // delete files
     }
+    nextCacheFile(QString());
+    
 
     // close each codec
     close_video(oc, video_st);
@@ -685,13 +702,18 @@ void KastiEncoder::drawMouseClick(QPainter *painter, const QColor &color, const 
 bool KastiEncoder::readCache(QByteArray *frame, QByteArray *data)
 {
 
-    if (m_context->currentCache < 0) {
-        m_context->currentCache = 0;
-    } else if (m_context->currentCache >= m_context->cache.size()) {
-        m_context->currentCache = 0;
-    }
+    QDataStream *stream = m_context->currentCacheStream;
+    if (stream->atEnd()) {
+        if (!m_context->cacheFiles.isEmpty()) {
+            nextCacheFile(m_context->cacheFiles.takeFirst());
     
-    QDataStream *stream = m_context->cache.at(m_context->currentCache);
+            stream = m_context->currentCacheStream;
+        } else {
+            nextCacheFile(QString()); // delete last file
+            return false;
+        }
+    }
+
     QByteArray compressedFrame;
     int size;
     
@@ -699,8 +721,8 @@ bool KastiEncoder::readCache(QByteArray *frame, QByteArray *data)
     *stream >> size;
     *stream >> *data;
 
-    if (compressedFrame.isEmpty()) { // EOF
-        return false;
+    if (compressedFrame.isEmpty()) { 
+        kFatal() << "empty data";
     }
     
     // uncompress

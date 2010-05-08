@@ -28,6 +28,7 @@
 #include <QtGui/QImage>
 
 
+class QFile;
 struct AVStream;
 struct AVFrame;
 struct AVFormatContext;
@@ -41,7 +42,6 @@ class KastiEncoder : public QThread
     
 public:
     struct KastiEncoderContext {
-        QList<QDataStream*> cache;
         QString outputFile;
         int width;
         int height;
@@ -49,6 +49,10 @@ public:
         int codecID;
         int frames_total;
         int currentCache;
+        
+        QStringList cacheFiles;
+        QFile *currentCacheFile;
+        QDataStream *currentCacheStream;
         
         // zoom
         double zoomAnimationFactor;
@@ -97,6 +101,7 @@ private:
     inline void drawMouseClick(QPainter *painter, const QColor &color, const int &size, const int &mode, CursorData *cursor);
     inline bool readCache(QByteArray *frame, QByteArray *data);
     inline void zoomImage(const float &factor, const QPoint &mousePos, QImage &image, QRect &target);
+    inline void nextCacheFile(const QString &cache);
     
     
 protected:

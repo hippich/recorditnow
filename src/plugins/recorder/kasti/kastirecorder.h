@@ -29,6 +29,7 @@
 #include <QtCore/QPointer>
 
 
+class QFile;
 class KastiEncoder;
 class QPainter;
 struct AVFrame;
@@ -66,7 +67,7 @@ private:
     inline void updateFrameGeometry();
     inline bool cacheData(unsigned char *buff, const int &bytes, const QByteArray &data, const bool &shm);
     bool readCache(QByteArray *frame, QByteArray *data);
-    
+    bool nextCacheFile();
     
     inline QByteArray createData(void *image);
 

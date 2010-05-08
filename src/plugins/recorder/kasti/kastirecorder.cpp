@@ -106,8 +106,10 @@ struct KastiContext {
 
     // cache/video
     QString outputFile;
-    QList<QDataStream*> cache;
-    int currentCache;
+    QFile *currentCacheFile;
+    QDataStream *currentCacheStream;
+    QStringList cacheFiles;
+    QString cacheDir;
     unsigned char *workMem;
     long int maxCacheSize;
     long int currentCacheSize;
@@ -213,13 +215,15 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
     ctx->stop = false;
     ctx->pause = false;
     ctx->skippedFrames = 0;
-    ctx->currentCache = 0;
     ctx->mouseClick = false;
     ctx->mouseColor = Qt::black;
     ctx->uncompressedBytes = 0;
     ctx->compressedBytes = 0;
     ctx->maxCacheSize = 1048576*500; // 500 MB
     ctx->currentCacheSize = 0;
+    ctx->currentCacheFile = 0;
+    ctx->currentCacheStream = 0;
+    ctx->cacheFiles = QStringList();
     
     // SHM
     bool canUseShm = shm;
@@ -291,22 +295,10 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
 #warning "TODO: follow mouse cfg"
     m_context->followMouse = true; 
 
-#warning "TODO: cache"
-    for (int i = 0; i < 1; i++) {
-        QFile *file = new QFile(getTemporaryFile(d.workDir));
-        
-        if (file->exists()) {
-            if (!file->remove()) {
-                kFatal() << "remove failed:" << file->fileName();
-            }
-        }
-        
-        if (!file->open(QIODevice::WriteOnly)) {
-            kFatal() << "open failed:" << file->fileName();
-            return;
-        }
-        
-        m_context->cache.append(new QDataStream(file));
+
+    m_context->cacheDir = d.workDir;
+    if (!nextCacheFile()) {
+        return; // TODO: error signal
     }
 
     m_context->mouseMarkSize = d.mouseMarkSize;
@@ -316,6 +308,39 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
 
     // first frame
     QTimer::singleShot(0, this, SLOT(cheese()));
+
+}
+
+
+bool KastiRecorder::nextCacheFile()
+{
+
+    if (m_context->currentCacheStream) {
+        delete m_context->currentCacheStream;
+        m_context->currentCacheStream = 0;
+    }
+    
+    if (m_context->currentCacheFile) {
+        m_context->currentCacheFile->close();
+    
+        delete m_context->currentCacheFile;
+        m_context->currentCacheFile = 0;
+    }
+    
+    QFile *file = new QFile(getTemporaryFile(m_context->cacheDir));
+    if (!file->open(QIODevice::WriteOnly)) {        
+        kWarning() << "open failed:" << file->fileName();
+        delete file;
+        return false;
+    }
+    
+    QDataStream *stream = new QDataStream(file);
+
+    m_context->currentCacheFile = file;
+    m_context->currentCacheStream = stream;
+    m_context->cacheFiles.append(file->fileName());
+
+    return true;
 
 }
 
@@ -594,14 +619,8 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
 
     Q_ASSERT(m_context->running);
 
-    if (m_context->currentCache < 0) {
-        m_context->currentCache = 0;
-    } else if (m_context->currentCache >= m_context->cache.size()) {
-        m_context->currentCache = 0;
-    }
+    QDataStream *stream = m_context->currentCacheStream;
 
-    QDataStream *stream = m_context->cache.at(m_context->currentCache);
-    
     // compress
     unsigned char *cData = (unsigned char*)malloc(bytes);
     if (!cData) {
@@ -626,7 +645,8 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
 
     m_context->currentCacheSize += compressedSize;
     if (m_context->currentCacheSize > m_context->maxCacheSize) {
-        kWarning() << "Max cache size!!!!!! impl me :)";
+        kWarning() << "New cache file...";
+        nextCacheFile();
     }
 
     //kDebug() << "uncompressed:" << bytes << "compressed:" << compressedSize;
@@ -678,23 +698,24 @@ void KastiRecorder::encode()
         m_context->frame = 0;
     }
     
-    foreach (QDataStream *stream, m_context->cache) {
-        QFile *file = static_cast<QFile*>(stream->device());
-        
-        file->flush();
-        file->waitForBytesWritten(-1);
-        file->close();
-    }
+    // close
+    m_context->currentCacheFile->flush();
+    m_context->currentCacheFile->close();
+    delete m_context->currentCacheStream;
+    m_context->currentCacheStream = 0;
+    delete m_context->currentCacheFile;
+    m_context->currentCacheFile = 0;
+    
     
     KastiEncoder::KastiEncoderContext *ctx = new KastiEncoder::KastiEncoderContext;
-    ctx->cache = m_context->cache;
     ctx->width = m_context->width;
     ctx->height = m_context->height;
     ctx->codecID = m_context->codecID;
     ctx->outputFile = m_context->outputFile;
     ctx->fps = m_context->fps;
     ctx->frames_total = m_context->frames_total;
-    ctx->currentCache = m_context->currentCache;
+    ctx->cacheFiles = m_context->cacheFiles;
+    
     
     m_encoder = new KastiEncoder(ctx, this);
     connect(m_encoder, SIGNAL(finished()), this, SLOT(encoderFinished()));
