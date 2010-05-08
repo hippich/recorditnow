@@ -1254,7 +1254,7 @@ void MainWindow::initKeyMon(const bool &start)
         keyMonDevs.append(Settings::mouseDevice());
     }
 
-    if (m_keyboardDock && keyboardFeature) {
+    if (isDockEnabled(m_keyboardDock) && keyboardFeature) {
         keyMonDevs.append(Settings::keyboardDevice());
     }
 
