@@ -59,11 +59,16 @@ public:
         int currentClickFrame;
         QColor clickColor;
         int mouseMarkMode;
+        
+        // stop
+        bool stop;
     };
     
     
     KastiEncoder(KastiEncoderContext *ctx, QObject *parent);
     ~KastiEncoder();
+    
+    void stop();
     
     
 private:

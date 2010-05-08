@@ -55,7 +55,8 @@ KastiEncoder::KastiEncoder(KastiEncoderContext *ctx, QObject *parent)
     m_context->lastZoomOut = false;
     m_context->targetZoomFactor = 1;
     m_context->currentClickFrame = 0;
-    
+    m_context->stop = false;
+
 }
 
 
@@ -64,6 +65,13 @@ KastiEncoder::~KastiEncoder()
     
     delete m_context;
     
+}
+
+void KastiEncoder::stop()
+{
+
+    m_context->stop = true;
+
 }
 
 
@@ -178,6 +186,20 @@ void KastiEncoder::run()
     
         frame.clear();
         data.clear();
+    
+        if (m_context->stop) {
+            break;
+        }
+    
+    }
+
+    foreach (QDataStream *stream, m_context->cache) {
+        QFile *file = static_cast<QFile*>(stream->device());
+        file->close();
+        file->remove();
+    
+        delete stream;
+        delete file;
     }
 
     // close each codec

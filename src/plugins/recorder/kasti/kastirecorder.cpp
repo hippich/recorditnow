@@ -328,8 +328,12 @@ void KastiRecorder::stop()
 {
 
     m_context->stop = true;
-
+    if (m_encoder) {
+        m_encoder->stop();
+    }
+        
 }
+
 
 #warning "impl mode"
 void KastiRecorder::mouseClick(const QColor &color, const bool &pressed, const int &mode)
@@ -542,7 +546,6 @@ void KastiRecorder::updateFrameGeometry()
         
         m_context->frame->setView(rect.x(), rect.y(), rect.width(), rect.height());
     }
-
 
 }
 
