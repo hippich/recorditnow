@@ -129,6 +129,8 @@ struct KastiContext {
     // mouse clicks
     bool mouseClick;
     QColor mouseColor;
+    int mouseMarkSize;
+    int markMode;
 
     // stop/pause recording
     bool stop;
@@ -301,6 +303,7 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
         m_context->cache.append(new QDataStream(file));
     }
 
+    m_context->mouseMarkSize = d.mouseMarkSize;
     m_context->running = true;
     m_context->time.start();
     m_context->duration.start();
@@ -332,7 +335,8 @@ void KastiRecorder::mouseClick(const QColor &color, const bool &pressed, const i
 
     m_context->mouseClick = pressed;
     m_context->mouseColor = color;
-
+    m_context->markMode = mode;
+    
 }
 
     
@@ -623,10 +627,18 @@ QByteArray KastiRecorder::createData(void *image)
     stream << cursorArray;
     stream << (int)xcursor->width;
     stream << (int)xcursor->height;
-
+    stream << (int)xcursor->x;
+    stream << (int)xcursor->y;
+    stream << (int)xcursor->xhot;
+    stream << (int)xcursor->yhot;
+    stream << m_context->xOffset;
+    stream << m_context->yOffset;
+    
     stream << m_context->mouseClick; // mouse click?
     stream << m_context->mouseColor;
-
+    stream << m_context->mouseMarkSize;
+    stream << m_context->markMode;
+    
     return data;
 
 }

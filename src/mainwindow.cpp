@@ -543,7 +543,8 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
     d->outputFile = outputWidget->outputFile();
     d->overwrite = Settings::overwrite();
     d->workDir = Settings::workDir().path();
-
+    d->mouseMarkSize = Settings::cursorWidgetSize();
+    
     pluginStatus(""); // clear the status bar
 
 }

@@ -50,9 +50,15 @@ public:
         int frames_total;
         int currentCache;
         
+        // zoom
         double zoomAnimationFactor;
         int targetZoomFactor;
         bool lastZoomOut;
+        
+        // clicks
+        int currentClickFrame;
+        QColor clickColor;
+        int mouseMarkMode;
     };
     
     
@@ -61,17 +67,29 @@ public:
     
     
 private:
+    struct CursorData {
+        QByteArray pixels;
+        QPoint imgPos;
+        int width;
+        int height;
+        int x;
+        int y;
+        int xHot;
+        int yHot;
+        int xOffset;
+        int yOffset;
+    };
     KastiEncoderContext *m_context;
     
-    inline void getData(const QByteArray *data, int *zoom, QPoint *mousePos, QByteArray *pixels,
-                        int *cursorWidth, int *cursorHeight, bool *click, QColor *clickColor);
+    inline void getData(const QByteArray *data, int *zoom, bool *click, QColor *clickColor, 
+                        int *markSize, int *mouseMarkMode, CursorData *cursor);
 
     inline AVStream *add_video_stream(AVFormatContext *oc, int codec_id, AVOutputFormat *fmt);
     inline void open_video(AVFormatContext *oc, AVStream *st);
     inline AVFrame *alloc_picture(int pix_fmt, int width, int height);
     inline void close_video(AVFormatContext *oc, AVStream *st);
     inline void write_video_frame(AVFormatContext *oc, AVStream *st, const QByteArray &data, const QByteArray &cfg);
-    inline void drawMouseClick(QPainter *painter, const int &x, const int &y, const QColor &color);
+    inline void drawMouseClick(QPainter *painter, const QColor &color, const int &size, const int &mode, CursorData *cursor);
     inline bool readCache(QByteArray *frame, QByteArray *data);
     inline void zoomImage(const float &factor, const QPoint &mousePos, QImage &image, QRect &target);
     

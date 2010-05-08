@@ -60,6 +60,7 @@ public:
         int fps;
         bool sound;
         bool overwrite;
+        int mouseMarkSize;
     };
 
     explicit AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
