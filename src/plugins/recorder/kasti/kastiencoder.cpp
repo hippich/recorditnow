@@ -128,19 +128,18 @@ void KastiEncoder::run()
     avcodec_register_all();
     av_register_all();
 
-
     // auto detect the output format from the name. default is mpeg.
-#if LIBAVFORMAT_VERSION_MAJOR < 52
-    fmt = guess_format(NULL, filename.toLatin1(), NULL);
-#else
+#if LIBAVFORMAT_VERSION_MAJOR > 52 || LIBAVFORMAT_VERSION_MAJOR  == 52 && LIBAVFORMAT_VERSION_MINOR >= 45
     fmt = av_guess_format(NULL, filename.toLatin1(), NULL);
+#else
+    fmt = guess_format(NULL, filename.toLatin1(), NULL);
 #endif
     if (!fmt) {
         kDebug() << "Could not deduce output format from file extension: using MPEG";
-#if LIBAVFORMAT_VERSION_MAJOR < 52
-        fmt = guess_format("mpeg", NULL, NULL);
-#else
+#if LIBAVFORMAT_VERSION_MAJOR > 52 || LIBAVFORMAT_VERSION_MAJOR  == 52 && LIBAVFORMAT_VERSION_MINOR > 45
         fmt = av_guess_format("mpeg", NULL, NULL);
+#else
+        fmt = guess_format("mpeg", NULL, NULL);
 #endif
     }
 
