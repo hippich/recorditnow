@@ -42,6 +42,10 @@ public slots:
     void loadConfig();
 
 
+private slots:
+    void keyChanged();
+    
+
 };
 
 

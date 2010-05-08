@@ -29,6 +29,8 @@ ShortcutsConfig::ShortcutsConfig(KActionCollection *collection, KConfig *cfg, QW
     setupUi(this);
     shortcutsEditor->addCollection(collection);
 
+    connect(shortcutsEditor, SIGNAL(keyChange()), this, SLOT(keyChanged()));
+
 }
 
 
@@ -53,6 +55,14 @@ void ShortcutsConfig::loadConfig()
 
 
 
+}
+
+
+void ShortcutsConfig::keyChanged()
+{
+    
+    setConfigChanged(shortcutsEditor->isModified());
+    
 }
 
 
