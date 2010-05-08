@@ -69,12 +69,8 @@ extern "C" {
  * 
  * TODO:
  *  Sound
- *  zoom in/out animation
  *  cache
- *  fix clicks
- *  encode in another thread
  *  error handling
- *  encode stop
  *  .....
  * 
  * 
@@ -113,6 +109,8 @@ struct KastiContext {
     QList<QDataStream*> cache;
     int currentCache;
     unsigned char *workMem;
+    long int maxCacheSize;
+    long int currentCacheSize;
   
     // current zoom default = 1
     int zoomFactor;
@@ -145,6 +143,8 @@ struct KastiContext {
     int frames_total;
     int averageFPS;
     int skippedFrames;
+    long int uncompressedBytes;
+    long int compressedBytes;
 };
 
 
@@ -216,6 +216,10 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
     ctx->currentCache = 0;
     ctx->mouseClick = false;
     ctx->mouseColor = Qt::black;
+    ctx->uncompressedBytes = 0;
+    ctx->compressedBytes = 0;
+    ctx->maxCacheSize = 1048576*500; // 500 MB
+    ctx->currentCacheSize = 0;
     
     // SHM
     bool canUseShm = shm;
@@ -506,9 +510,10 @@ void KastiRecorder::scheduleNextShot(QTime *lastShot)
         long duration = m_context->duration.elapsed();
         m_context->averageFPS = m_context->frames_total/(duration/1000);
 
-        qDebug() << "Frames:" << m_context->frames_total << "Skipped:" << m_context->skippedFrames <<
+        kDebug() << "Frames:" << m_context->frames_total << "Skipped:" << m_context->skippedFrames <<
                 "Duration" << duration << "ms";
-        qDebug() << "Average FPS:" << m_context->averageFPS;
+        kDebug() << "Average FPS:" << m_context->averageFPS;
+        kDebug() << "Bytes:" << m_context->uncompressedBytes << "Compressed:" << m_context->compressedBytes;
 
         encode();
     } else if (nextShot <= 0) {
@@ -616,6 +621,13 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
     
     free(cData);
 
+    m_context->uncompressedBytes += bytes;
+    m_context->compressedBytes += compressedSize;
+
+    m_context->currentCacheSize += compressedSize;
+    if (m_context->currentCacheSize > m_context->maxCacheSize) {
+        kWarning() << "Max cache size!!!!!! impl me :)";
+    }
 
     //kDebug() << "uncompressed:" << bytes << "compressed:" << compressedSize;
 
