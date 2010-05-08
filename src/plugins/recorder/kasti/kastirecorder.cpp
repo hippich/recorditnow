@@ -269,8 +269,7 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
 
     ctx->workMem = (unsigned char*)malloc(LZO1X_1_11_MEM_COMPRESS);
 
-    const QRect screenGeometry = KApplication::desktop()->screenGeometry(QX11Info::appScreen());
-    if (showFrame && screenGeometry != frame) {
+    if (showFrame) {
         m_context->frame = new Frame(0);
         
         m_context->frame->setZoomMode(true);
@@ -524,8 +523,9 @@ void KastiRecorder::cheese()
 #endif
 
     if (m_context->time.elapsed() >= 1000) {
-        emit status(i18n("FPS: %1, Duration: %2", m_context->frames, 
-                         KGlobal::locale()->formatDuration(m_context->duration.elapsed())));
+        emit status(i18n("FPS: %1, Duration: %2, Cache: %3", m_context->frames, 
+                         KGlobal::locale()->formatDuration(m_context->duration.elapsed()),
+                         KGlobal::locale()->formatByteSize(m_context->compressedBytes)));
         m_context->frames = 0;
         m_context->time.restart();
     }
@@ -731,6 +731,8 @@ QByteArray KastiRecorder::createData(void *image)
 
 void KastiRecorder::encode()
 {
+    
+    emit stateChanged(AbstractRecorder::Encode);
     
     if (m_context->frame) {
         delete m_context->frame;

@@ -54,7 +54,7 @@ KastiEncoder::KastiEncoder(KastiEncoderContext *ctx, QObject *parent)
     m_context->zoomAnimationFactor = -1;
     m_context->lastZoomOut = false;
     m_context->targetZoomFactor = 1;
-    m_context->currentClickFrame = 0;
+    m_context->currentClickFrame = -1;
     m_context->stop = false;
     m_context->currentCacheFile = 0;
     m_context->currentCacheStream = 0;
@@ -483,7 +483,7 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
                 clickColor = m_context->clickColor;
                 m_context->currentClickFrame++;
             }
-            drawMouseClick(&imagePainter, clickColor, markSize, mouseMarkMode, &cursorData);
+            drawMouseClick(&imagePainter, clickColor, mouseMarkMode, markSize, &cursorData);
         } else {
             m_context->currentClickFrame = -1;
         }
@@ -622,7 +622,7 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
 
 void KastiEncoder::drawMouseClick(QPainter *painter, const QColor &color, const int &mode, const int &size, CursorData *cursor)
 {
-    
+        
     QPoint mousePos(cursor->x-cursor->xOffset, cursor->y-cursor->yOffset); 
     QRect mouseRect(0, 0, size, size);
     mouseRect.moveCenter(mousePos);
@@ -692,13 +692,15 @@ void KastiEncoder::drawMouseClick(QPainter *painter, const QColor &color, const 
             painter->drawEllipse(ellipse);
             break;
         }
+        case 1:
         default: { // Circle
-            QRadialGradient grad(mouseRect.x(), mouseRect.y(), mouseRect.height());
+            QRadialGradient grad(mousePos, mouseRect.height());
             grad.setColorAt(0, color);
             grad.setColorAt(1, Qt::transparent);
             painter->setBrush(QBrush(grad));
             painter->setOpacity(0.5);
             painter->drawEllipse(mouseRect);
+            break;
         }
     }
     painter->restore();
