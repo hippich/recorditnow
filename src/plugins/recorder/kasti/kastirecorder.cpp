@@ -335,7 +335,6 @@ void KastiRecorder::stop()
 }
 
 
-#warning "impl mode"
 void KastiRecorder::mouseClick(const QColor &color, const bool &pressed, const int &mode)
 {
 
