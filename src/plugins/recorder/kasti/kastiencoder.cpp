@@ -553,7 +553,7 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
             currentZoom = m_context->zoomAnimationFactor;
 
             QRect target;
-            zoomImage(currentZoom, cursorData.imgPos, pImage, target);
+            zoomImage(currentZoom, QPoint(cursorData.x-cursorData.xOffset, cursorData.y-cursorData.yOffset), pImage, target);
 
 
             p.drawImage(im.rect(), pImage, target);
