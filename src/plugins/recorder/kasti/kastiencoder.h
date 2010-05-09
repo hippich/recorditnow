@@ -49,6 +49,7 @@ public:
         int codecID;
         int frames_total;
         int currentCache;
+        int bitrate;
         
         QStringList cacheFiles;
         QFile *currentCacheFile;

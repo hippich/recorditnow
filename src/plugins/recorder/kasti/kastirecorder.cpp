@@ -116,8 +116,8 @@ struct KastiContext {
     QStringList cacheFiles;
     QString cacheDir;
     unsigned char *workMem;
-    long int maxCacheSize;
-    long int currentCacheSize;
+    qlonglong maxCacheSize;
+    qlonglong currentCacheSize;
   
     // current zoom default = 1
     int zoomFactor;
@@ -150,8 +150,8 @@ struct KastiContext {
     int frames_total;
     int averageFPS;
     int skippedFrames;
-    long int uncompressedBytes;
-    long int compressedBytes;
+    qlonglong uncompressedBytes;
+    qlonglong compressedBytes;
 };
 
 
@@ -224,7 +224,7 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
     ctx->mouseColor = Qt::black;
     ctx->uncompressedBytes = 0;
     ctx->compressedBytes = 0;
-    ctx->maxCacheSize = 1048576*300; // 100 MB
+    ctx->maxCacheSize = 1048576*300; // 300 MB
     ctx->currentCacheSize = 0;
     ctx->currentCacheFile = 0;
     ctx->currentCacheStream = 0;
@@ -706,7 +706,7 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
     *stream << compressedArray;
     *stream << bytes;
     *stream << data;
-    
+
     stream->device()->waitForBytesWritten(-1);
     
     free(cData);
@@ -801,7 +801,7 @@ void KastiRecorder::encode()
     ctx->fps = m_context->fps;
     ctx->frames_total = m_context->frames_total;
     ctx->cacheFiles = m_context->cacheFiles;
-    
+    ctx->bitrate = Settings::bitrate();
     
     m_encoder = new KastiEncoder(ctx, this);
     connect(m_encoder, SIGNAL(finished()), this, SLOT(encoderFinished()));

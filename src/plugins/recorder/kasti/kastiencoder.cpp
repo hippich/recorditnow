@@ -58,7 +58,7 @@ KastiEncoder::KastiEncoder(KastiEncoderContext *ctx, QObject *parent)
     m_context->stop = false;
     m_context->currentCacheFile = 0;
     m_context->currentCacheStream = 0;
-    
+        
 }
 
 
@@ -127,7 +127,7 @@ void KastiEncoder::run()
     avcodec_init();
     avcodec_register_all();
     av_register_all();
-
+    
     // auto detect the output format from the name. default is mpeg.
 #if LIBAVFORMAT_VERSION_MAJOR > 52 || LIBAVFORMAT_VERSION_MAJOR  == 52 && LIBAVFORMAT_VERSION_MINOR >= 45
     fmt = av_guess_format(NULL, filename.toLatin1(), NULL);
@@ -170,7 +170,6 @@ void KastiEncoder::run()
         }
         video_st = add_video_stream(oc, id, fmt);
     }
-
 
     // set the output parameters (must be done even if no parameters).
     if (av_set_parameters(oc, NULL) < 0) {
@@ -295,7 +294,7 @@ AVStream *KastiEncoder::add_video_stream(AVFormatContext *oc, int codec_id, AVOu
     c->codec_id = (CodecID) codec_id;
     c->codec_type = CODEC_TYPE_VIDEO;
     // put sample parameters
-    c->bit_rate = 4500000; // FIXME
+    c->bit_rate = m_context->bitrate == 0 ? 4500000 : m_context->bitrate;
     // resolution must be a multiple of two
     c->width = m_context->width;
     c->height = m_context->height;
@@ -308,8 +307,30 @@ AVStream *KastiEncoder::add_video_stream(AVFormatContext *oc, int codec_id, AVOu
     c->time_base.num = 1;
     c->gop_size = 25; // emit one intra frame every twelve frames at most
 
-//    c->pix_fmt = choosePixelFormat(m_context->codecID);
-    c->pix_fmt = PIX_FMT_YUV420P; // FIXME
+    // find suitable pix_fmt for codec
+    int pix_fmt_mask = 0;
+    c->pix_fmt = PIX_FMT_NONE;
+    AVCodec *codec = avcodec_find_encoder((CodecID)codec_id);
+    if (!codec) {
+        kFatal() << "codec not found:" << codec_id;
+    }
+    if (codec->pix_fmts != NULL) {
+        for (int i = 0; codec->pix_fmts[i] != -1; i++) {
+            if (0 <= codec->pix_fmts[i] && codec->pix_fmts[i] < (sizeof (int) * 8)) {
+                pix_fmt_mask |= (1 << codec->pix_fmts[i]);
+            }
+        }
+        c->pix_fmt = avcodec_find_best_pix_fmt(pix_fmt_mask, PIX_FMT_RGB32, FALSE, NULL);
+    }
+    if (c->pix_fmt == PIX_FMT_NONE) {
+        kFatal() << "could not find a suitable pix_fmt for codec";
+    }
+    kDebug() << "pix fmt:" << avcodec_get_pix_fmt_name(c->pix_fmt);
+
+    if (!sws_isSupportedOutput(c->pix_fmt)) {
+        kFatal() << "unsupported pix_fmt";
+    }
+    
     if (c->codec_id == CODEC_ID_MPEG1VIDEO) {
         // needed to avoid using macroblocks in which some coeffs overflow
         // this doesnt happen with normal video, it just happens here as the
@@ -365,7 +386,7 @@ void KastiEncoder::open_video(AVFormatContext *oc, AVStream *st)
     // allocate the encoded raw picture
     picture = alloc_picture(c->pix_fmt, c->width, c->height);
     if (!picture) {
-        kFatal() << "Could not allocate picture";
+        kFatal() << "Could not allocate picture" << avcodec_get_pix_fmt_name(c->pix_fmt) << c->width << c->height;
     }
 
     // if the output format is not YUV420P, then a temporary YUV420P
@@ -464,9 +485,9 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
     
     getData(&data, &zoom, &click, &clickColor, &markSize, &mouseMarkMode, &cursorData);
 
-    if (c->pix_fmt != PIX_FMT_YUV420P/*DESTINATION_PIX_FMT*/) {
-        kFatal() << "pix_fmt != PIX_FMT_YUV420P";
-    } else {
+   // if (c->pix_fmt != PIX_FMT_YUV420P/*DESTINATION_PIX_FMT*/) {
+    //    kFatal() << "pix_fmt != PIX_FMT_YUV420P";
+   // } else {
         QImage pImage((uchar*)frame.data(), c->width, c->height, QImage::Format_RGB32); // frame
         // paint on frame
         QPainter imagePainter(&pImage);
@@ -516,7 +537,7 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
                                                 PIX_FMT_RGB32,
                                                 c->width,
                                                 c->height,
-                                                PIX_FMT_YUV420P,//DESTINATION_PIX_FMT,
+                                                st->codec->pix_fmt,//DESTINATION_PIX_FMT,
                                                 SWS_FAST_BILINEAR,
                                                 NULL,
                                                 NULL,
@@ -570,7 +591,7 @@ void KastiEncoder::write_video_frame(AVFormatContext *oc, AVStream *st, const QB
 
         sws_scale(ctx, tmp_picture->data, tmp_picture->linesize, 0, c->height, picture->data, picture->linesize);
         sws_freeContext(ctx);
-    }
+ //   }
 
 
     if (oc->oformat->flags & AVFMT_RAWPICTURE) {

@@ -57,6 +57,8 @@ public:
     
     static void adjustFrame(QRect *frame, const QRect *geometry);
 
+    QDataStream *nextStream();
+    
     
 private:
     KastiContext *m_context;

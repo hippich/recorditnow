@@ -14,5 +14,8 @@
     <entry name="showFrame" type="Bool">
             <default>true</default>
     </entry>
+    <entry name="bitrate" type="Int">
+            <default>0</default>
+    </entry>
   </group>
 </kcfg>
