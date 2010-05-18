@@ -74,9 +74,8 @@ Helper::~Helper()
     Settings::setMouseSoundVolume(m_audioOutput->volume());
     
     delete m_compositeWatcher;
-    m_audioPlayer->stop();
-    delete m_audioOutput;
     delete m_audioPlayer;
+    delete m_audioOutput;
     
 }
 

@@ -90,7 +90,8 @@ private:
         int yOffset;
     };
     KastiEncoderContext *m_context;
-    
+    QByteArray m_lastFrame;
+
     inline void getData(const QByteArray *data, int *zoom, bool *click, QColor *clickColor, 
                         int *markSize, int *mouseMarkMode, CursorData *cursor);
 

@@ -729,6 +729,15 @@ void KastiEncoder::drawMouseClick(QPainter *painter, const QColor &color, const 
 }
 
 
+static void copyArray(QByteArray *src, QByteArray *dest)
+{
+
+    dest->resize(src->size());
+    memcpy(dest->data(), src->data(), src->size());
+
+}
+
+
 bool KastiEncoder::readCache(QByteArray *frame, QByteArray *data)
 {
 
@@ -740,34 +749,40 @@ bool KastiEncoder::readCache(QByteArray *frame, QByteArray *data)
             stream = m_context->currentCacheStream;
         } else {
             nextCacheFile(QString()); // delete last file
+            kDebug() << "DONE";
             return false;
         }
     }
-
-    QByteArray compressedFrame;
-    int size;
     
-    *stream >> compressedFrame;
-    *stream >> size;
-    *stream >> *data;
-
-    if (compressedFrame.isEmpty()) { 
-        kFatal() << "empty data";
+    QByteArray cache;
+    if (m_lastFrame.isEmpty()) { // first frame
+        kDebug() << "first frame!";
+        *stream >> m_lastFrame;
+        *stream >> cache;
+        *stream >> *data;
+        
+        copyArray(&m_lastFrame, frame);
+    } else {
+        *stream >> cache;
+        *stream >> *data;
+        
+        copyArray(&m_lastFrame, frame);
+        
+        QDataStream cacheStream(&cache, QIODevice::ReadOnly);
+        while (!cacheStream.atEnd()) {
+            int row;
+            cacheStream >> row;
+                  
+            int rowLen = (m_context->width*sizeof(char))*4;
+            char *rowData = (char*) malloc(rowLen);
+            cacheStream.readRawData(rowData, rowLen);
+    
+            memcpy(frame->data()+((row*m_context->width)*4), rowData, rowLen);
+            free(rowData);    
+        }
     }
+    copyArray(frame, &m_lastFrame);
     
-    // uncompress
-    lzo_uint compressedSize = compressedFrame.size();
-    lzo_uint uncompressedSize;
-
-    unsigned char *uncompressed = (unsigned char*) malloc(size);
-    lzo1x_decompress((unsigned char*)compressedFrame.data(), compressedSize, uncompressed, &uncompressedSize, NULL);
-
-    frame->resize(uncompressedSize);
-    memcpy(frame->data(), uncompressed, uncompressedSize);
-    free(uncompressed);
-
-    //kDebug() << "uncompressed:" << size << "compressed:" << compressedSize;
-
     return true;
 
 }

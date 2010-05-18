@@ -103,6 +103,7 @@ struct KastiContext {
     int width;
     int height;
     int fps;
+    int maxFps;
     Display *dpy;
     int screen;
     int root;
@@ -275,20 +276,17 @@ void KastiRecorder::initContext(KastiContext *ctx, const QRect &frame, const boo
 
     ctx->workMem = (unsigned char*)malloc(LZO1X_1_11_MEM_COMPRESS);
 
-    if (showFrame) {
-        m_context->frame = new Frame(0);
-        
-        m_context->frame->setZoomMode(true);
-        m_context->frame->setView(frame.x(), frame.y(), frame.width(), frame.height());
-        m_context->frame->setVisible(true);
-    }
+    m_context->frame = new Frame(0);
+
+    m_context->frame->setZoomMode(true);
+    m_context->frame->setView(frame.x(), frame.y(), frame.width(), frame.height());
+    m_context->frame->setVisible(showFrame);
 
     m_context->workMem = (unsigned char*) malloc(LZO1X_1_11_MEM_COMPRESS);
 
 }
 
 
-#warning "TODO: errors!"
 void KastiRecorder::record(const AbstractRecorder::Data &d)
 {
 
@@ -317,13 +315,14 @@ void KastiRecorder::record(const AbstractRecorder::Data &d)
     }
     
     m_context->outputFile = d.outputFile;
-    m_context->fps = d.fps;
+    m_context->fps = m_context->maxFps = d.fps;
     m_context->followMouse = Settings::followMouse(); 
 
 
     m_context->cacheDir = d.workDir;
     if (!nextCacheFile()) {
-        return; // TODO: error signal
+        emit error(i18n("Could not create cache."));
+        return;
     }
 
     m_context->mouseMarkSize = d.mouseMarkSize;
@@ -345,7 +344,7 @@ static void prepareCache(QFile *cache)
     QTime time;
     time.start();
     
-    if (!cache->open(QIODevice::WriteOnly)) {        
+    if (!cache->open(QIODevice::WriteOnly|QIODevice::Unbuffered)) {        
         kWarning() << "open failed:" << cache->fileName();
         delete cache;
         cache = 0;
@@ -575,7 +574,6 @@ void KastiRecorder::cheese()
 void KastiRecorder::scheduleNextShot(QTime *lastShot)
 {
 
-#warning "FIX FPS"
     int nextShot = (1000/m_context->fps)-lastShot->elapsed();
 
 #ifdef S_DEBUG
@@ -597,11 +595,20 @@ void KastiRecorder::scheduleNextShot(QTime *lastShot)
                 "Duration" << duration << "ms";
         kDebug() << "Average FPS:" << m_context->averageFPS;
         kDebug() << "Bytes:" << m_context->uncompressedBytes << "Compressed:" << m_context->compressedBytes;
-
+        kDebug() << "Compression ratio:" << double(((double)m_context->compressedBytes / (double)m_context->uncompressedBytes) * 100);
         encode();
     } else if (nextShot <= 0) {
+            kDebug() << "FPS--";
+            m_context->fps--;
+            if (m_context->fps == 0) {
+                kFatal() << "too slow";
+            }
         cheese();
     } else {
+        if (nextShot > 20 && m_context->fps < m_context->maxFps) {
+            kDebug() << "FPS++";
+            m_context->fps++;
+        }
         QTimer::singleShot(nextShot, this, SLOT(cheese()));
     }
     
@@ -623,7 +630,7 @@ void KastiRecorder::updateFrameGeometry()
         m_context->yOffset = frame.y();
     }
         
-    if (m_context->frame) {
+    if (m_context->frame->isVisible()) {
         QRect rect(m_context->xOffset, m_context->yOffset, m_context->width, m_context->height);
         QPoint center;
         if (m_context->followMouse || m_context->zoomFactor != 1) {
@@ -685,36 +692,59 @@ void KastiRecorder::adjustFrame(QRect *frame, const QRect *geometry)
 }
 
 
+// TODO: move this to another thread
 bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByteArray &data, const bool &shm)
 {
-
+    
     Q_ASSERT(m_context->running);
 
     QDataStream *stream = m_context->currentCacheStream;
 
-    // compress
-    unsigned char *cData = (unsigned char*)malloc(bytes);
-    if (!cData) {
-        kFatal() << "malloc() failed!";
+   // QTime t;
+  //  t.start();
+
+    QByteArray cache;
+    QDataStream cacheStream(&cache, QIODevice::WriteOnly);
+    
+    register char *opR = m_lastFrame.data();
+    register char *npR= (char*)buff;
+    
+    int compressedSize = 0;
+    if (m_lastFrame.isEmpty()) { // first frame
+        m_lastFrame.resize(bytes);
+        memcpy(m_lastFrame.data(), buff, bytes);
+        *stream << m_lastFrame; // first frame;
+        compressedSize = bytes;
+        cacheStream << QString("First Frame!");
+    } else { // compare all rgb values
+        for (int i = 0; i < m_context->height; i++) { // row
+            for (int j = 0; j < m_context->width; j++) { // column
+                register char *np = npR;
+                np += (j+i*m_context->width)*4;
+
+                register char *op = opR;
+                op += (j+i*m_context->width)*4;
+
+                // r g b changed ? cache the row
+                if (*op++ != *np++ || *op++ != *np++ || *op++ != *np)  {
+                    cacheStream << i; // current row
+                    cacheStream.writeRawData((char*)buff+((i*m_context->width)*4), (m_context->width*sizeof(char))*4); // row data
+                    break; // next row
+                }
+            }
+        }
     }
+  //  qDebug() << t.elapsed();
     
-    lzo_uint compressedSize;
-    lzo1x_1_11_compress(buff, (lzo_uint)bytes, cData, &compressedSize, m_context->workMem);
-    QByteArray compressedArray = QByteArray::fromRawData((const char*)cData, compressedSize);
-
-    // write
-    *stream << compressedArray;
-    *stream << bytes;
+    compressedSize += cache.size()+data.size();
+    *stream << cache;
     *stream << data;
-
-    stream->device()->waitForBytesWritten(-1);
-    
-    free(cData);
+    memcpy(m_lastFrame.data(), buff, bytes);
 
     m_context->uncompressedBytes += bytes;
     m_context->compressedBytes += compressedSize;
-
     m_context->currentCacheSize += compressedSize;
+
     if (m_context->currentCacheSize > m_context->maxCacheSize) {
         kWarning() << "New cache file...";
         nextCacheFile();
@@ -724,8 +754,6 @@ bool KastiRecorder::cacheData(unsigned char *buff, const int &bytes, const QByte
     if (!shm) {
         free(buff);
     }
-
-    //kDebug() << "uncompressed:" << bytes << "compressed:" << compressedSize;
 
 
     return true;
