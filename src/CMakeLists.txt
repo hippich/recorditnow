@@ -15,7 +15,7 @@ macro_log_feature(XFIXES_FOUND "XFixes"
 
 if (XFIXES_FOUND)
     add_definitions(-DXFIXES_FOUND=true)
-endif()
+endif(XFIXES_FOUND)
 
 
 add_subdirectory(libs)
@@ -180,6 +180,11 @@ target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
                                   ${KDE4_KUTILS_LIBS}
                                   ${KDE4_KIO_LIBS}
                                   ${KDE4_KNOTIFYCONFIG_LIBS}
+                                  ${KDE4_KDECORE_LIBS}
+                                  ${KDE4_PHONON_LIBS}
+                                  ${X11_X11_LIB}
+                                  ${X11_Xext_LIB}
+                                  recorditnow_plugin
                                   recorditnow_recorder
                                   recorditnow_encoder
                                   recorditnow_keymon
@@ -188,7 +193,9 @@ target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
                                   ${X11_Xcursor_LIB}
                                   ${JOSCHYCORE_LIBRARIES})
 
-
+if (XFIXES_FOUND)
+    target_link_libraries(recorditnow ${XFIXES_LIBRARIES})
+endif(XFIXES_FOUND)
 
 install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
 

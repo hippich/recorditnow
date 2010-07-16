@@ -18,5 +18,6 @@ add_subdirectory(screenshot)
 
     
 #if (AV_FOUND AND XFIXES_FOUND AND LZO_FOUND)
+#    include_directories( ${AV_INCLUDE} ${XFIXES_INCLUDE_DIR} ${LZO_INCLUDE_DIR} )
 #    add_subdirectory(kasti)
 #endif(AV_FOUND AND XFIXES_FOUND AND LZO_FOUND)

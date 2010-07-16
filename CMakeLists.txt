@@ -4,12 +4,10 @@ find_package(KDE4 REQUIRED)
 include (KDE4Defaults)
 
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 
 set(KDE_MIN_VERSION "4.4.0")
-
 ########### install files ###############
 install(FILES recorditnow.desktop recorditnow_snapshot.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
@@ -17,6 +15,13 @@ install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
 
 find_package(JoschyCore REQUIRED)
 find_package(RecordMyDesktop REQUIRED)
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_BINARY_DIR}
+    ${KDE4_INCLUDES}
+    ${JOSCHYCORE_INCLUDE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(sounds)
