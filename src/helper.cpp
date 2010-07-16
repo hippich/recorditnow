@@ -57,8 +57,8 @@ Helper::Helper()
 
     m_compositingActive = KWindowSystem::compositingActive();
 
-    m_audioPlayer = new Phonon::MediaObject(this);
-    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+    m_audioPlayer = new Phonon::MediaObject;
+    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory);
     Phonon::createPath(m_audioPlayer, m_audioOutput);
 
     if (Settings::mouseSoundVolume() != -1) {
@@ -74,8 +74,8 @@ Helper::~Helper()
     Settings::setMouseSoundVolume(m_audioOutput->volume());
     
     delete m_compositeWatcher;
-    delete m_audioPlayer;
-    delete m_audioOutput;
+    m_audioPlayer->deleteLater();
+    m_audioOutput->deleteLater();
     
 }
 
