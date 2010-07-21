@@ -64,6 +64,8 @@ public:
     KeyloggerEvent::EventType type() const;
     RecordItNow::KeyloggerEvent::MouseButton idToButton() const;
 
+    bool operator==(const RecordItNow::KeyloggerEvent &other) const;
+    bool operator!=(const RecordItNow::KeyloggerEvent &other) const;
 
     void setText(const QString &text);
     void setId(const int &id);

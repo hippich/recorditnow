@@ -123,6 +123,22 @@ RecordItNow::KeyloggerEvent::MouseButton KeyloggerEvent::idToButton() const
 }
 
 
+bool KeyloggerEvent::operator==(const RecordItNow::KeyloggerEvent &other) const
+{
+
+    return d->id == other.id();
+
+}
+
+
+bool KeyloggerEvent::operator!=(const RecordItNow::KeyloggerEvent &other) const
+{
+
+    return d->id != other.id();
+
+}
+
+
 void KeyloggerEvent::setText(const QString &text)
 {
 

@@ -56,14 +56,11 @@ void AbstractKeyloggerPrivate::logKeys(const RecordItNow::KeyloggerEvent &event)
     }
 
     if (event.pressed()) {
-        m_keys.append(event);
-    } else {
-        for (int i = 0; i < m_keys.size(); i++) {
-            if (m_keys.at(i).id() == event.id()) {
-                m_keys.takeAt(i);
-                i--;
-            }
+        if (!m_keys.contains(event)) {
+            m_keys.append(event);
         }
+    } else {
+        m_keys.removeAll(event);
     }
 
     QString string;
