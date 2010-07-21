@@ -8,20 +8,12 @@ include_directories(${CMAKE_SOURCE_DIR}/src/libs/plugin
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
+# XFixes
 macro_optional_find_package(XFixes)
-macro_log_feature(XFIXES_FOUND "XFixes"
+set(HAVE_XFIXES XFIXES_FOUND)
+macro_log_feature(HAVE_XFIXES "XFixes"
     "X.Org Xfixes library"
     "http://xorg.freedesktop.org/")
-
-if (XFIXES_FOUND)
-    add_definitions(-DXFIXES_FOUND=true)
-endif(XFIXES_FOUND)
-
-add_subdirectory(libs)
-add_subdirectory(plugins)
-add_subdirectory(icons)
-add_subdirectory(keyboard)
-add_subdirectory(devicekeylogger)
 
 # XRecord
 if (X11_Xext_FOUND AND X11_XTest_FOUND AND NOT FORCE_DEVICELOGGER)
@@ -34,12 +26,16 @@ macro_log_feature(HAVE_RECORDKEYLOGGER "XRecord"
                                        ""
                                        "Required for RecordItNow`s keylogger")
 
-
-macro_display_feature_log()
-
-
 configure_file(config-recorditnow.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-recorditnow.h)
 
+
+add_subdirectory(libs)
+add_subdirectory(plugins)
+add_subdirectory(icons)
+add_subdirectory(keyboard)
+add_subdirectory(devicekeylogger)
+
+macro_display_feature_log()
 
 set (COMMON_SRCS configitem.cpp)
 

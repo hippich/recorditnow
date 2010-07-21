@@ -38,7 +38,7 @@ ScreenshotRecorderConfig::ScreenshotRecorderConfig(QWidget *parent, const QVaria
 
     addConfig(Settings::self(), this);
 
-#ifndef XFIXES_FOUND
+#ifndef HAVE_XFIXES
     kcfg_drawCursor->hide();
 #endif
 

@@ -20,6 +20,7 @@
 
 // own
 #include "zoomview.h"
+#include <config-recorditnow.h>
 
 // KDE
 #include <kdebug.h>
@@ -33,7 +34,7 @@
 #include <QtGui/QDesktopWidget>
 
 // X
-#ifdef XFIXES_FOUND
+#if defined HAVE_XFIXES
     #include <X11/extensions/Xfixes.h>
     #include <X11/Xlib.h>
 #endif
@@ -167,7 +168,7 @@ void ZoomView::updateView()
         return;
     }
 
-#ifdef XFIXES_FOUND
+#if defined HAVE_XFIXES
     // cursor
     XFixesCursorImage *xcursor = XFixesGetCursorImage(QX11Info::display());
     unsigned char *pixels = (unsigned char*) malloc(xcursor->width*xcursor->height*4);

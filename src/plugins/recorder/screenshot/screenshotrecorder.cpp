@@ -20,6 +20,7 @@
 // own
 #include "screenshotrecorder.h"
 #include <recorditnow_screenshot.h>
+#include <config-recorditnow.h>
 
 // KDE
 #include <klocalizedstring.h>
@@ -35,7 +36,7 @@
 #include <QtCore/QtConcurrentRun>
 
 // X
-#ifdef XFIXES_FOUND
+#if defined HAVE_XFIXES
     #include <X11/extensions/Xfixes.h>
     #include <X11/Xlib.h>
 #endif
@@ -91,7 +92,7 @@ void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
     QPixmap cheese = QPixmap::grabWindow(window, x, y, w, h); // screenshot
     QPainter painter(&cheese);
 
-#ifdef XFIXES_FOUND
+#if defined HAVE_XFIXES
     // cursor
     if (Settings::drawCursor()) {
 
