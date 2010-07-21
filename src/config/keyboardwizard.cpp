@@ -27,7 +27,7 @@
 #include <kiconloader.h>
 
 
-KeyboardWizard::KeyboardWizard(const QString &device, QWidget *parent)
+KeyboardWizard::KeyboardWizard(QWidget *parent)
     : QWizard(parent)
 {
 
@@ -35,7 +35,7 @@ KeyboardWizard::KeyboardWizard(const QString &device, QWidget *parent)
     setPixmap(QWizard::LogoPixmap, KIcon("input-keyboard").pixmap(KIconLoader::SizeMedium,
                                                                   KIconLoader::SizeMedium));
 
-    addPage(new KeyboardKeyPage(device, this));
+    addPage(new KeyboardKeyPage(this));
     addPage(new KeyboardKeyIconPage(this));
 
     connect(this, SIGNAL(finished(int)), this, SLOT(wizardFinished(int)));

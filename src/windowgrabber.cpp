@@ -21,6 +21,9 @@
 // own
 #include "windowgrabber.h"
 
+// KDE
+#include <kdebug.h>
+
 // Qt
 #include <QtGui/QMouseEvent>
 #include <QtGui/QX11Info>
@@ -70,6 +73,8 @@ void WindowGrabber::mousePressEvent(QMouseEvent *event)
 
 void WindowGrabber::mouseReleaseEvent(QMouseEvent *event)
 {
+
+    kDebug() << "release";
 
     event->accept();
 

@@ -1,0 +1,1 @@
+#cmakedefine HAVE_RECORDKEYLOGGER 1

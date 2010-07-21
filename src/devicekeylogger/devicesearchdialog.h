@@ -17,34 +17,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSEDEVICEPAGE_H
-#define MOUSEDEVICEPAGE_H
+
+#ifndef DEVICESEARCHDIALOG_H
+#define DEVICESEARCHDIALOG_H
 
 
 // own
-#include "ui_mousedevicepage.h"
+#include "deviceinfo.h"
 
-// Qt
-#include <QtGui/QWizardPage>
+// KDE
+#include <kdialog.h>
 
 
-class MouseDevicePage : public QWizardPage, Ui::MouseDevicePage
+class DeviceSearchDialog : public KDialog
 {
     Q_OBJECT
 
 
 public:
-    explicit MouseDevicePage(QWidget *parent = 0);
-    ~MouseDevicePage();
+    explicit DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent = 0);
 
-    void initializePage();
+
+private:
+    bool m_input;
 
 
 private slots:
-    void deviceChanged(const QString &device);
+    void dialogFinished(const int &ret);
+
+
+signals:
+    void deviceSelected(const QString &file);
+
 
 
 };
 
 
-#endif // MOUSEDEVICEPAGE_H
+#endif // DEVICESEARCHDIALOG_H

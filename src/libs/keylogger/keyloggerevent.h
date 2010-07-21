@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,56 +17,73 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef DEVICE_H
-#define DEVICE_H
+#ifndef KEYLOGGEREVENT_H
+#define KEYLOGGEREVENT_H
 
-
-// own
-#include "event.h"
 
 // KDE
 #include <kdemacros.h>
 
 // Qt
-#include <QtCore/QObject>
+#include <QtCore/QExplicitlySharedDataPointer>
+#include <QtCore/QMetaType>
 
 
-class QSocketNotifier;
-namespace KeyMon {
+namespace RecordItNow {
 
 
-class KDE_EXPORT Device : public QObject
+class KeyloggerEventPrivate;
+class KDE_EXPORT KeyloggerEvent
 {
-    Q_OBJECT
 
 
 public:
-    explicit Device(QObject *parent, const QString &file, const bool &mouse = true);
-    ~Device();
+    enum EventType {
+        MouseEvent = 0,
+        KeyboardEvent = 1
+    };
+    enum MouseButton {
+        LeftButton = 0,
+        RightButton = 1,
+        MiddleButton = 3,
+        SpecialButton1 = 4,
+        SpecialButton2 = 5,
+        WheelUp = 6,
+        WheelDown = 7,
+        NoButton = -1
+    };
 
-    bool error() const;
+    KeyloggerEvent();
+    KeyloggerEvent(const RecordItNow::KeyloggerEvent &copy);
+
+    ~KeyloggerEvent();
+
+    QString text() const;
+    int id() const;
+    bool pressed() const;
+    KeyloggerEvent::EventType type() const;
+    RecordItNow::KeyloggerEvent::MouseButton idToMouseButton() const;
+
+
+    void setText(const QString &text);
+    void setId(const int &id);
+    void setPressed(const bool &pressed);
+    void setType(const KeyloggerEvent::EventType &type);
+
+    static int keyToXButton(const RecordItNow::KeyloggerEvent::MouseButton &key);
 
 
 private:
-    QSocketNotifier *m_socketNotifier;
-    bool m_error;
-    bool m_watchMouse;
-
-
-private slots:
-    void readEvents();
-
-
-signals:
-    void buttonPressed(const KeyMon::Event &event);
-    void keyPressed(const KeyMon::Event &event);
-    void finished();
+    KeyloggerEventPrivate *d;
 
 
 };
 
 
-}; // Namespace KeyMon
+} // namespace RecordItNow
 
 
-#endif // DEVICE_H
+Q_DECLARE_METATYPE(RecordItNow::KeyloggerEvent)
+
+
+#endif // KEYLOGGEREVENT_H

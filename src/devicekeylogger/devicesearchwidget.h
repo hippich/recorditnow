@@ -17,43 +17,45 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef DEVICEHELPER_H
-#define DEVICEHELPER_H
+#ifndef DEVICESEARCHWIDGET_H
+#define DEVICESEARCHWIDGET_H
 
 
 // own
-#include "event.h"
-#include "manager.h"
-
-// KDE
-#include <kauth.h>
-
-// Qt
-#include <QtCore/QObject>
-#include <QtCore/QEventLoop>
+#include "ui_devicesearchwidget.h"
+#include "deviceinfo.h"
 
 
-using namespace KAuth;
-class DeviceHelper : public QObject
+namespace RecordItNow {
+
+
+class DeviceSearchWidget : public QWidget, Ui::DeviceSearchWidget
 {
     Q_OBJECT
 
 
-public slots:
-    ActionReply watch(QVariantMap args);
+public:
+    explicit DeviceSearchWidget(QWidget *parent = 0);
+    ~DeviceSearchWidget();
 
+    int deviceCount() const;
+    QString selectedDevice() const;
 
-private:
-    QEventLoop m_loop;
-    int m_pipe;
+    void search(const KeyMon::DeviceInfo::DeviceType &type);
 
 
 private slots:
-    void key(const KeyMon::Event &event);
-    void timeout();
+    void itemSelectionChanged();
+
+
+signals:
+    void deviceSelectionChanged(const QString &device);
 
 
 };
 
 
-#endif // DEVICEHELPER_H
+} // namespace RecordItNow
+
+
+#endif // DEVICESEARCHWIDGET_H

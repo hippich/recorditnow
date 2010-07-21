@@ -20,11 +20,11 @@
 
 // own
 #include "mouseconfig.h"
-#include "devicesearchdialog.h"
 #include "helper.h"
 #include "colorrow.h"
 #include "soundrow.h"
 #include "listlayout.h"
+#include "keymonmanager.h"
 
 // KDE
 #include <kicon.h>
@@ -47,6 +47,8 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     
     setupUi(this);
 
+    mouseConfigLayout->addWidget(KeyMonManager::self()->keylogger()->getMouseConfigWidget(this, cfg));
+
     m_colorLayout = new RecordItNow::ListLayout;
     colorListWidget->setLayout(m_colorLayout);
     
@@ -55,12 +57,10 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     
     addButton->setIcon(KIcon("list-add"));
     soundAddButton->setIcon(KIcon("list-add"));
-    keyMonButton->setIcon(KIcon("system-search"));
     volumeSlider->setAudioOutput(RecordItNow::Helper::self()->audioOutput());
     
     connect(addButton, SIGNAL(clicked()), this, SLOT(addClicked()));
     connect(soundAddButton, SIGNAL(clicked()), this, SLOT(addSoundClicked()));
-    connect(keyMonButton, SIGNAL(clicked()), this, SLOT(showKeyMonDialog()));
 
     buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::LeftButton));
     buttonCombo->addItem(MouseButtonWidget::getName(MouseButtonWidget::RightButton));
@@ -110,6 +110,7 @@ void MouseConfig::saveConfig()
 {
 
     saveConfig(config(), currentButtons());
+    KeyMonManager::self()->keylogger()->saveConfig(config());
 
 }
 
@@ -383,17 +384,6 @@ void MouseConfig::soundButtonChanged(const MouseButtonWidget::Button &oldButton,
         changed->setButton(oldButton);
     }
     buttonsChanged();
-
-}
-
-
-void MouseConfig::showKeyMonDialog()
-{
-
-    DeviceSearchDialog *dialog = new DeviceSearchDialog(KeyMon::DeviceInfo::MouseType, this);
-    connect(dialog, SIGNAL(deviceSelected(QString)), kcfg_mouseDevice, SLOT(setText(QString)));
-
-    dialog->show();
 
 }
 

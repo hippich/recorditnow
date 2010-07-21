@@ -17,63 +17,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef DEVICEHELPER_H
+#define DEVICEHELPER_H
+
 
 // own
-#include "mousedevicepage.h"
-#include "keymon/deviceinfo.h"
-#include <recorditnow.h>
+#include "src/libs/keylogger/keyloggerevent.h"
+#include "../manager.h"
 
 // KDE
-#include <kiconloader.h>
+#include <kauth.h>
+
+// Qt
+#include <QtCore/QObject>
+#include <QtCore/QEventLoop>
 
 
-MouseDevicePage::MouseDevicePage(QWidget *parent)
-    : QWizardPage(parent)
+using namespace KAuth;
+class DeviceHelper : public QObject
 {
-
-    setupUi(this);
-
-    QPixmap logo = KIcon("input-mouse").pixmap(KIconLoader::SizeMedium, KIconLoader::SizeMedium);
-    setPixmap(QWizard::LogoPixmap, logo);
-
-    registerField("MouseDevice", deviceLine);
-
-    connect(searchWidget, SIGNAL(deviceSelectionChanged(QString)), this, SLOT(deviceChanged(QString)));
-
-}
+    Q_OBJECT
 
 
-MouseDevicePage::~MouseDevicePage()
-{
+public slots:
+    ActionReply watch(QVariantMap args);
 
 
-}
+private:
+    QEventLoop m_loop;
+    int m_pipe;
 
 
-void MouseDevicePage::initializePage()
-{
-
-    searchWidget->search(KeyMon::DeviceInfo::MouseType);
-    deviceLine->setText(Settings::mouseDevice());
-
-    QString text;
-    if (searchWidget->deviceCount() == 0) {
-        text = i18n("Failed to find a suitable device, please skip this step.");
-    } else {
-        text = i18n("Please select a device.");
-
-    }
-    setSubTitle(text);
-
-}
+private slots:
+    void key(const RecordItNow::KeyloggerEvent &event);
+    void timeout();
 
 
-void MouseDevicePage::deviceChanged(const QString &device)
-{
-
-    deviceLine->setText(device);
-
-}
+};
 
 
-#include "mousedevicepage.moc"
+#endif // DEVICEHELPER_H

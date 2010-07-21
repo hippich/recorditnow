@@ -17,62 +17,43 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_KEYLOGGEREVENT_P_H
+#define RECORDITNOW_KEYLOGGEREVENT_P_H
 
 
 // own
-#include "devicesearchdialog.h"
-#include "keymonmanager.h"
-#include "devicesearchwidget.h"
-
-// KDE
-#include <klocalizedstring.h>
-#include <kmessagebox.h>
+#include "keyloggerevent.h"
 
 // Qt
-#include <QtGui/QTreeWidgetItem>
+#include <QtCore/QSharedData>
+#include <QtCore/QString>
 
 
-DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
-    : KDialog(parent)
+namespace RecordItNow {
+
+
+class KeyloggerEventPrivate: public QSharedData
 {
 
-    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
-    setMainWidget(main);
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    resize(500, 300);
+public:
+    KeyloggerEventPrivate(KeyloggerEvent *parent);
+    ~KeyloggerEventPrivate();
 
-    main->search(type);
-
-    switch (type) {
-    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
-    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
-    default: break;
-    }
-
-    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
+    QString text;
+    int id;
+    bool pressed;
+    KeyloggerEvent::EventType type;
 
 
-    if (main->deviceCount() == 0) {
-        KMessageBox::information(this, i18n("No devices found."));
-        reject();
-    }
-
-}
+private:
+    KeyloggerEvent *q;
 
 
-void DeviceSearchDialog::dialogFinished(const int &ret)
-{
-
-    if (ret == KDialog::Accepted) {
-        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
-        if (device.isEmpty()) {
-            return;
-        }
-        emit deviceSelected(device);
-    }
-
-}
+};
 
 
-#include "devicesearchdialog.moc"
+}; // namespace RecordItNow
+
+
+#endif // RECORDITNOW_KEYLOGGEREVENT_P_H

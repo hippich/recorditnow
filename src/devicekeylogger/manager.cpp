@@ -19,7 +19,6 @@
 
 // own
 #include "manager.h"
-#include "device.h"
 
 // KDE
 #include <kdebug.h>

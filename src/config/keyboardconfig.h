@@ -65,9 +65,6 @@ private slots:
     void add();
     void remove(QWidget *widget);
     void wizardFinished(const int &key, const QString &icon, const QString &text);
-    void showSearchDialog();
-    void searchDialogFinished(const QString &uuid);
-    void textChanged(const QString &text);
     void changed();
 
 

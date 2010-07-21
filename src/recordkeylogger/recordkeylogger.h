@@ -17,34 +17,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYBOARDDEVICEPAGE_H
-#define KEYBOARDDEVICEPAGE_H
-
+#ifndef RECORDITNOW_RECORDKEYLOGGER_H
+#define RECORDITNOW_RECORDKEYLOGGER_H
 
 // own
-#include "ui_keyboarddevicepage.h"
+#include "src/libs/keylogger/abstractkeylogger.h"
+#include "src/libs/keylogger/keyloggerevent.h"
+
+// KDE
+#include <kdemacros.h>
 
 // Qt
-#include <QtGui/QWizardPage>
+#include <QtCore/QObject>
 
 
-class KeyboardDevicePage : public QWizardPage, Ui::KeyboardDevicePage
+namespace RecordItNow {
+
+
+class RecordKeyloggerPrivate;
+class KDE_EXPORT RecordKeylogger: public RecordItNow::AbstractKeylogger
 {
     Q_OBJECT
 
 
 public:
-    explicit KeyboardDevicePage(QWidget *parent = 0);
-    ~KeyboardDevicePage();
+    explicit RecordKeylogger(QObject *parent = 0);
+    ~RecordKeylogger();
 
-    void initializePage();
+    bool start(const KConfig *);
+    void stop();
+    bool waitForStarted();
+    bool isRunning();
 
 
-private slots:
-    void deviceChanged(const QString &device);
+private:
+    RecordKeyloggerPrivate *d;
 
 
 };
 
 
-#endif // KEYBOARDDEVICEPAGE_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_RECORDKEYLOGGER_H

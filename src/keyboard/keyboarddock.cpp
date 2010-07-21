@@ -49,8 +49,8 @@ KeyboardDock::KeyboardDock(QWidget *parent)
     QWidget *content = new QWidget;
     setupUi(content);
 
-    connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
-            SLOT(keyPressed(KeyMon::Event)));
+    connect(KeyMonManager::self(), SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
+            SLOT(keyPressed(RecordItNow::KeyloggerEvent)));
 
     m_layout = new FlowLayout;
     mainLayout->addLayout(m_layout);
@@ -94,17 +94,17 @@ void KeyboardDock::init(const QList<KeyboardKey> &map)
 }
 
 
-void KeyboardDock::keyPressed(const KeyMon::Event &event)
+void KeyboardDock::keyPressed(const RecordItNow::KeyloggerEvent &event)
 {
 
-    if (event.mouseEvent) {
+    if (event.type() != RecordItNow::KeyloggerEvent::KeyboardEvent) {
         return;
     }
 
     foreach (KeyWidget * widget, m_keyList) {
-        if (widget->keyCode() == event.keyCode) {
-            kDebug() << "Event:" << "Code:" << event.keyCode << "Pressed?" << event.pressed;
-            widget->setPressed(event.pressed);
+        if (widget->keyCode() == event.id()) {
+            kDebug() << "Event:" << "Code:" << event.id() << "Pressed?" << event.pressed();
+            widget->setPressed(event.pressed());
             break;
         }
     }

@@ -17,13 +17,28 @@ if (XFIXES_FOUND)
     add_definitions(-DXFIXES_FOUND=true)
 endif(XFIXES_FOUND)
 
-
 add_subdirectory(libs)
 add_subdirectory(plugins)
 add_subdirectory(icons)
-add_subdirectory(keymon)
+add_subdirectory(keyboard)
+add_subdirectory(devicekeylogger)
+
+# XRecord
+if (X11_Xext_FOUND AND X11_XTest_FOUND AND NOT FORCE_DEVICELOGGER)
+    add_subdirectory(recordkeylogger)
+    set(HAVE_RECORDKEYLOGGER True)
+endif(X11_Xext_FOUND AND X11_XTest_FOUND AND NOT FORCE_DEVICELOGGER)
+macro_log_feature(HAVE_RECORDKEYLOGGER "XRecord"
+                                       "X Record Extension Library"
+                                       "http://www.x.org/" FALSE
+                                       ""
+                                       "Required for RecordItNow`s keylogger")
+
 
 macro_display_feature_log()
+
+
+configure_file(config-recorditnow.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-recorditnow.h)
 
 
 set (COMMON_SRCS configitem.cpp)
@@ -43,7 +58,6 @@ set(gui_SRCS
    encodermanager.cpp
    application.cpp
    keymonmanager.cpp
-   devicesearchdialog.cpp
    checkicon.cpp
    helper.cpp
 
@@ -103,7 +117,7 @@ set(gui_SRCS
    outputwidget.cpp
    timerwidget.cpp
    windowgrabber.cpp
-   devicesearchwidget.cpp
+   #devicesearchwidget.cpp
    dockwidget.cpp
    volumeslider.cpp
    listlayout.cpp
@@ -111,9 +125,7 @@ set(gui_SRCS
 
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp
-   firstStart/createconfigpage.cpp
-   firstStart/mousedevicepage.cpp
-   firstStart/keyboarddevicepage.cpp)
+   firstStart/createconfigpage.cpp)
 
 
 # GUI
@@ -146,16 +158,12 @@ kde4_add_ui_files(gui_SRCS
 
     keyboard/ui/keyboarddock.ui
     keyboard/ui/keyboarddocktitlewidget.ui
-    
-    ui/devicesearchwidget.ui
-    
+        
     zoom/ui/zoomdock.ui
     zoom/ui/zoomdocktitlewidget.ui
     
     firstStart/ui/welcomepage.ui
     firstStart/ui/createconfigpage.ui
-    firstStart/ui/mousedevicepage.ui
-    firstStart/ui/keyboarddevicepage.ui
     
     player/ui/playerdock.ui
     player/ui/videoplayer.ui
@@ -174,32 +182,36 @@ kde4_add_library(recorditnow_frame SHARED ${FRAME_SRCS})
 target_link_libraries(recorditnow_frame ${KDE4_KDEUI_LIBS} recorditnow_common)
 install(TARGETS recorditnow_frame ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
-kde4_add_executable(recorditnow ${gui_SRCS})
-target_link_libraries(recorditnow ${KDE4_KDEUI_LIBS}
-                                  ${KDE4_KUTILS_LIBS}
-                                  ${KDE4_KIO_LIBS}
-                                  ${KDE4_KNOTIFYCONFIG_LIBS}
-                                  ${KDE4_KDECORE_LIBS}
-                                  ${KDE4_PHONON_LIBS}
-                                  ${X11_X11_LIB}
-                                  ${X11_Xext_LIB}
-                                  recorditnow_plugin
-                                  recorditnow_recorder
-                                  recorditnow_encoder
-                                  recorditnow_keymon
-                                  recorditnow_frame
-                                  recorditnow_common
-                                  ${X11_Xcursor_LIB}
-                                  ${JOSCHYCORE_LIBRARIES})
+
+set(GUI_SRCS_LINK ${KDE4_KDEUI_LIBS}
+                  ${KDE4_KUTILS_LIBS}
+                  ${KDE4_KIO_LIBS}
+                  ${KDE4_KNOTIFYCONFIG_LIBS}
+                  ${KDE4_KDECORE_LIBS}
+                  ${KDE4_PHONON_LIBS}
+                  ${X11_X11_LIB}
+                  ${X11_Xext_LIB}
+                  recorditnow_plugin
+                  recorditnow_recorder
+                  recorditnow_encoder
+                  recorditnow_frame
+                  recorditnow_common
+                  recorditnow_devicekeylogger
+                  ${X11_Xcursor_LIB}
+                  ${JOSCHYCORE_LIBRARIES})
+
+if (HAVE_RECORDKEYLOGGER)
+    set(GUI_SRCS_LINK ${GUI_SRCS_LINK} recorditnow_recordkeylogger)
+endif (HAVE_RECORDKEYLOGGER)
 
 if (XFIXES_FOUND)
-    target_link_libraries(recorditnow ${XFIXES_LIBRARIES})
+    set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${XFIXES_LIBRARIES})
 endif(XFIXES_FOUND)
 
+kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
+kde4_add_executable(recorditnow ${gui_SRCS})
+target_link_libraries(recorditnow ${GUI_SRCS_LINK})
 install(TARGETS recorditnow ${INSTALL_TARGETS_DEFAULT_ARGS})
-
-add_subdirectory(keyboard)
 
 ########### install files ###############
 install(FILES recorditnow.kcfg  DESTINATION  ${KCFG_INSTALL_DIR})

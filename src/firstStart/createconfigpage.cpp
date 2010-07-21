@@ -22,11 +22,7 @@
 #include "createconfigpage.h"
 #include "config/frameconfig.h"
 #include "config/timelineconfig.h"
-#include "config/mouseconfig.h"
-#include "config/keyboardconfig.h"
 #include <recorditnow.h>
-#include "keymon/deviceinfo.h"
-#include "keymonmanager.h"
 
 // Qt
 #include <QtGui/QListWidgetItem>
@@ -64,21 +60,10 @@ void CreateConfigPage::initializePage()
     timelineItem->setText(i18n("Create timeline configuration..."));
     timelineItem->setIcon(KIcon("task-recurring"));
 
-    QListWidgetItem *mouseItem = new QListWidgetItem;
-    mouseItem->setText(i18n("Create mouse configuration..."));
-    mouseItem->setIcon(KIcon("task-recurring"));
-
-    QListWidgetItem *keyboardItem = new QListWidgetItem;
-    keyboardItem->setText(i18n("Create keyboard configuration..."));
-    keyboardItem->setIcon(KIcon("task-recurring"));
-
     listWidget->addItem(frameItem);
     listWidget->addItem(timelineItem);
-    listWidget->addItem(mouseItem);
-    listWidget->addItem(keyboardItem);
 
-    QFuture<void> future = QtConcurrent::run(createConfig, frameItem, timelineItem, mouseItem,
-                                             keyboardItem);
+    QFuture<void> future = QtConcurrent::run(createConfig, frameItem, timelineItem);
 
     QFutureWatcher<void> *watcher = new QFutureWatcher<void>();
     watcher->setFuture(future);
@@ -89,8 +74,7 @@ void CreateConfigPage::initializePage()
 }
 
 
-void CreateConfigPage::createConfig(QListWidgetItem *frameItem, QListWidgetItem *timelineItem,
-                                    QListWidgetItem *mouseItem, QListWidgetItem *keyboardItem)
+void CreateConfigPage::createConfig(QListWidgetItem *frameItem, QListWidgetItem *timelineItem)
 {
 
     FrameConfig::writeSizes(FrameConfig::defaultSizes(), Settings::self()->config());
@@ -98,32 +82,6 @@ void CreateConfigPage::createConfig(QListWidgetItem *frameItem, QListWidgetItem 
 
     TimelineConfig::saveTopics(TimelineConfig::defaultTopics(), Settings::self()->config());
     timelineItem->setIcon(KIcon("task-complete"));
-
-
-    QList<KeyMon::DeviceInfo> mouseInfos;
-    QList<KeyMon::DeviceInfo> keyboardInfos;
-
-    foreach (const KeyMon::DeviceInfo &info, KeyMonManager::self()->getInputDeviceList()) {
-        if (info.type == KeyMon::DeviceInfo::KeyboardType) {
-            keyboardInfos.append(info);
-        } else  if (info.type == KeyMon::DeviceInfo::MouseType) {
-            mouseInfos.append(info);
-        }
-    }
-
-    if (!mouseInfos.isEmpty() && Settings::mouseDevice().isEmpty()) {
-        Settings::self()->setMouseDevice(mouseInfos.first().uuid);
-    }
-
-    if (!keyboardInfos.isEmpty() && Settings::keyboardDevice().isEmpty()) {
-        Settings::self()->setKeyboardDevice(keyboardInfos.first().uuid);
-    }
-
-    MouseConfig::saveConfig(Settings::self()->config(), MouseConfig::defaultButtons());
-    mouseItem->setIcon(KIcon("task-complete"));
-
-    KeyboardConfig::saveConfig(KeyboardConfig::defaultKeys(), Settings::self()->config());
-    keyboardItem->setIcon(KIcon("task-complete"));
 
 }
 

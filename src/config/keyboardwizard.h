@@ -31,7 +31,7 @@ class KeyboardWizard : public QWizard
 
 
 public:
-    explicit KeyboardWizard(const QString &device, QWidget *parent = 0);
+    explicit KeyboardWizard(QWidget *parent = 0);
 
 
 private slots:

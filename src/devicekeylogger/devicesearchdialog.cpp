@@ -18,54 +18,60 @@
  ***************************************************************************/
 
 
-#ifndef KEYBOARDKEYPAGE_H
-#define KEYBOARDKEYPAGE_H
-
 
 // own
-#include "ui_keyboardkeypage.h"
-#include "src/libs/keylogger/keyloggerevent.h"
+#include "devicesearchdialog.h"
+#include "devicesearchwidget.h"
 
 // KDE
-#include <kauth.h>
+#include <klocalizedstring.h>
+#include <kmessagebox.h>
 
 // Qt
-#include <QtGui/QWizardPage>
-#include <QtCore/QVariantMap>
+#include <QtGui/QTreeWidgetItem>
 
 
-using namespace KAuth;
-class KeyboardKeyPage : public QWizardPage, Ui::KeyboardKeyPage
+DeviceSearchDialog::DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent)
+    : KDialog(parent)
 {
-    Q_OBJECT
+
+    RecordItNow::DeviceSearchWidget *main = new RecordItNow::DeviceSearchWidget(this);
+    setMainWidget(main);
+
+    setAttribute(Qt::WA_DeleteOnClose);
+    resize(500, 300);
+
+    main->search(type);
+
+    switch (type) {
+    case KeyMon::DeviceInfo::MouseType: setWindowTitle(i18n("Mouse"));  break;
+    case KeyMon::DeviceInfo::KeyboardType: setWindowTitle(i18n("Keyboard")); break;
+    default: break;
+    }
+
+    connect(this, SIGNAL(finished(int)), this, SLOT(dialogFinished(int)));
 
 
-public:
-    explicit KeyboardKeyPage(QWidget *parent = 0);
-    ~KeyboardKeyPage();
+    if (main->deviceCount() == 0) {
+        KMessageBox::information(this, i18n("No devices found."));
+        reject();
+    }
 
-    void initializePage();
-
-
-private:
-    int m_key;
-    bool m_grab;
+}
 
 
-private slots:
-    void start();
-    void startGrab();
-    void stop();
-    void keyEvent(const RecordItNow::KeyloggerEvent &event);
-    void keymonStopped();
+void DeviceSearchDialog::dialogFinished(const int &ret)
+{
+
+    if (ret == KDialog::Accepted) {
+        QString device = static_cast<RecordItNow::DeviceSearchWidget*>(mainWidget())->selectedDevice();
+        if (device.isEmpty()) {
+            return;
+        }
+        emit deviceSelected(device);
+    }
+
+}
 
 
-protected:
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
-
-
-};
-
-
-#endif // KEYBOARDKEYPAGE_H
+#include "devicesearchdialog.moc"

@@ -24,9 +24,9 @@
 // own
 #include "ui_keyboarddock.h"
 #include "ui_keyboarddocktitlewidget.h"
-#include "../keymon/event.h"
 #include "../config/keyboardconfig.h"
 #include "../dockwidget.h"
+#include "src/libs/keylogger/keyloggerevent.h"
 
 // Qt
 #include <QtGui/QDockWidget>
@@ -56,7 +56,7 @@ private:
     
 
 private slots:
-    void keyPressed(const KeyMon::Event &event);
+    void keyPressed(const RecordItNow::KeyloggerEvent &event);
     void sizeChanged(const int &value);
 
 

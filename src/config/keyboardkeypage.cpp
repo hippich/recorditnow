@@ -33,19 +33,23 @@
 #include <QtGui/QKeyEvent>
 
 
-KeyboardKeyPage::KeyboardKeyPage(const QString &device, QWidget *parent)
+#include <X11/Xlib.h>
+#include <QX11Info>
+#include <X11/keysym.h>
+
+
+KeyboardKeyPage::KeyboardKeyPage(QWidget *parent)
     : QWizardPage(parent)
 {
 
     m_grab = false;
     m_key = -1;
-    m_device = device;
 
     setupUi(this);
 
     connect(startButton, SIGNAL(clicked()), this, SLOT(start()));
-    connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
-            SLOT(keyEvent(KeyMon::Event)));
+    connect(KeyMonManager::self(), SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
+            SLOT(keyEvent(RecordItNow::KeyloggerEvent)));
     connect(KeyMonManager::self(), SIGNAL(stopped()), this, SLOT(keymonStopped()));
     connect(KeyMonManager::self(), SIGNAL(started()), this, SLOT(startGrab()));
 
@@ -76,11 +80,6 @@ void KeyboardKeyPage::initializePage()
 void KeyboardKeyPage::start()
 {
 
-    if (m_device.isEmpty()) {
-        statusLabel->setText(i18n("Please select a device."));
-        return;
-    }
-
     statusLabel->setText(i18n("Please wait..."));
 
     startButton->setDisabled(true);
@@ -89,7 +88,7 @@ void KeyboardKeyPage::start()
     keyLabel->clear();
     keyCodeLabel->clear();
 
-    if (!KeyMonManager::self()->start(QStringList() << m_device)) {
+    if (!KeyMonManager::self()->start()) {
         statusLabel->setText(KeyMonManager::self()->error());
         stop();
     } else {
@@ -120,11 +119,11 @@ void KeyboardKeyPage::stop()
 }
 
 
-void KeyboardKeyPage::keyEvent(const KeyMon::Event &event)
+void KeyboardKeyPage::keyEvent(const RecordItNow::KeyloggerEvent &event)
 {
 
     if (m_grab) {
-        m_key = event.keyCode;
+        m_key = event.id();
     }
 
 }

@@ -17,52 +17,50 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef DEVICE_H
+#define DEVICE_H
 
 
 // own
-#include "deviceinfo.h"
+#include "src/libs/keylogger/keyloggerevent.h"
 
 // KDE
 #include <kdemacros.h>
 
 // Qt
-#include <QtCore/QString>
+#include <QtCore/QObject>
 
 
+class QSocketNotifier;
 namespace KeyMon {
 
 
-class KDE_EXPORT Event
+class KDE_EXPORT Device : public QObject
 {
+    Q_OBJECT
 
 
 public:
-    enum Key {
-        LeftButton = 0,
-        RightButton = 1,
-        MiddleButton = 3,
-        SpecialButton1 = 4,
-        SpecialButton2 = 5,
-        WheelUp = 6,
-        WheelDown = 7,
-        NoButton = -1
-    };
-    Event();
-    Event(const KeyMon::Event &other);
-    ~Event();
+    explicit Device(QObject *parent, const QString &file, const bool &mouse = true);
+    ~Device();
 
-    Key key;
-    int keyCode;
-    bool pressed;
-    bool mouseEvent;
-    KeyMon::DeviceInfo device;
+    bool error() const;
 
-    static QString name(const KeyMon::Event::Key &key);
-    static KeyMon::Event::Key keyFromName(const QString &name);
-    static KeyMon::Event::Key xButtonToKey(const int &button);
-    static int keyToXButton(const KeyMon::Event::Key &key);
+
+private:
+    QSocketNotifier *m_socketNotifier;
+    bool m_error;
+    bool m_watchMouse;
+
+
+private slots:
+    void readEvents();
+
+
+signals:
+    void buttonPressed(const RecordItNow::KeyloggerEvent &event);
+    void keyPressed(const RecordItNow::KeyloggerEvent &event);
+    void finished();
 
 
 };
@@ -71,4 +69,4 @@ public:
 }; // Namespace KeyMon
 
 
-#endif // EVENT_H
+#endif // DEVICE_H

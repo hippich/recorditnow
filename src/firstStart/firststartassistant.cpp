@@ -22,10 +22,6 @@
 #include "firststartassistant.h"
 #include "welcomepage.h"
 #include "createconfigpage.h"
-#include "mousedevicepage.h"
-#include "keyboarddevicepage.h"
-#include "../config/keyboardconfig.h"
-#include "../keyboard/keyboardkey.h"
 #include <recorditnow.h>
 
 // KDE
@@ -51,8 +47,6 @@ FirstStartAssistant::FirstStartAssistant(QWidget *parent)
 
     addPage(new WelcomePage(this));
     addPage(new CreateConfigPage(this));
-    addPage(new MouseDevicePage(this));
-    addPage(new KeyboardDevicePage(this));
 
     connect(this, SIGNAL(finished(int)), this, SLOT(assistantFinished(int)));
 

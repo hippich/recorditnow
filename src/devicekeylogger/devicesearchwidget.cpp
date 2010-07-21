@@ -20,7 +20,7 @@
 
 // own
 #include "devicesearchwidget.h"
-#include "keymonmanager.h"
+#include "manager.h"
 
 // Qt
 #include <QtGui/QTreeWidgetItem>
@@ -76,7 +76,7 @@ void DeviceSearchWidget::search(const KeyMon::DeviceInfo::DeviceType &type)
     switch (type) {
     case KeyMon::DeviceInfo::MouseType:
     case KeyMon::DeviceInfo::KeyboardType: {
-            foreach (const KeyMon::DeviceInfo &info, KeyMonManager::self()->getInputDeviceList()) {
+            foreach (const KeyMon::DeviceInfo &info, KeyMon::Manager::getInputDeviceList()) {
                 if (info.type != type) {
                     continue;
                 }

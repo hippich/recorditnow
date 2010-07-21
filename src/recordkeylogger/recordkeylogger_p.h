@@ -17,41 +17,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef DEVICESEARCHDIALOG_H
-#define DEVICESEARCHDIALOG_H
+#ifndef RECORDITNOW_RECORDKEYLOGGER_P_H
+#define RECORDITNOW_RECORDKEYLOGGER_P_H
 
 
 // own
-#include "keymon/deviceinfo.h"
+#include "src/libs/keylogger/keyloggerevent.h"
 
-// KDE
-#include <kdialog.h>
+// Qt
+#include <QtCore/QObject>
+#include <QtCore/QFuture>
 
 
-class DeviceSearchDialog : public KDialog
+namespace RecordItNow {
+
+
+class WatchData;
+class RecordKeylogger;
+class RecordKeyloggerPrivate: public QObject
 {
     Q_OBJECT
 
 
 public:
-    explicit DeviceSearchDialog(const KeyMon::DeviceInfo::DeviceType &type, QWidget *parent = 0);
+    RecordKeyloggerPrivate(RecordKeylogger *parent);
+    ~RecordKeyloggerPrivate();
+
+    QFuture<void> future;
+    RecordItNow::WatchData *data;
+    bool running;
+
+    void emitKey(const RecordItNow::KeyloggerEvent &event);
+    void emitError(const QString &errorString);
 
 
 private:
-    bool m_input;
-
-
-private slots:
-    void dialogFinished(const int &ret);
+    RecordKeylogger *q;
 
 
 signals:
-    void deviceSelected(const QString &file);
-
+    void keyEvent(const RecordItNow::KeyloggerEvent &event);
+    void error(const QString &errorString);
 
 
 };
 
 
-#endif // DEVICESEARCHDIALOG_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_RECORDKEYLOGGER_P_H

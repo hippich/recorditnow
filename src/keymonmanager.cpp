@@ -20,18 +20,21 @@
 
 // own
 #include "keymonmanager.h"
-#include "keymon/manager.h"
+#include <config-recorditnow.h>
+#include <recorditnow.h>
+#include "devicekeylogger/devicekeylogger.h"
+#if defined HAVE_RECORDKEYLOGGER
+    #include "recordkeylogger/recordkeylogger.h"
+#endif
 
 // Qt
-#include <QtCore/QEventLoop>
-#include <QtCore/QTime>
+#include <QtCore/QTimer>
 
 // KDE
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kauth.h>
 #include <klocalizedstring.h>
-#include <kapplication.h>
+
 
 
 class KeyMonManagerSingleton
@@ -42,16 +45,21 @@ class KeyMonManagerSingleton
 
 
 K_GLOBAL_STATIC(KeyMonManagerSingleton, privateSelf)
-
-
-#define NOT_STARTED_ERROR_STRING "RecordItNow`s Key-Monitor could not be started.\n" \
-                                 "For this reason, some features may not be used!\n" \
-                                 "The error message was:\n\n"
 KeyMonManager::KeyMonManager(QObject *parent)
-    : QObject(parent), m_started(false), m_watching(false)
+    : QObject(parent)
 {
 
+#if defined HAVE_RECORDKEYLOGGER
+    m_logger = new RecordItNow::RecordKeylogger(this);
+#else
+    m_logger = new DeviceKeylogger(this);
+#endif
 
+    connect(m_logger, SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
+            SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)));
+
+    connect(m_logger, SIGNAL(started()), this, SIGNAL(started()));
+    connect(m_logger, SIGNAL(stopped()), this, SIGNAL(stopped()));
 
 }
 
@@ -59,7 +67,7 @@ KeyMonManager::KeyMonManager(QObject *parent)
 KeyMonManager::~KeyMonManager()
 {
 
-//    stop(); crash
+    delete m_logger;
 
 }
 
@@ -72,26 +80,10 @@ KeyMonManager *KeyMonManager::self()
 }
 
 
-QList<KeyMon::DeviceInfo> KeyMonManager::getInputDeviceList()
-{
-
-    return KeyMon::Manager::getInputDeviceList();
-
-}
-
-
-QString KeyMonManager::fileForDevice(const KeyMon::DeviceInfo &info)
-{
-
-    return KeyMon::Manager::fileForDevice(info);
-
-}
-
-
 bool KeyMonManager::isRunning() const
 {
 
-    return m_started;
+    return m_logger->isRunning();
 
 }
 
@@ -99,45 +91,15 @@ bool KeyMonManager::isRunning() const
 QString KeyMonManager::error() const
 {
 
-    return m_error;
+    return m_logger->error();
 
 }
 
 
-bool KeyMonManager::start(const QStringList &devs)
+bool KeyMonManager::start()
 {
 
-    if (m_started) {
-        return true;
-    }
-
-    KAuth::Action action("org.kde.recorditnow.helper.watch");
-    connect(action.watcher(), SIGNAL(progressStep(QVariantMap)), this,
-            SLOT(progressStep(QVariantMap)));
-    connect(action.watcher(), SIGNAL(actionPerformed(ActionReply)), this,
-            SLOT(actionPerformed(ActionReply)));
-
-    QVariantMap args;
-    args["Devs"] = devs;
-
-    action.setArguments(args);
-    action.setExecutesAsync(true);
-
-    KAuth::ActionReply reply = action.execute("org.kde.recorditnow.helper");
-    if (reply.errorCode() != KAuth::ActionReply::NoError) {
-        if (reply.errorCode() == KAuth::ActionReply::UserCancelled) {
-            m_error.clear();
-            action.watcher()->disconnect(this);
-            return false;
-        } else {
-            action.watcher()->disconnect(this);
-            m_error = parseError(reply.errorCode());
-            return false;
-        }
-    }
-    m_started = true;
-
-    return true;
+    return m_logger->start(Settings::self()->config());
 
 }
 
@@ -145,16 +107,7 @@ bool KeyMonManager::start(const QStringList &devs)
 void KeyMonManager::stop()
 {
 
-    if (!m_started) {
-        return;
-    }
-
-    KAuth::Action action("org.kde.recorditnow.helper.watch");
-    action.setHelperID("org.kde.recorditnow.helper");
-    action.watcher()->disconnect(this);
-    action.stop();
-
-    m_started = false;
+    m_logger->stop();
 
 }
 
@@ -162,109 +115,15 @@ void KeyMonManager::stop()
 bool KeyMonManager::waitForStarted()
 {
 
-    if (!m_started) {
-        return false;
-    }
-
-    QTime time;
-    bool timeout = false;
-    
-    time.start();
-    while (!m_watching) {
-        kapp->processEvents(QEventLoop::WaitForMoreEvents|QEventLoop::AllEvents, 1000);
-
-        // timeout (broken kauth etc)
-        if (time.elapsed() > (1000*60)) { // 1 min
-            timeout = true;
-            
-            m_error = i18n(NOT_STARTED_ERROR_STRING);
-            m_error.append(i18n("Timeout"));
-            break;
-        } else if (!m_started) { // cancelled
-            return false;
-        }
-    }
-
-    return !timeout;
+    return m_logger->waitForStarted();
 
 }
 
 
-QString KeyMonManager::parseError(const int &errorCode)
+RecordItNow::AbstractKeylogger *KeyMonManager::keylogger() const
 {
 
-    KAuth::ActionReply::Error reply = static_cast<KAuth::ActionReply::Error>(errorCode);
-
-    QString error;
-    switch (reply) {
-    case KAuth::ActionReply::NoResponder:
-    case KAuth::ActionReply::NoSuchAction:
-    case KAuth::ActionReply::InvalidAction:
-    case KAuth::ActionReply::HelperBusy:
-    case KAuth::ActionReply::DBusError: error = i18n("An internal error has occurred.\n"
-                                                     "Error code: %1\n", errorCode); break;
-    case KAuth::ActionReply::AuthorizationDenied: error = i18n("You don't have the authorization to"
-                                                               " use this feature."); break;
-    default: break;
-    }
-
-    if (!error.isEmpty()) {
-        error.prepend(i18n(NOT_STARTED_ERROR_STRING));
-    }
-
-    return error;
-
-}
-
-
-void KeyMonManager::progressStep(const QVariantMap &data)
-{
-
-    if (data.contains("Started")) {
-        m_watching = true;
-        kapp->postEvent(this, new QEvent(QEvent::User), Qt::HighEventPriority); // see waitForStarted
-        
-        emit started();
-        return;
-    }
-
-    KeyMon::Event event;
-    event.key = static_cast<KeyMon::Event::Key>(data["Key"].toInt());
-    event.pressed = data["Pressed"].toBool();
-    event.keyCode = data.value("KeyCode").toInt();
-    event.mouseEvent = data.value("MouseEvent").toBool();
-
-    emit keyEvent(event);
-
-}
-
-
-void KeyMonManager::actionPerformed(const ActionReply &reply)
-{
-
-    if (reply.type() != KAuth::ActionReply::Success) {
-        if (reply.type() == KAuth::ActionReply::HelperError) {
-            m_error = reply.data().value("ErrorString").toString();
-        } else {
-            m_error = parseError(reply.errorCode());
-        }
-    }
-
-    KAuth::Action action("org.kde.recorditnow.helper.watch");
-    action.setHelperID("org.kde.recorditnow.helper");
-    action.watcher()->disconnect(this);
-
-    m_started = m_watching = false;
-
-    emit stopped();
-
-}
-
-
-void KeyMonManager::actionStarted()
-{
-
-    emit started();
+    return m_logger;
 
 }
 

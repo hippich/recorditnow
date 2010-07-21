@@ -44,8 +44,7 @@ public:
 private:
     bool m_complete;
 
-    static void createConfig(QListWidgetItem *frameItem, QListWidgetItem *timelineItem,
-                             QListWidgetItem *mouseItem, QListWidgetItem *keyboardItem);
+    static void createConfig(QListWidgetItem *frameItem, QListWidgetItem *timelineItem);
 
 
 private slots:

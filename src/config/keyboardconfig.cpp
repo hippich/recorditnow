@@ -21,11 +21,11 @@
 // own
 #include "keyboardconfig.h"
 #include "keyboardwizard.h"
-#include "devicesearchdialog.h"
 #include "keyboardkeyiconpage.h"
 #include "helper.h"
 #include "keyboardrow.h"
 #include "listlayout.h"
+#include "keymonmanager.h"
 
 // KDE
 #include <kicon.h>
@@ -49,15 +49,14 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
 
     setupUi(this);
 
+    keyboardConfigLayout->addWidget(KeyMonManager::self()->keylogger()->getKeyboardConfigWidget(this, cfg));
+
     m_layout = new RecordItNow::ListLayout(0, true);
     keyboardWidgetList->setLayout(m_layout);
     
     addButton->setIcon(KIcon("list-add"));
-    searchButton->setIcon(KIcon("system-search"));
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
-    connect(searchButton, SIGNAL(clicked()), this, SLOT(showSearchDialog()));
-    connect(kcfg_keyboardDevice, SIGNAL(textChanged(QString)), this, SLOT(textChanged(QString)));
     connect(m_layout, SIGNAL(layoutChanged()), this, SLOT(changed()));
     connect(m_layout, SIGNAL(removeRequested(QWidget*)), this, SLOT(remove(QWidget*)));
 
@@ -137,6 +136,7 @@ void KeyboardConfig::saveConfig()
 {
 
     saveConfig(currentKeys(), config());
+    KeyMonManager::self()->keylogger()->saveConfig(config());
 
 }
 
@@ -186,7 +186,7 @@ void KeyboardConfig::setKeys(const QList<KeyboardKey> &keys)
 void KeyboardConfig::add()
 {
 
-    KeyboardWizard *wizard = new KeyboardWizard(kcfg_keyboardDevice->text(), this);
+    KeyboardWizard *wizard = new KeyboardWizard(this);
     connect(wizard, SIGNAL(wizardFinished(int, QString, QString)), this,
             SLOT(wizardFinished(int, QString, QString)));
 
@@ -227,33 +227,6 @@ void KeyboardConfig::wizardFinished(const int &key, const QString &icon, const Q
     m_layout->addRow(row);
     
     setConfigChanged(readConfig(config()) != currentKeys());
-
-}
-
-
-void KeyboardConfig::showSearchDialog()
-{
-
-    DeviceSearchDialog *dialog = new DeviceSearchDialog(KeyMon::DeviceInfo::KeyboardType, this);
-    connect(dialog, SIGNAL(deviceSelected(QString)), this, SLOT(searchDialogFinished(QString)));
-
-    dialog->show();
-
-}
-
-
-void KeyboardConfig::searchDialogFinished(const QString &uuid)
-{
-
-    kcfg_keyboardDevice->setText(uuid);
-
-}
-
-
-void KeyboardConfig::textChanged(const QString &text)
-{
-
-    addButton->setDisabled(text.isEmpty());
 
 }
 

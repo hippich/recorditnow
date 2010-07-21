@@ -44,8 +44,6 @@ Device::Device(QObject *parent, const QString &file, const bool &mouse)
     : QObject(parent), m_watchMouse(mouse)
 {
 
-    qRegisterMetaType<KeyMon::Event>("KeyMon::Event");
-
     m_socketNotifier = 0;
     int fd = open(file.toLatin1(), O_RDONLY|O_NONBLOCK); // krazy:exclude=syscalls
     if (fd == -1) {
@@ -95,41 +93,41 @@ void Device::readEvents()
             return;
         }
         const bool pressed = (ev.value == 1);
-        KeyMon::Event::Key key;
+        RecordItNow::KeyloggerEvent::MouseButton key;
         switch(ev.code)
         {
         case BTN_LEFT:
-            key = KeyMon::Event::LeftButton;
+            key = RecordItNow::KeyloggerEvent::LeftButton;
             break;
         case BTN_RIGHT:
-            key = KeyMon::Event::RightButton;
+            key = RecordItNow::KeyloggerEvent::RightButton;
             break;
         case BTN_MIDDLE:
-            key = KeyMon::Event::MiddleButton;
+            key = RecordItNow::KeyloggerEvent::MiddleButton;
             break;
         case BTN_EXTRA:
-            key = KeyMon::Event::SpecialButton1;
+            key = RecordItNow::KeyloggerEvent::SpecialButton1;
             break;
         case BTN_SIDE:
-            key = KeyMon::Event::SpecialButton2;
+            key = RecordItNow::KeyloggerEvent::SpecialButton2;
             break;
         case REL_WHEEL:
             if (pressed) {
-                key = KeyMon::Event::WheelUp;
+                key = RecordItNow::KeyloggerEvent::WheelUp;
             } else {
-                key = KeyMon::Event::WheelDown;
+                key = RecordItNow::KeyloggerEvent::WheelDown;
             }
             break;
             default:
-            key = KeyMon::Event::NoButton;
+            key = RecordItNow::KeyloggerEvent::NoButton;
             break;
         };
 
-        if (key != KeyMon::Event::NoButton) { // mouse
-            KeyMon::Event event;
-            event.key = key;
-            event.pressed = pressed;
-            event.mouseEvent = true;
+        if (key != RecordItNow::KeyloggerEvent::NoButton) { // mouse
+            RecordItNow::KeyloggerEvent event;
+            event.setId((int) key);
+            event.setPressed(pressed);
+            event.setType(RecordItNow::KeyloggerEvent::MouseEvent);
 
             emit buttonPressed(event);
         } else { // keyboard
@@ -139,10 +137,10 @@ void Device::readEvents()
 
             const bool pressed = (ev.value == 1 || ev.value == 2);
 
-            KeyMon::Event event;
-            event.keyCode = ev.code;
-            event.pressed = pressed;
-            event.mouseEvent = false;
+            RecordItNow::KeyloggerEvent event;
+            event.setId(ev.code);
+            event.setPressed(pressed);
+            event.setType(RecordItNow::KeyloggerEvent::KeyboardEvent);
 
             emit keyPressed(event);
         }

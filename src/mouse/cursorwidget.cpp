@@ -77,8 +77,8 @@ CursorWidget::CursorWidget(QWidget *parent)
     m_defaultButton = MouseButton(-1, Qt::black);
     m_currentButton = m_defaultButton;
 
-    connect(KeyMonManager::self(), SIGNAL(keyEvent(KeyMon::Event)), this,
-            SLOT(buttonPressed(KeyMon::Event)));
+    connect(KeyMonManager::self(), SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
+            SLOT(buttonPressed(RecordItNow::KeyloggerEvent)));
     connect(RecordItNow::Helper::self(), SIGNAL(compositingChanged(bool)), this, SLOT(updateMask()));
 
 }
@@ -274,10 +274,10 @@ MouseButton CursorWidget::getButton(const int &code) const
 }
 
 
-void CursorWidget::buttonPressed(const KeyMon::Event &event)
+void CursorWidget::buttonPressed(const RecordItNow::KeyloggerEvent &event)
 {
 
-    if (!event.mouseEvent) {
+    if (event.type() != RecordItNow::KeyloggerEvent::MouseEvent) {
         return;
     }
 
@@ -285,11 +285,11 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
         m_resetTimer->stop();
     }
 
-    const MouseButton button = getButton(event.keyToXButton(event.key));
+    const MouseButton button = getButton(event.keyToXButton(event.idToMouseButton()));
     if (!button.sound().isEmpty() && 
-        (event.pressed || 
-        (event.key == KeyMon::Event::WheelUp || 
-        event.key == KeyMon::Event::WheelDown))) {
+        (event.pressed() ||
+         (event.idToMouseButton() == RecordItNow::KeyloggerEvent::WheelUp ||
+        event.idToMouseButton() == RecordItNow::KeyloggerEvent::WheelDown))) {
         RecordItNow::Helper::self()->playSound(button.sound());
     }
     
@@ -299,18 +299,18 @@ void CursorWidget::buttonPressed(const KeyMon::Event &event)
     
     
     if (m_recorder) {
-        m_recorder->mouseClick(button.color(), event.pressed, m_mode);
+        m_recorder->mouseClick(button.color(), event.pressed(), m_mode);
     }
     
-    switch (event.key) {
-    case KeyMon::Event::WheelUp:
-    case KeyMon::Event::WheelDown: {
+    switch (event.idToMouseButton()) {
+    case RecordItNow::KeyloggerEvent::WheelUp:
+    case RecordItNow::KeyloggerEvent::WheelDown: {
             m_currentButton = button;
             m_resetTimer->start(RESET_TIME);
             break;
         }
     default: {
-            if (event.pressed) {
+            if (event.pressed()) {
                 m_currentButton = button;
             } else {
                 m_resetTimer->start(RESET_TIME);

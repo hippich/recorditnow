@@ -17,45 +17,62 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef DEVICESEARCHWIDGET_H
-#define DEVICESEARCHWIDGET_H
 
 
 // own
-#include "ui_devicesearchwidget.h"
-#include "keymon/deviceinfo.h"
+#include "abstractkeylogger.h"
 
 
 namespace RecordItNow {
 
 
-class DeviceSearchWidget : public QWidget, Ui::DeviceSearchWidget
+AbstractKeylogger::AbstractKeylogger(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
 
 
-public:
-    explicit DeviceSearchWidget(QWidget *parent = 0);
-    ~DeviceSearchWidget();
 
-    int deviceCount() const;
-    QString selectedDevice() const;
-
-    void search(const KeyMon::DeviceInfo::DeviceType &type);
+}
 
 
-private slots:
-    void itemSelectionChanged();
+AbstractKeylogger::~AbstractKeylogger()
+{
 
 
-signals:
-    void deviceSelectionChanged(const QString &device);
+
+}
 
 
-};
+QWidget *AbstractKeylogger::getKeyboardConfigWidget(QWidget *parent, const KConfig *)
+{
+
+    Q_UNUSED(parent);
+
+    return 0;
+
+}
+
+
+QWidget *AbstractKeylogger::getMouseConfigWidget(QWidget *parent, const KConfig *)
+{
+
+    Q_UNUSED(parent);
+
+    return 0;
+
+}
+
+
+bool AbstractKeylogger::hasConfigChanged(const KConfig *cfg)
+{
+
+    Q_UNUSED(cfg);
+    return false;
+
+}
 
 
 } // namespace RecordItNow
 
 
-#endif // DEVICESEARCHWIDGET_H
+#include "abstractkeylogger.moc"

@@ -17,22 +17,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYMONMANAGER_H
-#define KEYMONMANAGER_H
+#ifndef RECORDITNOW_KEYMONMANAGER_H
+#define RECORDITNOW_KEYMONMANAGER_H
 
 
 // own
-#include "keymon/event.h"
-#include"keymon/deviceinfo.h"
-
-// KDE
-#include <kauth.h>
-
-// Qt
-#include <QtCore/QObject>
+#include "libs/keylogger/abstractkeylogger.h"
 
 
-using namespace KAuth;
 class KeyMonManager : public QObject
 {
     Q_OBJECT
@@ -42,36 +34,26 @@ class KeyMonManager : public QObject
 public:
     ~KeyMonManager();
     static KeyMonManager *self();
-    static QList<KeyMon::DeviceInfo> getInputDeviceList();
-    static QString fileForDevice(const KeyMon::DeviceInfo &info);
 
 
     bool isRunning() const;
     QString error() const;
-    bool start(const QStringList &devs);
+    bool start();
     void stop();
     bool waitForStarted();
+
+    RecordItNow::AbstractKeylogger *keylogger() const;
 
 
 private:
     static KeyMonManager *m_self;
-    bool m_started;
-    bool m_watching;
-    QString m_error;
+    RecordItNow::AbstractKeylogger *m_logger;
 
     explicit KeyMonManager(QObject *parent = 0);
 
-    QString parseError(const int &errorCode);
-
-
-private slots:
-    void progressStep(const QVariantMap &data);
-    void actionPerformed(const ActionReply &reply);
-    void actionStarted();
-
 
 signals:
-    void keyEvent(const KeyMon::Event &event);
+    void keyEvent(const RecordItNow::KeyloggerEvent &event);
     void stopped();
     void started();
 
@@ -79,4 +61,4 @@ signals:
 };
 
 
-#endif // KEYMONMANAGER_H
+#endif // RECORDITNOW_KEYMONMANAGER_H

@@ -1246,20 +1246,11 @@ void MainWindow::initRecordWidgets(const bool &start)
 void MainWindow::initKeyMon(const bool &start)
 {
 
-    QStringList keyMonDevs;
     const bool mouseFeature = m_recorderManager->hasFeature("MouseEnabled", backendCombo->currentText());
     const bool keyboardFeature = m_recorderManager->hasFeature("KeyboardEnabled", backendCombo->currentText());
 
-    if (Settings::showActivity() && mouseFeature) {
-        keyMonDevs.append(Settings::mouseDevice());
-    }
-
-    if (isDockEnabled(m_keyboardDock) && keyboardFeature) {
-        keyMonDevs.append(Settings::keyboardDevice());
-    }
-
-    if (!keyMonDevs.isEmpty() && start) {
-        if (!KeyMonManager::self()->start(keyMonDevs) && !KeyMonManager::self()->error().isEmpty()) {
+    if (start && ((mouseFeature && m_cursor) || (keyboardFeature && isDockEnabled(m_keyboardDock)))) {
+        if (!KeyMonManager::self()->start() && !KeyMonManager::self()->error().isEmpty()) {
             errorNotification(KeyMonManager::self()->error());
         } else {
             if (!KeyMonManager::self()->waitForStarted()) {

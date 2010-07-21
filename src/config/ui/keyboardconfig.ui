@@ -18,38 +18,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QFormLayout" name="formLayout_2">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Device:</string>
-       </property>
-       <property name="buddy">
-        <cstring>kcfg_keyboardDevice</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="KLineEdit" name="kcfg_keyboardDevice"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="searchButton">
-         <property name="text">
-          <string>Search</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="KSeparator" name="kseparator"/>
+    <layout class="QHBoxLayout" name="keyboardConfigLayout"/>
    </item>
    <item>
     <spacer name="verticalSpacer">
@@ -107,7 +76,7 @@
           <x>0</x>
           <y>0</y>
           <width>391</width>
-          <height>170</height>
+          <height>199</height>
          </rect>
         </property>
        </widget>
@@ -123,21 +92,7 @@
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
   </customwidget>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KSeparator</class>
-   <extends>QFrame</extends>
-   <header>kseparator.h</header>
-  </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>kcfg_keyboardDevice</tabstop>
-  <tabstop>searchButton</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

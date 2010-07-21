@@ -22,7 +22,7 @@
 
 
 // own
-#include "keymon/event.h"
+#include "src/libs/keylogger/keyloggerevent.h"
 #include "mousebutton.h"
 #include "abstractrecorder.h"
 
@@ -87,7 +87,7 @@ private:
 private slots:
     void updatePos();
     void resetColor();
-    void buttonPressed(const KeyMon::Event &event);
+    void buttonPressed(const RecordItNow::KeyloggerEvent &event);
     void previewColors();
     void updateMask();
 

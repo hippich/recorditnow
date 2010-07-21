@@ -83,7 +83,6 @@ private slots:
     void removeSoundRow(QWidget *widget);
     void buttonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
     void soundButtonChanged(const MouseButtonWidget::Button &oldButton, const MouseButtonWidget::Button &newButton);
-    void showKeyMonDialog();
     void buttonsChanged();
     void modeChanged();
     void currentButtonChanged();

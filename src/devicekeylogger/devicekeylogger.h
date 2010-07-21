@@ -17,55 +17,68 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef KEYBOARDKEYPAGE_H
-#define KEYBOARDKEYPAGE_H
+#ifndef RECORDITNOW_DEVICEKEYLOGGER_H
+#define RECORDITNOW_DEVICEKEYLOGGER_H
 
 
 // own
-#include "ui_keyboardkeypage.h"
-#include "src/libs/keylogger/keyloggerevent.h"
+#include "src/libs/keylogger/abstractkeylogger.h"
 
 // KDE
 #include <kauth.h>
+#include <kdemacros.h>
 
 // Qt
-#include <QtGui/QWizardPage>
-#include <QtCore/QVariantMap>
+#include <QtCore/QObject>
 
+
+namespace Ui {
+    class DeviceWidget;
+}
 
 using namespace KAuth;
-class KeyboardKeyPage : public QWizardPage, Ui::KeyboardKeyPage
+class KDE_EXPORT DeviceKeylogger : public RecordItNow::AbstractKeylogger
 {
     Q_OBJECT
 
 
 public:
-    explicit KeyboardKeyPage(QWidget *parent = 0);
-    ~KeyboardKeyPage();
+    DeviceKeylogger(QObject *parent);
+    ~DeviceKeylogger();
 
-    void initializePage();
+    QWidget *getKeyboardConfigWidget(QWidget *parent, const KConfig *cfg);
+    QWidget *getMouseConfigWidget(QWidget *parent, const KConfig *cfg);
+
+
+    bool isRunning();
+    QString error() const;
+    bool start(const KConfig *cfg);
+    void stop();
+    bool waitForStarted();
+    void saveConfig(KConfig *cfg);
+    bool hasConfigChanged(const KConfig *cfg);
 
 
 private:
-    int m_key;
-    bool m_grab;
+    bool m_started;
+    bool m_watching;
+    QString m_error;
+    Ui::DeviceWidget *ui_mouse;
+    Ui::DeviceWidget *ui_keyboard;
+
+    QString parseError(const int &errorCode);
 
 
 private slots:
-    void start();
-    void startGrab();
-    void stop();
-    void keyEvent(const RecordItNow::KeyloggerEvent &event);
-    void keymonStopped();
+    void progressStep(const QVariantMap &data);
+    void actionPerformed(const ActionReply &reply);
+    void actionStarted();
 
-
-protected:
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+    void showKeyboardDeviceDialog();
+    void showMouseDeviceDialog();
 
 
 };
 
 
-#endif // KEYBOARDKEYPAGE_H
+#endif // KEYMONMANAGER_H

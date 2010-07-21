@@ -61,8 +61,8 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 
             return reply;
         }
-        connect(device, SIGNAL(buttonPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
-        connect(device, SIGNAL(keyPressed(KeyMon::Event)), this, SLOT(key(KeyMon::Event)));
+        connect(device, SIGNAL(buttonPressed(RecordItNow::KeyloggerEvent)), this, SLOT(key(RecordItNow::KeyloggerEvent)));
+        connect(device, SIGNAL(keyPressed(RecordItNow::KeyloggerEvent)), this, SLOT(key(RecordItNow::KeyloggerEvent)));
     }
 
     QVariantMap data;
@@ -78,14 +78,13 @@ ActionReply DeviceHelper::watch(QVariantMap args)
 }
 
 
-void DeviceHelper::key(const KeyMon::Event &event)
+void DeviceHelper::key(const RecordItNow::KeyloggerEvent &event)
 {
 
     QVariantMap data;
-    data["Key"] = event.key;
-    data["KeyCode"] = event.keyCode;
-    data["Pressed"] = event.pressed;
-    data["MouseEvent"] = event.mouseEvent;
+    data["KeyCode"] = event.id();
+    data["Pressed"] = event.pressed();
+    data["MouseEvent"] = event.type() == RecordItNow::KeyloggerEvent::MouseEvent;
     HelperSupport::progressStep(data);
 
 }
