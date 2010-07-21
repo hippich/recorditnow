@@ -285,11 +285,11 @@ void CursorWidget::buttonPressed(const RecordItNow::KeyloggerEvent &event)
         m_resetTimer->stop();
     }
 
-    const MouseButton button = getButton(event.keyToXButton(event.idToMouseButton()));
+    const MouseButton button = getButton(event.buttonToXButton(event.idToButton()));
     if (!button.sound().isEmpty() && 
         (event.pressed() ||
-         (event.idToMouseButton() == RecordItNow::KeyloggerEvent::WheelUp ||
-        event.idToMouseButton() == RecordItNow::KeyloggerEvent::WheelDown))) {
+         (event.idToButton() == RecordItNow::KeyloggerEvent::WheelUp ||
+        event.idToButton() == RecordItNow::KeyloggerEvent::WheelDown))) {
         RecordItNow::Helper::self()->playSound(button.sound());
     }
     
@@ -302,7 +302,7 @@ void CursorWidget::buttonPressed(const RecordItNow::KeyloggerEvent &event)
         m_recorder->mouseClick(button.color(), event.pressed(), m_mode);
     }
     
-    switch (event.idToMouseButton()) {
+    switch (event.idToButton()) {
     case RecordItNow::KeyloggerEvent::WheelUp:
     case RecordItNow::KeyloggerEvent::WheelDown: {
             m_currentButton = button;

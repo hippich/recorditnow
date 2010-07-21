@@ -23,6 +23,9 @@
 #include "keyloggerevent.h"
 #include "keyloggerevent_p.h"
 
+// KDE
+#include <kdebug.h>
+
 // X
 #include <X11/Xlib.h>
 
@@ -103,17 +106,17 @@ KeyloggerEvent::EventType KeyloggerEvent::type() const
 }
 
 
-RecordItNow::KeyloggerEvent::MouseButton KeyloggerEvent::idToMouseButton() const
+RecordItNow::KeyloggerEvent::MouseButton KeyloggerEvent::idToButton() const
 {
 
     switch (id()) {
-    case 0: return LeftButton;
-    case 1: return RightButton;
-    case 3: return MiddleButton;
-    case 4: return SpecialButton1;
-    case 5: return SpecialButton2;
-    case 6: return WheelUp;
-    case 7: return WheelDown;
+    case Button1: return LeftButton;
+    case Button3: return RightButton;
+    case Button2: return MiddleButton;
+    case 8: return SpecialButton1;
+    case 9: return SpecialButton2;
+    case Button4: return WheelUp;
+    case Button5: return WheelDown;
     default: return NoButton;
     }
 
@@ -152,7 +155,7 @@ void KeyloggerEvent::setType(const KeyloggerEvent::EventType &type)
 }
 
 
-int KeyloggerEvent::keyToXButton(const RecordItNow::KeyloggerEvent::MouseButton &key)
+int KeyloggerEvent::buttonToXButton(const RecordItNow::KeyloggerEvent::MouseButton &key)
 {
 
     switch (key) {

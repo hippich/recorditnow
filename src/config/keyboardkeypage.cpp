@@ -33,11 +33,6 @@
 #include <QtGui/QKeyEvent>
 
 
-#include <X11/Xlib.h>
-#include <QX11Info>
-#include <X11/keysym.h>
-
-
 KeyboardKeyPage::KeyboardKeyPage(QWidget *parent)
     : QWizardPage(parent)
 {

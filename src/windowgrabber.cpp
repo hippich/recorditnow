@@ -74,8 +74,6 @@ void WindowGrabber::mousePressEvent(QMouseEvent *event)
 void WindowGrabber::mouseReleaseEvent(QMouseEvent *event)
 {
 
-    kDebug() << "release";
-
     event->accept();
 
     releaseMouse();

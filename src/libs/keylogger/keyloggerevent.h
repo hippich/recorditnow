@@ -62,7 +62,7 @@ public:
     int id() const;
     bool pressed() const;
     KeyloggerEvent::EventType type() const;
-    RecordItNow::KeyloggerEvent::MouseButton idToMouseButton() const;
+    RecordItNow::KeyloggerEvent::MouseButton idToButton() const;
 
 
     void setText(const QString &text);
@@ -70,7 +70,7 @@ public:
     void setPressed(const bool &pressed);
     void setType(const KeyloggerEvent::EventType &type);
 
-    static int keyToXButton(const RecordItNow::KeyloggerEvent::MouseButton &key);
+    static int buttonToXButton(const RecordItNow::KeyloggerEvent::MouseButton &key);
 
 
 private:
