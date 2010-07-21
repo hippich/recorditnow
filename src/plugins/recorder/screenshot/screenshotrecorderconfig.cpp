@@ -21,6 +21,7 @@
 // own
 #include "screenshotrecorderconfig.h"
 #include <recorditnow_screenshot.h>
+#include <config-recorditnow.h>
 
 // KDE
 #include <kpluginfactory.h>
