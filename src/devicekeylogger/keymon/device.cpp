@@ -142,6 +142,16 @@ void Device::readEvents()
             event.setPressed(pressed);
             event.setType(RecordItNow::KeyloggerEvent::KeyboardEvent);
 
+            switch (ev.code) {
+            case KEY_RIGHTMETA:
+            case KEY_LEFTMETA:
+            case KEY_RIGHTALT:
+            case KEY_LEFTALT:
+            case KEY_LEFTSHIFT:
+            case KEY_LEFTCTRL: event.setKeyType(RecordItNow::KeyloggerEvent::ModifierKey); break;
+            default: break;
+            }
+
             emit keyPressed(event);
         }
     }

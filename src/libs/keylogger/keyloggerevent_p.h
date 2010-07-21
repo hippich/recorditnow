@@ -44,6 +44,7 @@ public:
     int id;
     bool pressed;
     KeyloggerEvent::EventType type;
+    RecordItNow::KeyloggerEvent::KeyboardKey key;
 
 
 private:

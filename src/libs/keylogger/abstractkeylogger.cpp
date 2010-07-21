@@ -55,6 +55,12 @@ void AbstractKeyloggerPrivate::logKeys(const RecordItNow::KeyloggerEvent &event)
         return;
     }
 
+    if ((!event.isKeyboardModifier() && m_keys.isEmpty()) ||
+        (!m_keys.isEmpty() && !m_keys.at(0).isKeyboardModifier())) {
+        // TODO: log text
+        return;
+    }
+
     if (event.pressed()) {
         if (!m_keys.contains(event)) {
             m_keys.append(event);

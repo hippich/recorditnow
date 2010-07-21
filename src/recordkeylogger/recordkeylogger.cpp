@@ -129,6 +129,23 @@ RecordKeylogger::~RecordKeylogger()
 
 }
 
+static void setModifier(const KeySym &sym, RecordItNow::KeyloggerEvent *event)
+{
+
+    switch (sym) {
+    case XK_Shift_L:
+    case XK_Shift_R:
+    case XK_Control_L:
+    case XK_Control_R:
+    case XK_Meta_L:
+    case XK_Meta_R:
+    case XK_Alt_L:
+    case XK_Alt_R: event->setKeyType(RecordItNow::KeyloggerEvent::ModifierKey);; break;
+    default: break;
+    }
+
+}
+
 
 static void event_callback(XPointer priv, XRecordInterceptData *hook)
 {
@@ -160,8 +177,12 @@ static void event_callback(XPointer priv, XRecordInterceptData *hook)
             event.setPressed(true);
             event.setId(keyCode);
 
-            string = XKeysymToString(XKeycodeToKeysym(watch->ctrl_display, keyCode, 0));
+
+            KeySym sym = XKeycodeToKeysym(watch->ctrl_display, keyCode, 0);
+            string = XKeysymToString(sym);
             event.setText(QString(string));
+
+            setModifier(sym, &event);
 
           //  qDebug() << "key press" << string;
             break;
@@ -171,8 +192,11 @@ static void event_callback(XPointer priv, XRecordInterceptData *hook)
             event.setPressed(false);
             event.setId(keyCode);
 
-            string = XKeysymToString(XKeycodeToKeysym(watch->ctrl_display, keyCode, 0));
+            KeySym sym = XKeycodeToKeysym(watch->ctrl_display, keyCode, 0);
+            string = XKeysymToString(sym);
             event.setText(QString(string));
+
+            setModifier(sym, &event);
 
             //qDebug() << "key release" << string;
             break;

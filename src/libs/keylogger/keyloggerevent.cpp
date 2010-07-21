@@ -30,6 +30,7 @@
 #include <X11/Xlib.h>
 
 
+
 namespace RecordItNow {
 
 
@@ -39,6 +40,7 @@ KeyloggerEventPrivate::KeyloggerEventPrivate(KeyloggerEvent *parent)
 
     qRegisterMetaType<RecordItNow::KeyloggerEvent>("RecordItNow::KeyloggerEvent");
     id = -1;
+    key = KeyloggerEvent::OtherKey;
 
 }
 
@@ -139,6 +141,22 @@ bool KeyloggerEvent::operator!=(const RecordItNow::KeyloggerEvent &other) const
 }
 
 
+bool KeyloggerEvent::isKeyboardModifier() const
+{
+
+    return keyType() == RecordItNow::KeyloggerEvent::ModifierKey;
+
+}
+
+
+RecordItNow::KeyloggerEvent::KeyboardKey KeyloggerEvent::keyType() const
+{
+
+    return d->key;
+
+}
+
+
 void KeyloggerEvent::setText(const QString &text)
 {
 
@@ -184,6 +202,14 @@ int KeyloggerEvent::buttonToXButton(const RecordItNow::KeyloggerEvent::MouseButt
     case WheelDown: return Button5;
     default: return -1;
     }
+
+}
+
+
+void KeyloggerEvent::setKeyType(const RecordItNow::KeyloggerEvent::KeyboardKey &key)
+{
+
+    d->key = key;
 
 }
 

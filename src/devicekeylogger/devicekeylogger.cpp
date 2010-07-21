@@ -294,10 +294,7 @@ void DeviceKeylogger::progressStep(const QVariantMap &data)
         return;
     }
 
-    RecordItNow::KeyloggerEvent event;
-    event.setId(data.value("KeyCode").toInt());
-    event.setPressed(data["Pressed"].toBool());
-    event.setType(data.value("MouseEvent").toBool() ? RecordItNow::KeyloggerEvent::MouseEvent : RecordItNow::KeyloggerEvent::KeyboardEvent);
+    const RecordItNow::KeyloggerEvent event = data.value("Event").value<RecordItNow::KeyloggerEvent>();
     emit keyEvent(event);
 
 }

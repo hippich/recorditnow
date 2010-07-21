@@ -82,9 +82,7 @@ void DeviceHelper::key(const RecordItNow::KeyloggerEvent &event)
 {
 
     QVariantMap data;
-    data["KeyCode"] = event.id();
-    data["Pressed"] = event.pressed();
-    data["MouseEvent"] = event.type() == RecordItNow::KeyloggerEvent::MouseEvent;
+    data.insert("Event", QVariant::fromValue(event));
     HelperSupport::progressStep(data);
 
 }

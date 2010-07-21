@@ -52,6 +52,15 @@ public:
         WheelDown = 7,
         NoButton = -1
     };
+    enum KeyboardKey {
+        ModifierKey = 0, // shift,ctr,alt,...
+        TextKey = 1, // a,b,c,1,2,3, ...
+        TabKey = 2,
+        BackSpaceKey = 3,
+        SpaceKey = 4,
+        ReturnKey = 5,
+        OtherKey = 6
+    };
 
     KeyloggerEvent();
     KeyloggerEvent(const RecordItNow::KeyloggerEvent &copy);
@@ -63,6 +72,8 @@ public:
     bool pressed() const;
     KeyloggerEvent::EventType type() const;
     RecordItNow::KeyloggerEvent::MouseButton idToButton() const;
+    bool isKeyboardModifier() const;
+    RecordItNow::KeyloggerEvent::KeyboardKey keyType() const;
 
     bool operator==(const RecordItNow::KeyloggerEvent &other) const;
     bool operator!=(const RecordItNow::KeyloggerEvent &other) const;
@@ -71,6 +82,7 @@ public:
     void setId(const int &id);
     void setPressed(const bool &pressed);
     void setType(const KeyloggerEvent::EventType &type);
+    void setKeyType(const RecordItNow::KeyloggerEvent::KeyboardKey &key);
 
     static int buttonToXButton(const RecordItNow::KeyloggerEvent::MouseButton &key);
 
