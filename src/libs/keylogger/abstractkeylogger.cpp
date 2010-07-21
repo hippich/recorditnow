@@ -21,16 +21,72 @@
 
 // own
 #include "abstractkeylogger.h"
+#include "abstractkeylogger_p.h"
+
+// KDE
+#include <kdebug.h>
 
 
 namespace RecordItNow {
 
 
-AbstractKeylogger::AbstractKeylogger(QObject *parent)
-    : QObject(parent)
+AbstractKeyloggerPrivate::AbstractKeyloggerPrivate(AbstractKeylogger *parent)
+    : QObject(parent), q(parent)
+{
+
+    connect(q, SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
+            SLOT(logKeys(RecordItNow::KeyloggerEvent)));
+
+}
+
+
+AbstractKeyloggerPrivate::~AbstractKeyloggerPrivate()
 {
 
 
+}
+
+
+void AbstractKeyloggerPrivate::logKeys(const RecordItNow::KeyloggerEvent &event)
+{
+
+
+    if (event.type() != KeyloggerEvent::KeyboardEvent) {
+        return;
+    }
+
+    if (event.pressed()) {
+        m_keys.append(event);
+    } else {
+        for (int i = 0; i < m_keys.size(); i++) {
+            if (m_keys.at(i).id() == event.id()) {
+                m_keys.takeAt(i);
+                i--;
+            }
+        }
+    }
+
+    QString string;
+    foreach (const RecordItNow::KeyloggerEvent &key, m_keys) {
+        if (!string.isEmpty()) {
+            string.append("+");
+        }
+        string.append(key.text());
+    }
+    kDebug() << string;
+
+    emit pressedKeysChanged(m_keys);
+
+}
+
+
+
+AbstractKeylogger::AbstractKeylogger(QObject *parent)
+    : QObject(parent), d(new AbstractKeyloggerPrivate(this))
+{
+
+    connect(d, SIGNAL(pressedKeysChanged(QList<RecordItNow::KeyloggerEvent>)), this,
+            SIGNAL(pressedKeysChanged(QList<RecordItNow::KeyloggerEvent>)));
 
 }
 
@@ -38,7 +94,7 @@ AbstractKeylogger::AbstractKeylogger(QObject *parent)
 AbstractKeylogger::~AbstractKeylogger()
 {
 
-
+    delete d;
 
 }
 
@@ -76,3 +132,4 @@ bool AbstractKeylogger::hasConfigChanged(const KConfig *cfg)
 
 
 #include "abstractkeylogger.moc"
+#include "abstractkeylogger_p.moc"

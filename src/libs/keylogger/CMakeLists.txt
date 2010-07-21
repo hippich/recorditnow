@@ -1,6 +1,6 @@
 
 # For QtCreator
-set(PRIVATE_H keyloggerevent_p.h)
+set(PRIVATE_H keyloggerevent_p.h abstractkeylogger_p.h)
 
 set(lib_SRCS
     ${PRIVATE_H}

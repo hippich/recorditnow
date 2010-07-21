@@ -17,16 +17,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOW_ABSTRACTKEYLOGGER_H
-#define RECORDITNOW_ABSTRACTKEYLOGGER_H
+#ifndef RECORDITNOW_ABSTRACTKEYLOGGER_P_H
+#define RECORDITNOW_ABSTRACTKEYLOGGER_P_H
 
 
 // own
 #include "keyloggerevent.h"
-
-// KDE
-#include <kconfiggroup.h>
-#include <kdemacros.h>
 
 // Qt
 #include <QtCore/QObject>
@@ -35,44 +31,34 @@
 namespace RecordItNow {
 
 
-class AbstractKeyloggerPrivate;
-class KDE_EXPORT AbstractKeylogger : public QObject
+class AbstractKeylogger;
+class AbstractKeyloggerPrivate: public QObject
 {
     Q_OBJECT
 
 
 public:
-    explicit AbstractKeylogger(QObject *parent);
-    ~AbstractKeylogger();
-
-    virtual QWidget *getKeyboardConfigWidget(QWidget *parent, const KConfig *);
-    virtual QWidget *getMouseConfigWidget(QWidget *parent, const KConfig *);
-    virtual bool start(const KConfig *) = 0;
-    virtual void stop() = 0;
-    virtual bool waitForStarted() = 0;
-    virtual bool isRunning() = 0;
-    virtual void saveConfig(KConfig *) {};
-    virtual bool hasConfigChanged(const KConfig *cfg);
-    virtual QString error() const { return QString(); };
+    AbstractKeyloggerPrivate(AbstractKeylogger *parent);
+    ~AbstractKeyloggerPrivate();
 
 
 private:
-    AbstractKeyloggerPrivate *d;
+    AbstractKeylogger *q;
+    QList<RecordItNow::KeyloggerEvent> m_keys;
+
+
+private slots:
+    void logKeys(const RecordItNow::KeyloggerEvent &event);
 
 
 signals:
-    void error(const QString &errorString);
-    void started();
-    void stopped();
-    void keyEvent(const RecordItNow::KeyloggerEvent &event);
-    void configChanged();
     void pressedKeysChanged(const QList<RecordItNow::KeyloggerEvent> &keys);
 
 
 };
 
 
-} // namespace RecordItNow
+}; // namespace RecordItNow
 
 
-#endif // RECORDITNOW_ABSTRACTKEYLOGGER_H
+#endif // RECORDITNOW_ABSTRACTKEYLOGGER_P_H
