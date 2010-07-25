@@ -44,15 +44,6 @@ public:
 
 private:
     AbstractKeylogger *q;
-    QList<RecordItNow::KeyloggerEvent> m_keys;
-
-
-private slots:
-    void logKeys(const RecordItNow::KeyloggerEvent &event);
-
-
-signals:
-    void pressedKeysChanged(const QList<RecordItNow::KeyloggerEvent> &keys);
 
 
 };

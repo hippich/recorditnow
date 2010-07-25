@@ -148,7 +148,7 @@ void Device::readEvents()
             case KEY_RIGHTALT:
             case KEY_LEFTALT:
             case KEY_LEFTSHIFT:
-            case KEY_LEFTCTRL: event.setKeyType(RecordItNow::KeyloggerEvent::ModifierKey); break;
+          //  case KEY_LEFTCTRL: event.setKeyType(RecordItNow::KeyloggerEvent::ModifierKey); break;
             default: break;
             }
 

@@ -47,8 +47,6 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     
     setupUi(this);
 
-    mouseConfigLayout->addWidget(KeyMonManager::self()->keylogger()->getMouseConfigWidget(this, cfg));
-
     m_colorLayout = new RecordItNow::ListLayout;
     colorListWidget->setLayout(m_colorLayout);
     
@@ -110,7 +108,6 @@ void MouseConfig::saveConfig()
 {
 
     saveConfig(config(), currentButtons());
-    KeyMonManager::self()->keylogger()->saveConfig(config());
 
 }
 

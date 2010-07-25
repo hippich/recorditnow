@@ -31,8 +31,6 @@
 #include "config/pluginconfig.h"
 #include "config/notificationconfig.h"
 #include "config/playerconfig.h"
-#include "keymonmanager.h"
-#include "src/libs/keylogger/abstractkeylogger.h"
 
 // KDE
 #include <kdebug.h>
@@ -120,8 +118,6 @@ void ConfigDialog::init()
         connect(page, SIGNAL(settingsChanged()), this, SLOT(pageConfigChanged()));
     }
 
-    connect(KeyMonManager::self()->keylogger(), SIGNAL(configChanged()), this, SLOT(pageConfigChanged()));
-
 }
 
 
@@ -169,7 +165,6 @@ void ConfigDialog::pageConfigChanged()
 void ConfigDialog::saveSettings()
 {
 
-    KeyMonManager::self()->keylogger()->saveConfig(Settings::self()->config());
     Settings::setEncoderName(ui_settings.encoderCombo->currentText());
     foreach (RecordItNow::ConfigPage *page, m_pageList) {
         page->save();
@@ -189,7 +184,7 @@ bool ConfigDialog::hasChanged()
             return true;
         }
     }
-    return KeyMonManager::self()->keylogger()->hasConfigChanged(Settings::self()->config());
+    return false;
 
 }
 

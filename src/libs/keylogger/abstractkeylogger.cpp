@@ -34,8 +34,7 @@ AbstractKeyloggerPrivate::AbstractKeyloggerPrivate(AbstractKeylogger *parent)
     : QObject(parent), q(parent)
 {
 
-    connect(q, SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
-            SLOT(logKeys(RecordItNow::KeyloggerEvent)));
+
 
 }
 
@@ -47,49 +46,11 @@ AbstractKeyloggerPrivate::~AbstractKeyloggerPrivate()
 }
 
 
-void AbstractKeyloggerPrivate::logKeys(const RecordItNow::KeyloggerEvent &event)
-{
-
-
-    if (event.type() != KeyloggerEvent::KeyboardEvent) {
-        return;
-    }
-
-    if ((!event.isKeyboardModifier() && m_keys.isEmpty()) ||
-        (!m_keys.isEmpty() && !m_keys.at(0).isKeyboardModifier())) {
-        // TODO: log text
-        return;
-    }
-
-    if (event.pressed()) {
-        if (!m_keys.contains(event)) {
-            m_keys.append(event);
-        }
-    } else {
-        m_keys.removeAll(event);
-    }
-
-    QString string;
-    foreach (const RecordItNow::KeyloggerEvent &key, m_keys) {
-        if (!string.isEmpty()) {
-            string.append("+");
-        }
-        string.append(key.text());
-    }
-    kDebug() << string;
-
-    emit pressedKeysChanged(m_keys);
-
-}
-
-
-
 AbstractKeylogger::AbstractKeylogger(QObject *parent)
     : QObject(parent), d(new AbstractKeyloggerPrivate(this))
 {
 
-    connect(d, SIGNAL(pressedKeysChanged(QList<RecordItNow::KeyloggerEvent>)), this,
-            SIGNAL(pressedKeysChanged(QList<RecordItNow::KeyloggerEvent>)));
+
 
 }
 
@@ -101,34 +62,6 @@ AbstractKeylogger::~AbstractKeylogger()
 
 }
 
-
-QWidget *AbstractKeylogger::getKeyboardConfigWidget(QWidget *parent, const KConfig *)
-{
-
-    Q_UNUSED(parent);
-
-    return 0;
-
-}
-
-
-QWidget *AbstractKeylogger::getMouseConfigWidget(QWidget *parent, const KConfig *)
-{
-
-    Q_UNUSED(parent);
-
-    return 0;
-
-}
-
-
-bool AbstractKeylogger::hasConfigChanged(const KConfig *cfg)
-{
-
-    Q_UNUSED(cfg);
-    return false;
-
-}
 
 
 } // namespace RecordItNow

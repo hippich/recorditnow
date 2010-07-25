@@ -22,10 +22,7 @@
 #include "keymonmanager.h"
 #include <config-recorditnow.h>
 #include <recorditnow.h>
-#include "devicekeylogger/devicekeylogger.h"
-#if defined HAVE_RECORDKEYLOGGER
-    #include "recordkeylogger/recordkeylogger.h"
-#endif
+#include "recordkeylogger/recordkeylogger.h"
 
 // Qt
 #include <QtCore/QTimer>
@@ -49,15 +46,10 @@ KeyMonManager::KeyMonManager(QObject *parent)
     : QObject(parent)
 {
 
-#if defined HAVE_RECORDKEYLOGGER
     m_logger = new RecordItNow::RecordKeylogger(this);
-#else
-    m_logger = new DeviceKeylogger(this);
-#endif
 
     connect(m_logger, SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
             SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)));
-
     connect(m_logger, SIGNAL(started()), this, SIGNAL(started()));
     connect(m_logger, SIGNAL(stopped()), this, SIGNAL(stopped()));
 
@@ -116,14 +108,6 @@ bool KeyMonManager::waitForStarted()
 {
 
     return m_logger->waitForStarted();
-
-}
-
-
-RecordItNow::AbstractKeylogger *KeyMonManager::keylogger() const
-{
-
-    return m_logger;
 
 }
 

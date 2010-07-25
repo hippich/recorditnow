@@ -53,7 +53,7 @@ private:
     Ui::KeyboardDockTitleWidget ui_title;
     QList<KeyWidget*> m_keyList;
     FlowLayout *m_layout;
-    
+
 
 private slots:
     void keyPressed(const RecordItNow::KeyloggerEvent &event);

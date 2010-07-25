@@ -44,7 +44,9 @@ public:
     int id;
     bool pressed;
     KeyloggerEvent::EventType type;
-    RecordItNow::KeyloggerEvent::KeyboardKey key;
+    Qt::Key qKey;
+    Qt::KeyboardModifiers modifiers;
+    int keyCount;
 
 
 private:

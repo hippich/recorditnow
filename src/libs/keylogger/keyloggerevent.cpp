@@ -40,7 +40,8 @@ KeyloggerEventPrivate::KeyloggerEventPrivate(KeyloggerEvent *parent)
 
     qRegisterMetaType<RecordItNow::KeyloggerEvent>("RecordItNow::KeyloggerEvent");
     id = -1;
-    key = KeyloggerEvent::OtherKey;
+    modifiers = Qt::NoModifier;
+    keyCount = 1;
 
 }
 
@@ -125,6 +126,14 @@ RecordItNow::KeyloggerEvent::MouseButton KeyloggerEvent::idToButton() const
 }
 
 
+Qt::Key KeyloggerEvent::key() const
+{
+
+    return d->qKey;
+
+}
+
+
 bool KeyloggerEvent::operator==(const RecordItNow::KeyloggerEvent &other) const
 {
 
@@ -141,18 +150,18 @@ bool KeyloggerEvent::operator!=(const RecordItNow::KeyloggerEvent &other) const
 }
 
 
-bool KeyloggerEvent::isKeyboardModifier() const
+Qt::KeyboardModifiers KeyloggerEvent::modifiers() const
 {
 
-    return keyType() == RecordItNow::KeyloggerEvent::ModifierKey;
+    return d->modifiers;
 
 }
 
 
-RecordItNow::KeyloggerEvent::KeyboardKey KeyloggerEvent::keyType() const
+int KeyloggerEvent::count() const
 {
 
-    return d->key;
+    return d->keyCount;
 
 }
 
@@ -206,14 +215,28 @@ int KeyloggerEvent::buttonToXButton(const RecordItNow::KeyloggerEvent::MouseButt
 }
 
 
-void KeyloggerEvent::setKeyType(const RecordItNow::KeyloggerEvent::KeyboardKey &key)
+void KeyloggerEvent::setKey(const Qt::Key &key)
 {
 
-    d->key = key;
+    d->qKey = key;
 
 }
 
 
+void KeyloggerEvent::setModifiers(const Qt::KeyboardModifiers &modifiers)
+{
+
+    d->modifiers = modifiers;
+
+}
+
+
+void KeyloggerEvent::setCount(const int &count)
+{
+
+    d->keyCount = count;
+
+}
 
 
 } // namespace RecordItNow

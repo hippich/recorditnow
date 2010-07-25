@@ -74,7 +74,6 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 KeyboardDock::~KeyboardDock()
 {
 
-
     
 }
 
@@ -108,6 +107,8 @@ void KeyboardDock::keyPressed(const RecordItNow::KeyloggerEvent &event)
             break;
         }
     }
+   // QKeyEvent k(event.pressed() ? (QEvent::Type)6 : (QEvent::Type)7, event.key(), event.modifiers(), event.text(), false, event.count());
+  //  qApp->sendEvent(m_edit, &k);
 
 }
 

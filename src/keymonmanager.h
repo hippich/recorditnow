@@ -42,8 +42,6 @@ public:
     void stop();
     bool waitForStarted();
 
-    RecordItNow::AbstractKeylogger *keylogger() const;
-
 
 private:
     static KeyMonManager *m_self;

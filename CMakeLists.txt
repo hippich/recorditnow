@@ -15,6 +15,11 @@ install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
 find_package(JoschyCore REQUIRED)
 find_package(RecordMyDesktop REQUIRED)
 
+if (NOT X11_Xext_FOUND OR NOT X11_XTest_FOUND)
+    MESSAGE(FATAL_ERROR "Could not find X11 ext/test")
+endif(NOT X11_Xext_FOUND OR NOT X11_XTest_FOUND)
+
+
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}

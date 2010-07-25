@@ -49,8 +49,6 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
 
     setupUi(this);
 
-    keyboardConfigLayout->addWidget(KeyMonManager::self()->keylogger()->getKeyboardConfigWidget(this, cfg));
-
     m_layout = new RecordItNow::ListLayout(0, true);
     keyboardWidgetList->setLayout(m_layout);
     
@@ -136,7 +134,6 @@ void KeyboardConfig::saveConfig()
 {
 
     saveConfig(currentKeys(), config());
-    KeyMonManager::self()->keylogger()->saveConfig(config());
 
 }
 

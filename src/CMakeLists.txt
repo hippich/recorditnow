@@ -15,17 +15,6 @@ macro_log_feature(HAVE_XFIXES "XFixes"
     "X.Org Xfixes library"
     "http://xorg.freedesktop.org/")
 
-# XRecord
-if (X11_Xext_FOUND AND X11_XTest_FOUND AND NOT FORCE_DEVICELOGGER)
-    add_subdirectory(recordkeylogger)
-    set(HAVE_RECORDKEYLOGGER True)
-endif(X11_Xext_FOUND AND X11_XTest_FOUND AND NOT FORCE_DEVICELOGGER)
-macro_log_feature(HAVE_RECORDKEYLOGGER "XRecord"
-                                       "X Record Extension Library"
-                                       "http://www.x.org/" FALSE
-                                       ""
-                                       "Required for RecordItNow`s keylogger")
-
 configure_file(config-recorditnow.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-recorditnow.h)
 
 
@@ -33,7 +22,7 @@ add_subdirectory(libs)
 add_subdirectory(plugins)
 add_subdirectory(icons)
 add_subdirectory(keyboard)
-add_subdirectory(devicekeylogger)
+add_subdirectory(recordkeylogger)
 
 macro_display_feature_log()
 
@@ -192,13 +181,9 @@ set(GUI_SRCS_LINK ${KDE4_KDEUI_LIBS}
                   recorditnow_encoder
                   recorditnow_frame
                   recorditnow_common
-                  recorditnow_devicekeylogger
+                  recorditnow_recordkeylogger
                   ${X11_Xcursor_LIB}
                   ${JOSCHYCORE_LIBRARIES})
-
-if (HAVE_RECORDKEYLOGGER)
-    set(GUI_SRCS_LINK ${GUI_SRCS_LINK} recorditnow_recordkeylogger)
-endif (HAVE_RECORDKEYLOGGER)
 
 if (XFIXES_FOUND)
     set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${XFIXES_LIBRARIES})

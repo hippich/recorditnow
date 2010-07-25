@@ -45,14 +45,10 @@ public:
     explicit AbstractKeylogger(QObject *parent);
     ~AbstractKeylogger();
 
-    virtual QWidget *getKeyboardConfigWidget(QWidget *parent, const KConfig *);
-    virtual QWidget *getMouseConfigWidget(QWidget *parent, const KConfig *);
     virtual bool start(const KConfig *) = 0;
     virtual void stop() = 0;
     virtual bool waitForStarted() = 0;
     virtual bool isRunning() = 0;
-    virtual void saveConfig(KConfig *) {};
-    virtual bool hasConfigChanged(const KConfig *cfg);
     virtual QString error() const { return QString(); };
 
 
@@ -65,8 +61,6 @@ signals:
     void started();
     void stopped();
     void keyEvent(const RecordItNow::KeyloggerEvent &event);
-    void configChanged();
-    void pressedKeysChanged(const QList<RecordItNow::KeyloggerEvent> &keys);
 
 
 };

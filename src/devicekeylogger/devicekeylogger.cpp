@@ -116,12 +116,10 @@ void DeviceKeylogger::saveConfig(KConfig *cfg)
     if (ui_mouse) {
         KConfigGroup configGroup(cfg, "Mouse");
         configGroup.writeEntry("MouseDevice", ui_mouse->deviceLine->text());
-        qDebug() << "save cfggggggggg";
     }
     if (ui_keyboard) {
         KConfigGroup configGroup(cfg, "Keyboard");
         configGroup.writeEntry("KeyboardDevice", ui_keyboard->deviceLine->text());
-        qDebug() << "save cfggggggggg";
     }
 
 }
