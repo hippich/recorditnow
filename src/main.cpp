@@ -52,30 +52,8 @@ static void checkVersion()
             Settings::setMouseDevice(cfg.readEntry("keyMonDevice", QString()));
             cfg.deleteEntry("keyMonDevice");
 
-
-            printf("Convert old keyboard configuration...\n");
-
-            KConfigGroup keyGroup(Settings::self()->config(), "Keyboard");
-            int count = keyGroup.readEntry("Keys", 0);
-            QList<KeyboardKey> keyMap;
-
-            for (int i = 0; i < count; i++) {
-                const QString codeKey(QString("Key %1 Code").arg(i));
-                const QString iconKey(QString("Key %1 Icon").arg(i));
-                const QString textKey(QString("Key %1 Text").arg(i));
-
-                const int key = keyGroup.readEntry(codeKey, -1);
-                const QString icon = keyGroup.readEntry(iconKey, QString());
-                const QString text = keyGroup.readEntry(textKey, QString());
-
-                printf("Save Key: %d\n", key);
-
-                keyMap.append(KeyboardKey(key, icon, text));
-            }
-            KeyboardConfig::saveConfig(keyMap, Settings::self()->config());
-
             printf("Delete old keyboard entrys...\n");
-
+            KConfigGroup keyGroup(Settings::self()->config(), "Keyboard");
             int index = 0;
             QString key = QString("Key %1 Code").arg(index);
             while (keyGroup.hasKey(key)) {
@@ -143,7 +121,7 @@ static void checkVersion()
 
             QList<RecordItNow::Timeline::Topic> topics;
             KConfigGroup timelineCfg(Settings::self()->config(), "Timeline");
-            count = timelineCfg.readEntry("Topics", 0);
+            int count = timelineCfg.readEntry("Topics", 0);
             for (int i = 0; i < count; i++) {
                 const QString title = timelineCfg.readEntry(QString("Topic %1 Title").arg(i), i18n("Untitled"));
                 const QString icon = timelineCfg.readEntry(QString("Topic %1 Icon").arg(i), "dialog-information");
