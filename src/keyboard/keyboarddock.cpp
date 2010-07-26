@@ -24,6 +24,7 @@
 #include "../keymonmanager.h"
 #include "flowlayout.h"
 #include <recorditnow.h>
+#include "keyloggerwidget.h"
 
 // KDE
 #include <kauth.h>
@@ -34,6 +35,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QMainWindow>
 #include <QtGui/QSlider>
+#include <QtGui/QKeyEvent>
 
 
 KeyboardDock::KeyboardDock(QWidget *parent)
@@ -68,12 +70,15 @@ KeyboardDock::KeyboardDock(QWidget *parent)
 
     setWidget(content);
 
+    m_edit = 0;
+
 }
 
 
 KeyboardDock::~KeyboardDock()
 {
 
+    stop();
     
 }
 
@@ -93,6 +98,28 @@ void KeyboardDock::init(const QList<KeyboardKey> &map)
 }
 
 
+void KeyboardDock::start(const bool &onScreenDisplay, const int &fontSize, const int &timeout, const int &width)
+{
+
+    if (onScreenDisplay) {
+        m_edit = new RecordItNow::KeyloggerWidget(this);
+        m_edit->init(timeout, fontSize, width);
+    }
+
+}
+
+
+void KeyboardDock::stop()
+{
+
+    if (m_edit) {
+        delete m_edit;
+        m_edit = 0;
+    }
+
+}
+
+
 void KeyboardDock::keyPressed(const RecordItNow::KeyloggerEvent &event)
 {
 
@@ -100,15 +127,18 @@ void KeyboardDock::keyPressed(const RecordItNow::KeyloggerEvent &event)
         return;
     }
 
-    foreach (KeyWidget * widget, m_keyList) {
+    foreach (KeyWidget *widget, m_keyList) {
         if (widget->keyCode() == event.id()) {
-            kDebug() << "Event:" << "Code:" << event.id() << "Pressed?" << event.pressed();
+           // kDebug() << "Event:" << "Code:" << event.id() << "Pressed?" << event.pressed();
             widget->setPressed(event.pressed());
             break;
         }
     }
-   // QKeyEvent k(event.pressed() ? (QEvent::Type)6 : (QEvent::Type)7, event.key(), event.modifiers(), event.text(), false, event.count());
-  //  qApp->sendEvent(m_edit, &k);
+
+    if (m_edit) {
+        QKeyEvent k(event.pressed() ? (QEvent::Type)6 : (QEvent::Type)7, event.key(), event.modifiers(), event.text(), false, event.count());
+        qApp->sendEvent(m_edit, &k);
+    }
 
 }
 

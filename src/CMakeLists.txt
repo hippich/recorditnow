@@ -71,6 +71,9 @@ set(gui_SRCS
    keyboard/keyboardkey.cpp
    keyboard/proxylayout.cpp
 
+   keyboard/keyloggerwidget.cpp
+   keyboard/keyloggerlabel.cpp
+
    player/playerdock.cpp
    player/videoplayer.cpp
    player/imageplayer.cpp
@@ -183,7 +186,8 @@ set(GUI_SRCS_LINK ${KDE4_KDEUI_LIBS}
                   recorditnow_common
                   recorditnow_recordkeylogger
                   ${X11_Xcursor_LIB}
-                  ${JOSCHYCORE_LIBRARIES})
+                  ${JOSCHYCORE_LIBRARIES}
+                  ${KDE4_PLASMA_LIBS})
 
 if (XFIXES_FOUND)
     set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${XFIXES_LIBRARIES})

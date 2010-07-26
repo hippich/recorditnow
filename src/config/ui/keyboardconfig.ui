@@ -18,23 +18,76 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="keyboardConfigLayout"/>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QGroupBox" name="kcfg_keyboardOnScreenDisplay">
+     <property name="title">
+      <string>Enable On-Screen-Display</string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>5</height>
-      </size>
+     <property name="checked">
+      <bool>true</bool>
      </property>
-    </spacer>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Font Size:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="KIntSpinBox" name="kcfg_keyboardOnScreenDisplayFontSize">
+        <property name="value">
+         <number>9</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Display width:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="KIntNumInput" name="kcfg_keyboardOnScreenDisplayWidth">
+        <property name="minimum">
+         <number>200</number>
+        </property>
+        <property name="maximum">
+         <number>3000</number>
+        </property>
+        <property name="singleStep">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Hide after</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="KIntSpinBox" name="kcfg_keyboardOnScreenDisplayHideTime">
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="prefix">
+         <string/>
+        </property>
+        <property name="maximum">
+         <number>300</number>
+        </property>
+        <property name="value">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -76,7 +129,7 @@
           <x>0</x>
           <y>0</y>
           <width>391</width>
-          <height>199</height>
+          <height>85</height>
          </rect>
         </property>
        </widget>
@@ -88,9 +141,19 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

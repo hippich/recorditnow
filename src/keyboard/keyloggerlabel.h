@@ -17,57 +17,44 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYBOARDDOCK_H
-#define KEYBOARDDOCK_H
+#ifndef KeyloggerLabel_H
+#define KeyloggerLabel_H
 
-
-// own
-#include "ui_keyboarddock.h"
-#include "ui_keyboarddocktitlewidget.h"
-#include "../config/keyboardconfig.h"
-#include "../dockwidget.h"
-#include "src/libs/keylogger/keyloggerevent.h"
 
 // Qt
-#include <QtGui/QDockWidget>
-#include <QtCore/QVariantMap>
+#include <QtGui/QLineEdit>
 
 
 namespace RecordItNow {
-    class KeyloggerWidget;
-}
 
-class FlowLayout;
-class KeyWidget;
-class KConfig;
-class KConfigGroup;
-class KeyboardDock: public RecordItNow::DockWidget, Ui::KeyboardDock
+
+class KeyloggerLabel : public QLineEdit
 {
     Q_OBJECT
 
 
 public:
-    explicit KeyboardDock(QWidget *parent = 0);
-    ~KeyboardDock();
+    explicit KeyloggerLabel(QWidget *parent = 0);
+    ~KeyloggerLabel();
 
-    void init(const QList<KeyboardKey> &map);
-    void start(const bool &onScreenDisplay, const int &fontSize, const int &timeout, const int &width);
-    void stop();
+    void pressEvent(QKeyEvent *event);
+    void releaseEvent(QKeyEvent *event);
 
-    
+
 private:
-    Ui::KeyboardDockTitleWidget ui_title;
-    QList<KeyWidget*> m_keyList;
-    FlowLayout *m_layout;
-    RecordItNow::KeyloggerWidget *m_edit;
+    QList<int> m_keys;
 
 
-private slots:
-    void keyPressed(const RecordItNow::KeyloggerEvent &event);
-    void sizeChanged(const int &value);
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 
 };
 
 
-#endif // KEYBOARDDOCK_H
+} // namespace RecordItNow
+
+
+#endif // KeyloggerLabel_H

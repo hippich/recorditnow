@@ -1,0 +1,11 @@
+0.9:
+    Remove all outdated code
+    Fix keyloggerlabel bugs
+    Make plasma optional (KeyloggerWidget)
+    clean up cmake
+    tests
+    translations
+    and different things
+
+moved:
+    kasti

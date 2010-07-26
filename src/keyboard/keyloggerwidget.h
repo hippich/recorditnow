@@ -17,57 +17,66 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef KEYBOARDDOCK_H
-#define KEYBOARDDOCK_H
+
+#ifndef KeyloggerWidget_H
+#define KeyloggerWidget_H
 
 
-// own
-#include "ui_keyboarddock.h"
-#include "ui_keyboarddocktitlewidget.h"
-#include "../config/keyboardconfig.h"
-#include "../dockwidget.h"
-#include "src/libs/keylogger/keyloggerevent.h"
 
 // Qt
-#include <QtGui/QDockWidget>
-#include <QtCore/QVariantMap>
+#include <QtGui/QWidget>
 
 
+
+namespace Plasma {
+    class FrameSvg;
+};
+
+
+class QPropertyAnimation;
 namespace RecordItNow {
-    class KeyloggerWidget;
-}
 
-class FlowLayout;
-class KeyWidget;
-class KConfig;
-class KConfigGroup;
-class KeyboardDock: public RecordItNow::DockWidget, Ui::KeyboardDock
+
+class KeyloggerLabel;
+class KeyloggerWidget : public QWidget
 {
     Q_OBJECT
 
 
 public:
-    explicit KeyboardDock(QWidget *parent = 0);
-    ~KeyboardDock();
+    KeyloggerWidget(QWidget *parent = 0);
+    virtual ~KeyloggerWidget();
 
-    void init(const QList<KeyboardKey> &map);
-    void start(const bool &onScreenDisplay, const int &fontSize, const int &timeout, const int &width);
-    void stop();
+    void init(const int &timeout, const int &fontSize, const int &width);
 
-    
+
 private:
-    Ui::KeyboardDockTitleWidget ui_title;
-    QList<KeyWidget*> m_keyList;
-    FlowLayout *m_layout;
-    RecordItNow::KeyloggerWidget *m_edit;
+    Plasma::FrameSvg *m_background;
+    QPropertyAnimation *m_animation;
+    QTimer *m_timer;
+    KeyloggerLabel *m_edit;
+    QTimer *m_hideTimer;
 
 
 private slots:
-    void keyPressed(const RecordItNow::KeyloggerEvent &event);
-    void sizeChanged(const int &value);
+    void updateMousePos();
+    void screenGeometryChanged(const int &screen);
+    void backgroundChanged();
+    void updateGeometry();
+    void inactive();
+
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 
 };
 
 
-#endif // KEYBOARDDOCK_H
+} // namespace RecordItNow
+
+
+#endif // KeyloggerWidget_H
