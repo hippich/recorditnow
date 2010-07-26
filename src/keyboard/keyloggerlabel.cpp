@@ -39,7 +39,6 @@ KeyloggerLabel::KeyloggerLabel(QWidget *parent)
 {
 
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setMaxLength(200);
 
 }
 
@@ -147,6 +146,13 @@ void KeyloggerLabel::keyReleaseEvent(QKeyEvent *event)
 
     m_keys.removeAll(event->key());
     QLineEdit::keyReleaseEvent(event);
+
+    QString txt = text();
+    if (txt.length() > 500) {
+        txt.remove(0, 100);
+        setText(txt);
+    }
+
     update();
 
 }
@@ -206,7 +212,7 @@ void KeyloggerLabel::paintEvent(QPaintEvent *event)
         }
     }
 
-    kDebug() << text;
+//    kDebug() << text;
 
     QTextOption option;
     option.setAlignment(Qt::AlignCenter);
