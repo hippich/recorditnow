@@ -24,7 +24,7 @@
 
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QFrame>
 
 
 
@@ -38,7 +38,7 @@ namespace RecordItNow {
 
 
 class KeyloggerLabel;
-class KeyloggerWidget : public QWidget
+class KeyloggerWidget : public QFrame
 {
     Q_OBJECT
 

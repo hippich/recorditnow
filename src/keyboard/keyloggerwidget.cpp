@@ -51,7 +51,7 @@ namespace RecordItNow {
 
 
 KeyloggerWidget::KeyloggerWidget(QWidget *parent)
-    : QWidget(parent, Qt::Window|
+    : QFrame(parent, Qt::Window|
               Qt::FramelessWindowHint|
               Qt::X11BypassWindowManagerHint|
               Qt::WindowStaysOnTopHint)
@@ -126,7 +126,10 @@ void KeyloggerWidget::init(const int &timeout, const int &fontSize, const int &w
 
     m_hideTimer->setInterval(timeout*1000);
 
-    QFont font = Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont);
+    QFont font = QFrame::font();
+    if (m_background->isValid()) {
+        font = Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont);
+    }
     font.setPointSize(fontSize);
     m_edit->setFont(font);
 
@@ -196,9 +199,11 @@ void KeyloggerWidget::screenGeometryChanged(const int &screen)
 void KeyloggerWidget::backgroundChanged()
 {
 
-    qreal left, top, right, bottom;
-    m_background->getMargins(left, top, right, bottom);
-    setContentsMargins(left, top, right, bottom);
+    if (m_background->isValid()) {
+        qreal left, top, right, bottom;
+        m_background->getMargins(left, top, right, bottom);
+        setContentsMargins(left, top, right, bottom);
+    }
 
 }
 
@@ -257,8 +262,10 @@ void KeyloggerWidget::resizeEvent(QResizeEvent *event)
 {
 
     QWidget::resizeEvent(event);
-    m_background->resizeFrame(event->size());
-    setMask(m_background->mask());
+    if (m_background->isValid()) {
+        m_background->resizeFrame(event->size());
+        setMask(m_background->mask());
+    }
 
 }
 
@@ -266,11 +273,15 @@ void KeyloggerWidget::resizeEvent(QResizeEvent *event)
 void KeyloggerWidget::paintEvent(QPaintEvent *event)
 {
 
-    QPainter painter(this);
-    painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
-    painter.setClipRegion(event->region());
+    if (m_background->isValid()) {
+        QPainter painter(this);
+        painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
+        painter.setClipRegion(event->region());
 
-    m_background->paintFrame(&painter);
+        m_background->paintFrame(&painter);
+    } else {
+        QFrame::paintEvent(event);
+    }
 
 }
 
