@@ -56,6 +56,7 @@ private:
     QTimer *m_timer;
     KeyloggerLabel *m_edit;
     QTimer *m_hideTimer;
+    bool m_inactive;
 
 
 private slots:

@@ -57,6 +57,7 @@ KeyloggerWidget::KeyloggerWidget(QWidget *parent)
               Qt::WindowStaysOnTopHint)
 {
 
+    m_inactive = true;
     setAttribute(Qt::WA_TranslucentBackground, true);
 
     m_background = new Plasma::FrameSvg(this);
@@ -146,7 +147,7 @@ void KeyloggerWidget::init(const int &timeout, const int &fontSize, const int &w
 void KeyloggerWidget::updateMousePos()
 {
 
-    if (!isVisible()) {
+    if (m_inactive) {
         return;
     }
 
@@ -168,7 +169,7 @@ void KeyloggerWidget::updateMousePos()
         }
     } else {
         if (!KWindowSystem::self()->compositingActive()) {
-            hide();
+            show();
         } else {
             if (m_animation->state() == QPropertyAnimation::Running) {
                 if (m_animation->endValue().toInt() != 1) {
@@ -225,6 +226,7 @@ void KeyloggerWidget::updateGeometry()
 void KeyloggerWidget::inactive()
 {
 
+    m_inactive = true;
     hide();
 
 }
@@ -232,6 +234,8 @@ void KeyloggerWidget::inactive()
 
 void KeyloggerWidget::keyPressEvent(QKeyEvent *event)
 {
+
+    m_inactive = false;
 
     if (m_hideTimer->isActive()) {
         m_hideTimer->stop();
@@ -248,6 +252,8 @@ void KeyloggerWidget::keyPressEvent(QKeyEvent *event)
 
 void KeyloggerWidget::keyReleaseEvent(QKeyEvent *event)
 {
+
+    m_inactive = false;
 
     m_edit->releaseEvent(event);
     if (m_hideTimer->isActive()) {
