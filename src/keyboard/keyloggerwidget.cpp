@@ -66,7 +66,7 @@ KeyloggerWidget::KeyloggerWidget(QWidget *parent)
     m_animation->setPropertyName("windowOpacity");
     m_animation->setTargetObject(this);
     m_animation->setEasingCurve(QEasingCurve::Linear);
-    m_animation->setDuration(500);
+    m_animation->setDuration(300);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
