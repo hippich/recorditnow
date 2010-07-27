@@ -43,6 +43,12 @@ public:
 
 private:
     QList<int> m_keys;
+    QString m_shortcut;
+    QTimer *m_shortcutTimer;
+
+
+private slots:
+    void clearShortcut();
 
 
 protected:
