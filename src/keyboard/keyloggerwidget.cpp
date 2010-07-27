@@ -84,8 +84,6 @@ KeyloggerWidget::KeyloggerWidget(QWidget *parent)
             SLOT(screenGeometryChanged(int)));
 
     backgroundChanged();
-    screenGeometryChanged(-1);
-
 
     m_timer = new QTimer(this);
     m_timer->setInterval(1000/2);
@@ -106,8 +104,6 @@ KeyloggerWidget::KeyloggerWidget(QWidget *parent)
 
     m_timer->start();
 
-    init(5, 30, 500);
-
 }
 
 
@@ -122,7 +118,7 @@ KeyloggerWidget::~KeyloggerWidget()
 }
 
 
-void KeyloggerWidget::init(const int &timeout, const int &fontSize, const int &width)
+void KeyloggerWidget::init(const int &timeout, const int &fontSize)
 {
 
     m_hideTimer->setInterval(timeout*1000);
@@ -138,8 +134,8 @@ void KeyloggerWidget::init(const int &timeout, const int &fontSize, const int &w
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
 
-    setMinimumWidth(width);
     setMinimumHeight(fm.height()+top+bottom+5);
+    updateGeometry();
 
 }
 
@@ -215,7 +211,7 @@ void KeyloggerWidget::updateGeometry()
     const QRect desktopGeometry =  qApp->desktop()->screenGeometry(this);
     QRect newGeometry = geometry();
 
-    newGeometry.setSize(minimumSize());
+    newGeometry.setSize(QSize(desktopGeometry.width()-20, minimumHeight()));
     newGeometry.moveTopLeft(desktopGeometry.topLeft()+QPoint(10, 10));
 
     setGeometry(newGeometry);
@@ -228,6 +224,7 @@ void KeyloggerWidget::inactive()
 
     m_inactive = true;
     hide();
+    m_edit->clear();
 
 }
 

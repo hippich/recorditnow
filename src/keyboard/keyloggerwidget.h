@@ -47,7 +47,7 @@ public:
     KeyloggerWidget(QWidget *parent = 0);
     virtual ~KeyloggerWidget();
 
-    void init(const int &timeout, const int &fontSize, const int &width);
+    void init(const int &timeout, const int &fontSize);
 
 
 private:

@@ -51,7 +51,7 @@ public:
     ~KeyboardDock();
 
     void init(const QList<KeyboardKey> &map);
-    void start(const bool &onScreenDisplay, const int &fontSize, const int &timeout, const int &width);
+    void start(const bool &onScreenDisplay, const int &fontSize, const int &timeout);
     void stop();
 
     

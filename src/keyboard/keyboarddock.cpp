@@ -98,12 +98,12 @@ void KeyboardDock::init(const QList<KeyboardKey> &map)
 }
 
 
-void KeyboardDock::start(const bool &onScreenDisplay, const int &fontSize, const int &timeout, const int &width)
+void KeyboardDock::start(const bool &onScreenDisplay, const int &fontSize, const int &timeout)
 {
 
     if (onScreenDisplay) {
         m_edit = new RecordItNow::KeyloggerWidget(this);
-        m_edit->init(timeout, fontSize, width);
+        m_edit->init(timeout, fontSize);
     }
 
 }

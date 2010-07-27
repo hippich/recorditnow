@@ -1244,8 +1244,7 @@ void MainWindow::initRecordWidgets(const bool &start)
     if (start) {
         m_keyboardDock->start(Settings::keyboardOnScreenDisplay(),
                               Settings::keyboardOnScreenDisplayFontSize(),
-                              Settings::keyboardOnScreenDisplayHideTime(),
-                              Settings::keyboardOnScreenDisplayWidth());
+                              Settings::keyboardOnScreenDisplayHideTime());
     } else {
         m_keyboardDock->stop();
     }

@@ -102,15 +102,15 @@ void KeyloggerLabel::keyPressEvent(QKeyEvent *event)
     if (modifierCount == 0) {
         QString txt;
         switch (event->key()) {
-        case Qt::Key_Left: txt = i18nc("Keyboard key", "Left"); break;
-        case Qt::Key_Right: txt = i18nc("Keyboard key", "Right"); break;
-        case Qt::Key_Up: txt = i18nc("Keyboard key", "Up"); break;
-        case Qt::Key_Down: txt = i18nc("Keyboard key", "Down"); break;
-        case Qt::Key_Backspace: txt = i18nc("Keyboard key", "Backspace"); break;
-        case Qt::Key_Return: txt = i18nc("Keyboard key", "Return"); break;
-        case Qt::Key_Print: txt = i18nc("Keyboard key", "Print"); break;
-        case Qt::Key_Tab: txt = i18nc("Keyboard key", "Tab"); break;
-        case Qt::Key_Escape: txt = i18nc("Keyboard key", "Escape"); break;
+        case Qt::Key_Left: txt = QChar(0x2190); break;
+        case Qt::Key_Right: txt = QChar(0x2192); break;
+        case Qt::Key_Up: txt = QChar(0x2191); break;
+        case Qt::Key_Down: txt = QChar(0x2193); break;
+       // case Qt::Key_Backspace: txt = i18nc("Keyboard key", "Backspace"); break;
+        case Qt::Key_Return: txt = QChar(0x23CE); break;
+        case Qt::Key_Print: txt = QChar(0x2399); break;
+        case Qt::Key_Tab: txt = QChar(0x21B9); break;
+        case Qt::Key_Escape: txt = "ESC";/*QChar(0x241B);*/ break;
         case Qt::Key_F1: txt = "F1"; break;
         case Qt::Key_F2: txt = "F2"; break;
         case Qt::Key_F3: txt = "F3"; break;
@@ -148,11 +148,11 @@ void KeyloggerLabel::keyPressEvent(QKeyEvent *event)
         case Qt::Key_F35: txt = "F35"; break;
         case Qt::Key_Insert: txt = i18nc("Keyboard key", "Insert"); break;
         case Qt::Key_End: txt = i18nc("Keyboard key", "End"); break;
-        case Qt::Key_PageUp: txt = i18nc("Keyboard key", "Page Up"); break;
-        case Qt::Key_PageDown: txt = i18nc("Keyboard key", "Page Down"); break;
+        case Qt::Key_PageUp: txt = QChar(0x2397); break;
+        case Qt::Key_PageDown: txt = QChar(0x2398); break;
         case Qt::Key_Delete: txt = i18nc("Keyboard key", "Delete"); break;
         case Qt::Key_NumLock: txt = i18nc("Keyboard key", "Num Lock"); break;
-        case Qt::Key_Space: txt = i18nc("Keyboard key", "Space"); break;
+       // case Qt::Key_Space: txt = i18nc("Keyboard key", "Space"); break;
         default: break;
         }
 
