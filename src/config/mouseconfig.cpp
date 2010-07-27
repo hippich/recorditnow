@@ -46,6 +46,7 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
 {
     
     setupUi(this);
+    kcfg_cursorWidgetSize->setSuffix(ki18np(" Pixel", " Pixels"));
 
     m_colorLayout = new RecordItNow::ListLayout;
     colorListWidget->setLayout(m_colorLayout);
