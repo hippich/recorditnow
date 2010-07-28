@@ -35,7 +35,7 @@ namespace RecordItNow {
 
 
 KeyloggerLabel::KeyloggerLabel(QWidget *parent)
-    : QLineEdit(parent)
+    : QWidget(parent)
 {
 
     m_shortcutTimer = new QTimer(this);
@@ -53,6 +53,42 @@ KeyloggerLabel::~KeyloggerLabel()
 {
 
     delete m_shortcutTimer;
+
+}
+
+
+QString KeyloggerLabel::text() const
+{
+
+    return m_text;
+
+}
+
+
+void KeyloggerLabel::setText(const QString &text)
+{
+
+    if (text == m_text) {
+        return;
+    }
+    m_text = text;
+
+    QFontMetrics fm(font());
+    while (!m_text.isEmpty() && fm.width(m_text) > width()*2) {
+        m_text.remove(0, 1);
+    }
+    update();
+
+}
+
+
+void KeyloggerLabel::clear()
+{
+
+    if (!m_text.isEmpty()) {
+        m_text.clear();
+        update();
+    }
 
 }
 
@@ -85,7 +121,7 @@ void KeyloggerLabel::clearShortcut()
 void KeyloggerLabel::keyPressEvent(QKeyEvent *event)
 {
 
-    kDebug() << "key:" << event->key();
+    //kDebug() << "key:" << event->key();
     m_keys.append(event->key());
 
     int modifierCount = 0;
@@ -164,7 +200,24 @@ void KeyloggerLabel::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    QLineEdit::keyPressEvent(event);
+    switch (event->key()) {
+    case Qt::Key_Backspace: {
+        QString txt = text();
+        if (!txt.isEmpty()) {
+            txt.resize(txt.size()-1);
+
+            setText(txt);
+            return;
+        }
+        break;
+    }
+    default: break;
+    }
+
+    if (!event->text().isEmpty() && event->text().at(0).isPrint()) {
+        setText(text()+event->text());
+    }
+
     update();
 
 }
@@ -174,14 +227,6 @@ void KeyloggerLabel::keyReleaseEvent(QKeyEvent *event)
 {
 
     m_keys.removeAll(event->key());
-    QLineEdit::keyReleaseEvent(event);
-
-    QString txt = text();
-    if (txt.length() > 500) {
-        txt.remove(0, 100);
-        setText(txt);
-    }
-
     update();
 
 }
@@ -200,7 +245,7 @@ void KeyloggerLabel::paintEvent(QPaintEvent *event)
     font.setBold(true);
     painter.setFont(font);
 
-    QString text = QLineEdit::text();
+    QString text = KeyloggerLabel::text();
     QList<int> tmpKeys = m_keys;
 
 

@@ -22,13 +22,13 @@
 
 
 // Qt
-#include <QtGui/QLineEdit>
+#include <QtGui/QWidget>
 
 
 namespace RecordItNow {
 
 
-class KeyloggerLabel : public QLineEdit
+class KeyloggerLabel : public QWidget
 {
     Q_OBJECT
 
@@ -37,11 +37,17 @@ public:
     explicit KeyloggerLabel(QWidget *parent = 0);
     ~KeyloggerLabel();
 
+    QString text() const;
+
+    void setText(const QString &text);
+    void clear();
+
     void pressEvent(QKeyEvent *event);
     void releaseEvent(QKeyEvent *event);
 
 
 private:
+    QString m_text;
     QList<int> m_keys;
     QString m_shortcut;
     QTimer *m_shortcutTimer;
