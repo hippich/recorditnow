@@ -635,6 +635,8 @@ void MainWindow::setState(const State &newState)
             getAction("popupAction")->setEnabled(true);
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
+            mouseCheck->setEnabled(m_recorderManager->hasFeature("MouseEnabled", recorder));
+            keyboardCheck->setEnabled(m_recorderManager->hasFeature("KeyboardEnabled", recorder));
             m_mainDock->setEnabled(true);
             timerWidget->reset();
             initRecordWidgets(false);
@@ -1204,7 +1206,7 @@ void MainWindow::initRecordWidgets(const bool &start)
     const QString recorder = backendCombo->currentText();
     // mouse
     if (start) {
-        if (mouseCheck->isChecked()) {
+        if (mouseCheck->isChecked() && m_recorderManager->hasFeature("MouseEnabled", recorder)) {
             if (m_cursor) {
                 return; // timer was paused
             }
@@ -1240,7 +1242,7 @@ void MainWindow::initRecordWidgets(const bool &start)
 
     // Keyboard
     if (start) {
-        if (keyboardCheck->isChecked()) {
+        if (keyboardCheck->isChecked() && m_recorderManager->hasFeature("KeyboardEnabled", recorder)) {
             if (!m_keyloggerOSD) {
                 m_keyloggerOSD = new RecordItNow::KeyloggerOSD(0);
             }
@@ -1263,7 +1265,7 @@ void MainWindow::initKeyMon(const bool &start)
     const bool mouseFeature = m_recorderManager->hasFeature("MouseEnabled", backendCombo->currentText());
     const bool keyboardFeature = m_recorderManager->hasFeature("KeyboardEnabled", backendCombo->currentText());
 
-    if (start && ((mouseFeature && mouseCheck->isChecked()) || (keyboardFeature && keyboardCheck->isChecked()))) {
+    if (start && (mouseFeature || keyboardFeature)) {
         if (!KeyMonManager::self()->start() && !KeyMonManager::self()->error().isEmpty()) {
             errorNotification(KeyMonManager::self()->error());
         } else {

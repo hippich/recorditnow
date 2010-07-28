@@ -53,7 +53,7 @@ CheckIcon::~CheckIcon()
 bool CheckIcon::isChecked() const
 {
 
-    return (m_checked && isEnabled());
+    return m_checked;
 
 }
 
