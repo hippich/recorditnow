@@ -58,7 +58,7 @@ KeyloggerWidget::KeyloggerWidget(QWidget *parent)
 {
 
     m_inactive = true;
-    setAttribute(Qt::WA_TranslucentBackground, true);
+    m_validBackground = false;
 
     m_background = new Plasma::FrameSvg(this);
     m_background->setImagePath("widgets/tooltip");
@@ -124,7 +124,7 @@ void KeyloggerWidget::init(const int &timeout, const int &fontSize)
     m_hideTimer->setInterval(timeout*1000);
 
     QFont font = QFrame::font();
-    if (m_background->isValid()) {
+    if (m_validBackground) {
         font = Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont);
     }
     font.setPointSize(fontSize);
@@ -196,7 +196,10 @@ void KeyloggerWidget::screenGeometryChanged(const int &screen)
 void KeyloggerWidget::backgroundChanged()
 {
 
-    if (m_background->isValid()) {
+    m_validBackground = m_background->isValid();
+
+    setAttribute(Qt::WA_TranslucentBackground, m_validBackground);
+    if (m_validBackground) {
         qreal left, top, right, bottom;
         m_background->getMargins(left, top, right, bottom);
         setContentsMargins(left, top, right, bottom);
@@ -265,7 +268,7 @@ void KeyloggerWidget::resizeEvent(QResizeEvent *event)
 {
 
     QWidget::resizeEvent(event);
-    if (m_background->isValid()) {
+    if (m_validBackground) {
         m_background->resizeFrame(event->size());
         setMask(m_background->mask());
     }
@@ -276,7 +279,7 @@ void KeyloggerWidget::resizeEvent(QResizeEvent *event)
 void KeyloggerWidget::paintEvent(QPaintEvent *event)
 {
 
-    if (m_background->isValid()) {
+    if (m_validBackground) {
         QPainter painter(this);
         painter.setRenderHints(QPainter::Antialiasing|QPainter::SmoothPixmapTransform);
         painter.setClipRegion(event->region());
