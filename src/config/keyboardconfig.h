@@ -25,7 +25,6 @@
 // own
 #include "config/configpage.h"
 #include "ui_keyboardconfig.h"
-#include "../keyboard/keyboardkey.h"
 
 // Qt
 #include <QtGui/QWidget>
@@ -45,27 +44,9 @@ class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
 public:
     explicit KeyboardConfig(KConfig *cfg, QWidget *parent = 0);
 
-    static QList<KeyboardKey> readConfig(KConfig *cfg);
-    static void saveConfig(const QList<KeyboardKey> &keys, KConfig *cfg);
-    static QList<KeyboardKey> defaultKeys();
-
     void saveConfig();
     void loadConfig();
     void setDefaults();
-
-
-private:
-    RecordItNow::ListLayout *m_layout;
-    
-    QList<KeyboardKey> currentKeys() const;
-    void setKeys(const QList<KeyboardKey> &keys);
-
-
-private slots:
-    void add();
-    void remove(QWidget *widget);
-    void wizardFinished(const int &key, const QString &icon, const QString &text);
-    void changed();
 
 
 };

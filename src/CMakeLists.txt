@@ -65,13 +65,7 @@ set(gui_SRCS
    mouse/mousebutton.cpp
    mouse/cursorwidget.cpp
 
-   keyboard/keyboarddock.cpp
-   keyboard/keywidget.cpp
-   keyboard/flowlayout.cpp
-   keyboard/keyboardkey.cpp
-   keyboard/proxylayout.cpp
-
-   keyboard/keyloggerwidget.cpp
+   keyboard/keyloggerosd.cpp
    keyboard/keyloggerlabel.cpp
 
    player/playerdock.cpp
@@ -84,9 +78,6 @@ set(gui_SRCS
    config/configdialog.cpp
    config/frameconfig.cpp
    config/keyboardconfig.cpp
-   config/keyboardwizard.cpp
-   config/keyboardkeypage.cpp
-   config/keyboardkeyiconpage.cpp
    config/mouseconfig.cpp
    config/mousebuttonwidget.cpp
    config/configpage.cpp
@@ -105,7 +96,6 @@ set(gui_SRCS
    outputwidget.cpp
    timerwidget.cpp
    windowgrabber.cpp
-   #devicesearchwidget.cpp
    dockwidget.cpp
    volumeslider.cpp
    listlayout.cpp
@@ -131,8 +121,6 @@ kde4_add_ui_files(gui_SRCS
     config/ui/pluginconfig.ui
     config/ui/playerconfig.ui
     config/ui/notificationconfig.ui
-    config/ui/keyboardkeypage.ui
-    config/ui/keyboardkeyiconpage.ui
     config/ui/zoom.ui 
     
     timeline/ui/timeline.ui 
@@ -143,9 +131,6 @@ kde4_add_ui_files(gui_SRCS
     upload/ui/uploadpage.ui
     upload/ui/termspage.ui
     upload/ui/accountpage.ui
-
-    keyboard/ui/keyboarddock.ui
-    keyboard/ui/keyboarddocktitlewidget.ui
         
     zoom/ui/zoomdock.ui
     zoom/ui/zoomdocktitlewidget.ui

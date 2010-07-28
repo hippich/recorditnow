@@ -54,6 +54,12 @@
     <entry name="stayOnTop" type="Bool">
             <default>false</default>
     </entry>
+    <entry name="mouseMonitorEnabled" type="Bool">
+            <default>false</default>
+    </entry>
+    <entry name="keyboardMonitorEnabled" type="Bool">
+            <default>false</default>
+    </entry>
   </group>
  <group name="Mouse">
     <entry name="showActivity" type="Bool">

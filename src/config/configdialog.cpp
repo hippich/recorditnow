@@ -102,8 +102,8 @@ void ConfigDialog::init()
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(pluginPage, i18n("Plugins"), "preferences-plugin");
     addPage(framePage, i18nc("Widget to select a screen area", "Frame"), "draw-rectangle");
-    addPage(mousePage, i18n("Mouse"), "input-mouse");
-    addPage(keyboardPage, i18n("Keyboard"), "input-keyboard");
+    addPage(mousePage, i18n("Mouse-Monitor"), "input-mouse");
+    addPage(keyboardPage, i18n("Keyboard-Monitor"), "input-keyboard");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
   //  addPage(playerPage, i18n("Player"), "media-playback-start");

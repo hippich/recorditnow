@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,77 +18,70 @@
  ***************************************************************************/
 
 
+#ifndef RECORDITNOW_KEYLOGGER_ON_SCREEN_DISPLAY_H
+#define RECORDITNOW_KEYLOGGER_ON_SCREEN_DISPLAY_H
+
+
 // own
-#include "deviceinfo.h"
+#include "src/libs/keylogger/keyloggerevent.h"
+
+// Qt
+#include <QtGui/QFrame>
 
 
-namespace KeyMon {
+
+namespace Plasma {
+    class FrameSvg;
+};
 
 
-DeviceInfo::DeviceInfo()
+class QPropertyAnimation;
+namespace RecordItNow {
+
+
+class KeyloggerLabel;
+class KeyloggerOSD : public QFrame
 {
+    Q_OBJECT
 
 
+public:
+    KeyloggerOSD(QWidget *parent = 0);
+    virtual ~KeyloggerOSD();
 
-}
-
-
-DeviceInfo::DeviceInfo(const DeviceInfo &copy)
-{
-
-    name = copy.name;
-    file = copy.file;
-    uuid = copy.uuid;
-    icon = copy.icon;
-    type = copy.type;
-
-}
+    void init(const int &timeout, const int &fontSize);
 
 
-DeviceInfo::~DeviceInfo()
-{
+private:
+    Plasma::FrameSvg *m_background;
+    QPropertyAnimation *m_animation;
+    QTimer *m_timer;
+    KeyloggerLabel *m_edit;
+    QTimer *m_hideTimer;
+    bool m_inactive;
+    bool m_validBackground;
 
 
-}
+private slots:
+    void updateMousePos();
+    void screenGeometryChanged(const int &screen);
+    void backgroundChanged();
+    void updateGeometry();
+    void inactive();
+    void keyloggerEvent(const RecordItNow::KeyloggerEvent &event);
 
 
-QByteArray KeyMon::DeviceInfo::toArray(const QList<KeyMon::DeviceInfo> &list)
-{
-
-    QByteArray array;
-    QDataStream stream(&array, QIODevice::WriteOnly);
-
-    stream << list.size();
-    foreach (const KeyMon::DeviceInfo &info, list) {
-        stream << info.name << info.file << info.uuid << (int)info.type << info.icon;
-    }
-
-    return array;
-
-}
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 
-QList<KeyMon::DeviceInfo> DeviceInfo::fromArray(QByteArray &array)
-{
-
-    QList<KeyMon::DeviceInfo> list;
-    QDataStream stream(&array, QIODevice::ReadOnly);
-
-   int size;
-   stream >> size;
-
-   for (int i = 0; i < size; i++) {
-       DeviceInfo info;
-       int type;
-       stream >> info.name >> info.file >> info.uuid >> type >> info.icon;
-       info.type = static_cast<KeyMon::DeviceInfo::DeviceType>(type);
-       list.append(info);
-   }
-    return list;
-
-}
+};
 
 
+} // namespace RecordItNow
 
 
-} // namespace KeyMon
+#endif // RECORDITNOW_KEYLOGGER_ON_SCREEN_DISPLAY_H

@@ -32,7 +32,7 @@
 #include "timeline/timeline.h"
 #include "timeline/timelinedock.h"
 #include "upload/uploadwizard.h"
-#include "keyboard/keyboarddock.h"
+#include "keyboard/keyloggerosd.h"
 #include "config/keyboardconfig.h"
 #include "keymonmanager.h"
 #include "config/frameconfig.h"
@@ -112,6 +112,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     
     soundCheck->setIcon("preferences-desktop-sound");
+    mouseCheck->setIcon("input-mouse");
+    keyboardCheck->setIcon("input-keyboard");
 
     connect(backendCombo, SIGNAL(currentIndexChanged(QString)), this,
             SLOT(backendChanged(QString)));
@@ -124,7 +126,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_tray = 0;
     m_timelineDock = 0;
-    m_keyboardDock = 0;
+    m_keyloggerOSD = 0;
     m_zoomDock = 0;
     m_playerDock = 0;
 
@@ -157,9 +159,6 @@ MainWindow::MainWindow(QWidget *parent)
     // default dock cfg, must be called after setupGUI()
     if (RecordItNow::Helper::self()->firstStart()) {
         m_timelineDock->close();
-        if (Settings::keyboardDevice().isEmpty()) {
-            m_keyboardDock->close();
-        }
         m_mainDock->raise(); // the main dock should be activated
     }
 
@@ -173,6 +172,8 @@ MainWindow::MainWindow(QWidget *parent)
     soundCheck->setChecked(Settings::soundEnabled());
     fpsSpinBox->setValue(Settings::currentFps());
     timerWidget->setValue(Settings::currentTime());
+    mouseCheck->setChecked(Settings::mouseMonitorEnabled());
+    keyboardCheck->setChecked(Settings::keyboardMonitorEnabled());
 
     reloadPopAction();
     lockLayout(Settings::lockLayout());
@@ -196,6 +197,8 @@ MainWindow::~MainWindow()
     Settings::self()->setCurrentFrame(m_frame->getFrameGeometry());
     Settings::self()->setCurrentTime(timerWidget->value());
     Settings::self()->setLockLayout(getAction("lockLayout")->isChecked());
+    Settings::self()->setMouseMonitorEnabled(mouseCheck->isChecked());
+    Settings::self()->setKeyboardMonitorEnabled(keyboardCheck->isChecked());
     Settings::self()->writeConfig();
 
     delete m_frame;
@@ -209,6 +212,10 @@ MainWindow::~MainWindow()
 
     if (m_cursor) {
         delete m_cursor;
+    }
+
+    if (m_keyloggerOSD) {
+        delete m_keyloggerOSD;
     }
 
 }
@@ -1103,15 +1110,6 @@ void MainWindow::setupDocks()
     }
     m_timelineDock->timeline()->reload();
 
-    // Keyboard
-    if (!m_keyboardDock) {
-        m_keyboardDock = new KeyboardDock(this);
-
-        addDockWidget(Qt::BottomDockWidgetArea, m_keyboardDock);
-        tabifyDockWidget(m_mainDock, m_keyboardDock);
-    }
-    m_keyboardDock->init(KeyboardConfig::readConfig(Settings::self()->config()));
-
     // Zoom
     if (!m_zoomDock) {
         m_zoomDock = new ZoomDock(this);
@@ -1205,8 +1203,8 @@ void MainWindow::initRecordWidgets(const bool &start)
 
     const QString recorder = backendCombo->currentText();
     // mouse
-    if (start && KeyMonManager::self()->isRunning()) {
-        if (Settings::showActivity() && m_recorderManager->hasFeature("MouseEnabled", recorder)) {
+    if (start) {
+        if (mouseCheck->isChecked()) {
             if (m_cursor) {
                 return; // timer was paused
             }
@@ -1242,11 +1240,18 @@ void MainWindow::initRecordWidgets(const bool &start)
 
     // Keyboard
     if (start) {
-        m_keyboardDock->start(Settings::keyboardOnScreenDisplay(),
-                              Settings::keyboardOnScreenDisplayFontSize(),
-                              Settings::keyboardOnScreenDisplayHideTime());
+        if (keyboardCheck->isChecked()) {
+            if (!m_keyloggerOSD) {
+                m_keyloggerOSD = new RecordItNow::KeyloggerOSD(0);
+            }
+            m_keyloggerOSD->init(Settings::keyboardOnScreenDisplayHideTime(),
+                                 Settings::keyboardOnScreenDisplayFontSize());
+        }
     } else {
-        m_keyboardDock->stop();
+        if (m_keyloggerOSD) {
+            delete m_keyloggerOSD;
+            m_keyloggerOSD = 0;
+        }
     }
 
 }
@@ -1258,7 +1263,7 @@ void MainWindow::initKeyMon(const bool &start)
     const bool mouseFeature = m_recorderManager->hasFeature("MouseEnabled", backendCombo->currentText());
     const bool keyboardFeature = m_recorderManager->hasFeature("KeyboardEnabled", backendCombo->currentText());
 
-    if (start && ((mouseFeature && m_cursor) || (keyboardFeature && isDockEnabled(m_keyboardDock)))) {
+    if (start && ((mouseFeature && mouseCheck->isChecked()) || (keyboardFeature && keyboardCheck->isChecked()))) {
         if (!KeyMonManager::self()->start() && !KeyMonManager::self()->error().isEmpty()) {
             errorNotification(KeyMonManager::self()->error());
         } else {
@@ -1328,7 +1333,6 @@ void MainWindow::lockLayout(const bool &lock)
 
     m_mainDock->setFeatures(mainFeatures);
     m_timelineDock->setFeatures(features);
-    m_keyboardDock->setFeatures(features);
     m_zoomDock->setFeatures(features);
     m_playerDock->setFeatures(features);
 

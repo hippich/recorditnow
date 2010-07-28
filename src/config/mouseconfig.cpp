@@ -83,7 +83,7 @@ MouseConfig::MouseConfig(KConfig *cfg, QWidget *parent)
     connect(m_soundLayout, SIGNAL(removeRequested(QWidget*)), this, SLOT(removeSoundRow(QWidget*)));
     connect(kcfg_cursorWidgetSize, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
     connect(kcfg_cursorOpacity, SIGNAL(valueChanged(int)), this, SLOT(buttonsChanged()));
-    connect(appearanceCombo, SIGNAL(activated(int)), this, SLOT(modeActivated()));
+    connect(appearanceCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(modeActivated()));
     connect(buttonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(soundButtonCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(currentButtonChanged()));
     connect(RecordItNow::Helper::self(), SIGNAL(compositingChanged(bool)), this,
@@ -515,7 +515,7 @@ void MouseConfig::modeActivated()
     kcfg_cursorOpacity->setEnabled(opacityLabel->isEnabled());
  
     kcfg_cursorMode->setValue((int)currentMode());
- 
+
 }
 
 

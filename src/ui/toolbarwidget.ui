@@ -90,7 +90,33 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Record sound</string>
+         <string>Enable/Disable sound recording</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="CheckIcon" name="mouseCheck" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Enable/Disable Mouse-Monitor</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="CheckIcon" name="keyboardCheck" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Enable/Disable Keyboard-Monitor</string>
         </property>
        </widget>
       </item>

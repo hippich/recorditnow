@@ -19,8 +19,9 @@
 
 
 // own
-#include "keyloggerwidget.h"
+#include "keyloggerosd.h"
 #include "keyloggerlabel.h"
+#include "src/keymonmanager.h"
 
 // KDE
 #include <plasma/theme.h>
@@ -29,7 +30,6 @@
 
 // Qt
 #include <QtGui/QResizeEvent>
-#include <QtGui/QKeyEvent>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QDesktopWidget>
@@ -50,7 +50,7 @@ namespace RecordItNow {
 
 
 
-KeyloggerWidget::KeyloggerWidget(QWidget *parent)
+KeyloggerOSD::KeyloggerOSD(QWidget *parent)
     : QFrame(parent, Qt::Window|
               Qt::FramelessWindowHint|
               Qt::X11BypassWindowManagerHint|
@@ -104,10 +104,13 @@ KeyloggerWidget::KeyloggerWidget(QWidget *parent)
 
     m_timer->start();
 
+    connect(KeyMonManager::self(), SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
+            SLOT(keyloggerEvent(RecordItNow::KeyloggerEvent)));
+
 }
 
 
-KeyloggerWidget::~KeyloggerWidget()
+KeyloggerOSD::~KeyloggerOSD()
 {
 
     delete m_hideTimer;
@@ -118,7 +121,7 @@ KeyloggerWidget::~KeyloggerWidget()
 }
 
 
-void KeyloggerWidget::init(const int &timeout, const int &fontSize)
+void KeyloggerOSD::init(const int &timeout, const int &fontSize)
 {
 
     m_hideTimer->setInterval(timeout*1000);
@@ -140,7 +143,7 @@ void KeyloggerWidget::init(const int &timeout, const int &fontSize)
 }
 
 
-void KeyloggerWidget::updateMousePos()
+void KeyloggerOSD::updateMousePos()
 {
 
     if (m_inactive) {
@@ -184,7 +187,7 @@ void KeyloggerWidget::updateMousePos()
 }
 
 
-void KeyloggerWidget::screenGeometryChanged(const int &screen)
+void KeyloggerOSD::screenGeometryChanged(const int &screen)
 {
 
     Q_UNUSED(screen);
@@ -193,7 +196,7 @@ void KeyloggerWidget::screenGeometryChanged(const int &screen)
 }
 
 
-void KeyloggerWidget::backgroundChanged()
+void KeyloggerOSD::backgroundChanged()
 {
 
     m_validBackground = m_background->isValid();
@@ -208,7 +211,7 @@ void KeyloggerWidget::backgroundChanged()
 }
 
 
-void KeyloggerWidget::updateGeometry()
+void KeyloggerOSD::updateGeometry()
 {
 
     const QRect desktopGeometry =  qApp->desktop()->screenGeometry(this);
@@ -222,7 +225,7 @@ void KeyloggerWidget::updateGeometry()
 }
 
 
-void KeyloggerWidget::inactive()
+void KeyloggerOSD::inactive()
 {
 
     m_inactive = true;
@@ -232,7 +235,26 @@ void KeyloggerWidget::inactive()
 }
 
 
-void KeyloggerWidget::keyPressEvent(QKeyEvent *event)
+void KeyloggerOSD::keyloggerEvent(const RecordItNow::KeyloggerEvent &event)
+{
+
+    if (event.type() != RecordItNow::KeyloggerEvent::KeyboardEvent) {
+        return;
+    }
+
+    QKeyEvent qKeyEvent(event.pressed() ? (QEvent::Type) 6 : (QEvent::Type) 7,
+                        event.key(),
+                        event.modifiers(),
+                        event.text(),
+                        false,
+                        event.count());
+
+    qApp->sendEvent(this, &qKeyEvent);
+
+}
+
+
+void KeyloggerOSD::keyPressEvent(QKeyEvent *event)
 {
 
     m_inactive = false;
@@ -250,7 +272,7 @@ void KeyloggerWidget::keyPressEvent(QKeyEvent *event)
 }
 
 
-void KeyloggerWidget::keyReleaseEvent(QKeyEvent *event)
+void KeyloggerOSD::keyReleaseEvent(QKeyEvent *event)
 {
 
     m_inactive = false;
@@ -264,7 +286,7 @@ void KeyloggerWidget::keyReleaseEvent(QKeyEvent *event)
 }
 
 
-void KeyloggerWidget::resizeEvent(QResizeEvent *event)
+void KeyloggerOSD::resizeEvent(QResizeEvent *event)
 {
 
     QWidget::resizeEvent(event);
@@ -276,7 +298,7 @@ void KeyloggerWidget::resizeEvent(QResizeEvent *event)
 }
 
 
-void KeyloggerWidget::paintEvent(QPaintEvent *event)
+void KeyloggerOSD::paintEvent(QPaintEvent *event)
 {
 
     if (m_validBackground) {
@@ -295,4 +317,4 @@ void KeyloggerWidget::paintEvent(QPaintEvent *event)
 } // namespace RecordItNow
 
 
-#include "keyloggerwidget.moc"
+#include "keyloggerosd.moc"

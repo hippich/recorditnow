@@ -22,12 +22,6 @@
 #include "mainwindow.h"
 #include <recorditnow.h>
 #include "firstStart/firststartassistant.h"
-#include "keyboard/keyboardkey.h"
-#include "config/keyboardconfig.h"
-#include "config/mouseconfig.h"
-#include "config/frameconfig.h"
-#include "timeline/topic.h"
-#include "config/timelineconfig.h"
 #include "helper.h"
 
 // KDE
@@ -43,114 +37,6 @@ static void checkVersion()
     if (RECORDITNOW_VERSION != Settings::version()) {
         printf("RecordItNow update:\nOld version: %f.\nNew version: %f.\n\n",
                Settings::version(), RECORDITNOW_VERSION);
-
-
-        if (Settings::version() < 0.9) {
-            printf("keyMonDevice >> mouseDevice\n");
-
-            KConfigGroup cfg(Settings::self()->config(), "Mouse");
-            Settings::setMouseDevice(cfg.readEntry("keyMonDevice", QString()));
-            cfg.deleteEntry("keyMonDevice");
-
-            printf("Delete old keyboard entrys...\n");
-            KConfigGroup keyGroup(Settings::self()->config(), "Keyboard");
-            int index = 0;
-            QString key = QString("Key %1 Code").arg(index);
-            while (keyGroup.hasKey(key)) {
-                keyGroup.deleteEntry(key);
-                keyGroup.deleteEntry(QString("Key %1 Icon").arg(index));
-                keyGroup.deleteEntry(QString("Key %1 Text").arg(index));
-
-                index++;
-                key = QString("Key %1 Code").arg(index);
-            }
-
-
-            printf("Convert old mouse configuration...\n");
-
-            QList<MouseButton> buttons;
-            KConfigGroup mouseGroup(Settings::self()->config(), "Mouse");
-
-            int keys = mouseGroup.readEntry("Buttons", 0);
-            for (int i = 0; i < keys; i++) {
-                const int key = mouseGroup.readEntry(QString("Button %1 key").arg(i), 0);
-                const QColor color = mouseGroup.readEntry(QString("Button %1 color").arg(i), QColor());
-
-                printf("Save Button: %d\n", key);
-
-                buttons.append(MouseButton(key, color));
-            }
-            MouseConfig::saveConfig(Settings::self()->config(), buttons);
-
-            printf("Delete old mouse entrys...\n");
-
-            index = 0;
-            key = QString("Button %1 key").arg(index);
-            while (mouseGroup.hasKey(key)) {
-                mouseGroup.deleteEntry(key);
-                mouseGroup.deleteEntry(QString("Button %1 color").arg(index));
-
-                index++;
-                key = QString("Button %1 key").arg(index);
-            }
-
-            printf("Convert old frame configuration...\n");
-
-            KConfigGroup frameCfg(Settings::self()->config(), "Frame");
-
-            QList<FrameSize> frames;
-            foreach (const QString &name, frameCfg.readEntry("Names", QStringList())) {
-                FrameSize size;
-
-                size.setText(name);
-                size.setSize(frameCfg.readEntry(QString("Size %1").arg(name), QSize()));
-
-                printf("Save Frame: %s\n", size.text().toLatin1().constData());
-
-                frames.append(size);
-            }
-            FrameConfig::writeSizes(frames, Settings::self()->config());
-
-            printf("Delete old frame entrys...\n");
-            foreach (const QString &name, frameCfg.readEntry("Names", QStringList())) {
-                frameCfg.deleteEntry(QString("Size %1").arg(name));
-            }
-            frameCfg.deleteEntry("Names");
-
-            printf("Convert old timeline configuration...\n");
-
-            QList<RecordItNow::Timeline::Topic> topics;
-            KConfigGroup timelineCfg(Settings::self()->config(), "Timeline");
-            int count = timelineCfg.readEntry("Topics", 0);
-            for (int i = 0; i < count; i++) {
-                const QString title = timelineCfg.readEntry(QString("Topic %1 Title").arg(i), i18n("Untitled"));
-                const QString icon = timelineCfg.readEntry(QString("Topic %1 Icon").arg(i), "dialog-information");
-                const unsigned long duration = timelineCfg.readEntry(QString("Topic %1 Duration").arg(i), 10);
-
-                printf("Save Topic: %s\n", title.toLatin1().constData());
-
-                RecordItNow::Timeline::Topic topic;
-                topic.setDuration(RecordItNow::Timeline::Topic::secondsToTime(duration));
-                topic.setIcon(icon);
-                topic.setTitle(title);
-
-                topics.append(topic);
-            }
-
-            TimelineConfig::saveTopics(topics, Settings::self()->config());
-
-            printf("Delete old timeline entrys...\n");
-            index = 0;
-            key = QString("Topic %1 Title").arg(index);
-            while (timelineCfg.hasKey(key)) {
-                timelineCfg.deleteEntry(key);
-                timelineCfg.deleteEntry(QString("Topic %1 Icon").arg(index));
-                timelineCfg.deleteEntry(QString("Topic %1 Duration").arg(index));
-
-                index++;
-                key = QString("Topic %1 Title").arg(index);
-            }
-        }
 
         printf("\n");
         printf("Update done...\n\n");

@@ -36,10 +36,10 @@
 namespace RecordItNow {
     class PlayerDock;
     class DockWidget;
+    class KeyloggerOSD;
 };
 
 class ZoomDock;
-class KeyboardDock;
 class TimelineDock;
 class CursorWidget;
 class KSqueezedTextLabel;
@@ -83,10 +83,10 @@ private:
     KSqueezedTextLabel *m_statusLabel;
     QPointer<CursorWidget> m_cursor;
     TimelineDock *m_timelineDock;
-    KeyboardDock *m_keyboardDock;
     ZoomDock *m_zoomDock;
     RecordItNow::PlayerDock *m_playerDock;
     RecordItNow::DockWidget *m_mainDock;
+    RecordItNow::KeyloggerOSD *m_keyloggerOSD;
 
     KAction *getAction(const QString &name);
     bool isDockEnabled(QDockWidget *dock) const;
