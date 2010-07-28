@@ -296,6 +296,8 @@ void KeyloggerLabel::paintEvent(QPaintEvent *event)
 
     QTextOption option;
     option.setAlignment(Qt::AlignCenter);
+    option.setWrapMode(QTextOption::NoWrap);
+    //option.setFlags(QTextOption::ShowTabsAndSpaces);
 
     if (m_shortcut.isEmpty()) {
         painter.drawText(rect(), text, option);
