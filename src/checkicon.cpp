@@ -132,6 +132,8 @@ void CheckIcon::paintEvent(QPaintEvent *event)
     QStyleOption options;
     options.initFrom(this);
 
+    result = style()->generatedIconPixmap(mode, result, &options);
+
     if (isEnabled() && m_hover) {
         KIconEffect *effect = KIconLoader::global()->iconEffect();
         result = effect->apply(result, KIconLoader::Desktop, KIconLoader::ActiveState);
