@@ -303,7 +303,11 @@ void KeyloggerLabel::keyPressEvent(QKeyEvent *event)
     }
 
     if (modifierCount > 1 ||
-        ((modifiers & Qt::ControlModifier || modifiers & Qt::MetaModifier || modifiers & Qt::AltModifier) && !tmpKeys.isEmpty())) {
+        ((modifiers & Qt::ControlModifier ||
+          modifiers & Qt::MetaModifier ||
+          modifiers & Qt::AltModifier ||
+          (modifiers & Qt::ShiftModifier && event->text().isEmpty())) &&
+         !tmpKeys.isEmpty())) {
         int key = 0;
         foreach (const int &k, tmpKeys) {
             key = k;
