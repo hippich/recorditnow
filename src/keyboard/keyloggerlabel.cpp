@@ -38,10 +38,12 @@ KeyloggerLabel::KeyloggerLabel(QWidget *parent)
     : QWidget(parent)
 {
 
-    m_shortcutTimer = new QTimer(this);
-    m_shortcutTimer->setSingleShot(true);
-    connect(m_shortcutTimer, SIGNAL(timeout()), this, SLOT(clearShortcut()));
-    m_shortcutTimer->setInterval(2000);
+    m_showClipboard = m_showShortcuts = false;
+
+    m_textTimer = new QTimer(this);
+    m_textTimer->setSingleShot(true);
+    connect(m_textTimer, SIGNAL(timeout()), this, SLOT(clearText()));
+    m_textTimer->setInterval(1500);
 
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setFocusPolicy(Qt::NoFocus);
@@ -52,7 +54,7 @@ KeyloggerLabel::KeyloggerLabel(QWidget *parent)
 KeyloggerLabel::~KeyloggerLabel()
 {
 
-    delete m_shortcutTimer;
+    delete m_textTimer;
 
 }
 
@@ -65,18 +67,66 @@ QString KeyloggerLabel::text() const
 }
 
 
+void KeyloggerLabel::setShowClipbaord(const bool &enabled)
+{
+
+    m_showClipboard = enabled;
+
+}
+
+
+void KeyloggerLabel::setShowShortcuts(const bool &enabled)
+{
+
+    m_showShortcuts = enabled;
+
+}
+
+
+void KeyloggerLabel::setClipboardText(const QString &text)
+{
+
+    if (!m_showClipboard) {
+        return;
+    }
+
+    QString clip = text;
+    clip.remove(QRegExp("\n.*")); // show only the first line
+
+    m_clipboard = i18n("Clipboard: \"%1\"", clip);
+    update();
+
+    if (!m_textTimer->isActive()) {
+        m_textTimer->start();
+    }
+
+}
+
+
+void KeyloggerLabel::setShortcut(const QString &text)
+{
+
+    if (!m_showShortcuts) {
+        return;
+    }
+
+    m_shortcut = i18n("Shortcut: \"%1\"", text);;
+    update();
+
+    if (!m_textTimer->isActive()) {
+        m_textTimer->start();
+    }
+
+}
+
+
 void KeyloggerLabel::setText(const QString &text)
 {
 
     if (text == m_text) {
         return;
     }
-    m_text = text;
-
-    QFontMetrics fm(font());
-    while (!m_text.isEmpty() && fm.width(m_text) > width()*2) {
-        m_text.remove(0, 1);
-    }
+    m_text = resizeText(text);
     update();
 
 }
@@ -109,10 +159,32 @@ void KeyloggerLabel::releaseEvent(QKeyEvent *event)
 }
 
 
-void KeyloggerLabel::clearShortcut()
+QString KeyloggerLabel::resizeText(const QString &text) const
 {
 
-    m_shortcut.clear();
+    QString newText = text;
+
+    QFontMetrics fm(font());
+    while (!newText.isEmpty() && fm.width(newText) > width()*2) {
+        newText.remove(0, 1);
+    }
+    return newText;
+
+}
+
+
+void KeyloggerLabel::clearText()
+{
+
+    if (!m_clipboard.isEmpty()) {
+        m_clipboard.clear();
+
+        if (!m_shortcut.isEmpty()) {
+            m_textTimer->start();
+        }
+    } else if (!m_shortcut.isEmpty()) {
+        m_shortcut.clear();
+    }
     update();
 
 }
@@ -214,6 +286,40 @@ void KeyloggerLabel::keyPressEvent(QKeyEvent *event)
     default: break;
     }
 
+
+    // shortcut ?
+    QList<int> tmpKeys = m_keys;
+    Qt::KeyboardModifiers modifiers;
+    QMutableListIterator<int> it(tmpKeys);
+    while (it.hasNext()) {
+        it.next();
+        switch ((Qt::Key) it.value()) {
+        case Qt::Key_Alt: modifiers |= Qt::AltModifier; it.remove(); break;
+        case Qt::Key_Shift: modifiers |= Qt::ShiftModifier; it.remove(); break;
+        case Qt::Key_Control: modifiers |= Qt::ControlModifier; it.remove(); break;
+        case Qt::Key_Meta: modifiers |= Qt::MetaModifier; it.remove(); break;
+        default: break;
+        }
+    }
+
+    if (modifierCount > 1 ||
+        ((modifiers & Qt::ControlModifier || modifiers & Qt::MetaModifier || modifiers & Qt::AltModifier) && !tmpKeys.isEmpty())) {
+        int key = 0;
+        foreach (const int &k, tmpKeys) {
+            key = k;
+            break;
+        }
+
+        QKeySequence seq(key|modifiers);
+        QString text = seq.toString();
+
+        if (!text.isEmpty() && text != m_shortcut && key != 0) {
+            setShortcut(text);
+            return;
+        }
+    }
+
+    // text ?
     if (!event->text().isEmpty() && event->text().at(0).isPrint()) {
         setText(text()+event->text());
     }
@@ -246,64 +352,19 @@ void KeyloggerLabel::paintEvent(QPaintEvent *event)
     painter.setFont(font);
 
     QString text = KeyloggerLabel::text();
-    QList<int> tmpKeys = m_keys;
-
-
-    // shortcut ?
-    int modifierCount = 0;
-    Qt::KeyboardModifiers modifiers;
-    QMutableListIterator<int> it(tmpKeys);
-    while (it.hasNext()) {
-        it.next();
-        switch ((Qt::Key) it.value()) {
-        case Qt::Key_Alt: modifiers |= Qt::AltModifier; it.remove(); modifierCount++; break;
-        case Qt::Key_Shift: modifiers |= Qt::ShiftModifier; it.remove(); modifierCount++; break;
-        case Qt::Key_Control: modifiers |= Qt::ControlModifier; it.remove(); modifierCount++; break;
-        case Qt::Key_Meta: modifiers |= Qt::MetaModifier; it.remove(); modifierCount++; break;
-        default: break;
-        }
+    if (!m_clipboard.isEmpty()) {
+        text = m_clipboard;
+    } else if (!m_shortcut.isEmpty()) {
+        text = m_shortcut;
     }
 
-    if (modifierCount > 1 ||
-        ((modifiers & Qt::ControlModifier || modifiers & Qt::MetaModifier || modifiers & Qt::AltModifier) && !tmpKeys.isEmpty())) {
-        int key = 0;
-        foreach (const int &k, tmpKeys) {
-            key = k;
-            break;
-        }
-
-        QKeySequence seq(key|modifiers);
-        text = seq.toString();
-
-        if (!text.isEmpty() && text != m_shortcut && key != 0) {
-            m_shortcut = text;
-            m_shortcutTimer->start();
-        }
-    }
-
-    QFontMetrics fm(font);
-    if (fm.width(text) > width()) {
-        while (!text.isEmpty()) {
-            text.remove(0, 1);
-
-            if (fm.width(text) < width()) {
-                break;
-            }
-        }
-    }
-
-//    kDebug() << text;
-
+    text = resizeText(text);
     QTextOption option;
     option.setAlignment(Qt::AlignCenter);
     option.setWrapMode(QTextOption::NoWrap);
     //option.setFlags(QTextOption::ShowTabsAndSpaces);
 
-    if (m_shortcut.isEmpty()) {
-        painter.drawText(rect(), text, option);
-    } else {
-        painter.drawText(rect(), m_shortcut, option);
-    }
+    painter.drawText(contentsRect(), text, option);
 
 }
 

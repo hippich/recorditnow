@@ -40,6 +40,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QX11Info>
+#include <QtGui/QClipboard>
 
 // X11
 #include <X11/Xlib.h>
@@ -107,6 +108,8 @@ KeyloggerOSD::KeyloggerOSD(QWidget *parent)
     connect(KeyMonManager::self(), SIGNAL(keyEvent(RecordItNow::KeyloggerEvent)), this,
             SLOT(keyloggerEvent(RecordItNow::KeyloggerEvent)));
 
+    connect(qApp->clipboard(), SIGNAL(dataChanged()), this, SLOT(clipboardDataChanged()));
+
 }
 
 
@@ -121,7 +124,7 @@ KeyloggerOSD::~KeyloggerOSD()
 }
 
 
-void KeyloggerOSD::init(const int &timeout, const int &fontSize)
+void KeyloggerOSD::init(const int &timeout, const int &fontSize, const bool &shortcuts, const bool &clipboard)
 {
 
     m_hideTimer->setInterval(timeout*1000);
@@ -132,6 +135,8 @@ void KeyloggerOSD::init(const int &timeout, const int &fontSize)
     }
     font.setPointSize(fontSize);
     m_edit->setFont(font);
+    m_edit->setShowShortcuts(shortcuts);
+    m_edit->setShowClipbaord(clipboard);
 
     QFontMetrics fm(font);
     int left, top, right, bottom;
@@ -250,6 +255,32 @@ void KeyloggerOSD::keyloggerEvent(const RecordItNow::KeyloggerEvent &event)
                         event.count());
 
     qApp->sendEvent(this, &qKeyEvent);
+
+}
+
+
+void KeyloggerOSD::clipboardDataChanged()
+{
+
+    QClipboard *clip = static_cast<QClipboard*>(sender());
+    QString txt = clip->text();
+
+    if (!txt.isEmpty()) {
+        m_edit->setClipboardText(txt);
+
+        m_inactive = false;
+
+        if (m_hideTimer->isActive()) {
+            m_hideTimer->stop();
+        }
+
+        if (!isVisible()) {
+            show();
+            updateMousePos();
+        }
+
+        m_hideTimer->start();
+    }
 
 }
 

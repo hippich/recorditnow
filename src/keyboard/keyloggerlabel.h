@@ -39,6 +39,10 @@ public:
 
     QString text() const;
 
+    void setShowClipbaord(const bool &enabled);
+    void setShowShortcuts(const bool &enabled);
+    void setClipboardText(const QString &text);
+    void setShortcut(const QString &text);
     void setText(const QString &text);
     void clear();
 
@@ -48,13 +52,18 @@ public:
 
 private:
     QString m_text;
-    QList<int> m_keys;
     QString m_shortcut;
-    QTimer *m_shortcutTimer;
+    QString m_clipboard;
+    QList<int> m_keys;
+    QTimer *m_textTimer;
+    bool m_showShortcuts;
+    bool m_showClipboard;
+
+    QString resizeText(const QString &text) const;
 
 
 private slots:
-    void clearShortcut();
+    void clearText();
 
 
 protected:

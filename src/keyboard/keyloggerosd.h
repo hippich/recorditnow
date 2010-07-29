@@ -49,7 +49,7 @@ public:
     KeyloggerOSD(QWidget *parent = 0);
     virtual ~KeyloggerOSD();
 
-    void init(const int &timeout, const int &fontSize);
+    void init(const int &timeout, const int &fontSize, const bool &shortcuts, const bool &clipboard);
 
 
 private:
@@ -69,6 +69,7 @@ private slots:
     void updateGeometry();
     void inactive();
     void keyloggerEvent(const RecordItNow::KeyloggerEvent &event);
+    void clipboardDataChanged();
 
 
 protected:

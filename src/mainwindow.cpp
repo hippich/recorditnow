@@ -1247,7 +1247,9 @@ void MainWindow::initRecordWidgets(const bool &start)
                 m_keyloggerOSD = new RecordItNow::KeyloggerOSD(0);
             }
             m_keyloggerOSD->init(Settings::keyboardOnScreenDisplayHideTime(),
-                                 Settings::keyboardOnScreenDisplayFontSize());
+                                 Settings::keyboardOnScreenDisplayFontSize(),
+                                 Settings::keyboardOnScreenDisplayShortcuts(),
+                                 Settings::keyboardOnScreenDisplayClipboard());
         }
     } else {
         if (m_keyloggerOSD) {

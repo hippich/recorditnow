@@ -101,6 +101,12 @@
     <entry name="keyboardOnScreenDisplayFontSize" type="Int">
             <default>30</default>
     </entry>
+    <entry name="keyboardOnScreenDisplayShortcuts" type="Bool">
+            <default>true</default>
+    </entry>
+    <entry name="keyboardOnScreenDisplayClipboard" type="Bool">
+            <default>true</default>
+    </entry>
   </group>
   <group name="Zoom">
     <entry name="zoomFactor" type="Int">
