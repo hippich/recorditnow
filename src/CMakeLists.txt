@@ -1,10 +1,13 @@
 include_directories(${CMAKE_SOURCE_DIR}/src/libs/plugin
     ${CMAKE_SOURCE_DIR}/src/libs/recorder
     ${CMAKE_SOURCE_DIR}/src/libs/encoder
-    ${CMAKE_SOURCE_DIR}/src/libs/upload
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_BINARY_DIR}
     ${KDE4_INCLUDES})
+
+if (BUILD_WITH_JOSCHY)
+    include_directories(${JOSCHY_SNAPSHOT_INCLUDE_DIR})
+endif (BUILD_WITH_JOSCHY)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
@@ -171,12 +174,17 @@ set(GUI_SRCS_LINK ${KDE4_KDEUI_LIBS}
                   recorditnow_common
                   recorditnow_recordkeylogger
                   ${X11_Xcursor_LIB}
-                  ${JOSCHYCORE_LIBRARIES}
                   ${KDE4_PLASMA_LIBS})
 
 if (XFIXES_FOUND)
     set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${XFIXES_LIBRARIES})
 endif(XFIXES_FOUND)
+
+if (BUILD_WITH_JOSCHY)
+    set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${JOSCHY_SNAPSHOT_LIBRARIES})
+else (BUILD_WITH_JOSCHY)
+    set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${JOSCHYCORE_LIBRARIES})
+endif (BUILD_WITH_JOSCHY)
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})

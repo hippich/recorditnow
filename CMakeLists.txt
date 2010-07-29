@@ -1,5 +1,13 @@
 project(RecordItNow)
 
+
+set(BUILD_WITH_JOSCHY true)
+#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wall)
+
+
+# build joschy
+add_subdirectory(joschy-snapshot-23-02-10)
+
 find_package(KDE4 REQUIRED)
 include (KDE4Defaults)
 
@@ -12,7 +20,12 @@ set(KDE_MIN_VERSION "4.4.0")
 install(FILES recorditnow.desktop recorditnow_snapshot.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
 
-find_package(JoschyCore REQUIRED)
+if (NOT BUILD_WITH_JOSCHY)
+    find_package(JoschyCore REQUIRED)
+else (NOT BUILD_WITH_JOSCHY)
+    set (JOSCHY_SNAPSHOT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/joschy-snapshot-23-02-10/joschycore/)
+    set (JOSCHY_SNAPSHOT_LIBRARIES joschycore)
+endif (NOT BUILD_WITH_JOSCHY)
 find_package(RecordMyDesktop REQUIRED)
 
 if (NOT X11_Xext_FOUND OR NOT X11_XTest_FOUND)

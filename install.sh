@@ -6,24 +6,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# build Joschy
-joschyDir="./joschy-snapshot-23-02-10"
-buildDir="${joschyDir}/build"
-
-if [ ! -d ${buildDir} ]
-then mkdir ${buildDir} || exit
-fi
-
-
-cd ${buildDir} || exit
-cmake -DLINGUAS=${linguas} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=release ../ || exit
-make || exit
-make install || exit
-
-
-cd ../../ || exit
-
-
 # build recorditnow
 buildDir="./build"
 linguas="de;hu;pt_BR;cs;fr;tr"
