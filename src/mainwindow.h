@@ -49,7 +49,7 @@ class CursorWidget;
 class RecorderManager;
 class EncoderManager;
 class RecordItNowPluginManager;
-class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
+class MainWindow : public KXmlGuiWindow, Ui::ToolBarWidget
 {
     Q_OBJECT
 
