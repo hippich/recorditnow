@@ -86,8 +86,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupActions();
 
-    setCentralWidget(new QWidget(this)); // just a placeholder
-    centralWidget()->setMaximumSize(1, 1);
+   // setCentralWidget(new QWidget(this)); // just a placeholder
+   // centralWidget()->setMaximumSize(1, 1);
+
+    setDockOptions(KXmlGuiWindow::AllowNestedDocks|
+                   KXmlGuiWindow::AllowTabbedDocks|
+                   KXmlGuiWindow::AnimatedDocks);
 
     QWidget *toolWidget = new QWidget(this);
     setupUi(toolWidget);
@@ -184,6 +188,8 @@ MainWindow::MainWindow(QWidget *parent)
             widget->removeAction(toolBarMenuAction());
         }
     }
+    layout()->setContentsMargins(10, 10, 10, 10);
+    layout()->setSpacing(10);
 
 }
 
