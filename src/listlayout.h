@@ -35,7 +35,7 @@ class ListLayout: public QVBoxLayout
     
     
 public:
-    ListLayout(QWidget *parent = 0, const bool &moveEnabled = false);
+    explicit ListLayout(QWidget *parent = 0, const bool &moveEnabled = false);
     ~ListLayout();    
     
     QList<QWidget*> rows() const;

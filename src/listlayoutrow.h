@@ -34,7 +34,7 @@ class ListLayoutRow: public QFrame
     Q_OBJECT
     
 public:
-    ListLayoutRow(QWidget *widget, QWidget *parent = 0, const bool &moveEnabled = false);
+    explicit ListLayoutRow(QWidget *widget, QWidget *parent = 0, const bool &moveEnabled = false);
     
     QWidget *widget() const;
     void removeWidget();

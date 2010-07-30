@@ -938,7 +938,7 @@ static QString translateKeySym(KeySym keysym, uint xmodifiers,
             // map shift+tab to shift+backtab, QShortcutMap knows about it
             // and will handle it.
             code = Qt::Key_Backtab;
-            text = QString();
+            text.clear();
         }
     }
     return text;

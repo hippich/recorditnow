@@ -179,7 +179,7 @@ void ImageFrame::mouseMoveEvent(QMouseEvent *event)
         QImage image = m_image.scaled(128, 128, Qt::KeepAspectRatio, Qt::FastTransformation);
         drag->setPixmap(QPixmap::fromImage(image));
 
-        drag->exec();
+        drag->exec(); // krazy:exclude=crashy
     }
 
 }

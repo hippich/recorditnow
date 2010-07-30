@@ -85,7 +85,7 @@ void RecordItNowPlugin::jobFinishedInternal(KJob *job)
     if (job->error()) {
         errorString = job->errorString();
         if (errorString.isEmpty()) {
-            errorString = i18n("Unkown error!");
+            errorString = i18n("Unknown error!");
         }
     }
 

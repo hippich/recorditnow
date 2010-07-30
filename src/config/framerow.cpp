@@ -92,4 +92,3 @@ void FrameRow::setSize(const QSize &size)
     
     
 #include "framerow.moc"
-    
