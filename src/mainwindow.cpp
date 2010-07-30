@@ -26,55 +26,36 @@
 #include "recordermanager.h"
 #include "encodermanager.h"
 #include "mouse/cursorwidget.h"
-#include "application.h"
 #include "config/mouseconfig.h"
 #include "zoom/zoomview.h"
 #include "timeline/timeline.h"
 #include "timeline/timelinedock.h"
 #include "upload/uploadwizard.h"
 #include "keyboard/keyloggerosd.h"
-#include "config/keyboardconfig.h"
 #include "keymonmanager.h"
 #include "config/frameconfig.h"
 #include "zoom/zoomdock.h"
 #include "windowgrabber.h"
 #include "player/playerdock.h"
 #include "helper.h"
-#include "dockwidget.h"
 
 // Qt
-#include <QtGui/QX11Info>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QDesktopWidget>
-#include <QtCore/QTimer>
-#include <QtGui/QPainter>
-#include <QtGui/QStackedLayout>
-#include <QtGui/QDockWidget>
-#include <QtCore/QDir>
-#include <QtGui/QPainter>
 
 // KDE
-#include <kicon.h>
-#include <kactioncollection.h>
-#include <klocalizedstring.h>
 #include <kdebug.h>
 #include <kstatusbar.h>
 #include <kmenubar.h>
 #include <kmessagebox.h>
-#include <kservicetypetrader.h>
 #include <kmenu.h>
 #include <krun.h>
-#include <kmimetype.h>
 #include <kapplication.h>
 #include <kactionmenu.h>
 #include <ksqueezedtextlabel.h>
 #include <kactioncategory.h>
 #include <knotification.h>
 #include <ktoolbar.h>
-#include <kcolorscheme.h>
-
-// X11
-#include <X11/Xlib.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
