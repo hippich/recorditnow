@@ -30,7 +30,7 @@
 
 
 class KProcess;
-class RecordMyDesktopRecorder : public AbstractRecorder
+class RecordMyDesktopRecorder : public RecordItNow::AbstractRecorder
 {
     Q_OBJECT
 
@@ -39,7 +39,7 @@ public:
     explicit RecordMyDesktopRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~RecordMyDesktopRecorder();
 
-    void record(const AbstractRecorder::Data &d);
+    void record(const RecordItNow::AbstractRecorder::Data &d);
     void pause();
     void stop();
 

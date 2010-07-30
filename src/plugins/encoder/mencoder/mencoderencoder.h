@@ -28,7 +28,7 @@
 
 
 class KProcess;
-class MencoderEncoder : public AbstractEncoder
+class MencoderEncoder : public RecordItNow::AbstractEncoder
 {
     Q_OBJECT
 

@@ -80,8 +80,8 @@ void EncoderManager::startEncode(const QString &encoder, const AbstractEncoder::
     connect(m_encoder, SIGNAL(status(QString)), this, SIGNAL(status(QString)));
     connect(m_encoder, SIGNAL(error(QString)), this, SLOT(encoderError(QString)));
     connect(m_encoder, SIGNAL(outputFileChanged(QString)), this, SIGNAL(fileChanged(QString)));
-    connect(m_encoder, SIGNAL(finished(AbstractEncoder::ExitStatus)), this,
-            SLOT(encoderFinished(AbstractEncoder::ExitStatus)));
+    connect(m_encoder, SIGNAL(finished(RecordItNow::AbstractEncoder::ExitStatus)), this,
+            SLOT(encoderFinished(RecordItNow::AbstractEncoder::ExitStatus)));
 
     m_encoder->encode(data);
 
@@ -128,7 +128,7 @@ void EncoderManager::encoderError(const QString &error)
 }
 
 
-void EncoderManager::encoderFinished(const AbstractEncoder::ExitStatus &status)
+void EncoderManager::encoderFinished(const RecordItNow::AbstractEncoder::ExitStatus &status)
 {
 
     QString error;

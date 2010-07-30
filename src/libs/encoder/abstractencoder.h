@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTENCODER_H
-#define ABSTRACTENCODER_H
+#ifndef RECORDITNOW_ABSTRACTENCODER_H
+#define RECORDITNOW_ABSTRACTENCODER_H
 
 
 // own
@@ -30,6 +30,9 @@
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QVariantList>
+
+
+namespace RecordItNow {
 
 
 class KDE_EXPORT AbstractEncoder : public RecordItNowPlugin
@@ -61,10 +64,13 @@ signals:
     void status(const QString &text);
     void error(const QString &text);
     void outputFileChanged(const QString &newFile);
-    void finished(const AbstractEncoder::ExitStatus &status);
+    void finished(const RecordItNow::AbstractEncoder::ExitStatus &status);
 
 
 };
+
+
+} // namespace RecordItNow
 
 
 #endif // ABSTRACTRECORDER_H

@@ -126,8 +126,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_recorderManager, SIGNAL(finished(QString,bool)), this,
             SLOT(recorderFinished(QString,bool)));
-    connect(m_recorderManager, SIGNAL(stateChanged(AbstractRecorder::State)), this,
-            SLOT(recorderStateChanged(AbstractRecorder::State)));
+    connect(m_recorderManager, SIGNAL(stateChanged(RecordItNow::AbstractRecorder::State)), this,
+            SLOT(recorderStateChanged(RecordItNow::AbstractRecorder::State)));
 
     m_encoderManager = new RecordItNow::EncoderManager(this, m_pluginManager);
     connect(m_encoderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
@@ -523,7 +523,7 @@ void MainWindow::recordFullScreen()
 }
 
 
-void MainWindow::initRecorder(AbstractRecorder::Data *d)
+void MainWindow::initRecorder(RecordItNow::AbstractRecorder::Data *d)
 {
 
     if (m_frame->isVisible()) {
@@ -545,7 +545,7 @@ void MainWindow::initRecorder(AbstractRecorder::Data *d)
 }
 
 
-void MainWindow::initEncoder(AbstractEncoder::Data *d)
+void MainWindow::initEncoder(RecordItNow::AbstractEncoder::Data *d)
 {
 
     d->overwrite = Settings::overwrite();
@@ -913,7 +913,7 @@ void MainWindow::reloadPopAction()
 }
 
 
-void MainWindow::recorderStateChanged(const AbstractRecorder::State &newState)
+void MainWindow::recorderStateChanged(const RecordItNow::AbstractRecorder::State &newState)
 {
 
     switch (newState) {

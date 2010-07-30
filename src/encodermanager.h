@@ -63,7 +63,7 @@ private:
 
 private slots:
     void encoderError(const QString &error);
-    void encoderFinished(const AbstractEncoder::ExitStatus &status);
+    void encoderFinished(const RecordItNow::AbstractEncoder::ExitStatus &status);
 
 
 signals:

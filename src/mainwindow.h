@@ -93,8 +93,8 @@ private:
     bool isDockEnabled(QDockWidget *dock) const;
 
     inline void setupActions();
-    inline void initRecorder(AbstractRecorder::Data *d);
-    inline void initEncoder(AbstractEncoder::Data *d);
+    inline void initRecorder(RecordItNow::AbstractRecorder::Data *d);
+    inline void initEncoder(RecordItNow::AbstractEncoder::Data *d);
     inline void setupTray();
     void setTrayOverlay(const QString &name);
     void setState(const State &newState);
@@ -126,7 +126,7 @@ private slots:
     void aboutToQuit();
     void pluginsChanged();
     void upload();
-    void recorderStateChanged(const AbstractRecorder::State &newState);
+    void recorderStateChanged(const RecordItNow::AbstractRecorder::State &newState);
     void linkActivated(const QString &link);
     void zoomIn();
     void zoomOut();

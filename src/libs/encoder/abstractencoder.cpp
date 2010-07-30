@@ -29,6 +29,9 @@
 #include <QtCore/QDir>
 
 
+namespace RecordItNow {
+
+
 AbstractEncoder::AbstractEncoder(QObject *parent, const QVariantList &args)
     : RecordItNowPlugin(parent)
 {
@@ -44,6 +47,9 @@ AbstractEncoder::~AbstractEncoder()
 
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "abstractencoder.moc"

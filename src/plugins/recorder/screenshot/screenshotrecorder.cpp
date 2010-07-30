@@ -45,7 +45,7 @@
 K_PLUGIN_FACTORY(myFactory, registerPlugin<ScreenshotRecorder>();)
 K_EXPORT_PLUGIN(myFactory("screenshot_recorder"))
 ScreenshotRecorder::ScreenshotRecorder(QObject *parent, const QVariantList &args)
-    : AbstractRecorder(parent, args)
+    : RecordItNow::AbstractRecorder(parent, args)
 {
 
 
@@ -70,7 +70,7 @@ bool ScreenshotRecorder::isVideoRecorder() const
 }
 
 
-void ScreenshotRecorder::record(const AbstractRecorder::Data &d)
+void ScreenshotRecorder::record(const RecordItNow::AbstractRecorder::Data &d)
 {
 
     setState(Record);

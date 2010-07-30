@@ -48,12 +48,12 @@ public:
     RecorderManager(QObject *parent, RecordItNowPluginManager *manager);
     ~RecorderManager();
 
-    AbstractRecorder::State currentState() const;
-    QList<RecorderData> getRecorder() const;
+    RecordItNow::AbstractRecorder::State currentState() const;
+    QList<RecordItNow::RecorderData> getRecorder() const;
     bool hasFeature(const QString &feature, const QString &recorder) const;
     QString getDefaultFile(const QString &name) const;
 
-    void startRecord(const QString &recorder, const AbstractRecorder::Data &data, RecordItNow::CursorWidget *cursor);
+    void startRecord(const QString &recorder, const RecordItNow::AbstractRecorder::Data &data, RecordItNow::CursorWidget *cursor);
     void pauseOrContinue();
     void stop();
     void zoom(const bool &in);
@@ -62,21 +62,21 @@ public:
 
 private:
     RecordItNowPluginManager *m_manager;
-    QPointer<AbstractRecorder> m_recorder;
+    QPointer<RecordItNow::AbstractRecorder> m_recorder;
 
     void clean();
 
 
 private slots:
     void recorderError(const QString &error);
-    void recorderFinished(const AbstractRecorder::ExitStatus &status);
+    void recorderFinished(const RecordItNow::AbstractRecorder::ExitStatus &status);
 
 
 signals:
     void status(const QString &status);
     void finished(const QString &error, const bool &isVideo = false);
     void fileChanged(const QString &newFile);
-    void stateChanged(const AbstractRecorder::State &newState);
+    void stateChanged(const RecordItNow::AbstractRecorder::State &newState);
 
 
 };

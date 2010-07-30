@@ -42,7 +42,7 @@ static const QStringList formats = QStringList() << "avi" << "flv" << "wmv" << "
 K_PLUGIN_FACTORY(myFactory, registerPlugin<MencoderEncoder>();)
 K_EXPORT_PLUGIN(myFactory("mencoder_encoder"))
 MencoderEncoder::MencoderEncoder(QObject *parent, const QVariantList &args)
-    : AbstractEncoder(parent, args)
+    : RecordItNow::AbstractEncoder(parent, args)
 {
 
     m_mencoder = 0;

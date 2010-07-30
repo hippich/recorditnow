@@ -28,7 +28,7 @@
 #include <QtGui/QPixmap>
 
 
-class ScreenshotRecorder : public AbstractRecorder
+class ScreenshotRecorder : public RecordItNow::AbstractRecorder
 {
     Q_OBJECT
 
@@ -39,7 +39,7 @@ public:
 
     bool isVideoRecorder() const;
 
-    void record(const AbstractRecorder::Data &d);
+    void record(const RecordItNow::AbstractRecorder::Data &d);
     void pause();
     void stop();
 

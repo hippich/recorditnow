@@ -43,7 +43,7 @@ static const QStringList formats = QStringList() << "avi" << "flv" << "wmv" << "
 K_PLUGIN_FACTORY(myFactory, registerPlugin<FfmpegEncoder>();)
 K_EXPORT_PLUGIN(myFactory("ffmpeg_encoder"))
 FfmpegEncoder::FfmpegEncoder(QObject *parent, const QVariantList &args)
-    : AbstractEncoder(parent, args)
+    : RecordItNow::AbstractEncoder(parent, args)
 {
 
     m_duration = -1;

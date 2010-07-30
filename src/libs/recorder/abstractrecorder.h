@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ABSTRACTRECORDER_H
-#define ABSTRACTRECORDER_H
+#ifndef RECORDITNOW_ABSTRACTRECORDER_H
+#define RECORDITNOW_ABSTRACTRECORDER_H
 
 
 // own
@@ -32,6 +32,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QRect>
 #include <QtCore/QVariantList>
+
+
+namespace RecordItNow {
 
 
 class KDE_EXPORT AbstractRecorder : public RecordItNowPlugin
@@ -66,7 +69,7 @@ public:
     explicit AbstractRecorder(QObject *parent = 0, const QVariantList &args = QVariantList());
     ~AbstractRecorder();
 
-    AbstractRecorder::State state() const;
+    RecordItNow::AbstractRecorder::State state() const;
     virtual int zoomFactor() const { return 1; };
 
     virtual bool isVideoRecorder() const { return true; };
@@ -84,18 +87,21 @@ private:
 
 
 protected:
-    void setState(const AbstractRecorder::State &newState);
+    void setState(const RecordItNow::AbstractRecorder::State &newState);
 
 
 signals:
     void status(const QString &text);
-    void finished(const AbstractRecorder::ExitStatus &status);
+    void finished(const RecordItNow::AbstractRecorder::ExitStatus &status);
     void error(const QString &text);
     void outputFileChanged(const QString &newFile);
-    void stateChanged(const AbstractRecorder::State &newState);
+    void stateChanged(const RecordItNow::AbstractRecorder::State &newState);
 
 
 };
 
 
-#endif // ABSTRACTRECORDER_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_ABSTRACTRECORDER_H

@@ -31,6 +31,9 @@
 #include <QtCore/QDir>
 
 
+namespace RecordItNow {
+
+
 AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
     : RecordItNowPlugin(parent)
 {
@@ -50,7 +53,7 @@ AbstractRecorder::~AbstractRecorder()
 }
 
 
-AbstractRecorder::State AbstractRecorder::state() const
+RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
 {
 
     return m_state;
@@ -58,7 +61,7 @@ AbstractRecorder::State AbstractRecorder::state() const
 }
 
 
-void AbstractRecorder::setState(const AbstractRecorder::State &newState)
+void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
 {
 
     if (m_state == newState) {
@@ -69,6 +72,8 @@ void AbstractRecorder::setState(const AbstractRecorder::State &newState)
 
 }
 
+
+} // namespace RecordItNow
 
 
 #include "abstractrecorder.moc"

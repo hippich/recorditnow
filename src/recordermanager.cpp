@@ -50,7 +50,7 @@ RecorderManager::~RecorderManager()
 }
 
 
-AbstractRecorder::State RecorderManager::currentState() const
+RecordItNow::AbstractRecorder::State RecorderManager::currentState() const
 {
 
     if (m_recorder) {
@@ -62,10 +62,10 @@ AbstractRecorder::State RecorderManager::currentState() const
 }
 
 
-QList<RecorderData> RecorderManager::getRecorder() const
+QList<RecordItNow::RecorderData> RecorderManager::getRecorder() const
 {
 
-    QList<RecorderData> list;
+    QList<RecordItNow::RecorderData> list;
     foreach (const KPluginInfo &info, m_manager->getRecorderList()) {
         if (info.isPluginEnabled()) {
             RecorderData data;
@@ -128,14 +128,16 @@ QString RecorderManager::getDefaultFile(const QString &name) const
 }
 
 
-void RecorderManager::startRecord(const QString &recorder, const AbstractRecorder::Data &data, RecordItNow::CursorWidget *cursor)
+void RecorderManager::startRecord(const QString &recorder,
+                                  const RecordItNow::AbstractRecorder::Data &data,
+                                  RecordItNow::CursorWidget *cursor)
 {
 
     if (m_recorder) {
         m_manager->unloadPlugin(m_recorder);
     }
 
-    m_recorder = static_cast<AbstractRecorder*>(m_manager->loadPlugin(recorder));
+    m_recorder = static_cast<RecordItNow::AbstractRecorder*>(m_manager->loadPlugin(recorder));
 
     if (!m_recorder) {
         recorderError(i18n("Cannot load Recorder %1.", recorder));
@@ -148,10 +150,10 @@ void RecorderManager::startRecord(const QString &recorder, const AbstractRecorde
     connect(m_recorder, SIGNAL(error(QString)), this, SLOT(recorderError(QString)));
     connect(m_recorder, SIGNAL(outputFileChanged(QString)), this, SIGNAL(fileChanged(QString)));
     connect(m_recorder, SIGNAL(status(QString)), this, SIGNAL(status(QString)));
-    connect(m_recorder, SIGNAL(finished(AbstractRecorder::ExitStatus)), this,
-            SLOT(recorderFinished(AbstractRecorder::ExitStatus)));
-    connect(m_recorder, SIGNAL(stateChanged(AbstractRecorder::State)), this,
-            SIGNAL(stateChanged(AbstractRecorder::State)));
+    connect(m_recorder, SIGNAL(finished(RecordItNow::AbstractRecorder::ExitStatus)), this,
+            SLOT(recorderFinished(RecordItNow::AbstractRecorder::ExitStatus)));
+    connect(m_recorder, SIGNAL(stateChanged(RecordItNow::AbstractRecorder::State)), this,
+            SIGNAL(stateChanged(RecordItNow::AbstractRecorder::State)));
 
     if (cursor && recorder == "Kasti") { // FIXME
         cursor->setRecorder(m_recorder);
@@ -231,11 +233,11 @@ void RecorderManager::recorderError(const QString &error)
 }
 
 
-void RecorderManager::recorderFinished(const AbstractRecorder::ExitStatus &status)
+void RecorderManager::recorderFinished(const RecordItNow::AbstractRecorder::ExitStatus &status)
 {
 
     QString error;
-    if (status == AbstractRecorder::Crash) {
+    if (status == RecordItNow::AbstractRecorder::Crash) {
         error = i18n("The recorder has crashed!");
     }
     emit finished(error, m_recorder->isVideoRecorder());

@@ -28,7 +28,7 @@
 
 
 class KProcess;
-class FfmpegEncoder : public AbstractEncoder
+class FfmpegEncoder : public RecordItNow::AbstractEncoder
 {
     Q_OBJECT
 

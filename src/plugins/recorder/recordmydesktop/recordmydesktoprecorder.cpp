@@ -42,7 +42,7 @@
 K_PLUGIN_FACTORY(myFactory, registerPlugin<RecordMyDesktopRecorder>();)
 K_EXPORT_PLUGIN(myFactory("recordmydesktop_recorder"))
 RecordMyDesktopRecorder::RecordMyDesktopRecorder(QObject *parent, const QVariantList &args)
-    : AbstractRecorder(parent, args)
+    : RecordItNow::AbstractRecorder(parent, args)
 {
 
     m_recorder = 0;
@@ -59,7 +59,7 @@ RecordMyDesktopRecorder::~RecordMyDesktopRecorder()
 }
 
 
-void RecordMyDesktopRecorder::record(const AbstractRecorder::Data &d)
+void RecordMyDesktopRecorder::record(const RecordItNow::AbstractRecorder::Data &d)
 {
 
     const QString recordMyDesktop = KGlobal::dirs()->findExe("recordmydesktop");
