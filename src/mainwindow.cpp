@@ -188,8 +188,6 @@ MainWindow::MainWindow(QWidget *parent)
             widget->removeAction(toolBarMenuAction());
         }
     }
-    layout()->setContentsMargins(10, 10, 10, 10);
-    layout()->setSpacing(10);
 
 }
 
