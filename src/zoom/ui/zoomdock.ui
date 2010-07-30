@@ -36,7 +36,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="ZoomView" name="zoomView" native="true">
+       <widget class="RecordItNow::ZoomView" name="zoomView" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -131,7 +131,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ZoomView</class>
+   <class>RecordItNow::ZoomView</class>
    <extends>QWidget</extends>
    <header>zoom/zoomview.h</header>
    <container>1</container>

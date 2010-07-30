@@ -29,6 +29,10 @@
 // Qt
 #include <QtCore/QDir>
 
+
+namespace RecordItNow {
+
+
 RecorderManager::RecorderManager(QObject *parent, RecordItNowPluginManager *manager)
     : QObject(parent), m_manager(manager)
 {
@@ -124,7 +128,7 @@ QString RecorderManager::getDefaultFile(const QString &name) const
 }
 
 
-void RecorderManager::startRecord(const QString &recorder, const AbstractRecorder::Data &data, CursorWidget *cursor)
+void RecorderManager::startRecord(const QString &recorder, const AbstractRecorder::Data &data, RecordItNow::CursorWidget *cursor)
 {
 
     if (m_recorder) {
@@ -238,6 +242,9 @@ void RecorderManager::recorderFinished(const AbstractRecorder::ExitStatus &statu
     clean();
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "recordermanager.moc"

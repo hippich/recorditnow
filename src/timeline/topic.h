@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef TOPIC_H
-#define TOPIC_H
+#ifndef RECORDITNOW_TOPIC_H
+#define RECORDITNOW_TOPIC_H
 
 // own
 #include "configitem.h"
@@ -33,9 +33,6 @@
 
 
 namespace RecordItNow {
-
-
-namespace Timeline {
 
 
 class TopicProgressBar;
@@ -71,10 +68,7 @@ private:
 };
 
 
-} // namespace Timeline
-
-
 } // namespace RecordItNow
 
 
-#endif // TOPIC_H
+#endif // RECORDITNOW_TOPIC_H

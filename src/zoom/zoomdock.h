@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ZOOMDOCK_H
-#define ZOOMDOCK_H
+#ifndef RECORDITNOW_ZOOMDOCK_H
+#define RECORDITNOW_ZOOMDOCK_H
 
 
 // own
@@ -31,6 +31,9 @@
 
 
 class QTimer;
+namespace RecordItNow {
+
+
 class ZoomDock : public RecordItNow::DockWidget, Ui::ZoomDock
 {
     Q_OBJECT
@@ -66,4 +69,7 @@ private slots:
 };
 
 
-#endif // ZOOMDOCK_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_ZOOMDOCK_H

@@ -40,6 +40,9 @@
 #endif
 
 
+namespace RecordItNow {
+
+
 ZoomView::ZoomView(QWidget *parent)
     : QWidget(parent)
 {
@@ -249,6 +252,9 @@ void ZoomView::wheelEvent(QWheelEvent *event)
     updateView();
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "zoomview.moc"

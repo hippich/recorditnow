@@ -116,8 +116,8 @@ void MouseConfig::saveConfig()
 void MouseConfig::loadConfig()
 {
 
-    QList<MouseButton> buttons = getButtons(config());
-    foreach (const MouseButton &button, buttons) {
+    QList<RecordItNow::MouseButton> buttons = getButtons(config());
+    foreach (const RecordItNow::MouseButton &button, buttons) {
 
         ColorRow *cRow = newColorRow();
         cRow->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
@@ -152,7 +152,7 @@ void MouseConfig::setDefaults()
     m_soundLayout->clear();
     
     // defaults
-    foreach (const MouseButton &button, defaultButtons()) {
+    foreach (const RecordItNow::MouseButton &button, defaultButtons()) {
         ColorRow *cRow = newColorRow();
         cRow->setButton(MouseButtonWidget::getButtonFromXButton(button.code()));
         cRow->setColor(button.color());
@@ -163,15 +163,15 @@ void MouseConfig::setDefaults()
 }
 
 
-QList<MouseButton> MouseConfig::defaultButtons()
+QList<RecordItNow::MouseButton> MouseConfig::defaultButtons()
 {
 
-    MouseButton button1;
-    MouseButton button3;
-    MouseButton button4;
-    MouseButton button5;
-    MouseButton button8;
-    MouseButton button9;
+    RecordItNow::MouseButton button1;
+    RecordItNow::MouseButton button3;
+    RecordItNow::MouseButton button4;
+    RecordItNow::MouseButton button5;
+    RecordItNow::MouseButton button8;
+    RecordItNow::MouseButton button9;
 
     button1.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::LeftButton));
     button3.setCode(MouseButtonWidget::getXButtonFromMouseButton(MouseButtonWidget::RightButton));
@@ -187,7 +187,7 @@ QList<MouseButton> MouseConfig::defaultButtons()
     button8.setColor(Qt::magenta);
     button9.setColor(Qt::darkMagenta);
 
-    QList<MouseButton> buttons;
+    QList<RecordItNow::MouseButton> buttons;
     buttons.append(button1);
     buttons.append(button3);
     buttons.append(button4);
@@ -200,16 +200,16 @@ QList<MouseButton> MouseConfig::defaultButtons()
 }
 
 
-QList<MouseButton> MouseConfig::getButtons(KConfig *cfg)
+QList<RecordItNow::MouseButton> MouseConfig::getButtons(KConfig *cfg)
 {
 
     KConfigGroup cfgGroup(cfg, "Mouse");
-    return RecordItNow::Helper::listFromArray<MouseButton>(cfgGroup.readEntry("Buttons", QByteArray()));
+    return RecordItNow::Helper::listFromArray<RecordItNow::MouseButton>(cfgGroup.readEntry("Buttons", QByteArray()));
 
 }
 
 
-void MouseConfig::saveConfig(KConfig *cfg, const QList<MouseButton> &list)
+void MouseConfig::saveConfig(KConfig *cfg, const QList<RecordItNow::MouseButton> &list)
 {
 
     KConfigGroup cfgGroup(cfg, "Mouse");
@@ -268,21 +268,21 @@ bool MouseConfig::contains(const MouseButtonWidget::Button &button, RecordItNow:
 }
 
 
-QList<MouseButton> MouseConfig::currentButtons() const
+QList<RecordItNow::MouseButton> MouseConfig::currentButtons() const
 {
 
-    QList<MouseButton> list;
+    QList<RecordItNow::MouseButton> list;
     // color
     foreach (QWidget *widget, m_colorLayout->rows()) {
         ColorRow *row = static_cast<ColorRow*>(widget);
-        list.append(MouseButton(row->code(), row->color()));
+        list.append(RecordItNow::MouseButton(row->code(), row->color()));
     }
     
     // sound
     foreach (QWidget *widget, m_soundLayout->rows()) {
         SoundRow *row = static_cast<SoundRow*>(widget);
         
-        MouseButton button;
+        RecordItNow::MouseButton button;
         for (int i = 0; i < list.size(); i++) {
             if (row->code() == list.at(i).code()) {
                 button = list.takeAt(i);
@@ -389,7 +389,7 @@ void MouseConfig::soundButtonChanged(const MouseButtonWidget::Button &oldButton,
 void MouseConfig::buttonsChanged()
 {
 
-    const QList<MouseButton> buttons = currentButtons();
+    const QList<RecordItNow::MouseButton> buttons = currentButtons();
 
     cursorWidget->setButtons(buttons);
     cursorWidget->setSize(QSize(kcfg_cursorWidgetSize->value(), kcfg_cursorWidgetSize->value()));
@@ -432,17 +432,17 @@ void MouseConfig::currentButtonChanged()
 }
 
 
-CursorWidget::WidgetMode MouseConfig::currentMode() const
+RecordItNow::CursorWidget::WidgetMode MouseConfig::currentMode() const
 {
 
-    CursorWidget::WidgetMode mode;
+    RecordItNow::CursorWidget::WidgetMode mode;
     if (appearanceCombo->currentText() == i18n("LED")) {
-        mode = CursorWidget::LEDMode;
+        mode = RecordItNow::CursorWidget::LEDMode;
     } else if (appearanceCombo->currentText() == i18n("Circle") || 
                appearanceCombo->currentText() == i18n("Square")) {
-        mode = CursorWidget::CircleMode;
+        mode = RecordItNow::CursorWidget::CircleMode;
     } else {
-        mode = CursorWidget::TargetMode;
+        mode = RecordItNow::CursorWidget::TargetMode;
     }
 
     return mode;
@@ -450,21 +450,21 @@ CursorWidget::WidgetMode MouseConfig::currentMode() const
 }
 
 
-void MouseConfig::setMode(const CursorWidget::WidgetMode &mode)
+void MouseConfig::setMode(const RecordItNow::CursorWidget::WidgetMode &mode)
 {
 
     switch (mode) {
-    case CursorWidget::LEDMode: 
+    case RecordItNow::CursorWidget::LEDMode:
         appearanceCombo->setCurrentItem(i18n("LED")); 
         break;
-    case CursorWidget::CircleMode:
+    case RecordItNow::CursorWidget::CircleMode:
         if (RecordItNow::Helper::self()->compositingActive()) {
             appearanceCombo->setCurrentItem(i18n("Circle")); 
         } else {
             appearanceCombo->setCurrentItem(i18n("Square"));
         }
         break;
-    case CursorWidget::TargetMode:
+    case RecordItNow::CursorWidget::TargetMode:
         appearanceCombo->setCurrentItem(i18n("Target"));
         break;
     };
@@ -492,15 +492,15 @@ void MouseConfig::updateModeCombo()
 void MouseConfig::compositingChanged(const bool &active)
 {
     
-    CursorWidget::WidgetMode cMode = currentMode();
+    RecordItNow::CursorWidget::WidgetMode cMode = currentMode();
     updateModeCombo();
     
-    if (!active && cMode == CursorWidget::TargetMode) {
-        cMode = CursorWidget::LEDMode;
+    if (!active && cMode == RecordItNow::CursorWidget::TargetMode) {
+        cMode = RecordItNow::CursorWidget::LEDMode;
     }
     setMode(cMode);
     
-    opacityLabel->setEnabled(active && cMode == CursorWidget::CircleMode);
+    opacityLabel->setEnabled(active && cMode == RecordItNow::CursorWidget::CircleMode);
     kcfg_cursorOpacity->setEnabled(opacityLabel->isEnabled());
       
 }
@@ -511,7 +511,7 @@ void MouseConfig::modeActivated()
     
     buttonsChanged();
     opacityLabel->setEnabled(RecordItNow::Helper::self()->compositingActive() && 
-                             currentMode() == CursorWidget::CircleMode);
+                             currentMode() == RecordItNow::CursorWidget::CircleMode);
     kcfg_cursorOpacity->setEnabled(opacityLabel->isEnabled());
  
     kcfg_cursorMode->setValue((int)currentMode());
@@ -522,7 +522,7 @@ void MouseConfig::modeActivated()
 void MouseConfig::loadMode(const int &value)
 {
     
-    CursorWidget::WidgetMode mode = (CursorWidget::WidgetMode) value;
+    RecordItNow::CursorWidget::WidgetMode mode = (RecordItNow::CursorWidget::WidgetMode) value;
     if (mode != currentMode()) {
         setMode(mode);
     }

@@ -40,7 +40,7 @@
 
 
 ConfigDialog::ConfigDialog(QWidget *parent, KActionCollection *collection,
-                           RecordItNowPluginManager *manager)
+                           RecordItNow::RecordItNowPluginManager *manager)
     : KConfigDialog(parent, "settings", Settings::self()),
     m_pluginManager(manager),
     m_collection(collection)

@@ -28,9 +28,6 @@
 namespace RecordItNow {
 
 
-namespace Timeline {
-
-
 TopicProgressBar::TopicProgressBar(QWidget *parent)
     : QProgressBar(parent)
 {
@@ -63,9 +60,6 @@ void TopicProgressBar::setTopic(const Topic &topic)
     m_topic.setProgressBar(this);
 
 }
-
-
-} // namespace Timeline
 
 
 } // namespace RecordItNow

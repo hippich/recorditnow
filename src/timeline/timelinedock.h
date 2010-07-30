@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef TIMELINEDOCK_H
-#define TIMELINEDOCK_H
+#ifndef RECORDITNOW_TIMELINEDOCK_H
+#define RECORDITNOW_TIMELINEDOCK_H
 
 
 // own
@@ -28,6 +28,9 @@
 
 // Qt
 #include <QtGui/QDockWidget>
+
+
+namespace RecordItNow {
 
 
 class Timeline;
@@ -51,10 +54,13 @@ private:
 
 
 private slots:
-    void topicChanged(const RecordItNow::Timeline::Topic &topic);
+    void topicChanged(const RecordItNow::Topic &topic);
 
 
 };
 
 
-#endif // TIMELINEDOCK_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_TIMELINEDOCK_H

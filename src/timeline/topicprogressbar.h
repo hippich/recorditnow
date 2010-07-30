@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef TopicProgressBar_H
-#define TopicProgressBar_H
+#ifndef RECORDITNOW_TOPICPROGRESSBAR_H
+#define RECORDITNOW_TOPICPROGRESSBAR_H
 
 
 // own
@@ -36,12 +36,7 @@
 
 class QToolButton;
 class QLabel;
-
-
 namespace RecordItNow {
-
-
-namespace Timeline {
 
 
 class TopicProgressBar: public QProgressBar
@@ -64,10 +59,7 @@ private:
 };
 
 
-} // namespace Timeline
-
-
 } // namespace RecordItNow
 
 
-#endif // TopicProgressBar_H
+#endif // RECORDITNOW_TOPICPROGRESSBAR_H

@@ -45,17 +45,17 @@ public:
     void setDefaults();
     void loadConfig();
 
-    static void saveTopics(const QList<RecordItNow::Timeline::Topic> &topics, KConfig *cfg);
-    static QList<RecordItNow::Timeline::Topic> loadTopics(KConfig *cfg);
-    static QList<RecordItNow::Timeline::Topic> defaultTopics();
+    static void saveTopics(const QList<RecordItNow::Topic> &topics, KConfig *cfg);
+    static QList<RecordItNow::Topic> loadTopics(KConfig *cfg);
+    static QList<RecordItNow::Topic> defaultTopics();
 
 
 private:
     RecordItNow::ListLayout *m_layout;
     
-    QList<RecordItNow::Timeline::Topic> currentTopics() const;
+    QList<RecordItNow::Topic> currentTopics() const;
 
-    void setTopics(const QList<RecordItNow::Timeline::Topic> &topics);
+    void setTopics(const QList<RecordItNow::Topic> &topics);
 
 
 private slots:

@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 
-#ifndef TIMELINE_H
-#define TIMELINE_H
+#ifndef RECORDITNOW_TIMELINE_H
+#define RECORDITNOW_TIMELINE_H
 
 
 // own
@@ -33,6 +33,9 @@
 
 class KConfigGroup;
 class QTimer;
+namespace RecordItNow {
+
+
 class Timeline : public QWidget, public Ui::Timeline
 {
     Q_OBJECT
@@ -69,17 +72,20 @@ private:
 
 private slots:
     void updateTime();
-    void topicChanged(const RecordItNow::Timeline::Topic &topic);
+    void topicChanged(const RecordItNow::Topic &topic);
     void resetSlider();
     void durationChanged(const unsigned long newDuration);
 
 
 signals:
     void finished();
-    void currentTopicChanged(const RecordItNow::Timeline::Topic &current);
+    void currentTopicChanged(const RecordItNow::Topic &current);
 
 
 };
+
+
+} // namespace RecordItNow
 
 
 #endif // TIMELINE_H

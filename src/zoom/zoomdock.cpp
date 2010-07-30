@@ -30,6 +30,9 @@
 #include <kicon.h>
 
 
+namespace RecordItNow {
+
+
 ZoomDock::ZoomDock(QWidget *parent)
     : RecordItNow::DockWidget(parent), m_started(false)
 {
@@ -158,6 +161,9 @@ void ZoomDock::hideLabel()
     zoomFrame->hide();
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "zoomdock.moc"

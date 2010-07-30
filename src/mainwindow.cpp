@@ -58,6 +58,9 @@
 #include <ktoolbar.h>
 
 
+namespace RecordItNow {
+
+
 MainWindow::MainWindow(QWidget *parent)
     : KXmlGuiWindow(parent)
 {
@@ -115,10 +118,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_zoomDock = 0;
     m_playerDock = 0;
 
-    m_pluginManager = new RecordItNowPluginManager(this);
+    m_pluginManager = new RecordItNow::RecordItNowPluginManager(this);
     connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
 
-    m_recorderManager = new RecorderManager(this, m_pluginManager);
+    m_recorderManager = new RecordItNow::RecorderManager(this, m_pluginManager);
     connect(m_recorderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
     connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_recorderManager, SIGNAL(finished(QString,bool)), this,
@@ -126,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_recorderManager, SIGNAL(stateChanged(AbstractRecorder::State)), this,
             SLOT(recorderStateChanged(AbstractRecorder::State)));
 
-    m_encoderManager = new EncoderManager(this, m_pluginManager);
+    m_encoderManager = new RecordItNow::EncoderManager(this, m_pluginManager);
     connect(m_encoderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
     connect(m_encoderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_encoderManager, SIGNAL(finished(QString)), this,
@@ -862,7 +865,7 @@ void MainWindow::updateRecorderCombo()
     const QString oldBackend = backendCombo->currentText();
     backendCombo->clear();
 
-    foreach (const RecorderData &data, m_recorderManager->getRecorder()) {
+    foreach (const RecordItNow::RecorderData &data, m_recorderManager->getRecorder()) {
         backendCombo->addItem(data.second, data.first);
     }
 
@@ -1089,7 +1092,7 @@ void MainWindow::setupDocks()
 
     // Timeline
     if (!m_timelineDock) {
-        m_timelineDock = new TimelineDock(this);
+        m_timelineDock = new RecordItNow::TimelineDock(this);
         connect(m_timelineDock->timeline(), SIGNAL(finished()), this, SLOT(timeLineFinsihed()));
 
         addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
@@ -1099,16 +1102,16 @@ void MainWindow::setupDocks()
 
     // Zoom
     if (!m_zoomDock) {
-        m_zoomDock = new ZoomDock(this);
+        m_zoomDock = new RecordItNow::ZoomDock(this);
         addDockWidget(Qt::BottomDockWidgetArea, m_zoomDock);
         tabifyDockWidget(m_mainDock, m_zoomDock);
     }
     m_zoomDock->setFactor(Settings::zoomFactor());
     m_zoomDock->setFPS(Settings::zoomFps());
     if (Settings::zoomHighQuality()) {
-        m_zoomDock->setQuality(ZoomView::High);
+        m_zoomDock->setQuality(RecordItNow::ZoomView::High);
     } else {
-        m_zoomDock->setQuality(ZoomView::Low);
+        m_zoomDock->setQuality(RecordItNow::ZoomView::Low);
     }
 
     // Player
@@ -1195,13 +1198,13 @@ void MainWindow::initRecordWidgets(const bool &start)
             if (m_cursor) {
                 return; // timer was paused
             }
-            m_cursor = new CursorWidget(this);
+            m_cursor = new RecordItNow::CursorWidget(this);
             connect(m_cursor, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
 
             m_cursor->setButtons(MouseConfig::getButtons(Settings::self()->config()));
             m_cursor->setSize(QSize(Settings::cursorWidgetSize(), Settings::cursorWidgetSize()));
             m_cursor->setDevice(Settings::mouseDevice());
-            m_cursor->setMode((CursorWidget::WidgetMode)Settings::cursorMode());
+            m_cursor->setMode((RecordItNow::CursorWidget::WidgetMode)Settings::cursorMode());
             m_cursor->setOpacity(Settings::cursorOpacity());
             m_cursor->setShowAlways(Settings::mouseWidgetAlwaysVisible());
 
@@ -1331,6 +1334,9 @@ void MainWindow::lockLayout(const bool &lock)
     }
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "mainwindow.moc"

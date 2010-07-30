@@ -31,7 +31,7 @@
 #include <kicondialog.h>
 
 
-using namespace RecordItNow::Timeline;
+using namespace RecordItNow;
 TimelineConfig::TimelineConfig(KConfig *cfg, QWidget *parent)
     : RecordItNow::ConfigPage(cfg, parent)
 {
@@ -82,7 +82,7 @@ void TimelineConfig::loadConfig()
 }
 
 
-void TimelineConfig::saveTopics(const QList<RecordItNow::Timeline::Topic> &topics, KConfig *cfg)
+void TimelineConfig::saveTopics(const QList<RecordItNow::Topic> &topics, KConfig *cfg)
 {
 
     KConfigGroup group(cfg, "Timeline");
@@ -92,36 +92,36 @@ void TimelineConfig::saveTopics(const QList<RecordItNow::Timeline::Topic> &topic
 }
 
 
-QList<RecordItNow::Timeline::Topic> TimelineConfig::loadTopics(KConfig *cfg)
+QList<RecordItNow::Topic> TimelineConfig::loadTopics(KConfig *cfg)
 {
 
     KConfigGroup group(cfg, "Timeline");
     const QByteArray data = group.readEntry("Topics", QByteArray());
-    return RecordItNow::Helper::listFromArray<RecordItNow::Timeline::Topic>(data);
+    return RecordItNow::Helper::listFromArray<RecordItNow::Topic>(data);
 
 }
 
 
-QList<RecordItNow::Timeline::Topic> TimelineConfig::defaultTopics()
+QList<RecordItNow::Topic> TimelineConfig::defaultTopics()
 {
 
-    RecordItNow::Timeline::Topic linuxTopic;
-    RecordItNow::Timeline::Topic recorditnowTopic;
-    RecordItNow::Timeline::Topic kdeTopic;
+    RecordItNow::Topic linuxTopic;
+    RecordItNow::Topic recorditnowTopic;
+    RecordItNow::Topic kdeTopic;
 
-    linuxTopic.setDuration(RecordItNow::Timeline::Topic::secondsToTime(60));
+    linuxTopic.setDuration(RecordItNow::Topic::secondsToTime(60));
     linuxTopic.setTitle("Linux!");
     linuxTopic.setIcon("computer");
 
-    recorditnowTopic.setDuration(RecordItNow::Timeline::Topic::secondsToTime(30));
+    recorditnowTopic.setDuration(RecordItNow::Topic::secondsToTime(30));
     recorditnowTopic.setTitle("RecordItNow");
     recorditnowTopic.setIcon("recorditnow");
 
-    kdeTopic.setDuration(RecordItNow::Timeline::Topic::secondsToTime(300));
+    kdeTopic.setDuration(RecordItNow::Topic::secondsToTime(300));
     kdeTopic.setTitle("KDE SC");
     kdeTopic.setIcon("start-here-kde");
 
-    QList<RecordItNow::Timeline::Topic> topics;
+    QList<RecordItNow::Topic> topics;
     topics.append(linuxTopic);
     topics.append(recorditnowTopic);
     topics.append(kdeTopic);
@@ -131,14 +131,14 @@ QList<RecordItNow::Timeline::Topic> TimelineConfig::defaultTopics()
 }
 
 
-QList<RecordItNow::Timeline::Topic> TimelineConfig::currentTopics() const
+QList<RecordItNow::Topic> TimelineConfig::currentTopics() const
 {
 
-    QList<RecordItNow::Timeline::Topic> topics;
+    QList<RecordItNow::Topic> topics;
     foreach (QWidget *widget, m_layout->rows()) {
         TopicRow *row = static_cast<TopicRow*>(widget);
 
-        RecordItNow::Timeline::Topic topic;
+        RecordItNow::Topic topic;
         topic.setTitle(row->title());
         topic.setIcon(row->icon());
         topic.setDuration(row->duration());
@@ -150,12 +150,12 @@ QList<RecordItNow::Timeline::Topic> TimelineConfig::currentTopics() const
 }
 
 
-void TimelineConfig::setTopics(const QList<RecordItNow::Timeline::Topic> &topics)
+void TimelineConfig::setTopics(const QList<RecordItNow::Topic> &topics)
 {
     
     m_layout->clear();
     for (int i = 0; i < topics.size(); i++) {
-        RecordItNow::Timeline::Topic topic = topics.at(i);
+        RecordItNow::Topic topic = topics.at(i);
             
         TopicRow *row = new TopicRow(this);
         connect(row, SIGNAL(changed()), this, SLOT(updateTotalDuration()));
@@ -195,7 +195,7 @@ void TimelineConfig::updateTotalDuration()
 {
 
     unsigned long duration = 0;
-    foreach (const RecordItNow::Timeline::Topic &topic, currentTopics()) {
+    foreach (const RecordItNow::Topic &topic, currentTopics()) {
         duration += topic.durationToSeconds();
     }
     totalDurationLabel->setText(QString(" ")+KGlobal::locale()->formatDuration(duration*1000));

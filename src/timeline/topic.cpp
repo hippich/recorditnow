@@ -32,9 +32,6 @@
 namespace RecordItNow {
 
 
-namespace Timeline {
-
-
 Topic::Topic()
     : RecordItNow::ConfigItem()
 {
@@ -189,9 +186,6 @@ bool Topic::operator!=(const Topic &other) const
     return (other.title() != title() && other.duration() != duration() && other.icon() != icon());
 
 }
-
-
-} // namespace Timeline
 
 
 } // namespace RecordItNow

@@ -37,9 +37,6 @@
 namespace RecordItNow {
 
 
-namespace Timeline {
-
-
 
 TopicWidget::TopicWidget(QWidget *parent)
     : QWidget(parent)
@@ -68,12 +65,12 @@ void TopicWidget::setTime(const unsigned long &seconds)
 }
 
 
-RecordItNow::Timeline::Topic TopicWidget::addTopic(const QTime &duration, const QString title, const QString &icon)
+RecordItNow::Topic TopicWidget::addTopic(const QTime &duration, const QString title, const QString &icon)
 {
 
     TopicProgressBar *bar = new TopicProgressBar(this);
 
-    RecordItNow::Timeline::Topic newTopic;
+    RecordItNow::Topic newTopic;
     newTopic.setTitle(title);
     newTopic.setIcon(icon);
     newTopic.setDuration(duration);
@@ -96,7 +93,7 @@ RecordItNow::Timeline::Topic TopicWidget::addTopic(const QTime &duration, const 
 }
 
 
-RecordItNow::Timeline::Topic TopicWidget::addTopic(const RecordItNow::Timeline::Topic &topic)
+RecordItNow::Topic TopicWidget::addTopic(const RecordItNow::Topic &topic)
 {
 
     TopicProgressBar *bar = new TopicProgressBar(this);
@@ -119,10 +116,10 @@ RecordItNow::Timeline::Topic TopicWidget::addTopic(const RecordItNow::Timeline::
 }
 
 
-QList<RecordItNow::Timeline::Topic> TopicWidget::topics() const
+QList<RecordItNow::Topic> TopicWidget::topics() const
 {
 
-    QList<RecordItNow::Timeline::Topic> list;
+    QList<RecordItNow::Topic> list;
     for (int i = 0; i < m_layout->count(); i++) {
         TopicProgressBar *topicBar = static_cast<TopicProgressBar*>(m_layout->widget(i));
         if (topicBar != m_noTopic) {
@@ -144,7 +141,7 @@ void TopicWidget::setCurrentSecond(const unsigned long &second)
     }
 
 
-    RecordItNow::Timeline::Topic oldTopic = static_cast<TopicProgressBar*>(m_layout->currentWidget())->topic();
+    RecordItNow::Topic oldTopic = static_cast<TopicProgressBar*>(m_layout->currentWidget())->topic();
 
     bool found = false;
     unsigned long duration = 0;
@@ -183,7 +180,7 @@ void TopicWidget::clear()
     }
     m_noTopic = new TopicProgressBar(this);
 
-    RecordItNow::Timeline::Topic topic;
+    RecordItNow::Topic topic;
     topic.setDuration(QTime(0, 0, 10, 0));
     topic.setTitle(i18n("No Topic"));
     topic.setIcon("dialog-information");
@@ -195,9 +192,6 @@ void TopicWidget::clear()
     emit durationChanged(0);
 
 }
-
-
-} // namespace Timeline
 
 
 } // namespace RecordItNow

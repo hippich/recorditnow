@@ -31,6 +31,9 @@
 #include <kconfiggroup.h>
 
 
+namespace RecordItNow {
+
+
 RecordItNowPluginManager::RecordItNowPluginManager(QObject *parent)
     : QObject(parent)
 {
@@ -209,6 +212,9 @@ void RecordItNowPluginManager::loadInfos(const QString &type)
     }
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "recorditnowpluginmanager.moc"

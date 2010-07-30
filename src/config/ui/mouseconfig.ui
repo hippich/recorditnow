@@ -37,7 +37,7 @@
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="1">
-           <widget class="CursorWidget" name="cursorWidget" native="true">
+           <widget class="RecordItNow::CursorWidget" name="cursorWidget" native="true">
             <property name="minimumSize">
              <size>
               <width>9</width>
@@ -251,8 +251,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>362</width>
-            <height>226</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
          </widget>
@@ -312,8 +312,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>362</width>
-            <height>207</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
          </widget>
@@ -369,15 +369,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>CursorWidget</class>
-   <extends>QWidget</extends>
-   <header>mouse/cursorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>RecordItNow::VolumeSlider</class>
    <extends>QWidget</extends>
    <header>volumeslider.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RecordItNow::CursorWidget</class>
+   <extends>QWidget</extends>
+   <header>mouse/cursorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

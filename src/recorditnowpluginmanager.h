@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOWPLUGINMANAGER_H
-#define RECORDITNOWPLUGINMANAGER_H
+#ifndef RECORDITNOW_RECORDITNOWPLUGINMANAGER_H
+#define RECORDITNOW_RECORDITNOWPLUGINMANAGER_H
 
 
 // Qt
@@ -31,6 +31,11 @@
 class AbstractRecorder;
 class AbstractEncoder;
 class RecordItNowPlugin;
+
+
+namespace RecordItNow {
+
+
 class RecordItNowPluginManager : public QObject
 {
     Q_OBJECT
@@ -65,4 +70,7 @@ signals:
 };
 
 
-#endif // RECORDITNOWPLUGINMANAGER_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_RECORDITNOWPLUGINMANAGER_H

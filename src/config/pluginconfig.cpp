@@ -26,7 +26,7 @@
 #include <klocalizedstring.h>
 
 
-PluginConfig::PluginConfig(RecordItNowPluginManager *manager, KConfig *cfg, QWidget *parent)
+PluginConfig::PluginConfig(RecordItNow::RecordItNowPluginManager *manager, KConfig *cfg, QWidget *parent)
     : RecordItNow::ConfigPage(cfg, parent), m_manager(manager)
 {
 

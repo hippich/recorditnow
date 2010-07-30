@@ -47,6 +47,9 @@
 #include <X11/extensions/shape.h>
 
 
+namespace RecordItNow {
+
+
 #define RESET_TIME 600
 CursorWidget::CursorWidget(QWidget *parent)
     : QWidget(parent, Qt::X11BypassWindowManagerHint|Qt::FramelessWindowHint|Qt::Tool)
@@ -510,6 +513,9 @@ void CursorWidget::updateMask()
     }
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "cursorwidget.moc"

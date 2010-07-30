@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CURSORWIDGET_H
-#define CURSORWIDGET_H
+#ifndef RECORDITNOW_CURSORWIDGET_H
+#define RECORDITNOW_CURSORWIDGET_H
 
 
 // own
@@ -40,6 +40,9 @@ namespace KeyMon {
 };
 
 class QTimer;
+namespace RecordItNow {
+
+
 class CursorWidget : public QWidget
 {
     Q_OBJECT
@@ -107,4 +110,8 @@ signals:
 };
 
 
-#endif // CURSORWIDGET_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_CURSORWIDGET_H
+

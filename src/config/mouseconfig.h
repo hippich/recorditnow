@@ -55,9 +55,9 @@ public:
     void loadConfig();
     void setDefaults();
 
-    static QList<MouseButton> defaultButtons();
-    static QList<MouseButton> getButtons(KConfig *cfg);
-    static void saveConfig(KConfig *cfg, const QList<MouseButton> &list);
+    static QList<RecordItNow::MouseButton> defaultButtons();
+    static QList<RecordItNow::MouseButton> getButtons(KConfig *cfg);
+    static void saveConfig(KConfig *cfg, const QList<RecordItNow::MouseButton> &list);
 
 
 private:
@@ -67,12 +67,12 @@ private:
     RecordItNow::ListLayout *m_soundLayout;
 
     bool contains(const MouseButtonWidget::Button &button, RecordItNow::ListLayout *layout, QWidget *exclude = 0) const;
-    QList<MouseButton> currentButtons() const;
-    CursorWidget::WidgetMode currentMode() const;
+    QList<RecordItNow::MouseButton> currentButtons() const;
+    RecordItNow::CursorWidget::WidgetMode currentMode() const;
     
     void addRow(QWidget *widget, QLayout *layout);
     void removeRow(QWidget *widget, QLayout *layout);
-    void setMode(const CursorWidget::WidgetMode &mode);
+    void setMode(const RecordItNow::CursorWidget::WidgetMode &mode);
     void updateModeCombo();
     
 

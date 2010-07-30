@@ -26,6 +26,9 @@
 #include <kdebug.h>
 
 
+namespace RecordItNow {
+
+
 EncoderManager::EncoderManager(QObject *parent, RecordItNowPluginManager *manager)
     : QObject(parent), m_manager(manager)
 {
@@ -136,6 +139,9 @@ void EncoderManager::encoderFinished(const AbstractEncoder::ExitStatus &status)
     clean();
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "encodermanager.moc"

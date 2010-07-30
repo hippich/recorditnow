@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef RECORDITNOW_MAINWINDOW_H
+#define RECORDITNOW_MAINWINDOW_H
 
 // own
 #include "ui_toolbarwidget.h"
@@ -33,21 +33,22 @@
 // Qt
 #include <QtCore/QPointer>
 
-namespace RecordItNow {
-    class PlayerDock;
-    class DockWidget;
-    class KeyloggerOSD;
-};
 
+class KSqueezedTextLabel;
+class KAction;
+class Frame;
+namespace RecordItNow {
+
+
+class PlayerDock;
+class DockWidget;
+class KeyloggerOSD;
 class ZoomDock;
 class TimelineDock;
 class CursorWidget;
-class KSqueezedTextLabel;
-class KAction;
 class RecorderManager;
 class EncoderManager;
 class RecordItNowPluginManager;
-class Frame;
 class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
     Q_OBJECT
@@ -77,13 +78,13 @@ private:
     KStatusNotifierItem *m_tray;
     AbstractRecorder::Data m_recordData;
     State m_state;
-    RecordItNowPluginManager *m_pluginManager;
-    RecorderManager *m_recorderManager;
-    EncoderManager *m_encoderManager;
+    RecordItNow::RecordItNowPluginManager *m_pluginManager;
+    RecordItNow::RecorderManager *m_recorderManager;
+    RecordItNow::EncoderManager *m_encoderManager;
     KSqueezedTextLabel *m_statusLabel;
-    QPointer<CursorWidget> m_cursor;
-    TimelineDock *m_timelineDock;
-    ZoomDock *m_zoomDock;
+    QPointer<RecordItNow::CursorWidget> m_cursor;
+    RecordItNow::TimelineDock *m_timelineDock;
+    RecordItNow::ZoomDock *m_zoomDock;
     RecordItNow::PlayerDock *m_playerDock;
     RecordItNow::DockWidget *m_mainDock;
     RecordItNow::KeyloggerOSD *m_keyloggerOSD;
@@ -152,4 +153,7 @@ protected:
 };
 
 
-#endif // MAINWINDOW_H
+} // anmespace RecordItNow
+
+
+#endif // RECORDITNOW_MAINWINDOW_H

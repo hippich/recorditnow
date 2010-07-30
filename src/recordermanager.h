@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDERMANAGER_H
-#define RECORDERMANAGER_H
+#ifndef RECORDITNOW_RECORDERMANAGER_H
+#define RECORDITNOW_RECORDERMANAGER_H
 
 
 // own
@@ -32,9 +32,13 @@
 #include <QtCore/QPair>
 #include <QtCore/QPointer>
 
-class CursorWidget;
+
+namespace RecordItNow {
+
+
 typedef QPair<QString, KIcon> RecorderData;
 class RecordItNowPluginManager;
+class CursorWidget;
 class RecorderManager : public QObject
 {
     Q_OBJECT
@@ -49,7 +53,7 @@ public:
     bool hasFeature(const QString &feature, const QString &recorder) const;
     QString getDefaultFile(const QString &name) const;
 
-    void startRecord(const QString &recorder, const AbstractRecorder::Data &data, CursorWidget *cursor);
+    void startRecord(const QString &recorder, const AbstractRecorder::Data &data, RecordItNow::CursorWidget *cursor);
     void pauseOrContinue();
     void stop();
     void zoom(const bool &in);
@@ -78,4 +82,7 @@ signals:
 };
 
 
-#endif // RECORDERMANAGER_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_RECORDERMANAGER_H

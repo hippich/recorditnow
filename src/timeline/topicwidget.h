@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 
-#ifndef TOPICWIDGET_H
-#define TOPICWIDGET_H
+#ifndef RECORDITNOW_TOPICWIDGET_H
+#define RECORDITNOW_TOPICWIDGET_H
 
 // own
 #include "topic.h"
@@ -36,9 +36,6 @@
 namespace RecordItNow {
 
 
-namespace Timeline {
-
-
 class TopicProgressBar;
 class TopicWidget : public QWidget
 {
@@ -49,10 +46,10 @@ public:
     TopicWidget(QWidget *parent = 0);
     ~TopicWidget();
 
-    RecordItNow::Timeline::Topic addTopic(const QTime &duration, const QString title, const QString &icon);
-    RecordItNow::Timeline::Topic addTopic(const RecordItNow::Timeline::Topic &topic);
+    RecordItNow::Topic addTopic(const QTime &duration, const QString title, const QString &icon);
+    RecordItNow::Topic addTopic(const RecordItNow::Topic &topic);
 
-    QList<RecordItNow::Timeline::Topic> topics() const;
+    QList<RecordItNow::Topic> topics() const;
 
     void setTime(const unsigned long &seconds);
     void setCurrentSecond(const unsigned long &second);
@@ -66,17 +63,14 @@ private:
 
 
 signals:
-    void topicChanged(const RecordItNow::Timeline::Topic &newTopic);
+    void topicChanged(const RecordItNow::Topic &newTopic);
     void durationChanged(const unsigned long &newDuration);
 
 
 };
 
 
-} // namespace Timeline
-
-
 } // namespace RecordItNow
 
 
-#endif // TOPICWIDGET_H
+#endif // RECORDITNOW_TOPICWIDGET_H

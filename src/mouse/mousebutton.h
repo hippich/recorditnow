@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef MOUSEBUTTON_H
-#define MOUSEBUTTON_H
+#ifndef RECORDITNOW_MOUSEBUTTON_H
+#define RECORDITNOW_MOUSEBUTTON_H
 
 
 // own
@@ -26,6 +26,9 @@
 
 // Qt
 #include <QtGui/QColor>
+
+
+namespace RecordItNow {
 
 
 class MouseButton : public RecordItNow::ConfigItem
@@ -49,4 +52,7 @@ public:
 };
 
 
-#endif // MOUSEBUTTON_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_MOUSEBUTTON_H

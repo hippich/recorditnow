@@ -99,7 +99,7 @@ void startRecordItNow(KCmdLineArgs *parsed = 0)
         RecordItNow::FirstStartAssistant *assistant = new RecordItNow::FirstStartAssistant;
         assistant->show();
     } else {
-        MainWindow *window = new MainWindow;
+        RecordItNow::MainWindow *window = new RecordItNow::MainWindow;
         if (!hide) {
             window->show();
         }
@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
     Application app;
 
     if (app.isSessionRestored()) { // see if we are starting with session management
-        RESTORE(MainWindow);
+        RESTORE(RecordItNow::MainWindow);
     } else { // no session.. just start up normally        
         startRecordItNow(KCmdLineArgs::parsedArgs());
     }

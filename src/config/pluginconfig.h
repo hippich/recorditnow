@@ -26,14 +26,18 @@
 #include "ui_pluginconfig.h"
 
 
-class RecordItNowPluginManager;
+namespace RecordItNow {
+    class RecordItNowPluginManager;
+};
+
+
 class PluginConfig : public RecordItNow::ConfigPage, Ui::PluginConfig
 {
     Q_OBJECT
 
 
 public:
-    explicit PluginConfig(RecordItNowPluginManager *manager, KConfig *cfg, QWidget *parent = 0);
+    explicit PluginConfig(RecordItNow::RecordItNowPluginManager *manager, KConfig *cfg, QWidget *parent = 0);
 
 
 public slots:
@@ -43,7 +47,7 @@ public slots:
 
 
 private:
-    RecordItNowPluginManager *m_manager;
+    RecordItNow::RecordItNowPluginManager *m_manager;
 
 
 private slots:

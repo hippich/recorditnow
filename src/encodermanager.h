@@ -17,8 +17,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef ENCODERMANAGER_H
-#define ENCODERMANAGER_H
+#ifndef RECORDITNOW_ENCODERMANAGER_H
+#define RECORDITNOW_ENCODERMANAGER_H
 
 
 // own
@@ -31,6 +31,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QPointer>
 #include <QtCore/QPair>
+
+
+namespace RecordItNow {
 
 
 typedef QPair<QString, KIcon> EncoderData;
@@ -72,4 +75,7 @@ signals:
 };
 
 
-#endif // ENCODERMANAGER_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_ENCODERMANAGER_H

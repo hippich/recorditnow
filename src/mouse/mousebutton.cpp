@@ -22,6 +22,9 @@
 #include "mousebutton.h"
 
 
+namespace RecordItNow {
+
+
 MouseButton::MouseButton(const int &code, const QColor &color, const QString &sound)
     : RecordItNow::ConfigItem()
 {
@@ -98,4 +101,8 @@ void MouseButton::setSound(const QString& sound)
     setData("Sound", sound);    
     
 }
+
+
+} // namespace RecordItNow
+
 

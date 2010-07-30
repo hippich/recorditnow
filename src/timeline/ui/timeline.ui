@@ -53,7 +53,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="RecordItNow::Timeline::TopicWidget" name="topicWidget" native="true">
+      <widget class="RecordItNow::TopicWidget" name="topicWidget" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -84,7 +84,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>RecordItNow::Timeline::TopicWidget</class>
+   <class>RecordItNow::TopicWidget</class>
    <extends>QWidget</extends>
    <header>timeline/topicwidget.h</header>
    <container>1</container>

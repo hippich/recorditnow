@@ -30,6 +30,9 @@
 #include <kicon.h>
 
 
+namespace RecordItNow {
+
+
 TimelineDock::TimelineDock(QWidget *parent)
     : RecordItNow::DockWidget(parent)
 {
@@ -49,8 +52,8 @@ TimelineDock::TimelineDock(QWidget *parent)
 
     setTitleBarWidget(title);
 
-    connect(line, SIGNAL(currentTopicChanged(RecordItNow::Timeline::Topic)), this,
-            SLOT(topicChanged(RecordItNow::Timeline::Topic)));
+    connect(line, SIGNAL(currentTopicChanged(RecordItNow::Topic)), this,
+            SLOT(topicChanged(RecordItNow::Topic)));
 
 }
 
@@ -80,7 +83,7 @@ void TimelineDock::resetTitle()
 }
 
 
-void TimelineDock::topicChanged(const RecordItNow::Timeline::Topic &topic)
+void TimelineDock::topicChanged(const RecordItNow::Topic &topic)
 {
 
     if (!topic.isValid()) {
@@ -91,6 +94,9 @@ void TimelineDock::topicChanged(const RecordItNow::Timeline::Topic &topic)
     ui_titleWidget.iconButton->setIcon(KIcon(topic.icon()));
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "timelinedock.moc"

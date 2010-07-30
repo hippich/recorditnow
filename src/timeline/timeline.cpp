@@ -32,6 +32,9 @@
 #include <QtCore/QTimer>
 
 
+namespace RecordItNow {
+
+
 Timeline::Timeline(QWidget *parent)
     : QWidget(parent)
 {
@@ -41,11 +44,11 @@ Timeline::Timeline(QWidget *parent)
 
     setupUi(this);
 
-    connect(topicWidget, SIGNAL(topicChanged(RecordItNow::Timeline::Topic)), this,
-            SLOT(topicChanged(RecordItNow::Timeline::Topic)));
+    connect(topicWidget, SIGNAL(topicChanged(RecordItNow::Topic)), this,
+            SLOT(topicChanged(RecordItNow::Topic)));
     connect(topicWidget, SIGNAL(durationChanged(ulong)), this, SLOT(durationChanged(ulong)));
-    connect(topicWidget, SIGNAL(topicChanged(RecordItNow::Timeline::Topic)), this,
-            SIGNAL(currentTopicChanged(RecordItNow::Timeline::Topic)));
+    connect(topicWidget, SIGNAL(topicChanged(RecordItNow::Topic)), this,
+            SIGNAL(currentTopicChanged(RecordItNow::Topic)));
 
     slider->setMaximum(0);
     resetSlider();
@@ -75,8 +78,8 @@ void Timeline::reload()
 
     topicWidget->clear();
 
-    QList<RecordItNow::Timeline::Topic> topics = TimelineConfig::loadTopics(Settings::self()->config());
-    foreach (const RecordItNow::Timeline::Topic &topic, topics) {
+    QList<RecordItNow::Topic> topics = TimelineConfig::loadTopics(Settings::self()->config());
+    foreach (const RecordItNow::Topic &topic, topics) {
         topicWidget->addTopic(topic);
     }
     resetSlider();
@@ -148,9 +151,9 @@ void Timeline::updateTime()
     slider->setValue(slider->value()+1);
     topicWidget->setCurrentSecond(slider->value());
 
-    const QString total = KGlobal::locale()->formatTime(RecordItNow::Timeline::Topic::secondsToTime(slider->maximum()),
+    const QString total = KGlobal::locale()->formatTime(RecordItNow::Topic::secondsToTime(slider->maximum()),
                                                         true, true);
-    const QString passed = KGlobal::locale()->formatTime(RecordItNow::Timeline::Topic::secondsToTime(slider->value()),
+    const QString passed = KGlobal::locale()->formatTime(RecordItNow::Topic::secondsToTime(slider->value()),
                                                          true, true);
     timeLabel->setText(passed+'/'+total);
 
@@ -162,7 +165,7 @@ void Timeline::updateTime()
 }
 
 
-void Timeline::topicChanged(const RecordItNow::Timeline::Topic &topic)
+void Timeline::topicChanged(const RecordItNow::Topic &topic)
 {
 
     if (!topic.isValid()) {
@@ -182,7 +185,7 @@ void Timeline::resetSlider()
 
     slider->setValue(0);
     topicWidget->setCurrentSecond(-1);
-    const QString total = KGlobal::locale()->formatTime(RecordItNow::Timeline::Topic::secondsToTime(slider->maximum()),
+    const QString total = KGlobal::locale()->formatTime(RecordItNow::Topic::secondsToTime(slider->maximum()),
                                                         true, true);
     const QString passed = KGlobal::locale()->formatTime(QTime(0, 0, 0, 0), true, true);
     timeLabel->setText(passed+'/'+total);
@@ -197,6 +200,9 @@ void Timeline::durationChanged(const unsigned long newDuration)
     resetSlider();
 
 }
+
+
+} // namespace RecordItNow
 
 
 #include "timeline.moc"

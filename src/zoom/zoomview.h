@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 
-#ifndef ZOOMVIEW_H
-#define ZOOMVIEW_H
+#ifndef RECORDITNOW_ZOOMVIEW_H
+#define RECORDITNOW_ZOOMVIEW_H
 
 
 // Qt
@@ -27,6 +27,10 @@
 
 
 class QTimer;
+namespace RecordItNow {
+
+
+
 class ZoomView : public QWidget
 {
     Q_OBJECT
@@ -73,4 +77,7 @@ signals:
 };
 
 
-#endif // ZOOMVIEW_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_ZOOMVIEW_H
