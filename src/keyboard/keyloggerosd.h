@@ -23,7 +23,7 @@
 
 
 // own
-#include "src/libs/keylogger/keyloggerevent.h"
+#include "keyloggerevent.h"
 
 // Qt
 #include <QtGui/QFrame>

@@ -14,10 +14,10 @@
    <string notr="true"/>
   </property>
   <property name="title">
-   <string>Provider</string>
+   <string comment="@title:window Wizard page title">Provider</string>
   </property>
   <property name="subTitle">
-   <string>Please select where you want to upload your video</string>
+   <string comment="@title:window subtitle">Please select where you want to upload your video</string>
   </property>
   <attribute name="pageId">
    <string notr="true">0</string>
@@ -57,7 +57,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Plugin Information</string>
+      <string comment="@title:group">Plugin Information</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
       <property name="fieldGrowthPolicy">
@@ -73,7 +73,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Description:</string>
+         <string comment="@label:textbox Description of the plugin">Description:</string>
         </property>
         <property name="buddy">
          <cstring>descriptionLine</cstring>
@@ -90,7 +90,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Version:</string>
+         <string comment="@label:textbox plugin version">Version:</string>
         </property>
         <property name="buddy">
          <cstring>versionLine</cstring>
@@ -107,7 +107,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Name:</string>
+         <string comment="@label:textbox Name of the plugin">Name:</string>
         </property>
         <property name="buddy">
          <cstring>nameLine</cstring>

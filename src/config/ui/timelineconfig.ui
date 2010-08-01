@@ -19,7 +19,7 @@
      <item row="0" column="0" colspan="2">
       <widget class="QCheckBox" name="kcfg_timeLineStop">
        <property name="text">
-        <string>Stop recording when the timeline reaches the end</string>
+        <string comment="@option:check">Stop recording when the timeline reaches the end</string>
        </property>
       </widget>
      </item>
@@ -36,7 +36,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Total duration:</string>
+        <string comment="@label The total timeline duration">Total duration:</string>
        </property>
       </widget>
      </item>
@@ -70,7 +70,7 @@
      <item>
       <widget class="KPushButton" name="addTopicButton">
        <property name="text">
-        <string>Add Topic</string>
+        <string comment="@action:button Add a new topic to the timeline">Add Topic</string>
        </property>
       </widget>
      </item>

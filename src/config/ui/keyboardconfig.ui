@@ -20,20 +20,20 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Behavior</string>
+      <string comment="@title:group Behavior of the keyboard-monitor">Behavior</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_keyboardOnScreenDisplayClipboard">
         <property name="text">
-         <string>Show clipboard</string>
+         <string comment="@option:check Show text from the clipboard">Show clipboard</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_keyboardOnScreenDisplayShortcuts">
         <property name="text">
-         <string>Show shortcuts</string>
+         <string comment="@option:check Show keyboard shortcuts">Show shortcuts</string>
         </property>
        </widget>
       </item>
@@ -43,7 +43,7 @@
    <item>
     <widget class="QGroupBox" name="GroupBox">
      <property name="title">
-      <string>Appearance</string>
+      <string comment="@title:group Appearance of the keyboard-monitor">Appearance</string>
      </property>
      <property name="checkable">
       <bool>false</bool>
@@ -58,7 +58,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Font Size:</string>
+         <string comment="@label The font size">Font Size:</string>
         </property>
        </widget>
       </item>
@@ -72,7 +72,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Hide after:</string>
+         <string comment="@label Hide the Keyboad-Monitor after...">Hide after:</string>
         </property>
        </widget>
       </item>

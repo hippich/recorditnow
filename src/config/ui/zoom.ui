@@ -23,7 +23,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Default zoom factor:</string>
+      <string comment="@label The default zoom factor">Default zoom factor:</string>
      </property>
      <property name="buddy">
       <cstring>kcfg_zoomFactor</cstring>
@@ -49,7 +49,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Frames per second:</string>
+      <string comment="@label The FPS of the zoom dock">Frames per second:</string>
      </property>
      <property name="buddy">
       <cstring>kcfg_zoomFps</cstring>
@@ -72,7 +72,7 @@
    <item row="2" column="0" colspan="2">
     <widget class="QCheckBox" name="kcfg_zoomHighQuality">
      <property name="text">
-      <string>High quality</string>
+      <string comment="@option:check Enable the high quality zoom mode">High quality</string>
      </property>
     </widget>
    </item>

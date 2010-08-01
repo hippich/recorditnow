@@ -1,6 +1,7 @@
 include_directories(${CMAKE_SOURCE_DIR}/src/libs/plugin
     ${CMAKE_SOURCE_DIR}/src/libs/recorder
     ${CMAKE_SOURCE_DIR}/src/libs/encoder
+    ${CMAKE_SOURCE_DIR}/src/libs/keylogger
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_BINARY_DIR}
     ${KDE4_INCLUDES})
@@ -94,7 +95,6 @@ set(gui_SRCS
    config/colorrow.cpp
    config/topicrow.cpp
    config/framerow.cpp
-   config/keyboardrow.cpp
    
    outputwidget.cpp
    timerwidget.cpp

@@ -20,7 +20,7 @@
    <item row="0" column="0">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Behavior </string>
+      <string comment="@title:group General RecordItNow behavior">Behavior </string>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
       <property name="fieldGrowthPolicy">
@@ -29,35 +29,35 @@
       <item row="0" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_tray">
         <property name="text">
-         <string>Enable system tray icon</string>
+         <string extracomment="@option:check">Enable system tray icon</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_hideOnRecord">
         <property name="text">
-         <string>Hide RecordItNow during record</string>
+         <string comment="@option:check">Hide RecordItNow during record</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_overwrite">
         <property name="text">
-         <string>Overwrite existing files</string>
+         <string comment="@option:check">Overwrite existing files</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_showVideo">
         <property name="text">
-         <string>Show file after record</string>
+         <string comment="@option:check">Show file after record</string>
         </property>
        </widget>
       </item>
       <item row="6" column="0">
        <widget class="QCheckBox" name="kcfg_encode">
         <property name="text">
-         <string>Encode after record</string>
+         <string comment="@option:check">Encode after record</string>
         </property>
        </widget>
       </item>
@@ -80,7 +80,7 @@
       <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_stayOnTop">
         <property name="text">
-         <string>Stay above all other windows</string>
+         <string comment="@option:check">Stay above all other windows</string>
         </property>
        </widget>
       </item>
@@ -90,7 +90,7 @@
    <item row="1" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Directories</string>
+      <string comment="@title:group">Directories</string>
      </property>
      <layout class="QFormLayout" name="formLayout_4">
       <property name="fieldGrowthPolicy">
@@ -99,7 +99,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Videos:</string>
+         <string comment="@label Video directory">Videos:</string>
         </property>
         <property name="buddy">
          <cstring>kcfg_videoDir</cstring>
@@ -116,7 +116,7 @@
       <item row="3" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Temporary files:</string>
+         <string comment="@label directory for tempoary files">Temporary files:</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

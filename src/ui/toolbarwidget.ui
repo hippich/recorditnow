@@ -53,7 +53,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Frames per second</string>
+         <string comment="@info:tooltip Video FPS">Frames per second</string>
         </property>
         <property name="wrapping">
          <bool>false</bool>
@@ -68,7 +68,7 @@
          <bool>false</bool>
         </property>
         <property name="suffix">
-         <string> FPS</string>
+         <string comment="@label:spinbox Frames per second"> FPS</string>
         </property>
         <property name="prefix">
          <string/>
@@ -90,7 +90,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Enable/Disable sound recording</string>
+         <string comment="@info:tooltip ">Enable/Disable sound recording</string>
         </property>
        </widget>
       </item>
@@ -103,7 +103,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Enable/Disable Mouse-Monitor</string>
+         <string comment="@info:tooltip ">Enable/Disable Mouse-Monitor</string>
         </property>
        </widget>
       </item>
@@ -116,7 +116,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Enable/Disable Keyboard-Monitor</string>
+         <string comment="@info:tooltip ">Enable/Disable Keyboard-Monitor</string>
         </property>
        </widget>
       </item>
@@ -148,7 +148,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Backend</string>
+         <string comment="@info:tooltip Backend combobox">Backend</string>
         </property>
         <property name="insertPolicy">
          <enum>QComboBox::InsertAlphabetically</enum>

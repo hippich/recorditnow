@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string notr="true"/>
   </property>
+  <property name="toolTip">
+   <string notr="true"/>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QLabel" name="titleLabel">
@@ -31,7 +34,7 @@
    <item>
     <widget class="QToolButton" name="button">
      <property name="text">
-      <string>...</string>
+      <string notr="true"/>
      </property>
      <property name="autoRaise">
       <bool>true</bool>

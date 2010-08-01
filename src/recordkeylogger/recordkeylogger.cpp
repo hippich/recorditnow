@@ -955,7 +955,6 @@ static void initModifiers(Display *dpy)
     int min_keycode;
     int max_keycode;
     int keysyms_per_keycode;
-    int i;
 
     AltMask = 0;
     MetaMask = 0;
@@ -972,7 +971,7 @@ static void initModifiers(Display *dpy)
     keymap = XGetKeyboardMapping(dpy, min_keycode, max_keycode - min_keycode + 1, &keysyms_per_keycode);
 
     if (modmap && keymap) {
-        for (i = 3 * modmap->max_keypermod; i < 8 * modmap->max_keypermod; i++) {
+        for (int i = 3 * modmap->max_keypermod; i < 8 * modmap->max_keypermod; i++) {
             keycode = modmap->modifiermap[i];
             if ((keycode >= (unsigned int) min_keycode) && (keycode <= (unsigned int) max_keycode)) {
                 int j;

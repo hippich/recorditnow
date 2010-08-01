@@ -24,12 +24,12 @@
      </property>
      <column>
       <property name="text">
-       <string>Device</string>
+       <string comment="@title:column">Device</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Id</string>
+       <string comment="@title:column The device id">Id</string>
       </property>
      </column>
     </widget>

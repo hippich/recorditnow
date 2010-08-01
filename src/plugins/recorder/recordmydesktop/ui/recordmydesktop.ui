@@ -21,7 +21,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Image</string>
+       <string comment="@title:tab Image settings">Image</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -35,28 +35,28 @@
          <item row="1" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___no_cursor">
            <property name="text">
-            <string>Disable drawing of the cursor</string>
+            <string comment="@option:check">Disable drawing of the cursor</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___no_shared">
            <property name="text">
-            <string>Disable usage of MIT-shared memory extension(Not Recommended!)</string>
+            <string comment="@option:check">Disable usage of MIT-shared memory extension(Not Recommended!)</string>
            </property>
           </widget>
          </item>
          <item row="3" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___full_shots">
            <property name="text">
-            <string>Take full screenshot at every frame(Not Recommended!)</string>
+            <string comment="@option:check">Take full screenshot at every frame(Not Recommended!)</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___subsampling">
            <property name="text">
-            <string>Quick subsampling</string>
+            <string comment="@option:check">Quick subsampling</string>
            </property>
           </widget>
          </item>
@@ -66,7 +66,7 @@
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>Sound</string>
+       <string comment="@title:tab Sound settings">Sound</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -77,7 +77,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>Device:</string>
+            <string comment="@label A device">Device:</string>
            </property>
            <property name="buddy">
             <cstring>kcfg___device</cstring>
@@ -89,14 +89,14 @@
            <item>
             <widget class="KLineEdit" name="kcfg___device">
              <property name="text">
-              <string notr="true">hw:0,0</string>
+              <string notr="true" comment="@label:textbox">hw:0,0</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="KPushButton" name="deviceButton">
              <property name="text">
-              <string>Search</string>
+              <string comment="@action:button Search something">Search</string>
              </property>
             </widget>
            </item>
@@ -105,7 +105,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Channels:</string>
+            <string comment="@label Audio channels">Channels:</string>
            </property>
            <property name="buddy">
             <cstring>kcfg___channels</cstring>
@@ -121,14 +121,14 @@
             <number>-1</number>
            </property>
            <property name="specialValueText">
-            <string>Default</string>
+            <string comment="@label:spinbox Default value">Default</string>
            </property>
           </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Frequency:</string>
+            <string comment="@label Audio frequency">Frequency:</string>
            </property>
            <property name="buddy">
             <cstring>kcfg___freq</cstring>
@@ -144,14 +144,14 @@
             <number>-1</number>
            </property>
            <property name="specialValueText">
-            <string>Default</string>
+            <string comment="@label:spinbox Default value">Default</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Buffer size (only ALSA or OSS):</string>
+            <string comment="@label">Buffer size (only ALSA or OSS):</string>
            </property>
            <property name="buddy">
             <cstring>kcfg___buffer_size</cstring>
@@ -167,14 +167,14 @@
             <number>-1</number>
            </property>
            <property name="specialValueText">
-            <string>Default</string>
+            <string comment="@label:spinbox Default value">Default</string>
            </property>
           </widget>
          </item>
          <item row="5" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Ring Buffer size (JACK only):</string>
+            <string comment="@label">Ring Buffer size (JACK only):</string>
            </property>
            <property name="buddy">
             <cstring>kcfg___ring_buffer_size</cstring>
@@ -190,14 +190,14 @@
             <number>-1</number>
            </property>
            <property name="specialValueText">
-            <string>Default</string>
+            <string comment="@label:spinbox Default value">Default</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>JACK Ports:</string>
+            <string comment="@label">JACK Ports:</string>
            </property>
            <property name="buddy">
             <cstring>kcfg___use_jack</cstring>
@@ -213,7 +213,7 @@
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
-       <string>Encoding</string>
+       <string comment="@title:tab Encoding settings">Encoding</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="0" column="0">
@@ -233,7 +233,7 @@
             <number>100</number>
            </property>
            <property name="suffix">
-            <string notr="true"> %</string>
+            <string notr="true" comment="@label:spinbox"> %</string>
            </property>
            <property name="specialValueText">
             <string notr="true"/>
@@ -246,7 +246,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="lab_2">
            <property name="text">
-            <string>Audio Quality:</string>
+            <string comment="@label">Audio Quality:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -271,7 +271,7 @@
             <number>100</number>
            </property>
            <property name="suffix">
-            <string notr="true"> %</string>
+            <string notr="true" comment="@label:spinbox"> %</string>
            </property>
            <property name="sliderEnabled">
             <bool>true</bool>
@@ -281,7 +281,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="lab_3">
            <property name="text">
-            <string>Bitrate:</string>
+            <string comment="@label The video bitrate">Bitrate:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -309,7 +309,7 @@
             <number>2000000</number>
            </property>
            <property name="specialValueText">
-            <string/>
+            <string notr="true"/>
            </property>
            <property name="sliderEnabled">
             <bool>true</bool>
@@ -325,7 +325,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Video Quality:</string>
+            <string comment="@label">Video Quality:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -338,7 +338,7 @@
          <item row="0" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___on_the_fly_encoding">
            <property name="text">
-            <string>Encode the audio-video data, while recording</string>
+            <string comment="@option:check">Encode the audio-video data, while recording</string>
            </property>
           </widget>
          </item>
@@ -348,7 +348,7 @@
      </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
-       <string>Miscellaneous</string>
+       <string comment="@title:tab Miscellaneous settings">Miscellaneous</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -359,28 +359,28 @@
          <item row="0" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___no_wm_check">
            <property name="text">
-            <string>Do not try to detect the window manager.</string>
+            <string comment="@option:check">Do not try to detect the window manager.</string>
            </property>
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg___compress_cache">
            <property name="text">
-            <string>Compress Cache</string>
+            <string comment="@option:check">Compress Cache</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg_followMouse">
            <property name="text">
-            <string>Follow the mouse</string>
+            <string comment="@option:check">Follow the mouse</string>
            </property>
           </widget>
          </item>
          <item row="3" column="0" colspan="2">
           <widget class="QCheckBox" name="kcfg_frame">
            <property name="text">
-            <string>Show Frame</string>
+            <string comment="@option:check Show the recording frame">Show Frame</string>
            </property>
           </widget>
          </item>

@@ -22,7 +22,7 @@
      <item>
       <widget class="QToolButton" name="playPauseButton">
        <property name="text">
-        <string>...</string>
+        <string notr="true"/>
        </property>
        <property name="autoRaise">
         <bool>true</bool>
@@ -92,6 +92,12 @@
    <header>kseparator.h</header>
   </customwidget>
   <customwidget>
+   <class>RecordItNow::VolumeSlider</class>
+   <extends>QWidget</extends>
+   <header>volumeslider.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>Phonon::VideoPlayer</class>
    <extends>QWidget</extends>
    <header location="global">Phonon/VideoPlayer</header>
@@ -101,12 +107,6 @@
    <class>Phonon::SeekSlider</class>
    <extends>QSlider</extends>
    <header location="global">Phonon/SeekSlider</header>
-  </customwidget>
-  <customwidget>
-   <class>RecordItNow::VolumeSlider</class>
-   <extends>QWidget</extends>
-   <header>volumeslider.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

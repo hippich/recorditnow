@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Timeline</string>
+      <string comment="@title:window Dock title">Timeline</string>
      </property>
     </widget>
    </item>

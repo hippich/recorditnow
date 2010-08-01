@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Zoom</string>
+      <string comment="@title:window Zoom dock">Zoom</string>
      </property>
     </widget>
    </item>
@@ -37,7 +37,7 @@
    <item>
     <widget class="QToolButton" name="startButton">
      <property name="toolTip">
-      <string>Start</string>
+      <string comment="@info:tooltip start or stop zoom">Start/Stop</string>
      </property>
      <property name="text">
       <string notr="true"/>
@@ -50,7 +50,7 @@
    <item>
     <widget class="QToolButton" name="zoomInButton">
      <property name="toolTip">
-      <string>Zoom in</string>
+      <string comment="@info:tooltip">Zoom in</string>
      </property>
      <property name="text">
       <string notr="true"/>
@@ -63,7 +63,7 @@
    <item>
     <widget class="QToolButton" name="zoomOutButton">
      <property name="toolTip">
-      <string>Zoom out</string>
+      <string comment="@info:tooltip">Zoom out</string>
      </property>
      <property name="text">
       <string notr="true"/>
@@ -76,7 +76,7 @@
    <item>
     <widget class="QToolButton" name="defaultButton">
      <property name="toolTip">
-      <string>Original zoom factor</string>
+      <string comment="@info:tooltip">Original zoom factor</string>
      </property>
      <property name="text">
       <string notr="true"/>

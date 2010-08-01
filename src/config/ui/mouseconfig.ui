@@ -27,13 +27,95 @@
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
-       <string>Appearance</string>
+       <string comment="@title:tab Appearance settings">Appearance</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
-       <item row="10" column="0" colspan="2">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::ExpandingFieldsGrow</enum>
+       </property>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string comment="@label The display mode of the Mouse-Monitor">Mode:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="KComboBox" name="appearanceCombo">
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QCheckBox" name="kcfg_mouseWidgetInvisible">
+         <property name="text">
+          <string comment="@option:check Show the Mouse-Monitor only during mouse clicks">Show only during mouse clicks</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="opacityLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string comment="@label Widget opacity">Opacity:</string>
+         </property>
+         <property name="buddy">
+          <cstring>kcfg_cursorOpacity</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="KIntSpinBox" name="kcfg_cursorOpacity">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="suffix">
+          <string notr="true" comment="@label:spinbox">%</string>
+         </property>
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string comment="@label Widget size">Size:</string>
+         </property>
+         <property name="buddy">
+          <cstring>kcfg_cursorWidgetSize</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="KIntSpinBox" name="kcfg_cursorWidgetSize">
+         <property name="suffix">
+          <string notr="true"/>
+         </property>
+         <property name="prefix">
+          <string/>
+         </property>
+         <property name="minimum">
+          <number>15</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Preview</string>
+          <string comment="@title:group Mouse-Monitor preview">Preview</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="1">
@@ -75,7 +157,7 @@
          </layout>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="10" column="0">
         <widget class="KIntSpinBox" name="kcfg_cursorMode">
          <property name="enabled">
           <bool>false</bool>
@@ -88,117 +170,11 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Mode:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="KComboBox" name="appearanceCombo">
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Visible:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QRadioButton" name="kcfg_mouseWidgetAlwaysVisible">
-           <property name="text">
-            <string>Always</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="autoExclusive">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="kcfg_mouseWidgetInvisible">
-           <property name="text">
-            <string>Only during mouse clicks</string>
-           </property>
-           <property name="autoExclusive">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="opacityLabel">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Opacity:</string>
-         </property>
-         <property name="buddy">
-          <cstring>kcfg_cursorOpacity</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="KIntSpinBox" name="kcfg_cursorOpacity">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="suffix">
-          <string notr="true">%</string>
-         </property>
-         <property name="minimum">
-          <number>10</number>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="singleStep">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Size:</string>
-         </property>
-         <property name="buddy">
-          <cstring>kcfg_cursorWidgetSize</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="KIntSpinBox" name="kcfg_cursorWidgetSize">
-         <property name="suffix">
-          <string notr="true"/>
-         </property>
-         <property name="prefix">
-          <string/>
-         </property>
-         <property name="minimum">
-          <number>15</number>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
-       <string>Colors</string>
+       <string comment="@title:tab Colors">Colors</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -206,7 +182,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Mouse button:</string>
+            <string comment="@label A mouse button">Mouse button:</string>
            </property>
           </widget>
          </item>
@@ -216,7 +192,7 @@
          <item>
           <widget class="KPushButton" name="addButton">
            <property name="text">
-            <string>Add</string>
+            <string comment="@action:button Add a new item">Add</string>
            </property>
           </widget>
          </item>
@@ -251,8 +227,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>362</width>
+            <height>226</height>
            </rect>
           </property>
          </widget>
@@ -262,7 +238,7 @@
      </widget>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Sound</string>
+       <string comment="@title:tab mouseclick sounds">Sound</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -270,7 +246,7 @@
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Mouse button:</string>
+            <string comment="@label A mouse button">Mouse button:</string>
            </property>
           </widget>
          </item>
@@ -280,7 +256,7 @@
          <item>
           <widget class="KPushButton" name="soundAddButton">
            <property name="text">
-            <string>Add</string>
+            <string comment="@action:button Add a new item">Add</string>
            </property>
           </widget>
          </item>
@@ -312,8 +288,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>362</width>
+            <height>207</height>
            </rect>
           </property>
          </widget>
@@ -324,7 +300,7 @@
          <item>
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Volume:</string>
+            <string comment="@label The sound volume">Volume:</string>
            </property>
           </widget>
          </item>
@@ -382,8 +358,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>kcfg_mouseWidgetAlwaysVisible</tabstop>
-  <tabstop>kcfg_mouseWidgetInvisible</tabstop>
   <tabstop>buttonCombo</tabstop>
   <tabstop>addButton</tabstop>
  </tabstops>

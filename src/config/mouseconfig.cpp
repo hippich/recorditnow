@@ -436,10 +436,10 @@ RecordItNow::CursorWidget::WidgetMode MouseConfig::currentMode() const
 {
 
     RecordItNow::CursorWidget::WidgetMode mode;
-    if (appearanceCombo->currentText() == i18n("LED")) {
+    if (appearanceCombo->currentText() == i18nc("Widget look", "LED")) {
         mode = RecordItNow::CursorWidget::LEDMode;
-    } else if (appearanceCombo->currentText() == i18n("Circle") || 
-               appearanceCombo->currentText() == i18n("Square")) {
+    } else if (appearanceCombo->currentText() == i18nc("Widget look", "Circle") ||
+               appearanceCombo->currentText() == i18nc("Widget look", "Square")) {
         mode = RecordItNow::CursorWidget::CircleMode;
     } else {
         mode = RecordItNow::CursorWidget::TargetMode;
@@ -455,17 +455,17 @@ void MouseConfig::setMode(const RecordItNow::CursorWidget::WidgetMode &mode)
 
     switch (mode) {
     case RecordItNow::CursorWidget::LEDMode:
-        appearanceCombo->setCurrentItem(i18n("LED")); 
+        appearanceCombo->setCurrentItem(i18nc("Widget look", "LED"));
         break;
     case RecordItNow::CursorWidget::CircleMode:
         if (RecordItNow::Helper::self()->compositingActive()) {
-            appearanceCombo->setCurrentItem(i18n("Circle")); 
+            appearanceCombo->setCurrentItem(i18nc("Widget look", "Circle"));
         } else {
-            appearanceCombo->setCurrentItem(i18n("Square"));
+            appearanceCombo->setCurrentItem(i18nc("Widget look", "Square"));
         }
         break;
     case RecordItNow::CursorWidget::TargetMode:
-        appearanceCombo->setCurrentItem(i18n("Target"));
+        appearanceCombo->setCurrentItem(i18nc("Widget look", "Target"));
         break;
     };
     kcfg_cursorMode->setValue((int)mode);
@@ -478,12 +478,12 @@ void MouseConfig::updateModeCombo()
 
     appearanceCombo->clear();
     
-    appearanceCombo->addItem(i18n("LED"));
+    appearanceCombo->addItem(i18nc("Widget look", "LED"));
     if (RecordItNow::Helper::self()->compositingActive()) {
-        appearanceCombo->addItem(i18n("Circle"));
-        appearanceCombo->addItem(i18n("Target"));
+        appearanceCombo->addItem(i18nc("Widget look", "Circle"));
+        appearanceCombo->addItem(i18nc("Widget look", "Target"));
     } else {
-        appearanceCombo->addItem(i18n("Square"));
+        appearanceCombo->addItem(i18nc("Widget look", "Square"));
     }
     
 }
