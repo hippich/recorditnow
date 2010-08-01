@@ -32,7 +32,7 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
 {
 
     setupUi(this);
-    kcfg_keyboardOnScreenDisplayHideTime->setSuffix(ki18np(" second inactivity", " seconds inactivity"));
+    kcfg_keyboardOnScreenDisplayHideTime->setSuffix(ki18np(" second", " seconds"));
 
 }
 

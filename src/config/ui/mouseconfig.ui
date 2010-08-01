@@ -38,6 +38,9 @@
          <property name="text">
           <string comment="@label The display mode of the Mouse-Monitor">Mode:</string>
          </property>
+         <property name="buddy">
+          <cstring>appearanceCombo</cstring>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
@@ -170,6 +173,19 @@
          </property>
         </widget>
        </item>
+       <item row="11" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_4">
@@ -183,6 +199,9 @@
           <widget class="QLabel" name="label">
            <property name="text">
             <string comment="@label A mouse button">Mouse button:</string>
+           </property>
+           <property name="buddy">
+            <cstring>buttonCombo</cstring>
            </property>
           </widget>
          </item>
@@ -247,6 +266,9 @@
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string comment="@label A mouse button">Mouse button:</string>
+           </property>
+           <property name="buddy">
+            <cstring>soundButtonCombo</cstring>
            </property>
           </widget>
          </item>
@@ -358,8 +380,18 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>ktabwidget</tabstop>
+  <tabstop>appearanceCombo</tabstop>
+  <tabstop>kcfg_mouseWidgetInvisible</tabstop>
+  <tabstop>kcfg_cursorOpacity</tabstop>
+  <tabstop>kcfg_cursorWidgetSize</tabstop>
+  <tabstop>kcfg_cursorMode</tabstop>
   <tabstop>buttonCombo</tabstop>
   <tabstop>addButton</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>soundButtonCombo</tabstop>
+  <tabstop>soundAddButton</tabstop>
+  <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>
  <connections/>

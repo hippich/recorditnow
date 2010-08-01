@@ -19,6 +19,12 @@
    </property>
    <item row="0" column="1">
     <widget class="QGroupBox" name="groupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
       <string comment="@title:group Group for frames">Frames</string>
      </property>
@@ -31,7 +37,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string comment="@label A name for a frame">Name:</string>
+           <string comment="@label Frame title">Title:</string>
           </property>
           <property name="buddy">
            <cstring>sizeEdit</cstring>
@@ -46,7 +52,7 @@
           <item>
            <widget class="KPushButton" name="addButton">
             <property name="text">
-             <string comment="@action:button Add a new frame">Add</string>
+             <string comment="@action:button Add a new item">Add</string>
             </property>
            </widget>
           </item>
@@ -101,6 +107,11 @@
    <header>klineedit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>sizeEdit</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
