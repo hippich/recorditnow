@@ -39,6 +39,7 @@ CheckIcon::CheckIcon(QWidget *parent)
 {
 
 
+
 }
 
 

@@ -1,0 +1,17 @@
+[Desktop Entry] 
+Encoding=UTF-8
+Name=Duration Example Script
+Comment=RecordItNow Example Script
+Icon=application-javascript
+Type=Service                                                                    
+X-KDE-ServiceTypes=RecordItNowScript                                                      
+X-KDE-PluginInfo-Name=DurationExampleScript
+X-KDE-PluginInfo-Category=Script
+X-KDE-PluginInfo-Author=Kai Dombrowe
+X-KDE-PluginInfo-Email=just89@gmx.de
+X-KDE-PluginInfo-Version=0.9
+X-KDE-PluginInfo-Website=http://recorditnow.sourceforge.net/index.html
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=false
+
+X-RecordItNow-ScriptType=UI

@@ -18,8 +18,8 @@
  ***************************************************************************/
 
 
-#ifndef RECORDITNOW_KEYLOGGER_ON_SCREEN_DISPLAY_H
-#define RECORDITNOW_KEYLOGGER_ON_SCREEN_DISPLAY_H
+#ifndef RECORDITNOW_KEYLOGGER_OSD_H
+#define RECORDITNOW_KEYLOGGER_OSD_H
 
 
 // own
@@ -85,4 +85,4 @@ protected:
 } // namespace RecordItNow
 
 
-#endif // RECORDITNOW_KEYLOGGER_ON_SCREEN_DISPLAY_H
+#endif // RECORDITNOW_KEYLOGGER_OSD_H

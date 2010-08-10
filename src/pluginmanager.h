@@ -17,65 +17,60 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_PLUGINMANAGER_H
+#define RECORDITNOW_PLUGINMANAGER_H
 
-// own
-#include "abstractrecorder.h"
-
-// KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
 
 // Qt
-#include <QtCore/QDir>
+#include <QtCore/QObject>
+
+// KDE
+#include <kplugininfo.h>
+
+
+class AbstractRecorder;
+class AbstractEncoder;
 
 
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class Plugin;
+class PluginManager : public QObject
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    PluginManager(QObject *parent = 0);
+    ~PluginManager();
+
+    void init();
+
+    RecordItNow::Plugin *loadPlugin(const QString &name);
+    void unloadPlugin(RecordItNow::Plugin *plugin);
+
+    QList<KPluginInfo> getList(const QString &category) const;
+    QList<KPluginInfo> getRecorderList() const;
+    QList<KPluginInfo> getEncoderList() const;
 
 
+private:
+    QHash<KPluginInfo, RecordItNow::Plugin*> m_plugins;
+
+    void clear();
+    void loadPluginList();
+    void loadInfos(const QString &type);
 
 
-}
+signals:
+    void pluginsChanged();
 
 
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
-
-    return m_state;
-
-}
-
-
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
-
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
-
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // RECORDITNOW_PLUGINMANAGER_H

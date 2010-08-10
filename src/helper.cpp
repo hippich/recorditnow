@@ -21,6 +21,11 @@
 // own
 #include "helper.h"
 #include <recorditnow.h>
+#include "pluginmanager.h"
+#include <config-recorditnow.h>
+#ifdef HAVE_QTSCRIPT
+    #include "script/scriptmanager.h"
+#endif
 
 // KDE
 #include <kmanagerselection.h>
@@ -41,6 +46,9 @@ Helper::Helper()
     : QObject(0)
 {
     
+    m_window = 0;
+    m_pluginManager = new RecordItNow::PluginManager(this);
+
     m_firstStart = Settings::firstStart();
     if (firstStart()) {
         Settings::self()->setFirstStart(false);
@@ -65,6 +73,10 @@ Helper::Helper()
         m_audioOutput->setVolume(Settings::mouseSoundVolume());
     }
 
+#ifdef HAVE_QTSCRIPT
+    m_scriptManager = new RecordItNow::ScriptManager(this);
+#endif
+
 }
 
 
@@ -77,6 +89,12 @@ Helper::~Helper()
     m_audioPlayer->deleteLater();
     m_audioOutput->deleteLater();
     
+    delete m_pluginManager;
+
+#ifdef HAVE_QTSCRIPT
+    Q_ASSERT(!m_scriptManager);
+#endif
+
 }
 
 
@@ -122,6 +140,30 @@ Phonon::AudioOutput *Helper::audioOutput() const
 }
 
 
+RecordItNow::PluginManager *Helper::pluginmanager() const
+{
+
+    return m_pluginManager;
+
+}
+
+
+RecordItNow::ScriptManager *Helper::scriptManager() const
+{
+
+    return m_scriptManager;
+
+}
+
+
+RecordItNow::MainWindow *Helper::window() const
+{
+
+    return m_window;
+
+}
+
+
 void Helper::playSound(const QString &file)
 {
 
@@ -131,6 +173,25 @@ void Helper::playSound(const QString &file)
     
     m_audioPlayer->setCurrentSource(Phonon::MediaSource(file));
     m_audioPlayer->play();
+
+}
+
+
+void Helper::setMainWindow(RecordItNow::MainWindow *window)
+{
+
+    m_window = window;
+
+}
+
+
+void Helper::unloadScriptManager()
+{
+
+#ifdef HAVE_QTSCRIPT
+    delete m_scriptManager;
+    m_scriptManager = 0;
+#endif
 
 }
 

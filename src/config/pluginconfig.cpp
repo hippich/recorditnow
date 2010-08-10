@@ -20,18 +20,33 @@
 
 // own
 #include "pluginconfig.h"
-#include "recorditnowpluginmanager.h"
+#include "pluginmanager.h"
+#include <config-recorditnow.h>
+#ifdef HAVE_QTSCRIPT
+    #include "script/scriptmanager.h"
+    #include "scriptdialog.h"
+#endif
+#include "helper.h"
 
 // KDE
 #include <klocalizedstring.h>
+#include <kfiledialog.h>
+#include <kmessagebox.h>
 
 
-PluginConfig::PluginConfig(RecordItNow::RecordItNowPluginManager *manager, KConfig *cfg, QWidget *parent)
-    : RecordItNow::ConfigPage(cfg, parent), m_manager(manager)
+PluginConfig::PluginConfig(KConfig *cfg, QWidget *parent)
+    : RecordItNow::ConfigPage(cfg, parent)
 {
 
     setupUi(this);
-    connect(pluginSelector, SIGNAL(changed(bool)), this, SLOT(pluginSettingsChanged(bool)));
+
+#ifdef HAVE_QTSCRIPT
+    connect(scriptButton, SIGNAL(clicked()), this, SLOT(showScriptDialog()));
+
+    scriptButton->setIcon(KIcon("preferences-plugin"));
+#else
+    scriptButton->hide();
+#endif
 
 }
 
@@ -55,15 +70,38 @@ void PluginConfig::setDefaults()
 void PluginConfig::loadConfig()
 {
 
-    pluginSelector->addPlugins(m_manager->getRecorderList(),
-                               KPluginSelector::ReadConfigFile,
-                               i18n("Record Plugins"), "Recorder");
-    pluginSelector->addPlugins(m_manager->getEncoderList(),
-                               KPluginSelector::ReadConfigFile,
-                               i18n("Encode Plugins"), "Encoder");
+    reloadPluginList();
 
 }
 
+
+void PluginConfig::reloadPluginList()
+{
+
+
+    // KPluginSelector has no clear function :-(
+    pluginSelector->hide();
+    pluginLayout->removeWidget(pluginSelector);
+    delete pluginSelector;
+
+    pluginSelector = new KPluginSelector(this);
+    connect(pluginSelector, SIGNAL(changed(bool)), this, SLOT(pluginSettingsChanged(bool)));
+
+    pluginLayout->insertWidget(0, pluginSelector);
+
+    pluginSelector->addPlugins(RecordItNow::Helper::self()->pluginmanager()->getRecorderList(),
+                               KPluginSelector::ReadConfigFile,
+                               i18n("Record Plugins"), "Recorder");
+    pluginSelector->addPlugins(RecordItNow::Helper::self()->pluginmanager()->getEncoderList(),
+                               KPluginSelector::ReadConfigFile,
+                               i18n("Encode Plugins"), "Encoder");
+#ifdef HAVE_QTSCRIPT
+    pluginSelector->addPlugins(RecordItNow::Helper::self()->scriptManager()->availableScripts(),
+                               KPluginSelector::ReadConfigFile,
+                               i18n("Scripts"), "Script");
+#endif
+
+}
 
 
 void PluginConfig::pluginSettingsChanged(const bool &changed)
@@ -76,6 +114,30 @@ void PluginConfig::pluginSettingsChanged(const bool &changed)
     pluginSelector->updatePluginsState();
 
 }
+
+
+void PluginConfig::showScriptDialog()
+{
+
+#ifdef HAVE_QTSCRIPT
+    RecordItNow::ScriptDialog *dialog = new RecordItNow::ScriptDialog(this);
+    connect(dialog, SIGNAL(destroyed()), this, SLOT(scriptDialogFinished()));
+
+    dialog->show();
+#endif
+
+}
+
+
+void PluginConfig::scriptDialogFinished()
+{
+
+#ifdef HAVE_QTSCRIPT
+    reloadPluginList();
+#endif
+
+}
+
 
 
 #include "pluginconfig.moc"

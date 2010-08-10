@@ -31,7 +31,6 @@
 
 namespace RecordItNow {
     class ConfigPage;
-    class RecordItNowPluginManager;
 }
 
 
@@ -42,12 +41,11 @@ class ConfigDialog : public KConfigDialog
 
 
 public:
-    ConfigDialog(QWidget *parent, KActionCollection *collection, RecordItNow::RecordItNowPluginManager *manager);
+    ConfigDialog(QWidget *parent, KActionCollection *collection);
     ~ConfigDialog();
 
 
 private:
-    RecordItNow::RecordItNowPluginManager *m_pluginManager;
     Ui::Settings ui_settings;
     KActionCollection *m_collection;
     QList<RecordItNow::ConfigPage*> m_pageList;

@@ -37,14 +37,13 @@ namespace RecordItNow {
 
 
 typedef QPair<QString, KIcon> EncoderData;
-class RecordItNowPluginManager;
 class EncoderManager : public QObject
 {
     Q_OBJECT
 
 
 public:
-    EncoderManager(QObject *parent, RecordItNowPluginManager *manager);
+    EncoderManager(QObject *parent);
     ~EncoderManager();
 
     QList<EncoderData> getEncoder() const;
@@ -55,7 +54,6 @@ public:
 
 
 private:
-    RecordItNowPluginManager *m_manager;
     QPointer<AbstractEncoder> m_encoder;
 
     void clean();

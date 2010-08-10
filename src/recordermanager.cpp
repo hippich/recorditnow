@@ -20,7 +20,8 @@
 
 // own
 #include "recordermanager.h"
-#include "recorditnowpluginmanager.h"
+#include "helper.h"
+#include "pluginmanager.h"
 #include "mouse/cursorwidget.h"
 
 // KDE
@@ -33,8 +34,8 @@
 namespace RecordItNow {
 
 
-RecorderManager::RecorderManager(QObject *parent, RecordItNowPluginManager *manager)
-    : QObject(parent), m_manager(manager)
+RecorderManager::RecorderManager(QObject *parent)
+    : QObject(parent)
 {
 
 
@@ -66,7 +67,7 @@ QList<RecordItNow::RecorderData> RecorderManager::getRecorder() const
 {
 
     QList<RecordItNow::RecorderData> list;
-    foreach (const KPluginInfo &info, m_manager->getRecorderList()) {
+    foreach (const KPluginInfo &info, RecordItNow::Helper::self()->pluginmanager()->getRecorderList()) {
         if (info.isPluginEnabled()) {
             RecorderData data;
             data.first = info.name();
@@ -82,7 +83,7 @@ QList<RecordItNow::RecorderData> RecorderManager::getRecorder() const
 bool RecorderManager::hasFeature(const QString &feature, const QString &recorder) const
 {
 
-    foreach (const KPluginInfo &info, m_manager->getRecorderList()) {
+    foreach (const KPluginInfo &info, RecordItNow::Helper::self()->pluginmanager()->getRecorderList()) {
         if (info.name().toLower() == recorder.toLower()) {
             return info.property("X-RecordItNow-"+feature).toBool();
         }
@@ -95,7 +96,7 @@ bool RecorderManager::hasFeature(const QString &feature, const QString &recorder
 QString RecorderManager::getDefaultFile(const QString &name) const
 {
 
-    foreach (const KPluginInfo &info, m_manager->getRecorderList()) {
+    foreach (const KPluginInfo &info, RecordItNow::Helper::self()->pluginmanager()->getRecorderList()) {
         if (info.name().toLower() == name.toLower()) {
             QString file = info.property("X-RecordItNow-DefaultFile").toString();
             if (file.contains("${home}")) {
@@ -134,10 +135,10 @@ void RecorderManager::startRecord(const QString &recorder,
 {
 
     if (m_recorder) {
-        m_manager->unloadPlugin(m_recorder);
+        RecordItNow::Helper::self()->pluginmanager()->unloadPlugin(m_recorder);
     }
 
-    m_recorder = static_cast<RecordItNow::AbstractRecorder*>(m_manager->loadPlugin(recorder));
+    m_recorder = static_cast<RecordItNow::AbstractRecorder*>(RecordItNow::Helper::self()->pluginmanager()->loadPlugin(recorder));
 
     if (!m_recorder) {
         recorderError(i18n("Cannot load Recorder %1.", recorder));
@@ -217,7 +218,7 @@ void RecorderManager::clean()
 
     if (m_recorder) {
         m_recorder->disconnect();
-        m_manager->unloadPlugin(m_recorder);
+        RecordItNow::Helper::self()->pluginmanager()->unloadPlugin(m_recorder);
         m_recorder = 0;
     }
 

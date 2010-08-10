@@ -40,7 +40,10 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string comment="@label Hide the Keyboad-Monitor after...">Hide after inactivity:</string>
+         <string comment="@label Hide the Keyboard-Monitor after...">Hide after inactivity:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_keyboardOnScreenDisplayHideTime</cstring>
         </property>
        </widget>
       </item>
@@ -82,6 +85,9 @@
        <widget class="QLabel" name="label">
         <property name="text">
          <string comment="@label The font size">Font Size:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_keyboardOnScreenDisplayFontSize</cstring>
         </property>
        </widget>
       </item>

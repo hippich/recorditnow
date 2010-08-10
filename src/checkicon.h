@@ -17,16 +17,19 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef CHECKICON_H
-#define CHECKICON_H
+#ifndef RECORDITNOW_CHECKICON_H
+#define RECORDITNOW_CHECKICON_H
 
 
 // Qt
 #include <QtGui/QWidget>
 
+
 class CheckIcon : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QString icon READ icon WRITE setIcon)
+    Q_PROPERTY(bool c READ isChecked WRITE setChecked)
 
 
 public:
@@ -37,9 +40,6 @@ public:
     QString icon() const;
 
     void setIcon(const QString &icon);
-
-
-public slots:
     void setChecked(const bool &c);
 
 
@@ -65,4 +65,4 @@ signals:
 };
 
 
-#endif // CHECKICON_H
+#endif // RECORDITNOW_CHECKICON_H

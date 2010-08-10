@@ -26,10 +26,6 @@
 #include "ui_pluginconfig.h"
 
 
-namespace RecordItNow {
-    class RecordItNowPluginManager;
-};
-
 
 class PluginConfig : public RecordItNow::ConfigPage, Ui::PluginConfig
 {
@@ -37,7 +33,7 @@ class PluginConfig : public RecordItNow::ConfigPage, Ui::PluginConfig
 
 
 public:
-    explicit PluginConfig(RecordItNow::RecordItNowPluginManager *manager, KConfig *cfg, QWidget *parent = 0);
+    explicit PluginConfig(KConfig *cfg, QWidget *parent = 0);
 
 
 public slots:
@@ -47,11 +43,13 @@ public slots:
 
 
 private:
-    RecordItNow::RecordItNowPluginManager *m_manager;
+    void reloadPluginList();
 
 
 private slots:
     void pluginSettingsChanged(const bool &changed);
+    void showScriptDialog();
+    void scriptDialogFinished();
 
 
 };

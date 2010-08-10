@@ -1283,8 +1283,6 @@ void RecordKeylogger::stop()
         return;
     }
 
-    qDebug() << "stopping rec";
-
     d->data->stop = true;
 
     if (d->future.isRunning()) {
@@ -1293,8 +1291,6 @@ void RecordKeylogger::stop()
     d->running = false;
 
     emit stopped();
-
-    qDebug() << "rec stopped";
 
 }
 

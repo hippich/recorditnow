@@ -37,7 +37,10 @@ class KSelectionWatcher;
 namespace RecordItNow {
 
 
-    class Helper : public QObject
+class MainWindow;
+class PluginManager;
+class ScriptManager;
+class Helper : public QObject
 {
     Q_OBJECT
 
@@ -73,10 +76,15 @@ public:
     bool firstStart() const;
     bool compositingActive() const;
     Phonon::AudioOutput *audioOutput() const;
+    PluginManager *pluginmanager() const;
+    RecordItNow::ScriptManager *scriptManager() const;
+    RecordItNow::MainWindow *window() const;
 
     void playSound(const QString &file);
+    void setMainWindow(RecordItNow::MainWindow *window);
+    void unloadScriptManager();
 
-    
+
 private:
     friend class HelperSingleton;
     Helper();
@@ -87,6 +95,9 @@ private:
     bool m_compositingActive;
     Phonon::MediaObject *m_audioPlayer;
     Phonon::AudioOutput *m_audioOutput;
+    PluginManager *m_pluginManager;
+    RecordItNow::ScriptManager *m_scriptManager;
+    RecordItNow::MainWindow *m_window;
 
 
 private slots:

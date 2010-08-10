@@ -33,7 +33,7 @@ namespace RecordItNow {
 
 
 AbstractEncoder::AbstractEncoder(QObject *parent, const QVariantList &args)
-    : RecordItNowPlugin(parent)
+    : RecordItNow::Plugin(parent)
 {
 
     Q_UNUSED(args);

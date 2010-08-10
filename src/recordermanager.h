@@ -37,7 +37,6 @@ namespace RecordItNow {
 
 
 typedef QPair<QString, KIcon> RecorderData;
-class RecordItNowPluginManager;
 class CursorWidget;
 class RecorderManager : public QObject
 {
@@ -45,7 +44,7 @@ class RecorderManager : public QObject
 
 
 public:
-    RecorderManager(QObject *parent, RecordItNowPluginManager *manager);
+    RecorderManager(QObject *parent);
     ~RecorderManager();
 
     RecordItNow::AbstractRecorder::State currentState() const;
@@ -61,7 +60,6 @@ public:
     
 
 private:
-    RecordItNowPluginManager *m_manager;
     QPointer<RecordItNow::AbstractRecorder> m_recorder;
 
     void clean();

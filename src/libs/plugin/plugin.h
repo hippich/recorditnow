@@ -17,65 +17,58 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_PLUGIN_H
+#define RECORDITNOW_PLUGIN_H
 
-// own
-#include "abstractrecorder.h"
 
 // KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
+#include <kdemacros.h>
 
 // Qt
-#include <QtCore/QDir>
+#include <QtCore/QObject>
+#include <QtCore/QHash>
+#include <QtCore/QStringList>
 
 
+class KJob;
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class KDE_EXPORT Plugin : public QObject
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    Plugin(QObject *parent = 0);
+    ~Plugin();
 
 
+private:
+    QHash<KJob*, QString> m_jobs;
+    QStringList m_uniqueIds;
+
+    QString getUniqueId();
+    void removeUniqueId(const QString &id);
 
 
-}
+private slots:
+    void jobFinishedInternal(KJob *job);
 
 
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
+protected:
+    QString move(const QString &from ,const QString &to);
+    QString remove(const QString &file);
+    QString getTemporaryFile(const QString &workDir) const;
+    QString unique(const QString &file) const;
 
-    return m_state;
-
-}
+    virtual void jobFinished(const QString &id, const QString &errorString);
 
 
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
-
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
-
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // RECORDITNOW_PLUGIN_H

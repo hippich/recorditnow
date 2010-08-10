@@ -21,7 +21,7 @@
 #include "mainwindow.h"
 #include "frame/frame.h"
 #include <recorditnow.h>
-#include "recorditnowpluginmanager.h"
+#include "pluginmanager.h"
 #include "config/configdialog.h"
 #include "recordermanager.h"
 #include "encodermanager.h"
@@ -38,6 +38,11 @@
 #include "windowgrabber.h"
 #include "player/playerdock.h"
 #include "helper.h"
+#include <config-recorditnow.h>
+#ifdef HAVE_QTSCRIPT
+    #include "script/mainwindowscriptadaptor.h"
+    #include "script/scriptmanager.h"
+#endif
 
 // Qt
 #include <QtGui/QMouseEvent>
@@ -118,10 +123,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_zoomDock = 0;
     m_playerDock = 0;
 
-    m_pluginManager = new RecordItNow::RecordItNowPluginManager(this);
-    connect(m_pluginManager, SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
+    connect(Helper::self()->pluginmanager(), SIGNAL(pluginsChanged()), this, SLOT(pluginsChanged()));
 
-    m_recorderManager = new RecordItNow::RecorderManager(this, m_pluginManager);
+    m_recorderManager = new RecordItNow::RecorderManager(this);
     connect(m_recorderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
     connect(m_recorderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_recorderManager, SIGNAL(finished(QString,bool)), this,
@@ -129,7 +133,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_recorderManager, SIGNAL(stateChanged(RecordItNow::AbstractRecorder::State)), this,
             SLOT(recorderStateChanged(RecordItNow::AbstractRecorder::State)));
 
-    m_encoderManager = new RecordItNow::EncoderManager(this, m_pluginManager);
+    m_encoderManager = new RecordItNow::EncoderManager(this);
     connect(m_encoderManager, SIGNAL(status(QString)), this, SLOT(pluginStatus(QString)));
     connect(m_encoderManager, SIGNAL(fileChanged(QString)), outputWidget, SLOT(setOutputFile(QString)));
     connect(m_encoderManager, SIGNAL(finished(QString)), this,
@@ -154,7 +158,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     menuBar()->clear();
     setState(Idle);
-    m_pluginManager->init();
+    Helper::self()->pluginmanager()->init();
 
     backendCombo->setCurrentItem(Settings::currentBackend(), false);
     soundCheck->setChecked(Settings::soundEnabled());
@@ -173,11 +177,21 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+#ifdef HAVE_QTSCRIPT
+    RecordItNow::Helper::self()->setMainWindow(this);
+    connect(Helper::self()->scriptManager(), SIGNAL(scriptError(QString)), this, SLOT(errorNotification(QString)));
+    RecordItNow::Helper::self()->scriptManager()->reloadScripts();
+#endif
+
 }
 
 
 MainWindow::~MainWindow()
 {
+
+#ifdef HAVE_QTSCRIPT
+    RecordItNow::Helper::self()->unloadScriptManager();
+#endif
 
     Settings::self()->setCurrentBackend(backendCombo->currentText());
     Settings::self()->setSoundEnabled(soundCheck->isChecked());
@@ -196,7 +210,6 @@ MainWindow::~MainWindow()
     }
     delete m_recorderManager;
     delete m_encoderManager;
-    delete m_pluginManager;
 
     if (m_cursor) {
         delete m_cursor;
@@ -602,7 +615,17 @@ void MainWindow::setTrayOverlay(const QString &name)
 void MainWindow::setState(const State &newState)
 {
 
+    const RecordItNow::MainWindow::State oldState = m_state;
     m_state = newState;
+
+    QList<QWidget*> widgets;
+    widgets << soundCheck;
+    widgets << keyboardCheck;
+    widgets << mouseCheck;
+    widgets << fpsSpinBox;
+    widgets << backendCombo;
+    widgets << outputWidget;
+    widgets << timerWidget;
 
     const QString recorder = backendCombo->currentText();
     switch (newState) {
@@ -621,11 +644,15 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(true);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(true);
+            }
+
             fpsSpinBox->setEnabled(m_recorderManager->hasFeature("FPS", recorder));
             soundCheck->setEnabled(m_recorderManager->hasFeature("Sound", recorder));
             mouseCheck->setEnabled(m_recorderManager->hasFeature("MouseEnabled", recorder));
             keyboardCheck->setEnabled(m_recorderManager->hasFeature("KeyboardEnabled", recorder));
-            m_mainDock->setEnabled(true);
             timerWidget->reset();
             initRecordWidgets(false);
             initKeyMon(false);
@@ -645,7 +672,11 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            m_mainDock->setEnabled(false);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(false);
+            }
+
             initKeyMon(true);
 
             if (Settings::hideOnRecord()) {
@@ -671,7 +702,11 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            m_mainDock->setEnabled(false);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(false);
+            }
+
             initRecordWidgets(true);
             break;
         }
@@ -690,7 +725,11 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            m_mainDock->setEnabled(false);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(false);
+            }
+
             break;
         }
     case Paused: {
@@ -708,7 +747,11 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            m_mainDock->setEnabled(false);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(false);
+            }
+
             break;
         }
     case Encode: {
@@ -725,7 +768,11 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(true);
             getAction("zoom-out")->setEnabled(true);
             getAction("popupAction")->setEnabled(false);
-            m_mainDock->setEnabled(false);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(false);
+            }
+
             initRecordWidgets(false);
             initKeyMon(false);
             break;
@@ -744,10 +791,16 @@ void MainWindow::setState(const State &newState)
             getAction("zoom-in")->setEnabled(false);
             getAction("zoom-out")->setEnabled(false);
             getAction("popupAction")->setEnabled(false);
-            m_mainDock->setEnabled(false);
+
+            foreach (QWidget *widget, widgets) {
+                widget->setEnabled(false);
+            }
+
             break;
         }
     }
+
+    emit recordStateChanged(m_state, oldState);
 
 }
 
@@ -824,7 +877,7 @@ void MainWindow::configure()
         return;
     }
 
-    ConfigDialog *dialog = new ConfigDialog(this, actionCollection(), m_pluginManager);
+    ConfigDialog *dialog = new ConfigDialog(this, actionCollection());
     connect(dialog, SIGNAL(dialogFinished()), this, SLOT(configDialogFinished()));
     connect(dialog, SIGNAL(settingsSaved()), this, SLOT(applyConfig()));
     dialog->show();
@@ -855,6 +908,11 @@ void MainWindow::applyConfig()
     updateWindowFlags();
 
     reloadPopAction();
+
+    // reload scripts
+#ifdef HAVE_QTSCRIPT
+    RecordItNow::Helper::self()->scriptManager()->reloadScripts();
+#endif
 
 }
 
@@ -951,6 +1009,10 @@ void MainWindow::trayActivated(const bool &active, const QPoint &pos)
 void MainWindow::backendChanged(const QString &newBackend)
 {
 
+    if (state() != Idle) {
+        return;
+    }
+
     //outputRequester->clear(); // call textChanged()
     outputWidget->setOutputFile(QString());
 
@@ -977,10 +1039,6 @@ void MainWindow::aboutToQuit()
 void MainWindow::pluginsChanged()
 {
 
-    if (state() != Idle) {
-        return; // play save
-    }
-    // recorder
     updateRecorderCombo();
 
 }

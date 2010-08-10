@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=RecordItNowScript
+X-KDE-PluginInfo-Version=0.1
+Name=RecordItNow Script
+
+[PropertyDef::X-RecordItNow-ScriptType]
+Type=QString
+

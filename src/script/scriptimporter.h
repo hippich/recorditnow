@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,52 +17,46 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOWPLUGIN_H
-#define RECORDITNOWPLUGIN_H
+#ifndef RECORDITNOW_SCRIPTIMPORTER_H
+#define RECORDITNOW_SCRIPTIMPORTER_H
 
-
-// KDE
-#include <kdemacros.h>
 
 // Qt
-#include <QtCore/QObject>
-#include <QtCore/QHash>
-#include <QtCore/QStringList>
+#include <QtScript/QScriptEngine>
 
 
-class KJob;
-class KDE_EXPORT RecordItNowPlugin : public QObject
+namespace RecordItNow {
+
+
+class Script;
+class ScriptImporter : public QObject
 {
     Q_OBJECT
 
 
 public:
-    RecordItNowPlugin(QObject *parent = 0);
-    ~RecordItNowPlugin();
+    explicit ScriptImporter(RecordItNow::Script *script, QObject *parent = 0);
+    ~ScriptImporter();
+
+
+public slots:
+    bool importBinding(const QString &binding);
+    bool include(const QString &relativeFilename);
 
 
 private:
-    QHash<KJob*, QString> m_jobs;
-    QStringList m_uniqueIds;
+    RecordItNow::Script *m_script;
+    QList<QObject*> m_ext;
 
-    QString getUniqueId();
-    void removeUniqueId(const QString &id);
-
-
-private slots:
-    void jobFinishedInternal(KJob *job);
-
-
-protected:
-    QString move(const QString &from ,const QString &to);
-    QString remove(const QString &file);
-    QString getTemporaryFile(const QString &workDir) const;
-    QString unique(const QString &file) const;
-
-    virtual void jobFinished(const QString &id, const QString &errorString);
+    void registerObject(QObject *object, const QString &name);
+    void registerClass(QScriptEngine::FunctionSignature func, const QString &name);
 
 
 };
 
 
-#endif // RECORDITNOWPLUGIN_H
+} // namespace RecordItNow
+
+
+
+#endif // RECORDITNOW_SCRIPTIMPORTER_H

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +17,41 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_SCRIPTDIALOG_H
+#define RECORDITNOW_SCRIPTDIALOG_H
+
 
 // own
-#include "abstractrecorder.h"
+#include "ui_scriptdialog.h"
 
 // KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
-
-// Qt
-#include <QtCore/QDir>
+#include <kdialog.h>
 
 
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class ScriptDialog : public KDialog, Ui::ScriptDialog
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    explicit ScriptDialog(QWidget *parent = 0);
+    ~ScriptDialog();
 
 
+private slots:
+    void updateScriptList();
+    void installClicked();
+    void uninstallClicked();
+    void installScript();
 
 
-}
-
-
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
-
-    return m_state;
-
-}
-
-
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
-
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
-
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // SCRIPTDIALOG_H

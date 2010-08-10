@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +17,53 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_MAINWINDOWSCRIPTADAPTOR_H
+#define RECORDITNOW_MAINWINDOWSCRIPTADAPTOR_H
+
 
 // own
-#include "abstractrecorder.h"
-
-// KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
+#include "mainwindow.h"
 
 // Qt
-#include <QtCore/QDir>
+#include <QtCore/QObject>
 
 
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class MainWindow;
+class MainWindowScriptAdaptor : public QObject
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    explicit MainWindowScriptAdaptor(QObject *parent);
+    ~MainWindowScriptAdaptor();
 
 
+public slots:
+    void addToolWidget(QWidget *widget);
+    void removeToolWidget(QWidget *widget);
+    void addToolBarAction(QAction *action);
+    void removeToolBarAction(QAction *action);
 
 
-}
+private slots:
+    void stateChanged(const RecordItNow::MainWindow::State &state, const RecordItNow::MainWindow::State &oldState);
 
 
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
+signals:
+    void recordStarted();
+    void recordPaused();
+    void recordResumed();
+    void recordFinished();
 
-    return m_state;
 
-}
-
-
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
-
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
-
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // MAINWINDOWSCRIPTADAPTOR_H

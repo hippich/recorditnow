@@ -14,10 +14,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
 # XFixes
 macro_optional_find_package(XFixes)
-set(HAVE_XFIXES XFIXES_FOUND)
-macro_log_feature(HAVE_XFIXES "XFixes"
+macro_log_feature(XFIXES_FOUND "XFixes"
     "X.Org Xfixes library"
     "http://xorg.freedesktop.org/")
+
+set(HAVE_XFIXES XFIXES_FOUND)
+set(HAVE_QTSCRIPT QT_QTSCRIPT_FOUND)
 
 configure_file(config-recorditnow.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-recorditnow.h)
 
@@ -27,6 +29,9 @@ add_subdirectory(plugins)
 add_subdirectory(icons)
 add_subdirectory(keyboard)
 add_subdirectory(recordkeylogger)
+if (HAVE_QTSCRIPT)
+    add_subdirectory(script)
+endif (HAVE_QTSCRIPT)
 
 macro_display_feature_log()
 
@@ -42,7 +47,7 @@ set (FRAME_SRCS frame/frame.cpp
 set(gui_SRCS
    main.cpp
    mainwindow.cpp
-   recorditnowpluginmanager.cpp
+   pluginmanager.cpp
    recordermanager.cpp
    encodermanager.cpp
    application.cpp
@@ -108,6 +113,16 @@ set(gui_SRCS
    firstStart/welcomepage.cpp
    firstStart/createconfigpage.cpp)
 
+if (HAVE_QTSCRIPT)
+    set(gui_SRCS ${gui_SRCS} script/scriptmanager.cpp
+                             script/mainwindowscriptadaptor.cpp
+                             script/scriptimporter.cpp
+                             script/script.cpp
+                             script/recorderscriptadaptor.cpp
+                             script/debugscriptadaptor.cpp
+
+                             config/scriptdialog.cpp)
+endif (HAVE_QTSCRIPT)
 
 # GUI
 kde4_add_ui_files(gui_SRCS 
@@ -146,6 +161,11 @@ kde4_add_ui_files(gui_SRCS
     player/ui/playerdocktitle.ui
     player/ui/volumeslider.ui)
 
+if (HAVE_QTSCRIPT)
+kde4_add_ui_files(gui_SRCS
+    config/ui/scriptdialog.ui)
+endif (HAVE_QTSCRIPT)
+
 
 # Common
 kde4_add_library(recorditnow_common SHARED ${COMMON_SRCS})
@@ -179,6 +199,10 @@ set(GUI_SRCS_LINK ${KDE4_KDEUI_LIBS}
 if (XFIXES_FOUND)
     set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${XFIXES_LIBRARIES})
 endif(XFIXES_FOUND)
+
+if (HAVE_QTSCRIPT)
+    set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${QT_QTSCRIPT_LIBRARY})
+endif (HAVE_QTSCRIPT)
 
 if (BUILD_WITH_JOSCHY)
     set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${JOSCHY_SNAPSHOT_LIBRARIES})

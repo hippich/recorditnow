@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +17,73 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_SCRIPT_H
+#define RECORDITNOW_SCRIPT_H
 
-// own
-#include "abstractrecorder.h"
 
 // KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
+#include <kplugininfo.h>
+
 
 // Qt
-#include <QtCore/QDir>
+#include <QtCore/QObject>
+#include <QtScript/QScriptValue>
 
 
+class QScriptEngine;
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class Script : public QObject
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    enum ScriptType {
+        InvalidType = -1,
+        RecorderType = 0,
+        EncoderType = 1,
+        UIType = 2
+    };
+
+    explicit Script(QObject *parent, const KPluginInfo &info);
+    ~Script();
+
+    QScriptEngine *engine() const;
+    KPluginInfo info() const;
+    bool isRunning() const;
+    QString name() const;
+    RecordItNow::Script::ScriptType type() const;
 
 
+    bool load();
+    void unload();
+    void addAdaptor(QObject *adaptor, const QString &name);
+    void handleException(const QScriptValue &exception);
+
+    static QString scriptFile(const KPluginInfo &info);
+    static QByteArray scriptContent(const QString &path);
 
 
-}
+private:
+    KPluginInfo m_info;
+    QScriptEngine *m_engine;
+    QObject *m_importer;
 
 
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
-
-    return m_state;
-
-}
+private slots:
+    void signalHandlerException(const QScriptValue &exception);
 
 
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
+signals:
+    void scriptError(const QString &error);
 
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
 
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // RECORDITNOW_SCRIPT_H

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +17,58 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_SCRIPTMANAGER_H
+#define RECORDITNOW_SCRIPTMANAGER_H
 
-// own
-#include "abstractrecorder.h"
-
-// KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
 
 // Qt
-#include <QtCore/QDir>
+#include <QtCore/QObject>
+#include <QtCore/QHash>
+#include <QtCore/QStringList>
+#include <QtScript/QScriptEngine>
+
+// KDE
+#include <kplugininfo.h>
 
 
+class QScriptEngine;
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class Script;
+class Plugin;
+class ScriptManager : public QObject
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    explicit ScriptManager(QObject *parent = 0);
+    ~ScriptManager();
+
+    QList<KPluginInfo> availableScripts() const;
+    RecordItNow::Plugin *loadRecorder(const KPluginInfo &info);
+    QString scriptSaveLocation() const;
+
+    void reloadPluginList();
+    void reloadScripts();
+
+    bool installScript(const QString &path);
+    bool uninstallScript(const QString &path);
 
 
+private:
+    QList<RecordItNow::Script*> m_scripts;
 
 
-}
+signals:
+    void scriptError(const QString &message);
 
 
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
-
-    return m_state;
-
-}
-
-
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
-
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
-
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // SCRIPTMANAGER_H

@@ -22,7 +22,7 @@
 
 
 // own
-#include "recorditnowplugin.h"
+#include "plugin.h"
 
 // KDE
 #include <kdemacros.h>
@@ -37,7 +37,7 @@
 namespace RecordItNow {
 
 
-class KDE_EXPORT AbstractRecorder : public RecordItNowPlugin
+class KDE_EXPORT AbstractRecorder : public RecordItNow::Plugin
 {
     Q_OBJECT
 

@@ -21,7 +21,8 @@
 // own
 #include "configdialog.h"
 #include <recorditnow.h>
-#include "recorditnowpluginmanager.h"
+#include "helper.h"
+#include "pluginmanager.h"
 #include "config/mouseconfig.h"
 #include "config/frameconfig.h"
 #include "config/keyboardconfig.h"
@@ -39,14 +40,11 @@
 #include <kmenu.h>
 
 
-ConfigDialog::ConfigDialog(QWidget *parent, KActionCollection *collection,
-                           RecordItNow::RecordItNowPluginManager *manager)
+ConfigDialog::ConfigDialog(QWidget *parent, KActionCollection *collection)
     : KConfigDialog(parent, "settings", Settings::self()),
-    m_pluginManager(manager),
     m_collection(collection)
 {
 
-    Q_ASSERT(m_pluginManager);
     setAttribute(Qt::WA_DeleteOnClose);
     setInitialSize(QSize(600, 550));
     init();
@@ -79,7 +77,7 @@ void ConfigDialog::init()
             SLOT(encoderChanged()));
 
 
-    RecordItNow::ConfigPage *pluginPage = new PluginConfig(m_pluginManager, cfg, this);
+    RecordItNow::ConfigPage *pluginPage = new PluginConfig(cfg, this);
     RecordItNow::ConfigPage *mousePage = new MouseConfig(cfg, this);
     RecordItNow::ConfigPage *zoomPage = new ZoomConfig(cfg, this);
     RecordItNow::ConfigPage *timelinePage = new TimelineConfig(cfg, this);
@@ -102,8 +100,8 @@ void ConfigDialog::init()
     addPage(generalPage, i18n("RecordItNow"), "configure");
     addPage(pluginPage, i18n("Plugins"), "preferences-plugin");
     addPage(framePage, i18nc("Widget to select a screen area", "Frame"), "draw-rectangle");
-    addPage(mousePage, i18n("Mouse-Monitor"), "input-mouse");
-    addPage(keyboardPage, i18n("Keyboard-Monitor"), "input-keyboard");
+    addPage(mousePage, i18n("Mouse Monitor"), "input-mouse");
+    addPage(keyboardPage, i18n("Keyboard Monitor"), "input-keyboard");
     addPage(zoomPage, i18n("Zoom"), "zoom-in");
     addPage(timelinePage, i18n("Timeline"), "recorditnow-timeline");
   //  addPage(playerPage, i18n("Player"), "media-playback-start");
@@ -126,7 +124,7 @@ void ConfigDialog::updateEncoderCombo()
 
     const QString oldEncoder = ui_settings.encoderCombo->currentText();
     ui_settings.encoderCombo->clear();
-    foreach (const KPluginInfo &info, m_pluginManager->getEncoderList()) {
+    foreach (const KPluginInfo &info, RecordItNow::Helper::self()->pluginmanager()->getEncoderList()) {
         if (info.isPluginEnabled()) {
             ui_settings.encoderCombo->addItem(KIcon(info.icon()), info.name());
         }

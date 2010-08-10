@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,65 +17,67 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_RECORDERSCRIPTADAPTOR_H
+#define RECORDITNOW_RECORDERSCRIPTADAPTOR_H
+
 
 // own
 #include "abstractrecorder.h"
 
 // KDE
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <klocalizedstring.h>
-#include <kdebug.h>
-
-// Qt
-#include <QtCore/QDir>
+#include <kplugininfo.h>
 
 
+class QScriptEngine;
 namespace RecordItNow {
 
 
-AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+class Script;
+class RecorderScriptAdaptor : public RecordItNow::AbstractRecorder
 {
-
-    Q_UNUSED(args);
-    m_state = Idle;
-    qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
-
-}
+    Q_OBJECT
 
 
-AbstractRecorder::~AbstractRecorder()
-{
+public:
+    explicit RecorderScriptAdaptor(RecordItNow::Script *script, QObject *parent = 0);
+    ~RecorderScriptAdaptor();
+
+    int zoomFactor() const;
+    bool isVideoRecorder() const;
+    bool initPlugin();
+
+    void record(const AbstractRecorder::Data &data);
+    void pause();
+    void stop();
+
+    void mouseClick(const QColor &color, const bool &pressed, const int &mode);
+    void setZoomFactor(const int &factor);
 
 
+public slots:
+    void setRecorderState(const int &newState);
+    void exit(const int &status);
+    void sendStatus(const QString &message);
+    void sendError(const QString &message);
 
 
-}
+private:
+    Script *m_script;
+    int m_status;
 
 
-RecordItNow::AbstractRecorder::State AbstractRecorder::state() const
-{
-
-    return m_state;
-
-}
+private slots:
+    void emitFinished();
 
 
-void AbstractRecorder::setState(const RecordItNow::AbstractRecorder::State &newState)
-{
+signals:
+    void zoomFactorChanged();
 
-    if (m_state == newState) {
-        return;
-    }
-    m_state = newState;
-    emit stateChanged(newState);
 
-}
+};
 
 
 } // namespace RecordItNow
 
 
-#include "abstractrecorder.moc"
-
+#endif // RECORDITNOW_RECORDERSCRIPTADAPTOR_H

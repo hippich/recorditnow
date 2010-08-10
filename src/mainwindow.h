@@ -48,8 +48,7 @@ class TimelineDock;
 class CursorWidget;
 class RecorderManager;
 class EncoderManager;
-class RecordItNowPluginManager;
-class MainWindow : public KXmlGuiWindow, Ui::ToolBarWidget
+class MainWindow : public KXmlGuiWindow, public Ui::ToolBarWidget
 {
     Q_OBJECT
 
@@ -78,7 +77,6 @@ private:
     KStatusNotifierItem *m_tray;
     AbstractRecorder::Data m_recordData;
     State m_state;
-    RecordItNow::RecordItNowPluginManager *m_pluginManager;
     RecordItNow::RecorderManager *m_recorderManager;
     RecordItNow::EncoderManager *m_encoderManager;
     KSqueezedTextLabel *m_statusLabel;
@@ -148,6 +146,10 @@ protected:
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
     void saveNewToolbarConfig();
+
+
+signals:
+    void recordStateChanged(const RecordItNow::MainWindow::State &state, const RecordItNow::MainWindow::State &oldState);
 
 
 };

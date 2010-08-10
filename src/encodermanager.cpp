@@ -20,7 +20,8 @@
 
 // own
 #include "encodermanager.h"
-#include "recorditnowpluginmanager.h"
+#include "helper.h"
+#include "pluginmanager.h"
 
 // KDE
 #include <kdebug.h>
@@ -29,8 +30,8 @@
 namespace RecordItNow {
 
 
-EncoderManager::EncoderManager(QObject *parent, RecordItNowPluginManager *manager)
-    : QObject(parent), m_manager(manager)
+EncoderManager::EncoderManager(QObject *parent)
+    : QObject(parent)
 {
 
 
@@ -50,7 +51,7 @@ QList<EncoderData> EncoderManager::getEncoder() const
 {
 
     QList<EncoderData> list;
-    foreach (const KPluginInfo &info, m_manager->getEncoderList()) {
+    foreach (const KPluginInfo &info, RecordItNow::Helper::self()->pluginmanager()->getEncoderList()) {
         if (info.isPluginEnabled()) {
             EncoderData data;
             data.first = info.name();
@@ -67,10 +68,10 @@ void EncoderManager::startEncode(const QString &encoder, const AbstractEncoder::
 {
 
     if (m_encoder) {
-        m_manager->unloadPlugin(m_encoder);
+        RecordItNow::Helper::self()->pluginmanager()->unloadPlugin(m_encoder);
     }
 
-    m_encoder = static_cast<AbstractEncoder*>(m_manager->loadPlugin(encoder));
+    m_encoder = static_cast<AbstractEncoder*>(RecordItNow::Helper::self()->pluginmanager()->loadPlugin(encoder));
 
     if (!m_encoder) {
         encoderError(i18n("Cannot load Encoder %1.", encoder));
@@ -112,7 +113,7 @@ void EncoderManager::clean()
 {
 
     if (m_encoder) {
-        m_manager->unloadPlugin(m_encoder);
+        RecordItNow::Helper::self()->pluginmanager()->unloadPlugin(m_encoder);
         m_encoder = 0;
     }
 

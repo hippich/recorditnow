@@ -19,7 +19,7 @@
 
 
 // own
-#include "recorditnowplugin.h"
+#include "plugin.h"
 
 // KDE
 #include <kstandarddirs.h>
@@ -35,7 +35,10 @@
 #include <QtCore/QUuid>
 
 
-RecordItNowPlugin::RecordItNowPlugin(QObject *parent)
+namespace RecordItNow {
+
+
+Plugin::Plugin(QObject *parent)
     : QObject(parent)
 {
 
@@ -44,7 +47,7 @@ RecordItNowPlugin::RecordItNowPlugin(QObject *parent)
 }
 
 
-RecordItNowPlugin::~RecordItNowPlugin()
+Plugin::~Plugin()
 {
 
 
@@ -52,7 +55,7 @@ RecordItNowPlugin::~RecordItNowPlugin()
 }
 
 
-QString RecordItNowPlugin::getUniqueId()
+QString Plugin::getUniqueId()
 {
 
     QString id = QUuid::createUuid().toString();
@@ -66,7 +69,7 @@ QString RecordItNowPlugin::getUniqueId()
 }
 
 
-void RecordItNowPlugin::removeUniqueId(const QString &id)
+void Plugin::removeUniqueId(const QString &id)
 {
 
     m_uniqueIds.removeAll(id);
@@ -74,7 +77,7 @@ void RecordItNowPlugin::removeUniqueId(const QString &id)
 }
 
 
-void RecordItNowPlugin::jobFinishedInternal(KJob *job)
+void Plugin::jobFinishedInternal(KJob *job)
 {
 
     QString id = m_jobs.value(job);
@@ -95,7 +98,7 @@ void RecordItNowPlugin::jobFinishedInternal(KJob *job)
 }
 
 
-QString RecordItNowPlugin::move(const QString &from ,const QString &to)
+QString Plugin::move(const QString &from ,const QString &to)
 {
 
     if (!QFile::exists(from)) {
@@ -114,7 +117,7 @@ QString RecordItNowPlugin::move(const QString &from ,const QString &to)
 }
 
 
-QString RecordItNowPlugin::remove(const QString &file)
+QString Plugin::remove(const QString &file)
 {
 
     KIO::SimpleJob *job = KIO::file_delete(KUrl(file), KIO::HideProgressInfo);
@@ -129,7 +132,7 @@ QString RecordItNowPlugin::remove(const QString &file)
 }
 
 
-QString RecordItNowPlugin::getTemporaryFile(const QString &workDir) const
+QString Plugin::getTemporaryFile(const QString &workDir) const
 {
 
     QString tmpDir = workDir;
@@ -153,7 +156,7 @@ QString RecordItNowPlugin::getTemporaryFile(const QString &workDir) const
 }
 
 
-QString RecordItNowPlugin::unique(const QString &file) const
+QString Plugin::unique(const QString &file) const
 {
 
     QString result = file;
@@ -183,7 +186,7 @@ QString RecordItNowPlugin::unique(const QString &file) const
 }
 
 
-void RecordItNowPlugin::jobFinished(const QString &id, const QString &errorString)
+void Plugin::jobFinished(const QString &id, const QString &errorString)
 {
 
     Q_UNUSED(id);
@@ -192,5 +195,8 @@ void RecordItNowPlugin::jobFinished(const QString &id, const QString &errorStrin
 }
 
 
-#include "recorditnowplugin.moc"
+} // namespace RecordItNow
+
+
+#include "plugin.moc"
 
