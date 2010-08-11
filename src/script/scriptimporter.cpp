@@ -43,7 +43,7 @@ namespace RecordItNow {
 
 
 ScriptImporter::ScriptImporter(RecordItNow::Script *script, QObject *parent)
-    : QObject(parent ? parent : script), m_script(script)
+    : QObject(parent), m_script(script)
 {
 
     registerObject(this, "RecordItNowImporter");
