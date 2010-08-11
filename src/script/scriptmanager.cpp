@@ -23,6 +23,7 @@
 #include "pluginmanager.h"
 #include "script.h"
 #include "recorderscriptadaptor.h"
+#include "encoderscriptadaptor.h"
 
 // KDE
 #include <kdebug.h>
@@ -84,6 +85,30 @@ RecordItNow::Plugin *ScriptManager::loadRecorder(const KPluginInfo &info)
     }
 
     RecordItNow::RecorderScriptAdaptor *adaptor = new RecordItNow::RecorderScriptAdaptor(scriptObj, this);
+    if (!adaptor->initPlugin()) {
+        delete adaptor;
+        return 0;
+    }
+    return adaptor;
+
+}
+
+
+RecordItNow::Plugin *ScriptManager::loadEncoder(const KPluginInfo &info)
+{
+
+    RecordItNow::Script *scriptObj = 0;
+    foreach (RecordItNow::Script *script, m_scripts) {
+        if (script->info().name() == info.name()) {
+            scriptObj = script;
+            break;
+        }
+    }
+    if (!scriptObj) {
+        return 0;
+    }
+
+    RecordItNow::EncoderScriptAdaptor *adaptor = new RecordItNow::EncoderScriptAdaptor(scriptObj, this);
     if (!adaptor->initPlugin()) {
         delete adaptor;
         return 0;

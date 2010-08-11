@@ -99,6 +99,8 @@ RecordItNow::Plugin *PluginManager::loadPlugin(const QString &name)
     if (info.category() == QLatin1String("Script")) {
         if (info.property("X-RecordItNow-ScriptType").toString() == QLatin1String("Recorder")) {
             return RecordItNow::Helper::self()->scriptManager()->loadRecorder(info);
+        } else if (info.property("X-RecordItNow-ScriptType").toString() == QLatin1String("Encoder")) {
+            return RecordItNow::Helper::self()->scriptManager()->loadEncoder(info);
         }
     }
 #endif

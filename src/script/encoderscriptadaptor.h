@@ -17,53 +17,47 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOW_SCRIPTMANAGER_H
-#define RECORDITNOW_SCRIPTMANAGER_H
+#ifndef RECORDITNOW_ENCODERSCRIPTADAPTOR_H
+#define RECORDITNOW_ENCODERSCRIPTADAPTOR_H
 
 
-// Qt
-#include <QtCore/QObject>
-#include <QtCore/QHash>
-#include <QtCore/QStringList>
-#include <QtScript/QScriptEngine>
-
-// KDE
-#include <kplugininfo.h>
+// own
+#include "libs/encoder/abstractencoder.h"
 
 
-class QScriptEngine;
 namespace RecordItNow {
 
 
 class Script;
-class Plugin;
-class ScriptManager : public QObject
+class EncoderScriptAdaptor : public RecordItNow::AbstractEncoder
 {
     Q_OBJECT
 
 
 public:
-    explicit ScriptManager(QObject *parent = 0);
-    ~ScriptManager();
+    explicit EncoderScriptAdaptor(RecordItNow::Script *script, QObject *parent = 0);
+    ~EncoderScriptAdaptor();
 
-    QList<KPluginInfo> availableScripts() const;
-    RecordItNow::Plugin *loadRecorder(const KPluginInfo &info);
-    RecordItNow::Plugin *loadEncoder(const KPluginInfo &info);
-    QString scriptSaveLocation() const;
+    bool initPlugin();
 
-    void reloadPluginList();
-    void reloadScripts();
+    void encode(const Data &d);
+    void pause();
+    void stop();
 
-    bool installScript(const QString &path);
-    bool uninstallScript(const QString &path);
+
+public slots:
+    void sendStatus(const QString &text);
+    void sendError(const QString &text);
+    void sendNewOutputfile(const QString &newFile);
+    void exit(const int &status);
 
 
 private:
-    QList<RecordItNow::Script*> m_scripts;
+    RecordItNow::Script *m_script;
+    int m_status;
 
-
-signals:
-    void scriptError(const QString &message);
+private slots:
+    void emitFinished();
 
 
 };
@@ -72,4 +66,4 @@ signals:
 } // namespace RecordItNow
 
 
-#endif // SCRIPTMANAGER_H
+#endif // RECORDITNOW_ENCODERSCRIPTADAPTOR_H

@@ -119,6 +119,7 @@ if (HAVE_QTSCRIPT)
                              script/scriptimporter.cpp
                              script/script.cpp
                              script/recorderscriptadaptor.cpp
+                             script/encoderscriptadaptor.cpp
                              script/debugscriptadaptor.cpp
 
                              config/scriptdialog.cpp)
