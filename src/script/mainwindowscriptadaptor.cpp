@@ -48,6 +48,14 @@ MainWindowScriptAdaptor::~MainWindowScriptAdaptor()
 }
 
 
+QToolBar *MainWindowScriptAdaptor::toolBar(const QString &name) const
+{
+
+    return Helper::self()->window()->toolBar(name);
+
+}
+
+
 void MainWindowScriptAdaptor::addToolWidget(QWidget *widget)
 {
 
@@ -76,6 +84,38 @@ void MainWindowScriptAdaptor::removeToolBarAction(QAction *action)
 {
 
     Helper::self()->window()->toolBar()->removeAction(action);
+
+}
+
+
+void MainWindowScriptAdaptor::addDockWidget(const Qt::DockWidgetArea &area, QDockWidget *dock)
+{
+
+    Helper::self()->window()->addDockWidget(area, dock);
+
+}
+
+
+void MainWindowScriptAdaptor::removeDockWidget(QDockWidget *dock)
+{
+
+    Helper::self()->window()->removeDockWidget(dock);
+
+}
+
+
+void MainWindowScriptAdaptor::addToolBar(const Qt::ToolBarArea &area, QToolBar *bar)
+{
+
+    Helper::self()->window()->addToolBar(area, bar);
+
+}
+
+
+void MainWindowScriptAdaptor::removeToolBar(QToolBar *bar)
+{
+
+    Helper::self()->window()->removeToolBar(bar);
 
 }
 

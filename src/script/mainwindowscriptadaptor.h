@@ -43,10 +43,16 @@ public:
 
 
 public slots:
+    QToolBar *toolBar(const QString &name) const;
+
     void addToolWidget(QWidget *widget);
     void removeToolWidget(QWidget *widget);
     void addToolBarAction(QAction *action);
     void removeToolBarAction(QAction *action);
+    void addDockWidget(const Qt::DockWidgetArea &area, QDockWidget *dock);
+    void removeDockWidget(QDockWidget *dock);
+    void addToolBar(const Qt::ToolBarArea &area, QToolBar *bar);
+    void removeToolBar(QToolBar *bar);
 
 
 private slots:
