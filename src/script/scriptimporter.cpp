@@ -24,6 +24,7 @@
 #include "recorditnow_script_export.h"
 #include "checkicon.h"
 #include "debugscriptadaptor.h"
+#include "configscriptadaptor.h"
 
 // KDE
 #include <kdebug.h>
@@ -76,7 +77,8 @@ bool ScriptImporter::importBinding(const QString &binding)
     const QStringList RecordItNowBindings = QStringList() <<
                                             "RecordItNow.MainWindow" <<
                                             "RecordItNow.Widgets" <<
-                                            "RecordItNow.Debug";
+                                            "RecordItNow.Debug" <<
+                                            "RecordItNow.Config";
 
 
     if (qtBindings.contains(binding)) {
@@ -88,6 +90,8 @@ bool ScriptImporter::importBinding(const QString &binding)
             RECORDITNOW_SCRIPT_REGISTER(CheckIcon, "CheckIcon");
         } else if (binding == QLatin1String("RecordItNow.Debug")) {
             registerObject(new RecordItNow::DebugScriptAdaptor(this), "RecordItNowDebugAdaptor");
+        } else if (binding == QLatin1String("RecordItNow.Config")) {
+            registerObject(new RecordItNow::ConfigScriptAdaptor(m_script->name(), this), "RecordItNowConfig");
         } else {
             return false;
         }

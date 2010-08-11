@@ -122,6 +122,7 @@ if (HAVE_QTSCRIPT)
                              script/recorderscriptadaptor.cpp
                              script/encoderscriptadaptor.cpp
                              script/debugscriptadaptor.cpp
+                             script/configscriptadaptor.cpp
 
                              config/scriptdialog.cpp)
 endif (HAVE_QTSCRIPT)
