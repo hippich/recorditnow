@@ -49,10 +49,10 @@ processOutput = function() {
     var lines = output.split("\n");
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i];
-        RecordItNowDebugAdaptor.debug(line);
+        RecordItNowDebug.debug(line);
 
        if (line == "Capturing!") {
-          RecordItNowDebugAdaptor.debug("STATUS");
+          RecordItNowDebug.debug("STATUS");
           RecordItNowRecorder.sendStatus("Capturing!");
        } else if (line.charAt(0) == "[") {
            RecordItNowRecorder.setRecorderState(2);

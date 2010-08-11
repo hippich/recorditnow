@@ -85,11 +85,11 @@ bool ScriptImporter::importBinding(const QString &binding)
         m_script->engine()->importExtension(binding);
     } else if (RecordItNowBindings.contains(binding)) {
         if (binding == QLatin1String("RecordItNow.MainWindow")) {
-            registerObject(new RecordItNow::MainWindowScriptAdaptor(this), "MainWindow");
+            registerObject(new RecordItNow::MainWindowScriptAdaptor(this), "RecordItNowMainWindow");
         } else if (binding == QLatin1String("RecordItNow.Widgets")) {
             RECORDITNOW_SCRIPT_REGISTER(CheckIcon, "CheckIcon");
         } else if (binding == QLatin1String("RecordItNow.Debug")) {
-            registerObject(new RecordItNow::DebugScriptAdaptor(this), "RecordItNowDebugAdaptor");
+            registerObject(new RecordItNow::DebugScriptAdaptor(this), "RecordItNowDebug");
         } else if (binding == QLatin1String("RecordItNow.Config")) {
             registerObject(new RecordItNow::ConfigScriptAdaptor(m_script->name(), this), "RecordItNowConfig");
         } else {

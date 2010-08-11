@@ -22,12 +22,12 @@ function DurationWidget() {
     layout.addWidget(this.label, 0, 0);
     layout.addWidget(this.durationLabel, 0, 0);
 
-    MainWindow.addToolWidget(this.widget);
+    RecordItNowMainWindow.addToolWidget(this.widget);
 
-    MainWindow.recordStarted.connect(this, this.onRecordStarted);
-    MainWindow.recordPaused.connect(this, this.onRecordPaused);
-    MainWindow.recordResumed.connect(this, this.onRecordResumed);
-    MainWindow.recordFinished.connect(this, this.onRecordFinished);
+    RecordItNowMainWindow.recordStarted.connect(this, this.onRecordStarted);
+    RecordItNowMainWindow.recordPaused.connect(this, this.onRecordPaused);
+    RecordItNowMainWindow.recordResumed.connect(this, this.onRecordResumed);
+    RecordItNowMainWindow.recordFinished.connect(this, this.onRecordFinished);
     
     this.timer.timeout.connect(this, this.onTimeout);
     this.timer.interval = 1000;
@@ -84,7 +84,7 @@ DurationWidget.prototype.onTimeout = function() {
 
 DurationWidget.prototype.unload = function() {
 
-    MainWindow.removeToolWidget(this.widget);
+    RecordItNowMainWindow.removeToolWidget(this.widget);
     this.widget.deleteLater();
     
 }
