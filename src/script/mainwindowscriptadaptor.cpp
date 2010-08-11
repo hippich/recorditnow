@@ -83,6 +83,8 @@ void MainWindowScriptAdaptor::removeToolBarAction(QAction *action)
 void MainWindowScriptAdaptor::stateChanged(const RecordItNow::MainWindow::State &state, const RecordItNow::MainWindow::State &oldState)
 {
 
+    kDebug() << "STATE:" << state;
+
     switch (state) {
     case RecordItNow::MainWindow::Idle: emit recordFinished(); break;
     case RecordItNow::MainWindow::Paused: emit recordPaused(); break;

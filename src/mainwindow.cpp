@@ -977,7 +977,7 @@ void MainWindow::recorderStateChanged(const RecordItNow::AbstractRecorder::State
     switch (newState) {
     case AbstractRecorder::Idle: setTrayOverlay(""); break;
     case AbstractRecorder::Record: setTrayOverlay("media-record"); break;
-    case AbstractRecorder::Encode: setTrayOverlay("system-run"); break;
+    case AbstractRecorder::Encode: setState(Encode); break;
     }
 
 }

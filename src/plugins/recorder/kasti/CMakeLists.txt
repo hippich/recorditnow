@@ -1,5 +1,5 @@
 include_directories(${CMAKE_SOURCE_DIR}/src/)
-
+add_definitions(-D__STDC_CONSTANT_MACROS)
 
 set(SRCS kastirecorder.cpp
     kastiencoder.cpp)
