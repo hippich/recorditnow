@@ -30,7 +30,7 @@ unload = function() {
 processFinished = function(exitCode, exitStatus) {
 
     print("ExitCode:", exitCode);
-    Recorder.exit(0);
+    RecordItNowRecorder.exit(0);
 
 }
 
@@ -53,15 +53,15 @@ processOutput = function() {
 
        if (line == "Capturing!") {
           RecordItNowDebugAdaptor.debug("STATUS");
-          Recorder.sendStatus("Capturing!");
+          RecordItNowRecorder.sendStatus("Capturing!");
        } else if (line.charAt(0) == "[") {
-           Recorder.setRecorderState(2);
+           RecordItNowRecorder.setRecorderState(2);
            for (var c = 0; c < line.length; c++) {
                if (line.charAt(0) == "[") {
                    line = line.substr(c+1, line.lenght);
                    var percent = line.substr(0, line.indexOf("%"));
                    percent = "Encode: " + percent + "%";
-                   Recorder.sendStatus(percent);
+                   RecordItNowRecorder.sendStatus(percent);
                }
            }
         }

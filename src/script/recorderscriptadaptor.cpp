@@ -78,7 +78,7 @@ bool RecorderScriptAdaptor::initPlugin()
 
     if (m_script->load()) {
         QScriptValue value = m_script->engine()->newQObject(this);
-        m_script->engine()->globalObject().setProperty("Recorder", value);
+        m_script->engine()->globalObject().setProperty("RecordItNowRecorder", value);
         return true;
     }
     return false;
