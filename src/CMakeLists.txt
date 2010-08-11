@@ -20,6 +20,7 @@ macro_log_feature(XFIXES_FOUND "XFixes"
 
 set(HAVE_XFIXES XFIXES_FOUND)
 set(HAVE_QTSCRIPT QT_QTSCRIPT_FOUND)
+set(BUILD_EXAMPLE true)
 
 configure_file(config-recorditnow.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-recorditnow.h)
 
