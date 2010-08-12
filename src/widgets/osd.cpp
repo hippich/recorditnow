@@ -187,10 +187,14 @@ void OSD::backgroundChanged()
         setContentsMargins(left, top, right, bottom);
 
         setFont(Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont));
+        QPalette p = palette();
+        p.setColor(QPalette::WindowText, Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
+        setPalette(p);
     } else {
         setContentsMargins(4, 4, 4, 4);
 
         setFont(KGlobalSettings::generalFont());
+        setPalette(qApp->palette());
     }
     updateBlur();
 
