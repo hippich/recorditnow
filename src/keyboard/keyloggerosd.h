@@ -70,6 +70,7 @@ private slots:
     void inactive();
     void keyloggerEvent(const RecordItNow::KeyloggerEvent &event);
     void clipboardDataChanged();
+    void updateBlur();
 
 
 protected:

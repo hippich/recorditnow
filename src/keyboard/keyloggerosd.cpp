@@ -27,6 +27,10 @@
 #include <plasma/theme.h>
 #include <plasma/framesvg.h>
 #include <kwindowsystem.h>
+#include <kdeversion.h>
+#if KDE_VERSION_MINOR >= 5
+    #include <plasma/windoweffects.h>
+#endif
 
 // Qt
 #include <QtGui/QResizeEvent>
@@ -212,6 +216,7 @@ void KeyloggerOSD::backgroundChanged()
         m_background->getMargins(left, top, right, bottom);
         setContentsMargins(left, top, right, bottom);
     }
+    updateBlur();
 
 }
 
@@ -285,6 +290,17 @@ void KeyloggerOSD::clipboardDataChanged()
 }
 
 
+void KeyloggerOSD::updateBlur()
+{
+
+#if KDE_VERSION_MINOR >= 5
+    const bool enableBlur = m_validBackground && Plasma::WindowEffects::isEffectAvailable(Plasma::WindowEffects::BlurBehind);
+    Plasma::WindowEffects::enableBlurBehind(winId(), enableBlur, m_background->mask());
+#endif
+
+}
+
+
 void KeyloggerOSD::keyPressEvent(QKeyEvent *event)
 {
 
@@ -325,6 +341,7 @@ void KeyloggerOSD::resizeEvent(QResizeEvent *event)
         m_background->resizeFrame(event->size());
         setMask(m_background->mask());
     }
+    updateBlur();
 
 }
 
