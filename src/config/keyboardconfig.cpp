@@ -20,10 +20,11 @@
 
 // own
 #include "keyboardconfig.h"
+#include "configosd.h"
 
 // KDE
 #include <kdebug.h>
-
+#include <kconfiggroup.h>
 
 
 
@@ -34,12 +35,39 @@ KeyboardConfig::KeyboardConfig(KConfig *cfg, QWidget *parent)
     setupUi(this);
     kcfg_keyboardOnScreenDisplayHideTime->setSuffix(ki18np(" second", " seconds"));
 
+    m_osd = new RecordItNow::ConfigOSD(this);
+    connect(m_osd, SIGNAL(OSDChanged()), this, SLOT(OSDChanged()));
+
+    showOSDButton->setIcon(KIcon("window-new"));
+    connect(showOSDButton, SIGNAL(clicked()), this, SLOT(showOSD()));
+
+    hideOSDButton->setIcon(KIcon("window-close"));
+    connect(hideOSDButton, SIGNAL(clicked()), this, SLOT(hideOSD()));
+
+}
+
+
+KeyboardConfig::~KeyboardConfig()
+{
+
+    delete m_osd;
+
 }
 
 
 void KeyboardConfig::loadConfig()
 {
 
+    m_osd->loadGeometry(keyloggerGeometry(config()));
+
+}
+
+
+QVariant KeyboardConfig::keyloggerGeometry(KConfig *cfg)
+{
+
+    KConfigGroup group(cfg, "Keyboard");
+    return group.readEntry("KeyloggerGeometry", QVariant(QRectF(-1, -1, -1, -1)));
 
 }
 
@@ -47,6 +75,8 @@ void KeyboardConfig::loadConfig()
 void KeyboardConfig::saveConfig()
 {
 
+    KConfigGroup group(config(), "Keyboard");
+    group.writeEntry("KeyloggerGeometry", m_osd->saveGeometry(m_osd, m_osd->geometry()));
 
 }
 
@@ -54,6 +84,31 @@ void KeyboardConfig::saveConfig()
 void KeyboardConfig::setDefaults()
 {
 
+    m_osd->loadGeometry(QVariant(QRectF(-1, -1, -1, -1)));
+
+}
+
+
+void KeyboardConfig::OSDChanged()
+{
+
+    setConfigChanged(m_osd->saveGeometry(m_osd, m_osd->geometry()) != keyloggerGeometry(config()));
+
+}
+
+
+void KeyboardConfig::showOSD()
+{
+
+    m_osd->show();
+
+}
+
+
+void KeyboardConfig::hideOSD()
+{
+
+    m_osd->hide();
 
 }
 

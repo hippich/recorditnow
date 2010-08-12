@@ -22,7 +22,7 @@
 #include "script.h"
 #include "mainwindowscriptadaptor.h"
 #include "recorditnow_script_export.h"
-#include "checkicon.h"
+#include "widgets/checkicon.h"
 #include "debugscriptadaptor.h"
 #include "configscriptadaptor.h"
 

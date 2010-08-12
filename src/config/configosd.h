@@ -17,53 +17,61 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-
-#ifndef KEYBOARDCONFIG_H
-#define KEYBOARDCONFIG_H
+#ifndef RECORDITNOW_CONFIGOSD_H
+#define RECORDITNOW_CONFIGOSD_H
 
 
 // own
-#include "config/configpage.h"
-#include "ui_keyboardconfig.h"
-
-// Qt
-#include <QtGui/QWidget>
+#include "widgets/osd.h"
 
 
+class QToolButton;
+class QSpinBox;
 namespace RecordItNow {
-    class ListLayout;
-    class ConfigOSD;
-};
 
 
-class KConfig;
-class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
+class ConfigOSD : public RecordItNow::OSD
 {
     Q_OBJECT
 
 
 public:
-    explicit KeyboardConfig(KConfig *cfg, QWidget *parent = 0);
-    ~KeyboardConfig();
-
-    static QVariant keyloggerGeometry(KConfig *cfg);
-
-    void saveConfig();
-    void loadConfig();
-    void setDefaults();
+    explicit ConfigOSD(QWidget *parent = 0);
+    ~ConfigOSD();
 
 
 private:
-    RecordItNow::ConfigOSD *m_osd;
+    QToolButton *m_moveButton;
+    QSpinBox *m_hSpin;
+    QSpinBox *m_wSpin;
+    QPoint m_lastPos;
+
+    void checkGeometry();
 
 
 private slots:
+    void movePressed();
+    void widthValueChanged(const int &value);
+    void heightValueChanged(const int &value);
+
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
+    void resizeEvent(QResizeEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
+
+signals:
     void OSDChanged();
-    void showOSD();
-    void hideOSD();
 
 
 };
 
 
-#endif // KEYBOARDCONFIG_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_CONFIGOSD_H

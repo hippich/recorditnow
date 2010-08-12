@@ -34,6 +34,7 @@
 #include "keyboard/keyloggerosd.h"
 #include "keymonmanager.h"
 #include "config/frameconfig.h"
+#include "config/keyboardconfig.h"
 #include "zoom/zoomdock.h"
 #include "windowgrabber.h"
 #include "player/playerdock.h"
@@ -411,7 +412,7 @@ void MainWindow::setupActions()
 void MainWindow::startRecord()
 {
 
-    setState(Recording);   
+    setState(Recording);
     m_recorderManager->startRecord(backendCombo->currentText(), m_recordData, m_cursor);
 
 }
@@ -1291,9 +1292,9 @@ void MainWindow::initRecordWidgets(const bool &start)
         if (keyboardCheck->isChecked() && m_recorderManager->hasFeature("KeyboardEnabled", recorder)) {
             if (!m_keyloggerOSD) {
                 m_keyloggerOSD = new RecordItNow::KeyloggerOSD(0);
+                m_keyloggerOSD->loadGeometry(KeyboardConfig::keyloggerGeometry(Settings::self()->config()));
             }
             m_keyloggerOSD->init(Settings::keyboardOnScreenDisplayHideTime(),
-                                 Settings::keyboardOnScreenDisplayFontSize(),
                                  Settings::keyboardOnScreenDisplayShortcuts(),
                                  Settings::keyboardOnScreenDisplayClipboard());
         }

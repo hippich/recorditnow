@@ -59,7 +59,7 @@ private:
     bool m_showShortcuts;
     bool m_showClipboard;
 
-    QString resizeText(const QString &text) const;
+    QString resizeText(const QString &text, const bool &paint = false) const;
 
 
 private slots:

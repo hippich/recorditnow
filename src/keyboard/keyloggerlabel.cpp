@@ -159,13 +159,17 @@ void KeyloggerLabel::releaseEvent(QKeyEvent *event)
 }
 
 
-QString KeyloggerLabel::resizeText(const QString &text) const
+QString KeyloggerLabel::resizeText(const QString &text, const bool &paint) const
 {
 
     QString newText = text;
 
-    QFontMetrics fm(font());
-    while (!newText.isEmpty() && fm.width(newText) > width()*2) {
+    QFont font = QWidget::font();
+    font.setPointSize(height()/2);
+    font.setBold(true);
+    QFontMetrics fm(font);
+    int maxW = paint ? width() : width()*2;
+    while (!newText.isEmpty() && fm.width(newText) > maxW) {
         newText.remove(0, 1);
     }
     return newText;
@@ -350,7 +354,7 @@ void KeyloggerLabel::paintEvent(QPaintEvent *event)
     painter.setClipRegion(event->region());
     painter.setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::TextColor));
 
-    QFont font = Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont);
+    QFont font = QWidget::font();
     font.setPointSize(height()/2);
     font.setBold(true);
     painter.setFont(font);
@@ -362,7 +366,7 @@ void KeyloggerLabel::paintEvent(QPaintEvent *event)
         text = m_shortcut;
     }
 
-    text = resizeText(text);
+    text = resizeText(text, true);
     QTextOption option;
     option.setAlignment(Qt::AlignCenter);
     option.setWrapMode(QTextOption::NoWrap);

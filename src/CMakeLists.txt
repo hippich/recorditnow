@@ -53,7 +53,6 @@ set(gui_SRCS
    encodermanager.cpp
    application.cpp
    keymonmanager.cpp
-   checkicon.cpp
    helper.cpp
 
    zoom/zoomview.cpp
@@ -101,7 +100,11 @@ set(gui_SRCS
    config/colorrow.cpp
    config/topicrow.cpp
    config/framerow.cpp
-   
+   config/configosd.cpp
+
+   widgets/osd.cpp
+   widgets/checkicon.cpp
+
    outputwidget.cpp
    timerwidget.cpp
    windowgrabber.cpp

@@ -17,53 +17,66 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
+#ifndef RECORDITNOW_OSD_H
+#define RECORDITNOW_OSD_H
 
-#ifndef KEYBOARDCONFIG_H
-#define KEYBOARDCONFIG_H
-
-
-// own
-#include "config/configpage.h"
-#include "ui_keyboardconfig.h"
 
 // Qt
-#include <QtGui/QWidget>
+#include <QtGui/QFrame>
+#include <QtCore/QVariant>
+
+
+namespace Plasma {
+    class FrameSvg;
+}
 
 
 namespace RecordItNow {
-    class ListLayout;
-    class ConfigOSD;
-};
 
 
-class KConfig;
-class KeyboardConfig : public RecordItNow::ConfigPage, Ui::KeyboardConfig
+class OSD : public QFrame
 {
     Q_OBJECT
 
 
 public:
-    explicit KeyboardConfig(KConfig *cfg, QWidget *parent = 0);
-    ~KeyboardConfig();
+    explicit OSD(QWidget *parent = 0);
+    ~OSD();
 
-    static QVariant keyloggerGeometry(KConfig *cfg);
+    static QVariant saveGeometry(QWidget *parent, const QRect &geometry);
 
-    void saveConfig();
-    void loadConfig();
-    void setDefaults();
+    void setTransparentForMouseEvents(const bool &transparent);
+    void setBackgroundImage(const QString &imagePath);
+    void setBackgroundElementPrefix(const QString &prefix);
+    void setBlurEnabled(const bool &enabled);
+    void loadGeometry(const QVariant &geometry);
 
 
 private:
-    RecordItNow::ConfigOSD *m_osd;
+    Plasma::FrameSvg *m_background;
+    bool m_validBackground;
+    bool m_blurEnabled;
+    bool m_transparentForMouseEvents;
+    QRectF m_osdGeometry;
+
+    void setOSDGeometry(const QRectF &geometry);
 
 
 private slots:
-    void OSDChanged();
-    void showOSD();
-    void hideOSD();
+    void screenGeometryChanged(const int &screen);
+    void backgroundChanged();
+    void updateBlur();
+
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 
 };
 
 
-#endif // KEYBOARDCONFIG_H
+} // namespace RecordItNow
+
+
+#endif // RECORDITNOW_OSD_H

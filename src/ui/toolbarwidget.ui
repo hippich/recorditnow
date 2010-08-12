@@ -226,12 +226,6 @@
    <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>CheckIcon</class>
-   <extends>QWidget</extends>
-   <header>checkicon.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>RecordItNow::OutputWidget</class>
    <extends>QFrame</extends>
    <header>outputwidget.h</header>
@@ -241,6 +235,12 @@
    <class>RecordItNow::TimerWidget</class>
    <extends>QFrame</extends>
    <header>timerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CheckIcon</class>
+   <extends>QWidget</extends>
+   <header>widgets/checkicon.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

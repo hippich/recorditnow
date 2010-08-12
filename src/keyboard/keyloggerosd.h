@@ -23,16 +23,8 @@
 
 
 // own
+#include "widgets/osd.h"
 #include "keyloggerevent.h"
-
-// Qt
-#include <QtGui/QFrame>
-
-
-
-namespace Plasma {
-    class FrameSvg;
-};
 
 
 class QPropertyAnimation;
@@ -40,7 +32,7 @@ namespace RecordItNow {
 
 
 class KeyloggerLabel;
-class KeyloggerOSD : public QFrame
+class KeyloggerOSD : public RecordItNow::OSD
 {
     Q_OBJECT
 
@@ -49,35 +41,27 @@ public:
     KeyloggerOSD(QWidget *parent = 0);
     virtual ~KeyloggerOSD();
 
-    void init(const int &timeout, const int &fontSize, const bool &shortcuts, const bool &clipboard);
+    void init(const int &timeout, const bool &shortcuts, const bool &clipboard);
 
 
 private:
-    Plasma::FrameSvg *m_background;
     QPropertyAnimation *m_animation;
     QTimer *m_timer;
     KeyloggerLabel *m_edit;
     QTimer *m_hideTimer;
     bool m_inactive;
-    bool m_validBackground;
 
 
 private slots:
     void updateMousePos();
-    void screenGeometryChanged(const int &screen);
-    void backgroundChanged();
-    void updateGeometry();
     void inactive();
     void keyloggerEvent(const RecordItNow::KeyloggerEvent &event);
     void clipboardDataChanged();
-    void updateBlur();
 
 
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-    void resizeEvent(QResizeEvent *event);
-    void paintEvent(QPaintEvent *event);
 
 
 };
