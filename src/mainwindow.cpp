@@ -1291,7 +1291,7 @@ void MainWindow::initRecordWidgets(const bool &start)
     if (start) {
         if (keyboardCheck->isChecked() && m_recorderManager->hasFeature("KeyboardEnabled", recorder)) {
             if (!m_keyloggerOSD) {
-                m_keyloggerOSD = new RecordItNow::KeyloggerOSD(0);
+                m_keyloggerOSD = new RecordItNow::KeyloggerOSD(this);
                 m_keyloggerOSD->loadGeometry(KeyboardConfig::keyloggerGeometry(Settings::self()->config()));
             }
             m_keyloggerOSD->init(Settings::keyboardOnScreenDisplayHideTime(),
