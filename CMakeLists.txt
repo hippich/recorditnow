@@ -28,9 +28,12 @@ else (NOT BUILD_WITH_JOSCHY)
 endif (NOT BUILD_WITH_JOSCHY)
 find_package(RecordMyDesktop REQUIRED)
 
-if (NOT X11_Xext_FOUND OR NOT X11_XTest_FOUND)
-    MESSAGE(FATAL_ERROR "Could not find X11 ext/test")
-endif(NOT X11_Xext_FOUND OR NOT X11_XTest_FOUND)
+if (NOT X11_Xext_FOUND)
+    MESSAGE(FATAL_ERROR "Xorg Xext library not found. please install it")
+endif(NOT X11_Xext_FOUND)
+if (NOT X11_XTest_FOUND)
+    MESSAGE(FATAL_ERROR "Xorg XTest extension library not found. please install it")
+endif (NOT X11_XTest_FOUND)
 
 
 include_directories(
