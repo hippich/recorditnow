@@ -37,6 +37,10 @@ namespace RecordItNow {
 class OSD : public QFrame
 {
     Q_OBJECT
+    Q_PROPERTY(bool transparent READ transparentForMouseEvents WRITE setTransparentForMouseEvents)
+    Q_PROPERTY(QString imagePath READ backgroundImage WRITE setBackgroundImage)
+    Q_PROPERTY(QString prefix READ backgroundElementPrefix WRITE setBackgroundElementPrefix)
+    Q_PROPERTY(bool enabled READ blurEnabled WRITE setBlurEnabled)
 
 
 public:
@@ -44,6 +48,11 @@ public:
     ~OSD();
 
     static QVariant saveGeometry(QWidget *parent, const QRect &geometry);
+
+    bool transparentForMouseEvents() const;
+    QString backgroundImage() const;
+    QString backgroundElementPrefix() const;
+    bool blurEnabled() const;
 
     void setTransparentForMouseEvents(const bool &transparent);
     void setBackgroundImage(const QString &imagePath);

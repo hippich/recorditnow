@@ -91,6 +91,38 @@ QVariant  OSD::saveGeometry(QWidget *parent, const QRect &geometry)
 }
 
 
+bool OSD::transparentForMouseEvents() const
+{
+
+    return m_transparentForMouseEvents;
+
+}
+
+
+QString OSD::backgroundImage() const
+{
+
+    return m_background->imagePath();
+
+}
+
+
+QString OSD::backgroundElementPrefix() const
+{
+
+    return m_background->prefix();
+
+}
+
+
+bool OSD::blurEnabled() const
+{
+
+    return m_blurEnabled;
+
+}
+
+
 void OSD::setTransparentForMouseEvents(const bool &transparent)
 {
 

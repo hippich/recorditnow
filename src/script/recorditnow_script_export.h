@@ -9,8 +9,8 @@
     // Qt
     #include <QtScript/QScriptEngine>
 
-    #define RECORDITNOW_SCRIPT_CREATE_OBJECT(CLASS, NAME, PARENTTYPE) \
-        static QScriptValue static_##CLASS##_Constructor(QScriptContext *context, QScriptEngine *engine) \
+    #define RECORDITNOW_SCRIPT_CREATE_OBJECT(ID, CLASS, NAME, PARENTTYPE) \
+        static QScriptValue static_##ID##_Constructor(QScriptContext *context, QScriptEngine *engine) \
         { \
           \
             QWidget *parent = 0; \
@@ -22,6 +22,6 @@
         } \
         Q_SCRIPT_DECLARE_QMETAOBJECT(CLASS, PARENTTYPE)
 
-    #define RECORDITNOW_SCRIPT_REGISTER(CLASS, NAME) \
-        registerClass(static_##CLASS##_Constructor, NAME);
+    #define RECORDITNOW_SCRIPT_REGISTER(ID, NAME) \
+        registerClass(static_##ID##_Constructor, NAME);
 #endif

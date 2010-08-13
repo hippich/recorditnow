@@ -23,6 +23,7 @@
 #include "mainwindowscriptadaptor.h"
 #include "recorditnow_script_export.h"
 #include "widgets/checkicon.h"
+#include "widgets/osd.h"
 #include "debugscriptadaptor.h"
 #include "configscriptadaptor.h"
 
@@ -36,7 +37,8 @@
 #include <QtCore/QDir>
 
 
-RECORDITNOW_SCRIPT_CREATE_OBJECT(CheckIcon, "CheckIcon", QWidget*);
+RECORDITNOW_SCRIPT_CREATE_OBJECT(CheckIcon, CheckIcon, "RecordItNowCheckIcon", QWidget*);
+RECORDITNOW_SCRIPT_CREATE_OBJECT(RecordItNowOSD, RecordItNow::OSD, "RecordItNowOSD", QWidget*);
 
 
 namespace RecordItNow {
@@ -87,7 +89,8 @@ bool ScriptImporter::importBinding(const QString &binding)
         if (binding == QLatin1String("RecordItNow.MainWindow")) {
             registerObject(new RecordItNow::MainWindowScriptAdaptor(this), "RecordItNowMainWindow");
         } else if (binding == QLatin1String("RecordItNow.Widgets")) {
-            RECORDITNOW_SCRIPT_REGISTER(CheckIcon, "CheckIcon");
+            RECORDITNOW_SCRIPT_REGISTER(CheckIcon, "RecordItNowCheckIcon");
+            RECORDITNOW_SCRIPT_REGISTER(RecordItNowOSD, "RecordItNowOSD");
         } else if (binding == QLatin1String("RecordItNow.Debug")) {
             registerObject(new RecordItNow::DebugScriptAdaptor(this), "RecordItNowDebug");
         } else if (binding == QLatin1String("RecordItNow.Config")) {
