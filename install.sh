@@ -21,4 +21,5 @@ cd ${buildDir} || exit
 cmake -DLINGUAS=${linguas} -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` -DCMAKE_BUILD_TYPE=release ../ || exit
 make || exit
 make install || exit
-kbuildsycoca4 || exit
+
+echo "Please run kbuildsycoca4"
