@@ -1,0 +1,8 @@
+Requires:
+    libxtst-dev libxext-dev libxcursor-dev kdelibs5-dev recordmydesktop libxfixes-dev x11proto-record-dev
+
+optional but _highly_ recommended:
+    libxfixes-dev
+
+optional:
+    ffmpeg mplayer
