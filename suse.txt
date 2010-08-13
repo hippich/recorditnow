@@ -1,0 +1,8 @@
+Requires:
+    libkdecore4-devel recordmydesktop xorg-x11-devel xorg-x11-libXext-devel
+
+optional but _highly_ recommended:
+    xorg-x11-libXfixes-devel
+
+optional:
+    ffmpeg mplayer
