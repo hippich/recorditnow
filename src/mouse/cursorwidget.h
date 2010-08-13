@@ -83,6 +83,7 @@ private:
     MouseButton m_currentButton;
     MouseButton m_defaultButton;
     QPointer<AbstractRecorder> m_recorder;
+    bool m_preview;
 
     MouseButton getButton(const int &code) const;
 

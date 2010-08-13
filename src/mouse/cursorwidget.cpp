@@ -23,6 +23,7 @@
 #include "config/mousebuttonwidget.h"
 #include "keymonmanager.h"
 #include "helper.h"
+#include <config-recorditnow.h>
 
 // KDE
 #include <kdebug.h>
@@ -45,6 +46,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xcursor/Xcursor.h>
 #include <X11/extensions/shape.h>
+#if defined HAVE_XFIXES
+    #include <X11/extensions/Xfixes.h>
+#endif
 
 
 namespace RecordItNow {
@@ -65,6 +69,7 @@ CursorWidget::CursorWidget(QWidget *parent)
     m_mode = LEDMode;
     m_opacity = 0.4;
     m_show = true;
+    m_preview = false;
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updatePos()));
@@ -173,6 +178,7 @@ void CursorWidget::setShowAlways(const bool &show)
 void CursorWidget::switchToPreviewMode()
 {
 
+    m_preview = true;
     setWindowFlags(windowFlags()&~(Qt::X11BypassWindowManagerHint|Qt::FramelessWindowHint|Qt::Tool));
     show(); // necessary to apply window flags
     m_timer->disconnect(this);
@@ -363,6 +369,7 @@ void CursorWidget::previewColors()
 void CursorWidget::paintEvent(QPaintEvent *event)
 {
 
+
     QPainter painter(this);
     painter.setClipRegion(event->region());
 
@@ -371,6 +378,31 @@ void CursorWidget::paintEvent(QPaintEvent *event)
     case CircleMode: paintCircle(&painter); break;
     case TargetMode: paintTarget(&painter); break;
     }
+
+#ifdef HAVE_XFIXES
+    if (m_preview) {
+        painter.setOpacity(1.0);
+    // cursor
+        XFixesCursorImage *xcursor = XFixesGetCursorImage(x11Info().display());
+    unsigned char *pixels = (unsigned char*) malloc(xcursor->width*xcursor->height*4);
+    for (int i = 0; i < xcursor->width*xcursor->height; i++) {
+        unsigned long pix = xcursor->pixels[i];
+        pixels[i * 4] = pix & 0xff;
+        pixels[(i * 4) + 1] = (pix >> 8) & 0xff;
+        pixels[(i * 4) + 2] = (pix >> 16) & 0xff;
+        pixels[(i * 4) + 3] = (pix >> 24) & 0xff;
+    }
+    QImage qCursor(pixels, xcursor->width, xcursor->height, QImage::Format_ARGB32);
+
+    QRect target = qCursor.rect();
+    target.moveCenter(contentsRect().center());
+
+    painter.drawImage(target, qCursor);
+
+    free(pixels);
+    XFree(xcursor);
+    }
+#endif
 
 }
 
