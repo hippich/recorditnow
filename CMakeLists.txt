@@ -19,7 +19,6 @@ set(KDE_MIN_VERSION "4.4.0")
 ########### install files ###############
 install(FILES recorditnow.desktop recorditnow_snapshot.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES recorditnow.notifyrc DESTINATION ${DATA_INSTALL_DIR}/recorditnow)
-install(FILES recorditnow.knsrc DESTINATION ${CONFIG_INSTALL_DIR})
 
 if (NOT BUILD_WITH_JOSCHY)
     find_package(JoschyCore REQUIRED)
