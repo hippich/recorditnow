@@ -465,7 +465,7 @@ void MouseConfig::setMode(const RecordItNow::CursorWidget::WidgetMode &mode)
         }
         break;
     case RecordItNow::CursorWidget::TargetMode:
-        appearanceCombo->setCurrentItem(i18nc("Widget look", "Target"));
+        appearanceCombo->setCurrentItem(i18nc("Widget look", "Crosshair"));
         break;
     };
     kcfg_cursorMode->setValue((int)mode);
@@ -481,7 +481,7 @@ void MouseConfig::updateModeCombo()
     appearanceCombo->addItem(i18nc("Widget look", "LED"));
     if (RecordItNow::Helper::self()->compositingActive()) {
         appearanceCombo->addItem(i18nc("Widget look", "Circle"));
-        appearanceCombo->addItem(i18nc("Widget look", "Target"));
+        appearanceCombo->addItem(i18nc("Widget look", "Crosshair"));
     } else {
         appearanceCombo->addItem(i18nc("Widget look", "Square"));
     }

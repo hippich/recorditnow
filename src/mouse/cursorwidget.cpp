@@ -46,9 +46,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xcursor/Xcursor.h>
 #include <X11/extensions/shape.h>
-#if defined HAVE_XFIXES
-    #include <X11/extensions/Xfixes.h>
-#endif
 
 
 namespace RecordItNow {
@@ -378,31 +375,6 @@ void CursorWidget::paintEvent(QPaintEvent *event)
     case CircleMode: paintCircle(&painter); break;
     case TargetMode: paintTarget(&painter); break;
     }
-
-#ifdef HAVE_XFIXES
-    if (m_preview) {
-        painter.setOpacity(1.0);
-    // cursor
-        XFixesCursorImage *xcursor = XFixesGetCursorImage(x11Info().display());
-    unsigned char *pixels = (unsigned char*) malloc(xcursor->width*xcursor->height*4);
-    for (int i = 0; i < xcursor->width*xcursor->height; i++) {
-        unsigned long pix = xcursor->pixels[i];
-        pixels[i * 4] = pix & 0xff;
-        pixels[(i * 4) + 1] = (pix >> 8) & 0xff;
-        pixels[(i * 4) + 2] = (pix >> 16) & 0xff;
-        pixels[(i * 4) + 3] = (pix >> 24) & 0xff;
-    }
-    QImage qCursor(pixels, xcursor->width, xcursor->height, QImage::Format_ARGB32);
-
-    QRect target = qCursor.rect();
-    target.moveCenter(contentsRect().center());
-
-    painter.drawImage(target, qCursor);
-
-    free(pixels);
-    XFree(xcursor);
-    }
-#endif
 
 }
 
