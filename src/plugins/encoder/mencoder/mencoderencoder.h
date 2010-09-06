@@ -54,7 +54,7 @@ private:
     QString m_tmpFile;
     bool m_paused;
     bool m_stopped;
-    QString m_currentId;
+    int m_currentId;
     State m_state;
     QString m_command;
     int m_status;
@@ -71,7 +71,7 @@ private slots:
 
 
 protected:
-    void jobFinished(const QString &id, const QString &errorString);
+    void jobFinished(const int &id, const QString &errorString);
 
 
 };

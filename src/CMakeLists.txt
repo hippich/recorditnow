@@ -33,6 +33,7 @@ add_subdirectory(recordkeylogger)
 if (HAVE_QTSCRIPT)
     add_subdirectory(script)
 endif (HAVE_QTSCRIPT)
+add_subdirectory(tests)
 
 macro_display_feature_log()
 

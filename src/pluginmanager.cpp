@@ -34,11 +34,13 @@
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <ksycoca.h>
 
 
 namespace RecordItNow {
 
 
+#define RECORDITNOW_PM_RAU_P "__RecordItNow_RemoveAfterUnload__"
 PluginManager::PluginManager(QObject *parent)
     : QObject(parent)
 {
@@ -59,6 +61,7 @@ void PluginManager::init()
 {
 
     loadPluginList();
+    connect(KSycoca::self(), SIGNAL(databaseChanged(QStringList)), this, SLOT(sycocaChanged(QStringList)));
 
 }
 
@@ -115,7 +118,7 @@ RecordItNow::Plugin *PluginManager::loadPlugin(const QString &name)
         return 0;
     }
 
-    RecordItNow::Plugin *plugin = factory->create<RecordItNow::Plugin>(this);
+    RecordItNow::Plugin *plugin = factory->create<RecordItNow::Plugin>(this, QVariantList() << qVariantFromValue(info));
     delete factory;
     if (!plugin) {
         kWarning() << "factory::create<>() failed " << service->library();
@@ -130,17 +133,30 @@ RecordItNow::Plugin *PluginManager::loadPlugin(const QString &name)
 void PluginManager::unloadPlugin(RecordItNow::Plugin *plugin)
 {
 
+    if (!plugin) {
+        return;
+    }
+
+    KPluginInfo info; // isValid == false
     QHashIterator<KPluginInfo, RecordItNow::Plugin*> it(m_plugins);
     while (it.hasNext()) {
         it.next();
+
         if (it.value() && it.value() == plugin) {
-            kDebug() << "unload plugin:" << it.key().name();
-            it.value()->deleteLater();
-            m_plugins[it.key()] = 0;
-            return;
+            info = it.key();
+            break;
         }
     }
-    delete plugin; // script
+
+    if (info.isValid()) {
+        if (plugin->property(RECORDITNOW_PM_RAU_P).toBool()) {
+            const int count = m_plugins.remove(info);
+            Q_ASSERT(count == 1);
+        } else {
+            m_plugins[info] = 0;
+        }
+    }
+    delete plugin;
 
 }
 
@@ -154,7 +170,10 @@ QList<KPluginInfo> PluginManager::getList(const QString &category) const
     while (it.hasNext()) {
         it.next();
         if (it.key().category() == category) {
-            infoList.append(it.key());
+            // ignore deleted plugins
+            if (!it.value() || (it.value() && !it.value()->property(RECORDITNOW_PM_RAU_P).toBool())) {
+                infoList.append(it.key());
+            }
         }
     }
 
@@ -213,7 +232,8 @@ void PluginManager::clear()
 void PluginManager::loadPluginList()
 {
 
-    clear();
+    QHash<KPluginInfo, RecordItNow::Plugin*> oldPlugins = m_plugins;
+    m_plugins.clear();
 
     loadInfos("RecordItNowRecorder");
     if (m_plugins.isEmpty()) {
@@ -222,6 +242,27 @@ void PluginManager::loadPluginList()
         printf("*********************************\n");
     }
     loadInfos("RecordItNowEncoder");
+
+
+    QMutableHashIterator<KPluginInfo, RecordItNow::Plugin*> oldIt(oldPlugins);
+    while (oldIt.hasNext()) {
+        oldIt.next();
+        if (oldIt.value()) {
+            bool remove = true;
+            QHashIterator<KPluginInfo, RecordItNow::Plugin*> it(m_plugins);
+            while (it.hasNext()) {
+                it.next();
+                if (it.key().name() == oldIt.key().name()) {
+                    m_plugins.remove(it.key());
+                    remove = false;
+                    break;
+                }
+            }
+            oldIt.value()->setProperty(RECORDITNOW_PM_RAU_P, remove);
+            m_plugins.insert(oldIt.key(), oldIt.value());
+            oldIt.remove();
+        }
+    }
 
     emit pluginsChanged();
 
@@ -249,6 +290,16 @@ void PluginManager::loadInfos(const QString &type)
             info.load(pCfg);
             m_plugins[info] = 0;
         }
+    }
+
+}
+
+
+void PluginManager::sycocaChanged(const QStringList &changed)
+{
+
+    if (changed.contains(QLatin1String("services"))) {
+        loadPluginList();
     }
 
 }

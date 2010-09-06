@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,64 +17,56 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOW_PLUGINMANAGER_H
-#define RECORDITNOW_PLUGINMANAGER_H
 
+#ifndef RECORDITNOW_PLUGIN_P_H
+#define RECORDITNOW_PLUGIN_P_H
 
-// Qt
-#include <QtCore/QObject>
 
 // KDE
 #include <kplugininfo.h>
 
+// Qt
+#include <QtCore/QObject>
+#include <QtCore/QHash>
 
-class AbstractRecorder;
-class AbstractEncoder;
 
-
+class KJob;
 namespace RecordItNow {
 
 
 class Plugin;
-class PluginManager : public QObject
+class PluginPrivate : public QObject
 {
     Q_OBJECT
+    friend class Plugin;
 
 
 public:
-    PluginManager(QObject *parent = 0);
-    ~PluginManager();
+    PluginPrivate(Plugin *plugin);
+    ~PluginPrivate();
 
-    void init();
 
-    RecordItNow::Plugin *loadPlugin(const QString &name);
-    void unloadPlugin(RecordItNow::Plugin *plugin);
+    KPluginInfo info;
+    QHash<KJob*, int> jobs;
 
-    QList<KPluginInfo> getList(const QString &category) const;
-    QList<KPluginInfo> getRecorderList() const;
-    QList<KPluginInfo> getEncoderList() const;
+    int getUniqueId();
+    void removeUniqueId(const int &id);
 
 
 private:
-    QHash<KPluginInfo, RecordItNow::Plugin*> m_plugins;
-
-    void clear();
-    void loadPluginList();
-    void loadInfos(const QString &type);
+    Plugin *q;
+    QList<int> m_uniqueIds;
 
 
 private slots:
-    void sycocaChanged(const QStringList &changed);
-
-
-signals:
-    void pluginsChanged();
+    void jobFinishedInternal(KJob *job);
 
 
 };
 
 
-} // namespace RecordItNow
+}
 
 
-#endif // RECORDITNOW_PLUGINMANAGER_H
+
+#endif // RECORDITNOW_PLUGIN_P_H

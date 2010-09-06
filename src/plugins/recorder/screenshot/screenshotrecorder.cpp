@@ -48,7 +48,7 @@ ScreenshotRecorder::ScreenshotRecorder(QObject *parent, const QVariantList &args
     : RecordItNow::AbstractRecorder(parent, args)
 {
 
-
+    m_removeId = -1;
 
 }
 
@@ -243,7 +243,7 @@ void ScreenshotRecorder::save(ScreenshotRecorder *recorder, QImage image, const 
 }
 
 
-void ScreenshotRecorder::jobFinished(const QString &id, const QString &errorString)
+void ScreenshotRecorder::jobFinished(const int &id, const QString &errorString)
 {
 
     if (!errorString.isEmpty()) {

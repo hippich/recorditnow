@@ -1,4 +1,6 @@
-set(SRCS
+set(PRIVATE_H plugin_p.h) # show private headers in QtCreator
+
+set(SRCS ${PRIVATE_H}
    plugin.cpp)
 
 kde4_add_library(recorditnow_plugin SHARED ${SRCS})

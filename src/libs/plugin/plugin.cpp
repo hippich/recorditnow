@@ -20,6 +20,7 @@
 
 // own
 #include "plugin.h"
+#include "plugin_p.h"
 
 // KDE
 #include <kstandarddirs.h>
@@ -32,14 +33,21 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
-#include <QtCore/QUuid>
 
 
 namespace RecordItNow {
 
 
-Plugin::Plugin(QObject *parent)
-    : QObject(parent)
+PluginPrivate::PluginPrivate(Plugin *plugin)
+    : QObject(plugin),
+    q(plugin)
+{
+
+
+}
+
+
+PluginPrivate::~PluginPrivate()
 {
 
 
@@ -47,20 +55,12 @@ Plugin::Plugin(QObject *parent)
 }
 
 
-Plugin::~Plugin()
+int PluginPrivate::getUniqueId()
 {
 
-
-
-}
-
-
-QString Plugin::getUniqueId()
-{
-
-    QString id = QUuid::createUuid().toString();
+    int id = 1;
     while (m_uniqueIds.contains(id)) {
-        id = QUuid::createUuid().toString();
+        id++;
     }
 
     m_uniqueIds.append(id);
@@ -69,7 +69,7 @@ QString Plugin::getUniqueId()
 }
 
 
-void Plugin::removeUniqueId(const QString &id)
+void PluginPrivate::removeUniqueId(const int &id)
 {
 
     m_uniqueIds.removeAll(id);
@@ -77,12 +77,11 @@ void Plugin::removeUniqueId(const QString &id)
 }
 
 
-void Plugin::jobFinishedInternal(KJob *job)
+void PluginPrivate::jobFinishedInternal(KJob *job)
 {
 
-    QString id = m_jobs.value(job);
-
-    m_jobs.remove(job);
+    const int id = jobs.value(job);
+    jobs.remove(job);
 
     QString errorString;
     if (job->error()) {
@@ -93,41 +92,72 @@ void Plugin::jobFinishedInternal(KJob *job)
     }
 
     removeUniqueId(id);
-    jobFinished(id, errorString);
+    q->jobFinished(id, errorString);
 
 }
 
 
-QString Plugin::move(const QString &from ,const QString &to)
+Plugin::Plugin(const QVariantList &args, QObject *parent)
+    : QObject(parent),
+    d(new PluginPrivate(this))
 {
 
-    if (!QFile::exists(from)) {
-        return QString();
+    Q_ASSERT(!args.isEmpty());
+    d->info = args.value(0).value<KPluginInfo>();
+
+}
+
+
+Plugin::~Plugin()
+{
+
+    delete d;
+
+}
+
+
+KPluginInfo Plugin::info() const
+{
+
+    return d->info;
+
+}
+
+
+int Plugin::move(const QString &from ,const QString &to)
+{
+
+    if (!QFile::exists(from) || to.isEmpty()) {
+        return -1;
     }
 
     KIO::FileCopyJob *job = KIO::file_move(KUrl(from), KUrl(to), -1, KIO::HideProgressInfo);
-    connect(job, SIGNAL(finished(KJob*)), this, SLOT(jobFinishedInternal(KJob*)));
+    connect(job, SIGNAL(finished(KJob*)), d, SLOT(jobFinishedInternal(KJob*)));
 
     job->setAutoDelete(true);
 
-    m_jobs[job] = getUniqueId();
+    d->jobs[job] = d->getUniqueId();
 
-    return m_jobs.value(job);
+    return d->jobs.value(job);
 
 }
 
 
-QString Plugin::remove(const QString &file)
+int Plugin::remove(const QString &file)
 {
 
+    if (!QFile::exists(file)) {
+        return -1;
+    }
+
     KIO::SimpleJob *job = KIO::file_delete(KUrl(file), KIO::HideProgressInfo);
-    connect(job, SIGNAL(finished(KJob*)), this, SLOT(jobFinishedInternal(KJob*)));
+    connect(job, SIGNAL(finished(KJob*)), d, SLOT(jobFinishedInternal(KJob*)));
 
     job->setAutoDelete(true);
 
-    m_jobs[job] = getUniqueId();
+    d->jobs[job] = d->getUniqueId();
 
-    return m_jobs.value(job);
+    return d->jobs.value(job);
 
 }
 
@@ -147,11 +177,8 @@ QString Plugin::getTemporaryFile(const QString &workDir) const
     if (!tmpDir.endsWith('/')) {
         tmpDir.append('/');
     }
-    QString path = (tmpDir+"recorditnow_tmp");
 
-    path = unique(path);
-
-    return path;
+    return unique((tmpDir+"recorditnow_tmp"));
 
 }
 
@@ -186,7 +213,7 @@ QString Plugin::unique(const QString &file) const
 }
 
 
-void Plugin::jobFinished(const QString &id, const QString &errorString)
+void Plugin::jobFinished(const int &id, const QString &errorString)
 {
 
     Q_UNUSED(id);
@@ -199,4 +226,4 @@ void Plugin::jobFinished(const QString &id, const QString &errorString)
 
 
 #include "plugin.moc"
-
+#include "plugin_p.moc"

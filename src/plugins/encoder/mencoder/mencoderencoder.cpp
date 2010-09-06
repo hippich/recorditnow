@@ -47,6 +47,7 @@ MencoderEncoder::MencoderEncoder(QObject *parent, const QVariantList &args)
 
     m_mencoder = 0;
     m_stopped = false;
+    m_currentId = -1;
 
 }
 
@@ -240,7 +241,7 @@ void MencoderEncoder::mencoderFinished(const int &ret)
 }
 
 
-void MencoderEncoder::jobFinished(const QString &id, const QString &errorString)
+void MencoderEncoder::jobFinished(const int &id, const QString &errorString)
 {
 
     if (!errorString.isEmpty()) {

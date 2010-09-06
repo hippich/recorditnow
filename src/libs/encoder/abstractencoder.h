@@ -35,7 +35,7 @@
 namespace RecordItNow {
 
 
-    class KDE_EXPORT AbstractEncoder : public RecordItNow::Plugin
+class KDE_EXPORT AbstractEncoder : public RecordItNow::Plugin
 {
     Q_OBJECT
 

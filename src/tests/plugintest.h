@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2009 by Kai Dombrowe <just89@gmx.de>                    *
+ *   Copyright (C) 2010 by Kai Dombrowe <just89@gmx.de>                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,58 +17,46 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
  ***************************************************************************/
 
-#ifndef RECORDITNOW_PLUGINMANAGER_H
-#define RECORDITNOW_PLUGINMANAGER_H
+#ifndef RECORDITNOW_PLUGINTEST_H
+#define RECORDITNOW_PLUGINTEST_H
 
 
-// Qt
-#include <QtCore/QObject>
-
-// KDE
-#include <kplugininfo.h>
+// own
+#include "plugin.h"
 
 
-class AbstractRecorder;
-class AbstractEncoder;
-
-
+class QEventLoop;
 namespace RecordItNow {
 
 
-class Plugin;
-class PluginManager : public QObject
+class PluginTest : public RecordItNow::Plugin
 {
     Q_OBJECT
 
 
 public:
-    PluginManager(QObject *parent = 0);
-    ~PluginManager();
-
-    void init();
-
-    RecordItNow::Plugin *loadPlugin(const QString &name);
-    void unloadPlugin(RecordItNow::Plugin *plugin);
-
-    QList<KPluginInfo> getList(const QString &category) const;
-    QList<KPluginInfo> getRecorderList() const;
-    QList<KPluginInfo> getEncoderList() const;
+    explicit PluginTest(QObject *parent = 0);
 
 
 private:
-    QHash<KPluginInfo, RecordItNow::Plugin*> m_plugins;
-
-    void clear();
-    void loadPluginList();
-    void loadInfos(const QString &type);
+    QEventLoop *m_loop;
+    int m_id;
+    QString m_errorString;
+    int m_finId;
 
 
 private slots:
-    void sycocaChanged(const QStringList &changed);
+    void cleanup();
+    void initTestCase();
+    void testMove();
+    void testRemove();
+    void testGetTemporaryFile();
+    void testUnique();
+    void cleanupTestCase();
 
 
-signals:
-    void pluginsChanged();
+protected slots:
+    void jobFinished(const int &id, const QString &errorString);
 
 
 };
@@ -77,4 +65,4 @@ signals:
 } // namespace RecordItNow
 
 
-#endif // RECORDITNOW_PLUGINMANAGER_H
+#endif // RECORDITNOW_PLUGINTEST_H

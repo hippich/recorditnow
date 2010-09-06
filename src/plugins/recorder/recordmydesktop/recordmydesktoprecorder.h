@@ -54,13 +54,11 @@ private:
 
     KProcess *m_recorder;
     RecordMyDesktopData m_data;
-    QString m_moveId;
-    QString m_removeId;
+    int m_moveId;
+    int m_removeId;
 
     void clean();
     void moveToDestination();
-   // bool remove(const QString &file);
-   // bool move(const QString &from, const QString &to);
 
 
 private slots:
@@ -69,7 +67,7 @@ private slots:
 
 
 protected slots:
-    void jobFinished(const QString &id, const QString &errorString);
+    void jobFinished(const int &id, const QString &errorString);
 
 
 };

@@ -25,13 +25,14 @@
 // Qt
 #include <QtScript/QScriptEngine>
 #include <QtCore/QTimer>
+#include <QtCore/QVariantList>
 
 
 namespace RecordItNow {
 
 
 EncoderScriptAdaptor::EncoderScriptAdaptor(RecordItNow::Script *script, QObject *parent)
-    : RecordItNow::AbstractEncoder(parent),
+    : RecordItNow::AbstractEncoder(parent, QVariantList() << qVariantFromValue(script->info())),
     m_script(script)
 {
 

@@ -23,52 +23,54 @@
 
 // KDE
 #include <kdemacros.h>
+#include <kplugininfo.h>
 
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QHash>
 #include <QtCore/QStringList>
+#include <QtCore/QMetaType>
 
 
 class KJob;
 namespace RecordItNow {
 
 
+class PluginPrivate;
 class KDE_EXPORT Plugin : public QObject
 {
     Q_OBJECT
+    friend class PluginPrivate;
 
 
 public:
-    Plugin(QObject *parent = 0);
+    Plugin(const QVariantList &args, QObject *parent = 0);
     ~Plugin();
 
 
+    KPluginInfo info() const;
+
+
 private:
-    QHash<KJob*, QString> m_jobs;
-    QStringList m_uniqueIds;
-
-    QString getUniqueId();
-    void removeUniqueId(const QString &id);
-
-
-private slots:
-    void jobFinishedInternal(KJob *job);
+    RecordItNow::PluginPrivate *d;
 
 
 protected:
-    QString move(const QString &from ,const QString &to);
-    QString remove(const QString &file);
+    int move(const QString &from ,const QString &to);
+    int remove(const QString &file);
     QString getTemporaryFile(const QString &workDir) const;
     QString unique(const QString &file) const;
 
-    virtual void jobFinished(const QString &id, const QString &errorString);
+    virtual void jobFinished(const int &id, const QString &errorString);
 
 
 };
 
 
 } // namespace RecordItNow
+
+
+Q_DECLARE_METATYPE(KPluginInfo)
 
 
 #endif // RECORDITNOW_PLUGIN_H

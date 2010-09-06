@@ -55,7 +55,7 @@ private:
     bool m_paused;
     int m_duration;
     bool m_stopped;
-    QString m_currentId;
+    int m_currentId;
     State m_state;
     AbstractEncoder::Data m_data;
     QString m_command;
@@ -72,7 +72,7 @@ private slots:
 
 
 protected:
-    void jobFinished(const QString &id, const QString &errorString);
+    void jobFinished(const int &id, const QString &errorString);
 
 
 };

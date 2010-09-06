@@ -48,7 +48,7 @@ public:
 
 private:
     QString m_outputFile;
-    QString m_removeId;
+    int m_removeId;
     QPixmap m_shot;
 
     static void save(ScreenshotRecorder *recorder, QImage image, const QString outputFile,
@@ -56,7 +56,7 @@ private:
 
 
 protected:
-    void jobFinished(const QString &id, const QString &errorString);
+    void jobFinished(const int &id, const QString &errorString);
 
 
 };

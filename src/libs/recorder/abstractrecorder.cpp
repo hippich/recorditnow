@@ -35,10 +35,9 @@ namespace RecordItNow {
 
 
 AbstractRecorder::AbstractRecorder(QObject *parent, const QVariantList &args)
-    : RecordItNow::Plugin(parent)
+    : RecordItNow::Plugin(args, parent)
 {
 
-    Q_UNUSED(args);
     m_state = Idle;
     qRegisterMetaType<RecordItNow::AbstractRecorder::ExitStatus>("RecordItNow::AbstractRecorder::ExitStatus");
 

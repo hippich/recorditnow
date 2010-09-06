@@ -47,6 +47,7 @@ RecordMyDesktopRecorder::RecordMyDesktopRecorder(QObject *parent, const QVariant
 
     m_recorder = 0;
     m_data.paused = false;
+    m_moveId = m_removeId = -1;
 
 }
 
@@ -331,14 +332,14 @@ void RecordMyDesktopRecorder::moveToDestination()
 {
 
     m_moveId = move(m_data.tmpFile, m_data.outputFile);
-    if (m_moveId.isEmpty()) {
+    if (m_moveId == -1) {
         emit error(i18n("Internal error!"));
     }
 
 }
 
 
-void RecordMyDesktopRecorder::jobFinished(const QString &id, const QString &errorString)
+void RecordMyDesktopRecorder::jobFinished(const int &id, const QString &errorString)
 {
 
     if (!errorString.isEmpty()) {

@@ -49,6 +49,7 @@ FfmpegEncoder::FfmpegEncoder(QObject *parent, const QVariantList &args)
     m_duration = -1;
     m_ffmpeg = 0;
     m_stopped = false;
+    m_currentId = -1;
 
 }
 
@@ -256,7 +257,7 @@ void FfmpegEncoder::ffmpegFinished(const int &ret)
 }
 
 
-void FfmpegEncoder::jobFinished(const QString &id, const QString &errorString)
+void FfmpegEncoder::jobFinished(const int &id, const QString &errorString)
 {
 
     if (!errorString.isEmpty()) {
