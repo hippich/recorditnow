@@ -105,6 +105,7 @@ set(gui_SRCS
 
    widgets/osd.cpp
    widgets/checkicon.cpp
+   widgets/recordhelpwidget.cpp
 
    outputwidget.cpp
    timerwidget.cpp
@@ -148,6 +149,8 @@ kde4_add_ui_files(gui_SRCS
     config/ui/notificationconfig.ui
     config/ui/zoom.ui 
     
+    widgets/ui/recordhelpwidget.ui
+
     timeline/ui/timeline.ui 
     timeline/ui/timelinedocktitlewidget.ui
     

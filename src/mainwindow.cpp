@@ -44,6 +44,7 @@
     #include "script/mainwindowscriptadaptor.h"
     #include "script/scriptmanager.h"
 #endif
+#include "widgets/recordhelpwidget.h"
 
 // Qt
 #include <QtGui/QMouseEvent>
@@ -464,7 +465,18 @@ void MainWindow::recordTriggered()
 {
 
     if (!m_frame->isVisible()) {
-        KMessageBox::sorry(this, i18n("No screen area selected."));
+        KDialog *dialog = new KDialog(this);
+        dialog->setAttribute(Qt::WA_DeleteOnClose, true);
+        RecordItNow::RecordHelpWidget *widget = new RecordItNow::RecordHelpWidget(getAction("box"),
+                                                                                  getAction("recordFullScreen"),
+                                                                                  getAction("recordWindow"),
+                                                                                  dialog);
+        dialog->setMainWidget(widget);
+        connect(widget, SIGNAL(clicked()), dialog, SLOT(close()));
+        dialog->setCaption(widget->windowTitle());
+        dialog->setButtons(KDialog::Cancel);
+
+        dialog->show();
         return;
     }
 
