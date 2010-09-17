@@ -491,7 +491,7 @@ void Frame::paintEvent(QPaintEvent *event)
             break;
         }
 
-        painter.drawRoundedRect(box, 1, 1);
+        painter.drawRoundedRect(box, 0.5, 0.5);
     }
 
     box = QRect(0, 0, (bottom.height()/2)-(pen.width()*2), (bottom.height()/2)-(pen.width()*2));
@@ -503,7 +503,7 @@ void Frame::paintEvent(QPaintEvent *event)
             break;
         }
 
-        painter.drawRoundedRect(box, 1, 1);
+        painter.drawRoundedRect(box, 0.5, 0.5);
     }
 
     painter.setBrush(QBrush());
