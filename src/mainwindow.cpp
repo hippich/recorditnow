@@ -491,7 +491,7 @@ void MainWindow::recordTriggered()
 void MainWindow::recordWindow()
 {
 
-    RecordItNow::WindowGrabber *grabber = new RecordItNow::WindowGrabber;
+    RecordItNow::WindowGrabber *grabber = new RecordItNow::WindowGrabber(this);
     connect(grabber, SIGNAL(grabCanceled()), this, SLOT(windowGrabberCanceled()));
     connect(grabber, SIGNAL(windowGrabbed(WId)), this, SLOT(recordCurrentWindow(WId)));
 

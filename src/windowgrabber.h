@@ -34,7 +34,7 @@ class WindowGrabber : public QWidget
 
 
 public:
-    explicit WindowGrabber();
+    explicit WindowGrabber(QWidget *parent);
     ~WindowGrabber();
 
     void startGrab();

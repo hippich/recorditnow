@@ -23,6 +23,8 @@
 
 // KDE
 #include <kdebug.h>
+#include <kmessagebox.h>
+#include <klocalizedstring.h>
 
 // Qt
 #include <QtGui/QMouseEvent>
@@ -35,8 +37,8 @@
 namespace RecordItNow {
 
 
-WindowGrabber::WindowGrabber()
-    : QWidget(0, Qt::X11BypassWindowManagerHint)
+WindowGrabber::WindowGrabber(QWidget *parent)
+    : QWidget(parent, Qt::X11BypassWindowManagerHint|Qt::Tool)
 {
 
     setAttribute(Qt::WA_UpdatesDisabled, true);
@@ -48,6 +50,13 @@ WindowGrabber::WindowGrabber()
 
 void WindowGrabber::startGrab()
 {
+
+    const QString text = i18n("<b>After you close this dialog, you can:</b>\n\n"
+                              "Click with the left mouse button on the window "
+                              "you want to record.\nClick anywhere with the "
+                              "right mouse button to cancel.");
+
+    KMessageBox::information(parentWidget(), text, QString(), "__RecordItNow_WindowGrabber__");
 
     show();
     grabMouse(Qt::CrossCursor);
