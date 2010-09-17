@@ -342,7 +342,7 @@ void MainWindow::setupActions()
 
     KActionMenu *boxAction = static_cast<KActionMenu*>(getAction("box"));
     boxAction->setText(i18n("Show Frame"));
-    boxAction->setIcon(KIcon("draw-rectangle"));
+    boxAction->setIcon(KIcon("recorditnow-frame"));
     boxAction->setShortcut(Qt::CTRL+Qt::Key_F, KAction::DefaultShortcut);
     boxAction->setCheckable(true);
     connect(boxAction, SIGNAL(triggered(bool)), this, SLOT(triggerFrame(bool)));
