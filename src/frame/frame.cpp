@@ -479,12 +479,16 @@ void Frame::paintEvent(QPaintEvent *event)
     box.moveCenter(top.center());
     const int spacing = 10;
 
+    QRect contents = top;
+    contents.setWidth(contents.width()-(pen.width()*2));
+    contents.moveLeft(contents.left()-pen.width());
+
     painter.setBrush(Qt::white);
     painter.setPen(Qt::white);
     for (int i = spacing; i < top.width(); i += spacing+box.width()) {
         box.moveLeft(i);
 
-        if (!top.contains(box, true)) {
+        if (!contents.contains(box, true)) {
             break;
         }
 
@@ -493,10 +497,15 @@ void Frame::paintEvent(QPaintEvent *event)
 
     box = QRect(0, 0, (bottom.height()/2)-(pen.width()*2), (bottom.height()/2)-(pen.width()*2));
     box.moveCenter(bottom.center());
+
+    contents = bottom;
+    contents.setWidth(contents.width()-(pen.width()*2));
+    contents.moveLeft(contents.left()-pen.width());
+
     for (int i = spacing; i < bottom.width(); i += spacing+box.width()) {
         box.moveLeft(i);
 
-        if (!bottom.contains(box, true)) {
+        if (!contents.contains(box, true)) {
             break;
         }
 
