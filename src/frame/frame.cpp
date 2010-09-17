@@ -43,8 +43,8 @@ Frame::Frame(QWidget *parent)
     m_moveWidget = 0;
 
     resize(FRAME_MIN_SIZE, FRAME_MIN_SIZE);
-    setContentsMargins(8, 8, 8, 8);
-    setMinimumSize(FRAME_MIN_SIZE-(8*2), FRAME_MIN_SIZE-(8*2));
+    setContentsMargins(10, 22, 10, 22);
+    setMinimumSize(FRAME_MIN_SIZE-(10*2), FRAME_MIN_SIZE-(22*2));
 
     if (parent) {
         parent->installEventFilter(this);
@@ -452,23 +452,73 @@ void Frame::showEvent(QShowEvent *event)
 void Frame::paintEvent(QPaintEvent *event)
 {
 
-    QWidget::paintEvent(event);
-
     QPainter painter(this);
+    painter.setClipRegion(event->region());
+    painter.setRenderHints(QPainter::Antialiasing);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
     QPen pen;
-    pen.setWidth(1);
-    pen.setColor(palette().color(QPalette::Shadow));
+    pen.setColor(Qt::lightGray);
+    pen.setWidth(2);
+
+    QRect left = rect();
+    left.setRight(contentsRect().left());
+
+    QRect right = left;
+    right.moveTopRight(rect().topRight());
+
+    QRect top = rect();
+    top.setBottom(contentsRect().top());
+
+    QRect bottom = top;
+    bottom.moveTop(contentsRect().bottom());
+
+    painter.fillRect(left, Qt::black);
+    painter.fillRect(right, Qt::black);
+    painter.fillRect(top, Qt::black);
+    painter.fillRect(bottom, Qt::black);
+
+    QRect box = QRect(0, 0, (top.height()/2)-(pen.width()*2), (top.height()/2)-(pen.width()*2));
+    box.moveCenter(top.center());
+    const int spacing = 10;
+
+    painter.setBrush(Qt::white);
+    painter.setPen(Qt::white);
+    for (int i = spacing; i < top.width(); i += spacing+box.width()) {
+        box.moveLeft(i);
+
+        if (!top.contains(box, true)) {
+            break;
+        }
+
+        painter.drawRoundedRect(box, 1, 1);
+    }
+
+    box = QRect(0, 0, (bottom.height()/2)-(pen.width()*2), (bottom.height()/2)-(pen.width()*2));
+    box.moveCenter(bottom.center());
+    for (int i = spacing; i < bottom.width(); i += spacing+box.width()) {
+        box.moveLeft(i);
+
+        if (!bottom.contains(box, true)) {
+            break;
+        }
+
+        painter.drawRoundedRect(box, 1, 1);
+    }
+
+    painter.setBrush(QBrush());
     painter.setPen(pen);
 
     QRect in = contentsRect();
-    in.setHeight(in.height()+painter.pen().width());
-    in.setWidth(in.width()+painter.pen().width());
+    in.setHeight(in.height()+(painter.pen().width()*2));
+    in.setWidth(in.width()+(pen.width()*2));
     in.moveTopLeft(in.topLeft()-QPoint(painter.pen().width(), painter.pen().width()));
     painter.drawRect(in);
 
     QRect out = rect();
-    out.setHeight(out.height()-painter.pen().width());
-    out.setWidth(out.width()-painter.pen().width());
+    out.setHeight(out.height()-(painter.pen().width()*2));
+    out.setWidth(out.width()-(painter.pen().width()*2));
+    out.moveTopLeft(rect().topLeft()+QPoint(painter.pen().width(), painter.pen().width()));
     painter.drawRect(out);
 
 }
