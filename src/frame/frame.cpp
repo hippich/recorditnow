@@ -73,11 +73,9 @@ Frame::~Frame()
 QRect Frame::getFrameGeometry() const
 {
 
-    QRect geometry = this->geometry();
-    geometry.setHeight(geometry.height()-(getLineSize()*2));
-    geometry.setWidth(geometry.width()-(getLineSize()*2));
-    geometry.moveCenter(this->geometry().center());
-    return geometry;
+    QRect frameGeometry = contentsRect();
+    frameGeometry.moveCenter(mapToGlobal(contentsRect().center()));
+    return frameGeometry;
 
 }
 
@@ -85,7 +83,10 @@ QRect Frame::getFrameGeometry() const
 void Frame::setFrameSize(const FrameSize &size)
 {
 
-    resize(size.size().width()+(getLineSize()*2), size.size().height()+(getLineSize()*2));
+    int top, left, right, bottom;
+    getContentsMargins(&left, &top, &right, &bottom);
+
+    resize(size.size().width()+left+right, size.size().height()+top+bottom);
     moveToParent();
 
 }
@@ -103,14 +104,10 @@ void Frame::setVisible(bool visible)
 void Frame::setView(int x, int y, int width, int height)
 {
 
-    const int lineSize = getLineSize();
-
-    x -= lineSize;
-    y -= lineSize;
-    width += (lineSize*2);
-    height += (lineSize*2);
+    int top, left, right, bottom;
+    getContentsMargins(&left, &top, &right, &bottom);
     
-    setGeometry(QRect(x, y, width, height));
+    setGeometry(QRect(x-left, y-top, width+left+right, height+bottom+top));
 
 }
 
