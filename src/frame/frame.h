@@ -44,6 +44,7 @@ public:
     ~Frame();
 
     QRect getFrameGeometry() const;
+    bool validFrameGeometry() const;
     void setFrameSize(const FrameSize &size);
     void setVisible(bool visible);
     void setView(int x, int y, int width, int height);

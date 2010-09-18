@@ -85,6 +85,15 @@ QRect Frame::getFrameGeometry() const
 }
 
 
+bool Frame::validFrameGeometry() const
+{
+
+    const QRect screenGeometry = qApp->desktop()->screenGeometry(this);
+    return screenGeometry.contains(getFrameGeometry(), true);
+
+}
+
+
 void Frame::setFrameSize(const FrameSize &size)
 {
 
@@ -455,8 +464,7 @@ void Frame::moveEvent(QMoveEvent *event)
 {
 
     QWidget::moveEvent(event);
-    const QRect screenGeometry = qApp->desktop()->screenGeometry(this);
-    if (screenGeometry.contains(geometry(), true) != m_validGeometry) {
+    if (validFrameGeometry() != m_validGeometry) {
         m_validGeometry = !m_validGeometry;
         update();
     }

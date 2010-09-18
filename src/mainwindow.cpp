@@ -478,6 +478,10 @@ void MainWindow::recordTriggered()
 
         dialog->show();
         return;
+    } else if (!m_frame->validFrameGeometry()) {
+        KMessageBox::error(this, i18n("The recording area is located outside of the screen."));
+
+        return;
     }
 
     initRecorder(&m_recordData);
