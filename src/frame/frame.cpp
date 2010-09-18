@@ -31,6 +31,8 @@
 #include <QtGui/QResizeEvent>
 #include <QtCore/QTimer>
 #include <QtGui/QPainter>
+#include <QtGui/QDesktopWidget>
+#include <QtGui/QApplication>
 
 
 #define FRAME_MIN_SIZE 100
@@ -55,6 +57,9 @@ Frame::Frame(QWidget *parent)
 
     m_infoWidget = new FrameInfoWidget(this);
     m_infoWidget->hide();
+
+    setAttribute(Qt::WA_NoSystemBackground, true);
+    m_validGeometry = false;
 
 }
 
@@ -446,6 +451,19 @@ void Frame::showEvent(QShowEvent *event)
 }
 
 
+void Frame::moveEvent(QMoveEvent *event)
+{
+
+    QWidget::moveEvent(event);
+    const QRect screenGeometry = qApp->desktop()->screenGeometry(this);
+    if (screenGeometry.contains(geometry(), true) != m_validGeometry) {
+        m_validGeometry = !m_validGeometry;
+        update();
+    }
+
+}
+
+
 void Frame::paintEvent(QPaintEvent *event)
 {
 
@@ -470,10 +488,10 @@ void Frame::paintEvent(QPaintEvent *event)
     QRect bottom = top;
     bottom.moveTop(contentsRect().bottom());
 
-    painter.fillRect(left, Qt::black);
-    painter.fillRect(right, Qt::black);
-    painter.fillRect(top, Qt::black);
-    painter.fillRect(bottom, Qt::black);
+    painter.fillRect(left, m_validGeometry ? Qt::black : Qt::red);
+    painter.fillRect(right, m_validGeometry ? Qt::black : Qt::red);
+    painter.fillRect(top, m_validGeometry ? Qt::black : Qt::red);
+    painter.fillRect(bottom, m_validGeometry ? Qt::black : Qt::red);
 
     QRect box = QRect(0, 0, (top.height()/2)-(pen.width()*2), (top.height()/2)-(pen.width()*2));
     box.moveCenter(top.center());

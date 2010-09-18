@@ -72,7 +72,8 @@ private:
     MoveWidget *m_moveWidget;
     bool m_active;
     QHash<QString, QSize> m_sizes;
-    
+    bool m_validGeometry;
+
     inline QRect getRect(const Side &side) const;
     inline int getLineSize() const;
 
@@ -90,6 +91,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void showEvent(QShowEvent *event);
+    void moveEvent(QMoveEvent *event);
     void paintEvent(QPaintEvent *event);
 
 
