@@ -551,15 +551,15 @@ void Frame::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     QRect in = contentsRect();
-    in.setHeight(in.height()+(painter.pen().width()*2));
-    in.setWidth(in.width()+(pen.width()*2));
-    in.moveTopLeft(in.topLeft()-QPoint(painter.pen().width(), painter.pen().width()));
+    in.setHeight(in.height()+(painter.pen().width()));
+    in.setWidth(in.width()+(pen.width()));
+    in.moveTopLeft(in.topLeft()-QPoint(painter.pen().width()/2, painter.pen().width()/2));
     painter.drawRect(in);
 
     QRect out = rect();
-    out.setHeight(out.height()-(painter.pen().width()*2));
-    out.setWidth(out.width()-(painter.pen().width()*2));
-    out.moveTopLeft(rect().topLeft()+QPoint(painter.pen().width(), painter.pen().width()));
+    out.setHeight(out.height()-(painter.pen().width()));
+    out.setWidth(out.width()-(painter.pen().width()));
+    out.moveTopLeft(rect().topLeft()+QPoint(painter.pen().width()/2, painter.pen().width()/2));
     painter.drawRect(out);
 
 }

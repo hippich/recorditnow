@@ -30,22 +30,27 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
+#include <QtGui/QPainter>
+#include <QtGui/QPaintEvent>
 
 
 MoveWidget::MoveWidget(QWidget *parent)
-    : QFrame(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint), m_move(false)
+    : QWidget(parent, Qt::FramelessWindowHint|Qt::Tool|Qt::X11BypassWindowManagerHint),
+    m_move(false)
 {
 
     Q_ASSERT(parent);
     parent->installEventFilter(this);
     setCursor(Qt::SizeAllCursor);
 
-    setMaximumSize(50, 30);
+    int size, junk;
+    parentWidget()->getContentsMargins(&junk, &size, &junk, &junk);
+    setMaximumSize(size*2, size*2);
     setMinimumSize(maximumSize());
 
     setMouseTracking(true);
-    setFrameStyle(QFrame::Panel|QFrame::Plain);
 
+    setAttribute(Qt::WA_NoSystemBackground, true);
     setVisible(parentWidget()->isVisible());
 
 }
@@ -64,12 +69,12 @@ void MoveWidget::moveToParent()
 
     const QRect parentGeometry = parentWidget()->geometry();
 
-    int size;
-    parentWidget()->getContentsMargins(&size, &size, &size, &size);
+    int size, junk;
+    parentWidget()->getContentsMargins(&junk, &size, &junk, &junk);
     size = size/2;
 
     QPoint center;
-    center.setX(parentGeometry.x()+(parentGeometry.width()/2));
+    center.setX(parentGeometry.center().x());
     center.setY(parentGeometry.y()+size);
     QRect newGeometry = geometry();
     newGeometry.moveCenter(center);
@@ -113,8 +118,8 @@ void MoveWidget::mouseMoveEvent(QMouseEvent *event)
     geometry = parentWidget()->geometry();
     QPoint topLeft = this->geometry().center();
 
-    int size;
-    parentWidget()->getContentsMargins(&size, &size, &size, &size);
+    int size, junk;
+    parentWidget()->getContentsMargins(&junk, &size, &junk, &junk);
     size = size/2;
 
     topLeft.setX(topLeft.x()-(geometry.width()/2));
@@ -147,8 +152,32 @@ void MoveWidget::mouseReleaseEvent(QMouseEvent *event)
 void MoveWidget::showEvent(QShowEvent *event)
 {
 
-    QFrame::showEvent(event);
+    QWidget::showEvent(event);
     moveToParent();
+
+}
+
+
+void MoveWidget::paintEvent(QPaintEvent *event)
+{
+
+    QPainter painter(this);
+    painter.setClipRect(event->rect());
+
+    QPen pen;
+    pen.setColor(Qt::lightGray);
+    pen.setWidth(2);
+
+    painter.setPen(pen);
+
+    painter.fillRect(rect(), Qt::black);
+
+    QRect frame = rect();
+    frame.setHeight(frame.height()-pen.width());
+    frame.setWidth(frame.width()-pen.width());
+    frame.moveTopLeft(frame.topLeft()+QPoint(pen.width()/2, pen.width()/2));
+
+    painter.drawRect(frame);
 
 }
 

@@ -22,11 +22,11 @@
 
 
 // Qt
-#include <QtGui/QFrame>
+#include <QtGui/QWidget>
 
 
 
-class MoveWidget : public QFrame
+class MoveWidget : public QWidget
 {
     Q_OBJECT
 
@@ -49,6 +49,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void showEvent(QShowEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 
 };
