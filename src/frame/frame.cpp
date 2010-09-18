@@ -52,7 +52,7 @@ Frame::Frame(QWidget *parent)
         parent->installEventFilter(this);
     }
     setMouseTracking(true);
-    m_side = NoSide;
+    m_handle = NoHandle;
     m_active = false;
 
     m_infoWidget = new FrameInfoWidget(this);
@@ -160,11 +160,11 @@ void Frame::setMoveEnabled(const bool &enabled)
 }
 
 
-QRect Frame::getRect(const Side &side) const
+QRect Frame::getRect(const ResizeHandle &handle) const
 {
 
     const int size = getLineSize();
-    switch (side) {
+    switch (handle) {
     case TopLeft: return QRect(0, 0, size, size);
     case TopRight: return QRect(rect().topRight()-QPoint(size, 0), QSize(size, size));
     case BottomLeft: return QRect(rect().bottomLeft()-QPoint(0, size), QSize(size, size));
@@ -250,7 +250,7 @@ void Frame::hide()
 bool Frame::eventFilter(QObject *watched, QEvent *event)
 {
 
-    if (m_side == NoSide) {
+    if (m_handle == NoHandle) {
         if (watched == parent()) {
             switch (event->type()) {
             case QEvent::Move:
@@ -288,7 +288,7 @@ void Frame::resizeEvent(QResizeEvent *event)
 void Frame::mouseMoveEvent(QMouseEvent *event)
 {
 
-    if (m_side == NoSide) { // set cursor
+    if (m_handle == NoHandle) { // set cursor
         if (getRect(TopLeft).contains(event->pos())) {
             setCursor(Qt::SizeFDiagCursor);
         } else if (getRect(TopRight).contains(event->pos())) {
@@ -309,7 +309,7 @@ void Frame::mouseMoveEvent(QMouseEvent *event)
     } else { // resize
         QRect geometry = this->geometry();
         QRect tmp = geometry;
-        switch (m_side) {
+        switch (m_handle) {
         case Left: {
                 tmp.setLeft(event->globalX());
                 if (tmp.width() < FRAME_MIN_SIZE) {
@@ -417,26 +417,30 @@ void Frame::mousePressEvent(QMouseEvent *event)
 
     if (event->button() & Qt::LeftButton) {
         if (getRect(TopLeft).contains(event->pos())) {
-            m_side = TopLeft;
+            m_handle = TopLeft;
         } else if (getRect(TopRight).contains(event->pos())) {
-            m_side = TopRight;
+            m_handle = TopRight;
         } else if (getRect(BottomLeft).contains(event->pos())) {
-            m_side = BottomLeft;
+            m_handle = BottomLeft;
         } else if (getRect(BottomRight).contains(event->pos())) {
-            m_side = BottomRight;
+            m_handle = BottomRight;
         } else if (getRect(Left).contains(event->pos())) {
-            m_side = Left;
+            m_handle = Left;
         } else if (getRect(Right).contains(event->pos())) {
-            m_side = Right;
+            m_handle = Right;
         } else if (getRect(Top).contains(event->pos())) {
-            m_side = Top;
+            m_handle = Top;
         } else if (getRect(Bottom).contains(event->pos())) {
-            m_side = Bottom;
+            m_handle = Bottom;
         } else {
-            m_side = NoSide;
+            m_handle = NoHandle;
         }
     } else {
-        m_side = NoSide;
+        m_handle = NoHandle;
+    }
+
+    if (m_handle != NoHandle) {
+        grabMouse();
     }
 
 }
@@ -446,7 +450,8 @@ void Frame::mouseReleaseEvent(QMouseEvent *event)
 {
 
     Q_UNUSED(event);
-    m_side = NoSide;
+    m_handle = NoHandle;
+    releaseMouse();
 
 }
 

@@ -57,8 +57,8 @@ public slots:
 
 
 private:
-    enum Side {
-        NoSide = -1,
+    enum ResizeHandle {
+        NoHandle = -1,
         Left = 0,
         Top = 1,
         Right = 2,
@@ -68,14 +68,14 @@ private:
         BottomLeft = 6,
         BottomRight = 7
     };
-    Side m_side;
+    ResizeHandle m_handle;
     FrameInfoWidget *m_infoWidget;
     MoveWidget *m_moveWidget;
     bool m_active;
     QHash<QString, QSize> m_sizes;
     bool m_validGeometry;
 
-    inline QRect getRect(const Side &side) const;
+    inline QRect getRect(const ResizeHandle &handle) const;
     inline int getLineSize() const;
 
     void moveToParent(const bool &force = false);
