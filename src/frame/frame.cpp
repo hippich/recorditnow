@@ -281,6 +281,10 @@ void Frame::resizeEvent(QResizeEvent *event)
 
     QWidget::resizeEvent(event);
     setMask(QRegion(contentsRect()).xored(QRegion(rect())));
+    if (validFrameGeometry() != m_validGeometry) {
+        m_validGeometry = !m_validGeometry;
+        update();
+    }
 
 }
 
