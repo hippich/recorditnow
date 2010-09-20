@@ -134,8 +134,11 @@ void MoveWidget::mouseMoveEvent(QMouseEvent *event)
 void MoveWidget::mousePressEvent(QMouseEvent *event)
 {
 
+    event->accept();
+
     m_move = true;
     m_pos = event->globalPos();
+    grabMouse(Qt::ClosedHandCursor);
 
 }
 
@@ -143,8 +146,10 @@ void MoveWidget::mousePressEvent(QMouseEvent *event)
 void MoveWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 
-    Q_UNUSED(event);
+    event->accept();
+
     m_move = false;
+    releaseMouse();
 
 }
 
