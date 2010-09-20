@@ -93,7 +93,9 @@ void TimerWidget::start()
     } else {
         if (!m_tickNotification) {
             m_tickNotification = new KNotification("timerTick", this, KNotification::Persistent);
+            connect(m_tickNotification.data(), SIGNAL(activated(uint)), this, SLOT(actionActivated(uint)));
             m_tickNotification.data()->setText(getText());
+            m_tickNotification.data()->setActions(QStringList() << i18nc("Cacncel action", "Cancel"));
             m_tickNotification.data()->sendEvent();
         }
         m_timer->start();
@@ -182,6 +184,19 @@ void TimerWidget::tick()
         stopTimerInternal();
 
         emit timeout();
+    }
+
+}
+
+
+void TimerWidget::actionActivated(const uint &action)
+{
+
+    if (action == 1) {
+        pause();
+        reset();
+
+        emit canceled();
     }
 
 }

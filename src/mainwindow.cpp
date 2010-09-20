@@ -116,6 +116,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(outputWidget, SIGNAL(error(QString)), this, SLOT(errorNotification(QString)));
     connect(timerWidget, SIGNAL(timeout()), this, SLOT(startRecord()));
+    connect(timerWidget, SIGNAL(canceled()), this, SLOT(stopRecord()));
     connect(outputWidget, SIGNAL(playRequested()), this, SLOT(playRequested()));
     connect(KeyMonManager::self(), SIGNAL(stopped()), this, SLOT(keyMonStopped()));
 

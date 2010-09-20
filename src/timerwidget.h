@@ -66,10 +66,12 @@ private slots:
     void upClicked();
     void downClicked();
     void tick();
+    void actionActivated(const uint &action);
 
 
 signals:
     void timeout();
+    void canceled();
 
 
 };
