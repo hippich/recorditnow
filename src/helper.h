@@ -79,6 +79,7 @@ public:
     PluginManager *pluginmanager() const;
     RecordItNow::ScriptManager *scriptManager() const;
     RecordItNow::MainWindow *window() const;
+    QString currentFile() const;
 
     void playSound(const QString &file);
     void setMainWindow(RecordItNow::MainWindow *window);

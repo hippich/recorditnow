@@ -19,17 +19,24 @@
 
 
 // own
+#include <config-recorditnow.h>
 #include "uploadwizard.h"
 #include "pluginpage.h"
 #include "videopage.h"
 #include "uploadpage.h"
 #include "accountpage.h"
 #include "termspage.h"
+#include "helper.h"
+#ifdef HAVE_KIPI
+    #include "kipi/kipiinterface.h"
+    #include "kipipage.h"
+#endif
 
 // KDE
 #include <kicon.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
+#include <kmimetype.h>
 
 // Qt
 #include <QtGui/QCloseEvent>
@@ -39,18 +46,31 @@ UploadWizard::UploadWizard(const QString &video, QWidget *parent)
     : QWizard(parent)
 {
 
-    setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose, true);
     setWindowTitle(i18n("Upload Wizard"));
 
-    addPage(new PluginPage(this));
-    addPage(new AccountPage(this));
+    KMimeType::Ptr mimePtr = KMimeType::findByPath(video, 0, true, 0);
+    const QString name = mimePtr->name();
+    if (name.startsWith(QLatin1String("video"))) {
+        addPage(new PluginPage(this));
+        addPage(new AccountPage(this));
 
-    VideoPage *videoPage = new VideoPage(this);
-    videoPage->setVideo(video);
+        VideoPage *videoPage = new VideoPage(this);
+        videoPage->setVideo(video);
 
-    addPage(videoPage);
-    addPage(new TermsPage(this));
-    addPage(new UploadPage(this));
+        addPage(videoPage);
+        addPage(new TermsPage(this));
+        addPage(new UploadPage(this));
+    }
+#ifdef HAVE_KIPI
+    else  if (name.startsWith(QLatin1String("image"))) {
+        addPage(new RecordItNow::KIPIPage(new RecordItNow::KIPIInterface(RecordItNow::Helper::self()), this));
+    }
+#endif
+    else {
+        KMessageBox::information(this, i18n("Can not upload file with mime type: \"%1\"!", name));
+        close();
+    }
 
     setOption(QWizard::DisabledBackButtonOnLastPage, true);
     setPixmap(QWizard::LogoPixmap, KIcon("recorditnow-upload-media").pixmap(KIconLoader::SizeMedium,
@@ -68,7 +88,6 @@ void UploadWizard::closeEvent(QCloseEvent *event)
             if (ret == KMessageBox::No) {
                 event->ignore();
                 return;
-
             }
         }
     }

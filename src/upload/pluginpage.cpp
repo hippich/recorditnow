@@ -33,6 +33,7 @@
 #include <QtGui/QListWidgetItem>
 
 
+
 Q_DECLARE_METATYPE(Joschy::PluginInfo);
 PluginPage::PluginPage(QWidget *parent)
     : QWizardPage(parent)
@@ -45,7 +46,7 @@ PluginPage::PluginPage(QWidget *parent)
     registerField("Provider*", nameLine);
 
 }
-
+        
 
 Joschy::PluginInfo PluginPage::plugin() const
 {
@@ -71,6 +72,7 @@ void PluginPage::initializePage()
 
         providerList->addItem(item);
     }
+
     providerList->setCurrentRow(0);
     currentRowChanged(0);
 

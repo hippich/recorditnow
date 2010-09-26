@@ -26,6 +26,7 @@
 #ifdef HAVE_QTSCRIPT
     #include "script/scriptmanager.h"
 #endif
+#include "mainwindow.h"
 
 // KDE
 #include <kmanagerselection.h>
@@ -160,6 +161,14 @@ RecordItNow::MainWindow *Helper::window() const
 {
 
     return m_window;
+
+}
+
+
+QString Helper::currentFile() const
+{
+
+    return m_window->outputWidget->outputFile();
 
 }
 

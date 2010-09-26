@@ -63,6 +63,7 @@
 #include <kactioncategory.h>
 #include <knotification.h>
 #include <ktoolbar.h>
+#include <kfiledialog.h>
 
 
 namespace RecordItNow {
@@ -1065,9 +1066,24 @@ void MainWindow::pluginsChanged()
 void MainWindow::upload()
 {
 
-    const QString video = outputWidget->exists() ? outputWidget->outputFile() : QString();
-    UploadWizard *wizard = new UploadWizard(video, this);
-    wizard->show();
+    QString file;
+    if (outputWidget->exists()) {
+        file = outputWidget->outputFile();
+    } else {
+        KFileDialog dialog(KGlobalSettings::videosPath(), QString::null, this);
+        dialog.setMode(KFile::ExistingOnly|KFile::Files|KFile::LocalOnly);
+        dialog.setOperationMode(KFileDialog::Opening);
+
+        const int ret = dialog.exec();
+        if (ret == KFileDialog::Accepted) {
+            file = dialog.selectedFile();
+        }
+    }
+
+    if (!file.isEmpty()) {
+        UploadWizard *wizard = new UploadWizard(file, this);
+        wizard->show();
+    }
 
 }
 

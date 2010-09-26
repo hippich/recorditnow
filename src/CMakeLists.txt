@@ -12,6 +12,17 @@ endif (BUILD_WITH_JOSCHY)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
+
+# KIPI
+macro_optional_find_package(Kipi)
+macro_log_feature(KIPI_FOUND "KIPI" "A library for adding kipi support"
+                  "http://www.kipi-plugins.org" FALSE ""
+                  "Required to build RecordItNow with kipi support.")
+
+if(KIPI_FOUND)
+    include_directories(${KIPI_INCLUDE_DIR})
+endif(KIPI_FOUND)
+
 # XFixes
 macro_optional_find_package(XFixes)
 macro_log_feature(XFIXES_FOUND "XFixes"
@@ -20,6 +31,7 @@ macro_log_feature(XFIXES_FOUND "XFixes"
 
 set(HAVE_XFIXES XFIXES_FOUND)
 set(HAVE_QTSCRIPT QT_QTSCRIPT_FOUND)
+set(HAVE_KIPI KIPI_FOUND)
 set(BUILD_EXAMPLE true)
 
 configure_file(config-recorditnow.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-recorditnow.h)
@@ -117,7 +129,8 @@ set(gui_SRCS
 
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp
-   firstStart/createconfigpage.cpp)
+   firstStart/createconfigpage.cpp
+   )
 
 if (HAVE_QTSCRIPT)
     set(gui_SRCS ${gui_SRCS} script/scriptmanager.cpp
@@ -131,6 +144,15 @@ if (HAVE_QTSCRIPT)
 
                              config/scriptdialog.cpp)
 endif (HAVE_QTSCRIPT)
+
+
+if (KIPI_FOUND)
+    set (gui_SRCS
+    ${gui_SRCS}
+    kipi/kipiinterface.cpp
+    upload/kipipage.cpp
+    )
+endif (KIPI_FOUND)
 
 # GUI
 kde4_add_ui_files(gui_SRCS 
@@ -176,6 +198,12 @@ kde4_add_ui_files(gui_SRCS
     config/ui/scriptdialog.ui)
 endif (HAVE_QTSCRIPT)
 
+if (KIPI_FOUND)
+    kde4_add_ui_files(gui_SRCS
+    upload/ui/kipipage.ui
+    )
+endif (KIPI_FOUND)
+
 
 # Common
 kde4_add_library(recorditnow_common SHARED ${COMMON_SRCS})
@@ -219,6 +247,13 @@ if (BUILD_WITH_JOSCHY)
 else (BUILD_WITH_JOSCHY)
     set(GUI_SRCS_LINK ${GUI_SRCS_LINK} ${JOSCHYCORE_LIBRARIES})
 endif (BUILD_WITH_JOSCHY)
+
+if (KIPI_FOUND)
+    set (GUI_SRCS_LINK
+    ${GUI_SRCS_LINK}
+    ${KIPI_LIBRARIES}
+    )
+endif (KIPI_FOUND)
 
 kde4_add_kcfg_files(gui_SRCS recorditnow.kcfgc)
 kde4_add_executable(recorditnow ${gui_SRCS})
