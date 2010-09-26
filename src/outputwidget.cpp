@@ -31,6 +31,7 @@
 #include <krun.h>
 #include <kfileitemactions.h>
 #include <kfileitemlistproperties.h>
+#include <kmessagebox.h>
 
 // Qt
 #include <QtCore/QFile>
@@ -191,6 +192,18 @@ void OutputWidget::deleteOutputFile()
 {
 
     if (!exists() || isDir()) {
+        return;
+    }
+
+    const QString text = i18n("Are you sure you want to delete <b>%1</b>?", outputFile());
+    const int ret = KMessageBox::questionYesNo(this,
+                                               text,
+                                               QString(),
+                                               KStandardGuiItem::yes(),
+                                               KStandardGuiItem::no(),
+                                               "__RecordItNow_OutputWidget_delete_file_question__");
+
+    if (ret == KMessageBox::No) {
         return;
     }
 
