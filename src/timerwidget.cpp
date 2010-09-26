@@ -95,7 +95,7 @@ void TimerWidget::start()
             m_tickNotification = new KNotification("timerTick", this, KNotification::Persistent);
             connect(m_tickNotification.data(), SIGNAL(activated(uint)), this, SLOT(actionActivated(uint)));
             m_tickNotification.data()->setText(getText());
-            m_tickNotification.data()->setActions(QStringList() << i18nc("Cacncel action", "Cancel"));
+            m_tickNotification.data()->setActions(QStringList() << i18nc("@action:button", "Cancel"));
             m_tickNotification.data()->sendEvent();
         }
         m_timer->start();
