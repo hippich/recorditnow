@@ -55,19 +55,23 @@ CollectionViewPrivate::CollectionViewPrivate(CollectionView *parent)
     ui->viewLayout->removeWidget(ui->collectionList);
     ui->viewLayout->removeWidget(ui->contentWidget);
     QSplitter *splitter = new QSplitter(q);
+    splitter->setObjectName("__RecordItNow__Splitter1");
     splitter->addWidget(ui->collectionList);
     splitter->addWidget(ui->contentWidget);
     ui->viewLayout->addWidget(splitter);
 
+    splitterList.append(splitter);
 
     ui->contentWidgetLayout->removeWidget(ui->searchWidget);
     ui->contentWidgetLayout->removeWidget(ui->collectionItemWidget);
     splitter = new QSplitter(q);
+    splitter->setObjectName("__RecordItNow_Splitter2");
     splitter->setOrientation(Qt::Vertical);
     splitter->addWidget(ui->searchWidget);
     splitter->addWidget(ui->collectionItemWidget);
     ui->contentWidgetLayout->addWidget(splitter);
 
+    splitterList.append(splitter);
 
     ui->collectionList->setButtons(CollectionListWidget::AddButton|CollectionListWidget::DeleteButton|
                                    CollectionListWidget::EditButton);
@@ -259,6 +263,50 @@ RecordItNow::CollectionListWidget *CollectionView::listForCollection(RecordItNow
         }
     }
     return 0;
+
+}
+
+
+QByteArray CollectionView::saveState() const
+{
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    foreach (QSplitter *splitter, d->splitterList) {
+        QByteArray blob;
+        QDataStream blobStream(&blob, QIODevice::WriteOnly);
+        blobStream << splitter->objectName();
+        blobStream << splitter->saveState();
+
+        stream << blob;
+    }
+    return data;
+
+}
+
+
+void CollectionView::restoreState(const QByteArray &state)
+{
+
+    QDataStream stream(state);
+    while (!stream.atEnd()) {
+        QByteArray blob;
+        stream >> blob;
+
+        QDataStream blobStream(blob);
+        QString name;
+        QByteArray data;
+
+        blobStream >> name;
+        blobStream >> data;
+
+        foreach (QSplitter *splitter, d->splitterList) {
+            if (splitter->objectName() == name) {
+                splitter->restoreState(data);
+                break;
+            }
+        }
+    }
 
 }
 

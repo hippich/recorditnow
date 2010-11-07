@@ -46,6 +46,9 @@ public:
     RecordItNow::CollectionItem *selectedItem() const;
     RecordItNow::CollectionListWidget *listForCollection(RecordItNow::Collection *collection) const;
 
+    QByteArray saveState() const;
+    void restoreState(const QByteArray &state);
+
     void addCollection(RecordItNow::Collection *collection);
     void removeCollection(RecordItNow::Collection *collection);
 

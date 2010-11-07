@@ -45,7 +45,7 @@ public:
 
     QString getKey(const KUrl &file, const QSize &size) const;
 
-    void updateThumbnail(const KUrl &file, const QSize &size);
+    bool updateThumbnail(const KUrl &file, const QSize &size);
 
     KPixmapCache *cache;
 

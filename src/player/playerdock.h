@@ -29,10 +29,13 @@
 #include <QtGui/QDockWidget>
 
 
+class QSplitter;
 class QStackedLayout;
 namespace RecordItNow {
 
 
+class CollectionView;
+class CollectionItem;
 class AbstractPlayer;
 class PlayerDock : public RecordItNow::DockWidget, Ui::PlayerDock
 {
@@ -49,11 +52,17 @@ public:
 private:
     QList<AbstractPlayer*> m_playerWidgets;
     QStackedLayout *m_layout;
+    CollectionView *m_view;
+    QSplitter *m_splitter;
+
+    void save();
+    void load();
 
 
 private slots:
     void changePlayer();
     void currentChanged();
+    void playRequested(RecordItNow::CollectionItem *item);
 
 
 };

@@ -45,7 +45,7 @@ public:
 
     static RecordItNow::ThumbnailManager *self();
     static bool getThumbnail(QPixmap *pixmap, const KUrl &file, const QSize &size);
-    static void updateThumbnail(const KUrl &file, const QSize &size);
+    static bool updateThumbnail(const KUrl &file, const QSize &size);
     static void cacheThumbnail(const KUrl &file, const QSize &size, const QPixmap *pixmap);
 
 

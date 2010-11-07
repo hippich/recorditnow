@@ -68,6 +68,7 @@ set (P_H collection/collection_p.h
      widgets/collectionview_p.h
      widgets/collectionlistsearchwidget_p.h
      widgets/collectionitemdialog_p.h
+     thumbnailmanager_p.h
     )
 
 set(gui_SRCS ${P_H}

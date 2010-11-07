@@ -58,7 +58,7 @@ CollectionItemPrivate::CollectionItemPrivate(CollectionItem *parent)
             this, SLOT(thumbnailUpdateFinished(KUrl,QSize)));
 
     connect(RecordItNow::ThumbnailManager::self(), SIGNAL(thumbnailUpdateFailed(KUrl,QSize)),
-            q, SIGNAL(thumbnailUpdateFinished()));
+            this, SLOT(thumbnailUpdateFailed(KUrl,QSize)));
 
 }
 
@@ -106,6 +106,18 @@ void CollectionItemPrivate::thumbnailUpdateFinished(const KUrl &file, const QSiz
         q->setThumbnail(pixmap, size);
     }
 
+    emit q->thumbnailUpdateFinished();
+
+}
+
+
+void CollectionItemPrivate::thumbnailUpdateFailed(const KUrl &file, const QSize &size)
+{
+
+    Q_UNUSED(size);
+    if (file != q->url()) {
+        return;
+    }
     emit q->thumbnailUpdateFinished();
 
 }
@@ -314,8 +326,9 @@ void CollectionItem::createThumbnail(const QSize &size)
     if (RecordItNow::ThumbnailManager::getThumbnail(&pixmap, url(), size)) {
         setThumbnail(pixmap, size);
     } else {
-        emit thumbnailUpdateStarted();
-        RecordItNow::ThumbnailManager::updateThumbnail(url(), size);
+        if (RecordItNow::ThumbnailManager::updateThumbnail(url(), size)) {
+            emit thumbnailUpdateStarted();
+        }
     }
 
 }

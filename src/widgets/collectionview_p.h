@@ -29,6 +29,7 @@
 #include <QtCore/QObject>
 
 
+class QSplitter;
 class QStackedLayout;
 namespace RecordItNow {
 
@@ -52,6 +53,8 @@ public:
     Ui::CollectionView *ui;
     QStackedLayout *layout;
     CollectionListWidget *searchList;
+
+    QList<QSplitter*> splitterList;
 
 
 private:

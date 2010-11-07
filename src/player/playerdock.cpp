@@ -23,6 +23,10 @@
 #include "imageplayer.h"
 #include "videoplayer.h"
 #include "playerdocktitle.h"
+#include "collectionview.h"
+#include "collection/collectionitem.h"
+#include <recorditnow.h>
+#include "collection/collection.h"
 
 // KDE
 #include <kmimetype.h>
@@ -31,6 +35,7 @@
 // Qt
 #include <QtGui/QStackedLayout>
 #include <QtGui/QToolBar>
+#include <QtGui/QSplitter>
 
 
 namespace RecordItNow {
@@ -66,13 +71,26 @@ PlayerDock::PlayerDock(QWidget *parent)
     m_playerWidgets.append(imagePlayer);
     m_playerWidgets.append(videoPlayer);
 
+    m_view = new CollectionView(this);
+    connect(m_view, SIGNAL(playRequested(RecordItNow::CollectionItem*)), this,
+            SLOT(playRequested(RecordItNow::CollectionItem*)));
+
+    mainLayout->removeWidget(contentWidget);
+    m_splitter = new QSplitter(this);
+    m_splitter->addWidget(m_view);
+    m_splitter->addWidget(contentWidget);
+
+    mainLayout->addWidget(m_splitter);
+
+    load();
+
 }
 
 
 PlayerDock::~PlayerDock()
 {
 
-
+    save();
 
 }
 
@@ -100,6 +118,44 @@ bool PlayerDock::play(const QString &file)
     }
 
     return true;
+
+}
+
+
+void PlayerDock::save()
+{
+
+    KConfigGroup cfg(Settings::self()->config(), "Collections");
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    foreach (Collection *collection, m_view->collections()) {
+        stream << collection->save();
+    }
+    cfg.writeEntry("Data", data);
+    cfg.writeEntry("Splitter", m_splitter->saveState());
+    cfg.writeEntry("ViewState", m_view->saveState());
+
+}
+
+
+void PlayerDock::load()
+{
+
+    KConfigGroup cfg(Settings::self()->config(), "Collections");
+    QByteArray data = cfg.readEntry("Data", QByteArray());
+    QDataStream stream(&data, QIODevice::ReadOnly);
+    while (!stream.atEnd()) {
+        QByteArray blob;
+        stream >> blob;
+
+        Collection *collection = new Collection();
+        collection->load(blob);
+
+        m_view->addCollection(collection);
+    }
+    m_splitter->restoreState(cfg.readEntry("Splitter", QByteArray()));
+    m_view->restoreState(cfg.readEntry("ViewState", QByteArray()));
 
 }
 
@@ -135,6 +191,14 @@ void PlayerDock::currentChanged()
         PlayerDockTitle *titleWidget = static_cast<PlayerDockTitle*>(titleBarWidget());
         titleWidget->setTitle(player->name());
     }
+
+}
+
+
+void PlayerDock::playRequested(RecordItNow::CollectionItem *item)
+{
+
+    play(item->url().pathOrUrl());
 
 }
 

@@ -64,11 +64,11 @@ QString ThumbnailManagerPrivate::getKey(const KUrl &file, const QSize &size) con
 }
 
 
-void ThumbnailManagerPrivate::updateThumbnail(const KUrl &file, const QSize &size)
+bool ThumbnailManagerPrivate::updateThumbnail(const KUrl &file, const QSize &size)
 {
 
     if (file.isEmpty() || !file.isLocalFile() || !QFileInfo(file.path()).exists()) {
-        return;
+        return false;
     }
 
     QHashIterator<KJob*, ThumbnailUpdateData> it(m_runningJobs);
@@ -76,7 +76,7 @@ void ThumbnailManagerPrivate::updateThumbnail(const KUrl &file, const QSize &siz
         it.next();
         if (it.value().file == file && it.value().size == size) {
             kDebug() << "job for " << file << "is already running...";
-            return;
+            return true;
         }
     }
 
@@ -96,6 +96,8 @@ void ThumbnailManagerPrivate::updateThumbnail(const KUrl &file, const QSize &siz
     data.file = file;
     data.size = size;
     m_runningJobs.insert(job, data);
+
+    return true;
 
 }
 
@@ -181,10 +183,10 @@ bool ThumbnailManager::getThumbnail(QPixmap *pixmap, const KUrl &file, const QSi
 }
 
 
-void ThumbnailManager::updateThumbnail(const KUrl &file, const QSize &size)
+bool ThumbnailManager::updateThumbnail(const KUrl &file, const QSize &size)
 {
 
-    ThumbnailManager::self()->d->updateThumbnail(file, size);
+    return ThumbnailManager::self()->d->updateThumbnail(file, size);
 
 }
 

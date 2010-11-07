@@ -91,6 +91,12 @@ void CollectionListWidgetItemPrivate::itemDataChanged(RecordItNow::CollectionIte
 {
 
     switch (role) {
+    case CollectionItem::UrlRole:
+        if (list) {
+            self->createThumbnail(list->iconSize());
+        }
+        q->setData(self->value(role), role);
+        break;
     case CollectionItem::ThumbnailRole:
         if (list) {
             q->setIcon(KIcon(self->thumbnail(list->iconSize())));

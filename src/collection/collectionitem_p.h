@@ -60,6 +60,7 @@ private slots:
     void __debugParent(QObject *parent);
 
     void thumbnailUpdateFinished(const KUrl &file, const QSize &size);
+    void thumbnailUpdateFailed(const KUrl &file, const QSize &size);
 
 
 };
