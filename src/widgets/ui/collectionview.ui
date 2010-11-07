@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CollectionView</class>
+ <widget class="QWidget" name="CollectionView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="viewLayout">
+     <item>
+      <widget class="RecordItNow::CollectionListWidget" name="collectionList">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="resizeMode">
+        <enum>QListView::Adjust</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="contentWidget" native="true">
+       <layout class="QVBoxLayout" name="contentWidgetLayout">
+        <item>
+         <widget class="RecordItNow::CollectionListSearchWidget" name="searchWidget" native="true"/>
+        </item>
+        <item>
+         <widget class="QWidget" name="collectionItemWidget" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RecordItNow::CollectionListSearchWidget</class>
+   <extends>QWidget</extends>
+   <header>collectionlistsearchwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RecordItNow::CollectionListWidget</class>
+   <extends>QListWidget</extends>
+   <header>collectionlistwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

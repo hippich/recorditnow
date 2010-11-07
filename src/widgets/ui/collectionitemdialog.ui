@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CollectionItemDialog</class>
+ <widget class="QWidget" name="CollectionItemDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>403</width>
+    <height>223</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Title:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Comment:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Author:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Rating:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Date:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Location:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="KLineEdit" name="titleEdit"/>
+   </item>
+   <item row="4" column="1">
+    <widget class="KLineEdit" name="authorEdit"/>
+   </item>
+   <item row="6" column="1">
+    <widget class="KDateTimeWidget" name="dateEdit"/>
+   </item>
+   <item row="7" column="1">
+    <widget class="KUrlRequester" name="urlEdit">
+     <property name="mode">
+      <set>KFile::ExistingOnly|KFile::File</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="KTextEdit" name="commentEdit"/>
+   </item>
+   <item row="5" column="1">
+    <widget class="KRatingWidget" name="ratingEdit" native="true"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="iconLabel">
+     <property name="text">
+      <string>Icon:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="KIconButton" name="iconButton"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KIconButton</class>
+   <extends>QPushButton</extends>
+   <header>kicondialog.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KDateTimeWidget</class>
+   <extends>QWidget</extends>
+   <header>kdatetimewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>ktextedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KRatingWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">nepomuk/kratingwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

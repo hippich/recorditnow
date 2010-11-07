@@ -2,6 +2,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/libs/plugin
     ${CMAKE_SOURCE_DIR}/src/libs/recorder
     ${CMAKE_SOURCE_DIR}/src/libs/encoder
     ${CMAKE_SOURCE_DIR}/src/libs/keylogger
+    ${CMAKE_SOURCE_DIR}/src/widgets
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_BINARY_DIR}
     ${KDE4_INCLUDES})
@@ -57,8 +58,19 @@ set (FRAME_SRCS frame/frame.cpp
     frame/frameinfowidget.cpp 
     frame/movewidget.cpp)
 
+set (P_H collection/collection_p.h
+     collection/collectionitem_p.h
+     widgets/collectionlistwidget_p.h
+     widgets/collectionlistwidgetitem_p.h
+     widgets/collectionitemdelegate_p.h
+     widgets/collectionlistmodel_p.h
+     widgets/listwidgetbuttoncontainer_p.h
+     widgets/collectionview_p.h
+     widgets/collectionlistsearchwidget_p.h
+     widgets/collectionitemdialog_p.h
+    )
 
-set(gui_SRCS
+set(gui_SRCS ${P_H}
    main.cpp
    mainwindow.cpp
    pluginmanager.cpp
@@ -118,6 +130,14 @@ set(gui_SRCS
    widgets/osd.cpp
    widgets/checkicon.cpp
    widgets/recordhelpwidget.cpp
+   widgets/collectionlistwidget.cpp
+   widgets/collectionlistwidgetitem.cpp
+   widgets/collectionitemdelegate.cpp
+   widgets/listwidgetbuttoncontainer.cpp
+   widgets/collectionlistmodel.cpp
+   widgets/collectionview.cpp
+   widgets/collectionlistsearchwidget.cpp
+   widgets/collectionitemdialog.cpp
 
    outputwidget.cpp
    timerwidget.cpp
@@ -177,6 +197,10 @@ kde4_add_ui_files(gui_SRCS
     config/ui/zoom.ui 
     
     widgets/ui/recordhelpwidget.ui
+    widgets/ui/listwidgetbuttoncontainer.ui
+    widgets/ui/collectionview.ui
+    widgets/ui/collectionlistsearchwidget.ui
+    widgets/ui/collectionitemdialog.ui
 
     timeline/ui/timeline.ui 
     timeline/ui/timelinedocktitlewidget.ui
