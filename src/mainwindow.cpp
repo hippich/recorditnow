@@ -286,9 +286,9 @@ KAction *MainWindow::getAction(const QString &name)
 
     KAction *action = static_cast<KAction*>(actionCollection()->action(name));
     if (!action) {
-        if (name == "box" || name == "popupAction") {
+        if (name == QLatin1String("box") || name == QLatin1String("popupAction")) {
             action = new KActionMenu(this);
-            if (name == "popupAction") {
+            if (name == QLatin1String("popupAction")) {
                 static_cast<KActionMenu*>(action)->setDelayed(false);
             }
         } else {

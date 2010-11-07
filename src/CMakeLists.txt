@@ -130,6 +130,11 @@ set(gui_SRCS
    firstStart/firststartassistant.cpp
    firstStart/welcomepage.cpp
    firstStart/createconfigpage.cpp
+
+   collection/collection.cpp
+   collection/collectionitem.cpp
+
+   thumbnailmanager.cpp
    )
 
 if (HAVE_QTSCRIPT)
